@@ -203,6 +203,7 @@ function canPlayGame() {
 }
 
 function renderNavigation() {
+  for (const id of ['city-map-button', 'touch-city-map-button']) el<HTMLButtonElement>(id).disabled = restarting || !!onboarding?.blocksCityMap;
   const state: NavigationState = canPlayGame() ? navigationState : { phase: navigationState.phase === 'unavailable' ? 'unavailable' : 'hidden' };
   minimap.update(state);
   const packet = state.phase === 'live' ? state.snapshot : undefined;
@@ -524,7 +525,7 @@ minimapSetting.innerHTML = '<span id="minimap-label" data-i18n="Minimap">Minimap
 el('options-toolbar-slot').before(minimapSetting);
 const minimap = createMinimap({
   screen: el('screen'), toggle: el<HTMLSelectElement>('minimap-visibility'), hint: el('minimap-hint'), geometry: minimapGeometry,
-  openGuide: () => { if (!onboarding?.blocksInput) cityGuide.open(el('live-minimap')); },
+  openGuide: () => { if (!onboarding?.blocksCityMap) cityGuide.open(el('live-minimap')); },
 });
 onboarding = createOnboarding({
   host: el('console'),
@@ -533,7 +534,7 @@ onboarding = createOnboarding({
   pause: () => setPaused(true), resume: () => setPaused(false), leaveGame: () => gameView.leave(),
   releaseInputs, refreshInput: () => { gameInput?.refresh(); renderNavigation(); }, message,
 });
-for (const id of ['city-map-button', 'touch-city-map-button']) el(id).addEventListener('click', () => { if (!onboarding?.blocksInput) cityGuide.open(el(id)); });
+for (const id of ['city-map-button', 'touch-city-map-button']) el(id).addEventListener('click', () => { if (!onboarding?.blocksCityMap) cityGuide.open(el(id)); });
 
 function openGame() {
   if (starting || restarting) return;

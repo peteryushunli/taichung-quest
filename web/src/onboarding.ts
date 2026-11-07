@@ -32,6 +32,7 @@ export function createOnboarding(options: {
   let unavailableShown = false;
   let startupFailed = false;
   let startupWaiting = false;
+  let nativeGuideActive = false;
 
   const view = createOnboardingView({
     host: options.host, releaseInputs: options.releaseInputs,
@@ -72,6 +73,12 @@ export function createOnboarding(options: {
 
   function onState(next: OnboardingState) {
     state = next;
+    const packet = next.snapshot;
+    if (packet) {
+      startupWaiting = packet.phase === 1;
+      nativeGuideActive = packet.phase >= 4 && packet.phase <= 9 && !(packet.phase === 9 && packet.flags === 1);
+    }
+    if (next.status === 'unavailable') startupWaiting = nativeGuideActive = false;
     options.refreshInput();
     if (next.status === 'unavailable') {
       startupWaiting = false;
@@ -86,8 +93,6 @@ export function createOnboarding(options: {
       }
       return;
     }
-    const packet = next.snapshot;
-    if (packet) startupWaiting = packet.phase === 1;
     if (next.status !== 'live' || !packet || !options.getState().immersive) return;
     if (packet.phase === 10) {
       options.message('Choose your language in the game to continue. You can switch it later in Game options.');
@@ -139,6 +144,8 @@ export function createOnboarding(options: {
     }
   }
 
+  const inputBlocked = () => view.languageOpen || view.cardOpen || state.status === 'pending' || !!queuedCard || !!submittedCard || (!startupFailed && startupWaiting);
+
   return {
     async prepareLanguage(hasCapability: boolean, savedGameHint: boolean): Promise<boolean> {
       supported = hasCapability;
@@ -156,7 +163,7 @@ export function createOnboarding(options: {
       acknowledgedContext = startupRequestContext = 0;
       unavailableShown = false;
       startupFailed = false;
-      startupWaiting = false;
+      startupWaiting = nativeGuideActive = false;
       supported = !!metadata;
       if (!metadata) { state = { status: 'unavailable' }; return; }
       bridge = new NativeOnboardingBridge({
@@ -176,11 +183,12 @@ export function createOnboarding(options: {
       options.releaseInputs();
     },
     refresh() { bridge?.refresh(); },
-    stop() { bridge?.stop(); view.cancelLanguage(); view.closeCard(); queuedCard = submittedCard = undefined; ownsPause = startupWaiting = false; },
+    stop() { bridge?.stop(); view.cancelLanguage(); view.closeCard(); queuedCard = submittedCard = undefined; ownsPause = startupWaiting = nativeGuideActive = false; },
     destroy() { bridge?.stop(); stopLocaleListener(); view.destroy(); },
     get supported() { return supported; },
     get startupLanguagePending() { return supported && startupWaiting; },
-    get blocksInput() { return view.languageOpen || view.cardOpen || state.status === 'pending' || !!queuedCard || !!submittedCard || (!startupFailed && startupWaiting); },
+    get blocksInput() { return inputBlocked(); },
+    get blocksCityMap() { return inputBlocked() || (nativeGuideActive && options.getState().immersive); },
     get currentState() { return state; },
   };
 }

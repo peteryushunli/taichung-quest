@@ -147,6 +147,10 @@ document.querySelector('#run-adapter')!.addEventListener('click', async () => {
     await waitFor(() => (words[6] & 255) === 9 && !document.querySelector<HTMLDialogElement>('#outdoor-coach')!.open && !adapter.blocksInput);
     assert(commands.join(',') === '1,2,2,2,2', 'Expected one language application and four exact-context acknowledgements');
     assert(!host.paused, 'Native farewell could not resume');
+    assert(adapter.blocksCityMap, 'City Map became active while native farewell still owns input');
+    publish(9, 1);
+    await waitFor(() => !adapter.blocksCityMap);
+    assert(!adapter.blocksInput, 'Completing the native guide kept ordinary input blocked');
     status.textContent = 'PASS simulated adapter: dedicated language handshake, four paused cards, fresh resume/context ACKs, Continue later without progress, and phase9 native farewell. No actual ROM/party or physical-device coverage.';
   } catch (error) { status.textContent = `FAIL simulated adapter: ${error}`; }
   finally { clearInterval(timer); adapter.destroy(); view = makeView(); }
