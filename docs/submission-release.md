@@ -25,9 +25,9 @@ Browser controls: arrows move, F confirms, D cancels, M/Enter opens Menu; portra
 ## Verification
 
 - Integrated native build, 380-glyph generation, map reachability, Station format/budget checks, and host suites for all 150 Team presets, ten progress bits, encounter settings, exactly-once starter grants and save migration pass.
-- Actual integrated Charmander and Bulbasaur paths reach the plaza with one level-50 partner. Charmander native Save/Continue does not replay onboarding. The other two integrated paths are in final acceptance; results are appended before handoff.
+- All four actual integrated starter paths reach the plaza and native Save records exactly one chosen level-50 partner. Charmander, Bulbasaur and Pikachu native Continue does not replay onboarding; Bulbasaur and Pikachu were re-saved with count one. English and Traditional Chinese welcome/selector/confirmation/departure/save text render correctly. Squirtle’s Chinese native save independently validates species 7, level 50, language 2, map 43:0 at (30,66).
 - Six-member Team add/replace/cancel, an organically attached Potion surviving replacement, and fresh-runtime native Continue passed on the identical merged gameplay slice. Mail-specific runtime remains untested.
-- Gameplay's level-50 Station checkpoint passed a real Mewtwo win against both opponents, one badge, repeat recognition and native Save. Organic Magikarp loss, zero badges, healed plaza return and retry offer also passed. Battle proof is on the isolated common-level checkpoint; combined source retains those exact gameplay changes.
+- Gameplay's level-50 Station checkpoint passed a real Mewtwo win against both opponents, one badge, repeat recognition and native Save. Organic Magikarp loss, zero badges, healed plaza return and retry offer also passed. The victory save independently validates mask 1, level-50 Mewtwo, unchanged EXP 156250 and all six EVs zero. Battle proof is on the isolated common-level checkpoint; combined source retains those exact gameplay changes.
 - A real old canonical pre-Station save was loaded through actual Continue on the integrated build. Its new native Save retains identical party, position `(30,66)`, language, preferences and progress; version advances 1→2 and counter 2→3. The new facade renders correctly.
 - Production Worker validates 51 complete asset responses including full ROM/Wasm hashes, MIME and explicit COOP/COEP. The earlier published startup fix was confirmed on the user's iPhone Chrome; new native content has desktop-emulator acceptance, not a new physical-phone claim.
 
@@ -36,3 +36,11 @@ Browser controls: arrows move, F confirms, D cancels, M/Enter opens Menu; portra
 Live minimap, faster/contextual bike shortcut, expanded city geometry, the other nine real leader battles, further landmark facades, bespoke character sprites and final balance are not included. The existing eight Kanto badges are separate from the ten-landmark City Pass. Custom Taichung content is bilingual; many original FireRed names/detail screens remain English. Authored future trainer moves require review of the current common preset policy.
 
 Use native Save and export a backup before changing cartridge revisions. Browser snapshots are isolated by ROM digest. A normal Save cannot be invoked during the locked opening; grant host tests cover duplicates and existing partners, while interruption/transition edge cases beyond the tested Continue paths remain bounded verification limits.
+
+## Published release verification
+
+Private Site version 9 deployed at 14:46 Taipei from public source `e6dbee134ffe375ebc41be8010a66bbc8664cc6f` (deployment `appgdep_6aeec9213cf48191bc625e4ad1f07b8a`). The full live cartridge and Wasm hashes match the release; both return HTTP200 with the required cross-origin isolation headers and correct MIME. Anonymous Git access verified the exact public source commit. Later documentation-only commits do not change this cartridge.
+
+A fresh application of the portable patch matches all 238 changed native source files (16 palettes use Git-declared CRLF normalization; all remaining files match byte for byte). Patch SHA-256: `4725e58985c50fe8b3d421c171fb5bc29ea8e8315068972fbb01b47c75efc4fc`.
+
+Late character-art work remains outside the frozen submission and has not been discarded. Rebuilds should use the published patch or the frozen native commit; the active local native checkout may contain that preserved later work.

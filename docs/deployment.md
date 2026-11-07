@@ -82,3 +82,7 @@ browser-local snapshots and saves do not automatically follow a new domain.
 The same owner-private Site now includes four landmark-art postcards above the player, from Interface checkpoint `5240040`. Source `79579962094719faca7b1edeeb49a6ceda5889d4` adds PNG MIME support to the explicit-header Worker. Deployment `appgdep_6aeec4e0d32c8191aa7d810089b80c64` succeeded at 14:27 Taipei on 7 November 2026. The published native cartridge remains `ae0ada35`; native Team/Station/opening integration is separate and not yet published.
 
 Validation: 13 tests, TypeScript, production build, 51 complete asset-response checks, and actual local Worker rendering of all four images. Interface verified 1280px/390px/320px layouts and Play/Back; no new physical-phone claim. Proof: `artifacts/qa-landmark-intro-v6.jpg`.
+
+## Frozen submission, version 9
+
+Deployment `appgdep_6aeec9213cf48191bc625e4ad1f07b8a` succeeded at14:46 Taipei from source `e6dbee134ffe375ebc41be8010a66bbc8664cc6f`, retaining the same owner-private Site. Native cartridge is now `ea482a326672ac9fec2595e235ab669f9db0dd10`, source `21c08cbda8e1787b4504eb3a1131d628fc77222f`. All 51 Worker asset checks pass; authorized live reads verify exact full ROM/Wasm hashes and isolation headers. See [submission-release.md](submission-release.md) for playable scope and precise native acceptance.
