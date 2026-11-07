@@ -6,7 +6,7 @@ Private playable preview: <https://taichung-quest-hackday.helpfulwren.chatgpt.si
 
 A Pokémon FireRed modification set in a compressed, fictionalized Taichung. A real Game Boy Advance ROM runs in the browser through mGBA WebAssembly.
 
-Explore Old City, Greenway and Xitun in a native Pokémon game, with ten enterable landmark halls. Begin inside Old Taichung Station, choose one of four partners from their animated icons and large portraits, then step into the plaza. Ride through recognizable Station, Miyahara, Taichung Park and National Taichung Theater facades. All ten landmark hosts have custom field art; optional local characters add short bilingual greetings. Station leader Jun and Park leader Lian have playable battles with bilingual dialogue; the other eight challenges remain in development.
+Explore Old City, Greenway and Xitun in a native Pokémon game, with ten enterable landmark halls. Begin inside Old Taichung Station, choose one of four partners from their animated icons and large portraits, then step into the plaza. Ride through recognizable Station, Miyahara, Taichung Park, National Taichung Theater, Science Museum, Shen Ji and Fine Arts facades. All ten landmark hosts have custom field art; optional local characters add short bilingual greetings. Station leader Jun and Park leader Lian have playable battles with bilingual dialogue; the other eight challenges remain in development.
 
 The ten-landmark roster is approved. The remaining eight gym battles and further landmark facades are later integrations. [docs/game-design.md](docs/game-design.md) records decisions and open design work.
 
@@ -47,7 +47,7 @@ The bilingual City Map describes all ten real places with original illustrations
 
 Native Traditional Chinese covers custom city text, district names, starters, City Pass, exploration settings, menu actions and common save/battle labels. Original FireRed story, Pokémon/move names and many detail screens remain English. The browser and native language controls synchronize through a versioned packet validated against the exact ROM. Changes wait while the game is busy or paused. See [docs/native-localization.md](docs/native-localization.md) for coverage.
 
-Native saves survive reloads and can be exported/imported. Version-4 migration refreshes Theater's Xitun tiles and safely relocates only its 33 newly blocked saved positions. Earlier saves retain the connected-district upgrade chain, including Continue through quest-log replay. Party, inventory, preferences, checkpoint and progress are preserved. Character cache refreshes show the installed hosts and local characters on older saves; new optional NPCs move aside if the player saved on their square. Browser snapshots are isolated by ROM digest. Use native Save before exporting a backup or changing ROM revisions.
+Native saves survive reloads and can be exported/imported. Version-5 migration refreshes the new Greenway landmarks and repairs only 29 newly blocked saved positions. It retains the earlier Theater/Xitun upgrade and its 33 exact repairs. Earlier saves retain the connected-district upgrade chain, including Continue through quest-log replay. Party, inventory, preferences, checkpoint and progress are preserved. Character cache refreshes show the installed hosts and local characters on older saves; new optional NPCs move aside if the player saved on their square. Browser snapshots are isolated by ROM digest. Use native Save before exporting a backup or changing ROM revisions.
 
 ## Design input
 
