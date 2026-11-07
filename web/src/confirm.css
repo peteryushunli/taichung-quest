@@ -1,0 +1,16 @@
+.cartridge-confirm {
+  width: min(420px, calc(100vw - 36px));
+  padding: 27px;
+  border: 1px solid #bdcbb1;
+  border-radius: 12px;
+  background: var(--cream);
+  color: var(--ink);
+  box-shadow: 0 20px 70px #142f3555;
+}
+.cartridge-confirm::backdrop { background: #173c2cbf; backdrop-filter: blur(4px); }
+.cartridge-confirm h2 { margin: 0 0 13px; font: 400 28px/1.2 Georgia, serif; letter-spacing: -.5px; }
+.cartridge-confirm p { margin: 0; font-size: 12px; line-height: 1.9; color: #75866b; }
+.confirm-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 25px; }
+.confirm-actions button { min-height: 37px; padding: 9px 16px; border: 1px solid #c1cfb5; border-radius: 3px; background: transparent; color: #6b7e5e; font-size: 11px; }
+.confirm-actions .confirm-proceed { border-color: var(--pine); background: var(--pine); color: #f5efd9; }
+html[lang="zh-Hant"] .cartridge-confirm h2 { font-family: 'Songti TC', serif; font-size: 26px; letter-spacing: 1px; }

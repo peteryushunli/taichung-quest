@@ -1,4 +1,5 @@
 import './style.css';
+import './confirm.css';
 import type { mGBAEmulator } from '@thenick775/mgba-wasm';
 import { createCityGuide } from './city-guide';
 import { getLocale, initializeLocalization, languageControl, onLocaleChange, t } from './i18n';
@@ -6,10 +7,16 @@ import { getLocale, initializeLocalization, languageControl, onLocaleChange, t }
 type Button = 'Up' | 'Down' | 'Left' | 'Right' | 'A' | 'B' | 'Start' | 'Select' | 'L' | 'R';
 type RuntimeFactory = (options: { canvas: HTMLCanvasElement }) => Promise<mGBAEmulator>;
 type RuntimeWindow = Window & { taichungCreateEmulator?: RuntimeFactory };
+// These Emscripten exports pause the JavaScript scheduler without entering the
+// native core's thread-interrupt path (unlike live boolean core settings).
+type SchedulerRuntime = mGBAEmulator & { pauseMainLoop(): void; resumeMainLoop(): void };
 
 const ROM_URL = '/roms/taichung-firered.gba';
 const SAVE_PATH = '/data/saves/taichung-firered.sav';
 const SAVE_STAMP = 'taichung-quest-save-time';
+const CARTRIDGE_BOOT_PARAM = 'cartridge-boot';
+const cartridgeBootIntent = new URL(window.location.href).searchParams.get(CARTRIDGE_BOOT_PARAM);
+let bootFromCartridge = cartridgeBootIntent === '1' || cartridgeBootIntent === 'import';
 let savedAt: string | null = null;
 try { savedAt = localStorage.getItem(SAVE_STAMP); } catch { /* Storage can be disabled in private browser sessions. */ }
 
@@ -95,10 +102,13 @@ let running = false;
 let paused = false;
 let muted = false;
 let saving = false;
+let restarting = false;
+let confirmationOpen = false;
 let saveInterval: ReturnType<typeof setInterval> | undefined;
+let filesystemWrites: Promise<void> = Promise.resolve();
 const pressed = new Map<string, Button>();
 let statusText = 'READY WHEN YOU ARE';
-let feedbackText = savedAt ? 'Your last saved spot is waiting in this browser.' : 'No downloads. Just a little time to wander.';
+let feedbackText = cartridgeBootIntent === 'import' ? 'Save imported. Start exploring, then choose Continue from the game’s title screen.' : bootFromCartridge ? 'Cartridge restarted. Start exploring to continue your in-game save or begin a new adventure.' : savedAt ? 'Your last saved spot is waiting in this browser.' : 'No downloads. Just a little time to wander.';
 
 function message(text: string, error = false) {
   feedbackText = text;
@@ -108,7 +118,71 @@ function message(text: string, error = false) {
 
 function setStatus(text: string) { statusText = text; status.textContent = t(text); }
 
-function focusGame() { if (running && !paused && !cityGuide.isOpen) canvas.focus({ preventScroll: true }); }
+function focusGame() { if (running && !paused && !restarting && !confirmationOpen && !cityGuide.isOpen) canvas.focus({ preventScroll: true }); }
+
+function confirmAction(title: string, explanation: string, action: string): Promise<boolean> {
+  if (confirmationOpen) return Promise.resolve(false);
+  releaseInputs();
+  confirmationOpen = true;
+  const returnFocus = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+  const dialog = document.createElement('dialog');
+  dialog.className = 'cartridge-confirm';
+  dialog.setAttribute('aria-labelledby', 'cartridge-confirm-title');
+  dialog.setAttribute('aria-describedby', 'cartridge-confirm-explanation');
+  const heading = document.createElement('h2');
+  heading.id = 'cartridge-confirm-title';
+  heading.dataset.i18n = title;
+  heading.textContent = t(title);
+  const body = document.createElement('p');
+  body.id = 'cartridge-confirm-explanation';
+  body.dataset.i18n = explanation;
+  body.textContent = t(explanation);
+  const actions = document.createElement('div');
+  actions.className = 'confirm-actions';
+  const cancel = document.createElement('button');
+  cancel.dataset.i18n = 'Cancel';
+  cancel.textContent = t('Cancel');
+  const proceed = document.createElement('button');
+  proceed.className = 'confirm-proceed';
+  proceed.dataset.i18n = action;
+  proceed.textContent = t(action);
+  actions.append(cancel, proceed);
+  dialog.append(heading, body, actions);
+  document.body.append(dialog);
+  return new Promise((resolve) => {
+    dialog.addEventListener('close', () => {
+      const accepted = dialog.returnValue === 'confirm';
+      confirmationOpen = false;
+      dialog.remove();
+      returnFocus?.focus({ preventScroll: true });
+      resolve(accepted);
+    }, { once: true });
+    cancel.addEventListener('click', () => dialog.close('cancel'));
+    proceed.addEventListener('click', () => dialog.close('confirm'));
+    dialog.showModal();
+    cancel.focus();
+  });
+}
+
+function flushFilesystem() {
+  const activeEmulator = emulator;
+  if (!activeEmulator) return Promise.resolve();
+  const write = filesystemWrites.catch(() => undefined).then(() => activeEmulator.FSSync());
+  filesystemWrites = write;
+  return write;
+}
+
+function discardOwnedSnapshot(path: string | undefined) {
+  if (!emulator || !path) return;
+  const directory = `${emulator.filePaths().autosave}/`;
+  const filename = path.startsWith(directory) ? path.slice(directory.length) : '';
+  if (/^taichung-firered(?:-[a-f0-9]{16})?_auto\.ss$/.test(filename) && emulator.FS.analyzePath(path).exists) emulator.FS.unlink(path);
+}
+
+function startSaveTimer() {
+  if (saveInterval) clearInterval(saveInterval);
+  saveInterval = setInterval(() => { if (!paused && !restarting) void persist(); }, 20_000);
+}
 
 function getRuntimeFactory(): Promise<RuntimeFactory> {
   const runtimeWindow = window as RuntimeWindow;
@@ -134,7 +208,7 @@ function releaseInputs() {
 }
 
 function press(source: string, button: Button) {
-  if (!running || paused || !emulator || pressed.has(source)) return;
+  if (!running || paused || restarting || confirmationOpen || !emulator || pressed.has(source)) return;
   pressed.set(source, button);
   emulator.buttonPress(button);
 }
@@ -147,16 +221,17 @@ function unpress(source: string) {
 }
 
 async function persist(showFeedback = false) {
-  if (!emulator || !running || saving) return;
+  if (!emulator || !running || saving || restarting) return;
   saving = true;
   try {
     if (!emulator.forceAutoSaveState()) throw new Error('The game could not capture your spot yet.');
-    await emulator.FSSync();
+    await flushFilesystem();
+    if (restarting) return;
     try { localStorage.setItem(SAVE_STAMP, new Date().toISOString()); } catch { /* The snapshot itself is stored separately in IndexedDB. */ }
     if (showFeedback) message('Spot saved. Your next visit will pick up right here.');
   } catch (error) {
     console.error('Saving failed', error);
-    message('Your spot could not be saved in this browser. Use the in-game Save menu and Download save for a backup.', true);
+    if (!restarting) message('Your spot could not be saved in this browser. Use the in-game Save menu and Download save for a backup.', true);
   } finally {
     saving = false;
   }
@@ -184,18 +259,21 @@ async function startGame() {
       emulator = await createEmulator({ canvas });
       await emulator.FSInit();
       emulator.setCoreSettings({
-        autoSaveStateEnable: true,
+        // The wrapper owns one guarded snapshot timer. Avoid the native loop's
+        // duplicate timer and its unguardable thread-interrupt capture path.
+        autoSaveStateEnable: false,
         autoSaveStateTimerIntervalSeconds: 20,
-        restoreAutoSaveStateOnLoad: true,
+        restoreAutoSaveStateOnLoad: !bootFromCartridge,
         rewindEnable: false,
         allowOpposingDirections: false,
       });
       emulator.addCoreCallbacks({
         coreCrashedCallback: () => {
+          if (restarting) return;
           setStatus('ADVENTURE INTERRUPTED');
           message('The game stopped unexpectedly. Restart it to return to your saved progress.', true);
         },
-        saveDataUpdatedCallback: () => { void emulator?.FSSync().catch(() => message('Browser storage is unavailable. Download your save for a backup.', true)); },
+        saveDataUpdatedCallback: () => { if (!restarting) void flushFilesystem().catch(() => message('Browser storage is unavailable. Download your save for a backup.', true)); },
       });
     }
     const gamesDirectory = emulator.filePaths().gamePath;
@@ -207,7 +285,21 @@ async function startGame() {
       if (/^taichung-firered(?:-[a-f0-9]{16})?\.gba$/.test(filename) && path !== gamePath) emulator.FS.unlink(path);
     }
     emulator.FS.writeFile(gamePath, rom);
+    const freshCartridgeBoot = bootFromCartridge;
+    if (freshCartridgeBoot) {
+      const snapshotName = gamePath.slice(gamePath.lastIndexOf('/') + 1).replace(/\.gba$/, '_auto.ss');
+      discardOwnedSnapshot(`${emulator.filePaths().autosave}/${snapshotName}`);
+      // This is a new runtime with no emulation thread running yet. Remove the
+      // old CPU snapshot durably before loading the cartridge and its SRAM.
+      await flushFilesystem();
+    }
     if (!emulator.loadGame(gamePath, SAVE_PATH)) throw new Error('The emulator could not open this game cartridge.');
+    if (freshCartridgeBoot) {
+      bootFromCartridge = false;
+      const cleanUrl = new URL(window.location.href);
+      cleanUrl.searchParams.delete(CARTRIDGE_BOOT_PARAM);
+      history.replaceState(history.state, '', cleanUrl);
+    }
     emulator.toggleInput(false);
     emulator.setVolume(muted ? 0 : 0.55);
     emulator.resumeAudio();
@@ -218,9 +310,9 @@ async function startGame() {
     canvas.classList.add('playing');
     document.querySelectorAll<HTMLButtonElement>('#pause-button, #sound-button, #save-button, #restart-button, #export-button, #import-button').forEach((button) => button.disabled = false);
     setStatus('OUT EXPLORING');
-    message(emulator.getAutoSaveState() ? 'Welcome back. Your last saved spot is waiting for you.' : 'You’re here. Use the arrows to wander and Z to say hello.');
+    message(freshCartridgeBoot ? cartridgeBootIntent === 'import' ? 'Save imported. Choose Continue from the game’s title screen.' : 'Cartridge restarted. Continue your in-game save or begin a new adventure.' : emulator.getAutoSaveState() ? 'Welcome back. Your last saved spot is waiting for you.' : 'You’re here. Use the arrows to wander and Z to say hello.');
     canvas.focus({ preventScroll: true });
-    saveInterval = setInterval(() => { if (!paused) void persist(); }, 20_000);
+    startSaveTimer();
     cityGuide.onGameStarted();
   } catch (error) {
     const reason = error instanceof Error ? error.message : 'Something went wrong while loading the game.';
@@ -277,15 +369,70 @@ el('fullscreen-button').addEventListener('click', () => {
   else void el('console').requestFullscreen().catch(() => message('Fullscreen isn’t available in this browser. You can still explore right here.'));
   focusGame();
 });
-el('restart-button').addEventListener('click', () => {
-  if (!emulator || !running || !confirm(t('Restart the cartridge? Your in-game save is kept, but progress since that save will restart.'))) return;
-  releaseInputs();
-  emulator.setCoreSettings({ restoreAutoSaveStateOnLoad: false });
-  emulator.quickReload();
-  emulator.setCoreSettings({ restoreAutoSaveStateOnLoad: true });
-  setPaused(false);
-  message('A fresh start. Your in-game save is still available from the title screen.');
-});
+el('restart-button').addEventListener('click', () => { void restartCartridge(); });
+
+async function restartCartridge(importedSave?: Uint8Array) {
+  if (!emulator || !running || restarting) return;
+  if (!importedSave && !(await confirmAction('Restart cartridge', 'Your in-game save is kept. Progress since that save will be lost.', 'Restart'))) return;
+  const previousSave = importedSave ? emulator.getSave()?.slice() : undefined;
+  const wasPaused = paused;
+  restarting = true;
+  // Navigation will destroy the runtime and release native inputs. Do not call
+  // any core functions here: even live boolean setters can interrupt and hang
+  // the running core after a native save in the pinned emulator distribution.
+  pressed.clear();
+  document.querySelectorAll('[data-gba].pressed').forEach((button) => button.classList.remove('pressed'));
+  if (saveInterval) { clearInterval(saveInterval); saveInterval = undefined; }
+  document.querySelectorAll<HTMLButtonElement>('#pause-button, #resume-button, #sound-button, #save-button, #restart-button, #import-button, #city-map-button').forEach((button) => button.disabled = true);
+  setStatus('RESTARTING CARTRIDGE');
+  message(importedSave ? 'Importing your save and restarting the cartridge…' : 'Keeping your in-game save and restarting the cartridge…');
+  let cancelSaveWrite = false;
+  try {
+    (emulator as SchedulerRuntime).pauseMainLoop();
+    console.info('Cartridge reboot: JavaScript scheduler paused.');
+    paused = true;
+    // Drain pending writes and durably flush SRAM. Snapshot removal happens in
+    // the next runtime before loadGame, after all old workers are gone.
+    let timeout: ReturnType<typeof setTimeout> | undefined;
+    try {
+      const saveWrites = (async () => {
+        await flushFilesystem();
+        if (cancelSaveWrite) return;
+        if (importedSave) {
+          emulator!.FS.writeFile(SAVE_PATH, importedSave);
+          await flushFilesystem();
+        }
+      })();
+      await Promise.race([
+        saveWrites,
+        new Promise<never>((_, reject) => { timeout = setTimeout(() => reject(new Error('Save flush timed out.')), 8_000); }),
+      ]);
+    } finally { if (timeout) clearTimeout(timeout); }
+    console.info('Cartridge reboot: save files flushed.');
+    try { localStorage.removeItem(SAVE_STAMP); } catch { /* SRAM is stored in IndexedDB, separately from this hint. */ }
+    const restartUrl = new URL(window.location.href);
+    restartUrl.searchParams.set(CARTRIDGE_BOOT_PARAM, importedSave ? 'import' : '1');
+    // A full navigation creates a fresh WASM runtime. The one-time query stays
+    // in place until Play successfully loads SRAM without restoring a snapshot.
+    window.location.replace(restartUrl.href);
+  } catch (error) {
+    console.error('Cartridge restart failed', error);
+    cancelSaveWrite = true;
+    if (importedSave && previousSave) {
+      emulator.FS.writeFile(SAVE_PATH, previousSave);
+      void flushFilesystem().catch(() => undefined);
+    }
+    restarting = false;
+    document.querySelectorAll<HTMLButtonElement>('#pause-button, #resume-button, #sound-button, #save-button, #restart-button, #import-button, #city-map-button').forEach((button) => button.disabled = false);
+    paused = wasPaused;
+    if (!wasPaused) (emulator as SchedulerRuntime).resumeMainLoop();
+    el('pause-screen').hidden = !paused;
+    el('pause-button').innerHTML = `${icon(paused ? 'play' : 'pause')} <span>${t(paused ? 'Resume' : 'Pause')}</span>`;
+    setStatus(paused ? 'TAKING A BREATHER' : 'OUT EXPLORING');
+    startSaveTimer();
+    message('Your save could not be stored safely. Download a save backup before trying Restart again.', true);
+  }
+}
 
 el('export-button').addEventListener('click', () => {
   if (!emulator) return;
@@ -305,22 +452,13 @@ el<HTMLInputElement>('save-file').addEventListener('change', async (event) => {
   const input = event.target as HTMLInputElement;
   const file = input.files?.[0];
   if (!file || !emulator || !gamePath) return;
-  const activeGamePath = gamePath;
-  if (file.size !== 131072 && file.size !== 65536) { message('Choose a compatible FireRed .sav file (64 KB or 128 KB).', true); input.value = ''; return; }
-  if (!confirm(t('Import this save and restart the cartridge? It will replace the current in-game save in this browser.'))) { input.value = ''; return; }
+  // The pinned mGBA core can append a 16-byte hardware trailer. Accept its
+  // own exported backups unchanged, alongside ordinary raw cartridge saves.
+  if (![65536, 65552, 131072, 131088].includes(file.size)) { message('Choose a compatible FireRed .sav file (64 KB or 128 KB, including mGBA backups).', true); input.value = ''; return; }
+  if (!(await confirmAction('Import game save', 'Import this save and restart the cartridge? It will replace the current in-game save in this browser.', 'Import save'))) { input.value = ''; return; }
   try {
     const bytes = new Uint8Array(await file.arrayBuffer());
-    releaseInputs();
-    emulator.quitGame();
-    emulator.FS.writeFile(SAVE_PATH, bytes);
-    if (emulator.autoSaveStateName && emulator.FS.analyzePath(emulator.autoSaveStateName).exists) emulator.FS.unlink(emulator.autoSaveStateName);
-    await emulator.FSSync();
-    emulator.setCoreSettings({ restoreAutoSaveStateOnLoad: false });
-    if (!emulator.loadGame(activeGamePath, SAVE_PATH)) throw new Error('Could not reload the game.');
-    emulator.setCoreSettings({ restoreAutoSaveStateOnLoad: true });
-    emulator.toggleInput(false);
-    setPaused(false);
-    message('Save imported. Choose Continue from the game’s title screen.');
+    await restartCartridge(bytes);
   } catch (error) {
     console.error(error);
     message('The save could not be imported. Restart the page to reload your last saved spot.', true);
@@ -333,14 +471,14 @@ const keyboard: Record<string, Button> = {
   KeyZ: 'A', KeyX: 'B', Enter: 'Start', ShiftRight: 'Select', Backspace: 'Select', KeyQ: 'L', KeyE: 'R',
 };
 window.addEventListener('keydown', (event) => {
-  if (cityGuide.isOpen) return;
+  if (cityGuide.isOpen || confirmationOpen) return;
   if (event.ctrlKey || event.metaKey || event.altKey || (event.target instanceof HTMLElement && ['INPUT', 'TEXTAREA', 'SELECT', 'BUTTON', 'SUMMARY', 'A'].includes(event.target.tagName))) return;
   const button = keyboard[event.code];
   if (!button || !running || paused) return;
   event.preventDefault();
   press(`key:${event.code}`, button);
 });
-window.addEventListener('keyup', (event) => { if (cityGuide.isOpen) return; if (keyboard[event.code]) { if (running) event.preventDefault(); unpress(`key:${event.code}`); } });
+window.addEventListener('keyup', (event) => { if (cityGuide.isOpen || confirmationOpen) return; if (keyboard[event.code]) { if (running) event.preventDefault(); unpress(`key:${event.code}`); } });
 document.querySelectorAll<HTMLButtonElement>('[data-gba]').forEach((button) => {
   const input = button.dataset.gba as Button;
   button.addEventListener('pointerdown', (event) => {
@@ -360,7 +498,7 @@ document.querySelectorAll<HTMLButtonElement>('[data-gba]').forEach((button) => {
   button.addEventListener('contextmenu', (event) => event.preventDefault());
 });
 window.addEventListener('blur', releaseInputs);
-document.addEventListener('visibilitychange', () => { if (document.hidden && running && !paused) setPaused(true); });
+document.addEventListener('visibilitychange', () => { if (!restarting && !confirmationOpen && document.hidden && running && !paused) setPaused(true); });
 window.addEventListener('pagehide', () => { releaseInputs(); if (saveInterval) clearInterval(saveInterval); });
 
 // These labels describe the browser player and City Map. The cartridge's own
