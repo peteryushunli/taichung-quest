@@ -2,6 +2,8 @@
 
 Public source: <https://github.com/peteryushunli/taichung-quest>
 
+Private playable preview: <https://taichung-quest-hackday.helpfulwren.chatgpt.site> (ChatGPT sign-in required).
+
 A Pokémon FireRed modification set in a compressed, fictionalized Taichung. A real Game Boy Advance ROM runs in the browser through mGBA WebAssembly.
 
 The current blockout connects Old City, Greenway and Xitun, with ten enterable landmark halls. Old Taichung Station is the starting point and has the first optional native gym battle. Reused facades and provisional teams support the playable build while broader neighborhoods, original landmark art and story content are developed separately.
