@@ -49,7 +49,7 @@ Emulator snapshots are namespaced by the first 16 hexadecimal characters of the 
 
 ## City Map and interface language
 
-The persistent City Map button opens a native modal visitor guide. Five example landmarks use the shared `src/data/landmarks.json` catalog, with bilingual names, verified official visitor links, and original SVG field sketches. Marker positions and the green connecting path use catalog coordinates. The overview is a compressed schematic, not a street-navigation map. Only the Greenway starting area is playable; other districts and all landmark gyms are labeled as planned.
+The persistent City Map button opens a native modal visitor guide. Five example landmarks use the shared `src/data/landmarks.json` catalog, with bilingual names, verified official visitor links, and original SVG field sketches. Marker positions and the green connecting path use catalog coordinates. The overview is a compressed schematic, not a street-navigation map. Only the Greenway starting area is playable. Other markers are visitor-guide examples labeled as not playable; the full city layout and final landmark/gym roster remain undecided.
 
 Opening the guide releases held inputs and pauses an active game. Closing it, including with Escape, restores the prior running/paused state and returns keyboard focus to the opener. The guide does not simulate visited places, badges, player position, or progression.
 
