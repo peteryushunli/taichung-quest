@@ -76,3 +76,9 @@ bytes and retain the existing HTTPS origin.
 
 Native save export/import is the transfer path when changing hosting origins;
 browser-local snapshots and saves do not automatically follow a new domain.
+
+## Landmark introduction, version 6
+
+The same owner-private Site now includes four landmark-art postcards above the player, from Interface checkpoint `5240040`. Source `79579962094719faca7b1edeeb49a6ceda5889d4` adds PNG MIME support to the explicit-header Worker. Deployment `appgdep_6aeec4e0d32c8191aa7d810089b80c64` succeeded at 14:27 Taipei on 7 November 2026. The published native cartridge remains `ae0ada35`; native Team/Station/opening integration is separate and not yet published.
+
+Validation: 13 tests, TypeScript, production build, 51 complete asset-response checks, and actual local Worker rendering of all four images. Interface verified 1280px/390px/320px layouts and Play/Back; no new physical-phone claim. Proof: `artifacts/qa-landmark-intro-v6.jpg`.
