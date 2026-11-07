@@ -86,10 +86,11 @@ export function createOnboardingView(options: {
     const content = topics[card.topic];
     coach.lang = getLocale();
     const step = topicOrder.indexOf(card.topic) + 1;
+    const caption = pending ? 'Tutorial illustration · returning to your guide' : 'Tutorial illustration · your adventure is paused';
     coach.innerHTML = `<p class="onboarding-eyebrow"><span data-i18n="YOUR TAICHUNG FIELD GUIDE">${t('YOUR TAICHUNG FIELD GUIDE')}</span><span>${step} / 4</span></p>
       <h2 id="outdoor-coach-title" tabindex="-1">${t(content.title)}</h2>
       <p id="outdoor-coach-copy" class="onboarding-copy">${t(content.body)}</p>
-      <figure class="coach-illustration">${content.illustration}<figcaption data-i18n="Tutorial illustration · your adventure is paused">${t('Tutorial illustration · your adventure is paused')}</figcaption></figure>
+      <figure class="coach-illustration">${content.illustration}<figcaption data-i18n="${caption}">${t(caption)}</figcaption></figure>
       <p class="coach-availability" data-i18n="These controls become available when your guide finishes.">${t('These controls become available when your guide finishes.')}</p>
       <p class="onboarding-progress" role="status" aria-live="polite">${pending ? t('Returning to your guide…') : ''}</p>
       <div class="onboarding-actions"><button data-continue-later ${pending ? 'disabled' : ''}>${t('Continue later')}</button><button data-next-tip class="onboarding-primary" ${pending ? 'disabled' : ''}>${t(step === 4 ? 'Let’s explore' : 'Next tip')}</button></div>`;

@@ -37,7 +37,7 @@ export function createOnboarding(options: {
     host: options.host, releaseInputs: options.releaseInputs,
     onCardContinue(card) {
       queuedCard = card;
-      view.closeCard();
+      view.setPending(true);
       const resume = ownsPause;
       ownsPause = false;
       options.releaseInputs();
@@ -66,7 +66,7 @@ export function createOnboarding(options: {
     }
     if (ack.command === 2) {
       if (ack.result === 1) acknowledgedContext = ack.context;
-      if (submittedCard?.context === ack.context) submittedCard = undefined;
+      if (submittedCard?.context === ack.context) { submittedCard = undefined; view.closeCard(); }
     }
   }
 
@@ -111,9 +111,12 @@ export function createOnboarding(options: {
       }
       return;
     }
-    if (submittedCard && (submittedCard.context !== packet.context || submittedCard.phase !== packet.phase)) submittedCard = undefined;
+    if (submittedCard && (submittedCard.context !== packet.context || submittedCard.phase !== packet.phase)) {
+      submittedCard = undefined;
+      view.closeCard();
+    }
     if (queuedCard) {
-      if (queuedCard.context !== packet.context || queuedCard.phase !== packet.phase) queuedCard = undefined;
+      if (queuedCard.context !== packet.context || queuedCard.phase !== packet.phase) { queuedCard = undefined; view.closeCard(); }
       else if (onboardingAccepts(packet)) {
         const card = queuedCard;
         queuedCard = undefined;

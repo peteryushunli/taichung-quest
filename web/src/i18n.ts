@@ -23,6 +23,7 @@ const zh: Record<string, string> = {
   'Old Taichung Station, Miyahara and Taichung Park are nearby. Visit their halls, meet the hosts, and use City Map to see which gym challenges are open.': '舊臺中車站、宮原眼科與臺中公園就在附近。走進地標大廳、認識接待員，也能從城市地圖查看哪些道館已開放挑戰。',
   'Team': '隊伍',
   'Tutorial illustration · your adventure is paused': '導覽示意圖・冒險已暫停',
+  'Tutorial illustration · returning to your guide': '導覽示意圖・正在返回導覽',
   'These controls become available when your guide finishes.': '導覽結束後，就能使用這些功能。',
   'Returning to your guide…': '正在返回導覽…',
   'Continue later': '稍後繼續',

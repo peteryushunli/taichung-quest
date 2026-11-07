@@ -53,4 +53,9 @@
   .onboarding-dialog .onboarding-copy { margin-bottom: 16px; }
   .onboarding-actions { margin-top: 16px; }
   .coach-illustration { margin-top: 16px; padding-top: 12px; padding-bottom: 10px; }
+  .coach-control-example { gap: 8px; min-height: 48px; }
+  .coach-control-example>span:not(.coach-example-arrow) { padding-inline: 10px; }
+  .coach-illustration figcaption { margin-top: 8px; }
+  .coach-map-example { max-height: 64px; }
+  .onboarding-dialog .onboarding-actions button { padding-inline: 8px; }
 }

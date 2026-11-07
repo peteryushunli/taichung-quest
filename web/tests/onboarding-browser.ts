@@ -132,7 +132,7 @@ document.querySelector('#run-adapter')!.addEventListener('click', async () => {
     await waitFor(() => document.querySelector<HTMLDialogElement>('#outdoor-coach')!.open);
     assert(host.paused && adapter.blocksInput, 'Coach did not pause/release controls');
     for (const phase of [5, 6, 7, 8]) {
-      await waitFor(() => (words[6] & 255) === phase && !!document.querySelector<HTMLDialogElement>('#outdoor-coach')!.open);
+      await waitFor(() => (words[6] & 255) === phase && !!document.querySelector<HTMLDialogElement>('#outdoor-coach')!.open && !document.querySelector<HTMLButtonElement>('#outdoor-coach [data-next-tip]')?.disabled);
       if (phase === 6) {
         document.querySelector<HTMLButtonElement>('#outdoor-coach [data-continue-later]')!.click();
         assert(!host.immersive && (words[6] & 255) === 6, 'Continue later advanced native progress');
@@ -140,6 +140,9 @@ document.querySelector('#run-adapter')!.addEventListener('click', async () => {
         await waitFor(() => document.querySelector<HTMLDialogElement>('#outdoor-coach')!.open);
       }
       document.querySelector<HTMLButtonElement>('#outdoor-coach [data-next-tip]')!.click();
+      assert(document.querySelector<HTMLDialogElement>('#outdoor-coach')!.open, 'Pending acknowledgement removed the modal input barrier');
+      assert([...document.querySelectorAll<HTMLButtonElement>('#outdoor-coach button')].every(button => button.disabled), 'Pending acknowledgement permits duplicate activation');
+      assert(!document.querySelector('#outdoor-coach figcaption')!.textContent!.includes('paused'), 'Returning guide still claims a paused adventure');
     }
     await waitFor(() => (words[6] & 255) === 9 && !document.querySelector<HTMLDialogElement>('#outdoor-coach')!.open && !adapter.blocksInput);
     assert(commands.join(',') === '1,2,2,2,2', 'Expected one language application and four exact-context acknowledgements');
