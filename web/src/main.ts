@@ -64,7 +64,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
     <div class="adventure-layout">
       <section class="game-column" aria-label="Playable game">
         <div class="console" id="console">
-          <div class="immersive-bar"><button id="exit-fullscreen-button" class="fullscreen-exit" data-i18n="Back to introduction">Back to introduction</button><span>POKÉMON × TAICHUNG</span><button id="game-options-button" aria-haspopup="dialog" aria-controls="game-options" data-i18n="Game options">Game options</button></div>
+          <div class="immersive-bar"><button id="exit-fullscreen-button" class="fullscreen-exit" data-i18n="Back to introduction">Back to introduction</button><span>POKÉMON × TAICHUNG</span><div class="immersive-actions"><button id="game-sound-button" disabled aria-label="Sound off" title="Sound off" aria-pressed="true">${icon('mute')}</button><button id="game-options-button" aria-haspopup="dialog" aria-controls="game-options" data-i18n="Game options">Game options</button></div></div>
           <dialog id="game-options" class="player-options" aria-labelledby="game-options-title"><div class="options-heading"><h2 id="game-options-title" data-i18n="Game options">Game options</h2><button data-close-options data-i18n="Close">Close</button></div>${languageControl('player-language')}<div id="options-toolbar-slot"></div><div id="options-save-slot"></div><p id="options-feedback" role="status"></p><p class="options-key-help" data-i18n="Arrow keys move. F interacts or confirms. D goes back. M opens the game menu.">Arrow keys move. F interacts or confirms. D goes back. M opens the game menu.</p></dialog>
           <div class="console-top"><span><i class="power-light"></i> TAICHUNG QUEST</span><span>TAICHUNG CITY · 臺中城區</span></div>
           <div class="screen-bezel">
@@ -435,7 +435,7 @@ async function startGame() {
     gameInput?.refresh();
     el('start-screen').hidden = true;
     canvas.classList.add('playing');
-    document.querySelectorAll<HTMLButtonElement>('#pause-button, #sound-button, #save-button, #restart-button, #export-button, #import-button').forEach((button) => button.disabled = false);
+    document.querySelectorAll<HTMLButtonElement>('#pause-button, #sound-button, #game-sound-button, #save-button, #restart-button, #export-button, #import-button').forEach((button) => button.disabled = false);
     setStatus('OUT EXPLORING');
     message(freshCartridgeBoot ? cartridgeBootIntent === 'import' ? 'Save imported. Choose Continue from the game’s title screen.' : 'Cartridge restarted. Continue your in-game save or begin a new adventure.' : emulator.getAutoSaveState() ? 'Welcome back. Your last saved spot is waiting for you.' : 'New adventures begin at the old station. Use City Map to discover ten landmarks.');
     canvas.focus({ preventScroll: true });
@@ -520,15 +520,26 @@ el('pause-button').addEventListener('click', () => {
   if (gameView.optionsOpen) { gameView.closeOptions(); setPaused(false); }
   else setPaused(!paused);
 });
-el('sound-button').addEventListener('click', () => {
-  if (!emulator) return;
+function refreshSoundControls() {
+  const label = t(muted ? 'Sound off' : 'Sound on');
+  el('sound-button').innerHTML = `${icon(muted ? 'mute' : 'sound')} <span>${label}</span>`;
+  el('sound-button').setAttribute('aria-pressed', String(muted));
+  const screenSound = el('game-sound-button');
+  screenSound.innerHTML = icon(muted ? 'mute' : 'sound');
+  screenSound.setAttribute('aria-label', label);
+  screenSound.setAttribute('title', label);
+  screenSound.setAttribute('aria-pressed', String(muted));
+}
+function toggleSound() {
+  if (!emulator || !running || restarting) return;
   muted = !muted;
   emulator.setVolume(muted ? 0 : 0.55);
   if (!muted && !paused) { emulator.resumeAudio(); void emulator.SDL2?.audioContext?.resume(); }
-  el('sound-button').innerHTML = `${icon(muted ? 'mute' : 'sound')} <span>${t(muted ? 'Sound off' : 'Sound on')}</span>`;
-  el('sound-button').setAttribute('aria-pressed', String(muted));
+  refreshSoundControls();
   focusGame();
-});
+}
+el('sound-button').addEventListener('click', toggleSound);
+el('game-sound-button').addEventListener('click', toggleSound);
 el('save-button').addEventListener('click', () => { releaseInputs(); void persist(true); focusGame(); });
 el('restart-button').addEventListener('click', () => { void restartCartridge(); });
 
@@ -546,7 +557,7 @@ async function restartCartridge(importedSave?: Uint8Array) {
   // the running core after a native save in the pinned emulator distribution.
   gameInput?.forgetAll();
   if (saveInterval) { clearInterval(saveInterval); saveInterval = undefined; }
-  document.querySelectorAll<HTMLButtonElement>('#pause-button, #resume-button, #sound-button, #save-button, #restart-button, #import-button, #city-map-button, #touch-city-map-button').forEach((button) => button.disabled = true);
+  document.querySelectorAll<HTMLButtonElement>('#pause-button, #resume-button, #sound-button, #game-sound-button, #save-button, #restart-button, #import-button, #city-map-button, #touch-city-map-button').forEach((button) => button.disabled = true);
   setStatus('RESTARTING CARTRIDGE');
   message(importedSave ? 'Importing your save and restarting the cartridge…' : 'Keeping your in-game save and restarting the cartridge…');
   let cancelSaveWrite = false;
@@ -587,7 +598,7 @@ async function restartCartridge(importedSave?: Uint8Array) {
     }
     restarting = false;
     refreshLanguageConnection();
-    document.querySelectorAll<HTMLButtonElement>('#pause-button, #resume-button, #sound-button, #save-button, #restart-button, #import-button, #city-map-button, #touch-city-map-button').forEach((button) => button.disabled = false);
+    document.querySelectorAll<HTMLButtonElement>('#pause-button, #resume-button, #sound-button, #game-sound-button, #save-button, #restart-button, #import-button, #city-map-button, #touch-city-map-button').forEach((button) => button.disabled = false);
     paused = wasPaused;
     gameInput?.refresh();
     refreshNavigation();
@@ -652,8 +663,7 @@ function refreshRuntimeLabels() {
   playButton.querySelector('span')!.textContent = t(starting ? 'Packing your bag…' : 'Start exploring');
   landingPlayButton.querySelector('span')!.textContent = t(starting ? 'Packing your bag…' : running ? 'Return to game' : 'Play Pokémon × Taichung');
   el('pause-button').innerHTML = `${icon(paused ? 'play' : 'pause')} <span>${t(paused ? 'Resume' : 'Pause')}</span>`;
-  el('sound-button').innerHTML = `${icon(muted ? 'mute' : 'sound')} <span>${t(muted ? 'Sound off' : 'Sound on')}</span>`;
-  el('sound-button').setAttribute('aria-pressed', String(muted));
+  refreshSoundControls();
   document.title = getLocale() === 'zh-Hant' ? 'Taichung Quest · 台中小冒險' : 'Taichung Quest · A little adventure';
   refreshNavigation();
 }
