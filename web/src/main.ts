@@ -45,18 +45,18 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
   <main>
     <section class="intro" aria-labelledby="page-title">
       <div><p class="eyebrow" data-i18n="TAIWAN, WITH A LITTLE WONDER">TAIWAN, WITH A LITTLE WONDER</p><h1 id="page-title" data-i18n="Take the scenic route.">Take the scenic route.</h1></div>
-      <p class="intro-copy" data-i18n="A pocket-sized adventure through Taichung.&#10;Slow down. Meet the neighbors. See what turns up.">A pocket-sized adventure through Taichung.<br>Slow down. Meet the neighbors. See what turns up.</p>
+      <p class="intro-copy" data-i18n="A pocket-sized adventure through Taichung.&#10;Arrive at the old station. Explore three city districts.">A pocket-sized adventure through Taichung.<br>Arrive at the old station. Explore three city districts.</p>
     </section>
     <div class="adventure-layout">
       <section class="game-column" aria-label="Playable game">
         <div class="console" id="console">
-          <div class="console-top"><span><i class="power-light"></i> TAICHUNG QUEST</span><span>WEST DISTRICT · 台中西區</span></div>
+          <div class="console-top"><span><i class="power-light"></i> TAICHUNG QUEST</span><span>TAICHUNG CITY · 臺中城區</span></div>
           <div class="screen-bezel">
             <div class="screen" id="screen">
               <canvas id="game-canvas" width="240" height="160" tabindex="0" aria-label="Taichung Quest game screen. Arrow keys to move, Z to interact, X to go back, Enter for menu."></canvas>
               <div class="start-screen" id="start-screen">
                 <div class="pixel-postcard" aria-hidden="true"><div class="pixel-cloud cloud-one"></div><div class="pixel-cloud cloud-two"></div><div class="pixel-sun"></div><div class="postcard-hill"></div><div class="pixel-path"></div><div class="pixel-tree tree-one"></div><div class="pixel-tree tree-two"></div><div class="pixel-tree tree-three"></div><div class="pixel-shop"><span></span></div><div class="pixel-person"></div></div>
-                <div class="start-content"><p class="screen-eyebrow" data-i18n="YOUR NEXT LITTLE ADVENTURE">YOUR NEXT LITTLE ADVENTURE</p><h2 data-i18n="Somewhere&#10;in Taichung.">Somewhere<br>in Taichung.</h2><button class="start-button" id="play-button">${icon('play')} <span>Start exploring</span></button><p class="start-hint" data-i18n="A sunny afternoon. A whole new story.">A sunny afternoon. A whole new story.</p></div>
+                <div class="start-content"><p class="screen-eyebrow" data-i18n="YOUR NEXT LITTLE ADVENTURE">YOUR NEXT LITTLE ADVENTURE</p><h2 data-i18n="Next stop:&#10;Taichung.">Next stop:<br>Taichung.</h2><button class="start-button" id="play-button">${icon('play')} <span>Start exploring</span></button><p class="start-hint" data-i18n="Begin at the old station. Make the city your own.">Begin at the old station. Make the city your own.</p></div>
               </div>
               <div class="pause-screen" id="pause-screen" hidden><p class="screen-eyebrow" data-i18n="TAKE YOUR TIME">TAKE YOUR TIME</p><h2 data-i18n="A little breather.">A little breather.</h2><button class="start-button" id="resume-button">${icon('play')} <span data-i18n="Keep exploring">Keep exploring</span></button></div>
             </div>
@@ -74,12 +74,12 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
           <div class="toolbar-group"><button id="pause-button" class="tool-button" disabled>${icon('pause')} <span>Pause</span></button><button id="sound-button" class="tool-button" disabled aria-pressed="false">${icon('sound')} <span>Sound on</span></button></div>
           <div class="toolbar-group"><button id="save-button" class="tool-button" disabled>${icon('save')} <span data-i18n="Save spot">Save spot</span></button><button id="fullscreen-button" class="tool-button icon-only" aria-label="Enter fullscreen">${icon('fullscreen')}</button><button id="restart-button" class="tool-button icon-only" disabled aria-label="Restart game">${icon('restart')}</button></div>
         </div>
-        <p class="feedback" id="feedback" role="status" aria-live="polite">${savedAt ? 'Your last saved spot is waiting in this browser.' : 'No downloads. Just a little time to wander.'}</p>
+        <p class="feedback" id="feedback" role="status" aria-live="polite">${savedAt ? 'Your last saved spot is waiting in this browser.' : 'Begin at the old station. Get to know Taichung, one landmark at a time.'}</p>
       </section>
       <aside class="field-notes" aria-label="Adventure guide">
         <div class="notebook-heading"><span class="eyebrow" data-i18n="A FEW FIELD NOTES">A FEW FIELD NOTES</span><span class="note-number">NO. 01</span></div>
-        <div class="destination"><span class="destination-caption" data-i18n="FIRST STOP">FIRST STOP</span><h2><span class="district-name" data-i18n="West District">West District</span><span class="district-chinese" lang="zh-Hant">西區</span></h2><p data-i18n="Leafy paths, neighborhood corners, and a tea break along the way.">Leafy paths, neighborhood corners, and a tea break along the way.</p><div class="stamp" aria-hidden="true">TAICHUNG<br><b>24° N</b><br>TAIWAN</div></div>
-        <div class="note-section"><span class="note-index">01</span><div><h3 data-i18n="Follow your curiosity.">Follow your curiosity.</h3><p data-i18n="Explore the Greenway, meet the locals, and find your first little errand.">Explore the Greenway, meet the locals, and find your first little errand.</p></div></div>
+        <div class="destination"><span class="destination-caption" data-i18n="FIRST STOP">FIRST STOP</span><h2><span class="district-name" data-i18n="Old Taichung Station">Old Taichung Station</span><span class="district-chinese" lang="zh-Hant">舊臺中車站</span></h2><p data-i18n="Start beside the old station. Three connected city districts are ready to explore.">Start beside the old station. Three connected city districts are ready to explore.</p><div class="stamp" aria-hidden="true">TAICHUNG<br><b>24° N</b><br>TAIWAN</div></div>
+        <div class="note-section"><span class="note-index">01</span><div><h3 data-i18n="Follow your curiosity.">Follow your curiosity.</h3><p data-i18n="Meet the landmark hosts and collect visits in your City Pass.">Meet the landmark hosts and collect visits in your City Pass.</p></div></div>
         <div class="note-section"><span class="note-index">02</span><div><h3 data-i18n="Say hello.">Say hello.</h3><p><span data-i18n="Walk up to someone and press">Walk up to someone and press</span> <kbd>Z</kbd> <span data-i18n="or">or</span> <kbd>A</kbd> <span data-i18n="to see what they have to say.">to see what they have to say.</span></p></div></div>
         <div class="keyboard-guide"><h3 data-i18n="Make yourself at home.">Make yourself at home.</h3><div class="key-row"><span><kbd>↑</kbd><kbd>←</kbd><kbd>↓</kbd><kbd>→</kbd></span><span data-i18n="Wander around">Wander around</span></div><div class="key-row"><span><kbd>Z</kbd> <small>/</small> <kbd>X</kbd></span><span data-i18n="Interact / back">Interact / back</span></div><div class="key-row"><span><kbd>ENTER</kbd></span><span data-i18n="Open the menu">Open the menu</span></div><p data-i18n="Touch controls work too. A little old-school, wherever you are.">Touch controls work too. A little old-school, wherever you are.</p><p data-i18n="Language covers custom Taichung content. Original FireRed screens remain English.">Language covers custom Taichung content. Original FireRed screens remain English.</p></div>
         <details class="save-details"><summary><span data-i18n="Your saved adventures">Your saved adventures</span><span class="details-plus">+</span></summary><p data-i18n="Your spot is saved here every 20 seconds. Keep an extra backup using a game save from the in-game menu.">Your spot is saved here every 20 seconds. Keep an extra backup using a game save from the in-game menu.</p><div class="save-actions"><button id="export-button" disabled><span data-i18n="Download save">Download save</span> ${icon('arrow')}</button><button id="import-button" disabled><span data-i18n="Import save">Import save</span> ${icon('arrow')}</button></div><input type="file" id="save-file" accept=".sav" hidden></details>
@@ -113,7 +113,7 @@ let saveInterval: ReturnType<typeof setInterval> | undefined;
 let filesystemWrites: Promise<void> = Promise.resolve();
 const pressed = new Map<string, Button>();
 let statusText = 'READY WHEN YOU ARE';
-let feedbackText = cartridgeBootIntent === 'import' ? 'Save imported. Start exploring, then choose Continue from the game’s title screen.' : bootFromCartridge ? 'Cartridge restarted. Start exploring to continue your in-game save or begin a new adventure.' : savedAt ? 'Your last saved spot is waiting in this browser.' : 'No downloads. Just a little time to wander.';
+let feedbackText = cartridgeBootIntent === 'import' ? 'Save imported. Start exploring, then choose Continue from the game’s title screen.' : bootFromCartridge ? 'Cartridge restarted. Start exploring to continue your in-game save or begin a new adventure.' : savedAt ? 'Your last saved spot is waiting in this browser.' : 'Begin at the old station. Get to know Taichung, one landmark at a time.';
 
 function message(text: string, error = false) {
   feedbackText = text;
@@ -350,7 +350,7 @@ async function startGame() {
     canvas.classList.add('playing');
     document.querySelectorAll<HTMLButtonElement>('#pause-button, #sound-button, #save-button, #restart-button, #export-button, #import-button').forEach((button) => button.disabled = false);
     setStatus('OUT EXPLORING');
-    message(freshCartridgeBoot ? cartridgeBootIntent === 'import' ? 'Save imported. Choose Continue from the game’s title screen.' : 'Cartridge restarted. Continue your in-game save or begin a new adventure.' : emulator.getAutoSaveState() ? 'Welcome back. Your last saved spot is waiting for you.' : 'You’re here. Use the arrows to wander and Z to say hello.');
+    message(freshCartridgeBoot ? cartridgeBootIntent === 'import' ? 'Save imported. Choose Continue from the game’s title screen.' : 'Cartridge restarted. Continue your in-game save or begin a new adventure.' : emulator.getAutoSaveState() ? 'Welcome back. Your last saved spot is waiting for you.' : 'New adventures begin at the old station. Use City Map to discover ten landmarks.');
     canvas.focus({ preventScroll: true });
     startSaveTimer();
     cityGuide.onGameStarted();
