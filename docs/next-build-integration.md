@@ -1,6 +1,6 @@
 # Next build integration — 7 November 2026
 
-This is an integration record, not a deployment receipt. The private Site continues to serve the tagged presentation build until the combined candidate passes release checks.
+The combined Theater/Park release is published on the existing private Site. The tagged presentation build remains available as a fallback.
 
 ## Integrated source
 
@@ -14,7 +14,7 @@ The original presentation tag, cartridge, presenter save and deployment archive 
 
 ## Validation and publication
 
-All four bounded Theater-v4 cases pass: organic v1 quest-log, synthetic invalid/safe Xitun positions, and organic post-install v3 Xitun Continue/Save. Protected data remains unchanged except the save version. Combined cast fresh opening and actual Jun portrait/boy back-pose battle intro also pass. Actual browser Theater door/guide/pause/second Continue and v3→v4 Save pass. Park's complete native acceptance passes on its isolated frozen cartridge, including genuine defeat, cross-hall notice lifetime, retry cancellation, authored moves/full PP, held-mail item/index retention, genuine victory preserving Jun, and original/fresh-Continue repeats without new awards or preparation. The combined source passes progress, party, save and character host tests. Final combined runtime, production asset checks and deployment remain pending. No organic pre-Theater v3 Xitun fixture is available; the synthetic position cases and post-install organic fixture are labeled separately. Further gym work is included only when its independent and combined checks pass.
+All four bounded Theater-v4 cases pass: organic v1 quest-log, synthetic invalid/safe Xitun positions, and organic post-install v3 Xitun Continue/Save. Protected data remains unchanged except the save version. Combined cast fresh opening and actual Jun portrait/boy back-pose battle intro also pass. Actual browser Theater door/guide/pause/second Continue and v3→v4 Save pass. Park's complete native acceptance passes on its isolated frozen cartridge, including genuine defeat, cross-hall notice lifetime, retry cancellation, authored moves/full PP, held-mail item/index retention, genuine victory preserving Jun, and original/fresh-Continue repeats without new awards or preparation. The combined source passes progress, party, save and character host tests. Final combined native runtime and client smoke pass. Both packaged Worker builds pass 51 asset-response checks and contain identical decoded assets. Publication succeeded. Post-deployment read-only checks confirm the full live cartridge and Wasm hashes and isolation headers match the reviewed artifact. No organic pre-Theater v3 Xitun fixture is available; the synthetic position cases and post-install organic fixture are labeled separately. Further gym work is included only when its independent and combined checks pass.
 
 Checker-only commit `16625bd` permits just the two approved Xiaoyu graphics substitutions, retaining full type-sensitive map comparisons. All map/bank/seam and adversarial fault probes pass. Separate immutable graphics/NPC attestations preserve Theater’s exact 33/1,516 position semantics.
 
@@ -27,3 +27,11 @@ Native source `e65ee871fa62d10d9670e1c4e34602678f1a1d7d`; SHA-256 `e4d906ec91ca7
 Park integration commits: `a751821`, `c8e5da1`, `14eed79`, `3b3ca4a`, `7360766`; acceptance documentation `698b2a6`; final map provenance `e65ee87`. The v4/reset conflict was resolved by retaining the complete v4 tests and adding the separately reviewed transient-reset hooks and tests.
 
 Further Greenway facades, Miyahara battle activation and the girl trainer remain outside this frozen release. The existing presentation fallback stays available. Vercel migration follows publication and verification of this build, using the complete prebuilt artifact and native save export/import across origins.
+
+## Publication receipt
+
+Published source: `f0d2ffab29b395aa2d55c757447b4b0d755c5f9f`. Deployment: `appgdep_6aeee8f21fd48191a7332029df3c42ae`, terminal status `succeeded`. Saved version: `appgprj_6aee9376a188819190041febf7d7190d~appgver_59179032fc2c8191b3795f751330c28b`. Existing owner-private audience preserved.
+
+URL: https://taichung-quest-hackday.helpfulwren.chatgpt.site
+
+Final earned Park-save migration preserves both stamps, party, inventory and checkpoint; Lian repeat adds no reward or healing. A fresh English/Squirtle opening and native save pass. Evidence: `artifacts/game-build-runtime/final-park-v4/README.md`. Final client Continue reaches Theater, with square live HUD, correct guide status for all ten gyms, pause/resume and one focused canvas; evidence: `.worktrees/web-guide/artifacts/interface-qa/final-e65-client-smoke.json`. Theater remains enterable with its battle pending. Vercel deployment is ready at https://taichung-quest.vercel.app (`dpl_EPmEr3XxvBY42tLiQUhR9xud2PC2`). Its first deployment was automatically assigned production by the CLI. All five live edge asset/hash/header checks pass; actual browser play/save acceptance remains in progress. The GPT Site remains live. Native save files must be exported/imported when changing origins.
