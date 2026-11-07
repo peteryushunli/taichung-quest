@@ -1,14 +1,22 @@
 export type Locale = 'en' | 'zh-Hant';
+export type LocaleChange = { locale: Locale; source: 'user' | 'native' };
 
 const STORAGE_KEY = 'taichung-quest-interface-language';
 let locale: Locale = 'en';
 try { if (localStorage.getItem(STORAGE_KEY) === 'zh-Hant') locale = 'zh-Hant'; } catch { /* Language selection still works without browser storage. */ }
-const listeners = new Set<() => void>();
+const listeners = new Set<(change: LocaleChange) => void>();
 const boundControls = new WeakSet<HTMLSelectElement>();
 
 const zh: Record<string, string> = {
   'Interface language': '介面語言',
+  'Language': '語言',
   'Player & City Map': '玩家介面與城市導覽',
+  'Connecting to game…': '正在連接遊戲語言…',
+  'Choose inside the game first': '請先在遊戲內選擇語言',
+  'Taichung text + City Map': '台中內容與城市導覽',
+  'Queued until gameplay resumes': '恢復探索後會套用語言',
+  'Game: use its Language menu': '遊戲語言：請使用遊戲內選單',
+  'Language covers custom Taichung content. Original FireRed screens remain English.': '語言切換涵蓋台中自訂內容，原版 FireRed 畫面仍為英文。',
   'A TAICHUNG ADVENTURE': '一段台中小冒險',
   'FIELD EDITION': '探索手記',
   'TAIWAN, WITH A LITTLE WONDER': '在台灣，發現生活的小驚喜',
@@ -158,18 +166,18 @@ export function localizeTree(root: ParentNode = document) {
   root.querySelectorAll<HTMLSelectElement>('[data-locale-select]').forEach((control) => { control.value = locale; });
 }
 
-export function setLocale(next: Locale) {
+export function setLocale(next: Locale, source: LocaleChange['source'] = 'user') {
   locale = next;
   try { localStorage.setItem(STORAGE_KEY, next); } catch { /* UI remains usable if persistence is unavailable. */ }
   document.documentElement.lang = locale;
   localizeTree();
-  for (const listener of listeners) listener();
+  for (const listener of listeners) listener({ locale: next, source });
 }
 
-export function onLocaleChange(listener: () => void) { listeners.add(listener); return () => listeners.delete(listener); }
+export function onLocaleChange(listener: (change: LocaleChange) => void) { listeners.add(listener); return () => listeners.delete(listener); }
 
 export function languageControl(id: string) {
-  return `<label class="language-control" for="${id}"><span data-i18n="Interface language">${t('Interface language')}</span><select id="${id}" data-locale-select aria-label="Interface language · 介面語言"><option value="en"${locale === 'en' ? ' selected' : ''}>English</option><option value="zh-Hant"${locale === 'zh-Hant' ? ' selected' : ''}>繁體中文</option></select><small data-i18n="Player & City Map">${t('Player & City Map')}</small></label>`;
+  return `<label class="language-control" for="${id}"><span data-i18n="Language">${t('Language')}</span><select id="${id}" data-locale-select aria-label="Language · 語言"><option value="en"${locale === 'en' ? ' selected' : ''}>English</option><option value="zh-Hant"${locale === 'zh-Hant' ? ' selected' : ''}>繁體中文</option></select><small data-language-hint data-i18n="Player & City Map" aria-live="polite">${t('Player & City Map')}</small></label>`;
 }
 
 export function initializeLocalization(root: ParentNode = document) {
