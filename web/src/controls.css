@@ -1,0 +1,84 @@
+.physical-controls {
+  display: grid; grid-template-columns: 144px minmax(0, 1fr); grid-template-areas: 'pad actions' 'system system';
+  align-items: center; gap: 12px 22px; height: auto; padding: 20px 10px 12px; user-select: none;
+}
+.physical-controls[data-active="true"] { touch-action: none; }
+.physical-controls [data-gba] { -webkit-user-select: none; user-select: none; touch-action: none; }
+.dpad { grid-area: pad; width: 144px; height: 144px; transform: none; touch-action: none; }
+.dpad .direction { width: 48px; height: 48px; padding: 0; font-size: 13px; }
+.dpad .up { left: 48px; top: 0; }
+.dpad .left { left: 0; top: 48px; }
+.dpad .right { left: 96px; top: 48px; }
+.dpad .down { left: 48px; top: 96px; }
+.dpad .dpad-center { left: 48px; top: 48px; width: 48px; height: 48px; }
+.direction.pressed { background: #758d65; box-shadow: inset 0 2px 4px #183e2b88; color: #fff4cf; }
+.action-buttons { grid-area: actions; justify-content: flex-end; flex-wrap: wrap; gap: 10px; transform: none; margin: 0; }
+.action-buttons .action {
+  width: min(146px, 100%); min-width: 110px; min-height: 58px; height: auto; padding: 10px 12px;
+  border-radius: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px;
+}
+.action>span { font: 600 12px/1.3 Arial, sans-serif; }
+.action>small { font: 8px/1.2 var(--mono); opacity: .8; }
+.action-buttons .b { margin: 0; background: #788b72; border-color: #5d755a; box-shadow: 0 4px 0 #4f694e; color: #f3efd8; }
+.action-buttons .a { margin: 0; }
+.action-buttons .action.pressed { transform: translateY(3px); box-shadow: inset 0 2px 4px #503a3344; filter: brightness(1.1); }
+.middle-controls { grid-area: system; padding: 0; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.small-control-pair { display: flex; gap: 10px; }
+.small-control-pair button { min-width: 92px; min-height: 48px; padding: 7px 10px; border: 1px solid #bac7b0; border-radius: 7px; background: #dae1d0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; font: 600 11px/1.3 Arial, sans-serif; letter-spacing: 0; color: #516d4c; }
+.small-control-pair button::before { display: none; }
+.small-control-pair button small { font: 7px var(--mono); color: #819176; }
+.small-control-pair button.pressed { background: #c1d1b2; box-shadow: inset 0 2px 3px #3b613c33; }
+.small-control-pair .touch-map-control { display: none; }
+.console-model { margin: 0; }
+.game-navigation button, .tool-button { min-height: 48px; }
+.tool-button.icon-only { min-width: 48px; }
+
+@media(max-width:800px) {
+  .physical-controls { gap: 10px 12px; padding: 15px 4px 8px; }
+  .action-buttons { flex-direction: column; align-items: flex-end; gap: 10px; }
+  .action-buttons .action { width: min(160px, 100%); }
+  .small-control-pair { width: 100%; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+  .small-control-pair button { min-width: 0; }
+  .small-control-pair .touch-map-control { display: flex; flex-direction: row; gap: 6px; }
+  .touch-map-control svg { width: 15px; height: 15px; }
+  .console-model, .game-navigation { display: none; }
+  .game-active .site-header { height: 50px; padding: 0 20px; }
+  .game-active .site-header .brand-mark { font-size: 26px; }
+  .game-active .wordmark { font-size: 10px; gap: 8px; }
+  .game-active .intro { display: none; }
+  .game-active main { padding-top: 12px; }
+  .game-active .console-top { font-size: 6px; margin-bottom: 10px; }
+  .game-active .console-bottom { display: none; }
+  .game-active .field-notes>:not(.save-details):not(.keyboard-guide) { display: none; }
+}
+@media(max-width:540px) {
+  .physical-controls { grid-template-columns: 144px minmax(0, 1fr); }
+  .action>span { font-size: 11px; }
+  .action>small { font-size: 7px; }
+  .small-control-pair button { min-height: 48px; font-size: 10px; }
+  .game-active .console { padding: 10px 10px 0; }
+  .game-active .screen-bezel { padding: 7px 7px 0; }
+}
+/* Landscape thumb controls flank the full game frame, including dialogue. */
+@media(max-width:1000px) and (max-height:540px) and (min-aspect-ratio:6/5) {
+  .game-active .site-header { height: 42px; padding: 0 12px; }
+  .game-active .intro, .game-active .header-note, .game-active .edition { display: none; }
+  .game-active main { padding: 8px 10px 14px; }
+  .game-active .adventure-layout { grid-template-columns: 1fr; gap: 15px; }
+  .game-active .console { max-width: none; padding: 10px; border-radius: 12px; display: grid; grid-template-columns: 144px minmax(0, 1fr) 144px; grid-template-rows: 1fr auto; align-items: center; gap: 8px 10px; }
+  .game-active .console-top, .game-active .console-bottom { display: none; }
+  .game-active .screen-bezel { grid-column: 2; grid-row: 1 / 3; padding: 5px 5px 0; width: min(100%, calc((100dvh - 106px) * 1.5)); margin: auto; }
+  .game-active .screen-caption { height: 16px; font-size: 5px; }
+  .game-active .physical-controls { display: contents; }
+  .game-active .dpad { grid-column: 1; grid-row: 1 / 3; }
+  .game-active .action-buttons { grid-column: 3; grid-row: 1; flex-direction: column; align-items: stretch; justify-content: center; }
+  .game-active .action-buttons .action { width: 100%; min-height: 54px; }
+  .game-active .middle-controls { grid-column: 3; grid-row: 2; }
+  .game-active .small-control-pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; }
+  .game-active .small-control-pair button { min-width: 0; min-height: 48px; padding: 6px 3px; font-size: 10px; }
+  .game-active .small-control-pair .touch-map-control { display: flex; }
+  .game-active .small-control-pair [data-gba="Select"] { grid-column: 1 / 3; grid-row: 2; min-height: 48px; }
+  .game-active .small-control-pair .touch-map-control svg { display: none; }
+  .game-active .console-model, .game-active .game-navigation { display: none; }
+  .game-active .game-toolbar { padding: 9px 0 0; }
+}

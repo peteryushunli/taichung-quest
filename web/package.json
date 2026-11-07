@@ -8,7 +8,7 @@
     "predev": "npm run prepare:emulator",
     "dev": "vite --host 127.0.0.1",
     "check": "tsc --noEmit",
-    "test": "node --experimental-strip-types --test tests/language-bridge.test.mjs",
+    "test": "node --experimental-strip-types --test tests/*.test.mjs",
     "prebuild": "npm run prepare:emulator",
     "build": "npm run check && vite build",
     "preview": "vite preview --host 127.0.0.1"
