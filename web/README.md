@@ -39,13 +39,17 @@ The unmodified emulator modules are loaded through `public/emulator-loader.js`, 
 - Q / E: L / R.
 - Onscreen buttons support pointer and touch input.
 - Save spot captures an emulator snapshot. Snapshots are also stored every 20 seconds and restored on the next visit.
-- In-game saves persist in IndexedDB and can be downloaded/imported as `.sav` files. Use the game's own Save menu before downloading a save.
-- Restart returns to the cartridge's title screen while keeping the in-game save.
+- In-game saves persist in IndexedDB and can be downloaded/imported as `.sav` files. Use the game's own Save menu before downloading a save. Raw 64/128 KiB files and the pinned mGBA runtime's backups with a 16-byte trailer are accepted unchanged.
+- Restart keeps the in-game save, flushes browser storage and reloads the page through a fresh Play gate. The new runtime discards only this build's automatic CPU snapshot before loading the cartridge. Choose Continue on its title screen; progress since the last in-game Save is lost. Import uses the same fresh-runtime path after replacing SRAM.
 - Losing page visibility pauses the game and releases held buttons.
 
 Browser saves belong to the current origin. Downloads provide a portable backup across browsers or deployment URLs.
 
 Emulator snapshots are namespaced by the first 16 hexadecimal characters of the actual cartridge's SHA-256 digest. A rebuilt ROM therefore starts without restoring incompatible CPU/memory state from another build. The normal in-game `.sav` path stays stable so Continue remains available across builds. Older snapshots are retained, while obsolete downloaded cartridge copies are removed from IndexedDB to avoid storing another 16 MB for every build.
+
+The wrapper owns the 20-second snapshot timer; mGBA's duplicate internal timer is disabled before the game loads. Restart/import never call `quickReload`, `quitGame`, or change live boolean core settings. The pinned runtime's live setting path interrupts the native thread and froze Chrome after a cartridge save during QA. Confirmations use asynchronous HTML dialogs to keep the threaded player's event loop responsive. The one-time `cartridge-boot` query is consumed only after Play successfully loads the cartridge, so a failed load can be retried without restoring the discarded CPU state.
+
+For sustained runtime QA, use `npm run build` and `npm run preview`. Editing source with Vite HMR while a threaded game is running can leave a development tab unresponsive during its automatic reload; production builds have no HMR client.
 
 ## City Map and interface language
 
