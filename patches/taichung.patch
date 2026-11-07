@@ -13,10 +13,10 @@ index 8b454db..c2cf470 100644
  $(shell mkdir -p $(SUBDIRS))
  
 diff --git a/charmap.txt b/charmap.txt
-index b9d0ed9..799c335 100644
+index b9d0ed9..5fea1fb 100644
 --- a/charmap.txt
 +++ b/charmap.txt
-@@ -910,3 +910,422 @@ EMOJI_BIGANGER = F9 FE
+@@ -910,3 +910,481 @@ EMOJI_BIGANGER = F9 FE
  '\l' = FA @ scroll up window text
  '\p' = FB @ new paragraph
  '\n' = FE @ new line
@@ -439,6 +439,65 @@ index b9d0ed9..799c335 100644
 +'顧' = FC 19 AF 02
 +'鳥' = FC 19 B0 02
 +'默' = FC 19 B1 02
++'亭' = FC 19 B2 02
++'光' = FC 19 B3 02
++'口' = FC 19 B4 02
++'味' = FC 19 B5 02
++'命' = FC 19 B6 02
++'塑' = FC 19 B7 02
++'奇' = FC 19 B8 02
++'宿' = FC 19 B9 02
++'影' = FC 19 BA 02
++'恐' = FC 19 BB 02
++'景' = FC 19 BC 02
++'曲' = FC 19 BD 02
++'樓' = FC 19 BE 02
++'橋' = FC 19 BF 02
++'氣' = FC 19 C0 02
++'湖' = FC 19 C1 02
++'滋' = FC 19 C2 02
++'牆' = FC 19 C3 02
++'甜' = FC 19 C4 02
++'畫' = FC 19 C5 02
++'磚' = FC 19 C6 02
++'聞' = FC 19 C7 02
++'聲' = FC 19 C8 02
++'聽' = FC 19 C9 02
++'舍' = FC 19 CA 02
++'藏' = FC 19 CB 02
++'鐘' = FC 19 CC 02
++'雕' = FC 19 CD 02
++'香' = FC 19 CE 02
++'驚' = FC 19 CF 02
++'件' = FC 19 D0 02
++'去' = FC 19 D1 02
++'啦' = FC 19 D2 02
++'嚮' = FC 19 D3 02
++'囉' = FC 19 D4 02
++'幾' = FC 19 D5 02
++'彎' = FC 19 D6 02
++'戶' = FC 19 D7 02
++'淇' = FC 19 D8 02
++'淋' = FC 19 D9 02
++'玩' = FC 19 DA 02
++'現' = FC 19 DB 02
++'直' = FC 19 DC 02
++'級' = FC 19 DD 02
++'網' = FC 19 DE 02
++'總' = FC 19 DF 02
++'繞' = FC 19 E0 02
++'角' = FC 19 E1 02
++'話' = FC 19 E2 02
++'識' = FC 19 E3 02
++'費' = FC 19 E4 02
++'贏' = FC 19 E5 02
++'路' = FC 19 E6 02
++'身' = FC 19 E7 02
++'轉' = FC 19 E8 02
++'近' = FC 19 E9 02
++'都' = FC 19 EA 02
++'靠' = FC 19 EB 02
++'項' = FC 19 EC 02
 diff --git a/data/event_scripts.s b/data/event_scripts.s
 index 88d7594..55eac6d 100644
 --- a/data/event_scripts.s
@@ -827,10 +886,10 @@ index 802d32d..ea65545 100644
      {
        "type": "sign",
 diff --git a/data/maps/PalletTown/scripts.inc b/data/maps/PalletTown/scripts.inc
-index 1384b7d..dcebde5 100644
+index 1384b7d..10564cc 100644
 --- a/data/maps/PalletTown/scripts.inc
 +++ b/data/maps/PalletTown/scripts.inc
-@@ -1,449 +1,212 @@
+@@ -1,449 +1,231 @@
 -.equ SIGN_LADY_READY, VAR_TEMP_2
 +@ Taichung prototype: dedicated persistent state, separate from the Kanto story.
 +.equ TAICHUNG_LANGUAGE, VAR_0x40FB
@@ -894,6 +953,8 @@ index 1384b7d..dcebde5 100644
 -@ Oak approaches player after exiting their house post Elite Four to check if they should receieve the National Dex
 -PalletTown_EventScript_OakRatingScene::
 +Taichung_InitLanguage::
++	callnative TaichungOnboarding_ScriptStartupEligible
++	goto_if_eq VAR_RESULT, FALSE, Taichung_InitLanguageLegacy
  	lockall
 -	textcolor NPC_TEXT_COLOR_MALE
 -	setobjectxyperm LOCALID_PALLET_PROF_OAK, 14, 14
@@ -927,35 +988,45 @@ index 1384b7d..dcebde5 100644
 -	setvar VAR_MAP_SCENE_PALLET_TOWN_OAK, 3
 -	setflag FLAG_HIDE_OAK_IN_PALLET_TOWN
 -	warp MAP_PALLET_TOWN_PROFESSOR_OAKS_LAB, 6, 12
-+	call Taichung_ChooseLanguageCore
-+	callnative TaichungExploration_ScriptOpenStartup
++	callnative TaichungOnboarding_ScriptBeginStartup
  	waitstate
- 	releaseall
- 	end
- 
+-	releaseall
+-	end
+-
 -PalletTown_EventScript_EndOakRatingScene::
--	closemessage
+ 	closemessage
 -	applymovement LOCALID_PALLET_PROF_OAK, PalletTown_Movement_OakExit
 -	waitmovement 0
 -	removeobject LOCALID_PALLET_PROF_OAK
 -	setvar VAR_MAP_SCENE_PALLET_TOWN_OAK, 3
-+Taichung_EventScript_ChooseLanguage::
-+	lockall
++	goto_if_eq VAR_RESULT, TRUE, Taichung_OnboardingLanguageReady
 +	call Taichung_ChooseLanguageCore
-+	msgbox Taichung_Text_LanguageChanged
++Taichung_OnboardingLanguageReady::
++	callnative TaichungOnboarding_ScriptLanguageReady
  	releaseall
  	end
  
 -PalletTown_EventScript_NotEnoughMonsForNationalDex::
 -	msgbox PalletTown_Text_CaughtXPuttingInHonestEffort
 -	goto PalletTown_EventScript_EndOakRatingScene
--	end
--
++Taichung_InitLanguageLegacy::
++	lockall
++	call Taichung_ChooseLanguageCore
++	callnative TaichungExploration_ScriptOpenStartup
++	waitstate
++	releaseall
+ 	end
+ 
 -PalletTown_EventScript_NotBeenToOneIslandYet::
 -	msgbox PalletTown_Text_OakYouEnjoyingTraveling
 -	goto PalletTown_EventScript_EndOakRatingScene
--	end
--
++Taichung_EventScript_ChooseLanguage::
++	lockall
++	call Taichung_ChooseLanguageCore
++	msgbox Taichung_Text_LanguageChanged
++	releaseall
+ 	end
+ 
 -PalletTown_Movement_OakWalkToPlayersDoor::
 -	walk_left
 -	walk_left
@@ -1051,10 +1122,7 @@ index 1384b7d..dcebde5 100644
 -	setvar VAR_TEMP_1, 1
 -	goto PalletTown_EventScript_OakTrigger
 -	end
-+	callnative TaichungStarter_ScriptHasPartner
-+	goto_if_eq VAR_RESULT, TRUE, Taichung_OpeningAlreadyDone
-+	msgbox Taichung_Text_Welcome
- 
+-
 -PalletTown_EventScript_OakTrigger::
 -	famechecker FAMECHECKER_OAK, FCPICKSTATE_COLORED, UpdatePickStateFromSpecialVar8005
 -	textcolor NPC_TEXT_COLOR_MALE
@@ -1087,7 +1155,14 @@ index 1384b7d..dcebde5 100644
 -	closedoor 16, 13
 -	waitdooranim
 -	setvar VAR_MAP_SCENE_PALLET_TOWN_PROFESSOR_OAKS_LAB, 1
++	callnative TaichungStarter_ScriptHasPartner
++	goto_if_eq VAR_RESULT, TRUE, Taichung_OpeningAlreadyDone
++	callnative TaichungOnboarding_ScriptWelcome
++	msgbox Taichung_Text_Welcome
++	msgbox Taichung_Text_ChooseStarter
++
 +Taichung_ChooseStarter::
++	callnative TaichungOnboarding_ScriptPartner
 +	callnative TaichungStarter_ScriptOpenMenu
 +	waitstate
 +	goto_if_eq VAR_RESULT, SPECIES_CHARMANDER, Taichung_PickCharmander
@@ -1142,6 +1217,7 @@ index 1384b7d..dcebde5 100644
 -	setflag FLAG_DONT_TRANSITION_MUSIC
 -	warp MAP_PALLET_TOWN_PROFESSOR_OAKS_LAB, 6, 12
 +	setvar VAR_MAP_SCENE_PALLET_TOWN_PROFESSOR_OAKS_LAB, 6
++	callnative TaichungOnboarding_ScriptGranted
 +	callnative TaichungOpening_ScriptBufferPartner
 +	msgbox Taichung_Text_StarterChosen
 +
@@ -1149,6 +1225,7 @@ index 1384b7d..dcebde5 100644
 +@ saves in any other map retain their position and party.
 +Taichung_OpeningGoOutside::
 +Taichung_OpeningAlreadyDone::
++	callnative TaichungOnboarding_ScriptGranted
 +	callnative TaichungOpening_ScriptIsWelcomeRoom
 +	goto_if_eq VAR_RESULT, FALSE, Taichung_OpeningRelease
 +	closemessage
@@ -1431,10 +1508,10 @@ index 1384b7d..dcebde5 100644
 +	msgbox Taichung_Text_GreenwaySign, MSGBOX_SIGN
  	end
 diff --git a/data/maps/PalletTown/text.inc b/data/maps/PalletTown/text.inc
-index 726aea8..765a95b 100644
+index 726aea8..eb4838a 100644
 --- a/data/maps/PalletTown/text.inc
 +++ b/data/maps/PalletTown/text.inc
-@@ -1,67 +1,96 @@
+@@ -1,67 +1,93 @@
 -PalletTown_Text_OakDontGoOut::
 -    .string "OAK: Hey! Wait!\n"
 -    .string "Don't go out!$"
@@ -1502,16 +1579,13 @@ index 726aea8..765a95b 100644
 -    .string "Good for you, good for you.\n"
 -    .string "Hohoho.$"
 +Taichung_Text_Welcome::
-+	.string "Welcome to Taichung!\n"
-+	.string "I'm Xiaoyu.$"
++	.string "You made it! I'm Xiaoyu,\nyour Taichung city guide.\pWelcome to Old Station.\nYour city story starts here.\pRed brick and a clock tower.\nThe city has stories to share.\pOld streets, green corridors,\nmuseums full of surprises...\pAnd ice cream at Miyahara!\nI never skip a sweet detour.\pMeet our City League leaders.\nWin badges at open gyms.$"
  
 +Taichung_Text_ChooseStarter::
-+	.string "Choose your travel partner.\n"
-+	.string "Take a look at all four.$"
++	.string "But every good detour needs\nsomeone to share it with.\pFour POKéMON are waiting.\nOne new friend. Your choice.\pReady to meet them?\nLet's take a closer look.$"
 +
 +Taichung_Text_StarterChosen::
-+	.string "{STR_VAR_1} is your partner!\n"
-+	.string "Let's head outside.$"
++	.string "{STR_VAR_1} is your partner!\nCome on. Our city is waiting.$"
 +
 +Taichung_Text_TeaRequest::
 +	.string "A sunny day calls for iced tea!\p"
@@ -2229,15 +2303,39 @@ index 0000000..2eb880c
 +}
 diff --git a/data/maps/TaichungOldCity/scripts.inc b/data/maps/TaichungOldCity/scripts.inc
 new file mode 100644
-index 0000000..36509bd
+index 0000000..63e16ec
 --- /dev/null
 +++ b/data/maps/TaichungOldCity/scripts.inc
-@@ -0,0 +1,5 @@
+@@ -0,0 +1,29 @@
 +TaichungOldCity_MapScripts::
 +	map_script MAP_SCRIPT_ON_TRANSITION, TaichungCity_OnTransition
 +	map_script MAP_SCRIPT_ON_RESUME, TaichungCity_OnTransition
 +	map_script MAP_SCRIPT_ON_FRAME_TABLE, Taichung_OnFrame
 +	.byte 0
++
++@ The new-game-only C field gate starts this before ordinary input handling.
++@ It does not run for existing saves or while quest-log recap is playing.
++TaichungOldCity_OnboardingStart::
++	lockall
++	turnobject LOCALID_TAICHUNG_STATION_GUIDE, DIR_EAST
++	turnobject LOCALID_PLAYER, DIR_WEST
++	callnative TaichungOnboarding_ScriptIsRelease
++	goto_if_eq VAR_RESULT, TRUE, TaichungOldCity_OnboardingRelease
++TaichungOldCity_OnboardingTopic::
++	callnative TaichungOnboarding_ScriptBufferTopic
++	message gStringVar4
++	waitmessage
++	callnative TaichungOnboarding_ScriptWaitCard
++	waitstate
++	closemessage
++	callnative TaichungOnboarding_ScriptAdvance
++	goto_if_eq VAR_RESULT, FALSE, TaichungOldCity_OnboardingTopic
++TaichungOldCity_OnboardingRelease::
++	callnative TaichungOnboarding_ScriptBufferRelease
++	msgbox gStringVar4
++	callnative TaichungOnboarding_ScriptFinish
++	releaseall
++	end
 diff --git a/data/maps/TaichungOldStation_Gym/map.json b/data/maps/TaichungOldStation_Gym/map.json
 new file mode 100644
 index 0000000..d085d2d
@@ -2993,7 +3091,7 @@ index 8c382f5..058aea0 100644
  }
 diff --git a/data/scripts/taichung_city.inc b/data/scripts/taichung_city.inc
 new file mode 100644
-index 0000000..3319d36
+index 0000000..02ea822
 --- /dev/null
 +++ b/data/scripts/taichung_city.inc
 @@ -0,0 +1,215 @@
@@ -3053,8 +3151,8 @@ index 0000000..3319d36
 +	goto TaichungGym_EventScript_StationChallenge
 +
 +TaichungCity_Text_OldStation::
-+	.string "OLD TAICHUNG STATION\p"
-+	.string "Landmark hall: enter to explore.$"
++	.string "Old Taichung Station\n"
++	.string "Red brick. A city's stories.$"
 +
 +TaichungCity_Text_Host_OldStation::
 +	.string "Welcome to this landmark hall!\p"
@@ -3069,8 +3167,8 @@ index 0000000..3319d36
 +	goto TaichungGym_EventScript_ParkChallenge
 +
 +TaichungCity_Text_Park::
-+	.string "TAICHUNG PARK\p"
-+	.string "Landmark hall: enter to explore.$"
++	.string "Taichung Park\n"
++	.string "Lake light, pavilion shade.$"
 +
 +TaichungCity_Text_Host_Park::
 +	.string "Welcome to TAICHUNG PARK!\p"
@@ -3086,8 +3184,8 @@ index 0000000..3319d36
 +	end
 +
 +TaichungCity_Text_Miyahara::
-+	.string "MIYAHARA\p"
-+	.string "Landmark hall: enter to explore.$"
++	.string "Miyahara\n"
++	.string "Old walls, sweet surprises.$"
 +
 +TaichungCity_Text_Host_Miyahara::
 +	.string "Welcome to MIYAHARA!\p"
@@ -3103,8 +3201,8 @@ index 0000000..3319d36
 +	end
 +
 +TaichungCity_Text_ScienceMuseum::
-+	.string "SCIENCE MUSEUM\p"
-+	.string "Landmark hall: enter to explore.$"
++	.string "Natural Science Museum\n"
++	.string "Dinosaurs and living wonders.$"
 +
 +TaichungCity_Text_Host_ScienceMuseum::
 +	.string "Welcome to SCIENCE MUSEUM!\p"
@@ -3120,8 +3218,8 @@ index 0000000..3319d36
 +	end
 +
 +TaichungCity_Text_Greenway::
-+	.string "CALLIGRAPHY GREENWAY\p"
-+	.string "Landmark hall: enter to explore.$"
++	.string "Calligraphy Greenway\n"
++	.string "A green path between the arts.$"
 +
 +TaichungCity_Text_Host_Greenway::
 +	.string "Welcome to this landmark hall!\p"
@@ -3137,8 +3235,8 @@ index 0000000..3319d36
 +	end
 +
 +TaichungCity_Text_ShenJi::
-+	.string "SHEN JI NEW VILLAGE\p"
-+	.string "Landmark hall: enter to explore.$"
++	.string "Shen Ji New Village\n"
++	.string "Old homes. New ideas.$"
 +
 +TaichungCity_Text_Host_ShenJi::
 +	.string "Welcome to this landmark hall!\p"
@@ -3154,8 +3252,8 @@ index 0000000..3319d36
 +	end
 +
 +TaichungCity_Text_FineArts::
-+	.string "FINE ARTS MUSEUM\p"
-+	.string "Landmark hall: enter to explore.$"
++	.string "Taiwan Fine Arts Museum\n"
++	.string "Color, sculpture, fresh eyes.$"
 +
 +TaichungCity_Text_Host_FineArts::
 +	.string "Welcome to FINE ARTS MUSEUM!\p"
@@ -3171,8 +3269,8 @@ index 0000000..3319d36
 +	end
 +
 +TaichungCity_Text_Fengjia::
-+	.string "FENGJIA NIGHT MARKET\p"
-+	.string "Landmark hall: enter to explore.$"
++	.string "Fengjia Night Market\n"
++	.string "Follow the aroma of snacks.$"
 +
 +TaichungCity_Text_Host_Fengjia::
 +	.string "Welcome to this landmark hall!\p"
@@ -3188,8 +3286,8 @@ index 0000000..3319d36
 +	end
 +
 +TaichungCity_Text_MapleGarden::
-+	.string "MAPLE GARDEN\p"
-+	.string "Landmark hall: enter to explore.$"
++	.string "Maple Garden\n"
++	.string "Lake, bridge, a slower pace.$"
 +
 +TaichungCity_Text_Host_MapleGarden::
 +	.string "Welcome to MAPLE GARDEN!\p"
@@ -3205,8 +3303,8 @@ index 0000000..3319d36
 +	end
 +
 +TaichungCity_Text_Theater::
-+	.string "NATIONAL TAICHUNG THEATER\p"
-+	.string "Landmark hall: enter to explore.$"
++	.string "National Taichung Theater\n"
++	.string "Curved walls, room for sound.$"
 +
 +TaichungCity_Text_Host_Theater::
 +	.string "Welcome to this landmark hall!\p"
@@ -305210,6 +305308,1364 @@ index 0000000..07fc43a
 +Source hashes are refreshed; a stable fingerprint does not imply collision or
 +cache compatibility. Actual-ROM proof and immutable source/ROM binding are
 +delivered separately under `artifacts/worktrees/c291d4842985/greenway-native/`.
+diff --git a/docs/localization/landmark-signs-binding.json b/docs/localization/landmark-signs-binding.json
+new file mode 100644
+index 0000000..e3da089
+--- /dev/null
++++ b/docs/localization/landmark-signs-binding.json
+@@ -0,0 +1,155 @@
++{
++  "schemaVersion": 1,
++  "status": "exact Story copy integrated; font/compile/runtime validation pending",
++  "baseline": "31aae01c66bf09011c0d4a8ac91856d364f21db8",
++  "storyHandoff": "/Users/peter/devday_hackathon/content/story/landmark-signs-handoff.json",
++  "storyHandoffSha256": "9c5e3916f03c2d968bd51f704527c84dda85f8124e5be688ead08e6ba1da1553",
++  "sourceSnippetSha256": {
++    "landmark-signs-en.inc": "4f79425bd2d94340753418ad69436a0f5a14a822e6cff9b26e7b5575de6d8440",
++    "landmark-signs-zh.inc.c": "749f9b19c01ce7cd509ed6945657ee3fec3301102a02706703c60e13d1c6201f"
++  },
++  "entries": [
++    {
++      "id": "sign.old-taichung-station",
++      "script": "TaichungCity_Sign_OldStation",
++      "englishSymbol": "TaichungCity_Text_OldStation",
++      "chineseSymbol": "sZh_TaichungCity_Text_OldStation",
++      "en": [
++        "Old Taichung Station",
++        "Red brick. A city's stories."
++      ],
++      "zh-TW": [
++        "舊臺中車站",
++        "紅磚與鐘樓，故事的起點。"
++      ]
++    },
++    {
++      "id": "sign.taichung-park",
++      "script": "TaichungCity_Sign_Park",
++      "englishSymbol": "TaichungCity_Text_Park",
++      "chineseSymbol": "sZh_TaichungCity_Text_Park",
++      "en": [
++        "Taichung Park",
++        "Lake light, pavilion shade."
++      ],
++      "zh-TW": [
++        "臺中公園",
++        "湖光、亭影，一起歇歇腳。"
++      ]
++    },
++    {
++      "id": "sign.miyahara",
++      "script": "TaichungCity_Sign_Miyahara",
++      "englishSymbol": "TaichungCity_Text_Miyahara",
++      "chineseSymbol": "sZh_TaichungCity_Text_Miyahara",
++      "en": [
++        "Miyahara",
++        "Old walls, sweet surprises."
++      ],
++      "zh-TW": [
++        "宮原眼科",
++        "老屋裡，藏著甜點驚喜。"
++      ]
++    },
++    {
++      "id": "sign.natural-science-museum",
++      "script": "TaichungCity_Sign_ScienceMuseum",
++      "englishSymbol": "TaichungCity_Text_ScienceMuseum",
++      "chineseSymbol": "sZh_TaichungCity_Text_ScienceMuseum",
++      "en": [
++        "Natural Science Museum",
++        "Dinosaurs and living wonders."
++      ],
++      "zh-TW": [
++        "國立自然科學博物館",
++        "從恐龍，看到生命的驚奇。"
++      ]
++    },
++    {
++      "id": "sign.calligraphy-greenway",
++      "script": "TaichungCity_Sign_Greenway",
++      "englishSymbol": "TaichungCity_Text_Greenway",
++      "chineseSymbol": "sZh_TaichungCity_Text_Greenway",
++      "en": [
++        "Calligraphy Greenway",
++        "A green path between the arts."
++      ],
++      "zh-TW": [
++        "草悟道／市民廣場",
++        "沿著綠意，走進藝文日常。"
++      ]
++    },
++    {
++      "id": "sign.shen-ji-new-village",
++      "script": "TaichungCity_Sign_ShenJi",
++      "englishSymbol": "TaichungCity_Text_ShenJi",
++      "chineseSymbol": "sZh_TaichungCity_Text_ShenJi",
++      "en": [
++        "Shen Ji New Village",
++        "Old homes. New ideas."
++      ],
++      "zh-TW": [
++        "審計新村",
++        "老宿舍，新點子。"
++      ]
++    },
++    {
++      "id": "sign.fine-arts-museum",
++      "script": "TaichungCity_Sign_FineArts",
++      "englishSymbol": "TaichungCity_Text_FineArts",
++      "chineseSymbol": "sZh_TaichungCity_Text_FineArts",
++      "en": [
++        "Taiwan Fine Arts Museum",
++        "Color, sculpture, fresh eyes."
++      ],
++      "zh-TW": [
++        "國立臺灣美術館",
++        "看畫、看雕塑，也換個眼光。"
++      ]
++    },
++    {
++      "id": "sign.fengjia-night-market",
++      "script": "TaichungCity_Sign_Fengjia",
++      "englishSymbol": "TaichungCity_Text_Fengjia",
++      "chineseSymbol": "sZh_TaichungCity_Text_Fengjia",
++      "en": [
++        "Fengjia Night Market",
++        "Follow the aroma of snacks."
++      ],
++      "zh-TW": [
++        "逢甲夜市",
++        "聞著香氣，找一口好滋味。"
++      ]
++    },
++    {
++      "id": "sign.maple-garden",
++      "script": "TaichungCity_Sign_MapleGarden",
++      "englishSymbol": "TaichungCity_Text_MapleGarden",
++      "chineseSymbol": "sZh_TaichungCity_Text_MapleGarden",
++      "en": [
++        "Maple Garden",
++        "Lake, bridge, a slower pace."
++      ],
++      "zh-TW": [
++        "秋紅谷",
++        "湖水、景觀橋，慢一點走。"
++      ]
++    },
++    {
++      "id": "sign.taichung-theater",
++      "script": "TaichungCity_Sign_Theater",
++      "englishSymbol": "TaichungCity_Text_Theater",
++      "chineseSymbol": "sZh_TaichungCity_Text_Theater",
++      "en": [
++        "National Taichung Theater",
++        "Curved walls, room for sound."
++      ],
++      "zh-TW": [
++        "臺中國家歌劇院",
++        "曲牆之間，聽見新的聲音。"
++      ]
++    }
++  ],
++  "translationLookup": "Existing pointer identity mappings retained; shared root corpus is Main-owned. Merge translations fragment only, then use append-only font path.",
++  "scope": "Only exterior sign English/Chinese payloads. No host, script, coordinates, geometry, progress or challenge readiness changes."
++}
+diff --git a/docs/localization/landmark-signs-glyphs.json b/docs/localization/landmark-signs-glyphs.json
+new file mode 100644
+index 0000000..379d83b
+--- /dev/null
++++ b/docs/localization/landmark-signs-glyphs.json
+@@ -0,0 +1,331 @@
++{
++  "schemaVersion": 1,
++  "status": "append-only glyph checkpoint; native sign UI pending explicit lease",
++  "baseCommit": "31aae01c66bf09011c0d4a8ac91856d364f21db8",
++  "baseGlyphCount": 417,
++  "glyphCount": 447,
++  "addedGlyphCount": 30,
++  "releasedMappingsUnchanged": true,
++  "releasedGlyphRowsByteIdentical": true,
++  "originalCharmapBytesPreservedAsPrefix": true,
++  "beforeSha256": {
++    "charmapSha256": "4c16f285ada45227b2402cf3f73b61588ec99ecae61c986ed51545471b0d7a21",
++    "headerSha256": "dc87c2fad3b23095edd3c5cef23fb772005ecc7277bdf3eda2314180c449d341"
++  },
++  "resultSha256": {
++    "charmapSha256": "0c073a0d7f5242b1ea70861ec39fd45f8c36439fa8ac5c317b174df16c6744b8",
++    "headerSha256": "adfa48ff02f92c42a0cecc1adc7b9967e42e3426dbf181fef44d6fefbb2e2884"
++  },
++  "fontSha256": "864727d210d54f2537bbe23b3a839436c3992af72de9322af5270897246bd44f",
++  "rendering": {
++    "variation": "Medium",
++    "fontPixels": 12,
++    "width": 12,
++    "height": 14,
++    "threshold": 96
++  },
++  "encoding": "FC 19 (index%240+1) (index//240+1)",
++  "additions": [
++    {
++      "character": "亭",
++      "index": 417,
++      "encoding": [
++        252,
++        25,
++        178,
++        2
++      ]
++    },
++    {
++      "character": "光",
++      "index": 418,
++      "encoding": [
++        252,
++        25,
++        179,
++        2
++      ]
++    },
++    {
++      "character": "口",
++      "index": 419,
++      "encoding": [
++        252,
++        25,
++        180,
++        2
++      ]
++    },
++    {
++      "character": "味",
++      "index": 420,
++      "encoding": [
++        252,
++        25,
++        181,
++        2
++      ]
++    },
++    {
++      "character": "命",
++      "index": 421,
++      "encoding": [
++        252,
++        25,
++        182,
++        2
++      ]
++    },
++    {
++      "character": "塑",
++      "index": 422,
++      "encoding": [
++        252,
++        25,
++        183,
++        2
++      ]
++    },
++    {
++      "character": "奇",
++      "index": 423,
++      "encoding": [
++        252,
++        25,
++        184,
++        2
++      ]
++    },
++    {
++      "character": "宿",
++      "index": 424,
++      "encoding": [
++        252,
++        25,
++        185,
++        2
++      ]
++    },
++    {
++      "character": "影",
++      "index": 425,
++      "encoding": [
++        252,
++        25,
++        186,
++        2
++      ]
++    },
++    {
++      "character": "恐",
++      "index": 426,
++      "encoding": [
++        252,
++        25,
++        187,
++        2
++      ]
++    },
++    {
++      "character": "景",
++      "index": 427,
++      "encoding": [
++        252,
++        25,
++        188,
++        2
++      ]
++    },
++    {
++      "character": "曲",
++      "index": 428,
++      "encoding": [
++        252,
++        25,
++        189,
++        2
++      ]
++    },
++    {
++      "character": "樓",
++      "index": 429,
++      "encoding": [
++        252,
++        25,
++        190,
++        2
++      ]
++    },
++    {
++      "character": "橋",
++      "index": 430,
++      "encoding": [
++        252,
++        25,
++        191,
++        2
++      ]
++    },
++    {
++      "character": "氣",
++      "index": 431,
++      "encoding": [
++        252,
++        25,
++        192,
++        2
++      ]
++    },
++    {
++      "character": "湖",
++      "index": 432,
++      "encoding": [
++        252,
++        25,
++        193,
++        2
++      ]
++    },
++    {
++      "character": "滋",
++      "index": 433,
++      "encoding": [
++        252,
++        25,
++        194,
++        2
++      ]
++    },
++    {
++      "character": "牆",
++      "index": 434,
++      "encoding": [
++        252,
++        25,
++        195,
++        2
++      ]
++    },
++    {
++      "character": "甜",
++      "index": 435,
++      "encoding": [
++        252,
++        25,
++        196,
++        2
++      ]
++    },
++    {
++      "character": "畫",
++      "index": 436,
++      "encoding": [
++        252,
++        25,
++        197,
++        2
++      ]
++    },
++    {
++      "character": "磚",
++      "index": 437,
++      "encoding": [
++        252,
++        25,
++        198,
++        2
++      ]
++    },
++    {
++      "character": "聞",
++      "index": 438,
++      "encoding": [
++        252,
++        25,
++        199,
++        2
++      ]
++    },
++    {
++      "character": "聲",
++      "index": 439,
++      "encoding": [
++        252,
++        25,
++        200,
++        2
++      ]
++    },
++    {
++      "character": "聽",
++      "index": 440,
++      "encoding": [
++        252,
++        25,
++        201,
++        2
++      ]
++    },
++    {
++      "character": "舍",
++      "index": 441,
++      "encoding": [
++        252,
++        25,
++        202,
++        2
++      ]
++    },
++    {
++      "character": "藏",
++      "index": 442,
++      "encoding": [
++        252,
++        25,
++        203,
++        2
++      ]
++    },
++    {
++      "character": "鐘",
++      "index": 443,
++      "encoding": [
++        252,
++        25,
++        204,
++        2
++      ]
++    },
++    {
++      "character": "雕",
++      "index": 444,
++      "encoding": [
++        252,
++        25,
++        205,
++        2
++      ]
++    },
++    {
++      "character": "香",
++      "index": 445,
++      "encoding": [
++        252,
++        25,
++        206,
++        2
++      ]
++    },
++    {
++      "character": "驚",
++      "index": 446,
++      "encoding": [
++        252,
++        25,
++        207,
++        2
++      ]
++    }
++  ],
++  "integrationWarning": "Merge later feature glyphs by character and append after this447glyph prefix; never overwrite with another branch417basedtable or run the root sorted full generator."
++}
+diff --git a/docs/localization/landmark-signs-translations.json b/docs/localization/landmark-signs-translations.json
+new file mode 100644
+index 0000000..e90a719
+--- /dev/null
++++ b/docs/localization/landmark-signs-translations.json
+@@ -0,0 +1,14 @@
++{
++  "translations": {
++    "TaichungCity_Text_OldStation": "舊臺中車站\n紅磚與鐘樓，故事的起點。",
++    "TaichungCity_Text_Park": "臺中公園\n湖光、亭影，一起歇歇腳。",
++    "TaichungCity_Text_Miyahara": "宮原眼科\n老屋裡，藏著甜點驚喜。",
++    "TaichungCity_Text_ScienceMuseum": "國立自然科學博物館\n從恐龍，看到生命的驚奇。",
++    "TaichungCity_Text_Greenway": "草悟道／市民廣場\n沿著綠意，走進藝文日常。",
++    "TaichungCity_Text_ShenJi": "審計新村\n老宿舍，新點子。",
++    "TaichungCity_Text_FineArts": "國立臺灣美術館\n看畫、看雕塑，也換個眼光。",
++    "TaichungCity_Text_Fengjia": "逢甲夜市\n聞著香氣，找一口好滋味。",
++    "TaichungCity_Text_MapleGarden": "秋紅谷\n湖水、景觀橋，慢一點走。",
++    "TaichungCity_Text_Theater": "臺中國家歌劇院\n曲牆之間，聽見新的聲音。"
++  }
++}
+diff --git a/docs/localization/landmark-signs.md b/docs/localization/landmark-signs.md
+new file mode 100644
+index 0000000..2180f68
+--- /dev/null
++++ b/docs/localization/landmark-signs.md
+@@ -0,0 +1,15 @@
++# Ten short bilingual exterior landmark signs
++
++Exact Story handoff `content/story/landmark-signs-handoff.json`, SHA-256 `9c5e3916f03c2d968bd51f704527c84dda85f8124e5be688ead08e6ba1da1553`, is integrated on base `31aae01c66bf09011c0d4a8ac91856d364f21db8`. Each existing exterior sign now shows the place name and one local hook in a single two-line English or Traditional Chinese box. No leader biography or battle availability claim was added.
++
++Only the ten `TaichungCity_Text_*` assembly payloads and their existing `sZh_TaichungCity_Text_*` array literals changed. All labels, pointer lookups, `MSGBOX_SIGN` calls and the rest of both source files remain byte-identical to baseline. No host conversation, coordinates, map geometry, warp, save variable, progress, renderer or challenge-readiness change. `landmark-signs-binding.json` records exact pairs; `landmark-signs-translations.json` is a ten-entry fragment for Main to merge into the separately owned root corpus.
++
++Static native-width review measures the actual Normal/Male/Female Latin glyph-width tables and encoded Chinese12px advances: all20locale/sign pairs fit the208px message window, maximum170px. Two14px rows at y1/y16 occupy30px within the32px window. Native encoding and isolated compilation pass. The built ROM SHA-256 is `c98c52e8a435f9b49bd12cbf2658dda4973725bc233027929615d5b1e9d0266a`; EWRAM remains261180bytes. This checkpoint has **not yet received native sign language/wrapping UI acceptance**; await Main's explicit browser lease and record runtime evidence separately.
++
++The existing append-only helper added30glyphs at indices417–446 (447total), preserving every released417mapping and bitmap row exactly. `landmark-signs-glyphs.json` gives exact character/code and hash ledger. Root sorted regeneration is unsuitable because it would renumber the released prefix. Use:
++
++```sh
++PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=/Users/peter/devday_hackathon/.tools/python-lib /Users/peter/.pyenv/versions/3.11.15/bin/python3 tools/taichung_gameplay/extend-chinese-glyphs.py --game "$PWD" --font /Users/peter/devday_hackathon/.tools/fonts/NotoSansTC.ttf --artifacts /absolute/artifact/path --write
++```
++
++Repeating the helper after this checkpoint adds zero glyphs. Later Miyahara/onboarding branches must reconcile new characters against this447glyph prefix and append only missing characters, preserving these assignments. Main alone integrates/publishes. All compile/font/static-review artifacts are isolated under the parent project's `artifacts/worktrees/284bed0e4a4d/`; no canonical cartridge or earlier CMP evidence was changed.
+diff --git a/docs/localization/onboarding-glyphs.json b/docs/localization/onboarding-glyphs.json
+new file mode 100644
+index 0000000..7efea0c
+--- /dev/null
++++ b/docs/localization/onboarding-glyphs.json
+@@ -0,0 +1,813 @@
++{
++  "mode": "write",
++  "game": "/Users/peter/devday_hackathon/.worktrees/game-onboarding",
++  "fontSha256": "864727d210d54f2537bbe23b3a839436c3992af72de9322af5270897246bd44f",
++  "rendering": {
++    "variation": "Medium",
++    "fontPixels": 12,
++    "width": 12,
++    "height": 14,
++    "threshold": 96
++  },
++  "encoding": "FC 19 (index%240+1) (index//240+1)",
++  "existingGlyphCount": 447,
++  "addedGlyphCount": 29,
++  "glyphCount": 476,
++  "allOldMappingsUnchanged": true,
++  "allOldHeaderRowsByteIdentical": true,
++  "originalCharmapBytesPreservedAsPrefix": true,
++  "sourceSha256": {
++    "src/start_menu.c": "1a3f52241386e7d502a1315c2b427ca6e8084d6aa482151dda55c6fe1eec892f",
++    "src/taichung_character_npcs.c": "d93d3c5578aa3e814926137c60cc4c6904d6858af2059369a4461167f727b5f2",
++    "src/taichung_characters.c": "4cb0ea830296e7cb65d449d3aba79cb8a5f09247b114794cb19fe5eff7a7ee48",
++    "src/taichung_city_names.c": "c0d3e2bac66674964939be045d443c02f00de582aef5f9b29b03fbc5ccdcfe7f",
++    "src/taichung_city_pass.c": "36703f0eca038fdb4a20f8aeb8eca64ded4e14b399ec80d5f569c9f8c64c51a6",
++    "src/taichung_exploration.c": "767cf09cdcff423dcd65affc9da810374f9da8c45513dd673d4bca07eccbd507",
++    "src/taichung_exploration_menu.c": "bd35f704516dc4625d629bca8b22c97ad7ada083141e20140ddcb8c7d58a2080",
++    "src/taichung_gym_adapter.c": "b3db84c6b3ae798a23301ed144521d3214322fab7671712d8fd17a84e2eed9d2",
++    "src/taichung_gym_progress.c": "b434ad078d02caf33f2879d27023e09605c550ddd5a7c4e9c4dbde8409ebfd87",
++    "src/taichung_jun.c": "a3ea273e8288f2f45b942a0decd39cbbe516c22d90857dda5740823cfda2bcbc",
++    "src/taichung_language.c": "992db14cda48b4098cae36fc7a4557c962dbb590a8c6020f53d79aef9f8e382e",
++    "src/taichung_language_bridge.c": "b3f45ef85ff7d1caa3e9535d41e9ba9e15cd75cd80af34ae8b196d503f0bf525",
++    "src/taichung_language_bridge_protocol.c": "2648a19ca54ce93fa2644bf01b96d3fb059828476a03be4d2bd8244b059687b4",
++    "src/taichung_lian.c": "a34b31ca052aa927341aa77056a806906018d34bebb72c11d6c136c2d32a4e78",
++    "src/taichung_navigation_bridge.c": "ea798834bc8e2e12a6a9d3854b0087d0248e7188491cf4a40bc8df0f0085fbe7",
++    "src/taichung_onboarding.c": "6f22db10b8a92e154e7b165eaa757b396d0b9a35ab989daaad162b2e0c26f424",
++    "src/taichung_onboarding_protocol.c": "241b595fb3785cc183bbfdabb9c1f8a3c6d6e5af49df4f69fca0845270247dfa",
++    "src/taichung_onboarding_text.c": "29bed2ad9ba5fa061fa947d0f9c5655a20e1e96d21bc996db478fb8d98ff45ce",
++    "src/taichung_opening.c": "ce02d325ddd791979554a801e5942f214d99fe07b17ecdca00c2804a483e895f",
++    "src/taichung_park_gym.c": "b7d11e23884bd84eb8d603cad993e9f67379226809645e7f75f39d453ba9b64c",
++    "src/taichung_peiqi.c": "2109a4537a1205c2b8cb7d46c811aa1cc886ae9471486af32a1bf87832d2636a",
++    "src/taichung_save.c": "f94f0d203c693ea2f29a2655382f0206e2ce8f576e66577ce3783fd8655c24d9",
++    "src/taichung_starter.c": "a05db6a86d41f7506ba9d0b2afc42c324a2805ca2ff89f5556cd6c51e18805eb",
++    "src/taichung_starter_menu.c": "84a9520af88e85503ec105382dbf2a81b640191663cf9b9e0b304c3ebc4d36fc",
++    "src/taichung_team.c": "f590125604141b41f3763168ed2df35b16f034ec4bc5a11c3ff40e0f0bbbf862",
++    "src/taichung_team_menu.c": "8638654ac80e8d25a14d8a930d8686d6f84bf2beba291c9f07b3b877e760ca7d",
++    "src/taichung_team_presets.c": "853121f1a8527476f45ec313abea10a36ee2d09cbbaea986c07f63073db5998b"
++  },
++  "before": {
++    "charmapSha256": "0c073a0d7f5242b1ea70861ec39fd45f8c36439fa8ac5c317b174df16c6744b8",
++    "headerSha256": "adfa48ff02f92c42a0cecc1adc7b9967e42e3426dbf181fef44d6fefbb2e2884"
++  },
++  "candidate": {
++    "charmapSha256": "125f76ce39e69c5dfdbc315468cffdfed0db2b18a12ef255f2a7c9521bef3602",
++    "headerSha256": "cca8b4e506a0b3d40727c59dd8a6a036fdaf1f69b33fc54bcc5572ed9c017b94"
++  },
++  "additions": [
++    {
++      "character": "件",
++      "index": 447,
++      "encoding": [
++        252,
++        25,
++        208,
++        2
++      ],
++      "masks": [
++        "0x000",
++        "0x000",
++        "0x0a8",
++        "0x0ac",
++        "0x7f4",
++        "0x096",
++        "0x097",
++        "0x084",
++        "0x7fc",
++        "0x084",
++        "0x084",
++        "0x084",
++        "0x084",
++        "0x000"
++      ]
++    },
++    {
++      "character": "去",
++      "index": 448,
++      "encoding": [
++        252,
++        25,
++        209,
++        2
++      ],
++      "masks": [
++        "0x000",
++        "0x020",
++        "0x020",
++        "0x3fe",
++        "0x020",
++        "0x020",
++        "0x7ff",
++        "0x038",
++        "0x098",
++        "0x10c",
++        "0x3fe",
++        "0x3fe",
++        "0x000",
++        "0x000"
++      ]
++    },
++    {
++      "character": "啦",
++      "index": 449,
++      "encoding": [
++        252,
++        25,
++        210,
++        2
++      ],
++      "masks": [
++        "0x000",
++        "0x000",
++        "0x320",
++        "0x32f",
++        "0x7fb",
++        "0x4ab",
++        "0x4ab",
++        "0x5eb",
++        "0x5bb",
++        "0x72f",
++        "0x323",
++        "0x220",
++        "0xfb0",
++        "0x000"
++      ]
++    },
++    {
++      "character": "嚮",
++      "index": 450,
++      "encoding": [
++        252,
++        25,
++        211,
++        2
++      ],
++      "masks": [
++        "0x000",
++        "0x000",
++        "0xff4",
++        "0xbfe",
++        "0xfb4",
++        "0xbfe",
++        "0xbfc",
++        "0x376",
++        "0x7fc",
++        "0xcf4",
++        "0xd94",
++        "0xdf4",
++        "0x614",
++        "0x000"
++      ]
++    },
++    {
++      "character": "囉",
++      "index": 451,
++      "encoding": [
++        252,
++        25,
++        212,
++        2
++      ],
++      "masks": [
++        "0x000",
++        "0x7f6",
++        "0x55f",
++        "0x7fb",
++        "0x32b",
++        "0x7fb",
++        "0x3fb",
++        "0x7eb",
++        "0x3ff",
++        "0x7d3",
++        "0x7f0",
++        "0x7a8",
++        "0x000",
++        "0x000"
++      ]
++    },
++    {
++      "character": "幾",
++      "index": 452,
++      "encoding": [
++        252,
++        25,
++        213,
++        2
++      ],
++      "masks": [
++        "0x000",
++        "0x248",
++        "0x554",
++        "0x7de",
++        "0x75c",
++        "0xffe",
++        "0x6e0",
++        "0xffe",
++        "0x288",
++        "0x3bc",
++        "0xbe4",
++        "0xe66",
++        "0x000",
++        "0x000"
++      ]
++    },
++    {
++      "character": "彎",
++      "index": 453,
++      "encoding": [
++        252,
++        25,
++        214,
++        2
++      ],
++      "masks": [
++        "0x000",
++        "0x000",
++        "0x224",
++        "0x7fe",
++        "0x376",
++        "0x77e",
++        "0x77e",
++        "0x3f6",
++        "0x3fc",
++        "0x3fc",
++        "0x00c",
++        "0x7fc",
++        "0x3c0",
++        "0x000"
++      ]
++    },
++    {
++      "character": "戶",
++      "index": 454,
++      "encoding": [
++        252,
++        25,
++        215,
++        2
++      ],
++      "masks": [
++        "0x000",
++        "0x000",
++        "0x3c0",
++        "0x07c",
++        "0x00c",
++        "0x7fc",
++        "0x60c",
++        "0x60c",
++        "0x7fc",
++        "0x60c",
++        "0x006",
++        "0x006",
++        "0x002",
++        "0x000"
++      ]
++    },
++    {
++      "character": "淇",
++      "index": 455,
++      "encoding": [
++        252,
++        25,
++        216,
++        2
++      ],
++      "masks": [
++        "0x000",
++        "0x666",
++        "0xffc",
++        "0x660",
++        "0x7e2",
++        "0x666",
++        "0x7e0",
++        "0x660",
++        "0xffc",
++        "0x364",
++        "0x666",
++        "0xc32",
++        "0x000",
++        "0x000"
++      ]
++    },
++    {
++      "character": "淋",
++      "index": 456,
++      "encoding": [
++        252,
++        25,
++        217,
++        2
++      ],
++      "masks": [
++        "0x000",
++        "0x220",
++        "0x224",
++        "0x224",
++        "0xff8",
++        "0x322",
++        "0x774",
++        "0x7b0",
++        "0xfbc",
++        "0xaae",
++        "0x222",
++        "0x222",
++        "0x000",
++        "0x000"
++      ]
++    },
++    {
++      "character": "玩",
++      "index": 457,
++      "encoding": [
++        252,
++        25,
++        218,
++        2
++      ],
++      "masks": [
++        "0x000",
++        "0x000",
++        "0x7ff",
++        "0x004",
++        "0x004",
++        "0xffe",
++        "0x344",
++        "0x344",
++        "0x35c",
++        "0x37f",
++        "0xb30",
++        "0x618",
++        "0x000",
++        "0x000"
++      ]
++    },
++    {
++      "character": "現",
++      "index": 458,
++      "encoding": [
++        252,
++        25,
++        219,
++        2
++      ],
++      "masks": [
++        "0x000",
++        "0x7ff",
++        "0x43f",
++        "0x7e4",
++        "0x624",
++        "0x7ff",
++        "0x7e4",
++        "0x7e4",
++        "0x15e",
++        "0x167",
++        "0x930",
++        "0xf18",
++        "0x000",
++        "0x000"
++      ]
++    },
++    {
++      "character": "直",
++      "index": 459,
++      "encoding": [
++        252,
++        25,
++        220,
++        2
++      ],
++      "masks": [
++        "0x000",
++        "0x060",
++        "0x7fe",
++        "0x020",
++        "0x3fc",
++        "0x30c",
++        "0x3fc",
++        "0x3fc",
++        "0x30c",
++        "0x3fc",
++        "0xffe",
++        "0x7fe",
++        "0x000",
++        "0x000"
++      ]
++    },
++    {
++      "character": "級",
++      "index": 460,
++      "encoding": [
++        252,
++        25,
++        221,
++        2
++      ],
++      "masks": [
++        "0x000",
++        "0x000",
++        "0x7ec",
++        "0x3e4",
++        "0x252",
++        "0x34e",
++        "0xfce",
++        "0x4d6",
++        "0x5de",
++        "0x760",
++        "0x37e",
++        "0x7be",
++        "0xce2",
++        "0x000"
++      ]
++    },
++    {
++      "character": "網",
++      "index": 461,
++      "encoding": [
++        252,
++        25,
++        222,
++        2
++      ],
++      "masks": [
++        "0x000",
++        "0x000",
++        "0xfe4",
++        "0xc24",
++        "0xeaa",
++        "0xdaf",
++        "0xfe6",
++        "0xfba",
++        "0xfff",
++        "0xca0",
++        "0xfb6",
++        "0xc36",
++        "0x620",
++        "0x000"
++      ]
++    },
++    {
++      "character": "總",
++      "index": 462,
++      "encoding": [
++        252,
++        25,
++        223,
++        2
++      ],
++      "masks": [
++        "0x000",
++        "0x000",
++        "0x084",
++        "0x7e4",
++        "0x4aa",
++        "0x7ef",
++        "0x5a6",
++        "0x6aa",
++        "0x7ff",
++        "0x080",
++        "0x56e",
++        "0x67e",
++        "0x3d0",
++        "0x000"
++      ]
++    },
++    {
++      "character": "繞",
++      "index": 463,
++      "encoding": [
++        252,
++        25,
++        224,
++        2
++      ],
++      "masks": [
++        "0x000",
++        "0x184",
++        "0x3c4",
++        "0x7ea",
++        "0x7ef",
++        "0x7ec",
++        "0x7fe",
++        "0x7ff",
++        "0xff0",
++        "0x2d6",
++        "0xa56",
++        "0xe30",
++        "0x000",
++        "0x000"
++      ]
++    },
++    {
++      "character": "角",
++      "index": 464,
++      "encoding": [
++        252,
++        25,
++        225,
++        2
++      ],
++      "masks": [
++        "0x000",
++        "0x010",
++        "0x0f8",
++        "0x088",
++        "0x3fc",
++        "0x7fe",
++        "0x64c",
++        "0x7fc",
++        "0x64c",
++        "0x7fc",
++        "0x7fc",
++        "0x606",
++        "0x382",
++        "0x000"
++      ]
++    },
++    {
++      "character": "話",
++      "index": 465,
++      "encoding": [
++        252,
++        25,
++        226,
++        2
++      ],
++      "masks": [
++        "0x000",
++        "0x000",
++        "0x784",
++        "0x1e4",
++        "0x11f",
++        "0x7ce",
++        "0x7ee",
++        "0x11e",
++        "0x180",
++        "0x7fe",
++        "0x472",
++        "0x47a",
++        "0x7fe",
++        "0x000"
++      ]
++    },
++    {
++      "character": "識",
++      "index": 466,
++      "encoding": [
++        252,
++        25,
++        227,
++        2
++      ],
++      "masks": [
++        "0x000",
++        "0x344",
++        "0x7f4",
++        "0x7ae",
++        "0x7f6",
++        "0x7f6",
++        "0x7fe",
++        "0x6b0",
++        "0x6fe",
++        "0x3fa",
++        "0xfbe",
++        "0x482",
++        "0x000",
++        "0x000"
++      ]
++    },
++    {
++      "character": "費",
++      "index": 467,
++      "encoding": [
++        252,
++        25,
++        228,
++        2
++      ],
++      "masks": [
++        "0x000",
++        "0x3fe",
++        "0x290",
++        "0x3fe",
++        "0x7fe",
++        "0x7fe",
++        "0x30e",
++        "0x3fc",
++        "0x3fc",
++        "0x3fc",
++        "0x39c",
++        "0x606",
++        "0x000",
++        "0x000"
++      ]
++    },
++    {
++      "character": "贏",
++      "index": 468,
++      "encoding": [
++        252,
++        25,
++        229,
++        2
++      ],
++      "masks": [
++        "0x000",
++        "0x020",
++        "0xfff",
++        "0x004",
++        "0x7fc",
++        "0x3fc",
++        "0x3fc",
++        "0x36e",
++        "0x77a",
++        "0x7fa",
++        "0x77e",
++        "0xf7b",
++        "0xc9d",
++        "0x000"
++      ]
++    },
++    {
++      "character": "路",
++      "index": 469,
++      "encoding": [
++        252,
++        25,
++        230,
++        2
++      ],
++      "masks": [
++        "0x000",
++        "0x000",
++        "0x0de",
++        "0x7d2",
++        "0x272",
++        "0x3fe",
++        "0x188",
++        "0x3ca",
++        "0xe7a",
++        "0x7ea",
++        "0x64a",
++        "0x67e",
++        "0x7c3",
++        "0x000"
++      ]
++    },
++    {
++      "character": "身",
++      "index": 470,
++      "encoding": [
++        252,
++        25,
++        231,
++        2
++      ],
++      "masks": [
++        "0x000",
++        "0x000",
++        "0x060",
++        "0x3fc",
++        "0x30c",
++        "0x3fc",
++        "0x70c",
++        "0x7fc",
++        "0x3fe",
++        "0x3ee",
++        "0x370",
++        "0x31e",
++        "0x1c6",
++        "0x000"
++      ]
++    },
++    {
++      "character": "轉",
++      "index": 471,
++      "encoding": [
++        252,
++        25,
++        232,
++        2
++      ],
++      "masks": [
++        "0x000",
++        "0x10c",
++        "0x7ff",
++        "0x7cc",
++        "0x7de",
++        "0x55e",
++        "0x71e",
++        "0x7fe",
++        "0xfec",
++        "0xfff",
++        "0x2de",
++        "0x30c",
++        "0x000",
++        "0x000"
++      ]
++    },
++    {
++      "character": "近",
++      "index": 472,
++      "encoding": [
++        252,
++        25,
++        233,
++        2
++      ],
++      "masks": [
++        "0x000",
++        "0x202",
++        "0x3f4",
++        "0x024",
++        "0x7ef",
++        "0x7e6",
++        "0x132",
++        "0x13f",
++        "0x134",
++        "0x114",
++        "0x10e",
++        "0x7f3",
++        "0x000",
++        "0x000"
++      ]
++    },
++    {
++      "character": "都",
++      "index": 473,
++      "encoding": [
++        252,
++        25,
++        234,
++        2
++      ],
++      "masks": [
++        "0x000",
++        "0x000",
++        "0x7e8",
++        "0x4be",
++        "0x6b8",
++        "0x2ff",
++        "0x29c",
++        "0x6be",
++        "0x4a7",
++        "0x4be",
++        "0x7a6",
++        "0x0be",
++        "0x0a6",
++        "0x000"
++      ]
++    },
++    {
++      "character": "靠",
++      "index": 474,
++      "encoding": [
++        252,
++        25,
++        235,
++        2
++      ],
++      "masks": [
++        "0x000",
++        "0x000",
++        "0x3fc",
++        "0x066",
++        "0x7fe",
++        "0x3fc",
++        "0x204",
++        "0x3fc",
++        "0x7de",
++        "0x0d0",
++        "0x7de",
++        "0xfde",
++        "0x0d8",
++        "0x000"
++      ]
++    },
++    {
++      "character": "項",
++      "index": 475,
++      "encoding": [
++        252,
++        25,
++        236,
++        2
++      ],
++      "masks": [
++        "0x000",
++        "0xfe0",
++        "0x11e",
++        "0x19e",
++        "0xfe4",
++        "0xfe4",
++        "0xc64",
++        "0xff4",
++        "0xc7e",
++        "0x7e3",
++        "0x6c0",
++        "0xc30",
++        "0x000",
++        "0x000"
++      ]
++    }
++  ],
++  "scope": "Only physical single-line _(\"...\") literals in start_menu.c and src/taichung*.c; existing native punctuation mappings retained. No parent generator, menu/translation regeneration, download or build."
++}
 diff --git a/docs/localization/taichung-city-localization.md b/docs/localization/taichung-city-localization.md
 new file mode 100644
 index 0000000..08a63ae
@@ -305595,6 +307051,68 @@ index 0000000..c18d71b
 +14×11 replaced the planned entry and retained the correct Station anchor. This
 +confirms that proposal values are not substituted for actual registration;
 +the real source registry and room were unchanged by that check.
+diff --git a/docs/native-onboarding-contract.md b/docs/native-onboarding-contract.md
+new file mode 100644
+index 0000000..ef607c2
+--- /dev/null
++++ b/docs/native-onboarding-contract.md
+@@ -0,0 +1,56 @@
++# Native onboarding contract proposal — v1
++
++Isolated source: `.worktrees/game-onboarding`, branch `codex/native-onboarding`, native base `5d6039c`, rebased onto signs-first checkpoint `d3803a8` (447-glyph prefix). No changes to the CMP release or existing field-language v1 packet are required.
++
++## Capability and ownership
++
++Add optional `onboardingBridge` metadata with version 1, size 48, an aligned EWRAM symbol address, and magic values below. The browser must validate metadata, actual packet magic/version/size/self-address and live frame counter before accessing this bounded mailbox. No browser writes to save variables, script state, coordinates, or other native RAM. Existing 32-byte language and 48-byte navigation packets retain their contracts. Absence of onboarding metadata means the old native opening remains the fallback; frontend must not assume support.
++
++Proposed symbol `gTaichungOnboardingBridge`, signature bytes `TCINTRO1` (magicA 0x4E494354, magicB 0x314F5254), little endian:
++
++| Offset | Type | Field / owner |
++|---|---|---|
++| 0x00 / 0x04 | u32/u32 | magicA / magicB, native |
++| 0x08 / 0x0A | u16/u16 | version=1 / size=48, native |
++| 0x0C | u32 | selfGbaAddress, native |
++| 0x10 | u32 | frameCounter, native; nonzero even publication seqlock, odd during native writes |
++| 0x14 | u32 | contextSequence, native; changes on every readiness/phase boundary |
++| 0x18 | u8 | phase, native |
++| 0x19 | u8 | flags, native |
++| 0x1A | u8 | activeLanguage (0/1/2), native |
++| 0x1B | u8 | result, native |
++| 0x1C | u32 | requestSequence, browser writes LAST |
++| 0x20 | u32 | ackSequence, native writes LAST |
++| 0x24 | u32 | requestedContext, browser |
++| 0x28 | u8 | command, browser |
++| 0x29 | u8 | requestedLanguage, browser |
++| 0x2A / 0x2B | u8/u8 | mapGroup / mapNum, native |
++| 0x2C / 0x2E | s16/s16 | local x / y, native |
++
++Phases: 0 inactive; 1 startup language; 2 welcome; 3 partner selection; 4 outdoor introduction; 5 bike; 6 minimap; 7 team; 8 nearby landmarks; 9 release/complete (NATIVE_TEXT while farewell is busy, READY alone after dismissal); 10 standalone language fallback. Flags: bit0 initialized/ready; bit1 accepts command now; bit2 native text/menu active. Commands: 1 APPLY_STARTUP_LANGUAGE; 2 ACK_TUTORIAL_CARD. Results: 0 none; 1 applied; 2 invalid command/value; 3 stale context; 4 not ready. Exactly one outstanding request, monotonic nonzero sequence, write payload/context then sequence, native validates stable payload and acknowledges only after applying.
++
++## Startup
++
++Frontend presents readable English / 繁體中文 cards before canvas startup, retaining selected preference. It submits command1 only when phase1 and accepts-command are both set. Native opens that bounded gate ONLY from the welcome-room script, after initialized new-game variables and before any welcome text/menu. Native applies the selected language itself, ACKs, closes gate, and resumes the script without native language multichoice. This does not relax the normal field-language bridge's safe-field guard. Only if a fresh native A/B edge is pressed after a release and a two-frame guard, the gate publishes phase10 and closes before invoking the existing standalone native language choice. Elapsed time never opens the native chooser automatically (a slow browser may show a hint). A late request gets stale-context/not-ready; browser must not silently claim success. Existing save Continue stays native-authoritative and uses the existing field bridge after safe-field readiness.
++
++## Outdoor tutorial without lock deadlocks
++
++Native dialogue and browser teaching cards are separate substates. Native renders a short bilingual page, waits until its text printer finishes, then exposes that topic with accepts-command set. The idle native page remains visible as the standalone teaching card; the browser may mirror it readably. After acknowledgment native closes that page and advances. Browser may show a readable card/highlight and ACK only the matching context. Native A or B also advances this explicit card-wait state for standalone play; no browser ACK is required for progress. Native scripts remain locked while teaching; the browser must NOT require an actual Bike/Team action or show a normal live minimap during that lock. The card explains controls, may show a clearly labeled tutorial preview anchored to packet coordinates, and instructs that these controls become available when the guide finishes. Browser ACK never toggles Bike, opens Team, grants Pokémon, teleports, or writes completion directly. Normal contextual controls and navigation resume after complete; real inputs are then tested.
++
++## Save/resume
++
++Reserve previously unused `VAR_0x40F6` with a distinctive opening-stage marker, initialized ONLY by NewGame. Existing saves with zero/unknown marker remain exempt, and aren't relocated or re-tutored. Stage advances after confirmed starter grant; existing grant's marker/party guard remains. Welcome-room Continue with a granted partner skips granting again, performs the authored exit, and resumes pending outdoor tutorial. Each completed tutorial topic advances the persistent stage. Completion is one-time. Old demo/presenter Continue remains unchanged. No source-wide save version bump is required: this is new-game opt-in state, not a geometry migration.
++
++Story owns EN/ZH words for welcome, partner invitation, granted partner transition, outdoor intro, Bike, map, Team, landmarks, release. Native owns stage and text selection. Interface owns cards, command validation, highlights and absence/fallback handling. Main owns build metadata integration and final Vercel acceptance. This draft is intentionally published before implementation; offsets and enum names will be frozen in the header and host tests next.
++
++Exact phase binding is supplied by the requestedContext: a new nonzero context is published on every phase/readiness boundary, with context zero during publication. Readers bracket all twelve words with frameCounter/context and reject zero, odd, or changed frameCounter, and zero/changed context. Every native-field write (including result/ACK) is inside an odd/even publication transaction. Requests double-read sequence/context/command/language; native retains the validated sequence through the action and publishes that exact ACK, never whichever request happens to be current afterward. Pauses and stale cards must revalidate context before ACK.
++
++## Implementation and regression notes
++
++The new flow omits the previous pre-welcome encounter-settings screen. Existing unset preferences still resolve to Normal/Normal, and their zero values are not rewritten. Existing Off/Low/Normal choices remain unchanged. Exploration settings remain optional in the normal native menu.
++
++A narrow opt-in check before ordinary field input launches the outdoor script only for this new game's pending stages in Old City. It returns immediately during quest-log playback, so recap callbacks cannot be starved by a repeating on-frame script. It does not introduce a new temp-variable write into existing saves, alter the old frame table, or script any guide/player walk.
++
++After300 native callback frames waiting for startup language, a short standalone fallback hint may appear. This is only a cue, never an automatic chooser. Phase1 may include NATIVE_TEXT while that hint prints while still accepting its bounded language command. Tutorialcard contexts remain READY+ACCEPTS_COMMAND and not NATIVE_TEXT.
++
++Story release staging: persistent A109 is pending farewell; distinct A1FF is completed. Continue at A109 resumes only farewell, then commits A1FF after dismissal. Old zero/unknown markers and completed A1FF remain exempt. This changes no mailbox offsets or command semantics.
 diff --git a/docs/old-core-graphics-budget.md b/docs/old-core-graphics-budget.md
 new file mode 100644
 index 0000000..e0bd8aa
@@ -310860,6 +312378,109 @@ index 0000000..b3a9a3c
 +void TaichungNavigationBridge_Tick(bool8 gameCallbacksRan);
 +
 +#endif
+diff --git a/include/taichung_onboarding.h b/include/taichung_onboarding.h
+new file mode 100644
+index 0000000..cdfb6ec
+--- /dev/null
++++ b/include/taichung_onboarding.h
+@@ -0,0 +1,97 @@
++#ifndef GUARD_TAICHUNG_ONBOARDING_H
++#define GUARD_TAICHUNG_ONBOARDING_H
++
++#include "gba/types.h"
++
++#define TAICHUNG_ONBOARDING_MAGIC_A 0x4E494354
++#define TAICHUNG_ONBOARDING_MAGIC_B 0x314F5254
++#define TAICHUNG_ONBOARDING_VERSION 1
++#define TAICHUNG_ONBOARDING_SIZE 48
++#define TAICHUNG_ONBOARDING_STAGE_VAR 0x40F6
++#define TAICHUNG_ONBOARDING_STAGE_BASE 0xA100
++#define TAICHUNG_ONBOARDING_DONE_STAGE 0xA1FF
++#define TAICHUNG_ONBOARDING_READY 1
++#define TAICHUNG_ONBOARDING_ACCEPTS_COMMAND 2
++#define TAICHUNG_ONBOARDING_NATIVE_TEXT 4 // Busy text/menu, clear at idle card wait.
++#define TAICHUNG_ONBOARDING_INACTIVE 0
++#define TAICHUNG_ONBOARDING_LANGUAGE 1
++#define TAICHUNG_ONBOARDING_WELCOME 2
++#define TAICHUNG_ONBOARDING_PARTNER 3
++#define TAICHUNG_ONBOARDING_OUTDOOR 4
++#define TAICHUNG_ONBOARDING_BIKE 5
++#define TAICHUNG_ONBOARDING_MAP 6
++#define TAICHUNG_ONBOARDING_TEAM 7
++#define TAICHUNG_ONBOARDING_LANDMARKS 8
++#define TAICHUNG_ONBOARDING_COMPLETE 9
++#define TAICHUNG_ONBOARDING_FALLBACK 10
++#define TAICHUNG_ONBOARDING_APPLY_LANGUAGE 1
++#define TAICHUNG_ONBOARDING_ACK_CARD 2
++#define TAICHUNG_ONBOARDING_RESULT_NONE 0
++#define TAICHUNG_ONBOARDING_RESULT_APPLIED 1
++#define TAICHUNG_ONBOARDING_RESULT_INVALID 2
++#define TAICHUNG_ONBOARDING_RESULT_STALE 3
++#define TAICHUNG_ONBOARDING_RESULT_NOT_READY 4
++
++struct TaichungOnboardingBridge
++{
++    u32 magicA;
++    u32 magicB;
++    u16 version;
++    u16 size;
++    u32 selfGbaAddress;
++    u32 frameCounter; // Nonzero even seqlock; odd means native publication in progress.
++    u32 contextSequence;
++    u8 phase;
++    u8 flags;
++    u8 activeLanguage;
++    u8 result;
++    u32 requestSequence;
++    u32 ackSequence;
++    u32 requestedContext;
++    u8 command;
++    u8 requestedLanguage;
++    u8 mapGroup;
++    u8 mapNum;
++    s16 x;
++    s16 y;
++};
++
++struct TaichungOnboardingRequest
++{
++    u32 sequence;
++    u8 language;
++};
++
++extern volatile struct TaichungOnboardingBridge gTaichungOnboardingBridge;
++extern const u8 gTaichungOnboardingLanguageHint[];
++extern const u8 *const gTaichungOnboardingTopics[5][2];
++extern const u8 *const gTaichungOnboardingRelease[2];
++
++// Pure packet policy shared with host tests. All native fields are read-only
++// to the client; it owns only requestSequence/context/command/language.
++void TaichungOnboardingPacket_Begin(volatile struct TaichungOnboardingBridge *packet);
++void TaichungOnboardingPacket_End(volatile struct TaichungOnboardingBridge *packet);
++void TaichungOnboardingPacket_Init(volatile struct TaichungOnboardingBridge *packet, u32 address);
++void TaichungOnboardingPacket_Context(volatile struct TaichungOnboardingBridge *packet, u8 phase, u8 flags);
++u8 TaichungOnboardingPacket_Request(volatile struct TaichungOnboardingBridge *packet, struct TaichungOnboardingRequest *request);
++void TaichungOnboardingPacket_Ack(volatile struct TaichungOnboardingBridge *packet, u32 sequence, u8 result);
++u8 TaichungOnboardingStage_Phase(u16 stage);
++u16 TaichungOnboardingStage_Advance(u16 stage);
++
++void TaichungOnboarding_InitNewGame(void);
++void TaichungOnboarding_Tick(bool8 callbacksRan);
++void TaichungOnboarding_ScriptStartupEligible(void);
++void TaichungOnboarding_ScriptBeginStartup(void);
++void TaichungOnboarding_ScriptLanguageReady(void);
++void TaichungOnboarding_ScriptWelcome(void);
++void TaichungOnboarding_ScriptPartner(void);
++void TaichungOnboarding_ScriptGranted(void);
++bool8 TaichungOnboarding_TryRunOutdoorScript(void);
++void TaichungOnboarding_ScriptBufferTopic(void);
++void TaichungOnboarding_ScriptIsRelease(void);
++void TaichungOnboarding_ScriptBufferRelease(void);
++void TaichungOnboarding_ScriptWaitCard(void);
++void TaichungOnboarding_ScriptAdvance(void);
++void TaichungOnboarding_ScriptFinish(void);
++
++#endif
 diff --git a/include/taichung_peiqi.h b/include/taichung_peiqi.h
 new file mode 100644
 index 0000000..16f3ced
@@ -312179,10 +313800,10 @@ index 601bff6..b9acdb6 100644
  }
 diff --git a/src/data/taichung_glyphs.h b/src/data/taichung_glyphs.h
 new file mode 100644
-index 0000000..6409429
+index 0000000..88bd384
 --- /dev/null
 +++ b/src/data/taichung_glyphs.h
-@@ -0,0 +1,420 @@
+@@ -0,0 +1,479 @@
 +// Generated by scripts/generate-chinese-font.py. SIL OFL 1.1; see assets/fonts/OFL.txt.
 +static const u16 sTaichungChineseGlyphs[][14] = {
 +    {0x000, 0x000, 0x030, 0x060, 0x0c0, 0x000, 0x000, 0x000, 0x000, 0x000, 0x000, 0x000, 0x000, 0x000}, // 0: 、
@@ -312602,6 +314223,65 @@ index 0000000..6409429
 +    {0x000, 0xffe, 0x302, 0x7be, 0x4a2, 0x7be, 0x49e, 0x7be, 0x4be, 0x7bf, 0x5bf, 0xccd, 0x000, 0x000}, // 414: 顧
 +    {0x000, 0x000, 0x040, 0x3fc, 0x3fc, 0x20c, 0x3fc, 0xffc, 0x00c, 0x7fc, 0x554, 0x556, 0x712, 0x000}, // 415: 鳥
 +    {0x000, 0x33e, 0x52a, 0x53e, 0x7fe, 0x13e, 0x33e, 0x308, 0x3be, 0x6b0, 0x4fe, 0xc56, 0x000, 0x000}, // 416: 默
++    {0x000, 0x000, 0x060, 0xffe, 0x1f8, 0x30c, 0x3f8, 0x7fe, 0xc02, 0xffe, 0x040, 0x040, 0x070, 0x000}, // 417: 亭
++    {0x000, 0x440, 0x64c, 0x248, 0x240, 0xffe, 0xffe, 0x190, 0x190, 0x998, 0x98c, 0xf06, 0x000, 0x000}, // 418: 光
++    {0x000, 0x7fe, 0x606, 0x606, 0x606, 0x606, 0x606, 0x606, 0x606, 0x7fe, 0x606, 0x000, 0x000, 0x000}, // 419: 口
++    {0x000, 0x080, 0x08e, 0x7fa, 0x08a, 0x08a, 0x7fa, 0x1ca, 0x3ce, 0x2a2, 0x490, 0x080, 0x000, 0x000}, // 420: 味
++    {0x000, 0x000, 0x040, 0x0f0, 0x398, 0xffe, 0x000, 0x79e, 0x696, 0x696, 0x79e, 0x086, 0x080, 0x000}, // 421: 命
++    {0x000, 0x000, 0x7b4, 0x4fe, 0x7fe, 0x4ea, 0x7fe, 0x46c, 0x646, 0x3fc, 0x060, 0x7fe, 0x000, 0x000}, // 422: 塑
++    {0x000, 0x060, 0x7fe, 0x0f0, 0x39c, 0x7fe, 0x7fe, 0x27c, 0x244, 0x244, 0x27c, 0x384, 0x000, 0x000}, // 423: 奇
++    {0x000, 0x000, 0x060, 0x7fe, 0x402, 0x7fc, 0x084, 0x7e6, 0x626, 0x7e4, 0x624, 0x7e4, 0x624, 0x000}, // 424: 宿
++    {0x000, 0x000, 0x67e, 0x37e, 0x1e6, 0x43e, 0x27f, 0x1be, 0x466, 0x67e, 0x32a, 0x1aa, 0x08c, 0x000}, // 425: 影
++    {0x000, 0x3ff, 0x3ff, 0x344, 0x364, 0x3e4, 0x72f, 0x030, 0x26e, 0x24a, 0x78b, 0x4f9, 0x000, 0x000}, // 426: 恐
++    {0x000, 0x3fc, 0x3fc, 0x304, 0x3fc, 0x7fe, 0x7fe, 0x3fc, 0x30c, 0x3fc, 0x3ac, 0x632, 0x000, 0x000}, // 427: 景
++    {0x000, 0x090, 0x090, 0xffe, 0xc96, 0xc96, 0xc96, 0xffe, 0xc96, 0xc96, 0xffe, 0xc06, 0x000, 0x000}, // 428: 曲
++    {0x000, 0x7e4, 0xde4, 0xffe, 0x7e4, 0xfee, 0xdae, 0x7e6, 0xfe7, 0x264, 0x3c4, 0xcf4, 0x000, 0x000}, // 429: 樓
++    {0x000, 0x000, 0x3f4, 0x7f4, 0x7ff, 0x3ee, 0x676, 0x3ce, 0x7fe, 0x5b7, 0x7f4, 0x7f4, 0x634, 0x000}, // 430: 橋
++    {0x000, 0x000, 0x008, 0x7fc, 0x3fe, 0x002, 0x3fc, 0x354, 0x354, 0x3fe, 0x258, 0xed4, 0x692, 0x000}, // 431: 氣
++    {0x000, 0x000, 0xf26, 0xd24, 0xdf8, 0xf22, 0xd26, 0xd78, 0xf78, 0xddc, 0xdfe, 0xc9a, 0x682, 0x000}, // 432: 湖
++    {0x000, 0x000, 0x222, 0x324, 0x7f8, 0x110, 0x156, 0x7f8, 0x3bc, 0x336, 0x572, 0x7fb, 0x4c8, 0x000}, // 433: 滋
++    {0x000, 0x08a, 0x7fa, 0x6aa, 0x7fe, 0x7f8, 0x7f8, 0x7ef, 0xdea, 0xd6a, 0xdaa, 0xfeb, 0x000, 0x000}, // 434: 牆
++    {0x000, 0x6de, 0x6cc, 0x7ec, 0x6ff, 0x6cc, 0x6cc, 0x7de, 0x6de, 0x6d2, 0x7de, 0x6d2, 0x000, 0x000}, // 435: 甜
++    {0x000, 0x3fc, 0xffe, 0x660, 0x3fc, 0x3fc, 0xffe, 0x3fc, 0x3fc, 0x264, 0x3fc, 0xffe, 0x000, 0x000}, // 436: 畫
++    {0x000, 0xffe, 0x104, 0x7c4, 0x7c6, 0x7de, 0x7da, 0xffb, 0x7fa, 0x25e, 0x282, 0x300, 0x000, 0x000}, // 437: 磚
++    {0x000, 0x7ff, 0x7ff, 0x7ff, 0x7ff, 0x603, 0x7fb, 0x7fb, 0x7fb, 0x7ff, 0x7fb, 0x683, 0x000, 0x000}, // 438: 聞
++    {0x000, 0x3fe, 0x6de, 0x7de, 0x39e, 0x7c2, 0x7fe, 0x30c, 0x3fc, 0x3fc, 0xffe, 0x300, 0x000, 0x000}, // 439: 聲
++    {0x000, 0x100, 0xffe, 0xfd6, 0xfde, 0xffe, 0xff6, 0x01e, 0xfde, 0x114, 0x5fe, 0xcfe, 0x796, 0x000}, // 440: 聽
++    {0x000, 0x000, 0x0e0, 0x1b0, 0x79c, 0xffe, 0x040, 0x7fe, 0x040, 0x3fc, 0x20c, 0x3fc, 0x20c, 0x000}, // 441: 舍
++    {0x000, 0xfff, 0x508, 0x500, 0xffe, 0x5fe, 0x55e, 0x7fc, 0x3ff, 0x356, 0xbf6, 0xc85, 0x000, 0x000}, // 442: 藏
++    {0x000, 0x000, 0x184, 0xfee, 0x2d3, 0xfef, 0x7e4, 0x5ff, 0x7e4, 0x7ee, 0x7ee, 0x19e, 0xfe3, 0x000}, // 443: 鐘
++    {0x000, 0x000, 0x7fe, 0x5d6, 0xffe, 0x5d6, 0x5fe, 0xfc6, 0x5fe, 0xfee, 0x5fe, 0xfc6, 0xfe2, 0x000}, // 444: 雕
++    {0x000, 0x380, 0x1fc, 0x040, 0xffe, 0x1f0, 0x64c, 0xffe, 0x30c, 0x3fc, 0x30c, 0x3fc, 0x000, 0x000}, // 445: 香
++    {0x000, 0x000, 0x0fe, 0xfd4, 0x3fe, 0xffc, 0x4f4, 0x7fc, 0x3fc, 0x3fc, 0x7fc, 0x55c, 0x752, 0x000}, // 446: 驚
++    {0x000, 0x000, 0x0a8, 0x0ac, 0x7f4, 0x096, 0x097, 0x084, 0x7fc, 0x084, 0x084, 0x084, 0x084, 0x000}, // 447: 件
++    {0x000, 0x020, 0x020, 0x3fe, 0x020, 0x020, 0x7ff, 0x038, 0x098, 0x10c, 0x3fe, 0x3fe, 0x000, 0x000}, // 448: 去
++    {0x000, 0x000, 0x320, 0x32f, 0x7fb, 0x4ab, 0x4ab, 0x5eb, 0x5bb, 0x72f, 0x323, 0x220, 0xfb0, 0x000}, // 449: 啦
++    {0x000, 0x000, 0xff4, 0xbfe, 0xfb4, 0xbfe, 0xbfc, 0x376, 0x7fc, 0xcf4, 0xd94, 0xdf4, 0x614, 0x000}, // 450: 嚮
++    {0x000, 0x7f6, 0x55f, 0x7fb, 0x32b, 0x7fb, 0x3fb, 0x7eb, 0x3ff, 0x7d3, 0x7f0, 0x7a8, 0x000, 0x000}, // 451: 囉
++    {0x000, 0x248, 0x554, 0x7de, 0x75c, 0xffe, 0x6e0, 0xffe, 0x288, 0x3bc, 0xbe4, 0xe66, 0x000, 0x000}, // 452: 幾
++    {0x000, 0x000, 0x224, 0x7fe, 0x376, 0x77e, 0x77e, 0x3f6, 0x3fc, 0x3fc, 0x00c, 0x7fc, 0x3c0, 0x000}, // 453: 彎
++    {0x000, 0x000, 0x3c0, 0x07c, 0x00c, 0x7fc, 0x60c, 0x60c, 0x7fc, 0x60c, 0x006, 0x006, 0x002, 0x000}, // 454: 戶
++    {0x000, 0x666, 0xffc, 0x660, 0x7e2, 0x666, 0x7e0, 0x660, 0xffc, 0x364, 0x666, 0xc32, 0x000, 0x000}, // 455: 淇
++    {0x000, 0x220, 0x224, 0x224, 0xff8, 0x322, 0x774, 0x7b0, 0xfbc, 0xaae, 0x222, 0x222, 0x000, 0x000}, // 456: 淋
++    {0x000, 0x000, 0x7ff, 0x004, 0x004, 0xffe, 0x344, 0x344, 0x35c, 0x37f, 0xb30, 0x618, 0x000, 0x000}, // 457: 玩
++    {0x000, 0x7ff, 0x43f, 0x7e4, 0x624, 0x7ff, 0x7e4, 0x7e4, 0x15e, 0x167, 0x930, 0xf18, 0x000, 0x000}, // 458: 現
++    {0x000, 0x060, 0x7fe, 0x020, 0x3fc, 0x30c, 0x3fc, 0x3fc, 0x30c, 0x3fc, 0xffe, 0x7fe, 0x000, 0x000}, // 459: 直
++    {0x000, 0x000, 0x7ec, 0x3e4, 0x252, 0x34e, 0xfce, 0x4d6, 0x5de, 0x760, 0x37e, 0x7be, 0xce2, 0x000}, // 460: 級
++    {0x000, 0x000, 0xfe4, 0xc24, 0xeaa, 0xdaf, 0xfe6, 0xfba, 0xfff, 0xca0, 0xfb6, 0xc36, 0x620, 0x000}, // 461: 網
++    {0x000, 0x000, 0x084, 0x7e4, 0x4aa, 0x7ef, 0x5a6, 0x6aa, 0x7ff, 0x080, 0x56e, 0x67e, 0x3d0, 0x000}, // 462: 總
++    {0x000, 0x184, 0x3c4, 0x7ea, 0x7ef, 0x7ec, 0x7fe, 0x7ff, 0xff0, 0x2d6, 0xa56, 0xe30, 0x000, 0x000}, // 463: 繞
++    {0x000, 0x010, 0x0f8, 0x088, 0x3fc, 0x7fe, 0x64c, 0x7fc, 0x64c, 0x7fc, 0x7fc, 0x606, 0x382, 0x000}, // 464: 角
++    {0x000, 0x000, 0x784, 0x1e4, 0x11f, 0x7ce, 0x7ee, 0x11e, 0x180, 0x7fe, 0x472, 0x47a, 0x7fe, 0x000}, // 465: 話
++    {0x000, 0x344, 0x7f4, 0x7ae, 0x7f6, 0x7f6, 0x7fe, 0x6b0, 0x6fe, 0x3fa, 0xfbe, 0x482, 0x000, 0x000}, // 466: 識
++    {0x000, 0x3fe, 0x290, 0x3fe, 0x7fe, 0x7fe, 0x30e, 0x3fc, 0x3fc, 0x3fc, 0x39c, 0x606, 0x000, 0x000}, // 467: 費
++    {0x000, 0x020, 0xfff, 0x004, 0x7fc, 0x3fc, 0x3fc, 0x36e, 0x77a, 0x7fa, 0x77e, 0xf7b, 0xc9d, 0x000}, // 468: 贏
++    {0x000, 0x000, 0x0de, 0x7d2, 0x272, 0x3fe, 0x188, 0x3ca, 0xe7a, 0x7ea, 0x64a, 0x67e, 0x7c3, 0x000}, // 469: 路
++    {0x000, 0x000, 0x060, 0x3fc, 0x30c, 0x3fc, 0x70c, 0x7fc, 0x3fe, 0x3ee, 0x370, 0x31e, 0x1c6, 0x000}, // 470: 身
++    {0x000, 0x10c, 0x7ff, 0x7cc, 0x7de, 0x55e, 0x71e, 0x7fe, 0xfec, 0xfff, 0x2de, 0x30c, 0x000, 0x000}, // 471: 轉
++    {0x000, 0x202, 0x3f4, 0x024, 0x7ef, 0x7e6, 0x132, 0x13f, 0x134, 0x114, 0x10e, 0x7f3, 0x000, 0x000}, // 472: 近
++    {0x000, 0x000, 0x7e8, 0x4be, 0x6b8, 0x2ff, 0x29c, 0x6be, 0x4a7, 0x4be, 0x7a6, 0x0be, 0x0a6, 0x000}, // 473: 都
++    {0x000, 0x000, 0x3fc, 0x066, 0x7fe, 0x3fc, 0x204, 0x3fc, 0x7de, 0x0d0, 0x7de, 0xfde, 0x0d8, 0x000}, // 474: 靠
++    {0x000, 0xfe0, 0x11e, 0x19e, 0xfe4, 0xfe4, 0xc64, 0xff4, 0xc7e, 0x7e3, 0x6c0, 0xc30, 0x000, 0x000}, // 475: 項
 +};
 diff --git a/src/data/taichung_team_presets.h b/src/data/taichung_team_presets.h
 new file mode 100644
@@ -313445,10 +315125,15 @@ index 8e82824..e755609 100644
  
  bool8 NpcTakeStep(struct Sprite *sprite)
 diff --git a/src/field_control_avatar.c b/src/field_control_avatar.c
-index b1b6465..59ef702 100644
+index b1b6465..e887601 100644
 --- a/src/field_control_avatar.c
 +++ b/src/field_control_avatar.c
-@@ -5,6 +5,7 @@
+@@ -1,10 +1,12 @@
+ #include "global.h"
++#include "taichung_onboarding.h"
+ #include "gflib.h"
+ #include "bike.h"
+ #include "coord_event_weather.h"
  #include "daycare.h"
  #include "event_data.h"
  #include "event_object_movement.h"
@@ -313456,7 +315141,7 @@ index b1b6465..59ef702 100644
  #include "event_scripts.h"
  #include "fieldmap.h"
  #include "field_control_avatar.h"
-@@ -13,6 +14,7 @@
+@@ -13,6 +15,7 @@
  #include "field_poison.h"
  #include "field_specials.h"
  #include "item_menu.h"
@@ -313464,7 +315149,7 @@ index b1b6465..59ef702 100644
  #include "link.h"
  #include "wonder_news.h"
  #include "metatile_behavior.h"
-@@ -30,6 +32,7 @@
+@@ -30,6 +33,7 @@
  #include "constants/event_objects.h"
  #include "constants/maps.h"
  #include "constants/metatile_behaviors.h"
@@ -313472,7 +315157,7 @@ index b1b6465..59ef702 100644
  
  #define SIGNPOST_POKECENTER 0
  #define SIGNPOST_POKEMART 1
-@@ -70,6 +73,14 @@ static s8 GetWarpEventAtMapPosition(struct MapHeader * mapHeader, struct MapPosi
+@@ -70,6 +74,14 @@ static s8 GetWarpEventAtMapPosition(struct MapHeader * mapHeader, struct MapPosi
  static bool8 TryDoorWarp(struct MapPosition * position, u16 metatileBehavior, u8 playerDirection);
  static s8 GetWarpEventAtPosition(struct MapHeader * mapHeader, u16 x, u16 y, u8 z);
  static const u8 *GetCoordEventScriptAtPosition(struct MapHeader * mapHeader, u16 x, u16 y, u8 z);
@@ -313487,7 +315172,7 @@ index b1b6465..59ef702 100644
  
  COMMON_DATA struct FieldInput gFieldInputRecord = {0};
  
-@@ -115,8 +126,6 @@ void FieldGetPlayerInput(struct FieldInput *input, u16 newKeys, u16 heldKeys)
+@@ -115,8 +127,6 @@ void FieldGetPlayerInput(struct FieldInput *input, u16 newKeys, u16 heldKeys)
                          input->pressedSelectButton = TRUE;
                      if (newKeys & A_BUTTON)
                          input->pressedAButton = TRUE;
@@ -313496,7 +315181,7 @@ index b1b6465..59ef702 100644
                      if (newKeys & R_BUTTON)
                          input->pressedRButton = TRUE;
                  }
-@@ -153,6 +162,48 @@ void FieldGetPlayerInput(struct FieldInput *input, u16 newKeys, u16 heldKeys)
+@@ -153,6 +163,48 @@ void FieldGetPlayerInput(struct FieldInput *input, u16 newKeys, u16 heldKeys)
          else if (heldKeys & DPAD_RIGHT)
              input->dpadDirection = DIR_EAST;
      }
@@ -313545,7 +315230,17 @@ index b1b6465..59ef702 100644
  }
  
  static void QuestLogOverrideJoyVars(struct FieldInput *input, u16 *newKeys, u16 *heldKeys)
-@@ -294,6 +345,19 @@ int ProcessPlayerFieldInput(struct FieldInput *input)
+@@ -206,6 +258,9 @@ int ProcessPlayerFieldInput(struct FieldInput *input)
+     FieldClearPlayerInput(&gFieldInputRecord);
+     gFieldInputRecord.dpadDirection = input->dpadDirection;
+ 
++    if (TaichungOnboarding_TryRunOutdoorScript())
++        return TRUE;
++
+     if (CheckForTrainersWantingBattle() == TRUE)
+         return TRUE;
+ 
+@@ -294,6 +349,19 @@ int ProcessPlayerFieldInput(struct FieldInput *input)
          gFieldInputRecord.pressedSelectButton = TRUE;
          return TRUE;
      }
@@ -313625,19 +315320,20 @@ index bec0f31..02776f9 100644
          SetGpuReg(REG_OFFSET_BLDCNT, 0);
          SetGpuReg(REG_OFFSET_BLDALPHA, 0);
 diff --git a/src/main.c b/src/main.c
-index 542b0f5..f9927fd 100644
+index 542b0f5..371b9f7 100644
 --- a/src/main.c
 +++ b/src/main.c
-@@ -16,6 +16,8 @@
+@@ -16,6 +16,9 @@
  #include "save_failed_screen.h"
  #include "quest_log.h"
  #include "sloopsvc.h"
 +#include "taichung_language_bridge.h"
++#include "taichung_onboarding.h"
 +#include "taichung_navigation_bridge.h"
  
  extern u32 intr_main[];
  
-@@ -86,6 +88,7 @@ static IntrFunc * const sTimerIntrFunc = gIntrTable + 0x7;
+@@ -86,6 +89,7 @@ static IntrFunc * const sTimerIntrFunc = gIntrTable + 0x7;
  
  EWRAM_DATA u8 gDecompressionBuffer[0x4000] = {0};
  EWRAM_DATA u16 gTrainerId = 0;
@@ -313645,7 +315341,7 @@ index 542b0f5..f9927fd 100644
  
  static void UpdateLinkAndCallCallbacks(void);
  static void InitMainCallbacks(void);
-@@ -177,6 +180,7 @@ void AgbMain()
+@@ -177,6 +181,7 @@ void AgbMain()
  
      for (;;)
      {
@@ -313653,16 +315349,17 @@ index 542b0f5..f9927fd 100644
          ReadKeys();
  
          if (gSoftResetDisabled == FALSE
-@@ -211,6 +215,8 @@ void AgbMain()
+@@ -211,6 +216,9 @@ void AgbMain()
              }
          }
  
++        TaichungOnboarding_Tick(sGameCallbacksRan);
 +        TaichungLanguageBridge_Tick(sGameCallbacksRan);
 +        TaichungNavigationBridge_Tick(sGameCallbacksRan);
          PlayTimeCounter_Update();
          MapMusicMain();
          WaitForVBlank();
-@@ -242,6 +248,7 @@ static void CallCallbacks(void)
+@@ -242,6 +250,7 @@ static void CallCallbacks(void)
  {
      if (!RunSaveFailedScreen() && !RunHelpSystemCallback())
      {
@@ -313703,18 +315400,19 @@ index 5cef7c4..e369127 100644
  }
  
 diff --git a/src/new_game.c b/src/new_game.c
-index 3768b3c..357c1a7 100644
+index 3768b3c..f6b1777 100644
 --- a/src/new_game.c
 +++ b/src/new_game.c
-@@ -29,6 +29,7 @@
+@@ -29,6 +29,8 @@
  #include "berry_powder.h"
  #include "pokemon_jump.h"
  #include "event_scripts.h"
 +#include "taichung_save.h"
++#include "taichung_onboarding.h"
  
  // this file's functions
  static void ResetMiniGamesResults(void);
-@@ -81,7 +82,7 @@ static void ClearBattleTower(void)
+@@ -81,7 +83,7 @@ static void ClearBattleTower(void)
  
  static void WarpToPlayersRoom(void)
  {
@@ -313723,11 +315421,12 @@ index 3768b3c..357c1a7 100644
      WarpIntoMap();
  }
  
-@@ -124,6 +125,7 @@ void NewGameInitData(void)
+@@ -124,6 +126,8 @@ void NewGameInitData(void)
      PlayTimeCounter_Reset();
      ClearPokedexFlags();
      InitEventData();
 +    TaichungSaveInitNewGame();
++    TaichungOnboarding_InitNewGame();
      ResetFameChecker();
      SetMoney(&gSaveBlock1Ptr->money, 3000);
      ResetGameStats();
@@ -315334,7 +317033,7 @@ index 0000000..a90f518
 +}
 diff --git a/src/taichung_language.c b/src/taichung_language.c
 new file mode 100644
-index 0000000..7881383
+index 0000000..6d97881
 --- /dev/null
 +++ b/src/taichung_language.c
 @@ -0,0 +1,238 @@
@@ -315343,11 +317042,11 @@ index 0000000..7881383
 +#include "taichung_language.h"
 +
 +extern const u8 Taichung_Text_Welcome[];
-+static const u8 sZh_Taichung_Text_Welcome[] = _("歡迎來到臺中！\n我是小雨。");
++static const u8 sZh_Taichung_Text_Welcome[] = _("你來啦！我是小雨，\n你的臺中城市嚮導。\p歡迎來到舊臺中車站。\n你的臺中故事，就從這裡開始。\p紅磚、鐘樓，還有老故事。\n這座舊站，記著城市的腳步。\p老街、綠廊，還有博物館，\n轉個彎，就有新的發現。\p還有宮原的冰淇淋！\n我每次經過，都想繞一下。\p這裡也有城市聯盟。\n挑戰開放的道館，贏取徽章。");
 +extern const u8 Taichung_Text_ChooseStarter[];
-+static const u8 sZh_Taichung_Text_ChooseStarter[] = _("選一隻寶可夢當旅途夥伴。\n先看看，喜歡哪一隻？");
++static const u8 sZh_Taichung_Text_ChooseStarter[] = _("不過，好玩的旅程，\n總要有個夥伴一起出發。\p有四隻寶可夢，\n正等著認識你這位旅伴。\p準備好認識牠們了嗎？\n來，靠近一點看看吧。");
 +extern const u8 Taichung_Text_StarterChosen[];
-+static const u8 sZh_Taichung_Text_StarterChosen[] = _("和{STR_VAR_1}一起出發吧！\n我們到外面走走。");
++static const u8 sZh_Taichung_Text_StarterChosen[] = _("和{STR_VAR_1}一起出發吧！\n走，我們到外面認識臺中。");
 +extern const u8 Taichung_Text_TeaRequest[];
 +static const u8 sZh_Taichung_Text_TeaRequest[] = _("晴天最適合喝冰茶！\p能幫我把這份茶點\n送給草悟道導覽員嗎？\p她在西南邊的花園裡。");
 +extern const u8 Taichung_Text_TeaAccepted[];
@@ -315411,43 +317110,43 @@ index 0000000..7881383
 +extern const u8 TaichungCity_Text_GreenwayGuide[];
 +static const u8 sZh_TaichungCity_Text_GreenwayGuide[] = _("這條綠廊串起藝術、\n科學與街區生活。\p西邊：秋紅谷、歌劇院。\n東邊：舊車站、臺中公園。");
 +extern const u8 TaichungCity_Text_OldStation[];
-+static const u8 sZh_TaichungCity_Text_OldStation[] = _("舊臺中車站\p地標會館：歡迎入內探索。");
++static const u8 sZh_TaichungCity_Text_OldStation[] = _("舊臺中車站\n紅磚與鐘樓，故事的起點。");
 +extern const u8 TaichungCity_Text_Host_OldStation[];
 +static const u8 sZh_TaichungCity_Text_Host_OldStation[] = _("歡迎來到這座地標會館！\p城市聯盟正為這裡\n準備未來的挑戰。");
 +extern const u8 TaichungCity_Text_Park[];
-+static const u8 sZh_TaichungCity_Text_Park[] = _("臺中公園\p地標會館：歡迎入內探索。");
++static const u8 sZh_TaichungCity_Text_Park[] = _("臺中公園\n湖光、亭影，一起歇歇腳。");
 +extern const u8 TaichungCity_Text_Host_Park[];
 +static const u8 sZh_TaichungCity_Text_Host_Park[] = _("歡迎來到臺中公園！\p城市聯盟正為這裡\n準備未來的挑戰。");
 +extern const u8 TaichungCity_Text_Miyahara[];
-+static const u8 sZh_TaichungCity_Text_Miyahara[] = _("宮原眼科\p地標會館：歡迎入內探索。");
++static const u8 sZh_TaichungCity_Text_Miyahara[] = _("宮原眼科\n老屋裡，藏著甜點驚喜。");
 +extern const u8 TaichungCity_Text_Host_Miyahara[];
 +static const u8 sZh_TaichungCity_Text_Host_Miyahara[] = _("歡迎來到宮原眼科！\p城市聯盟正為這裡\n準備未來的挑戰。");
 +extern const u8 TaichungCity_Text_ScienceMuseum[];
-+static const u8 sZh_TaichungCity_Text_ScienceMuseum[] = _("國立自然科學博物館\p地標會館：歡迎入內探索。");
++static const u8 sZh_TaichungCity_Text_ScienceMuseum[] = _("國立自然科學博物館\n從恐龍，看到生命的驚奇。");
 +extern const u8 TaichungCity_Text_Host_ScienceMuseum[];
 +static const u8 sZh_TaichungCity_Text_Host_ScienceMuseum[] = _("歡迎來到國立自然科學博物館！\p城市聯盟正為這裡\n準備未來的挑戰。");
 +extern const u8 TaichungCity_Text_Greenway[];
-+static const u8 sZh_TaichungCity_Text_Greenway[] = _("草悟道／市民廣場\p地標會館：歡迎入內探索。");
++static const u8 sZh_TaichungCity_Text_Greenway[] = _("草悟道／市民廣場\n沿著綠意，走進藝文日常。");
 +extern const u8 TaichungCity_Text_Host_Greenway[];
 +static const u8 sZh_TaichungCity_Text_Host_Greenway[] = _("歡迎來到這座地標會館！\p城市聯盟正為這裡\n準備未來的挑戰。");
 +extern const u8 TaichungCity_Text_ShenJi[];
-+static const u8 sZh_TaichungCity_Text_ShenJi[] = _("審計新村\p地標會館：歡迎入內探索。");
++static const u8 sZh_TaichungCity_Text_ShenJi[] = _("審計新村\n老宿舍，新點子。");
 +extern const u8 TaichungCity_Text_Host_ShenJi[];
 +static const u8 sZh_TaichungCity_Text_Host_ShenJi[] = _("歡迎來到這座地標會館！\p城市聯盟正為這裡\n準備未來的挑戰。");
 +extern const u8 TaichungCity_Text_FineArts[];
-+static const u8 sZh_TaichungCity_Text_FineArts[] = _("國立臺灣美術館\p地標會館：歡迎入內探索。");
++static const u8 sZh_TaichungCity_Text_FineArts[] = _("國立臺灣美術館\n看畫、看雕塑，也換個眼光。");
 +extern const u8 TaichungCity_Text_Host_FineArts[];
 +static const u8 sZh_TaichungCity_Text_Host_FineArts[] = _("歡迎來到國立臺灣美術館！\p城市聯盟正為這裡\n準備未來的挑戰。");
 +extern const u8 TaichungCity_Text_Fengjia[];
-+static const u8 sZh_TaichungCity_Text_Fengjia[] = _("逢甲夜市\p地標會館：歡迎入內探索。");
++static const u8 sZh_TaichungCity_Text_Fengjia[] = _("逢甲夜市\n聞著香氣，找一口好滋味。");
 +extern const u8 TaichungCity_Text_Host_Fengjia[];
 +static const u8 sZh_TaichungCity_Text_Host_Fengjia[] = _("歡迎來到這座地標會館！\p城市聯盟正為這裡\n準備未來的挑戰。");
 +extern const u8 TaichungCity_Text_MapleGarden[];
-+static const u8 sZh_TaichungCity_Text_MapleGarden[] = _("秋紅谷\p地標會館：歡迎入內探索。");
++static const u8 sZh_TaichungCity_Text_MapleGarden[] = _("秋紅谷\n湖水、景觀橋，慢一點走。");
 +extern const u8 TaichungCity_Text_Host_MapleGarden[];
 +static const u8 sZh_TaichungCity_Text_Host_MapleGarden[] = _("歡迎來到秋紅谷！\p城市聯盟正為這裡\n準備未來的挑戰。");
 +extern const u8 TaichungCity_Text_Theater[];
-+static const u8 sZh_TaichungCity_Text_Theater[] = _("臺中國家歌劇院\p地標會館：歡迎入內探索。");
++static const u8 sZh_TaichungCity_Text_Theater[] = _("臺中國家歌劇院\n曲牆之間，聽見新的聲音。");
 +extern const u8 TaichungCity_Text_Host_Theater[];
 +static const u8 sZh_TaichungCity_Text_Host_Theater[] = _("歡迎來到這座地標會館！\p城市聯盟正為這裡\n準備未來的挑戰。");
 +
@@ -316044,6 +317743,465 @@ index 0000000..0e1d492
 +    sequence++;
 +    packet->sequence = sequence == 0 ? 2 : sequence;
 +}
+diff --git a/src/taichung_onboarding.c b/src/taichung_onboarding.c
+new file mode 100644
+index 0000000..c9b0138
+--- /dev/null
++++ b/src/taichung_onboarding.c
+@@ -0,0 +1,277 @@
++#include "global.h"
++#include "event_data.h"
++#include "field_message_box.h"
++#include "main.h"
++#include "overworld.h"
++#include "palette.h"
++#include "quest_log.h"
++#include "script.h"
++#include "string_util.h"
++#include "taichung_language.h"
++#include "taichung_onboarding.h"
++#include "taichung_starter.h"
++#include "constants/maps.h"
++
++EWRAM_DATA volatile struct TaichungOnboardingBridge gTaichungOnboardingBridge = {0};
++static EWRAM_DATA u16 sWaitFrames = 0;
++static EWRAM_DATA u8 sWaitKind = 0;
++static EWRAM_DATA bool8 sReleased = FALSE;
++static EWRAM_DATA bool8 sFieldReady = FALSE;
++static EWRAM_DATA bool8 sHintShown = FALSE;
++
++// Story's reviewed bilingual text is supplied in taichung_onboarding_text.c.
++
++static u8 SavedPhase(void)
++{
++    return TaichungOnboardingStage_Phase(gSaveBlock1Ptr->vars[TAICHUNG_ONBOARDING_STAGE_VAR - VARS_START]);
++}
++
++static bool8 IsMap(u8 group, u8 num)
++{
++    return gSaveBlock1Ptr->location.mapGroup == group && gSaveBlock1Ptr->location.mapNum == num;
++}
++
++static bool8 IsWelcome(void)
++{
++    return IsMap(MAP_GROUP(MAP_TAICHUNG_STATION_WELCOME), MAP_NUM(MAP_TAICHUNG_STATION_WELCOME));
++}
++
++static bool8 IsOutdoor(void)
++{
++    return IsMap(MAP_GROUP(MAP_TAICHUNG_OLD_CITY), MAP_NUM(MAP_TAICHUNG_OLD_CITY));
++}
++
++static void Publish(u8 phase, u8 flags)
++{
++    TaichungOnboardingPacket_Context(&gTaichungOnboardingBridge, phase, flags);
++}
++
++static void SetStage(u8 phase)
++{
++    VarSet(TAICHUNG_ONBOARDING_STAGE_VAR, TAICHUNG_ONBOARDING_STAGE_BASE + phase);
++}
++
++void TaichungOnboarding_InitNewGame(void)
++{
++    // Opt in only here. Existing SRAM has no recognized marker and remains
++    // exempt from this tutorial, including all presentation/demo cartridges.
++    SetStage(TAICHUNG_ONBOARDING_LANGUAGE);
++    sWaitKind = 0;
++    sWaitFrames = 0;
++    sReleased = FALSE;
++    sFieldReady = FALSE;
++    sHintShown = FALSE;
++    TaichungOnboardingPacket_Init(&gTaichungOnboardingBridge, (u32)&gTaichungOnboardingBridge);
++}
++
++void TaichungOnboarding_ScriptStartupEligible(void)
++{
++    gSpecialVar_Result = IsWelcome() && SavedPhase() == TAICHUNG_ONBOARDING_LANGUAGE
++        && gSaveBlock1Ptr->vars[TAICHUNG_LANGUAGE_VAR - VARS_START] == 0;
++}
++
++void TaichungOnboarding_ScriptBeginStartup(void)
++{
++    sFieldReady = TRUE; // This call is reachable only after initialized map scripts.
++    sWaitKind = TAICHUNG_ONBOARDING_LANGUAGE;
++    sWaitFrames = 0;
++    sReleased = FALSE;
++    sHintShown = FALSE;
++    Publish(TAICHUNG_ONBOARDING_LANGUAGE, TAICHUNG_ONBOARDING_READY | TAICHUNG_ONBOARDING_ACCEPTS_COMMAND);
++}
++
++void TaichungOnboarding_ScriptLanguageReady(void)
++{
++    if (SavedPhase() == TAICHUNG_ONBOARDING_LANGUAGE)
++        SetStage(TAICHUNG_ONBOARDING_WELCOME);
++    Publish(TAICHUNG_ONBOARDING_WELCOME, TAICHUNG_ONBOARDING_READY | TAICHUNG_ONBOARDING_NATIVE_TEXT);
++}
++
++void TaichungOnboarding_ScriptWelcome(void)
++{
++    if (SavedPhase() != 0 && SavedPhase() < TAICHUNG_ONBOARDING_OUTDOOR)
++        Publish(TAICHUNG_ONBOARDING_WELCOME, TAICHUNG_ONBOARDING_READY | TAICHUNG_ONBOARDING_NATIVE_TEXT);
++}
++
++void TaichungOnboarding_ScriptPartner(void)
++{
++    if (SavedPhase() != 0 && SavedPhase() < TAICHUNG_ONBOARDING_OUTDOOR)
++    {
++        SetStage(TAICHUNG_ONBOARDING_PARTNER);
++        Publish(TAICHUNG_ONBOARDING_PARTNER, TAICHUNG_ONBOARDING_READY | TAICHUNG_ONBOARDING_NATIVE_TEXT);
++    }
++}
++
++void TaichungOnboarding_ScriptGranted(void)
++{
++    if (TaichungStarterHasPartner() && SavedPhase() != 0 && SavedPhase() < TAICHUNG_ONBOARDING_OUTDOOR)
++    {
++        SetStage(TAICHUNG_ONBOARDING_OUTDOOR);
++        Publish(TAICHUNG_ONBOARDING_OUTDOOR, TAICHUNG_ONBOARDING_READY | TAICHUNG_ONBOARDING_NATIVE_TEXT);
++    }
++}
++
++extern const u8 TaichungOldCity_OnboardingStart[];
++
++bool8 TaichungOnboarding_TryRunOutdoorScript(void)
++{
++    u8 phase = SavedPhase();
++    // The normal field-input path calls this before trainer/step handling.
++    // Return immediately for every existing/finished save and throughout recap
++    // playback. No temp var, saved coordinate, preference or old script changes.
++    if (!IsOutdoor() || phase < TAICHUNG_ONBOARDING_OUTDOOR
++        || phase > TAICHUNG_ONBOARDING_COMPLETE || !TaichungStarterHasPartner()
++        || QL_IS_PLAYBACK_STATE || QL_GetPlaybackState() == QL_PLAYBACK_STATE_RUNNING)
++        return FALSE;
++    ScriptContext_SetupScript(TaichungOldCity_OnboardingStart);
++    return TRUE;
++}
++
++void TaichungOnboarding_ScriptBufferTopic(void)
++{
++    u8 phase = SavedPhase();
++    if (phase < TAICHUNG_ONBOARDING_OUTDOOR || phase > TAICHUNG_ONBOARDING_LANDMARKS)
++        return;
++    Publish(phase, TAICHUNG_ONBOARDING_READY | TAICHUNG_ONBOARDING_NATIVE_TEXT);
++    StringCopy(gStringVar4, TaichungText(gTaichungOnboardingTopics[phase - TAICHUNG_ONBOARDING_OUTDOOR][0],
++                                      gTaichungOnboardingTopics[phase - TAICHUNG_ONBOARDING_OUTDOOR][1]));
++}
++
++void TaichungOnboarding_ScriptWaitCard(void)
++{
++    sWaitKind = SavedPhase();
++    sWaitFrames = 0;
++    sReleased = FALSE;
++    Publish(sWaitKind, TAICHUNG_ONBOARDING_READY | TAICHUNG_ONBOARDING_ACCEPTS_COMMAND);
++}
++
++void TaichungOnboarding_ScriptAdvance(void)
++{
++    u16 stage = gSaveBlock1Ptr->vars[TAICHUNG_ONBOARDING_STAGE_VAR - VARS_START];
++    VarSet(TAICHUNG_ONBOARDING_STAGE_VAR, TaichungOnboardingStage_Advance(stage));
++    gSpecialVar_Result = SavedPhase() == TAICHUNG_ONBOARDING_COMPLETE;
++}
++
++void TaichungOnboarding_ScriptIsRelease(void)
++{
++    gSpecialVar_Result = SavedPhase() == TAICHUNG_ONBOARDING_COMPLETE;
++}
++
++void TaichungOnboarding_ScriptBufferRelease(void)
++{
++    Publish(TAICHUNG_ONBOARDING_COMPLETE, TAICHUNG_ONBOARDING_READY | TAICHUNG_ONBOARDING_NATIVE_TEXT);
++    StringCopy(gStringVar4, TaichungText(gTaichungOnboardingRelease[0], gTaichungOnboardingRelease[1]));
++}
++
++void TaichungOnboarding_ScriptFinish(void)
++{
++    // A distinct done marker means an interrupted farewell resumes only that
++    // farewell. Commit completion only after the final native message closes.
++    if (SavedPhase() != TAICHUNG_ONBOARDING_COMPLETE)
++        return;
++    VarSet(TAICHUNG_ONBOARDING_STAGE_VAR, TAICHUNG_ONBOARDING_DONE_STAGE);
++    Publish(TAICHUNG_ONBOARDING_COMPLETE, TAICHUNG_ONBOARDING_READY);
++}
++
++static bool8 CanRunGate(bool8 callbacksRan)
++{
++    return callbacksRan && Overworld_IsMainFieldCallback() && !gMain.inBattle
++        && ArePlayerFieldControlsLocked() && !ScriptContext_IsEnabled()
++        && !gPaletteFade.active && !QL_IS_PLAYBACK_STATE
++        && QL_GetPlaybackState() != QL_PLAYBACK_STATE_RUNNING;
++}
++
++static void Resume(u8 nextPhase, u16 result)
++{
++    sWaitKind = 0;
++    Publish(nextPhase, TAICHUNG_ONBOARDING_READY | TAICHUNG_ONBOARDING_NATIVE_TEXT);
++    gSpecialVar_Result = result;
++    ScriptContext_Enable();
++}
++
++void TaichungOnboarding_Tick(bool8 callbacksRan)
++{
++    volatile struct TaichungOnboardingBridge *p = &gTaichungOnboardingBridge;
++    struct TaichungOnboardingRequest request;
++    u8 command;
++    bool8 edge;
++
++    if (p->magicA != TAICHUNG_ONBOARDING_MAGIC_A || p->magicB != TAICHUNG_ONBOARDING_MAGIC_B
++        || p->version != TAICHUNG_ONBOARDING_VERSION || p->size != TAICHUNG_ONBOARDING_SIZE
++        || p->selfGbaAddress != (u32)p)
++        TaichungOnboardingPacket_Init(p, (u32)p);
++    TaichungOnboardingPacket_Begin(p);
++    if (Overworld_IsMainFieldCallback())
++        sFieldReady = TRUE;
++    if (!sFieldReady || gSaveBlock1Ptr == NULL)
++    {
++        TaichungOnboardingPacket_End(p);
++        return;
++    }
++    p->activeLanguage = gSaveBlock1Ptr->vars[TAICHUNG_LANGUAGE_VAR - VARS_START];
++    p->mapGroup = gSaveBlock1Ptr->location.mapGroup;
++    p->mapNum = gSaveBlock1Ptr->location.mapNum;
++    p->x = gSaveBlock1Ptr->pos.x;
++    p->y = gSaveBlock1Ptr->pos.y;
++    TaichungOnboardingPacket_End(p);
++
++    if (!sWaitKind)
++    {
++        // Settle late requests after a phase closed without executing them.
++        TaichungOnboardingPacket_Request(p, &request);
++        return;
++    }
++    if (!CanRunGate(callbacksRan))
++        return;
++    if (sWaitKind == TAICHUNG_ONBOARDING_LANGUAGE && (!IsWelcome() || SavedPhase() != TAICHUNG_ONBOARDING_LANGUAGE))
++        return;
++    if (sWaitKind != TAICHUNG_ONBOARDING_LANGUAGE && (!IsOutdoor() || sWaitKind != SavedPhase()))
++        return;
++    if (sWaitKind == TAICHUNG_ONBOARDING_LANGUAGE && sHintShown)
++    {
++        u8 flags = TAICHUNG_ONBOARDING_READY | TAICHUNG_ONBOARDING_ACCEPTS_COMMAND;
++        if (!IsFieldMessageBoxHidden())
++            flags |= TAICHUNG_ONBOARDING_NATIVE_TEXT;
++        if (p->flags != flags)
++            Publish(TAICHUNG_ONBOARDING_LANGUAGE, flags);
++    }
++    command = TaichungOnboardingPacket_Request(p, &request);
++    if (command == TAICHUNG_ONBOARDING_APPLY_LANGUAGE)
++    {
++        if (VarSet(TAICHUNG_LANGUAGE_VAR, request.language))
++        {
++            TaichungOnboardingPacket_Begin(p);
++            p->activeLanguage = request.language;
++            TaichungOnboardingPacket_End(p);
++            Resume(TAICHUNG_ONBOARDING_WELCOME, TRUE);
++            TaichungOnboardingPacket_Ack(p, request.sequence, TAICHUNG_ONBOARDING_RESULT_APPLIED);
++        }
++        return;
++    }
++    if (command == TAICHUNG_ONBOARDING_ACK_CARD)
++    {
++        Resume(sWaitKind, TRUE);
++        TaichungOnboardingPacket_Ack(p, request.sequence, TAICHUNG_ONBOARDING_RESULT_APPLIED);
++        return;
++    }
++
++    if (sWaitFrames < 0xFFFF)
++        sWaitFrames++;
++    if (!(gMain.heldKeys & (A_BUTTON | B_BUTTON)))
++        sReleased = TRUE;
++    edge = sReleased && sWaitFrames > 2 && (gMain.newKeys & (A_BUTTON | B_BUTTON));
++    if (sWaitKind == TAICHUNG_ONBOARDING_LANGUAGE)
++    {
++        if (!sHintShown && sWaitFrames >= 300 && IsFieldMessageBoxHidden())
++        {
++            ShowFieldMessage(gTaichungOnboardingLanguageHint);
++            sHintShown = TRUE;
++            Publish(TAICHUNG_ONBOARDING_LANGUAGE, TAICHUNG_ONBOARDING_READY
++                | TAICHUNG_ONBOARDING_ACCEPTS_COMMAND | TAICHUNG_ONBOARDING_NATIVE_TEXT);
++        }
++        if (edge)
++            Resume(TAICHUNG_ONBOARDING_FALLBACK, FALSE);
++    }
++    else if (edge)
++        Resume(sWaitKind, TRUE);
++}
+diff --git a/src/taichung_onboarding_protocol.c b/src/taichung_onboarding_protocol.c
+new file mode 100644
+index 0000000..527764b
+--- /dev/null
++++ b/src/taichung_onboarding_protocol.c
+@@ -0,0 +1,137 @@
++#include <stddef.h>
++#include "taichung_onboarding.h"
++
++typedef char PacketSizeCheck[sizeof(struct TaichungOnboardingBridge) == 48 ? 1 : -1];
++typedef char RequestOffsetCheck[offsetof(struct TaichungOnboardingBridge, requestSequence) == 28 ? 1 : -1];
++typedef char ContextOffsetCheck[offsetof(struct TaichungOnboardingBridge, requestedContext) == 36 ? 1 : -1];
++typedef char PositionOffsetCheck[offsetof(struct TaichungOnboardingBridge, x) == 44 ? 1 : -1];
++
++static u32 Increment(u32 value)
++{
++    value++;
++    return value == 0 ? 1 : value;
++}
++
++void TaichungOnboardingPacket_Begin(volatile struct TaichungOnboardingBridge *p)
++{
++    p->frameCounter++; // The prior publication is always even.
++}
++
++void TaichungOnboardingPacket_End(volatile struct TaichungOnboardingBridge *p)
++{
++    p->frameCounter++;
++    if (p->frameCounter == 0)
++        p->frameCounter = 2;
++}
++
++void TaichungOnboardingPacket_Init(volatile struct TaichungOnboardingBridge *p, u32 address)
++{
++    p->magicA = 0;
++    p->magicB = 0;
++    p->version = TAICHUNG_ONBOARDING_VERSION;
++    p->size = TAICHUNG_ONBOARDING_SIZE;
++    p->selfGbaAddress = address;
++    p->frameCounter = 1;
++    p->contextSequence = 1;
++    p->phase = 0;
++    p->flags = 0;
++    p->activeLanguage = 0;
++    p->result = 0;
++    p->requestSequence = 0;
++    p->ackSequence = 0;
++    p->requestedContext = 0;
++    p->command = 0;
++    p->requestedLanguage = 0;
++    p->mapGroup = 0;
++    p->mapNum = 0;
++    p->x = 0;
++    p->y = 0;
++    p->magicB = TAICHUNG_ONBOARDING_MAGIC_B;
++    p->magicA = TAICHUNG_ONBOARDING_MAGIC_A;
++    TaichungOnboardingPacket_End(p);
++}
++
++void TaichungOnboardingPacket_Context(volatile struct TaichungOnboardingBridge *p, u8 phase, u8 flags)
++{
++    // Zero is never an actionable context. Invalidate before changing the
++    // phase/flags, then publish a fresh context after the entire boundary.
++    u32 next = Increment(p->contextSequence);
++    TaichungOnboardingPacket_Begin(p);
++    p->contextSequence = 0;
++    p->flags = 0;
++    p->phase = phase;
++    p->flags = flags;
++    p->contextSequence = next;
++    TaichungOnboardingPacket_End(p);
++}
++
++void TaichungOnboardingPacket_Ack(volatile struct TaichungOnboardingBridge *p, u32 sequence, u8 result)
++{
++    TaichungOnboardingPacket_Begin(p);
++    p->result = result;
++    p->ackSequence = sequence;
++    TaichungOnboardingPacket_End(p);
++}
++
++u8 TaichungOnboardingPacket_Request(volatile struct TaichungOnboardingBridge *p, struct TaichungOnboardingRequest *request)
++{
++    u32 sequence = p->requestSequence;
++    u32 context = p->requestedContext;
++    u8 command = p->command;
++    u8 requested = p->requestedLanguage;
++
++    if (sequence == 0 || sequence == p->ackSequence)
++        return 0;
++    if (sequence != p->requestSequence || context != p->requestedContext
++        || command != p->command || requested != p->requestedLanguage)
++        return 0;
++    if (context == 0 || context != p->contextSequence)
++    {
++        TaichungOnboardingPacket_Ack(p, sequence, TAICHUNG_ONBOARDING_RESULT_STALE);
++        return 0;
++    }
++    if ((p->flags & (TAICHUNG_ONBOARDING_READY | TAICHUNG_ONBOARDING_ACCEPTS_COMMAND))
++        != (TAICHUNG_ONBOARDING_READY | TAICHUNG_ONBOARDING_ACCEPTS_COMMAND))
++    {
++        TaichungOnboardingPacket_Ack(p, sequence, TAICHUNG_ONBOARDING_RESULT_NOT_READY);
++        return 0;
++    }
++    if (command == TAICHUNG_ONBOARDING_APPLY_LANGUAGE
++        && p->phase == TAICHUNG_ONBOARDING_LANGUAGE && (requested == 1 || requested == 2))
++    {
++        request->sequence = sequence;
++        request->language = requested;
++        return command;
++    }
++    if (command == TAICHUNG_ONBOARDING_ACK_CARD && requested == 0
++        && p->phase >= TAICHUNG_ONBOARDING_OUTDOOR && p->phase <= TAICHUNG_ONBOARDING_LANDMARKS)
++    {
++        // Startup may accept language while its fallback hint prints; tutorial
++        // cards must wait until the native text/menu has relinquished input.
++        if (p->flags & TAICHUNG_ONBOARDING_NATIVE_TEXT)
++        {
++            TaichungOnboardingPacket_Ack(p, sequence, TAICHUNG_ONBOARDING_RESULT_NOT_READY);
++            return 0;
++        }
++        request->sequence = sequence;
++        request->language = 0;
++        return command;
++    }
++    TaichungOnboardingPacket_Ack(p, sequence, TAICHUNG_ONBOARDING_RESULT_INVALID);
++    return 0;
++}
++
++u8 TaichungOnboardingStage_Phase(u16 stage)
++{
++    if (stage <= TAICHUNG_ONBOARDING_STAGE_BASE || stage > TAICHUNG_ONBOARDING_STAGE_BASE + TAICHUNG_ONBOARDING_COMPLETE)
++        return TAICHUNG_ONBOARDING_INACTIVE;
++    return stage - TAICHUNG_ONBOARDING_STAGE_BASE;
++}
++
++u16 TaichungOnboardingStage_Advance(u16 stage)
++{
++    u8 phase = TaichungOnboardingStage_Phase(stage);
++    if (phase >= TAICHUNG_ONBOARDING_OUTDOOR && phase < TAICHUNG_ONBOARDING_COMPLETE)
++        return stage + 1;
++    return stage;
++}
+diff --git a/src/taichung_onboarding_text.c b/src/taichung_onboarding_text.c
+new file mode 100644
+index 0000000..5a4b6c9
+--- /dev/null
++++ b/src/taichung_onboarding_text.c
+@@ -0,0 +1,27 @@
++#include "global.h"
++#include "taichung_onboarding.h"
++
++// Reviewed Story v2; native controls are cartridge A/B/START.
++const u8 gTaichungOnboardingLanguageHint[] = _("Waiting for browser language.\nA/B: choose on this cartridge.");
++static const u8 sIntroEn[] = _("Here we are: Station plaza!\nA quick tour, then off you go!");
++static const u8 sIntroZh[] = _("到囉，這裡是舊站前廣場！\n認識幾件事，就能自由出發。");
++static const u8 sBikeEn[] = _("After our tour: B to ride.\nTap again. Outdoors only.\pIn menus, B is Back.\nUse A to keep reading.");
++static const u8 sBikeZh[] = _("導覽後，戶外按B騎車，\n再按一次就下車。\p選單用B返回。\n這裡按A，接著看。");
++static const u8 sMapEn[] = _("In the browser: the minimap.\nTap it for City Map.\pUse the City Map button too.\nFind Minimap in Game options.");
++static const u8 sMapZh[] = _("網頁左上角，有小地圖。\n點開就能看城市地圖。\p也能直接開城市地圖。\n在遊戲選項開關小地圖。");
++static const u8 sTeamEn[] = _("Open Menu with START.\nChoose TEAM to add or swap.\p150 choices. All free.\nReady at Lv50 when added.");
++static const u8 sTeamZh[] = _("按START開選單。\n選隊伍，加入或更換夥伴。\p150隻任選，完全免費。\n加入就有50級，準備對戰。");
++static const u8 sLandmarksEn[] = _("Go south onto the main road.\nThen west to the avenue.\pThe Station is behind us.\nJun can take your challenge.\pMiyahara lies northwest.\nThe Park is farther north.\pLian at the Park is ready too.\nWest roads reach the Greenway.\pMore halls are preparing.\nVisit them as you explore.");
++static const u8 sLandmarksZh[] = _("先往南，走上站前大道。\n再往西，接著沿大道往北。\p身後的車站，有館主俊。\n想挑戰的話，可以找他。\p宮原眼科在西北邊，\n公園在更北邊。\p公園的莉安也準備好對戰了。\n沿西邊道路，可到草悟道。\p其他會館仍在準備挑戰。\n也歡迎先去走走、打聲招呼。");
++static const u8 sReleaseEn[] = _("All set! The city is yours.\nTake your partner exploring.");
++static const u8 sReleaseZh[] = _("都認識了，就出發吧！\n帶著夥伴，去轉個彎看看。");
++
++const u8 *const gTaichungOnboardingTopics[5][2] = {
++    {sIntroEn, sIntroZh},
++    {sBikeEn, sBikeZh},
++    {sMapEn, sMapZh},
++    {sTeamEn, sTeamZh},
++    {sLandmarksEn, sLandmarksZh},
++};
++
++const u8 *const gTaichungOnboardingRelease[2] = {sReleaseEn, sReleaseZh};
 diff --git a/src/taichung_opening.c b/src/taichung_opening.c
 new file mode 100644
 index 0000000..9afd2af
@@ -318356,6 +320514,103 @@ index 0000000..d0430a6
 +++ b/tests/lian_host/overworld.h
 @@ -0,0 +1 @@
 +const struct MapHeader *Overworld_GetMapHeaderByGroupAndId(u16, u16);
+diff --git a/tests/onboarding_host/event_data.h b/tests/onboarding_host/event_data.h
+new file mode 100644
+index 0000000..c26b536
+--- /dev/null
++++ b/tests/onboarding_host/event_data.h
+@@ -0,0 +1,2 @@
++#include "global.h"
++bool8 VarSet(u16 id,u16 value);
+diff --git a/tests/onboarding_host/field_message_box.h b/tests/onboarding_host/field_message_box.h
+new file mode 100644
+index 0000000..59cbb38
+--- /dev/null
++++ b/tests/onboarding_host/field_message_box.h
+@@ -0,0 +1,3 @@
++#include "global.h"
++bool8 IsFieldMessageBoxHidden(void);
++bool8 ShowFieldMessage(const u8 *text);
+diff --git a/tests/onboarding_host/global.h b/tests/onboarding_host/global.h
+new file mode 100644
+index 0000000..57203e7
+--- /dev/null
++++ b/tests/onboarding_host/global.h
+@@ -0,0 +1,23 @@
++#ifndef ONBOARDING_HOST_GLOBAL_H
++#define ONBOARDING_HOST_GLOBAL_H
++#define GUARD_GLOBAL_H
++#include <stddef.h>
++#include "gba/types.h"
++#define TRUE 1
++#define FALSE 0
++#define EWRAM_DATA
++#define _(text) ""
++#define A_BUTTON 1
++#define B_BUTTON 2
++#define VARS_START 0x4000
++struct SaveBlock1 { u16 vars[256]; struct {u8 mapGroup,mapNum;} location; struct {s16 x,y;} pos; u8 protectedState[512]; };
++extern struct SaveBlock1 *gSaveBlock1Ptr;
++extern u16 gSpecialVar_Result;
++struct Main { bool8 inBattle; u16 heldKeys,newKeys; };
++extern struct Main gMain;
++struct PaletteFade { bool8 active; };
++extern struct PaletteFade gPaletteFade;
++extern bool8 sPlayback;
++extern u8 sPlaybackState;
++extern u8 gStringVar4[1024];
++#endif
+diff --git a/tests/onboarding_host/main.h b/tests/onboarding_host/main.h
+new file mode 100644
+index 0000000..dc4f98a
+--- /dev/null
++++ b/tests/onboarding_host/main.h
+@@ -0,0 +1 @@
++#include "global.h"
+diff --git a/tests/onboarding_host/overworld.h b/tests/onboarding_host/overworld.h
+new file mode 100644
+index 0000000..f69af53
+--- /dev/null
++++ b/tests/onboarding_host/overworld.h
+@@ -0,0 +1,2 @@
++#include "global.h"
++bool8 Overworld_IsMainFieldCallback(void);
+diff --git a/tests/onboarding_host/palette.h b/tests/onboarding_host/palette.h
+new file mode 100644
+index 0000000..dc4f98a
+--- /dev/null
++++ b/tests/onboarding_host/palette.h
+@@ -0,0 +1 @@
++#include "global.h"
+diff --git a/tests/onboarding_host/quest_log.h b/tests/onboarding_host/quest_log.h
+new file mode 100644
+index 0000000..fb62c15
+--- /dev/null
++++ b/tests/onboarding_host/quest_log.h
+@@ -0,0 +1,4 @@
++#include "global.h"
++#define QL_IS_PLAYBACK_STATE sPlayback
++#define QL_PLAYBACK_STATE_RUNNING 1
++u8 QL_GetPlaybackState(void);
+diff --git a/tests/onboarding_host/script.h b/tests/onboarding_host/script.h
+new file mode 100644
+index 0000000..d765eb0
+--- /dev/null
++++ b/tests/onboarding_host/script.h
+@@ -0,0 +1,5 @@
++#include "global.h"
++void ScriptContext_Enable(void);
++bool8 ArePlayerFieldControlsLocked(void);
++bool8 ScriptContext_IsEnabled(void);
++void ScriptContext_SetupScript(const u8 *script);
+diff --git a/tests/onboarding_host/string_util.h b/tests/onboarding_host/string_util.h
+new file mode 100644
+index 0000000..22680af
+--- /dev/null
++++ b/tests/onboarding_host/string_util.h
+@@ -0,0 +1,2 @@
++#include "global.h"
++u8 *StringCopy(u8 *dest,const u8 *src);
 diff --git a/tests/peiqi_host/global.h b/tests/peiqi_host/global.h
 new file mode 100644
 index 0000000..3ceb121
@@ -318405,6 +320660,33 @@ index 0000000..d0430a6
 +++ b/tests/peiqi_host/overworld.h
 @@ -0,0 +1 @@
 +const struct MapHeader *Overworld_GetMapHeaderByGroupAndId(u16, u16);
+diff --git a/tests/run_taichung_onboarding.sh b/tests/run_taichung_onboarding.sh
+new file mode 100644
+index 0000000..729a4e6
+--- /dev/null
++++ b/tests/run_taichung_onboarding.sh
+@@ -0,0 +1,21 @@
++#!/usr/bin/env bash
++set -euo pipefail
++source_root="$(cd "$(dirname "$0")/.." && pwd)"
++test_output="$(mktemp -d "${TMPDIR:-/tmp}/taichung-onboarding-tests.XXXXXX")"
++trap 'rm -rf "$test_output"' EXIT
++cc -std=c99 -Wall -Wextra -Werror -I"$source_root/include" \
++  "$source_root/src/taichung_onboarding_protocol.c" \
++  "$source_root/tests/test_taichung_onboarding_protocol.c" -o "$test_output/protocol"
++"$test_output/protocol"
++if [[ ! -f "$source_root/include/constants/map_groups.h" ]]; then
++  printf 'Generate the native map headers with the ordinary ROM build before running adapter checks.\n' >&2
++  exit 1
++fi
++cc -std=c99 -Wall -Wextra -Werror -Wno-pointer-to-int-cast \
++  -I"$source_root/tests/onboarding_host" -I"$source_root/include" \
++  "$source_root/src/taichung_onboarding_protocol.c" \
++  "$source_root/src/taichung_onboarding.c" \
++  "$source_root/src/taichung_onboarding_text.c" \
++  "$source_root/src/taichung_exploration.c" \
++  "$source_root/tests/test_taichung_onboarding.c" -o "$test_output/adapter"
++"$test_output/adapter"
 diff --git a/tests/save_host/event_data.h b/tests/save_host/event_data.h
 new file mode 100644
 index 0000000..37004a7
@@ -323375,6 +325657,284 @@ index 0000000..e9da37f
 +    assert(sPacket.selfGbaAddress == PACKET_ADDRESS && sPacket.frameCounter == 1);
 +    assert(sPacket.requestSequence == 0 && sPacket.ackSequence == 0 && sWrites == 2);
 +    puts("Language bridge protocol: startup, queue/apply, native override, validation, ack ordering and state preservation passed.");
++    return 0;
++}
+diff --git a/tests/test_taichung_onboarding.c b/tests/test_taichung_onboarding.c
+new file mode 100644
+index 0000000..7a24f8b
+--- /dev/null
++++ b/tests/test_taichung_onboarding.c
+@@ -0,0 +1,152 @@
++#include <assert.h>
++#include <stdio.h>
++#include <string.h>
++#include "global.h"
++#include "taichung_onboarding.h"
++#include "taichung_language.h"
++#include "taichung_exploration.h"
++#include "constants/maps.h"
++
++static struct SaveBlock1 sSave;
++struct SaveBlock1 *gSaveBlock1Ptr = &sSave;
++struct Main gMain;
++struct PaletteFade gPaletteFade;
++u16 gSpecialVar_Result;
++bool8 sPlayback;
++u8 sPlaybackState;
++u8 gStringVar4[1024];
++static bool8 sField, sPartner, sLocked, sScriptRunning;
++static unsigned sResumes, sWrites, sHints, sStarts;
++const u8 TaichungOldCity_OnboardingStart[]={0};
++#define STAGE sSave.vars[TAICHUNG_ONBOARDING_STAGE_VAR - VARS_START]
++#define LANGUAGE sSave.vars[TAICHUNG_LANGUAGE_VAR - VARS_START]
++#define PACKET gTaichungOnboardingBridge
++
++bool8 VarSet(u16 id, u16 value) { assert(id == TAICHUNG_ONBOARDING_STAGE_VAR || id == TAICHUNG_LANGUAGE_VAR); sSave.vars[id - VARS_START] = value; sWrites++; return TRUE; }
++bool8 IsFieldMessageBoxHidden(void) { return TRUE; }
++bool8 ShowFieldMessage(const u8 *text) { (void)text; sHints++; return TRUE; }
++bool8 Overworld_IsMainFieldCallback(void) { return sField; }
++u8 QL_GetPlaybackState(void) { return sPlaybackState; }
++void ScriptContext_Enable(void) { sResumes++; }
++void ScriptContext_SetupScript(const u8 *script) { assert(script==TaichungOldCity_OnboardingStart); sStarts++; }
++bool8 ArePlayerFieldControlsLocked(void) { return sLocked; }
++bool8 ScriptContext_IsEnabled(void) { return sScriptRunning; }
++bool8 TaichungStarterHasPartner(void) { return sPartner; }
++const u8 *TaichungText(const u8 *en, const u8 *zh) { return LANGUAGE == 2 ? zh : en; }
++u8 *StringCopy(u8 *dest, const u8 *src) { return (u8 *)strcpy((char *)dest, (const char *)src); }
++static void SetMap(bool8 welcome) { sSave.location.mapGroup = MAP_GROUP(MAP_TAICHUNG_OLD_CITY); sSave.location.mapNum = welcome ? MAP_NUM(MAP_TAICHUNG_STATION_WELCOME) : MAP_NUM(MAP_TAICHUNG_OLD_CITY); }
++static void Tick(void) { TaichungOnboarding_Tick(TRUE); assert(PACKET.frameCounter && !(PACKET.frameCounter & 1)); }
++static void Request(u32 seq,u8 cmd,u8 language) { PACKET.requestedContext=PACKET.contextSequence; PACKET.command=cmd; PACKET.requestedLanguage=language; PACKET.requestSequence=seq; }
++static void Reset(void)
++{
++    memset(&sSave, 0xA5, sizeof(sSave));
++    memset((void *)&PACKET, 0, sizeof(PACKET));
++    memset(&gMain,0,sizeof(gMain));
++    sField=TRUE; sPartner=FALSE; sLocked=TRUE; sScriptRunning=FALSE; sPlayback=FALSE; sPlaybackState=0; gPaletteFade.active=FALSE;
++    sWrites=sResumes=sHints=sStarts=0; LANGUAGE=0; SetMap(TRUE);
++    TaichungOnboarding_InitNewGame();
++}
++static void AssertProtected(const struct SaveBlock1 *before)
++{
++    struct SaveBlock1 expected=*before;
++    expected.vars[TAICHUNG_ONBOARDING_STAGE_VAR - VARS_START]=STAGE;
++    expected.vars[TAICHUNG_LANGUAGE_VAR - VARS_START]=LANGUAGE;
++    assert(memcmp(&expected,&sSave,sizeof(sSave))==0);
++}
++int main(void)
++{
++    unsigned language,phase,i,wild,sight;
++    u32 oldContext;
++    struct SaveBlock1 before;
++    for(language=1;language<=2;language++)
++    {
++        Reset();
++        sSave.vars[TAICHUNG_EXPLORATION_WILD_VAR-VARS_START]=0;
++        sSave.vars[TAICHUNG_EXPLORATION_SIGHT_VAR-VARS_START]=0;
++        before=sSave;
++        TaichungOnboarding_ScriptStartupEligible(); assert(gSpecialVar_Result==TRUE);
++        TaichungOnboarding_ScriptBeginStartup();
++        gMain.heldKeys=A_BUTTON; gMain.newKeys=A_BUTTON;
++        for(i=0;i<2000;i++)Tick(); // Slow browser and held launch input never open native picker.
++        assert(sResumes==0 && PACKET.phase==1 && LANGUAGE==0 && sHints==1);
++        gMain.heldKeys=gMain.newKeys=0;
++        Request(1,1,language); gPaletteFade.active=TRUE; Tick();
++        assert(LANGUAGE==0 && PACKET.ackSequence==0);
++        gPaletteFade.active=FALSE; sLocked=FALSE; Tick();
++        assert(LANGUAGE==0 && PACKET.ackSequence==0);
++        sLocked=TRUE; sScriptRunning=TRUE; Tick();
++        assert(LANGUAGE==0 && PACKET.ackSequence==0);
++        sScriptRunning=FALSE; Tick();
++        assert(LANGUAGE==language && sResumes==1 && PACKET.ackSequence==1 && PACKET.result==1);
++        assert(PACKET.phase==2 && !(PACKET.flags&2));
++        TaichungOnboarding_ScriptLanguageReady(); assert(STAGE==0xA102);
++        TaichungOnboarding_ScriptWelcome(); TaichungOnboarding_ScriptPartner(); assert(STAGE==0xA103);
++        TaichungOnboarding_ScriptGranted(); assert(STAGE==0xA103); // No party, no progress.
++        sPartner=TRUE; TaichungOnboarding_ScriptGranted(); assert(STAGE==0xA104);
++        TaichungOnboarding_ScriptGranted(); assert(STAGE==0xA104); // Idempotent.
++        AssertProtected(&before);
++        SetMap(FALSE); before=sSave;
++        for(phase=4;phase<=8;phase++)
++        {
++            sPlayback=TRUE; assert(!TaichungOnboarding_TryRunOutdoorScript());
++            sPlayback=FALSE; assert(TaichungOnboarding_TryRunOutdoorScript());
++            TaichungOnboarding_ScriptBufferTopic(); assert(PACKET.phase==phase && PACKET.flags==5);
++            oldContext=PACKET.contextSequence;
++            TaichungOnboarding_ScriptWaitCard(); assert(PACKET.flags==3 && PACKET.contextSequence!=oldContext);
++            Request(phase+10,2,0); PACKET.requestedContext=oldContext; Tick(); assert(PACKET.result==3);
++            assert(STAGE==0xA100+phase && sResumes==phase-3);
++            Request(phase+20,2,0); Tick(); assert(PACKET.result==1 && !(PACKET.flags&2));
++            TaichungOnboarding_ScriptAdvance(); assert(STAGE==0xA100+phase+1);
++            assert(gSpecialVar_Result==(phase==8));
++            AssertProtected(&before);
++        }
++        assert(STAGE==0xA109 && TaichungOnboarding_TryRunOutdoorScript());
++        TaichungOnboarding_ScriptIsRelease(); assert(gSpecialVar_Result==TRUE);
++        TaichungOnboarding_ScriptBufferRelease(); assert(PACKET.phase==9 && PACKET.flags==5);
++        TaichungOnboarding_ScriptFinish(); assert(PACKET.phase==9 && PACKET.flags==1 && STAGE==0xA1FF);
++        assert(TaichungExplorationGetMode(TAICHUNG_EXPLORATION_WILD)==TAICHUNG_EXPLORATION_NORMAL);
++        assert(TaichungExplorationGetMode(TAICHUNG_EXPLORATION_SIGHT)==TAICHUNG_EXPLORATION_NORMAL);
++        assert(sSave.vars[TAICHUNG_EXPLORATION_WILD_VAR-VARS_START]==0 && sSave.vars[TAICHUNG_EXPLORATION_SIGHT_VAR-VARS_START]==0);
++        assert(!TaichungOnboarding_TryRunOutdoorScript());
++        Request(90,2,0); Tick(); assert(PACKET.result==4);
++    }
++    Reset(); TaichungOnboarding_ScriptBeginStartup();
++    gMain.heldKeys=gMain.newKeys=A_BUTTON;
++    Tick();Tick();Tick(); assert(sResumes==0);
++    gMain.heldKeys=gMain.newKeys=0;Tick();
++    gMain.heldKeys=gMain.newKeys=B_BUTTON;Tick();
++    assert(sResumes==1 && PACKET.phase==10 && gSpecialVar_Result==FALSE);
++    assert(LANGUAGE==0); // Only the standalone chooser subsequently sets it.
++    Reset(); SetMap(FALSE); sPartner=TRUE;
++    for(i=0;i<65536;i++)
++    {
++        STAGE=i;
++        assert(TaichungOnboarding_TryRunOutdoorScript()==(i>=0xA104 && i<=0xA109));
++    }
++    STAGE=0; before=sSave; TaichungOnboarding_ScriptGranted();
++    assert(memcmp(&before,&sSave,sizeof(sSave))==0); // Old save never opts in.
++    for(wild=0;wild<=3;wild++)
++    for(sight=0;sight<=3;sight++)
++    {
++        STAGE=0;
++        sSave.vars[TAICHUNG_EXPLORATION_WILD_VAR-VARS_START]=wild;
++        sSave.vars[TAICHUNG_EXPLORATION_SIGHT_VAR-VARS_START]=sight;
++        before=sSave;
++        assert(!TaichungOnboarding_TryRunOutdoorScript());
++        TaichungOnboarding_ScriptGranted();
++        assert(TaichungExplorationGetMode(0)==(wild?wild:3));
++        assert(TaichungExplorationGetMode(1)==(sight?sight:3));
++        assert(memcmp(&before,&sSave,sizeof(sSave))==0);
++    }
++    for(phase=4;phase<=8;phase++)
++    {
++        STAGE=0xA100+phase; assert(TaichungOnboarding_TryRunOutdoorScript());
++        TaichungOnboarding_ScriptBufferTopic(); TaichungOnboarding_ScriptWaitCard();
++        gMain.newKeys=gMain.heldKeys=0; Tick();Tick();Tick();
++        gMain.newKeys=gMain.heldKeys=A_BUTTON; Tick();
++        assert(!(PACKET.flags&2));
++        TaichungOnboarding_ScriptAdvance(); assert(STAGE==0xA101+phase);
++    }
++    puts("PASS: both startup languages, slow/held input, busy gating, native fallback, card contexts, questlog deferral, resumable phases, completed/legacy save exemption and protected state.");
++    return 0;
++}
+diff --git a/tests/test_taichung_onboarding_protocol.c b/tests/test_taichung_onboarding_protocol.c
+new file mode 100644
+index 0000000..f69aa8e
+--- /dev/null
++++ b/tests/test_taichung_onboarding_protocol.c
+@@ -0,0 +1,114 @@
++#include <assert.h>
++#include <stdio.h>
++#include <string.h>
++#include "taichung_onboarding.h"
++
++static volatile struct TaichungOnboardingBridge p;
++static struct TaichungOnboardingRequest accepted;
++
++static void Request(u32 sequence, u32 context, u8 command, u8 language)
++{
++    p.requestedContext = context;
++    p.command = command;
++    p.requestedLanguage = language;
++    p.requestSequence = sequence;
++}
++
++int main(void)
++{
++    unsigned phase, value;
++    u32 prior, token;
++    TaichungOnboardingPacket_Init(&p, 0x0203F000);
++    assert(sizeof(p) == 48 && p.frameCounter == 2 && p.contextSequence == 1);
++    assert(p.magicA == 0x4E494354 && p.magicB == 0x314F5254);
++    assert(p.version == 1 && p.size == 48 && p.selfGbaAddress == 0x0203F000);
++    Request(1, p.contextSequence, 1, 2);
++    assert(TaichungOnboardingPacket_Request(&p, &accepted) == 0);
++    assert(p.result == TAICHUNG_ONBOARDING_RESULT_NOT_READY && p.ackSequence == 1);
++    prior = p.contextSequence;
++    TaichungOnboardingPacket_Context(&p, 1, 3);
++    assert(p.contextSequence != prior && !(p.frameCounter & 1));
++    Request(2, prior, 1, 2);
++    assert(TaichungOnboardingPacket_Request(&p, &accepted) == 0 && p.result == TAICHUNG_ONBOARDING_RESULT_STALE);
++    Request(3, p.contextSequence, 1, 3);
++    assert(TaichungOnboardingPacket_Request(&p, &accepted) == 0 && p.result == TAICHUNG_ONBOARDING_RESULT_INVALID);
++    for (value = 1; value <= 2; value++)
++    {
++        Request(value + 3, p.contextSequence, 1, value);
++        assert(TaichungOnboardingPacket_Request(&p, &accepted) == 1);
++        assert(accepted.language == value && accepted.sequence == value + 3);
++        assert(p.ackSequence != accepted.sequence); // No promise before writer commits.
++        token = accepted.sequence;
++        p.requestSequence = 900; // A broken client replaces its request mid-action.
++        TaichungOnboardingPacket_Ack(&p, token, 1);
++        assert(p.ackSequence == token && p.ackSequence != 900);
++        p.requestSequence = token;
++        assert(TaichungOnboardingPacket_Request(&p, &accepted) == 0);
++    }
++    // A slow browser may apply either language while the startup hint prints.
++    TaichungOnboardingPacket_Context(&p, TAICHUNG_ONBOARDING_LANGUAGE,
++        TAICHUNG_ONBOARDING_READY | TAICHUNG_ONBOARDING_ACCEPTS_COMMAND | TAICHUNG_ONBOARDING_NATIVE_TEXT);
++    for (value = 1; value <= 2; value++)
++    {
++        Request(200 + value, p.contextSequence, TAICHUNG_ONBOARDING_APPLY_LANGUAGE, value);
++        assert(TaichungOnboardingPacket_Request(&p, &accepted) == TAICHUNG_ONBOARDING_APPLY_LANGUAGE);
++        assert(accepted.sequence == 200 + value && accepted.language == value);
++        TaichungOnboardingPacket_Ack(&p, accepted.sequence, TAICHUNG_ONBOARDING_RESULT_APPLIED);
++    }
++    for (phase = 4; phase <= 8; phase++)
++    {
++        TaichungOnboardingPacket_Context(&p, phase,
++            TAICHUNG_ONBOARDING_READY | TAICHUNG_ONBOARDING_ACCEPTS_COMMAND | TAICHUNG_ONBOARDING_NATIVE_TEXT);
++        prior = p.contextSequence;
++        accepted.sequence = 0xBAD;
++        accepted.language = 0xFF;
++        Request(phase + 210, prior, TAICHUNG_ONBOARDING_ACK_CARD, 0);
++        assert(TaichungOnboardingPacket_Request(&p, &accepted) == 0);
++        assert(p.result == TAICHUNG_ONBOARDING_RESULT_NOT_READY && p.ackSequence == phase + 210);
++        assert(p.phase == phase && p.contextSequence == prior);
++        assert(accepted.sequence == 0xBAD && accepted.language == 0xFF); // No accepted action to advance.
++        TaichungOnboardingPacket_Context(&p, phase, 5);
++        Request(phase + 10, p.contextSequence, 2, 0);
++        assert(TaichungOnboardingPacket_Request(&p, &accepted) == 0 && p.result == 4);
++        prior = p.contextSequence;
++        TaichungOnboardingPacket_Context(&p, phase, 3);
++        Request(phase + 20, prior, 2, 0);
++        assert(TaichungOnboardingPacket_Request(&p, &accepted) == 0 && p.result == 3);
++        Request(phase + 30, p.contextSequence, 1, 2);
++        assert(TaichungOnboardingPacket_Request(&p, &accepted) == 0 && p.result == 2);
++        Request(phase + 40, p.contextSequence, 2, 2);
++        assert(TaichungOnboardingPacket_Request(&p, &accepted) == 0 && p.result == 2);
++        Request(phase + 50, p.contextSequence, 2, 0);
++        assert(TaichungOnboardingPacket_Request(&p, &accepted) == 2);
++        token = accepted.sequence;
++        TaichungOnboardingPacket_Context(&p, phase, 5);
++        TaichungOnboardingPacket_Ack(&p, token, 1);
++        assert(!(p.frameCounter & 1));
++        Request(phase + 60, prior, 2, 0);
++        assert(TaichungOnboardingPacket_Request(&p, &accepted) == 0);
++    }
++    for (phase = 0; phase <= 10; phase++)
++    {
++        TaichungOnboardingPacket_Context(&p, phase, 1);
++        Request(phase + 100, p.contextSequence, 2, 0);
++        assert(TaichungOnboardingPacket_Request(&p, &accepted) == 0);
++    }
++    p.contextSequence = 0xFFFFFFFF;
++    p.frameCounter = 0xFFFFFFFE;
++    TaichungOnboardingPacket_Context(&p, 1, 3);
++    assert(p.contextSequence == 1 && p.frameCounter == 2);
++    for (value = 0; value <= 0xFFFF; value++)
++    {
++        phase = TaichungOnboardingStage_Phase(value);
++        if (value > 0xA100 && value <= 0xA109)
++            assert(phase == value - 0xA100);
++        else
++            assert(phase == 0 && TaichungOnboardingStage_Advance(value) == value);
++        if (phase >= 4 && phase <= 8)
++            assert(TaichungOnboardingStage_Advance(value) == value + 1);
++        else
++            assert(TaichungOnboardingStage_Advance(value) == value);
++    }
++    puts("PASS: startup-only language, exact card contexts, stale/invalid/not-ready, duplicate ACK, writer ordering, seqlock/context wrap and all 65536 stage values.");
 +    return 0;
 +}
 diff --git a/tools/taichung/.gitignore b/tools/taichung/.gitignore
