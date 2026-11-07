@@ -2,6 +2,8 @@
 
 A Vite + TypeScript frontend for the source-built Taichung FireRed cartridge. The canvas displays the real game running in mGBA WebAssembly.
 
+The introduction showcases four existing pixel landmark assets: Old Station, National Taichung Theater, Miyahara and Taichung Park. It uses a four-column desktop row and a two-column mobile grid, with English/Traditional Chinese captions. Asset provenance and native integration status are recorded in `src/assets/landmarks/README.md`; the gallery is labeled landmark art rather than gameplay screenshots.
+
 ## Run
 
 ```sh
@@ -38,7 +40,7 @@ The emulator modules are loaded through `public/emulator-loader.js`, using a nat
 - M or Enter: Menu (Start); Backspace or right Shift: Select.
 - Z / X remain legacy A / B aliases. E remains the R shoulder button.
 - Q / E: L / R.
-- Onscreen buttons support pointer and touch input. In portrait, the game sits above a 144px directional pad and large semantic action buttons; short landscape layouts place the controls beside the complete game frame. Each direction and system control has a 48px target. City Map is a separate browser guide action, not a game key.
+- Onscreen buttons support pointer and touch input. In portrait, the game sits above a 144px directional pad and large semantic action buttons. Each direction and system control has a 48px target. City Map is a separate browser guide action, not a game key.
 - Drag within the pad to change direction; its center and outside edge release movement. Multiple fingers and keyboard presses own their holds independently. Inputs release on cancellation, lost capture, focus loss, rotation, fullscreen transitions, pause and modal opening. A held key must be released before it can drive the game again after focus or modal changes.
 - Game shortcuts operate on the game canvas and focused game controls. Text fields, language selectors, guide/dialog controls, links and ordinary page buttons keep their own keyboard behavior. Enter/Space activate a focused game button; F/D remain its primary action shortcuts.
 - Play enters a viewport-filling portrait game view and requests native fullscreen directly in the click gesture. The CSS view works when the browser declines or lacks that API. Back to introduction pauses the live game; Return to game resumes the same canvas/runtime.
