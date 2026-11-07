@@ -1,4 +1,4 @@
-# Vercel preparation — separate integration item
+# Vercel deployment and origin verification
 
 This document began as a local configuration handoff. Main has since created and linked the existing-account `taichung-quest` project and deployed and verified the Greenway update at https://taichung-quest.vercel.app, after a separate protected preview and native/client acceptance. The original GPT Site remains live. See `docs/next-build-integration.md` for release identities and verification limits.
 
@@ -70,8 +70,17 @@ The original local preparation used the older `ae0ada35` cartridge. It is histor
 
 The new deployment gate passes all 28 unit tests, including missing/unsupported navigation metadata, invalid packet addresses, missing/mismatched minimap bindings, an edited Theater layout with a stale fingerprint, a missing geometry file and a provenance-only refresh. Existing ROM digest/source and language checks remain covered.
 
-Local packaging was refreshed against Main's intermediate Theater/cast pair: native `a9587ae9b4d8988cf89f9c72ecf413d3c6fa7d85`, 16MiB ROM SHA-256 `38e48bf5110c16910f3f769ef72540e11b16538e0143d1fb18078342e416cb6b`, navigation address 33813676 and geometry fingerprint `924380bc2dfe7176686fd81395a52b8489ff18ff6401442acdf06a5d41331722`. The 19 output file hashes, isolation headers, Wasm content type and fixture exclusion were checked. This is an intermediate packaging check; Main must regenerate from the clean integrated final Park source/metadata and verify that final attachment before deploying.
+Local packaging was refreshed against Main's intermediate Theater/cast pair: native `a9587ae9b4d8988cf89f9c72ecf413d3c6fa7d85`, 16MiB ROM SHA-256 `38e48bf5110c16910f3f769ef72540e11b16538e0143d1fb18078342e416cb6b`, navigation address 33813676 and geometry fingerprint `924380bc2dfe7176686fd81395a52b8489ff18ff6401442acdf06a5d41331722`. The 19 output file hashes, isolation headers, Wasm content type and fixture exclusion were checked. This historical intermediate check was followed by the final Theater/Park deployment and the Greenway promotion recorded in `docs/next-build-integration.md`.
 
-An actual Vercel preview still needs Main to verify response headers/MIME types, `crossOriginIsolated`/`SharedArrayBuffer`, worker startup and a complete Play/save/reload flow at that origin. Local Vite headers and artifact inspection do not prove Vercel edge behavior. No remote deployment or physical iPhone/Android test is claimed.
+Actual Vercel-origin Play, native-save import/Continue, language/navigation bridges, byte-identical save export and fresh-cartridge reload passed on the Theater/Park build. The final Greenway cartridge separately passed native migration and production-client local Chrome checks; its promoted production assets and headers match exactly. Full release identities and evidence are in `docs/next-build-integration.md`. No physical iPhone/Android retest is claimed.
 
-Saves belong to each browser/origin. Download/import can move a cartridge save from the existing host to a future Vercel origin; browser snapshots do not automatically migrate. Keep the existing preview/release available during that transition.
+Saves belong to each browser/origin. Download/import can move a cartridge save from the existing host to Vercel; browser snapshots do not automatically migrate. Keep the existing preview/release available during that transition.
+
+## Moving an existing adventure to Vercel
+
+1. On the existing Site, use the game's own menu to Save. Then open Game options → Your saved adventures → Download save and retain the `.sav` file.
+2. Open [the Vercel player](https://taichung-quest.vercel.app) in the phone/browser you intend to use. If that origin already has progress, export its native save before replacing it.
+3. Start the player, then use Game options → Your saved adventures → Import save. Choose the copied `.sav` file and confirm the cartridge restart.
+4. Start exploring and choose native Continue. Check the party, badges and saved location before continuing the adventure.
+
+Browser Save spot snapshots remain tied to their original browser/origin. Native `.sav` export/import is the transfer path; the existing Site stays available as fallback.
