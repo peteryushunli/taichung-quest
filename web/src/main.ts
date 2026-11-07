@@ -1,12 +1,14 @@
 import './style.css';
 import './confirm.css';
 import './controls.css';
+import './immersive.css';
 import type { mGBAEmulator } from '@thenick775/mgba-wasm';
 import { createCityGuide } from './city-guide';
 import { getLocale, initializeLocalization, languageControl, onLocaleChange, setLocale, t } from './i18n';
 import { NativeLanguageBridge, parseLanguageBridgeMetadata } from './language-bridge';
 import type { LanguageBridgeState } from './language-bridge';
 import { createGameControls } from './game-controls';
+import { createGameView } from './game-view';
 
 type RuntimeFactory = (options: { canvas: HTMLCanvasElement }) => Promise<mGBAEmulator>;
 type RuntimeWindow = Window & { taichungCreateEmulator?: RuntimeFactory };
@@ -45,20 +47,21 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
   </header>
   <main>
     <section class="intro" aria-labelledby="page-title">
-      <div><p class="eyebrow" data-i18n="TAIWAN, WITH A LITTLE WONDER">TAIWAN, WITH A LITTLE WONDER</p><h1 id="page-title" data-i18n="Take the scenic route.">Take the scenic route.</h1></div>
-      <p class="intro-copy" data-i18n="A pocket-sized adventure through Taichung.&#10;Arrive at the old station. Explore three city districts.">A pocket-sized adventure through Taichung.<br>Arrive at the old station. Explore three city districts.</p>
+      <div><p class="eyebrow" data-i18n="POKÉMON × TAICHUNG">POKÉMON × TAICHUNG</p><h1 id="page-title" data-i18n="Your Pokémon.&#10;A whole new Taichung.">Your Pokémon.<br>A whole new Taichung.</h1></div>
+      <div class="intro-copy"><p data-i18n="Choose Charmander, Bulbasaur, Squirtle or Pikachu, then explore a miniature Taichung. Discover ten real landmarks and their fictional Pokémon gyms.">Choose Charmander, Bulbasaur, Squirtle or Pikachu, then explore a miniature Taichung. Discover ten real landmarks and their fictional Pokémon gyms.</p><p class="prototype-scope" data-i18n="Three districts and ten visitor halls are open. The Station gym has a playable battle; the other nine challenges are still being built.">Three districts and ten visitor halls are open. The Station gym has a playable battle; the other nine challenges are still being built.</p><button class="start-button" id="landing-play-button">${icon('play')} <span>Play Pokémon × Taichung</span></button></div>
     </section>
     <div class="adventure-layout">
       <section class="game-column" aria-label="Playable game">
         <div class="console" id="console">
-          <button id="exit-fullscreen-button" class="fullscreen-exit" data-i18n="Exit fullscreen">Exit fullscreen</button>
+          <div class="immersive-bar"><button id="exit-fullscreen-button" class="fullscreen-exit" data-i18n="Back to introduction">Back to introduction</button><span>POKÉMON × TAICHUNG</span><button id="game-options-button" aria-haspopup="dialog" aria-controls="game-options" data-i18n="Game options">Game options</button></div>
+          <dialog id="game-options" class="player-options" aria-labelledby="game-options-title"><div class="options-heading"><h2 id="game-options-title" data-i18n="Game options">Game options</h2><button data-close-options data-i18n="Close">Close</button></div>${languageControl('player-language')}<div id="options-toolbar-slot"></div><div id="options-save-slot"></div><p id="options-feedback" role="status"></p><p class="options-key-help" data-i18n="Arrow keys move. F interacts or confirms. D goes back. M opens the game menu.">Arrow keys move. F interacts or confirms. D goes back. M opens the game menu.</p></dialog>
           <div class="console-top"><span><i class="power-light"></i> TAICHUNG QUEST</span><span>TAICHUNG CITY · 臺中城區</span></div>
           <div class="screen-bezel">
             <div class="screen" id="screen">
               <canvas id="game-canvas" width="240" height="160" tabindex="0" aria-label="Taichung Quest game screen. Arrow keys move. F interacts or confirms. D goes back. M or Enter opens the menu."></canvas>
               <div class="start-screen" id="start-screen">
                 <div class="pixel-postcard" aria-hidden="true"><div class="pixel-cloud cloud-one"></div><div class="pixel-cloud cloud-two"></div><div class="pixel-sun"></div><div class="postcard-hill"></div><div class="pixel-path"></div><div class="pixel-tree tree-one"></div><div class="pixel-tree tree-two"></div><div class="pixel-tree tree-three"></div><div class="pixel-shop"><span></span></div><div class="pixel-person"></div></div>
-                <div class="start-content"><p class="screen-eyebrow" data-i18n="YOUR NEXT LITTLE ADVENTURE">YOUR NEXT LITTLE ADVENTURE</p><h2 data-i18n="Next stop:&#10;Taichung.">Next stop:<br>Taichung.</h2><button class="start-button" id="play-button">${icon('play')} <span>Start exploring</span></button><p class="start-hint" data-i18n="Begin at the old station. Make the city your own.">Begin at the old station. Make the city your own.</p></div>
+                <div class="start-content"><p class="screen-eyebrow" data-i18n="YOUR NEXT LITTLE ADVENTURE">YOUR NEXT LITTLE ADVENTURE</p><h2 data-i18n="Pokémon ×&#10;Taichung.">Pokémon ×<br>Taichung.</h2><button class="start-button" id="play-button">${icon('play')} <span>Start exploring</span></button><p id="play-feedback" class="play-feedback" role="status" aria-live="polite" hidden></p><p class="start-hint" data-i18n="Choose your Pokémon. Explore Taichung.">Choose your Pokémon. Explore Taichung.</p></div>
               </div>
               <div class="pause-screen" id="pause-screen" hidden><p class="screen-eyebrow" data-i18n="TAKE YOUR TIME">TAKE YOUR TIME</p><h2 data-i18n="A little breather.">A little breather.</h2><button class="start-button" id="resume-button">${icon('play')} <span data-i18n="Keep exploring">Keep exploring</span></button></div>
             </div>
@@ -70,11 +73,13 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
             <div class="action-buttons"><button data-gba="A" class="action a" aria-label="Interact or confirm. Keyboard F; game A."><span data-i18n="Interact / Confirm">Interact / Confirm</span><small class="physical-key-hint" data-i18n="F key · game A">F key · game A</small><small class="touch-key-hint" aria-hidden="true">A</small></button><button data-gba="B" class="action b" aria-label="Go back or cancel. Keyboard D; game B."><span data-i18n="Back">Back</span><small class="physical-key-hint" data-i18n="D key · game B">D key · game B</small><small class="touch-key-hint" aria-hidden="true">B</small></button></div>
           </div>
           <div class="console-bottom"><span data-i18n="A LITTLE CURIOSITY GOES A LONG WAY">A LITTLE CURIOSITY GOES A LONG WAY</span><div class="speaker" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div></div>
+          <p id="player-notice" class="player-notice" role="alert" hidden></p>
+          <div class="handheld-details" aria-hidden="true"><span class="handheld-brand">TAICHUNG QUEST<b>GAME BOY</b></span><div class="speaker"><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
         </div>
         <div class="game-navigation"><span><span data-i18n="Get to know the city.">Get to know the city.</span><small data-i18n="Real places behind the adventure.">Real places behind the adventure.</small></span><button id="city-map-button" class="city-map-button" aria-haspopup="dialog" aria-controls="city-guide">${icon('map')} <span data-i18n="City Map">City Map</span> <span class="city-map-chinese" lang="zh-Hant">城市地圖</span></button></div>
         <div class="game-toolbar" aria-label="Emulator controls">
           <div class="toolbar-group"><button id="pause-button" class="tool-button" disabled>${icon('pause')} <span>Pause</span></button><button id="sound-button" class="tool-button" disabled aria-pressed="false">${icon('sound')} <span>Sound on</span></button></div>
-          <div class="toolbar-group"><button id="save-button" class="tool-button" disabled>${icon('save')} <span data-i18n="Save spot">Save spot</span></button><button id="fullscreen-button" class="tool-button icon-only" aria-label="Enter fullscreen">${icon('fullscreen')}</button><button id="restart-button" class="tool-button icon-only" disabled aria-label="Restart game">${icon('restart')}</button></div>
+          <div class="toolbar-group"><button id="save-button" class="tool-button" disabled>${icon('save')} <span data-i18n="Save spot">Save spot</span></button><button id="restart-button" class="tool-button" disabled aria-label="Restart game">${icon('restart')} <span data-i18n="Restart">Restart</span></button></div>
         </div>
         <p class="feedback" id="feedback" role="status" aria-live="polite">${savedAt ? 'Your last saved spot is waiting in this browser.' : 'Begin at the old station. Get to know Taichung, one landmark at a time.'}</p>
       </section>
@@ -98,6 +103,7 @@ function el<T extends HTMLElement = HTMLElement>(id: string): T {
 
 const canvas = el<HTMLCanvasElement>('game-canvas');
 const playButton = el<HTMLButtonElement>('play-button');
+const landingPlayButton = el<HTMLButtonElement>('landing-play-button');
 const feedback = el('feedback');
 const status = el('game-status');
 let emulator: mGBAEmulator | undefined;
@@ -121,6 +127,13 @@ function message(text: string, error = false) {
   feedbackText = text;
   feedback.textContent = t(text);
   feedback.classList.toggle('error', error);
+  el('options-feedback').textContent = t(text);
+  el('options-feedback').classList.toggle('error', error);
+  el('play-feedback').textContent = t(text);
+  el('play-feedback').hidden = !starting && !error;
+  el('start-screen').dataset.error = String(error);
+  el('player-notice').textContent = t(text);
+  el('player-notice').hidden = !error || !running;
 }
 
 function setStatus(text: string) { statusText = text; status.textContent = t(text); }
@@ -159,7 +172,7 @@ async function connectNativeLanguage(romSha256: string, romBytes: number) {
   }
 }
 
-function focusGame() { if (running && !paused && !restarting && !confirmationOpen && !cityGuide.isOpen) canvas.focus({ preventScroll: true }); }
+function focusGame() { if (running && !paused && !restarting && !confirmationOpen && !cityGuide.isOpen && !gameView.optionsOpen && gameView.immersive) canvas.focus({ preventScroll: true }); }
 
 function confirmAction(title: string, explanation: string, action: string): Promise<boolean> {
   if (confirmationOpen) return Promise.resolve(false);
@@ -190,7 +203,7 @@ function confirmAction(title: string, explanation: string, action: string): Prom
   proceed.textContent = t(action);
   actions.append(cancel, proceed);
   dialog.append(heading, body, actions);
-  document.body.append(dialog);
+  el('console').append(dialog);
   return new Promise((resolve) => {
     dialog.addEventListener('close', () => {
       const accepted = dialog.returnValue === 'confirm';
@@ -269,12 +282,13 @@ async function startGame() {
   if (starting || running) return;
   starting = true;
   playButton.disabled = true;
+  landingPlayButton.disabled = true;
   playButton.querySelector('span')!.textContent = t('Packing your bag…');
   setStatus('LOADING YOUR ADVENTURE');
   message('Getting your adventure ready…');
   try {
     if (!window.crossOriginIsolated || typeof SharedArrayBuffer === 'undefined') {
-      throw new Error('This emulator needs an isolated browser tab. Open the game directly in a current browser; the server must send COOP and COEP headers.');
+      throw new Error('This preview cannot start the game yet. Try the latest link in Safari or Chrome; the host may need an update.');
     }
     const response = await fetch(ROM_URL, { cache: 'no-store' });
     if (!response.ok) throw new Error('The game cartridge is still being built. Try again once the Taichung build is ready.');
@@ -322,6 +336,11 @@ async function startGame() {
       // old CPU snapshot durably before loading the cartridge and its SRAM.
       await flushFilesystem();
     }
+    if (!gameView.immersive) {
+      setStatus('READY WHEN YOU ARE');
+      message('Your game is ready. Tap Play when you want to enter.');
+      return;
+    }
     if (!emulator.loadGame(gamePath, SAVE_PATH)) throw new Error('The emulator could not open this game cartridge.');
     if (freshCartridgeBoot) {
       bootFromCartridge = false;
@@ -356,12 +375,13 @@ async function startGame() {
   } finally {
     starting = false;
     playButton.disabled = false;
-    playButton.querySelector('span')!.textContent = t('Start exploring');
+    landingPlayButton.disabled = false;
+    refreshRuntimeLabels();
   }
 }
 
 function setPaused(value: boolean) {
-  if (!running || !emulator) return;
+  if (!running || !emulator || paused === value) return;
   releaseInputs();
   paused = value;
   if (paused) {
@@ -385,11 +405,33 @@ const cityGuide = createCityGuide({
   resume: () => setPaused(false),
   releaseInputs,
 });
+// Native fullscreen only renders descendants of the player. Keep every modal
+// in that subtree, without replacing its existing controls or event listeners.
+el('console').append(el('city-guide'));
+el('options-toolbar-slot').append(document.querySelector('.game-toolbar')!);
+el('options-save-slot').append(document.querySelector('.save-details')!);
+const gameView = createGameView({
+  console: el('console'), dialog: el<HTMLDialogElement>('game-options'), returnTarget: landingPlayButton,
+  getState: () => ({ running, paused }), pause: () => setPaused(true), resume: () => setPaused(false),
+  release: releaseInputs, refresh: () => { gameInput?.refresh(); refreshRuntimeLabels(); },
+});
 for (const id of ['city-map-button', 'touch-city-map-button']) el(id).addEventListener('click', () => cityGuide.open(el(id)));
 
-playButton.addEventListener('click', () => { void startGame(); });
-el('pause-button').addEventListener('click', () => setPaused(!paused));
-el('resume-button').addEventListener('click', () => setPaused(false));
+function openGame() {
+  if (starting || restarting) return;
+  gameView.enter();
+  if (running) { setPaused(false); focusGame(); }
+  else void startGame();
+}
+playButton.addEventListener('click', openGame);
+landingPlayButton.addEventListener('click', openGame);
+el('resume-button').addEventListener('click', openGame);
+el('exit-fullscreen-button').addEventListener('click', () => gameView.leave());
+el('game-options-button').addEventListener('click', () => gameView.openOptions(el('game-options-button')));
+el('pause-button').addEventListener('click', () => {
+  if (gameView.optionsOpen) { gameView.closeOptions(); setPaused(false); }
+  else setPaused(!paused);
+});
 el('sound-button').addEventListener('click', () => {
   if (!emulator) return;
   muted = !muted;
@@ -400,16 +442,6 @@ el('sound-button').addEventListener('click', () => {
   focusGame();
 });
 el('save-button').addEventListener('click', () => { releaseInputs(); void persist(true); focusGame(); });
-async function toggleFullscreen() {
-  releaseInputs();
-  try {
-    if (document.fullscreenElement) await document.exitFullscreen();
-    else await el('console').requestFullscreen();
-  } catch { message('Fullscreen isn’t available in this browser. You can still explore right here.'); }
-  focusGame();
-}
-el('fullscreen-button').addEventListener('click', () => { void toggleFullscreen(); });
-el('exit-fullscreen-button').addEventListener('click', () => { void toggleFullscreen(); });
 el('restart-button').addEventListener('click', () => { void restartCartridge(); });
 
 async function restartCartridge(importedSave?: Uint8Array) {
@@ -512,7 +544,7 @@ el<HTMLInputElement>('save-file').addEventListener('change', async (event) => {
 gameInput = createGameControls({
   root: document.querySelector<HTMLElement>('.physical-controls')!,
   canvas,
-  canPlay: () => running && !paused && !restarting && !confirmationOpen && !cityGuide.isOpen,
+  canPlay: () => running && !paused && !restarting && !confirmationOpen && !cityGuide.isOpen && gameView.immersive && !gameView.optionsOpen,
   focus: focusGame,
   press: (button) => emulator?.buttonPress(button),
   release: (button) => emulator?.buttonUnpress(button),
@@ -528,6 +560,7 @@ function refreshRuntimeLabels() {
   setStatus(statusText);
   message(feedbackText, feedback.classList.contains('error'));
   playButton.querySelector('span')!.textContent = t(starting ? 'Packing your bag…' : 'Start exploring');
+  landingPlayButton.querySelector('span')!.textContent = t(starting ? 'Packing your bag…' : running ? 'Return to game' : 'Play Pokémon × Taichung');
   el('pause-button').innerHTML = `${icon(paused ? 'play' : 'pause')} <span>${t(paused ? 'Resume' : 'Pause')}</span>`;
   el('sound-button').innerHTML = `${icon(muted ? 'mute' : 'sound')} <span>${t(muted ? 'Sound off' : 'Sound on')}</span>`;
   document.title = getLocale() === 'zh-Hant' ? 'Taichung Quest · 台中小冒險' : 'Taichung Quest · A little adventure';

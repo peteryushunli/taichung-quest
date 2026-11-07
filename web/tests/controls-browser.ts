@@ -1,4 +1,5 @@
 import { createGameControls } from '../src/game-controls';
+import { createGameView } from '../src/game-view';
 
 const root = document.querySelector<HTMLElement>('.physical-controls')!;
 const canvas = document.querySelector('canvas')!;
@@ -31,6 +32,10 @@ function pointer(type: string, id: number, target: Element, x = .5, y = .5) {
     clientX: rect.left + rect.width * x, clientY: rect.top + rect.height * y, bubbles: true, cancelable: true }));
 }
 function equal(actual: unknown, expected: unknown) {
+  if (actual instanceof Node || expected instanceof Node) {
+    if (actual !== expected) throw new Error('Expected the original DOM node or focus target');
+    return;
+  }
   if (JSON.stringify(actual) !== JSON.stringify(expected)) throw new Error(`Expected ${JSON.stringify(expected)}, got ${JSON.stringify(actual)}`);
 }
 function held(value: string) { equal(root.dataset.heldInputs, value); }
@@ -135,6 +140,66 @@ run.addEventListener('click', async () => {
     pointer('pointerup', 6, root);
     held(''); equal(events, ['+B']);
   });
+  const viewRoot = document.createElement('section');
+  const viewCanvas = document.createElement('canvas');
+  const viewDialog = document.createElement('dialog');
+  viewDialog.innerHTML = '<button data-close-options>Close options</button>';
+  const trigger = document.createElement('button');
+  trigger.textContent = 'Options fixture';
+  viewRoot.append(viewCanvas, trigger, viewDialog);
+  document.body.append(viewRoot);
+  let viewPaused = false;
+  const calls: string[] = [];
+  viewRoot.requestFullscreen = () => { calls.push('fullscreen'); return Promise.reject(new Error('Unsupported fixture API')); };
+  const view = createGameView({
+    console: viewRoot, dialog: viewDialog, returnTarget: run,
+    getState: () => ({ running: true, paused: viewPaused }),
+    pause: () => { viewPaused = true; calls.push('pause'); },
+    resume: () => { viewPaused = false; calls.push('resume'); },
+    release: () => calls.push('release'), refresh() {},
+  });
+  const closeViewOptions = () => new Promise<void>((resolve) => {
+    viewDialog.addEventListener('close', () => resolve(), { once: true });
+    view.closeOptions();
+  });
+  await check('Play requests fullscreen synchronously and retains CSS mode after rejection', async () => {
+    view.enter();
+    equal(calls.slice(0, 2), ['release', 'fullscreen']);
+    equal(viewRoot.dataset.immersive, 'true');
+    await Promise.resolve();
+    equal(view.immersive, true);
+    equal(viewRoot.querySelector('canvas'), viewCanvas);
+  });
+  await check('options pause and release, then restore prior running state and focus', async () => {
+    viewPaused = false;
+    view.openOptions(trigger);
+    equal(viewPaused, true);
+    equal(view.optionsOpen, true);
+    await closeViewOptions();
+    equal(viewPaused, false);
+    equal(document.activeElement, trigger);
+  });
+  await check('options preserve an already-paused game', async () => {
+    viewPaused = true;
+    const resumes = calls.filter(value => value === 'resume').length;
+    view.openOptions(trigger);
+    await closeViewOptions();
+    equal(viewPaused, true);
+    equal(calls.filter(value => value === 'resume').length, resumes);
+  });
+  await check('exit closes options without resuming, preserves canvas and returns to intro', async () => {
+    viewPaused = false;
+    view.openOptions(trigger);
+    const closed = new Promise<void>(resolve => viewDialog.addEventListener('close', () => resolve(), { once: true }));
+    view.leave();
+    await closed;
+    equal(viewPaused, true);
+    equal(view.immersive, false);
+    equal(viewRoot.dataset.immersive, undefined);
+    equal(viewRoot.querySelector('canvas'), viewCanvas);
+    equal(document.body.classList.contains('game-immersive'), false);
+  });
+  viewRoot.remove();
   controls.releaseAll();
   const failed = lines.filter((line) => line.startsWith('FAIL')).length;
   results.textContent += `\n\n${lines.length - failed}/${lines.length} passed. Synthetic DOM tests; no physical-device claim.`;
