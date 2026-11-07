@@ -1,0 +1,65 @@
+.intro-copy p { margin: 0 0 14px; }
+.intro-copy .prototype-scope { font-size: 11px; line-height: 1.7; }
+.intro-copy .start-button { min-height: 48px; font-size: 12px; }
+.immersive-bar, .handheld-details { display: none; }
+.play-feedback { max-width: 340px; font: 500 12px/1.5 Arial, sans-serif; margin: 12px 0 0; color: #633c30; background: #fff8e8ed; padding: 10px; border-radius: 6px; }
+.player-notice { position: absolute; z-index: 5; left: 14px; right: 14px; bottom: max(10px, env(safe-area-inset-bottom)); margin: 0; padding: 10px 14px; background: #fff4e7; color: #7c392a; border: 1px solid #ce9a7e; border-radius: 8px; font-size: 12px; }
+.game-immersive { overflow: hidden; }
+.game-immersive .site-header, .game-immersive .intro, .game-immersive .field-notes, .game-immersive .site-footer, .game-immersive .game-navigation, .game-immersive .game-column>.feedback { display: none; }
+
+/* The CSS view is always available. Native fullscreen enhances it when the
+   browser grants the direct Play gesture; it is never a prerequisite. */
+#console:is(:fullscreen, [data-immersive]) {
+  position: fixed; inset: 0; z-index: 50; width: 100vw; height: 100dvh; max-width: none; min-height: 0;
+  margin: 0; border: 0; border-radius: 0; box-shadow: none; background: #e1e6d6;
+  padding: calc(64px + env(safe-area-inset-top)) max(14px, env(safe-area-inset-right)) max(14px, env(safe-area-inset-bottom)) max(14px, env(safe-area-inset-left));
+  display: flex; flex-direction: column; justify-content: flex-start; gap: 0;
+  align-items: center; overflow: auto;
+}
+#console:is(:fullscreen, [data-immersive])::before, #console:is(:fullscreen, [data-immersive])::after,
+#console:is(:fullscreen, [data-immersive]) .console-top, #console:is(:fullscreen, [data-immersive]) .console-bottom,
+#console:is(:fullscreen, [data-immersive]) .screen-caption, #console:is(:fullscreen, [data-immersive]) .console-model { display: none; }
+#console:is(:fullscreen, [data-immersive]) .immersive-bar { display: flex; position: absolute; top: env(safe-area-inset-top); left: max(14px, env(safe-area-inset-left)); right: max(14px, env(safe-area-inset-right)); height: 56px; align-items: center; justify-content: space-between; gap: 12px; }
+#console .immersive-bar>span { font: 600 10px/1.3 var(--mono); letter-spacing: 1px; color: #526b4d; text-align: center; }
+#console .immersive-bar button { display: inline-flex; position: static; align-items: center; justify-content: center; min-height: 44px; padding: 8px 12px; border: 1px solid #aabda0; border-radius: 7px; background: #f3f4e9; color: #244d3c; font-size: 12px; }
+#console:is(:fullscreen, [data-immersive]) .screen-bezel { display: block; flex: none; padding: 5px; width: min(100%, max(240px, calc((100dvh - 320px - env(safe-area-inset-top) - env(safe-area-inset-bottom)) * 1.5))); height: auto; margin: auto auto 0; border-radius: 7px; }
+#console:is(:fullscreen, [data-immersive]) .screen { width: 100%; height: auto; aspect-ratio: 3/2; }
+#console:is(:fullscreen, [data-immersive]) .physical-controls { display: grid; flex: none; width: min(100%, calc(100vw - 50px)); max-width: 680px; grid-template-columns: 144px minmax(0, 1fr); grid-template-areas: 'pad actions' 'system system'; gap: 10px 12px; padding: 15px 4px 8px; margin: 0 0 auto; }
+#console:is(:fullscreen, [data-immersive]) .dpad { grid-area: pad; }
+#console:is(:fullscreen, [data-immersive]) .action-buttons { grid-area: actions; align-self: center; flex-direction: column; align-items: flex-end; justify-content: center; transform: none; margin: 0; gap: 10px; }
+#console:is(:fullscreen, [data-immersive]) .action-buttons .action { width: min(160px, 100%); min-height: 58px; }
+#console:is(:fullscreen, [data-immersive]) .middle-controls { grid-area: system; align-self: center; transform: none; }
+#console:is(:fullscreen, [data-immersive]) .small-control-pair { display: grid; width: 100%; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+#console:is(:fullscreen, [data-immersive]) .small-control-pair button { min-width: 0; min-height: 48px; padding: 6px 3px; font-size: 10px; }
+#console:is(:fullscreen, [data-immersive]) .small-control-pair .touch-map-control { display: flex; }
+#console:is(:fullscreen, [data-immersive]) .small-control-pair [data-gba="Select"] { grid-column: auto; grid-row: auto; }
+#console:is(:fullscreen, [data-immersive]) .touch-map-control svg { display: none; }
+#console:is(:fullscreen, [data-immersive]) .start-content { padding: 12px; overflow: auto; }
+#console:is(:fullscreen, [data-immersive]) .start-content h2 { font-size: clamp(22px, 4vw, 40px); line-height: 1.15; margin-bottom: 14px; }
+#console:is(:fullscreen, [data-immersive]) .start-button { min-height: 44px; font-size: 12px; padding: 10px 14px; }
+#console:is(:fullscreen, [data-immersive]) .screen-eyebrow, #console:is(:fullscreen, [data-immersive]) .start-hint { display: none; }
+#console #start-screen[data-error="true"] .start-content h2 { display: none; }
+#console #start-screen[data-error="true"] .start-content { display: flex; flex-direction: column; align-items: center; justify-content: flex-start; }
+
+.player-options { width: min(440px, calc(100vw - 28px)); max-height: calc(100dvh - 28px - env(safe-area-inset-top) - env(safe-area-inset-bottom)); overflow: auto; padding: 20px; border: 1px solid #aabda0; border-radius: 12px; background: #f6f3e9; color: #263d32; }
+.player-options::backdrop { background: #173c2cbe; }
+.options-heading { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 16px; }
+.options-heading h2 { margin: 0; font: 400 26px/1.2 Georgia, serif; }
+.options-heading button { min-height: 44px; padding: 8px 12px; border: 1px solid #b5c5a8; border-radius: 6px; background: #e8ecde; color: #244d3c; }
+#console .player-options .language-control { grid-template-columns: 1fr auto; gap: 8px; }
+#console .player-options .language-control>span { display: block; font-size: 12px; }
+#console .player-options .language-control select { min-height: 44px; min-width: 120px; max-width: none; font-size: 14px; }
+#console .player-options .language-control small { max-width: none; text-align: left; font-size: 11px; }
+#console .player-options .game-toolbar { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 16px 0 0; }
+#console .player-options .toolbar-group { display: contents; }
+#console .player-options .tool-button { min-height: 48px; padding: 10px; justify-content: center; border: 1px solid #c6d1ba; border-radius: 6px; background: #e8ecde; font-size: 12px; }
+#console .player-options .save-details { margin-top: 16px; padding-top: 12px; }
+#console .player-options .save-details summary { font-size: 13px; }
+#console .player-options .save-details p, #console #options-feedback, #console .options-key-help { font-size: 12px; line-height: 1.6; }
+#console .player-options .save-actions button { min-height: 48px; font-size: 12px; }
+#console #options-feedback.error { color: #963e2a; }
+#console .options-key-help { padding-top: 12px; border-top: 1px solid #c6d1ba; color: #64735b; }
+
+@media(max-width:600px) { #console .immersive-bar>span { display: none; } }
+.intro h1 { white-space: pre-line; }
+.site-header .language-control select { min-height: 44px; font-size: 11px; }

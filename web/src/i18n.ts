@@ -8,6 +8,20 @@ const listeners = new Set<(change: LocaleChange) => void>();
 const boundControls = new WeakSet<HTMLSelectElement>();
 
 const zh: Record<string, string> = {
+  'POKÉMON × TAICHUNG': '寶可夢 × 台中',
+  'Your Pokémon.\nA whole new Taichung.': '帶著寶可夢，\n探索不一樣的台中。',
+  'Choose Charmander, Bulbasaur, Squirtle or Pikachu, then explore a miniature Taichung. Discover ten real landmarks and their fictional Pokémon gyms.': '選擇小火龍、妙蛙種子、傑尼龜或皮卡丘，探索縮小版台中，認識十個真實地標與遊戲中的寶可夢道館。',
+  'Three districts and ten visitor halls are open. The Station gym has a playable battle; the other nine challenges are still being built.': '目前可探索三個街區與十個地標大廳。車站道館已可對戰，其餘九個挑戰仍在製作中。',
+  'Play Pokémon × Taichung': '開始寶可夢台中冒險',
+  'Pokémon ×\nTaichung.': '寶可夢 ×\n台中。',
+  'Choose your Pokémon. Explore Taichung.': '選擇你的寶可夢，探索台中。',
+  'Back to introduction': '返回介紹',
+  'Game options': '遊戲選項',
+  'Close': '關閉',
+  'Return to game': '返回遊戲',
+  'Your game is ready. Tap Play when you want to enter.': '遊戲已準備好，想進入時請按開始。',
+  'Arrow keys move. F interacts or confirms. D goes back. M opens the game menu.': '方向鍵移動，F 互動或確認，D 返回，M 開啟遊戲選單。',
+  'This preview cannot start the game yet. Try the latest link in Safari or Chrome; the host may need an update.': '這個預覽目前無法啟動遊戲。請用 Safari 或 Chrome 開啟最新連結；主機可能需要更新。',
   'Interface language': '介面語言',
   'Language': '語言',
   'Player & City Map': '玩家介面與城市導覽',
