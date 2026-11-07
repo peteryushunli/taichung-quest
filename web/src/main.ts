@@ -89,7 +89,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
         </div>
         <div class="game-navigation"><span><span data-i18n="Get to know the city.">Get to know the city.</span><small data-i18n="Real places behind the adventure.">Real places behind the adventure.</small></span><button id="city-map-button" class="city-map-button" aria-haspopup="dialog" aria-controls="city-guide">${icon('map')} <span data-i18n="City Map">City Map</span> <span class="city-map-chinese" lang="zh-Hant">城市地圖</span></button></div>
         <div class="game-toolbar" aria-label="Emulator controls">
-          <div class="toolbar-group"><button id="pause-button" class="tool-button" disabled>${icon('pause')} <span>Pause</span></button><button id="sound-button" class="tool-button" disabled aria-pressed="false">${icon('sound')} <span>Sound on</span></button></div>
+          <div class="toolbar-group"><button id="pause-button" class="tool-button" disabled>${icon('pause')} <span>Pause</span></button><button id="sound-button" class="tool-button" disabled aria-pressed="true">${icon('mute')} <span>Sound off</span></button></div>
           <div class="toolbar-group"><button id="save-button" class="tool-button" disabled>${icon('save')} <span data-i18n="Save spot">Save spot</span></button><button id="restart-button" class="tool-button" disabled aria-label="Restart game">${icon('restart')} <span data-i18n="Restart">Restart</span></button></div>
         </div>
         <p class="feedback" id="feedback" role="status" aria-live="polite">${savedAt ? 'Your last saved spot is waiting in this browser.' : 'Begin at the old station. Get to know Taichung, one landmark at a time.'}</p>
@@ -136,7 +136,7 @@ let gamePath: string | undefined;
 let starting = false;
 let running = false;
 let paused = false;
-let muted = false;
+let muted = true;
 let saving = false;
 let restarting = false;
 let confirmationOpen = false;
@@ -417,6 +417,8 @@ async function startGame() {
       message('Your game is ready. Tap Play when you want to enter.');
       return;
     }
+    // Silence the output before loadGame can start the native audio thread.
+    emulator.setVolume(0);
     if (!emulator.loadGame(gamePath, SAVE_PATH)) throw new Error('The emulator could not open this game cartridge.');
     if (freshCartridgeBoot) {
       bootFromCartridge = false;
@@ -426,8 +428,7 @@ async function startGame() {
     }
     emulator.toggleInput(false);
     emulator.setVolume(muted ? 0 : 0.55);
-    emulator.resumeAudio();
-    void emulator.SDL2?.audioContext?.resume();
+    if (!muted) { emulator.resumeAudio(); void emulator.SDL2?.audioContext?.resume(); }
     running = true;
     paused = false;
     document.body.classList.add('game-active');
@@ -465,9 +466,10 @@ function setPaused(value: boolean) {
     emulator.pauseGame();
     void persist();
   } else {
+    // resumeGame also resumes native audio; apply mute before that happens.
+    emulator.setVolume(muted ? 0 : 0.55);
     emulator.resumeGame();
-    if (muted) emulator.setVolume(0);
-    else { emulator.resumeAudio(); void emulator.SDL2?.audioContext?.resume(); }
+    if (!muted) { emulator.resumeAudio(); void emulator.SDL2?.audioContext?.resume(); }
     canvas.focus({ preventScroll: true });
   }
   el('pause-screen').hidden = !paused;
@@ -651,6 +653,7 @@ function refreshRuntimeLabels() {
   landingPlayButton.querySelector('span')!.textContent = t(starting ? 'Packing your bag…' : running ? 'Return to game' : 'Play Pokémon × Taichung');
   el('pause-button').innerHTML = `${icon(paused ? 'play' : 'pause')} <span>${t(paused ? 'Resume' : 'Pause')}</span>`;
   el('sound-button').innerHTML = `${icon(muted ? 'mute' : 'sound')} <span>${t(muted ? 'Sound off' : 'Sound on')}</span>`;
+  el('sound-button').setAttribute('aria-pressed', String(muted));
   document.title = getLocale() === 'zh-Hant' ? 'Taichung Quest · 台中小冒險' : 'Taichung Quest · A little adventure';
   refreshNavigation();
 }
