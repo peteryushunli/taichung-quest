@@ -117,7 +117,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
       </aside>
     </div>
   </main>
-  <footer class="site-footer"><span>TAICHUNG QUEST <span class="footer-dot">·</span> <span data-i18n="AN EXPERIMENT IN LOCAL ADVENTURE">AN EXPERIMENT IN LOCAL ADVENTURE</span></span><span><span data-i18n="POWERED BY">POWERED BY</span> <a href="https://github.com/thenick775/mgba/tree/feature/wasm" target="_blank" rel="noreferrer">mGBA</a> <span class="footer-dot">/</span> <a href="/emulator/SOURCE.txt" target="_blank" data-i18n="RUNTIME LICENSE">RUNTIME LICENSE</a> <span class="footer-dot">/</span> <a href="/licenses/NotoSansTC-OFL.txt" target="_blank" rel="noopener" data-i18n="FONT LICENSE">FONT LICENSE</a></span></footer>
+  <footer class="site-footer"><span>TAICHUNG QUEST <span class="footer-dot">·</span> <span data-i18n="AN EXPERIMENT IN LOCAL ADVENTURE">AN EXPERIMENT IN LOCAL ADVENTURE</span></span><span><span data-i18n="POWERED BY">POWERED BY</span> <a href="https://github.com/thenick775/mgba/tree/feature/wasm" target="_blank" rel="noreferrer">mGBA</a> <span class="footer-dot">/</span> <a href="/emulator/SOURCE.txt" target="_blank" data-i18n="RUNTIME LICENSE">RUNTIME LICENSE</a> <span class="footer-dot">/</span> <a href="/licenses/native-font.txt" target="_blank" rel="noopener" data-i18n="FONT LICENSE">FONT LICENSE</a></span></footer>
 `;
 
 function el<T extends HTMLElement = HTMLElement>(id: string): T {
