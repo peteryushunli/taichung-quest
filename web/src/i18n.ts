@@ -9,6 +9,11 @@ const boundControls = new WeakSet<HTMLSelectElement>();
 
 const zh: Record<string, string> = {
   'POKÉMON × TAICHUNG': '寶可夢 × 台中',
+  'A little Taichung, in pixels.': '一座像素台中，等你探索。',
+  'LANDMARK ART': '地標美術',
+  'National Taichung Theater': '臺中國家歌劇院',
+  'Miyahara': '宮原眼科',
+  'Taichung Park': '臺中公園',
   'Your Pokémon.\nA whole new Taichung.': '帶著寶可夢，\n探索不一樣的台中。',
   'Choose Charmander, Bulbasaur, Squirtle or Pikachu, then explore a miniature Taichung. Discover ten real landmarks and their fictional Pokémon gyms.': '選擇小火龍、妙蛙種子、傑尼龜或皮卡丘，探索縮小版台中，認識十個真實地標與遊戲中的寶可夢道館。',
   'Three districts and ten visitor halls are open. The Station gym has a playable battle; the other nine challenges are still being built.': '目前可探索三個街區與十個地標大廳。車站道館已可對戰，其餘九個挑戰仍在製作中。',

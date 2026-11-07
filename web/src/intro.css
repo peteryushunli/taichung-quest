@@ -1,0 +1,34 @@
+.intro {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(260px, 360px);
+  align-items: end;
+  gap: 28px 40px;
+}
+.intro-copy { max-width: none; padding-top: 0; }
+.intro-landmarks { grid-column: 1 / -1; min-width: 0; }
+.landmark-art-heading { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 12px; }
+.landmark-art-heading p { margin: 0; font: italic 20px/1.3 Georgia, serif; color: #536c54; }
+.landmark-art-heading>span { font: 8px/1.4 var(--mono); letter-spacing: 1.2px; color: #81907a; }
+.landmark-art-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+.landmark-postcard { margin: 0; min-width: 0; overflow: hidden; border: 1px solid #d4dacb; border-radius: 6px; background: #eee8dc; }
+.theater-postcard { background: #e3e9e6; }
+.miyahara-postcard { background: #ede2d9; }
+.park-postcard { background: #e0e8dc; }
+.landmark-image { height: 152px; margin: 0 14px; border-bottom: 1px solid #a6b09b70; }
+.landmark-image img { display: block; width: 100%; height: 100%; object-fit: contain; object-position: center bottom; image-rendering: pixelated; }
+.landmark-postcard figcaption { display: flex; align-items: baseline; gap: 9px; padding: 12px; font-size: 11px; line-height: 1.4; color: #465c48; }
+.postcard-number { flex: none; font: 8px/1.4 var(--mono); color: #8b987f; }
+@media (max-width: 900px) {
+  .intro { grid-template-columns: minmax(0, 1fr) minmax(230px, 300px); gap: 26px; }
+  .landmark-image { height: 118px; margin: 0 8px; }
+  .landmark-postcard figcaption { padding: 10px 8px; font-size: 10px; gap: 6px; }
+}
+@media (max-width: 620px) {
+  .intro { grid-template-columns: minmax(0, 1fr); gap: 20px; }
+  .intro-copy { margin: 0; font-size: 12px; }
+  .landmark-art-heading p { font-size: 18px; }
+  .landmark-art-heading>span { font-size: 7px; letter-spacing: .7px; }
+  .landmark-art-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .landmark-image { height: clamp(88px, 26vw, 132px); }
+  .landmark-postcard figcaption { min-height: 28px; align-items: center; padding: 8px; font-size: 10px; }
+}
