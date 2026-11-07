@@ -1,8 +1,8 @@
 {
   "translations": {
-    "Taichung_Text_Welcome": "歡迎來到臺中！\n從這裡展開城市冒險。",
-    "Taichung_Text_ChooseStarter": "選一隻寶可夢當夥伴。\n接著自由探索這座城市！",
-    "Taichung_Text_StarterChosen": "你的冒險夥伴準備好了！\n背包有補給，出發吧！",
+    "Taichung_Text_Welcome": "歡迎來到臺中！\n我是小雨。",
+    "Taichung_Text_ChooseStarter": "選一隻寶可夢當旅途夥伴。\n先看看，喜歡哪一隻？",
+    "Taichung_Text_StarterChosen": "和{STR_VAR_1}一起出發吧！\n我們到外面走走。",
     "Taichung_Text_TeaRequest": "晴天最適合喝冰茶！\\p能幫我把這份茶點\n送給草悟道導覽員嗎？\\p她在西南邊的花園裡。",
     "Taichung_Text_TeaAccepted": "你收好了茶點。\\p沿著步道往南走，\n找花園旁的導覽員。\\p慢慢來，享受臺中！",
     "Taichung_Text_TeaDeclined": "不急！先四處逛逛，\n想幫忙時再來找我。",
