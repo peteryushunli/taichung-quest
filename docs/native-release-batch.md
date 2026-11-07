@@ -1,6 +1,6 @@
 # Shared native release batch
 
-Integration branch: `integration/native-release-batch`. Main is the only writer to this branch and PR head, canonical native `integration/taichung`, and the exported portable patch. Other sessions retain their own branches/worktrees and submit small commits. No concurrent force-checkouts, resets or shared-head pushes.
+Shared PR: https://github.com/peteryushunli/taichung-quest/pull/2. Integration branch: `integration/native-release-batch`. Main is the only writer to this branch and PR head, canonical native `integration/taichung`, and the exported portable patch. Other sessions retain their own branches/worktrees and submit small commits. No concurrent force-checkouts, resets or shared-head pushes.
 
 ## Current increment: Miyahara
 

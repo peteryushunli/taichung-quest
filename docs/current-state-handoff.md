@@ -1,6 +1,6 @@
 # Taichung Quest — current state and concurrent work
 
-Production: https://taichung-quest.vercel.app. The opening, Traditional Chinese font and ten bilingual signs are live; see [the exact release receipt](opening-font-signs-release.md). The legacy ChatGPT Site is not current. Canonical native source is `e13dbad` (checker-only child of the frozen `856cb930` cartridge source). A branch or successful build alone does not establish a live release.
+Production: https://taichung-quest.vercel.app. The opening, Traditional Chinese font and ten bilingual signs are live; see [the exact release receipt](opening-font-signs-release.md). The legacy ChatGPT Site is not current. The published cartridge source is `856cb930`, with checker-only release follow-up `e13dbad`. Canonical native integration may be ahead of production; [the shared native batch](native-release-batch.md) records the candidate and ownership. A branch or successful build alone does not establish a live release.
 
 ## Source and release inputs
 
