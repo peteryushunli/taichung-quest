@@ -1,0 +1,2183 @@
+diff --git a/Makefile b/Makefile
+index 8b454db..c2cf470 100644
+--- a/Makefile
++++ b/Makefile
+@@ -192,6 +192,9 @@ MID_OBJS := $(patsubst $(MID_SUBDIR)/%.mid,$(MID_BUILDDIR)/%.o,$(MID_SRCS))
+ OBJS     := $(C_OBJS) $(C_ASM_OBJS) $(ASM_OBJS) $(DATA_ASM_OBJS) $(SONG_OBJS) $(MID_OBJS)
+ OBJS_REL := $(patsubst $(OBJ_DIR)/%,%,$(OBJS))
+ 
++# Encoded Chinese glyph IDs depend on the generated character map.
++$(C_OBJS) $(C_ASM_OBJS) $(DATA_ASM_OBJS): charmap.txt
++
+ SUBDIRS  := $(sort $(dir $(OBJS)))
+ $(shell mkdir -p $(SUBDIRS))
+ 
+diff --git a/charmap.txt b/charmap.txt
+index b9d0ed9..f6dce3d 100644
+--- a/charmap.txt
++++ b/charmap.txt
+@@ -910,3 +910,260 @@ EMOJI_BIGANGER = F9 FE
+ '\l' = FA @ scroll up window text
+ '\p' = FB @ new paragraph
+ '\n' = FE @ new line
++
++@ TAICHUNG CHINESE SUBSET
++'、' = FC 19 01 01
++'・' = FC 19 02 01
++'一' = FC 19 03 01
++'下' = FC 19 04 01
++'不' = FC 19 05 01
++'丘' = FC 19 06 01
++'中' = FC 19 07 01
++'之' = FC 19 08 01
++'了' = FC 19 09 01
++'事' = FC 19 0A 01
++'享' = FC 19 0B 01
++'人' = FC 19 0C 01
++'代' = FC 19 0D 01
++'以' = FC 19 0E 01
++'份' = FC 19 0F 01
++'休' = FC 19 10 01
++'伴' = FC 19 11 01
++'位' = FC 19 12 01
++'住' = FC 19 13 01
++'你' = FC 19 14 01
++'來' = FC 19 15 01
++'候' = FC 19 16 01
++'傑' = FC 19 17 01
++'備' = FC 19 18 01
++'傷' = FC 19 19 01
++'儲' = FC 19 1A 01
++'先' = FC 19 1B 01
++'再' = FC 19 1C 01
++'冒' = FC 19 1D 01
++'冰' = FC 19 1E 01
++'出' = FC 19 1F 01
++'切' = FC 19 20 01
++'別' = FC 19 21 01
++'到' = FC 19 22 01
++'削' = FC 19 23 01
++'前' = FC 19 24 01
++'包' = FC 19 25 01
++'北' = FC 19 26 01
++'區' = FC 19 27 01
++'午' = FC 19 28 01
++'南' = FC 19 29 01
++'博' = FC 19 2A 01
++'卡' = FC 19 2B 01
++'取' = FC 19 2C 01
++'受' = FC 19 2D 01
++'叢' = FC 19 2E 01
++'另' = FC 19 2F 01
++'可' = FC 19 30 01
++'合' = FC 19 31 01
++'向' = FC 19 32 01
++'否' = FC 19 33 01
++'吧' = FC 19 34 01
++'呼' = FC 19 35 01
++'和' = FC 19 36 01
++'員' = FC 19 37 01
++'問' = FC 19 38 01
++'啟' = FC 19 39 01
++'喜' = FC 19 3A 01
++'喝' = FC 19 3B 01
++'單' = FC 19 3C 01
++'嗎' = FC 19 3D 01
++'四' = FC 19 3E 01
++'回' = FC 19 3F 01
++'園' = FC 19 40 01
++'圖' = FC 19 41 01
++'在' = FC 19 42 01
++'城' = FC 19 43 01
++'士' = FC 19 44 01
++'夢' = FC 19 45 01
++'夥' = FC 19 46 01
++'大' = FC 19 47 01
++'天' = FC 19 48 01
++'她' = FC 19 49 01
++'好' = FC 19 4A 01
++'妙' = FC 19 4B 01
++'始' = FC 19 4C 01
++'子' = FC 19 4D 01
++'存' = FC 19 4E 01
++'安' = FC 19 4F 01
++'完' = FC 19 50 01
++'定' = FC 19 51 01
++'室' = FC 19 52 01
++'家' = FC 19 53 01
++'寫' = FC 19 54 01
++'寶' = FC 19 55 01
++'導' = FC 19 56 01
++'小' = FC 19 57 01
++'就' = FC 19 58 01
++'尼' = FC 19 59 01
++'屋' = FC 19 5A 01
++'已' = FC 19 5B 01
++'市' = FC 19 5C 01
++'帶' = FC 19 5D 01
++'常' = FC 19 5E 01
++'幫' = FC 19 5F 01
++'座' = FC 19 60 01
++'弱' = FC 19 61 01
++'往' = FC 19 62 01
++'很' = FC 19 63 01
++'後' = FC 19 64 01
++'得' = FC 19 65 01
++'從' = FC 19 66 01
++'徽' = FC 19 67 01
++'心' = FC 19 68 01
++'忘' = FC 19 69 01
++'忙' = FC 19 6A 01
++'急' = FC 19 6B 01
++'息' = FC 19 6C 01
++'悟' = FC 19 6D 01
++'悠' = FC 19 6E 01
++'想' = FC 19 6F 01
++'意' = FC 19 70 01
++'慢' = FC 19 71 01
++'成' = FC 19 72 01
++'我' = FC 19 73 01
++'戰' = FC 19 74 01
++'戲' = FC 19 75 01
++'打' = FC 19 76 01
++'找' = FC 19 77 01
++'把' = FC 19 78 01
++'招' = FC 19 79 01
++'按' = FC 19 7A 01
++'捉' = FC 19 7B 01
++'捕' = FC 19 7C 01
++'探' = FC 19 7D 01
++'接' = FC 19 7E 01
++'換' = FC 19 7F 01
++'擇' = FC 19 80 01
++'收' = FC 19 81 01
++'放' = FC 19 82 01
++'故' = FC 19 83 01
++'整' = FC 19 84 01
++'文' = FC 19 85 01
++'料' = FC 19 86 01
++'旁' = FC 19 87 01
++'旅' = FC 19 88 01
++'日' = FC 19 89 01
++'是' = FC 19 8A 01
++'時' = FC 19 8B 01
++'晴' = FC 19 8C 01
++'最' = FC 19 8D 01
++'有' = FC 19 8E 01
++'木' = FC 19 8F 01
++'杯' = FC 19 90 01
++'東' = FC 19 91 01
++'檔' = FC 19 92 01
++'次' = FC 19 93 01
++'歡' = FC 19 94 01
++'正' = FC 19 95 01
++'步' = FC 19 96 01
++'每' = FC 19 97 01
++'沿' = FC 19 98 01
++'準' = FC 19 99 01
++'滿' = FC 19 9A 01
++'漫' = FC 19 9B 01
++'火' = FC 19 9C 01
++'為' = FC 19 9D 01
++'牠' = FC 19 9E 01
++'獲' = FC 19 9F 01
++'球' = FC 19 A0 01
++'理' = FC 19 A1 01
++'瓶' = FC 19 A2 01
++'生' = FC 19 A3 01
++'由' = FC 19 A4 01
++'當' = FC 19 A5 01
++'發' = FC 19 A6 01
++'的' = FC 19 A7 01
++'皮' = FC 19 A8 01
++'目' = FC 19 A9 01
++'真' = FC 19 AA 01
++'研' = FC 19 AB 01
++'確' = FC 19 AC 01
++'稍' = FC 19 AD 01
++'種' = FC 19 AE 01
++'究' = FC 19 AF 01
++'空' = FC 19 B0 01
++'站' = FC 19 B1 01
++'章' = FC 19 B2 01
++'等' = FC 19 B3 01
++'精' = FC 19 B4 01
++'索' = FC 19 B5 01
++'給' = FC 19 B6 01
++'綠' = FC 19 B7 01
++'練' = FC 19 B8 01
++'繁' = FC 19 B9 01
++'美' = FC 19 BA 01
++'老' = FC 19 BB 01
++'背' = FC 19 BC 01
++'能' = FC 19 BD 01
++'腳' = FC 19 BE 01
++'自' = FC 19 BF 01
++'臺' = FC 19 C0 01
++'花' = FC 19 C1 01
++'英' = FC 19 C2 01
++'茶' = FC 19 C3 01
++'草' = FC 19 C4 01
++'著' = FC 19 C5 01
++'藥' = FC 19 C6 01
++'處' = FC 19 C7 01
++'蛙' = FC 19 C8 01
++'補' = FC 19 C9 01
++'裡' = FC 19 CA 01
++'西' = FC 19 CB 01
++'要' = FC 19 CC 01
++'覆' = FC 19 CD 01
++'見' = FC 19 CE 01
++'覽' = FC 19 CF 01
++'言' = FC 19 D0 01
++'訓' = FC 19 D1 01
++'設' = FC 19 D2 01
++'語' = FC 19 D3 01
++'請' = FC 19 D4 01
++'謝' = FC 19 D5 01
++'讓' = FC 19 D6 01
++'資' = FC 19 D7 01
++'走' = FC 19 D8 01
++'跑' = FC 19 D9 01
++'跟' = FC 19 DA 01
++'踏' = FC 19 DB 01
++'車' = FC 19 DC 01
++'迎' = FC 19 DD 01
++'送' = FC 19 DE 01
++'逃' = FC 19 DF 01
++'這' = FC 19 E0 01
++'逛' = FC 19 E1 01
++'進' = FC 19 E2 01
++'遇' = FC 19 E3 01
++'遊' = FC 19 E4 01
++'過' = FC 19 E5 01
++'道' = FC 19 E6 01
++'適' = FC 19 E7 01
++'選' = FC 19 E8 01
++'邊' = FC 19 E9 01
++'野' = FC 19 EA 01
++'鍵' = FC 19 EB 01
++'鑑' = FC 19 EC 01
++'閉' = FC 19 ED 01
++'開' = FC 19 EE 01
++'閒' = FC 19 EF 01
++'間' = FC 19 F0 01
++'闆' = FC 19 01 02
++'關' = FC 19 02 02
++'險' = FC 19 03 02
++'隻' = FC 19 04 02
++'靈' = FC 19 05 02
++'領' = FC 19 06 02
++'騎' = FC 19 07 02
++'體' = FC 19 08 02
++'高' = FC 19 09 02
++'鬥' = FC 19 0A 02
++'點' = FC 19 0B 02
++'龍' = FC 19 0C 02
++'龜' = FC 19 0D 02
++'，' = FC 19 0E 02
++'：' = FC 19 0F 02
+diff --git a/data/layouts/PalletTown/map.bin b/data/layouts/PalletTown/map.bin
+index f2113394f22d6f0180f364071301b5ed06588773..bf1cbe2eb7b76e808e1fde8621cdf33a1a71beb2 100644
+GIT binary patch
+literal 1344
+zcmbtS$x6gP6eQA9cVR{^GkS5kCXdNM{Q~u?R1{noag7_|zJQL33W~eN4HrE6Ird8@
+zbWeJO5h*&|U8z@H{gS*Wh`cqL#TIQ-lf@TAR^&vBXibfFQKkcGOYyAD3-&5m7^I;T
+zHy)jr6^+tsR-%vkBMd}4n+d2P_Ak>jEz>YYB8=imR@h8n_y<()PGAa?64RKG`f7~!
+z4``F-FpmW+Vky?!4EIar4`?4NSjQSxu@UQSM*H8$UR=u*JeMf+La&nHcS-)7a9mcT
+zu|vBtuIMz<tNs^$(I4U{#xYLtDgF6B;2Otu+)R<5jJhJ96wn#YV_e`8WvSQxcA|i8
+zafdJ5;{hQaBfaULP9M+<Uh$1Ryx|=mRs2<sq)v58_iQYcKhY&~<(<^+%>0??maJAQ
+zefwnPxMqIG?eIJOE}!3Wl~QSr_ojd7b^ASjub<>mv*uWD`iGuy70e3F+5Rd)<(JUh
+s|NYGz_S*KhH73J)vp==;)9g>CsCvgf?8~#`CS2wB<+@r2XZp+d0fqWd6aWAK
+
+literal 960
+zcmZuvSxdt}7=*eE?TfOd>PxE+^#Ju@`Tn8zNxh91-c|*ziU*4Kt$3h5`E%Sa*>=-S
+z8NOsQJDE&|O^b|3N2XEaX^R>nd`6^1t!NU>&a{dG?Nf`xvo<Z*D;Gg8^*P+A|Gku`
+z*IqLkoz&%{+kc8O9@QED0=>`@4Pwa0FrM`rQN|1TdnDC3CNZHgg=wv?#8`iiHfa`f
+zn8yMZjXuh7UqOD4_OOC=tYH-!MjvIY|BdeATBqQ<U6nK8{M?3%ZQ3!oq7(m*tiP+}
+zehzSGaD-!g=>}|m-tR$xnBYD=I>Wia1ujw0OxWKep#n%1^m&UreB&Muc*K*h5Bpnv
+z+~{BNhCl4$9Uu6t;9n&YN-7@qFK;SGBToKcKR9>XBcBJ0;E%%j-G;`fAB>pb>ww=t
+yG5=}F=_i?$S^1lE-{xoAk2JXxs!g_QbV!@Tu9i#vSF0Mu6EEqdUfU_|bN+vQvI_11
+
+diff --git a/data/layouts/layouts.json b/data/layouts/layouts.json
+index 41d0eb1..d64a495 100644
+--- a/data/layouts/layouts.json
++++ b/data/layouts/layouts.json
+@@ -742,7 +742,7 @@
+       "id": "LAYOUT_PALLET_TOWN",
+       "name": "PalletTown_Layout",
+       "width": 24,
+-      "height": 20,
++      "height": 28,
+       "border_width": 2,
+       "border_height": 2,
+       "primary_tileset": "gTileset_General",
+diff --git a/data/maps/PalletTown/map.json b/data/maps/PalletTown/map.json
+index 802d32d..ea65545 100644
+--- a/data/maps/PalletTown/map.json
++++ b/data/maps/PalletTown/map.json
+@@ -18,11 +18,6 @@
+       "map": "MAP_ROUTE1",
+       "offset": 0,
+       "direction": "up"
+-    },
+-    {
+-      "map": "MAP_ROUTE21_NORTH",
+-      "offset": 0,
+-      "direction": "down"
+     }
+   ],
+   "object_events": [
+@@ -30,12 +25,12 @@
+       "local_id": "LOCALID_PALLET_SIGN_LADY",
+       "type": "object",
+       "graphics_id": "OBJ_EVENT_GFX_WOMAN_1",
+-      "x": 3,
+-      "y": 10,
++      "x": 6,
++      "y": 22,
+       "elevation": 3,
+-      "movement_type": "MOVEMENT_TYPE_WANDER_AROUND",
+-      "movement_range_x": 1,
+-      "movement_range_y": 4,
++      "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
++      "movement_range_x": 0,
++      "movement_range_y": 0,
+       "trainer_type": "TRAINER_TYPE_NONE",
+       "trainer_sight_or_berry_tree_id": "0",
+       "script": "PalletTown_EventScript_SignLady",
+@@ -45,12 +40,12 @@
+       "local_id": "LOCALID_PALLET_FAT_MAN",
+       "type": "object",
+       "graphics_id": "OBJ_EVENT_GFX_FAT_MAN",
+-      "x": 13,
+-      "y": 17,
++      "x": 16,
++      "y": 8,
+       "elevation": 3,
+-      "movement_type": "MOVEMENT_TYPE_WANDER_AROUND",
+-      "movement_range_x": 6,
+-      "movement_range_y": 2,
++      "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
++      "movement_range_x": 0,
++      "movement_range_y": 0,
+       "trainer_type": "TRAINER_TYPE_NONE",
+       "trainer_sight_or_berry_tree_id": "0",
+       "script": "PalletTown_EventScript_FatMan",
+@@ -95,35 +90,7 @@
+       "dest_warp_id": "0"
+     }
+   ],
+-  "coord_events": [
+-    {
+-      "type": "trigger",
+-      "x": 12,
+-      "y": 1,
+-      "elevation": 3,
+-      "var": "VAR_MAP_SCENE_PALLET_TOWN_OAK",
+-      "var_value": "0",
+-      "script": "PalletTown_EventScript_OakTriggerLeft"
+-    },
+-    {
+-      "type": "trigger",
+-      "x": 13,
+-      "y": 1,
+-      "elevation": 3,
+-      "var": "VAR_MAP_SCENE_PALLET_TOWN_OAK",
+-      "var_value": "0",
+-      "script": "PalletTown_EventScript_OakTriggerRight"
+-    },
+-    {
+-      "type": "trigger",
+-      "x": 13,
+-      "y": 2,
+-      "elevation": 3,
+-      "var": "VAR_TEMP_2",
+-      "var_value": "1",
+-      "script": "PalletTown_EventScript_SignLadyTrigger"
+-    }
+-  ],
++  "coord_events": [],
+   "bg_events": [
+     {
+       "type": "sign",
+diff --git a/data/maps/PalletTown/scripts.inc b/data/maps/PalletTown/scripts.inc
+index 1384b7d..482a69d 100644
+--- a/data/maps/PalletTown/scripts.inc
++++ b/data/maps/PalletTown/scripts.inc
+@@ -1,449 +1,196 @@
+-.equ SIGN_LADY_READY, VAR_TEMP_2
++@ Taichung prototype: dedicated persistent state, separate from the Kanto story.
++.equ TAICHUNG_LANGUAGE, VAR_0x40FB
++.equ TAICHUNG_STARTER_SPECIES, VAR_0x40FC
++.equ TAICHUNG_QUEST_STATE, VAR_0x40FD
+ 
+ PalletTown_MapScripts::
+-	map_script MAP_SCRIPT_ON_TRANSITION, PalletTown_OnTransition
+-	map_script MAP_SCRIPT_ON_FRAME_TABLE, PalletTown_OnFrame
++	map_script MAP_SCRIPT_ON_TRANSITION, Taichung_OnTransition
++	map_script MAP_SCRIPT_ON_RESUME, Taichung_OnTransition
++	map_script MAP_SCRIPT_ON_FRAME_TABLE, Taichung_OnFrame
+ 	.byte 0
+ 
+-PalletTown_OnTransition::
++Taichung_OnTransition::
+ 	setworldmapflag FLAG_WORLD_MAP_PALLET_TOWN
+-	call_if_set FLAG_PALLET_LADY_NOT_BLOCKING_SIGN, PalletTown_EventScript_TryReadySignLady
+-	call_if_eq VAR_MAP_SCENE_PALLET_TOWN_SIGN_LADY, 0, PalletTown_EventScript_SetSignLadyPos
+-	call_if_eq VAR_MAP_SCENE_PALLET_TOWN_SIGN_LADY, 1, PalletTown_EventScript_SetSignLadyDone
++	setrespawn HEAL_LOCATION_PALLET_TOWN
++	call_if_eq TAICHUNG_STARTER_SPECIES, 0, Taichung_MigrateLegacyStarter
+ 	end
+ 
+-PalletTown_EventScript_TryReadySignLady::
+-	goto_if_unset FLAG_OPENED_START_MENU, EventScript_Return
+-	goto_if_ge VAR_MAP_SCENE_PALLET_TOWN_SIGN_LADY, 1, EventScript_Return
+-	setvar VAR_MAP_SCENE_PALLET_TOWN_SIGN_LADY, 1
++@ The first prototype gave Bulbasaur before this dedicated starter variable existed.
++@ Keep those saved parties intact, including when that Bulbasaur has evolved.
++Taichung_MigrateLegacyStarter::
++	goto_if_eq TAICHUNG_QUEST_STATE, 0, EventScript_Return
++	getpartysize
++	goto_if_eq VAR_RESULT, 0, EventScript_Return
++	setvar TAICHUNG_STARTER_SPECIES, SPECIES_BULBASAUR
+ 	return
+ 
+-PalletTown_EventScript_SetSignLadyDone::
+-	setvar VAR_MAP_SCENE_PALLET_TOWN_SIGN_LADY, 2
+-	return
+-
+-PalletTown_EventScript_SetSignLadyPos::
+-	goto_if_set FLAG_PALLET_LADY_NOT_BLOCKING_SIGN, PalletTown_EventScript_MoveSignLadyToRouteEntrance
+-	setobjectxyperm LOCALID_PALLET_SIGN_LADY, 5, 15
+-	setobjectmovementtype LOCALID_PALLET_SIGN_LADY, MOVEMENT_TYPE_FACE_UP
+-	return
+-
+-PalletTown_EventScript_MoveSignLadyToRouteEntrance::
+-	setobjectxyperm LOCALID_PALLET_SIGN_LADY, 12, 2
+-	setobjectmovementtype LOCALID_PALLET_SIGN_LADY, MOVEMENT_TYPE_FACE_DOWN
+-	setvar SIGN_LADY_READY, TRUE
+-	return
+-
+-PalletTown_OnFrame::
+-	map_script_2 VAR_MAP_SCENE_PALLET_TOWN_OAK, 2, PalletTown_EventScript_OakRatingScene
++Taichung_OnFrame::
++	map_script_2 TAICHUNG_LANGUAGE, 0, Taichung_InitLanguage
++	map_script_2 TAICHUNG_STARTER_SPECIES, 0, Taichung_Welcome
+ 	.2byte 0
+ 
+-@ Oak approaches player after exiting their house post Elite Four to check if they should receieve the National Dex
+-PalletTown_EventScript_OakRatingScene::
++Taichung_InitLanguage::
+ 	lockall
+-	textcolor NPC_TEXT_COLOR_MALE
+-	setobjectxyperm LOCALID_PALLET_PROF_OAK, 14, 14
+-	setobjectmovementtype LOCALID_PALLET_PROF_OAK, MOVEMENT_TYPE_FACE_LEFT
+-	addobject LOCALID_PALLET_PROF_OAK
+-	applymovement LOCALID_PALLET_PROF_OAK, PalletTown_Movement_OakWalkToPlayersDoor
+-	waitmovement 0
+-	goto_if_unset FLAG_WORLD_MAP_ONE_ISLAND, PalletTown_EventScript_NotBeenToOneIslandYet
+-	msgbox PalletTown_Text_OakLetMeSeePokedex
+-	setvar VAR_0x8004, 0
+-	specialvar VAR_RESULT, GetPokedexCount
+-	copyvar VAR_0x8008, VAR_0x8005
+-	copyvar VAR_0x8009, VAR_0x8006
+-	buffernumberstring STR_VAR_1, VAR_0x8008
+-	buffernumberstring STR_VAR_2, VAR_0x8009
+-	goto_if_lt VAR_0x8009, 60, PalletTown_EventScript_NotEnoughMonsForNationalDex
+-	msgbox PalletTown_Text_CaughtXImpressiveFollowMe
+-	closemessage
+-	playbgm MUS_FOLLOW_ME, 0
+-	applymovement LOCALID_PLAYER, PalletTown_Movement_PlayerWalkToLabFromHouse
+-	applymovement LOCALID_PALLET_PROF_OAK, PalletTown_Movement_OakWalkToLabFromHouse
+-	waitmovement 0
+-	opendoor 16, 13
+-	waitdooranim
+-	applymovement LOCALID_PALLET_PROF_OAK, PalletTown_Movement_OakEnterLab
+-	applymovement LOCALID_PLAYER, PalletTown_Movement_PlayerEnterLab
+-	waitmovement 0
+-	closedoor 16, 13
+-	waitdooranim
+-	setvar VAR_MAP_SCENE_PALLET_TOWN_PROFESSOR_OAKS_LAB, 7
+-	setvar VAR_MAP_SCENE_PALLET_TOWN_OAK, 3
+-	setflag FLAG_HIDE_OAK_IN_PALLET_TOWN
+-	warp MAP_PALLET_TOWN_PROFESSOR_OAKS_LAB, 6, 12
+-	waitstate
++	call Taichung_ChooseLanguageCore
+ 	releaseall
+ 	end
+ 
+-PalletTown_EventScript_EndOakRatingScene::
+-	closemessage
+-	applymovement LOCALID_PALLET_PROF_OAK, PalletTown_Movement_OakExit
+-	waitmovement 0
+-	removeobject LOCALID_PALLET_PROF_OAK
+-	setvar VAR_MAP_SCENE_PALLET_TOWN_OAK, 3
++Taichung_EventScript_ChooseLanguage::
++	lockall
++	call Taichung_ChooseLanguageCore
++	msgbox Taichung_Text_LanguageChanged
+ 	releaseall
+ 	end
+ 
+-PalletTown_EventScript_NotEnoughMonsForNationalDex::
+-	msgbox PalletTown_Text_CaughtXPuttingInHonestEffort
+-	goto PalletTown_EventScript_EndOakRatingScene
+-	end
+-
+-PalletTown_EventScript_NotBeenToOneIslandYet::
+-	msgbox PalletTown_Text_OakYouEnjoyingTraveling
+-	goto PalletTown_EventScript_EndOakRatingScene
+-	end
+-
+-PalletTown_Movement_OakWalkToPlayersDoor::
+-	walk_left
+-	walk_left
+-	walk_left
+-	walk_up
+-	walk_up
+-	walk_up
+-	walk_up
+-	walk_up
+-	walk_left
+-	walk_left
+-	walk_left
+-	walk_left
+-	walk_left
+-	walk_in_place_faster_up
+-	step_end
+-
+-PalletTown_Movement_OakExit::
+-	walk_right
+-	walk_right
+-	walk_right
+-	walk_right
+-	walk_right
+-	walk_down
+-	walk_down
+-	walk_down
+-	walk_down
+-	walk_down
+-	walk_right
+-	walk_right
+-	walk_right
+-	step_end
+-
+-PalletTown_Movement_OakWalkToLabFromHouse::
+-	walk_right
+-	walk_right
+-	walk_right
+-	walk_right
+-	walk_right
+-	walk_down
+-	walk_down
+-	walk_down
+-	walk_down
+-	walk_down
+-	walk_right
+-	walk_right
+-	walk_right
+-	walk_right
+-	walk_right
+-	walk_in_place_faster_up
+-	step_end
++Taichung_ChooseLanguageCore::
++	message Taichung_Text_LanguagePrompt
++	waitmessage
++	multichoice 16, 1, MULTICHOICE_TAICHUNG_LANGUAGE, TRUE
++	goto_if_eq VAR_RESULT, 0, Taichung_SetEnglish
++	goto_if_eq VAR_RESULT, 1, Taichung_SetChinese
++	goto Taichung_ChooseLanguageCore
+ 
+-PalletTown_Movement_PlayerWalkToLabFromHouse::
+-	walk_down
+-	walk_right
+-	walk_right
+-	walk_right
+-	walk_right
+-	walk_right
+-	walk_down
+-	walk_down
+-	walk_down
+-	walk_down
+-	walk_down
+-	walk_right
+-	walk_right
+-	walk_right
+-	walk_right
+-	step_end
++Taichung_SetEnglish::
++	setvar TAICHUNG_LANGUAGE, 1
++	return
+ 
+-PalletTown_EventScript_OakTriggerLeft::
+-	lockall
+-	setvar VAR_TEMP_1, 0
+-	goto PalletTown_EventScript_OakTrigger
+-	end
++Taichung_SetChinese::
++	setvar TAICHUNG_LANGUAGE, 2
++	return
+ 
+-PalletTown_EventScript_OakTriggerRight::
++Taichung_Welcome::
+ 	lockall
+-	setvar VAR_TEMP_1, 1
+-	goto PalletTown_EventScript_OakTrigger
+-	end
++	msgbox Taichung_Text_Welcome
+ 
+-PalletTown_EventScript_OakTrigger::
+-	famechecker FAMECHECKER_OAK, FCPICKSTATE_COLORED, UpdatePickStateFromSpecialVar8005
+-	textcolor NPC_TEXT_COLOR_MALE
+-	delay 30
+-	playbgm MUS_OAK, 0
+-	message PalletTown_Text_OakDontGoOut
++Taichung_ChooseStarter::
++	message Taichung_Text_ChooseStarter
+ 	waitmessage
+-	delay 85
+-	closemessage
+-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterDown
+-	waitmovement 0
+-	playse SE_PIN
+-	applymovement LOCALID_PLAYER, Common_Movement_ExclamationMark
+-	waitmovement 0
+-	delay 30
+-	addobject LOCALID_PALLET_PROF_OAK
+-	call_if_eq VAR_TEMP_1, 0, PalletTown_EventScript_OakEnterLeft
+-	call_if_eq VAR_TEMP_1, 1, PalletTown_EventScript_OakEnterRight
+-	delay 30
+-	msgbox PalletTown_Text_OakGrassUnsafeNeedMon
+-	closemessage
+-	delay 30
+-	call_if_eq VAR_TEMP_1, 0, PalletTown_EventScript_OakLeadPlayerToLabLeft
+-	call_if_eq VAR_TEMP_1, 1, PalletTown_EventScript_OakLeadPlayerToLabRight
+-	opendoor 16, 13
+-	waitdooranim
+-	applymovement LOCALID_PALLET_PROF_OAK, PalletTown_Movement_OakEnterLab
+-	applymovement LOCALID_PLAYER, PalletTown_Movement_PlayerEnterLab
+-	waitmovement 0
+-	closedoor 16, 13
+-	waitdooranim
+-	setvar VAR_MAP_SCENE_PALLET_TOWN_PROFESSOR_OAKS_LAB, 1
++	multichoice 16, 1, MULTICHOICE_TAICHUNG_STARTERS, TRUE
++	goto_if_eq VAR_RESULT, 0, Taichung_PickCharmander
++	goto_if_eq VAR_RESULT, 1, Taichung_PickBulbasaur
++	goto_if_eq VAR_RESULT, 2, Taichung_PickSquirtle
++	goto_if_eq VAR_RESULT, 3, Taichung_PickPikachu
++	@ B is disabled, and any unexpected result reopens the choice safely.
++	goto Taichung_ChooseStarter
++
++Taichung_PickCharmander::
++	setvar VAR_0x8004, SPECIES_CHARMANDER
++	setvar VAR_STARTER_MON, 2
++	goto Taichung_GiveStarter
++
++Taichung_PickBulbasaur::
++	setvar VAR_0x8004, SPECIES_BULBASAUR
++	setvar VAR_STARTER_MON, 0
++	goto Taichung_GiveStarter
++
++Taichung_PickSquirtle::
++	setvar VAR_0x8004, SPECIES_SQUIRTLE
++	setvar VAR_STARTER_MON, 1
++	goto Taichung_GiveStarter
++
++Taichung_PickPikachu::
++	setvar VAR_0x8004, SPECIES_PIKACHU
++	setvar VAR_STARTER_MON, 0
++	goto Taichung_GiveStarter
++
++Taichung_GiveStarter::
++	givemon VAR_0x8004, 5
++	goto_if_eq VAR_RESULT, MON_CANT_GIVE, Taichung_ChooseStarter
++	copyvar TAICHUNG_STARTER_SPECIES, VAR_0x8004
++	setvar TAICHUNG_QUEST_STATE, 1
++	additem ITEM_POKE_BALL, 5
++	additem ITEM_POTION, 3
++	additem ITEM_BICYCLE, 1
++	setflag FLAG_SYS_POKEMON_GET
++	setflag FLAG_SYS_POKEDEX_GET
++	setflag FLAG_SYS_B_DASH
++	setflag FLAG_BEAT_RIVAL_IN_OAKS_LAB
++	setflag FLAG_OPENED_START_MENU
++	setflag FLAG_HIDE_BULBASAUR_BALL
++	setflag FLAG_HIDE_SQUIRTLE_BALL
++	setflag FLAG_HIDE_CHARMANDER_BALL
++	setflag FLAG_HIDE_RIVAL_IN_LAB
+ 	clearflag FLAG_HIDE_OAK_IN_HIS_LAB
+ 	setvar VAR_MAP_SCENE_PALLET_TOWN_OAK, 1
+-	setflag FLAG_HIDE_OAK_IN_PALLET_TOWN
+-	setflag FLAG_DONT_TRANSITION_MUSIC
+-	warp MAP_PALLET_TOWN_PROFESSOR_OAKS_LAB, 6, 12
+-	waitstate
++	setvar VAR_MAP_SCENE_PALLET_TOWN_PROFESSOR_OAKS_LAB, 6
++	bufferspeciesname STR_VAR_1, TAICHUNG_STARTER_SPECIES
++	msgbox Taichung_Text_StarterChosen
+ 	releaseall
+ 	end
+ 
+-PalletTown_EventScript_OakEnterLeft::
+-	applymovement LOCALID_PALLET_PROF_OAK, PalletTown_Movement_OakEnterLeft
+-	waitmovement 0
+-	return
+-
+-PalletTown_EventScript_OakEnterRight::
+-	applymovement LOCALID_PALLET_PROF_OAK, PalletTown_Movement_OakEnterRight
+-	waitmovement 0
+-	return
+-
+-PalletTown_EventScript_OakLeadPlayerToLabLeft::
+-	applymovement LOCALID_PALLET_PROF_OAK, PalletTown_Movement_OakWalkToLabLeft
+-	applymovement LOCALID_PLAYER, PalletTown_Movement_PlayerWalkToLabLeft
+-	waitmovement 0
+-	return
+-
+-PalletTown_EventScript_OakLeadPlayerToLabRight::
+-	applymovement LOCALID_PALLET_PROF_OAK, PalletTown_Movement_OakWalkToLabRight
+-	applymovement LOCALID_PLAYER, PalletTown_Movement_PlayerWalkToLabRight
+-	waitmovement 0
+-	return
+-
+-PalletTown_Movement_OakEnterLeft::
+-	walk_up
+-	walk_up
+-	walk_right
+-	walk_up
+-	walk_up
+-	walk_right
+-	walk_up
+-	walk_up
+-	step_end
+-
+-PalletTown_Movement_OakEnterRight::
+-	walk_right
+-	walk_up
+-	walk_up
+-	walk_right
+-	walk_up
+-	walk_up
+-	walk_right
+-	walk_up
+-	walk_up
+-	step_end
+-
+-	.macro walk_to_lab
+-	walk_left
+-	walk_down
+-	walk_down
+-	walk_down
+-	walk_down
+-	walk_down
+-	walk_down
+-	walk_down
+-	walk_down
+-	walk_down
+-	walk_down
+-	walk_down
+-	walk_right
+-	walk_right
+-	walk_right
+-	walk_right
+-	.endm
+-
+-PalletTown_Movement_OakWalkToLabLeft::
+-	walk_down
+-	walk_to_lab
+-	walk_right
+-	walk_in_place_faster_up
+-	step_end
+-
+-PalletTown_Movement_OakWalkToLabRight::
+-	walk_down
+-	walk_left
+-	walk_to_lab
+-	walk_right
+-	walk_in_place_faster_up
+-	step_end
+-
+-PalletTown_Movement_OakEnterLab::
+-	walk_up
+-	set_invisible
+-	step_end
+-
+-PalletTown_Movement_PlayerWalkToLabLeft::
+-	walk_down
+-	walk_down
+-	walk_to_lab
+-	step_end
+-
+-PalletTown_Movement_PlayerWalkToLabRight::
+-	walk_down
+-	walk_down
+-	walk_left
+-	walk_to_lab
+-	step_end
+-
+-PalletTown_Movement_PlayerEnterLab::
+-	walk_right
+-	walk_up
+-	set_invisible
+-	step_end
+-
+-PalletTown_EventScript_SignLady::
++PalletTown_EventScript_FatMan::
+ 	lock
+-	goto_if_eq VAR_MAP_SCENE_PALLET_TOWN_SIGN_LADY, 2, PalletTown_EventScript_SignLadyDone
+-	goto_if_eq VAR_MAP_SCENE_PALLET_TOWN_SIGN_LADY, 1, PalletTown_EventScript_SignLadyJustShowedSign
+-	goto_if_eq SIGN_LADY_READY, TRUE, PalletTown_EventScript_SignLadyStartShowSign
+-	goto_if_set FLAG_TEMP_2, PalletTown_EventScript_SignLadyGoReadSign
+-	msgbox PalletTown_Text_HmmIsThatRight
+-	applymovement LOCALID_PALLET_SIGN_LADY, Common_Movement_FacePlayer
+-	waitmovement 0
+-	playse SE_PIN
+-	applymovement LOCALID_PALLET_SIGN_LADY, Common_Movement_ExclamationMark
+-	waitmovement 0
+-	applymovement LOCALID_PALLET_SIGN_LADY, Common_Movement_Delay48
+-	waitmovement 0
+-	msgbox PalletTown_Text_OhLookLook
+-	closemessage
+-	call_if_eq VAR_FACING, DIR_EAST, PalletTown_EventScript_SignLadyMoveOutOfWayRight
+-	call_if_ne VAR_FACING, DIR_EAST, PalletTown_EventScript_SignLadyMoveOutOfWayLeft
+-	copyobjectxytoperm LOCALID_PALLET_SIGN_LADY
+-	setflag FLAG_TEMP_2
++	faceplayer
++	goto_if_eq TAICHUNG_QUEST_STATE, 3, Taichung_TeaDelivered
++	goto_if_eq TAICHUNG_QUEST_STATE, 2, Taichung_TeaReminder
++	msgbox Taichung_Text_TeaRequest, MSGBOX_YESNO
++	goto_if_eq VAR_RESULT, NO, Taichung_TeaDeclined
++	setvar TAICHUNG_QUEST_STATE, 2
++	msgbox Taichung_Text_TeaAccepted
+ 	release
+ 	end
+ 
+-PalletTown_EventScript_SignLadyMoveOutOfWayRight::
+-	applymovement LOCALID_PALLET_SIGN_LADY, PalletTown_Movement_SignLadyMoveOutOfWayRight
+-	waitmovement 0
+-	return
+-
+-PalletTown_EventScript_SignLadyMoveOutOfWayLeft::
+-	applymovement LOCALID_PALLET_SIGN_LADY, PalletTown_Movement_SignLadyMoveOutOfWayLeft
+-	waitmovement 0
+-	return
++Taichung_TeaDeclined::
++	msgbox Taichung_Text_TeaDeclined
++	release
++	end
+ 
+-PalletTown_EventScript_SignLadyDone::
+-	applymovement LOCALID_PALLET_SIGN_LADY, Common_Movement_FacePlayer
+-	waitmovement 0
+-	msgbox PalletTown_Text_RaisingMonsToo
++Taichung_TeaReminder::
++	msgbox Taichung_Text_TeaReminder
+ 	release
+ 	end
+ 
+-PalletTown_EventScript_SignLadyGoReadSign::
+-	applymovement LOCALID_PALLET_SIGN_LADY, Common_Movement_FacePlayer
+-	waitmovement 0
+-	msgbox PalletTown_Text_ReadItReadIt
++Taichung_TeaDelivered::
++	msgbox Taichung_Text_TeaThanks
+ 	release
+ 	end
+ 
+-PalletTown_EventScript_SignLadyJustShowedSign::
+-	applymovement LOCALID_PALLET_SIGN_LADY, Common_Movement_FacePlayer
+-	waitmovement 0
+-	msgbox PalletTown_Text_SignsAreUsefulArentThey
++PalletTown_EventScript_SignLady::
++	lock
++	faceplayer
++	goto_if_eq TAICHUNG_QUEST_STATE, 3, Taichung_GuideDone
++	goto_if_eq TAICHUNG_QUEST_STATE, 2, Taichung_DeliverTea
++	msgbox Taichung_Text_GuideWaiting
+ 	release
+ 	end
+ 
+-PalletTown_Movement_SignLadyMoveOutOfWayRight::
+-	walk_right
+-	walk_in_place_faster_left
+-	step_end
++Taichung_DeliverTea::
++	msgbox Taichung_Text_GuideThanks
++	additem ITEM_POTION, 1
++	goto_if_eq VAR_RESULT, FALSE, Taichung_BagFull
++	setvar TAICHUNG_QUEST_STATE, 3
++	playfanfare MUS_OBTAIN_ITEM
++	msgbox Taichung_Text_QuestComplete
++	waitfanfare
++	release
++	end
+ 
+-PalletTown_Movement_SignLadyMoveOutOfWayLeft::
+-	walk_left
+-	walk_in_place_faster_right
+-	step_end
++Taichung_BagFull::
++	msgbox Taichung_Text_BagFull
++	release
++	end
+ 
+-PalletTown_EventScript_FatMan::
+-	msgbox PalletTown_Text_CanStoreItemsAndMonsInPC, MSGBOX_NPC
++Taichung_GuideDone::
++	msgbox Taichung_Text_GuideDone
++	release
+ 	end
+ 
+ PalletTown_EventScript_OaksLabSign::
+-	lockall
+-	famechecker FAMECHECKER_OAK, 0
+-	msgbox PalletTown_Text_OakPokemonResearchLab
+-	releaseall
++	msgbox Taichung_Text_FieldStation, MSGBOX_SIGN
+ 	end
+ 
+ PalletTown_EventScript_PlayersHouseSign::
+-	msgbox PalletTown_Text_PlayersHouse, MSGBOX_SIGN
++	msgbox Taichung_Text_GuestHouse, MSGBOX_SIGN
+ 	end
+ 
+ PalletTown_EventScript_RivalsHouseSign::
+-	msgbox PalletTown_Text_RivalsHouse, MSGBOX_SIGN
++	msgbox Taichung_Text_TeaHouse, MSGBOX_SIGN
+ 	end
+ 
+ PalletTown_EventScript_TownSign::
+-	msgbox PalletTown_Text_TownSign, MSGBOX_SIGN
++	msgbox Taichung_Text_TownSign, MSGBOX_SIGN
+ 	end
+ 
+ PalletTown_EventScript_TrainerTips::
+-	lockall
+-	msgbox PalletTown_Text_PressStartToOpenMenu
+-	setvar VAR_MAP_SCENE_PALLET_TOWN_SIGN_LADY, 1
+-	releaseall
+-	end
+-
+-PalletTown_EventScript_SignLadyTrigger::
+-	lockall
+-	applymovement LOCALID_PALLET_SIGN_LADY, Common_Movement_WalkInPlaceFasterRight
+-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
+-	waitmovement 0
+-	call PalletTown_EventScript_SignLadyShowSign
+-	releaseall
+-	end
+-
+-PalletTown_EventScript_SignLadyShowSign::
+-	textcolor NPC_TEXT_COLOR_FEMALE
+-	msgbox PalletTown_Text_LookCopiedTrainerTipsSign
+-	closemessage
+-	delay 20
+-	textcolor NPC_TEXT_COLOR_NEUTRAL
+-	setflag FLAG_OPENED_START_MENU
+-	setvar VAR_MAP_SCENE_PALLET_TOWN_SIGN_LADY, 1
+-	setvar SIGN_LADY_READY, FALSE
+-	special SetWalkingIntoSignVars
+-	special DisableMsgBoxWalkaway
+-	signmsg
+-	msgbox PalletTown_Text_PressStartToOpenMenuCopy
+-	normalmsg
+-	return
+-
+-PalletTown_EventScript_SignLadyStartShowSign::
+-	applymovement LOCALID_PALLET_SIGN_LADY, Common_Movement_FacePlayer
+-	waitmovement 0
+-	call PalletTown_EventScript_SignLadyShowSign
+-	release
++	msgbox Taichung_Text_GreenwaySign, MSGBOX_SIGN
+ 	end
+diff --git a/data/maps/PalletTown/text.inc b/data/maps/PalletTown/text.inc
+index 726aea8..2e1ae3a 100644
+--- a/data/maps/PalletTown/text.inc
++++ b/data/maps/PalletTown/text.inc
+@@ -1,67 +1,96 @@
+-PalletTown_Text_OakDontGoOut::
+-    .string "OAK: Hey! Wait!\n"
+-    .string "Don't go out!$"
+-
+-PalletTown_Text_OakGrassUnsafeNeedMon::
+-    .string "OAK: It's unsafe!\n"
+-    .string "Wild POKéMON live in tall grass!\p"
+-    .string "You need your own POKéMON for\n"
+-    .string "your protection.\p"
+-    .string "I know!\n"
+-    .string "Here, come with me!$"
+-
+-PalletTown_Text_RaisingMonsToo::
+-    .string "I'm raising POKéMON, too.\p"
+-    .string "When they get strong, they can\n"
+-    .string "protect me.$"
+-
+-PalletTown_Text_CanStoreItemsAndMonsInPC::
+-    .string "Technology is incredible!\p"
+-    .string "You can now store and recall items\n"
+-    .string "and POKéMON as data via PC.$"
+-
+-PalletTown_Text_OakPokemonResearchLab::
+-    .string "OAK POKéMON RESEARCH LAB$"
+-
+-PalletTown_Text_PlayersHouse::
+-    .string "{PLAYER}'s house$"
+-
+-PalletTown_Text_RivalsHouse::
+-    .string "{RIVAL}'s house$"
+-
+-PalletTown_Text_TownSign::
+-    .string "PALLET TOWN\n"
+-    .string "Shades of your journey await!$"
+-
+-PalletTown_Text_OakLetMeSeePokedex::
+-    .string "OAK: Ah, {PLAYER}!\n"
+-    .string "You're back, are you?\p"
+-    .string "How much have you filled in your\n"
+-    .string "POKéDEX?\p"
+-    .string "May I see it?\p"
+-    .string "Let's see…$"
+-
+-PalletTown_Text_CaughtXPuttingInHonestEffort::
+-    .string "You've caught {STR_VAR_2}…\p"
+-    .string "Hm, it looks as if you're putting\n"
+-    .string "in an honest effort.\p"
+-    .string "When you manage to fill it some\n"
+-    .string "more, come show me, please.$"
+-
+-PalletTown_Text_CaughtXImpressiveFollowMe::
+-    .string "You've caught… {STR_VAR_2}!?\n"
+-    .string "Now, this is impressive!\p"
+-    .string "There's something I wanted to ask\n"
+-    .string "of you, {PLAYER}.\p"
+-    .string "Come.\n"
+-    .string "Follow me.$"
+-
+-PalletTown_Text_OakYouEnjoyingTraveling::
+-    .string "OAK: Ah, {PLAYER}!\n"
+-    .string "You seem to be enjoying traveling.\p"
+-    .string "Knowing you, {PLAYER}, I can easily\n"
+-    .string "imagine you going out to even more\l"
+-    .string "exotic locales.\p"
+-    .string "Good for you, good for you.\n"
+-    .string "Hohoho.$"
++Taichung_Text_Welcome::
++	.string "Welcome to TAICHUNG!\n"
++	.string "Your city adventure starts here.$"
+ 
++Taichung_Text_ChooseStarter::
++	.string "Choose one POKéMON partner.\n"
++	.string "Then explore at your own pace.$"
++
++Taichung_Text_StarterChosen::
++	.string "{STR_VAR_1} is your partner!\n"
++	.string "Your BAG has supplies. Let's go!$"
++
++Taichung_Text_TeaRequest::
++	.string "A sunny day calls for iced tea!\p"
++	.string "Could you take this tea parcel\n"
++	.string "to the GREENWAY GUIDE?\p"
++	.string "She's by the flowers in the\n"
++	.string "southwest garden.$"
++
++Taichung_Text_TeaAccepted::
++	.string "You tuck the tea parcel away.\p"
++	.string "Follow the path south, then\n"
++	.string "look for the guide by the flowers.\p"
++	.string "Take your time. This is TAICHUNG!$"
++
++Taichung_Text_TeaDeclined::
++	.string "No rush! Come back when you've\n"
++	.string "had a look around the Greenway.$"
++
++Taichung_Text_TeaReminder::
++	.string "The GREENWAY GUIDE is waiting\n"
++	.string "in the southwest flower garden.\p"
++	.string "Her tea is in your parcel!$"
++
++Taichung_Text_TeaThanks::
++	.string "The guide loved her tea!\p"
++	.string "Good tea, green streets, and\n"
++	.string "POKéMON. A lovely TAICHUNG day.$"
++
++Taichung_Text_GuideWaiting::
++	.string "Welcome to CALLIGRAPHY GREENWAY!\p"
++	.string "I'm waiting for my afternoon tea.\n"
++	.string "The TEA HOUSE is northeast.\p"
++	.string "Say hello to the vendor for me!$"
++
++Taichung_Text_GuideThanks::
++	.string "My tea! Thank you for bringing\n"
++	.string "a little kindness down the path.\p"
++	.string "Here, a POTION for your buddy.$"
++
++Taichung_Text_QuestComplete::
++	.string "GREENWAY DELIVERY complete!\n"
++	.string "You received a POTION.\p"
++	.string "Ready for an encounter? Head\n"
++	.string "north to the tall grass.$"
++
++Taichung_Text_BagFull::
++	.string "Your BAG is full. Make room\n"
++	.string "for a POTION and come back!$"
++
++Taichung_Text_GuideDone::
++	.string "The northern path leads to\n"
++	.string "wild POKéMON in the tall grass.\p"
++	.string "Weaken one, then choose a\n"
++	.string "POKé BALL from your BAG.\p"
++	.string "Press START to save your walk.$"
++
++Taichung_Text_FieldStation::
++	.string "GREENWAY FIELD STATION\n"
++	.string "OAK's POKéMON research outpost$"
++
++Taichung_Text_GuestHouse::
++	.string "GREENWAY GUEST HOUSE\n"
++	.string "A little rest for every traveler$"
++
++Taichung_Text_TeaHouse::
++	.string "TAICHUNG TEA HOUSE\n"
++	.string "Slow down. Have a little tea.$"
++
++Taichung_Text_TownSign::
++	.string "TAICHUNG - WEST DISTRICT\n"
++	.string "Follow the green, find your story.$"
++
++Taichung_Text_GreenwaySign::
++	.string "CALLIGRAPHY GREENWAY\n"
++	.string "Walk, wander, and say hello.\p"
++	.string "TEA HOUSE: northeast\n"
++	.string "GREENWAY GUIDE: southwest$"
++
++Taichung_Text_LanguagePrompt::
++	.string "Language / 語言\n"
++	.string "Choose English or 繁體中文.$"
++
++Taichung_Text_LanguageChanged::
++	.string "Language set to English.\n"
++	.string "Change it from the START menu.$"
+diff --git a/data/maps/PalletTown_RivalsHouse/scripts.inc b/data/maps/PalletTown_RivalsHouse/scripts.inc
+index a9e5e29..ffe7919 100644
+--- a/data/maps/PalletTown_RivalsHouse/scripts.inc
++++ b/data/maps/PalletTown_RivalsHouse/scripts.inc
+@@ -19,6 +19,8 @@ PalletTown_RivalsHouse_EventScript_AlreadyReceivedTownMap::
+ 	return
+ 
+ PalletTown_RivalsHouse_EventScript_Daisy::
++	goto PalletTown_EventScript_FatMan @ Share the tea errand indoors and outdoors.
++	end
+ 	lock
+ 	faceplayer
+ 	famechecker FAMECHECKER_DAISY, FCPICKSTATE_COLORED, UpdatePickStateFromSpecialVar8005
+diff --git a/include/characters.h b/include/characters.h
+index d00ecf0..384e36d 100644
+--- a/include/characters.h
++++ b/include/characters.h
+@@ -246,6 +246,7 @@
+ #define EXT_CTRL_CODE_ENG                    0x16
+ #define EXT_CTRL_CODE_PAUSE_MUSIC            0x17
+ #define EXT_CTRL_CODE_RESUME_MUSIC           0x18
++#define EXT_CTRL_CODE_TAICHUNG_CJK           0x19
+ 
+ #define TEXT_COLOR_TRANSPARENT  0x0
+ #define TEXT_COLOR_WHITE        0x1
+diff --git a/include/constants/menu.h b/include/constants/menu.h
+index 7c36f36..015fe25 100644
+--- a/include/constants/menu.h
++++ b/include/constants/menu.h
+@@ -70,6 +70,9 @@
+ #define MULTICHOICE_JOIN_OR_LEAD                               63
+ #define MULTICHOICE_TRAINER_TOWER_MODE                         64
+ 
++#define MULTICHOICE_TAICHUNG_STARTERS                          65
++#define MULTICHOICE_TAICHUNG_LANGUAGE                          66
++
+ #define MULTICHOICE_NONE                                      255
+ 
+ #define LISTMENU_BADGES                    0
+diff --git a/include/taichung_language.h b/include/taichung_language.h
+new file mode 100644
+index 0000000..ac78b12
+--- /dev/null
++++ b/include/taichung_language.h
+@@ -0,0 +1,14 @@
++#ifndef GUARD_TAICHUNG_LANGUAGE_H
++#define GUARD_TAICHUNG_LANGUAGE_H
++
++#include "global.h"
++
++#define TAICHUNG_LANGUAGE_VAR 0x40FB
++#define TAICHUNG_LANGUAGE_EN 1
++#define TAICHUNG_LANGUAGE_ZH 2
++
++bool8 TaichungIsChinese(void);
++const u8 *TaichungText(const u8 *english, const u8 *chinese);
++const u8 *TaichungTranslate(const u8 *text);
++
++#endif
+diff --git a/src/data/region_map/region_map_sections.json b/src/data/region_map/region_map_sections.json
+index 601bff6..2988b7b 100644
+--- a/src/data/region_map/region_map_sections.json
++++ b/src/data/region_map/region_map_sections.json
+@@ -266,7 +266,7 @@
+     },
+     {
+       "id": "MAPSEC_PALLET_TOWN",
+-      "name": "PALLET TOWN",
++      "name": "TAICHUNG GREENWAY",
+       "x": 4,
+       "y": 11,
+       "width": 1,
+@@ -645,7 +645,7 @@
+     },
+     {
+       "id": "MAPSEC_POKEMON_MANSION",
+-      "name": "POKéMON MANSION",
++      "name": "POK\u00e9MON MANSION",
+       "x": 0,
+       "y": 0,
+       "width": 1,
+@@ -661,7 +661,7 @@
+     },
+     {
+       "id": "MAPSEC_POKEMON_LEAGUE",
+-      "name": "POKéMON LEAGUE",
++      "name": "POK\u00e9MON LEAGUE",
+       "x": 0,
+       "y": 0,
+       "width": 1,
+@@ -685,7 +685,7 @@
+     },
+     {
+       "id": "MAPSEC_POKEMON_TOWER",
+-      "name": "POKéMON TOWER",
++      "name": "POK\u00e9MON TOWER",
+       "x": 0,
+       "y": 0,
+       "width": 1,
+diff --git a/src/data/taichung_glyphs.h b/src/data/taichung_glyphs.h
+new file mode 100644
+index 0000000..074baea
+--- /dev/null
++++ b/src/data/taichung_glyphs.h
+@@ -0,0 +1,258 @@
++// Generated by scripts/generate-chinese-font.py. SIL OFL 1.1; see assets/fonts/OFL.txt.
++static const u16 sTaichungChineseGlyphs[][14] = {
++    {0x000, 0x000, 0x030, 0x060, 0x0c0, 0x000, 0x000, 0x000, 0x000, 0x000, 0x000, 0x000, 0x000, 0x000}, // 0: 、
++    {0x000, 0x060, 0x0e0, 0x0e0, 0x000, 0x000, 0x000, 0x000, 0x000, 0x000, 0x000, 0x000, 0x000, 0x000}, // 1: ・
++    {0x000, 0x000, 0xffe, 0x000, 0x000, 0x000, 0x000, 0x000, 0x000, 0x000, 0x000, 0x000, 0x000, 0x000}, // 2: 一
++    {0x000, 0x7fe, 0x7ff, 0x020, 0x020, 0x0e0, 0x3a0, 0x220, 0x020, 0x020, 0x020, 0x020, 0x000, 0x000}, // 3: 下
++    {0x000, 0x000, 0x7fe, 0x060, 0x060, 0x1f0, 0x378, 0x66e, 0x462, 0x060, 0x060, 0x060, 0x000, 0x000}, // 4: 不
++    {0x000, 0x380, 0x1fc, 0x00c, 0x00c, 0x7fc, 0x7fc, 0x10c, 0x10c, 0x10c, 0xffe, 0x7fe, 0x000, 0x000}, // 5: 丘
++    {0x000, 0x020, 0x020, 0x7fe, 0x622, 0x622, 0x622, 0x7fe, 0x622, 0x020, 0x020, 0x020, 0x000, 0x000}, // 6: 中
++    {0x000, 0x000, 0x060, 0x060, 0x7fe, 0x300, 0x180, 0x0c0, 0x060, 0x030, 0x01c, 0x01e, 0xff2, 0x000}, // 7: 之
++    {0x000, 0x000, 0x7fe, 0x300, 0x180, 0x040, 0x040, 0x040, 0x040, 0x040, 0x040, 0x078, 0x000, 0x000}, // 8: 了
++    {0x000, 0x020, 0x7ff, 0x3fc, 0x264, 0x3fc, 0x3fe, 0x660, 0x7ff, 0x3fe, 0x220, 0x030, 0x000, 0x000}, // 9: 事
++    {0x000, 0x000, 0x7fe, 0x7fe, 0x3fc, 0x204, 0x3fc, 0x000, 0x3fc, 0x0e0, 0xffe, 0x060, 0x038, 0x000}, // 10: 享
++    {0x000, 0x020, 0x020, 0x020, 0x060, 0x070, 0x070, 0x0d0, 0x098, 0x18c, 0x706, 0x603, 0x000, 0x000}, // 11: 人
++    {0x000, 0x000, 0x690, 0xc98, 0x088, 0xf8c, 0x3fe, 0x18a, 0x188, 0x108, 0x908, 0xb08, 0xe08, 0x000}, // 12: 代
++    {0x000, 0x000, 0x204, 0x234, 0x264, 0x344, 0x304, 0x104, 0x1bc, 0x3de, 0x667, 0xc30, 0x000, 0x000}, // 13: 以
++    {0x000, 0x000, 0x3c8, 0x36c, 0x224, 0x636, 0x7f7, 0x3e4, 0x244, 0x244, 0x264, 0x334, 0x394, 0x000}, // 14: 份
++    {0x000, 0x000, 0x088, 0x08c, 0x08c, 0x7fe, 0x1c7, 0x1c4, 0x2e4, 0x6b4, 0xc9c, 0x084, 0x084, 0x000}, // 15: 休
++    {0x000, 0x000, 0x488, 0x6bc, 0x2a4, 0x2a6, 0x7f7, 0x085, 0x084, 0xffc, 0x084, 0x084, 0x084, 0x000}, // 16: 伴
++    {0x000, 0x000, 0x088, 0x08c, 0x7fc, 0x206, 0x227, 0x264, 0x244, 0x344, 0x144, 0xff4, 0x004, 0x000}, // 17: 位
++    {0x000, 0x000, 0x088, 0x08c, 0x7f4, 0x086, 0x087, 0x084, 0x7f4, 0x084, 0x084, 0x7fc, 0x7f4, 0x000}, // 18: 住
++    {0x000, 0x000, 0x028, 0x02c, 0xff4, 0xc96, 0x497, 0x2a4, 0x6a4, 0x4b4, 0xc94, 0x084, 0x0c4, 0x000}, // 19: 你
++    {0x000, 0x020, 0x020, 0x7ff, 0x124, 0x124, 0x3ae, 0x6f2, 0x0f8, 0x1ac, 0x727, 0x020, 0x000, 0x000}, // 20: 來
++    {0x000, 0x000, 0x7e8, 0x20c, 0x204, 0xff6, 0x7d6, 0x7d6, 0x134, 0xff4, 0x394, 0x6c4, 0xc64, 0x000}, // 21: 候
++    {0x000, 0x000, 0x47c, 0xff4, 0x5d4, 0x57e, 0xf66, 0x436, 0x184, 0xffc, 0x3a4, 0xdb4, 0x994, 0x000}, // 22: 傑
++    {0x000, 0x000, 0x34c, 0x7fc, 0x344, 0xffe, 0x7f6, 0x7f6, 0x5bc, 0x7f4, 0x7f4, 0x4b4, 0x694, 0x000}, // 23: 備
++    {0x000, 0x000, 0x068, 0xffc, 0x7f4, 0x626, 0x427, 0x7e4, 0xff4, 0xff4, 0xb54, 0xd64, 0x694, 0x000}, // 24: 傷
++    {0x000, 0x000, 0x114, 0x7a4, 0x77c, 0x706, 0xff6, 0x7f4, 0xdc4, 0xf7c, 0xd5c, 0xd7c, 0xf7c, 0x000}, // 25: 儲
++    {0x000, 0x048, 0x048, 0x7fc, 0x044, 0x064, 0x7fe, 0x190, 0x190, 0x998, 0x98c, 0xf06, 0x000, 0x000}, // 26: 先
++    {0x000, 0x7ff, 0x7ff, 0x020, 0x7fe, 0x626, 0x7fe, 0x626, 0xfff, 0x7ff, 0x606, 0x386, 0x000, 0x000}, // 27: 再
++    {0x000, 0x7fe, 0x602, 0x7fa, 0x7fa, 0x000, 0x3fc, 0x3fc, 0x3fc, 0x3fc, 0x304, 0x3fc, 0x000, 0x000}, // 28: 冒
++    {0x000, 0x080, 0x083, 0x586, 0x7f8, 0x3e0, 0x3b4, 0x3b6, 0x692, 0xc9b, 0x088, 0x0e0, 0x000, 0x000}, // 29: 冰
++    {0x000, 0x020, 0x226, 0x226, 0x226, 0x3fe, 0x020, 0x622, 0x622, 0x622, 0x7fe, 0x7fe, 0x000, 0x000}, // 30: 出
++    {0x000, 0x404, 0xfe4, 0xc84, 0xc9e, 0xc86, 0x484, 0x4c4, 0x45c, 0x46e, 0x660, 0x730, 0x000, 0x000}, // 31: 切
++    {0x000, 0x43e, 0x4a2, 0x4a2, 0x4be, 0x4be, 0x4bc, 0x4bc, 0x4a4, 0x426, 0x422, 0x73b, 0x000, 0x000}, // 32: 別
++    {0x000, 0x47e, 0x58c, 0x5a4, 0x5fe, 0x5ce, 0x598, 0x5fe, 0x598, 0x478, 0x47e, 0x702, 0x000, 0x000}, // 33: 到
++    {0x000, 0x810, 0x954, 0x954, 0x97c, 0x946, 0x95e, 0x946, 0x97e, 0x84e, 0x846, 0xf62, 0x000, 0x000}, // 34: 削
++    {0x000, 0x308, 0x108, 0xffe, 0x000, 0x4be, 0x4b6, 0x4be, 0x4b6, 0x4be, 0x422, 0x73a, 0x000, 0x000}, // 35: 前
++    {0x000, 0x010, 0x018, 0x7fc, 0x604, 0x6fe, 0x688, 0x6f8, 0x308, 0x808, 0xc08, 0x7f8, 0x000, 0x000}, // 36: 包
++    {0x000, 0x000, 0x1b0, 0x1b0, 0x1b0, 0xfbe, 0x1b0, 0x1b0, 0x1b0, 0x9b0, 0x9f0, 0x9bc, 0xf06, 0x000}, // 37: 北
++    {0x000, 0x7ff, 0x002, 0x1f2, 0x112, 0x1f2, 0x3ba, 0x2aa, 0x3ba, 0x006, 0x7fc, 0x000, 0x000, 0x000}, // 38: 區
++    {0x000, 0x000, 0x00c, 0x3fc, 0x3fe, 0x023, 0x020, 0x7ff, 0x020, 0x020, 0x020, 0x020, 0x020, 0x000}, // 39: 午
++    {0x000, 0x020, 0x7ff, 0x020, 0x7fe, 0x6da, 0x6d2, 0x6fa, 0x622, 0x7fe, 0x622, 0x7a2, 0x000, 0x000}, // 40: 南
++    {0x000, 0x684, 0x7f4, 0x7f6, 0xfff, 0xff4, 0xff4, 0x6a4, 0xff4, 0x264, 0x244, 0x384, 0x000, 0x000}, // 41: 博
++    {0x000, 0x020, 0x3e0, 0x020, 0x020, 0x7ff, 0x7ff, 0x020, 0x1e0, 0x720, 0x020, 0x020, 0x000, 0x000}, // 42: 卡
++    {0x000, 0x07f, 0x7ff, 0xff6, 0x4fe, 0x6b6, 0x6b6, 0x7be, 0x336, 0x33e, 0xfff, 0xc70, 0x000, 0x000}, // 43: 取
++    {0x000, 0x380, 0x3fe, 0x324, 0x324, 0x7fe, 0x402, 0x402, 0x1fc, 0x188, 0x0f0, 0x0f0, 0x79e, 0x000}, // 44: 受
++    {0x000, 0x294, 0xffe, 0x7fe, 0x7fe, 0x3fc, 0x7fe, 0x7fe, 0x7fe, 0x3de, 0x39f, 0xef2, 0x000, 0x000}, // 45: 叢
++    {0x000, 0x3fc, 0x204, 0x204, 0x3fc, 0x3fc, 0x020, 0x7fe, 0x630, 0x618, 0x20c, 0x386, 0x000, 0x000}, // 46: 另
++    {0x000, 0x000, 0x7fe, 0x200, 0x27c, 0x244, 0x244, 0x244, 0x27c, 0x204, 0x200, 0x380, 0x000, 0x000}, // 47: 可
++    {0x000, 0x040, 0x0e0, 0x1b0, 0x71c, 0xffe, 0x000, 0x7fc, 0x60c, 0x60c, 0x7fc, 0x60c, 0x000, 0x000}, // 48: 合
++    {0x000, 0x020, 0x020, 0x7fe, 0x7fe, 0x602, 0x6fa, 0x69a, 0x69a, 0x6fa, 0x61a, 0x602, 0x382, 0x000}, // 49: 向
++    {0x000, 0xffe, 0x060, 0x1f0, 0x77c, 0xc66, 0x000, 0x3fc, 0x204, 0x204, 0x3fc, 0x204, 0x000, 0x000}, // 50: 否
++    {0x000, 0xfe0, 0xfef, 0xd2b, 0xd2b, 0xd2b, 0xfeb, 0xfeb, 0x02f, 0x823, 0xc20, 0x7e0, 0x000, 0x000}, // 51: 吧
++    {0x000, 0x000, 0x780, 0x1fe, 0x68a, 0x6aa, 0x2aa, 0x2aa, 0x7fa, 0x08e, 0x082, 0x080, 0x0e0, 0x000}, // 52: 呼
++    {0x000, 0x000, 0x7be, 0x7ce, 0x4c8, 0x4ff, 0x4cc, 0x4dc, 0x4fe, 0x4ca, 0x7c8, 0x4c8, 0x008, 0x000}, // 53: 和
++    {0x000, 0x3fc, 0x20c, 0x3fc, 0x3fc, 0x7fc, 0x7fc, 0x604, 0x7fc, 0x7fc, 0x39c, 0x606, 0x000, 0x000}, // 54: 員
++    {0x000, 0x7ff, 0x6f3, 0x7ff, 0x6f3, 0x7ff, 0x603, 0x6fb, 0x69b, 0x6fb, 0x613, 0x303, 0x000, 0x000}, // 55: 問
++    {0x000, 0x000, 0x13e, 0x186, 0xfbe, 0x5a6, 0x5fe, 0x546, 0x73e, 0x326, 0x326, 0x7bf, 0xce4, 0x000}, // 56: 啟
++    {0x000, 0x060, 0x7fe, 0x3fc, 0x3fc, 0x30c, 0x3fc, 0x198, 0xffe, 0x3fc, 0x204, 0x3fc, 0x000, 0x000}, // 57: 喜
++    {0x000, 0x7ee, 0x42e, 0x7ea, 0x42a, 0x7ea, 0x7ea, 0x7fa, 0x5be, 0x7e2, 0x7e0, 0x7e0, 0x000, 0x000}, // 58: 喝
++    {0x000, 0x7de, 0x652, 0x3de, 0x3fe, 0x226, 0x3fe, 0x3fe, 0x070, 0x7fe, 0x020, 0x020, 0x000, 0x000}, // 59: 單
++    {0x000, 0xff0, 0x1be, 0x7fa, 0x13a, 0x7fa, 0x13a, 0xffa, 0xc0e, 0xf52, 0x550, 0x600, 0x000, 0x000}, // 60: 嗎
++    {0x000, 0x3fe, 0x7fe, 0x652, 0x652, 0x652, 0x65a, 0x7ca, 0x60e, 0x602, 0x7fe, 0x602, 0x000, 0x000}, // 61: 四
++    {0x000, 0x7ff, 0x603, 0x603, 0x6fb, 0x68b, 0x68b, 0x68b, 0x6fb, 0x603, 0x7ff, 0x603, 0x000, 0x000}, // 62: 回
++    {0x000, 0x7ff, 0x423, 0x5fb, 0x5ff, 0x5fb, 0x50b, 0x5fb, 0x5df, 0x5b3, 0x61b, 0x7ff, 0x000, 0x000}, // 63: 園
++    {0x000, 0x7ff, 0x4f3, 0x49b, 0x4fb, 0x5ff, 0x4fb, 0x5fb, 0x5fb, 0x5fb, 0x403, 0x7ff, 0x000, 0x000}, // 64: 圖
++    {0x000, 0x030, 0x030, 0xffe, 0x018, 0x08c, 0x08c, 0x7fe, 0x08e, 0x08c, 0xffc, 0xffc, 0x000, 0x000}, // 65: 在
++    {0x000, 0x704, 0x504, 0xff4, 0x13e, 0x5f4, 0x7b4, 0x7b4, 0x3bc, 0xb7e, 0xb90, 0xe98, 0x000, 0x000}, // 66: 城
++    {0x000, 0x020, 0x020, 0x020, 0x020, 0x7ff, 0x020, 0x020, 0x020, 0x020, 0x3fe, 0x000, 0x000, 0x000}, // 67: 士
++    {0x000, 0xf9e, 0x090, 0x7fc, 0x4b4, 0x7fc, 0xffe, 0xffe, 0xbfa, 0x1b8, 0x0f0, 0x01e, 0x000, 0x000}, // 68: 夢
++    {0x000, 0x100, 0x7be, 0x7aa, 0x7fe, 0x32a, 0x1be, 0x3c8, 0xfbf, 0x5cc, 0x73e, 0x3ab, 0x0c8, 0x000}, // 69: 夥
++    {0x000, 0x040, 0x060, 0x060, 0xffe, 0x0e0, 0x0e0, 0x0b0, 0x190, 0x318, 0xe0e, 0x402, 0x000, 0x000}, // 70: 大
++    {0x000, 0x000, 0x7fe, 0x060, 0x060, 0x7fe, 0x060, 0x0f0, 0x090, 0x31c, 0x606, 0x002, 0x000, 0x000}, // 71: 天
++    {0x000, 0x000, 0x102, 0x12a, 0x73f, 0x5ea, 0x57a, 0x52b, 0x52f, 0x52e, 0x42c, 0x43a, 0x7e3, 0x000}, // 72: 她
++    {0x000, 0x000, 0x7c4, 0x614, 0x23f, 0x316, 0x112, 0xff2, 0x11e, 0x10c, 0x11c, 0x116, 0x1c2, 0x000}, // 73: 好
++    {0x000, 0x000, 0x10c, 0x514, 0x57e, 0xd54, 0x956, 0x156, 0x51e, 0x60c, 0x31c, 0x1d6, 0x062, 0x000}, // 74: 妙
++    {0x000, 0x000, 0x18c, 0x294, 0x6fe, 0xcd4, 0xff6, 0x01e, 0xffe, 0xc7c, 0xc7c, 0xfe6, 0xc62, 0x000}, // 75: 始
++    {0x000, 0x000, 0x7fc, 0x300, 0x180, 0x0c0, 0x040, 0xffe, 0x040, 0x040, 0x040, 0x040, 0x078, 0x000}, // 76: 子
++    {0x000, 0x000, 0x030, 0xffe, 0x018, 0x008, 0x7ec, 0x30c, 0x18e, 0xffc, 0x18c, 0x18c, 0x0cc, 0x000}, // 77: 存
++    {0x000, 0x000, 0x060, 0x7fe, 0x406, 0x422, 0x330, 0xffe, 0x198, 0x1bc, 0x0e0, 0x3f0, 0x61e, 0x000}, // 78: 安
++    {0x000, 0x020, 0x060, 0x7fe, 0x402, 0x5fa, 0x000, 0x7fe, 0x7fe, 0x090, 0x098, 0xc8c, 0x786, 0x000}, // 79: 完
++    {0x000, 0x000, 0x060, 0x7fe, 0x402, 0x7fa, 0x3f8, 0x068, 0x3ec, 0x06c, 0x07c, 0x076, 0x7e2, 0x000}, // 80: 定
++    {0x000, 0x000, 0x040, 0x7fe, 0x402, 0x3fc, 0x130, 0x3fc, 0x040, 0x7fc, 0x040, 0xffe, 0xffe, 0x000}, // 81: 室
++    {0x000, 0x000, 0x020, 0x7fe, 0x402, 0x5fe, 0x238, 0x32e, 0x1f8, 0x16e, 0x378, 0x64e, 0x070, 0x000}, // 82: 家
++    {0x000, 0x040, 0x7fe, 0x462, 0x7be, 0x20c, 0x3bc, 0x3fc, 0x3f8, 0x7fc, 0x56e, 0x5ec, 0x324, 0x000}, // 83: 寫
++    {0x000, 0x020, 0x7ff, 0x4c3, 0x7fe, 0x7dc, 0x7fe, 0x3fc, 0x3fc, 0x3fc, 0x3fc, 0x3fc, 0x79e, 0x000}, // 84: 寶
++    {0x000, 0x000, 0x244, 0xffe, 0x7ee, 0x7ee, 0x7ee, 0x7ec, 0xffe, 0x180, 0xffe, 0x118, 0x1d0, 0x000}, // 85: 導
++    {0x000, 0x040, 0x040, 0x040, 0x24c, 0x64c, 0x444, 0xc46, 0xc42, 0x040, 0x040, 0x070, 0x000, 0x000}, // 86: 小
++    {0x000, 0x000, 0x108, 0x53e, 0x500, 0xffe, 0x132, 0x3be, 0x3be, 0x39a, 0x2aa, 0xa4b, 0xe6c, 0x000}, // 87: 就
++    {0x000, 0x7fc, 0x40c, 0x40c, 0x7fc, 0x06c, 0x06c, 0x7ec, 0x06c, 0x86c, 0x866, 0xfe6, 0x000, 0x000}, // 88: 尼
++    {0x000, 0x7fe, 0x406, 0x7fe, 0x006, 0x7fe, 0x3fe, 0x7fe, 0x446, 0x3fe, 0x042, 0x7ff, 0x000, 0x000}, // 89: 屋
++    {0x000, 0x3fe, 0x300, 0x300, 0x306, 0x306, 0x3fe, 0x306, 0x006, 0x406, 0x606, 0x3fc, 0x000, 0x000}, // 90: 已
++    {0x000, 0x000, 0x040, 0xffe, 0xffe, 0x040, 0x7fc, 0x644, 0x644, 0x644, 0x644, 0x744, 0x040, 0x000}, // 91: 市
++    {0x000, 0x000, 0x294, 0x7fe, 0x294, 0x6f6, 0x602, 0x7fe, 0x462, 0x7fe, 0x264, 0x364, 0x060, 0x000}, // 92: 帶
++    {0x000, 0x000, 0x34c, 0x7fe, 0x7fe, 0x5fa, 0x108, 0x1f8, 0x040, 0x7fc, 0x644, 0x344, 0x040, 0x000}, // 93: 常
++    {0x000, 0x000, 0x7fe, 0x6be, 0x2be, 0x23c, 0x37e, 0x3fc, 0x3fc, 0x3f8, 0x7fc, 0x644, 0x744, 0x000}, // 94: 幫
++    {0x000, 0x000, 0x0c0, 0xffe, 0x086, 0x6b6, 0x6b6, 0xffe, 0x086, 0x7f6, 0x086, 0xffa, 0xffa, 0x000}, // 95: 座
++    {0x000, 0x7df, 0x410, 0x410, 0x7de, 0x042, 0x7de, 0x452, 0x59c, 0x79e, 0x6d3, 0x39c, 0x000, 0x000}, // 96: 弱
++    {0x000, 0x080, 0x084, 0x186, 0x7fa, 0x08c, 0x086, 0x086, 0x7f7, 0x084, 0x084, 0x7fc, 0x7f4, 0x000}, // 97: 往
++    {0x000, 0x000, 0x7fc, 0x636, 0x633, 0x7f8, 0x634, 0x7f6, 0x4b7, 0x7b4, 0x334, 0x6f4, 0x474, 0x000}, // 98: 很
++    {0x000, 0x000, 0x0cc, 0x366, 0x1fa, 0x2ec, 0x7f6, 0xc57, 0x7f4, 0x334, 0x1d4, 0x3e4, 0x63c, 0x000}, // 99: 後
++    {0x000, 0x000, 0x7ec, 0x426, 0x7e3, 0x7ec, 0x7ee, 0xff7, 0x207, 0xff4, 0x224, 0x244, 0x384, 0x000}, // 100: 得
++    {0x000, 0x240, 0x264, 0x262, 0x7ec, 0xd94, 0x186, 0x1a7, 0x7a4, 0x1b4, 0x1f4, 0xf9c, 0x000, 0x000}, // 101: 從
++    {0x000, 0x000, 0x2bc, 0x2b6, 0xffa, 0xf04, 0x7f6, 0x776, 0x67c, 0x6f4, 0x6fc, 0xfbc, 0x9b4, 0x000}, // 102: 徽
++    {0x000, 0x000, 0x060, 0x0c0, 0x090, 0x414, 0x416, 0xc16, 0x816, 0xa12, 0x310, 0x3f0, 0x000, 0x000}, // 103: 心
++    {0x000, 0x000, 0x060, 0x7ff, 0x004, 0x004, 0x7fc, 0x020, 0x060, 0x64a, 0x60a, 0x50b, 0x1f8, 0x000}, // 104: 忘
++    {0x000, 0x000, 0x18c, 0x10c, 0xffe, 0xffe, 0x05e, 0x04f, 0x04c, 0x04c, 0x04c, 0x04c, 0xfcc, 0x000}, // 105: 忙
++    {0x000, 0x010, 0x1f8, 0x0cc, 0x3fe, 0x7fe, 0x600, 0x3fc, 0x060, 0x654, 0x516, 0x5f2, 0x000, 0x000}, // 106: 急
++    {0x000, 0x000, 0x020, 0x1fc, 0x104, 0x1fc, 0x1fc, 0x104, 0x1fc, 0x220, 0x24a, 0x78b, 0x0f8, 0x000}, // 107: 息
++    {0x000, 0x7f4, 0x0cc, 0x3fe, 0x25e, 0x247, 0xff5, 0x7f4, 0x7e4, 0x424, 0x7e4, 0x424, 0x000, 0x000}, // 108: 悟
++    {0x000, 0x000, 0x088, 0xfdc, 0x676, 0x7b7, 0x314, 0x7d4, 0x044, 0x468, 0x4de, 0xf1a, 0x1fa, 0x000}, // 109: 悠
++    {0x000, 0x7c8, 0x448, 0x47e, 0x7cc, 0x7fc, 0x44a, 0x7c8, 0x068, 0x65e, 0xd1a, 0x1f2, 0x000, 0x000}, // 110: 想
++    {0x000, 0x060, 0x7fe, 0x198, 0x7fe, 0x3fc, 0x3fc, 0x30c, 0x3fc, 0x274, 0x71e, 0x5f2, 0x000, 0x000}, // 111: 意
++    {0x000, 0x7ec, 0x7ec, 0x7fe, 0x41e, 0xffe, 0xfac, 0x7ec, 0x7ec, 0x6cc, 0x3cc, 0xe7c, 0x000, 0x000}, // 112: 慢
++    {0x000, 0x000, 0x280, 0x680, 0xffe, 0x486, 0x6be, 0x7b6, 0x3b6, 0x1b6, 0x99e, 0xfe2, 0xe23, 0x000}, // 113: 成
++    {0x000, 0x000, 0x2be, 0x68e, 0x088, 0xfff, 0x188, 0x7a8, 0x3be, 0x18e, 0x9c8, 0xf68, 0x60e, 0x000}, // 114: 我
++    {0x000, 0x7fe, 0x5de, 0x5fe, 0xffe, 0x1ca, 0x57e, 0x77e, 0x318, 0xb7f, 0xf88, 0x608, 0x000, 0x000}, // 115: 戰
++    {0x000, 0x578, 0x57e, 0x17e, 0xffe, 0x17a, 0x57e, 0x77a, 0x346, 0x37f, 0xf6b, 0x6fd, 0x000, 0x000}, // 116: 戲
++    {0x000, 0x004, 0x7e4, 0x11f, 0x104, 0x104, 0x11c, 0x10f, 0x104, 0x104, 0x104, 0x1c6, 0x000, 0x000}, // 117: 打
++    {0x000, 0x144, 0x244, 0x7df, 0x7f4, 0x2c4, 0x2dc, 0x38f, 0x184, 0x5c4, 0x764, 0x626, 0x000, 0x000}, // 118: 找
++    {0x000, 0xfe4, 0xca4, 0xcbf, 0xca4, 0xca4, 0xffc, 0xfff, 0x024, 0x824, 0x824, 0xfe6, 0x000, 0x000}, // 119: 把
++    {0x000, 0x7e4, 0x4c4, 0x4df, 0x444, 0x724, 0x01c, 0xff7, 0xc24, 0xc24, 0xfe4, 0xc26, 0x000, 0x000}, // 120: 招
++    {0x000, 0x000, 0x084, 0x7e4, 0x4bf, 0x4a4, 0x2c4, 0xff4, 0x35e, 0x367, 0x1c4, 0x7e4, 0x476, 0x000}, // 121: 按
++    {0x000, 0x7e4, 0x424, 0x43f, 0x7e6, 0x7e4, 0x18c, 0xfa7, 0x1a4, 0x1e4, 0x1d4, 0xf96, 0x000, 0x000}, // 122: 捉
++    {0x000, 0x284, 0x684, 0x7fe, 0x08e, 0x7e4, 0x4bc, 0x7ff, 0x4a4, 0x7e4, 0x4a4, 0x6a6, 0x000, 0x000}, // 123: 捕
++    {0x000, 0x7f4, 0x414, 0x14e, 0x144, 0x734, 0x08c, 0x7f6, 0x1c4, 0x2a4, 0x494, 0x086, 0x000, 0x000}, // 124: 探
++    {0x000, 0x000, 0x084, 0x7f4, 0x26e, 0x34e, 0x7f4, 0x2cc, 0x7f7, 0x264, 0x1e4, 0x3c4, 0x676, 0x000}, // 125: 接
++    {0x000, 0x044, 0x3e4, 0x12e, 0x7fe, 0x4a4, 0x76c, 0x4a7, 0xff4, 0x7f4, 0x664, 0xc36, 0x000, 0x000}, // 126: 換
++    {0x000, 0x7e4, 0x564, 0x7ee, 0x7e4, 0x084, 0x7fe, 0x34f, 0x7f4, 0x7f4, 0x084, 0x086, 0x000, 0x000}, // 127: 擇
++    {0x000, 0x000, 0x0d0, 0x052, 0x7d2, 0x252, 0x272, 0x3f2, 0x19a, 0x19e, 0x192, 0x6d0, 0x470, 0x000}, // 128: 收
++    {0x000, 0x000, 0x088, 0x0be, 0xfff, 0x6c6, 0x2fe, 0x2f6, 0x3b6, 0x316, 0x396, 0x6d3, 0x479, 0x000}, // 129: 放
++    {0x000, 0x000, 0x0cc, 0x04c, 0x7ff, 0x26c, 0x26c, 0x3fe, 0x19f, 0x193, 0x193, 0x3df, 0x662, 0x000}, // 130: 故
++    {0x000, 0x000, 0x1be, 0xf88, 0x6fe, 0x33e, 0x39c, 0xcea, 0x7fe, 0x3e8, 0x3ec, 0xffe, 0x7fe, 0x000}, // 131: 整
++    {0x000, 0x000, 0x040, 0x040, 0xffe, 0x308, 0x318, 0x1b0, 0x0e0, 0x0e0, 0x1f0, 0x71c, 0xc06, 0x000}, // 132: 文
++    {0x000, 0x20c, 0x2de, 0x29e, 0x20e, 0x2ff, 0x28c, 0x61e, 0x7fe, 0x20f, 0x20c, 0x20c, 0x000, 0x000}, // 133: 料
++    {0x000, 0x000, 0x060, 0xffe, 0x118, 0xffe, 0xc62, 0xffe, 0x038, 0x3f0, 0x218, 0x20c, 0x3c6, 0x000}, // 134: 旁
++    {0x000, 0x000, 0x0cc, 0x7cc, 0x67f, 0x7e6, 0x1de, 0x756, 0x356, 0x256, 0x256, 0x7d2, 0x45f, 0x000}, // 135: 旅
++    {0x000, 0x3fe, 0x306, 0x306, 0x306, 0x306, 0x3fe, 0x306, 0x306, 0x306, 0x3fe, 0x306, 0x000, 0x000}, // 136: 日
++    {0x000, 0x3fc, 0x3fc, 0x3fc, 0x3fc, 0x000, 0x7fe, 0x068, 0x7ec, 0x06c, 0x07e, 0xfe2, 0x000, 0x000}, // 137: 是
++    {0x000, 0x11e, 0xffa, 0x11a, 0x7da, 0x7fe, 0x21a, 0xffa, 0x25a, 0x2de, 0x282, 0x300, 0x000, 0x000}, // 138: 時
++    {0x000, 0x100, 0x7fe, 0x7ea, 0xffa, 0x7fe, 0x7ea, 0x46a, 0x7ea, 0x7ee, 0x462, 0x620, 0x000, 0x000}, // 139: 晴
++    {0x000, 0x3fc, 0x2f4, 0x204, 0x3fc, 0x000, 0x7fe, 0x7fe, 0x2be, 0x3b6, 0x7ff, 0x670, 0x000, 0x000}, // 140: 最
++    {0x000, 0x000, 0x030, 0xffe, 0x018, 0x008, 0x3fc, 0x20c, 0x3fa, 0x208, 0x3f8, 0x20c, 0x384, 0x000}, // 141: 有
++    {0x000, 0x040, 0x040, 0x040, 0xffe, 0x0e0, 0x1f0, 0x350, 0x648, 0xc4e, 0x842, 0x040, 0x000, 0x000}, // 142: 木
++    {0x000, 0x008, 0xfe8, 0x33e, 0x388, 0x79c, 0xdfc, 0x92e, 0x10a, 0x108, 0x108, 0x108, 0x000, 0x000}, // 143: 杯
++    {0x000, 0x040, 0xffe, 0x040, 0x3fc, 0x264, 0x264, 0x3fc, 0x1f0, 0x358, 0xe4e, 0x442, 0x000, 0x000}, // 144: 東
++    {0x000, 0x4a4, 0x6a4, 0xffe, 0xffe, 0x664, 0x7ee, 0x7ee, 0xfe5, 0xfe4, 0xfe4, 0xfe4, 0x000, 0x000}, // 145: 檔
++    {0x000, 0x000, 0x020, 0x030, 0x7ff, 0x650, 0x258, 0x0c0, 0x0c0, 0x0ef, 0x1a0, 0x330, 0x618, 0x000}, // 146: 次
++    {0x000, 0x000, 0x0f7, 0xf94, 0xff6, 0x5de, 0x576, 0x17e, 0x316, 0x33f, 0x2be, 0x4fe, 0xc7e, 0x000}, // 147: 歡
++    {0x000, 0x000, 0x7fe, 0x060, 0x060, 0x064, 0x7e4, 0x064, 0x064, 0x064, 0x7ff, 0x7fe, 0x000, 0x000}, // 148: 正
++    {0x000, 0x020, 0x3e4, 0x024, 0x7ff, 0x7ff, 0x228, 0x324, 0x1a6, 0x0e0, 0x078, 0x00f, 0x000, 0x000}, // 149: 步
++    {0x000, 0x000, 0x008, 0x7fc, 0x006, 0x3ff, 0x22c, 0x24c, 0xfff, 0x264, 0x7fc, 0x300, 0x180, 0x000}, // 150: 每
++    {0x000, 0x000, 0x126, 0x124, 0x120, 0x131, 0xf17, 0x010, 0x7f0, 0x634, 0x636, 0x7f2, 0x632, 0x000}, // 151: 沿
++    {0x000, 0x000, 0x1ec, 0xff0, 0x13e, 0x7f4, 0x7f8, 0x134, 0xff6, 0x060, 0xfff, 0x040, 0x040, 0x000}, // 152: 準
++    {0x000, 0x266, 0xffc, 0x3e0, 0x3e2, 0x486, 0xff0, 0xff0, 0xef4, 0xff6, 0xc92, 0x692, 0x000, 0x000}, // 153: 滿
++    {0x000, 0x000, 0x3f6, 0x3f4, 0x2f0, 0x003, 0x7f6, 0x7d0, 0x3f0, 0x3fc, 0x364, 0x1e6, 0x77a, 0x000}, // 154: 漫
++    {0x000, 0x020, 0x020, 0x222, 0x226, 0x326, 0x134, 0x070, 0x050, 0x098, 0x38e, 0x603, 0x000, 0x000}, // 155: 火
++    {0x000, 0x000, 0x04c, 0x068, 0x3fe, 0x130, 0x7f0, 0x218, 0xffc, 0xd06, 0x554, 0x454, 0x702, 0x000}, // 156: 為
++    {0x000, 0x108, 0x14e, 0x77e, 0x5ca, 0x5ea, 0x578, 0x55e, 0x54e, 0x048, 0xc48, 0x7c8, 0x000, 0x000}, // 157: 牠
++    {0x000, 0x342, 0xf7e, 0x3ee, 0xffe, 0x7f8, 0x7fc, 0x7fe, 0x7fa, 0x668, 0x3c8, 0xffe, 0x000, 0x000}, // 158: 獲
++    {0x000, 0x28f, 0x28e, 0x7f4, 0x084, 0x7be, 0x3a4, 0x1c4, 0x3e4, 0x6be, 0x492, 0x0e0, 0x000, 0x000}, // 159: 球
++    {0x000, 0x7ff, 0x7ef, 0x4a4, 0x7e4, 0x4ae, 0x7e4, 0x084, 0x7fc, 0x08e, 0x7f8, 0x7f0, 0x000, 0x000}, // 160: 理
++    {0x000, 0x000, 0xff4, 0xfd4, 0x0be, 0x7b4, 0x294, 0x2d4, 0x3fe, 0x3d4, 0xad4, 0xbd2, 0xff2, 0x000}, // 161: 瓶
++    {0x000, 0x048, 0x048, 0x7fc, 0x044, 0x046, 0x040, 0x7fc, 0x040, 0x040, 0xffe, 0xffe, 0x000, 0x000}, // 162: 生
++    {0x000, 0x040, 0x040, 0xffe, 0xc46, 0xc46, 0xc46, 0xffe, 0xc46, 0xc46, 0xffe, 0xffe, 0x000, 0x000}, // 163: 由
++    {0x000, 0x000, 0x34c, 0x7fe, 0x7fe, 0x5fa, 0x108, 0x1f8, 0x3fc, 0x7fc, 0x7fc, 0x644, 0x7fc, 0x000}, // 164: 當
++    {0x000, 0x000, 0x3fc, 0x596, 0x30c, 0x7fe, 0x370, 0x77c, 0x206, 0x3fe, 0x3f0, 0x190, 0x27c, 0x000}, // 165: 發
++    {0x000, 0x08c, 0x0c4, 0xfdf, 0x473, 0x433, 0x49f, 0x593, 0x513, 0x413, 0x61f, 0x782, 0x000, 0x000}, // 166: 的
++    {0x000, 0x040, 0x7fe, 0x646, 0x646, 0x3fe, 0x7fe, 0x336, 0x1e6, 0x1e6, 0x3fb, 0xe19, 0x000, 0x000}, // 167: 皮
++    {0x000, 0x7fe, 0x606, 0x606, 0x7fe, 0x606, 0x606, 0x7fe, 0x606, 0x606, 0x7fe, 0x606, 0x000, 0x000}, // 168: 目
++    {0x000, 0x000, 0x7fe, 0x7fe, 0x3fc, 0x30c, 0x3fc, 0x3fc, 0x3fc, 0x7fe, 0x7fe, 0x79c, 0x406, 0x000}, // 169: 真
++    {0x000, 0x000, 0x7de, 0x7c4, 0x284, 0x286, 0x29e, 0xfde, 0x293, 0x292, 0x2d2, 0x25e, 0x262, 0x000}, // 170: 研
++    {0x000, 0x000, 0x300, 0xffe, 0xbe4, 0x7c4, 0x7de, 0x2fe, 0x7d6, 0x6d6, 0x7de, 0x7c6, 0x7c0, 0x000}, // 171: 確
++    {0x000, 0x000, 0x4ae, 0x2a4, 0x284, 0x7ff, 0x626, 0x7ee, 0x63e, 0x7e5, 0x674, 0x634, 0x314, 0x000}, // 172: 稍
++    {0x000, 0x400, 0xff8, 0x10e, 0xfe8, 0xffe, 0xf5c, 0xfdc, 0x97c, 0xfce, 0xfca, 0x308, 0xfe8, 0x000}, // 173: 種
++    {0x000, 0x000, 0x7fe, 0x7fe, 0x492, 0x098, 0x7ae, 0x020, 0x1fe, 0x1b0, 0xdb0, 0xd9c, 0x78e, 0x000}, // 174: 究
++    {0x000, 0x000, 0x060, 0x7fe, 0x7fe, 0x49a, 0x78e, 0x006, 0x3fc, 0x3fc, 0x060, 0x7fe, 0x7fe, 0x000}, // 175: 空
++    {0x000, 0x188, 0x188, 0xfbe, 0x190, 0x196, 0x7d4, 0x7f4, 0x47c, 0x47e, 0x7e2, 0x460, 0x000, 0x000}, // 176: 站
++    {0x000, 0x000, 0x020, 0x3fe, 0x088, 0x7ff, 0x1fc, 0x306, 0x3fe, 0x3fe, 0x020, 0x7ff, 0x020, 0x000}, // 177: 章
++    {0x000, 0x084, 0xffe, 0x35a, 0x7fe, 0x060, 0x3fc, 0x180, 0x7fe, 0x108, 0x118, 0x1c0, 0x000, 0x000}, // 178: 等
++    {0x000, 0x184, 0x7f7, 0x7ee, 0x18c, 0x7ff, 0x7e4, 0x66e, 0x7f7, 0x7e5, 0x664, 0x724, 0x000, 0x000}, // 179: 精
++    {0x000, 0x040, 0xffe, 0x040, 0x7fe, 0x472, 0x5fe, 0x378, 0x7fe, 0x548, 0x34c, 0x476, 0x000, 0x000}, // 180: 索
++    {0x000, 0x184, 0x184, 0x3de, 0x66f, 0x7ff, 0x01e, 0x7ff, 0x670, 0x67e, 0x7ef, 0x660, 0x000, 0x000}, // 181: 給
++    {0x000, 0x048, 0x7cc, 0x654, 0x3de, 0xfee, 0xff4, 0xd7e, 0x552, 0x75e, 0xd3a, 0x1c2, 0x000, 0x000}, // 182: 綠
++    {0x000, 0x000, 0x104, 0x7e4, 0x11e, 0x7ef, 0x72e, 0x7be, 0x7ff, 0x390, 0x3de, 0x57e, 0x101, 0x000}, // 183: 練
++    {0x000, 0x108, 0x17c, 0xf8e, 0x5fc, 0x77e, 0xffc, 0x860, 0x1f8, 0x778, 0xffc, 0x658, 0x864, 0x000}, // 184: 繁
++    {0x000, 0x000, 0x108, 0x7fe, 0x060, 0x3fc, 0x7fe, 0xffe, 0x060, 0x7fe, 0x0f0, 0x39c, 0x406, 0x000}, // 185: 美
++    {0x000, 0x000, 0x630, 0x3fe, 0x3fc, 0x1b0, 0xfff, 0x7fe, 0x01c, 0x3ff, 0x018, 0xc18, 0x7f0, 0x000}, // 186: 老
++    {0x000, 0x090, 0x79e, 0x090, 0x7bc, 0x78e, 0x3fc, 0x23c, 0x2cc, 0x3fc, 0x214, 0x386, 0x000, 0x000}, // 187: 背
++    {0x000, 0x000, 0x0c8, 0x7ec, 0x0fe, 0x0c0, 0xffe, 0x066, 0x0fe, 0x7f6, 0x0fe, 0x8e6, 0xfb2, 0x000}, // 188: 能
++    {0x000, 0x000, 0x6ae, 0x7ba, 0x75e, 0x6ee, 0x7aa, 0x71a, 0x7ee, 0x7aa, 0x7ab, 0x3eb, 0x3ad, 0x000}, // 189: 腳
++    {0x000, 0x020, 0x020, 0x7fe, 0x606, 0x7fe, 0x606, 0x606, 0x7fe, 0x606, 0x7fe, 0x606, 0x000, 0x000}, // 190: 自
++    {0x000, 0xffe, 0x040, 0x7fc, 0x3f8, 0x3f8, 0xffe, 0xffa, 0x3b8, 0x3f8, 0x3f8, 0xffe, 0x000, 0x000}, // 191: 臺
++    {0x000, 0x110, 0x7fe, 0x110, 0x0d8, 0x0c8, 0x7cc, 0x0ce, 0x0ca, 0x8c8, 0x8c8, 0xf88, 0x000, 0x000}, // 192: 花
++    {0x000, 0x108, 0x7fe, 0x108, 0x020, 0x3fc, 0x224, 0x7fe, 0x7fe, 0x1f0, 0x71c, 0x406, 0x000, 0x000}, // 193: 英
++    {0x000, 0x108, 0x7ff, 0x128, 0x0f0, 0x3bc, 0x626, 0x3fe, 0x128, 0x32c, 0x626, 0x020, 0x000, 0x000}, // 194: 茶
++    {0x000, 0x7fe, 0x108, 0x3fc, 0x204, 0x3fc, 0x204, 0x3fc, 0x020, 0x7fe, 0x020, 0x020, 0x000, 0x000}, // 195: 草
++    {0x000, 0x7fe, 0x108, 0x020, 0x7fc, 0x320, 0xffe, 0x07c, 0x3fe, 0x3f8, 0x208, 0x3f8, 0x000, 0x000}, // 196: 著
++    {0x000, 0x7fe, 0x128, 0x2f6, 0x7de, 0x7f6, 0x7da, 0x7fe, 0x7fe, 0x1a8, 0x72e, 0x422, 0x000, 0x000}, // 197: 藥
++    {0x000, 0x7e0, 0x7fc, 0xffe, 0x5fe, 0x466, 0x7c6, 0x3be, 0x2ae, 0x6fe, 0x67a, 0xfef, 0x000, 0x000}, // 198: 處
++    {0x000, 0x10c, 0x7ce, 0x11e, 0x11e, 0xff6, 0x19e, 0x11e, 0x7dc, 0x11c, 0xfff, 0x000, 0x000, 0x000}, // 199: 蛙
++    {0x000, 0x684, 0x7f4, 0x7fe, 0x088, 0xff4, 0xcbc, 0xffe, 0xcbf, 0xff4, 0xcb4, 0x6b4, 0x000, 0x000}, // 200: 補
++    {0x000, 0x000, 0x7e4, 0x7e4, 0x4ae, 0x7ec, 0x4a4, 0x7ee, 0x08f, 0x7e4, 0x084, 0x7f4, 0x7f4, 0x000}, // 201: 裡
++    {0x000, 0xfff, 0xfff, 0x090, 0xffe, 0xc96, 0xc9e, 0xf8e, 0xc06, 0xc06, 0xffe, 0xc06, 0x000, 0x000}, // 202: 西
++    {0x000, 0x7fe, 0x090, 0x7fe, 0x696, 0x7fe, 0x7fc, 0x110, 0xffe, 0x18c, 0x0fc, 0x7be, 0x000, 0x000}, // 203: 要
++    {0x000, 0x3fe, 0x3fe, 0x252, 0x3fe, 0x3f4, 0x3fe, 0x3e4, 0x3e6, 0x3f6, 0x1f6, 0x3f6, 0x000, 0x000}, // 204: 覆
++    {0x000, 0x3fc, 0x204, 0x3fc, 0x204, 0x3fc, 0x204, 0x3fc, 0x3fc, 0x098, 0x48c, 0x787, 0x000, 0x000}, // 205: 見
++    {0x000, 0x000, 0x7de, 0x07e, 0x7f2, 0x7de, 0x7fe, 0x3fc, 0x3fc, 0x3fc, 0x3fc, 0x4d8, 0x78f, 0x000}, // 206: 覽
++    {0x000, 0x020, 0x060, 0xffe, 0x000, 0x3fc, 0x000, 0x3fc, 0x000, 0x3fc, 0x204, 0x204, 0x3fc, 0x000}, // 207: 言
++    {0x000, 0x000, 0x444, 0x544, 0x55f, 0x54e, 0x54e, 0x55e, 0x540, 0x55e, 0x572, 0x53e, 0x422, 0x000}, // 208: 訓
++    {0x000, 0x000, 0x3c4, 0x244, 0x25f, 0x66e, 0x43e, 0x7fe, 0x660, 0x25e, 0x3da, 0x7fe, 0x662, 0x000}, // 209: 設
++    {0x000, 0x000, 0x7e4, 0x09e, 0x3fe, 0x28e, 0x2c0, 0x7fe, 0x000, 0x7ee, 0x66a, 0x66a, 0x7ee, 0x000}, // 210: 語
++    {0x000, 0x104, 0x7ec, 0x7fe, 0x19e, 0x7e0, 0xfde, 0xc60, 0xffe, 0xff2, 0xc7e, 0x622, 0x000, 0x000}, // 211: 請
++    {0x000, 0x000, 0x424, 0x474, 0x7de, 0xff6, 0x4de, 0x5f6, 0x7f6, 0x4fe, 0x4fa, 0x4de, 0x662, 0x000}, // 212: 謝
++    {0x000, 0x000, 0x182, 0x7e4, 0x7ef, 0x7e6, 0x7e0, 0x34e, 0x7e0, 0x7ff, 0x77b, 0x7ef, 0x6e3, 0x000}, // 213: 讓
++    {0x000, 0x020, 0x7ee, 0x6b0, 0x7ef, 0xe30, 0x3fc, 0x3fc, 0x204, 0x3fc, 0x3fc, 0x39c, 0x606, 0x000}, // 214: 資
++    {0x000, 0x040, 0x7fc, 0x040, 0xffc, 0xffe, 0x048, 0xfc8, 0x048, 0x05c, 0x0f4, 0xfc6, 0x000, 0x000}, // 215: 走
++    {0x000, 0x000, 0x05e, 0x7d2, 0x432, 0x5fe, 0x56c, 0x57e, 0x5fe, 0x76e, 0x07e, 0xc7e, 0x7c2, 0x000}, // 216: 跑
++    {0x000, 0x7fe, 0x472, 0x472, 0x7fe, 0x46c, 0x7fa, 0xd7a, 0x76a, 0x67e, 0xdff, 0x860, 0x000, 0x000}, // 217: 跟
++    {0x000, 0x000, 0x11e, 0x7f2, 0x3d2, 0x35e, 0x53e, 0x1ae, 0x7fe, 0x46e, 0x7fe, 0x46e, 0x7e2, 0x000}, // 218: 踏
++    {0x000, 0x040, 0xffe, 0x040, 0x3fc, 0x244, 0x3fc, 0x264, 0x060, 0xffe, 0x040, 0x040, 0x000, 0x000}, // 219: 車
++    {0x000, 0x062, 0x7b6, 0x494, 0x497, 0x494, 0x496, 0x4ff, 0x6bc, 0x084, 0x08e, 0xff3, 0x000, 0x000}, // 220: 迎
++    {0x000, 0x000, 0x222, 0x364, 0x7f0, 0x3ef, 0x084, 0x7f2, 0x1cf, 0x344, 0x634, 0x01e, 0x7fb, 0x000}, // 221: 送
++    {0x000, 0x000, 0x142, 0x556, 0x770, 0x36f, 0x144, 0x772, 0x57f, 0x124, 0x734, 0x00e, 0xff3, 0x000}, // 222: 逃
++    {0x000, 0x000, 0x0c2, 0x7f4, 0x004, 0x3f7, 0x3f6, 0x006, 0x3f7, 0x214, 0x3f4, 0x00e, 0x7f3, 0x000}, // 223: 這
++    {0x000, 0x000, 0x7f2, 0x7f4, 0x134, 0x12f, 0x7e6, 0x132, 0x12f, 0x124, 0x7f4, 0x00e, 0x7f3, 0x000}, // 224: 逛
++    {0x000, 0x000, 0x162, 0x364, 0xff4, 0x13f, 0x7fe, 0x136, 0x7ff, 0xff4, 0x7e4, 0x00e, 0xff3, 0x000}, // 225: 進
++    {0x000, 0x000, 0x3f6, 0x3f4, 0x2b6, 0x3f6, 0x096, 0x7f3, 0x696, 0x7d4, 0x614, 0x00e, 0xff3, 0x000}, // 226: 遇
++    {0x000, 0x000, 0x122, 0xff6, 0x1f8, 0x7bf, 0x674, 0x2f2, 0x7ff, 0x25c, 0x36c, 0x00e, 0xff3, 0x000}, // 227: 遊
++    {0x000, 0x000, 0x3e2, 0x224, 0x3a4, 0x2a6, 0x7f6, 0x7d2, 0x5df, 0x5d4, 0x654, 0x00e, 0xff3, 0x000}, // 228: 過
++    {0x000, 0x000, 0x322, 0x7f4, 0x0c4, 0x3ee, 0x226, 0x3e3, 0x22f, 0x3ec, 0x3e4, 0x00e, 0x7f3, 0x000}, // 229: 道
++    {0x000, 0x000, 0x082, 0xffc, 0x7f6, 0x7f4, 0x492, 0x7d3, 0x5de, 0x5d4, 0x754, 0x00e, 0xff3, 0x000}, // 230: 適
++    {0x000, 0x000, 0x7f6, 0x7f4, 0x1b6, 0x7fe, 0x3c4, 0x7e6, 0x7fc, 0x7f4, 0x674, 0x43e, 0xff2, 0x000}, // 231: 選
++    {0x000, 0x042, 0x3f6, 0x3f4, 0x3f6, 0x3f6, 0x7fe, 0x53e, 0x7fe, 0x7fc, 0x3f4, 0x39e, 0xff3, 0x000}, // 232: 邊
++    {0x000, 0x000, 0xffe, 0x62a, 0x3be, 0x32a, 0xffe, 0xffe, 0xd08, 0x53e, 0x108, 0x13c, 0x186, 0x000}, // 233: 野
++    {0x000, 0x000, 0x174, 0x7ee, 0x7eb, 0x52f, 0x7f4, 0x14e, 0x7fc, 0x7fe, 0x12e, 0x07e, 0x792, 0x000}, // 234: 鍵
++    {0x000, 0x000, 0x2ec, 0xefe, 0x7f3, 0x1ff, 0x6e4, 0x7ff, 0x004, 0x7ee, 0x5ae, 0xffe, 0x7e2, 0x000}, // 235: 鑑
++    {0x000, 0x7ff, 0x673, 0x7ff, 0x673, 0x7ff, 0x643, 0x7fb, 0x663, 0x653, 0x64b, 0x363, 0x000, 0x000}, // 236: 閉
++    {0x000, 0x7df, 0x653, 0x7df, 0x653, 0x7df, 0x6fb, 0x653, 0x7ff, 0x653, 0x65b, 0x34b, 0x000, 0x000}, // 237: 開
++    {0x000, 0x7de, 0x652, 0x7de, 0x652, 0x79e, 0x6f2, 0x6f2, 0x6f2, 0x6f2, 0x6da, 0x3ca, 0x000, 0x000}, // 238: 閒
++    {0x000, 0x7ff, 0x6f3, 0x7ff, 0x6f3, 0x79f, 0x6fb, 0x69b, 0x6fb, 0x69b, 0x6fb, 0x713, 0x000, 0x000}, // 239: 間
++    {0x000, 0x7ff, 0x673, 0x7ff, 0x7df, 0x6f3, 0x6d3, 0x6f3, 0x7fb, 0x76b, 0x7fb, 0x703, 0x000, 0x000}, // 240: 闆
++    {0x000, 0x7ff, 0x7ff, 0x7ff, 0x7ff, 0x6cb, 0x7fb, 0x7fb, 0x7fb, 0x77b, 0x7fb, 0x65b, 0x000, 0x000}, // 241: 關
++    {0x000, 0x080, 0x1ce, 0x36a, 0xffa, 0x006, 0x7fa, 0x5fa, 0x7fa, 0x22e, 0x362, 0x7f2, 0x19a, 0x000}, // 242: 險
++    {0x000, 0x000, 0x058, 0x7fc, 0x04c, 0x3fe, 0x3fc, 0x7fc, 0x7fc, 0x3fe, 0x1b0, 0x1f0, 0x71e, 0x000}, // 243: 隻
++    {0x000, 0x7fe, 0xffe, 0xf5a, 0x35c, 0x7ee, 0x5ba, 0x7ee, 0x7fe, 0x148, 0x3d4, 0xffe, 0x000, 0x000}, // 244: 靈
++    {0x000, 0x008, 0xfc8, 0x11c, 0x7d6, 0x47f, 0x7dc, 0x45e, 0x7de, 0x450, 0x7dc, 0x28c, 0x478, 0x000}, // 245: 領
++    {0x000, 0x11e, 0x7ee, 0x19e, 0x6ca, 0x47e, 0x7ee, 0x5fe, 0x57c, 0x5fd, 0x451, 0x718, 0x000, 0x000}, // 246: 騎
++    {0x000, 0x7de, 0xfd2, 0xfda, 0xffe, 0x7ff, 0xffe, 0x7d6, 0x45a, 0x7de, 0x692, 0xffa, 0x000, 0x000}, // 247: 體
++    {0x000, 0x020, 0x7fe, 0x7fe, 0x3fc, 0x30c, 0x1f8, 0x7fe, 0x4f2, 0x59a, 0x5fa, 0x702, 0x000, 0x000}, // 248: 高
++    {0x000, 0x5de, 0x5de, 0x5de, 0x5de, 0x5de, 0x402, 0x402, 0x402, 0x402, 0x402, 0x702, 0x000, 0x000}, // 249: 鬥
++    {0x000, 0x33e, 0x32a, 0xf3e, 0x33e, 0x33e, 0x33e, 0x7cc, 0x4ff, 0x4fe, 0x7f6, 0x4c0, 0x000, 0x000}, // 250: 點
++    {0x000, 0x000, 0x0c8, 0xffe, 0x7d6, 0x7bf, 0x7c0, 0x0fe, 0x7f6, 0x7fa, 0x7fe, 0x8f2, 0x79a, 0x000}, // 251: 龍
++    {0x000, 0x010, 0x0f8, 0x04e, 0x3fe, 0x3fe, 0x07e, 0x7fe, 0x7fe, 0x7fe, 0x7fe, 0x43e, 0x7f0, 0x000}, // 252: 龜
++    {0x000, 0x060, 0x060, 0x040, 0x020, 0x000, 0x000, 0x000, 0x000, 0x000, 0x000, 0x000, 0x000, 0x000}, // 253: ，
++    {0x000, 0x060, 0x060, 0x000, 0x000, 0x000, 0x060, 0x060, 0x000, 0x000, 0x000, 0x000, 0x000, 0x000}, // 254: ：
++};
+diff --git a/src/intro.c b/src/intro.c
+index bec0f31..02776f9 100644
+--- a/src/intro.c
++++ b/src/intro.c
+@@ -11,6 +11,8 @@
+ #include "save.h"
+ #include "new_game.h"
+ #include "title_screen.h"
++#include "main_menu.h"
++#include "load_save.h"
+ #include "decompress.h"
+ #include "util.h"
+ #include "trig.h"
+@@ -898,7 +900,20 @@ static void VBlankCB_Copyright(void)
+ static void CB2_WaitFadeBeforeSetUpIntro(void)
+ {
+     if (!UpdatePaletteFade())
+-        SetMainCallback2(CB2_SetUpIntro);
++    {
++        // Keep the original title-screen save/RNG initialization while skipping
++        // the movie and title delay. Existing games still get Continue.
++        SeedRngAndSetTrainerId();
++        SetSaveBlocksPointers();
++        ResetMenuAndMonGlobals();
++        Save_ResetSaveCounters();
++        LoadGameSave(SAVE_NORMAL);
++        if (gSaveFileStatus == SAVE_STATUS_EMPTY || gSaveFileStatus == SAVE_STATUS_INVALID)
++            Sav2_ClearSetDefault();
++        SetPokemonCryStereo(gSaveBlock2Ptr->optionsSound);
++        InitHeap(gHeap, HEAP_SIZE);
++        SetMainCallback2(CB2_InitMainMenu);
++    }
+ }
+ 
+ static void LoadCopyrightGraphics(u16 charBase, u16 screenBase, u16 palOffset)
+@@ -918,6 +933,7 @@ static bool8 SetUpCopyrightScreen(void)
+     switch (gMain.state)
+     {
+     case 0:
++        StartTimer1();
+         SetVBlankCallback(NULL);
+         SetGpuReg(REG_OFFSET_BLDCNT, 0);
+         SetGpuReg(REG_OFFSET_BLDALPHA, 0);
+diff --git a/src/new_game.c b/src/new_game.c
+index 3768b3c..e8a4a99 100644
+--- a/src/new_game.c
++++ b/src/new_game.c
+@@ -81,7 +81,7 @@ static void ClearBattleTower(void)
+ 
+ static void WarpToPlayersRoom(void)
+ {
+-    SetWarpDestination(MAP_GROUP(MAP_PALLET_TOWN_PLAYERS_HOUSE_2F), MAP_NUM(MAP_PALLET_TOWN_PLAYERS_HOUSE_2F), -1, 6, 6);
++    SetWarpDestination(MAP_GROUP(MAP_PALLET_TOWN), MAP_NUM(MAP_PALLET_TOWN), -1, 10, 9);
+     WarpIntoMap();
+ }
+ 
+diff --git a/src/oak_speech.c b/src/oak_speech.c
+index 77dd3db..164f2d0 100644
+--- a/src/oak_speech.c
++++ b/src/oak_speech.c
+@@ -685,10 +685,16 @@ static void CB2_NewGameScene(void)
+ 
+ void StartNewGameScene(void)
+ {
++    // The hack-day demo starts on the Greenway rather than in Oak's tutorial.
++    static const u8 sDemoPlayerName[] = _("WALKER");
++    static const u8 sDemoRivalName[] = _("BLUE");
++    gSaveBlock2Ptr->playerGender = MALE;
++    StringCopy(gSaveBlock2Ptr->playerName, sDemoPlayerName);
++    StringCopy(gSaveBlock1Ptr->rivalName, sDemoRivalName);
++    gSaveBlock2Ptr->optionsTextSpeed = OPTIONS_TEXT_SPEED_FAST;
+     gPlttBufferUnfaded[0] = RGB_BLACK;
+-    gPlttBufferFaded[0]   = RGB_BLACK;
+-    CreateTask(Task_NewGameScene, 0);
+-    SetMainCallback2(CB2_NewGameScene);
++    gPlttBufferFaded[0] = RGB_BLACK;
++    SetMainCallback2(CB2_NewGame);
+ }
+ 
+ #define tSpriteTimer                data[0]
+diff --git a/src/script_menu.c b/src/script_menu.c
+index 41eebd8..4306960 100644
+--- a/src/script_menu.c
++++ b/src/script_menu.c
+@@ -1,4 +1,5 @@
+ #include "global.h"
++#include "taichung_language.h"
+ #include "gflib.h"
+ #include "menu.h"
+ #include "task.h"
+@@ -502,7 +503,38 @@ static const struct MenuAction sMultichoiceList_Exit[] = {
+     { gOtherText_Exit }
+ };
+ 
++static const u8 sText_TaichungCharmander[] = _("CHARMANDER");
++static const u8 sText_TaichungBulbasaur[] = _("BULBASAUR");
++static const u8 sText_TaichungSquirtle[] = _("SQUIRTLE");
++static const u8 sText_TaichungPikachu[] = _("PIKACHU");
++
++static const struct MenuAction sMultichoiceList_TaichungStarters[] = {
++    { sText_TaichungCharmander },
++    { sText_TaichungBulbasaur },
++    { sText_TaichungSquirtle },
++    { sText_TaichungPikachu }
++};
++
++static const u8 sText_TaichungCharmanderZh[] = _("小火龍");
++static const u8 sText_TaichungBulbasaurZh[] = _("妙蛙種子");
++static const u8 sText_TaichungSquirtleZh[] = _("傑尼龜");
++static const u8 sText_TaichungPikachuZh[] = _("皮卡丘");
++static const u8 sText_TaichungEnglish[] = _("English");
++static const u8 sText_TaichungTraditionalChinese[] = _("繁體中文");
++static const struct MenuAction sMultichoiceList_TaichungStartersZh[] = {
++    { sText_TaichungCharmanderZh },
++    { sText_TaichungBulbasaurZh },
++    { sText_TaichungSquirtleZh },
++    { sText_TaichungPikachuZh }
++};
++static const struct MenuAction sMultichoiceList_TaichungLanguage[] = {
++    { sText_TaichungEnglish },
++    { sText_TaichungTraditionalChinese }
++};
++
+ static const struct MultichoiceListStruct sMultichoiceLists[] = {
++    [MULTICHOICE_TAICHUNG_LANGUAGE] = MULTICHOICE(sMultichoiceList_TaichungLanguage),
++    [MULTICHOICE_TAICHUNG_STARTERS] = MULTICHOICE(sMultichoiceList_TaichungStarters),
+     [MULTICHOICE_YES_NO]                                     = MULTICHOICE(sMultichoiceList_YesNo),
+     [MULTICHOICE_EEVEELUTIONS]                               = MULTICHOICE(sMultichoiceList_Eeveelutions),
+     [MULTICHOICE_TRAINER_CARD_ICON_TINT]                     = MULTICHOICE(sMultichoiceList_TrainerCardIconTint),
+@@ -726,6 +758,8 @@ static void DrawVerticalMultichoiceMenu(u8 left, u8 top, u8 mcId, u8 ignoreBpres
+         ignoreBpress &= 1;
+         count = sMultichoiceLists[mcId].count;
+         list = sMultichoiceLists[mcId].list;
++        if (mcId == MULTICHOICE_TAICHUNG_STARTERS && TaichungIsChinese())
++            list = sMultichoiceList_TaichungStartersZh;
+         strWidth = 0;
+         for (i = 0; i < count; i++)
+         {
+diff --git a/src/start_menu.c b/src/start_menu.c
+index 88cc377..bb3dabc 100644
+--- a/src/start_menu.c
++++ b/src/start_menu.c
+@@ -5,6 +5,9 @@
+ #include "link.h"
+ #include "pokedex.h"
+ #include "item_menu.h"
++#include "item_use.h"
++#include "taichung_language.h"
++#include "constants/items.h"
+ #include "party_menu.h"
+ #include "save.h"
+ #include "link_rfu.h"
+@@ -49,6 +52,8 @@ enum StartMenuOption
+     STARTMENU_EXIT,
+     STARTMENU_RETIRE,
+     STARTMENU_PLAYER2,
++    STARTMENU_BIKE,
++    STARTMENU_LANGUAGE,
+     MAX_STARTMENU_ITEMS
+ };
+ 
+@@ -88,6 +93,10 @@ static bool8 StartMenuOptionCallback(void);
+ static bool8 StartMenuExitCallback(void);
+ static bool8 StartMenuSafariZoneRetireCallback(void);
+ static bool8 StartMenuLinkPlayerCallback(void);
++static bool8 StartMenuBikeCallback(void);
++static bool8 StartMenuLanguageCallback(void);
++static bool8 CanShowStartMenuHelp(void);
++static const u8 *GetStartMenuLabel(u8 action);
+ static bool8 StartCB_Save1(void);
+ static bool8 StartCB_Save2(void);
+ static void StartMenu_PrepareForSave(void);
+@@ -113,6 +122,25 @@ static void PrintSaveStats(void);
+ static void CloseSaveStatsWindow(void);
+ static void CloseStartMenu(void);
+ 
++// Keep native labels inside the original seven-tile menu window.
++static const u8 sText_StartBike[] = _("BIKE");
++static const u8 sText_StartGetOffBike[] = _("GET OFF");
++static const u8 sText_StartLanguage[] = _("LANGUAGE");
++static const u8 sText_StartPokedexZh[] = _("圖鑑");
++static const u8 sText_StartPokemonZh[] = _("寶可夢");
++static const u8 sText_StartBagZh[] = _("背包");
++static const u8 sText_StartBikeZh[] = _("騎腳踏車");
++static const u8 sText_StartGetOffBikeZh[] = _("下車");
++static const u8 sText_StartPlayerZh[] = _("訓練家");
++static const u8 sText_StartSaveZh[] = _("儲存");
++static const u8 sText_StartLanguageZh[] = _("語言");
++static const u8 sText_StartOptionZh[] = _("設定");
++static const u8 sText_StartExitZh[] = _("關閉");
++static const u8 sText_StartBikeHelp[] = _("Get on or off your bike.\nSome areas only allow walking.");
++static const u8 sText_StartLanguageHelp[] = _("Choose English or Traditional\nChinese without losing progress.");
++
++extern const u8 Taichung_EventScript_ChooseLanguage[];
++
+ static const struct MenuAction sStartMenuActionTable[] = {
+     [STARTMENU_POKEDEX] = { gText_MenuPokedex, {.u8_void = StartMenuPokedexCallback} },
+     [STARTMENU_POKEMON] = { gText_MenuPokemon, {.u8_void = StartMenuPokemonCallback} },
+@@ -122,7 +150,9 @@ static const struct MenuAction sStartMenuActionTable[] = {
+     [STARTMENU_OPTION]  = { gText_MenuOption,  {.u8_void = StartMenuOptionCallback} },
+     [STARTMENU_EXIT]    = { gText_MenuExit,    {.u8_void = StartMenuExitCallback} },
+     [STARTMENU_RETIRE]  = { gText_MenuRetire,  {.u8_void = StartMenuSafariZoneRetireCallback} },
+-    [STARTMENU_PLAYER2] = { gText_MenuPlayer,  {.u8_void = StartMenuLinkPlayerCallback} }
++    [STARTMENU_PLAYER2] = { gText_MenuPlayer,  {.u8_void = StartMenuLinkPlayerCallback} },
++    [STARTMENU_BIKE] = { sText_StartBike, {.u8_void = StartMenuBikeCallback} },
++    [STARTMENU_LANGUAGE] = { sText_StartLanguage, {.u8_void = StartMenuLanguageCallback} }
+ };
+ 
+ static const struct WindowTemplate sSafariZoneStatsWindowTemplate = {
+@@ -144,7 +174,9 @@ static const u8 *const sStartMenuDescPointers[] = {
+     gStartMenuDesc_Option,
+     gStartMenuDesc_Exit,
+     gStartMenuDesc_Retire,
+-    gStartMenuDesc_Player
++    gStartMenuDesc_Player,
++    sText_StartBikeHelp,
++    sText_StartLanguageHelp
+ };
+ 
+ static const struct BgTemplate sBGTemplates_AfterLinkSaveMessage[] = {
+@@ -217,8 +249,10 @@ static void SetUpStartMenu_NormalField(void)
+     if (FlagGet(FLAG_SYS_POKEMON_GET) == TRUE)
+         AppendToStartMenuItems(STARTMENU_POKEMON);
+     AppendToStartMenuItems(STARTMENU_BAG);
++    AppendToStartMenuItems(STARTMENU_BIKE);
+     AppendToStartMenuItems(STARTMENU_PLAYER);
+     AppendToStartMenuItems(STARTMENU_SAVE);
++    AppendToStartMenuItems(STARTMENU_LANGUAGE);
+     AppendToStartMenuItems(STARTMENU_OPTION);
+     AppendToStartMenuItems(STARTMENU_EXIT);
+ }
+@@ -282,11 +316,11 @@ static s8 PrintStartMenuItems(s8 *cursor_p, u8 nitems)
+     {
+         if (sStartMenuOrder[i] == STARTMENU_PLAYER || sStartMenuOrder[i] == STARTMENU_PLAYER2)
+         {
+-            Menu_PrintFormatIntlPlayerName(GetStartMenuWindowId(), sStartMenuActionTable[sStartMenuOrder[i]].text, 8, i * 15);
++            Menu_PrintFormatIntlPlayerName(GetStartMenuWindowId(), GetStartMenuLabel(sStartMenuOrder[i]), 8, i * 15);
+         }
+         else
+         {
+-            StringExpandPlaceholders(gStringVar4, sStartMenuActionTable[sStartMenuOrder[i]].text);
++            StringExpandPlaceholders(gStringVar4, GetStartMenuLabel(sStartMenuOrder[i]));
+             AddTextPrinterParameterized(GetStartMenuWindowId(), FONT_NORMAL, gStringVar4, 8, i * 15, 0xFF, NULL);
+         }
+         i++;
+@@ -327,7 +361,7 @@ static s8 DoDrawStartMenu(void)
+         break;
+     case 5:
+         sStartMenuCursorPos = Menu_InitCursor(GetStartMenuWindowId(), FONT_NORMAL, 0, 0, 15, sNumStartMenuItems, sStartMenuCursorPos);
+-        if (!MenuHelpers_IsLinkActive() && InUnionRoom() != TRUE && gSaveBlock2Ptr->optionsButtonMode == OPTIONS_BUTTON_MODE_HELP)
++        if (CanShowStartMenuHelp())
+         {
+             DrawHelpMessageWindowWithText(sStartMenuDescPointers[sStartMenuOrder[sStartMenuCursorPos]]);
+         }
+@@ -411,7 +445,7 @@ static bool8 StartCB_HandleInput(void)
+     {
+         PlaySE(SE_SELECT);
+         sStartMenuCursorPos = Menu_MoveCursor(-1);
+-        if (!MenuHelpers_IsLinkActive() && InUnionRoom() != TRUE && gSaveBlock2Ptr->optionsButtonMode == OPTIONS_BUTTON_MODE_HELP)
++        if (CanShowStartMenuHelp())
+         {
+             PrintTextOnHelpMessageWindow(sStartMenuDescPointers[sStartMenuOrder[sStartMenuCursorPos]], 2);
+         }
+@@ -420,7 +454,7 @@ static bool8 StartCB_HandleInput(void)
+     {
+         PlaySE(SE_SELECT);
+         sStartMenuCursorPos = Menu_MoveCursor(+1);
+-        if (!MenuHelpers_IsLinkActive() && InUnionRoom() != TRUE && gSaveBlock2Ptr->optionsButtonMode == OPTIONS_BUTTON_MODE_HELP)
++        if (CanShowStartMenuHelp())
+         {
+             PrintTextOnHelpMessageWindow(sStartMenuDescPointers[sStartMenuOrder[sStartMenuCursorPos]], 2);
+         }
+@@ -448,7 +482,9 @@ static void StartMenu_FadeScreenIfLeavingOverworld(void)
+ {
+     if (sStartMenuCallback != StartMenuSaveCallback
+      && sStartMenuCallback != StartMenuExitCallback
+-     && sStartMenuCallback != StartMenuSafariZoneRetireCallback)
++     && sStartMenuCallback != StartMenuSafariZoneRetireCallback
++     && sStartMenuCallback != StartMenuBikeCallback
++     && sStartMenuCallback != StartMenuLanguageCallback)
+     {
+         StopPokemonLeagueLightingEffectTask();
+         FadeScreen(FADE_TO_BLACK, 0);
+@@ -543,6 +579,74 @@ static bool8 StartMenuExitCallback(void)
+     return TRUE;
+ }
+ 
++static bool8 StartMenuBikeCallback(void)
++{
++    u8 taskId;
++
++    DestroySafariZoneStatsWindow();
++    DestroyHelpMessageWindow_();
++    CloseStartMenu();
++    // Use the exact registered-item field context. The engine retains all of
++    // its map, water, rail and forced-cycling checks and owns task cleanup.
++    LockPlayerFieldControls();
++    FreezeObjectEvents();
++    HandleEnforcedLookDirectionOnPlayerStopMoving();
++    StopPlayerAvatar();
++    gSpecialVar_ItemId = ITEM_BICYCLE;
++    taskId = CreateTask(FieldUseFunc_Bike, 8);
++    gTasks[taskId].data[3] = TRUE;
++    return TRUE;
++}
++
++static bool8 StartMenuLanguageCallback(void)
++{
++    DestroySafariZoneStatsWindow();
++    DestroyHelpMessageWindow_();
++    CloseStartMenu();
++    ScriptContext_SetupScript(Taichung_EventScript_ChooseLanguage);
++    return TRUE;
++}
++
++static bool8 CanShowStartMenuHelp(void)
++{
++    // Nine 15-pixel rows fit on the GBA display, but the original five-tile
++    // help bar would cover the final rows. Specialized shorter menus keep it.
++    return sNumStartMenuItems <= 7
++        && !MenuHelpers_IsLinkActive()
++        && InUnionRoom() != TRUE
++        && gSaveBlock2Ptr->optionsButtonMode == OPTIONS_BUTTON_MODE_HELP;
++}
++
++static const u8 *GetStartMenuLabel(u8 action)
++{
++    switch (action)
++    {
++    case STARTMENU_POKEDEX:
++        return TaichungText(gText_MenuPokedex, sText_StartPokedexZh);
++    case STARTMENU_POKEMON:
++        return TaichungText(gText_MenuPokemon, sText_StartPokemonZh);
++    case STARTMENU_BAG:
++        return TaichungText(gText_MenuBag, sText_StartBagZh);
++    case STARTMENU_PLAYER:
++    case STARTMENU_PLAYER2:
++        return TaichungText(gText_MenuPlayer, sText_StartPlayerZh);
++    case STARTMENU_SAVE:
++        return TaichungText(gText_MenuSave, sText_StartSaveZh);
++    case STARTMENU_OPTION:
++        return TaichungText(gText_MenuOption, sText_StartOptionZh);
++    case STARTMENU_EXIT:
++        return TaichungText(gText_MenuExit, sText_StartExitZh);
++    case STARTMENU_BIKE:
++        if (TestPlayerAvatarFlags(PLAYER_AVATAR_FLAG_MACH_BIKE | PLAYER_AVATAR_FLAG_ACRO_BIKE))
++            return TaichungText(sText_StartGetOffBike, sText_StartGetOffBikeZh);
++        return TaichungText(sText_StartBike, sText_StartBikeZh);
++    case STARTMENU_LANGUAGE:
++        return TaichungText(sText_StartLanguage, sText_StartLanguageZh);
++    default:
++        return sStartMenuActionTable[action].text;
++    }
++}
++
+ static bool8 StartMenuSafariZoneRetireCallback(void)
+ {
+     DestroySafariZoneStatsWindow();
+diff --git a/src/string_util.c b/src/string_util.c
+index 5c26d15..eba949a 100644
+--- a/src/string_util.c
++++ b/src/string_util.c
+@@ -1,4 +1,5 @@
+ #include "global.h"
++#include "taichung_language.h"
+ #include "gflib.h"
+ 
+ EWRAM_DATA u8 gStringVar1[32] = {};
+@@ -283,6 +284,7 @@ u8 *ConvertIntToHexStringN(u8 *dest, s32 value, enum StringConvertMode mode, u8
+ 
+ u8 *StringExpandPlaceholders(u8 *dest, const u8 *src)
+ {
++    src = TaichungTranslate(src);
+     for (;;)
+     {
+         u8 c = *src++;
+@@ -303,6 +305,10 @@ u8 *StringExpandPlaceholders(u8 *dest, const u8 *src)
+ 
+                 switch (c)
+                 {
++                    case EXT_CTRL_CODE_TAICHUNG_CJK:
++                        *dest++ = *src++;
++                        *dest++ = *src++;
++                        break;
+                     case 0x07:
+                     case 0x09:
+                     case 0x0F:
+@@ -628,6 +634,7 @@ u8 GetExtCtrlCodeLength(u8 code)
+         1,
+         1,
+         1,
++        3, // Taichung CJK glyph: code plus two base240 digits.
+     };
+ 
+     u8 length = 0;
+diff --git a/src/taichung_language.c b/src/taichung_language.c
+new file mode 100644
+index 0000000..40f5888
+--- /dev/null
++++ b/src/taichung_language.c
+@@ -0,0 +1,149 @@
++#include "global.h"
++#include "event_data.h"
++#include "taichung_language.h"
++
++extern const u8 Taichung_Text_Welcome[];
++static const u8 sZh_Taichung_Text_Welcome[] = _("歡迎來到臺中！\n城市冒險從草悟道開始。");
++extern const u8 Taichung_Text_ChooseStarter[];
++static const u8 sZh_Taichung_Text_ChooseStarter[] = _("選一隻寶可夢當夥伴。\n接著自由探索這座城市！");
++extern const u8 Taichung_Text_StarterChosen[];
++static const u8 sZh_Taichung_Text_StarterChosen[] = _("你的冒險夥伴準備好了！\n背包有補給，出發吧！");
++extern const u8 Taichung_Text_TeaRequest[];
++static const u8 sZh_Taichung_Text_TeaRequest[] = _("晴天最適合喝冰茶！\p能幫我把這份茶點\n送給草悟道導覽員嗎？\p她在西南邊的花園裡。");
++extern const u8 Taichung_Text_TeaAccepted[];
++static const u8 sZh_Taichung_Text_TeaAccepted[] = _("你收好了茶點。\p沿著步道往南走，\n找花園旁的導覽員。\p慢慢來，享受臺中！");
++extern const u8 Taichung_Text_TeaDeclined[];
++static const u8 sZh_Taichung_Text_TeaDeclined[] = _("不急！先四處逛逛，\n想幫忙時再來找我。");
++extern const u8 Taichung_Text_TeaReminder[];
++static const u8 sZh_Taichung_Text_TeaReminder[] = _("導覽員在西南邊的花園。\n別忘了帶給她茶點！");
++extern const u8 Taichung_Text_TeaThanks[];
++static const u8 sZh_Taichung_Text_TeaThanks[] = _("導覽員很喜歡這份茶！\p好茶、綠意和寶可夢，\n真是美好的臺中日常。");
++extern const u8 Taichung_Text_GuideWaiting[];
++static const u8 sZh_Taichung_Text_GuideWaiting[] = _("歡迎來到草悟道！\p我正在等下午茶。\n茶屋就在東北邊。\p有空請幫我向老闆問好！");
++extern const u8 Taichung_Text_GuideThanks[];
++static const u8 sZh_Taichung_Text_GuideThanks[] = _("我的茶！謝謝你\n把這份心意送過來。\p這瓶傷藥送給你的夥伴。");
++extern const u8 Taichung_Text_QuestComplete[];
++static const u8 sZh_Taichung_Text_QuestComplete[] = _("草悟道送茶完成！\n你獲得了一瓶傷藥。\p想遇見野生寶可夢嗎？\n往北走進高草叢吧！");
++extern const u8 Taichung_Text_BagFull[];
++static const u8 sZh_Taichung_Text_BagFull[] = _("背包滿了。請先整理，\n再回來領取傷藥。");
++extern const u8 Taichung_Text_GuideDone[];
++static const u8 sZh_Taichung_Text_GuideDone[] = _("北邊高草叢裡\n住著野生寶可夢。\p先削弱牠，再從背包\n選擇精靈球來捕捉。\p按開始鍵可以儲存冒險。");
++extern const u8 Taichung_Text_FieldStation[];
++static const u8 sZh_Taichung_Text_FieldStation[] = _("草悟道研究站\n大木博士的寶可夢研究室");
++extern const u8 Taichung_Text_GuestHouse[];
++static const u8 sZh_Taichung_Text_GuestHouse[] = _("草悟道旅人之家\n讓每位旅人安心休息");
++extern const u8 Taichung_Text_TeaHouse[];
++static const u8 sZh_Taichung_Text_TeaHouse[] = _("臺中茶屋\n放慢腳步，喝杯好茶");
++extern const u8 Taichung_Text_TownSign[];
++static const u8 sZh_Taichung_Text_TownSign[] = _("臺中・西區\n跟著綠意，找到你的故事");
++extern const u8 Taichung_Text_GreenwaySign[];
++static const u8 sZh_Taichung_Text_GreenwaySign[] = _("草悟道\p悠閒漫步，和大家打招呼。\p茶屋：東北邊\n導覽員：西南邊");
++extern const u8 gText_Yes[];
++static const u8 sZh_gText_Yes[] = _("是");
++extern const u8 gText_No[];
++static const u8 sZh_gText_No[] = _("否");
++extern const u8 gText_YesNo[];
++static const u8 sZh_gText_YesNo[] = _("是\n否");
++extern const u8 gText_WouldYouLikeToSaveTheGame[];
++static const u8 sZh_gText_WouldYouLikeToSaveTheGame[] = _("要儲存目前的冒險嗎？");
++extern const u8 gText_AlreadySaveFile_WouldLikeToOverwrite[];
++static const u8 sZh_gText_AlreadySaveFile_WouldLikeToOverwrite[] = _("已有儲存資料，\n要覆寫這份存檔嗎？");
++extern const u8 gText_DifferentGameFile[];
++static const u8 sZh_gText_DifferentGameFile[] = _("有另一份遊戲存檔。\n確定要取代嗎？");
++extern const u8 gText_SavingDontTurnOffThePower[];
++static const u8 sZh_gText_SavingDontTurnOffThePower[] = _("正在儲存冒險。\n請稍候，不要關閉遊戲。");
++extern const u8 gText_PlayerSavedTheGame[];
++static const u8 sZh_gText_PlayerSavedTheGame[] = _("遊戲已儲存！");
++extern const u8 gSaveStatName_Player[];
++static const u8 sZh_gSaveStatName_Player[] = _("訓練家");
++extern const u8 gSaveStatName_Badges[];
++static const u8 sZh_gSaveStatName_Badges[] = _("徽章");
++extern const u8 gSaveStatName_Pokedex[];
++static const u8 sZh_gSaveStatName_Pokedex[] = _("圖鑑");
++extern const u8 gSaveStatName_Time[];
++static const u8 sZh_gSaveStatName_Time[] = _("時間");
++extern const u8 gText_BattleMenu[];
++static const u8 sZh_gText_BattleMenu[] = _("{PALETTE 5}{COLOR_HIGHLIGHT_SHADOW 13 14 15}戰鬥{CLEAR_TO 56}背包\n寶可夢{CLEAR_TO 56}逃跑");
++extern const u8 Taichung_Text_LanguageChanged[];
++static const u8 sZh_Taichung_Text_LanguageChanged[] = _("已切換為繁體中文。\n可從開始選單再次切換。");
++
++bool8 TaichungIsChinese(void)
++{
++    return gSaveBlock1Ptr != NULL && VarGet(TAICHUNG_LANGUAGE_VAR) == TAICHUNG_LANGUAGE_ZH;
++}
++
++const u8 *TaichungText(const u8 *english, const u8 *chinese)
++{
++    return TaichungIsChinese() ? chinese : english;
++}
++
++const u8 *TaichungTranslate(const u8 *text)
++{
++    if (!TaichungIsChinese())
++        return text;
++    if (text == Taichung_Text_Welcome)
++        return sZh_Taichung_Text_Welcome;
++    if (text == Taichung_Text_ChooseStarter)
++        return sZh_Taichung_Text_ChooseStarter;
++    if (text == Taichung_Text_StarterChosen)
++        return sZh_Taichung_Text_StarterChosen;
++    if (text == Taichung_Text_TeaRequest)
++        return sZh_Taichung_Text_TeaRequest;
++    if (text == Taichung_Text_TeaAccepted)
++        return sZh_Taichung_Text_TeaAccepted;
++    if (text == Taichung_Text_TeaDeclined)
++        return sZh_Taichung_Text_TeaDeclined;
++    if (text == Taichung_Text_TeaReminder)
++        return sZh_Taichung_Text_TeaReminder;
++    if (text == Taichung_Text_TeaThanks)
++        return sZh_Taichung_Text_TeaThanks;
++    if (text == Taichung_Text_GuideWaiting)
++        return sZh_Taichung_Text_GuideWaiting;
++    if (text == Taichung_Text_GuideThanks)
++        return sZh_Taichung_Text_GuideThanks;
++    if (text == Taichung_Text_QuestComplete)
++        return sZh_Taichung_Text_QuestComplete;
++    if (text == Taichung_Text_BagFull)
++        return sZh_Taichung_Text_BagFull;
++    if (text == Taichung_Text_GuideDone)
++        return sZh_Taichung_Text_GuideDone;
++    if (text == Taichung_Text_FieldStation)
++        return sZh_Taichung_Text_FieldStation;
++    if (text == Taichung_Text_GuestHouse)
++        return sZh_Taichung_Text_GuestHouse;
++    if (text == Taichung_Text_TeaHouse)
++        return sZh_Taichung_Text_TeaHouse;
++    if (text == Taichung_Text_TownSign)
++        return sZh_Taichung_Text_TownSign;
++    if (text == Taichung_Text_GreenwaySign)
++        return sZh_Taichung_Text_GreenwaySign;
++    if (text == gText_Yes)
++        return sZh_gText_Yes;
++    if (text == gText_No)
++        return sZh_gText_No;
++    if (text == gText_YesNo)
++        return sZh_gText_YesNo;
++    if (text == gText_WouldYouLikeToSaveTheGame)
++        return sZh_gText_WouldYouLikeToSaveTheGame;
++    if (text == gText_AlreadySaveFile_WouldLikeToOverwrite)
++        return sZh_gText_AlreadySaveFile_WouldLikeToOverwrite;
++    if (text == gText_DifferentGameFile)
++        return sZh_gText_DifferentGameFile;
++    if (text == gText_SavingDontTurnOffThePower)
++        return sZh_gText_SavingDontTurnOffThePower;
++    if (text == gText_PlayerSavedTheGame)
++        return sZh_gText_PlayerSavedTheGame;
++    if (text == gSaveStatName_Player)
++        return sZh_gSaveStatName_Player;
++    if (text == gSaveStatName_Badges)
++        return sZh_gSaveStatName_Badges;
++    if (text == gSaveStatName_Pokedex)
++        return sZh_gSaveStatName_Pokedex;
++    if (text == gSaveStatName_Time)
++        return sZh_gSaveStatName_Time;
++    if (text == gText_BattleMenu)
++        return sZh_gText_BattleMenu;
++    if (text == Taichung_Text_LanguageChanged)
++        return sZh_Taichung_Text_LanguageChanged;
++    return text;
++}
+diff --git a/src/text.c b/src/text.c
+index f3eef07..71e9d53 100644
+--- a/src/text.c
++++ b/src/text.c
+@@ -5,6 +5,8 @@
+ #include "graphics.h"
+ #include "dynamic_placeholder_text_util.h"
+ #include "constants/songs.h"
++#include "taichung_language.h"
++#include "data/taichung_glyphs.h"
+ 
+ #define TAG_CURSOR 0x8000
+ 
+@@ -626,6 +628,32 @@ void DrawDownArrow(u8 windowId, u16 x, u16 y, u8 bgColor, bool8 drawArrow, u8 *c
+     }
+ }
+ 
++static void DecompressGlyph_Taichung(u16 glyphId)
++{
++    u32 x, y;
++    u32 offset;
++    u8 color;
++    u8 bg = GetLastTextColor(2);
++    u8 fg = GetLastTextColor(0);
++    if (glyphId >= ARRAY_COUNT(sTaichungChineseGlyphs))
++        glyphId = 0;
++    memset(gGlyphInfo.pixels, bg | (bg << 4), sizeof(gGlyphInfo.pixels));
++    for (y = 0; y < 14; y++)
++    {
++        for (x = 0; x < 12; x++)
++        {
++            color = (sTaichungChineseGlyphs[glyphId][y] & (1 << x)) ? fg : bg;
++            offset = ((y / 8) * 2 + x / 8) * 32 + (y % 8) * 4 + (x % 8) / 2;
++            if (x & 1)
++                gGlyphInfo.pixels[offset] = (gGlyphInfo.pixels[offset] & 0x0F) | (color << 4);
++            else
++                gGlyphInfo.pixels[offset] = (gGlyphInfo.pixels[offset] & 0xF0) | color;
++        }
++    }
++    gGlyphInfo.width = 12;
++    gGlyphInfo.height = 14;
++}
++
+ u16 RenderText(struct TextPrinter *textPrinter)
+ {
+     struct TextPrinterSubStruct *subStruct = &textPrinter->subUnion.sub;
+@@ -672,6 +700,17 @@ u16 RenderText(struct TextPrinter *textPrinter)
+             textPrinter->printerTemplate.currentChar++;
+             switch (currChar)
+             {
++            case EXT_CTRL_CODE_TAICHUNG_CJK:
++                currChar = textPrinter->printerTemplate.currentChar[0] - 1;
++                currChar += (textPrinter->printerTemplate.currentChar[1] - 1) * 240;
++                textPrinter->printerTemplate.currentChar += 2;
++                if (textPrinter->printerTemplate.currentX + 12 > gWindows[textPrinter->printerTemplate.windowId].window.width * 8)
++                {
++                    textPrinter->printerTemplate.currentX = textPrinter->printerTemplate.x;
++                    textPrinter->printerTemplate.currentY += gFonts[textPrinter->printerTemplate.fontId].maxLetterHeight + textPrinter->printerTemplate.lineSpacing;
++                }
++                DecompressGlyph_Taichung(currChar);
++                goto drawGlyph;
+             case EXT_CTRL_CODE_COLOR:
+                 textPrinter->printerTemplate.fgColor = *textPrinter->printerTemplate.currentChar;
+                 textPrinter->printerTemplate.currentChar++;
+@@ -836,6 +875,7 @@ u16 RenderText(struct TextPrinter *textPrinter)
+             break;
+         }
+ 
++drawGlyph:
+         CopyGlyphToWindow(textPrinter);
+ 
+         if (textPrinter->minLetterSpacing)
+@@ -1028,6 +1068,7 @@ s32 GetStringWidth(u8 fontId, const u8 *str, s16 letterSpacing)
+     int glyphWidth;
+     u32 width;
+ 
++    str = TaichungTranslate(str);
+     isJapanese = FALSE;
+     minGlyphWidth = 0;
+ 
+@@ -1087,6 +1128,10 @@ s32 GetStringWidth(u8 fontId, const u8 *str, s16 letterSpacing)
+         case EXT_CTRL_CODE_BEGIN:
+             switch (*++str)
+             {
++            case EXT_CTRL_CODE_TAICHUNG_CJK:
++                str += 2;
++                lineWidth += minGlyphWidth > 12 ? minGlyphWidth : 12;
++                break;
+             case EXT_CTRL_CODE_COLOR_HIGHLIGHT_SHADOW:
+                 ++str;
+             case EXT_CTRL_CODE_PLAY_BGM:
+diff --git a/src/text_printer.c b/src/text_printer.c
+index e425ccb..6089354 100644
+--- a/src/text_printer.c
++++ b/src/text_printer.c
+@@ -1,6 +1,7 @@
+ #include "global.h"
+ #include "window.h"
+ #include "text.h"
++#include "taichung_language.h"
+ 
+ static EWRAM_DATA struct TextPrinter sTempTextPrinter = {0};
+ static EWRAM_DATA struct TextPrinter sTextPrinters[NUM_TEXT_PRINTERS] = {0};
+@@ -83,6 +84,7 @@ bool16 AddTextPrinter(struct TextPrinterTemplate *textSubPrinter, u8 speed, void
+         sTempTextPrinter.subUnion.fields[i] = 0;
+ 
+     sTempTextPrinter.printerTemplate = *textSubPrinter;
++    sTempTextPrinter.printerTemplate.currentChar = TaichungTranslate(textSubPrinter->currentChar);
+     sTempTextPrinter.callback = callback;
+     sTempTextPrinter.minLetterSpacing = 0;
+     sTempTextPrinter.japanese = 0;

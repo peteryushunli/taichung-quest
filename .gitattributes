@@ -1,0 +1,4 @@
+*.patch -whitespace
+assets/fonts/OFL.txt -whitespace
+web/licenses/MPL-2.0.txt -whitespace
+web/public/licenses/NotoSansTC-OFL.txt -whitespace

@@ -1,0 +1,92 @@
+[
+  {
+    "id": "calligraphy-greenway",
+    "nameEn": "Calligraphy Greenway",
+    "nameZh": "草悟道",
+    "category": "Green space",
+    "description": "A green urban corridor linking Taichung's science and art museums, Civic Square and neighborhood shops. Come for a relaxed walk through the city's mix of culture and open space.",
+    "officialUrl": "https://travel.taichung.gov.tw/en/Attractions/Intro/1050",
+    "officialSourceTitle": "Taichung Tourism and Travel Bureau — Calligraphy Greenway",
+    "mapX": 57,
+    "mapY": 61,
+    "playable": true,
+    "gameAreaRef": "MAP_PALLET_TOWN",
+    "location": {
+      "address": "Xiangshang N. Rd., West Dist., Taichung City, Taiwan",
+      "latitude": 24.1484,
+      "longitude": 120.66477
+    }
+  },
+  {
+    "id": "cmp-park-lane",
+    "nameEn": "Park Lane by CMP",
+    "nameZh": "勤美誠品綠園道",
+    "category": "Shopping & culture",
+    "description": "A shopping and dining landmark beside Calligraphy Greenway, known for its planted walls and green architecture. Browse books and design shops, then step back into the surrounding public spaces.",
+    "officialUrl": "https://travel.taichung.gov.tw/en/attractions/intro/1352",
+    "officialSourceTitle": "Taichung Tourism and Travel Bureau — Park Lane by CMP",
+    "mapX": 55,
+    "mapY": 48,
+    "playable": false,
+    "gameAreaRef": null,
+    "location": {
+      "address": "No. 68, Gongyi Rd., West Dist., Taichung City, Taiwan",
+      "latitude": 24.151167,
+      "longitude": 120.663972
+    }
+  },
+  {
+    "id": "fine-arts-museum",
+    "nameEn": "National Taiwan Museum of Fine Arts",
+    "nameZh": "國立臺灣美術館",
+    "category": "Art museum",
+    "description": "A national art museum focused on modern and contemporary Taiwanese art. Explore its exhibitions and outdoor sculpture park for a closer look at Taiwan's artists and visual culture.",
+    "officialUrl": "https://www.ntmofa.gov.tw/en/cp.aspx?n=1579",
+    "officialSourceTitle": "National Taiwan Museum of Fine Arts — Overview",
+    "mapX": 54,
+    "mapY": 84,
+    "playable": false,
+    "gameAreaRef": null,
+    "location": {
+      "address": "No. 2, Sec. 1, Wuquan W. Rd., West Dist., Taichung City, Taiwan",
+      "latitude": 24.141186,
+      "longitude": 120.66331
+    }
+  },
+  {
+    "id": "natural-science-museum",
+    "nameEn": "National Museum of Natural Science",
+    "nameZh": "國立自然科學博物館",
+    "category": "Science museum",
+    "description": "A science museum with galleries about life, human cultures and the environment, plus a botanical garden. Discover dinosaur exhibits and Taiwan's native plants at a major destination for learning about the natural world.",
+    "officialUrl": "https://www.nmns.edu.tw/en/",
+    "officialSourceTitle": "National Museum of Natural Science — Galleries",
+    "mapX": 62,
+    "mapY": 31,
+    "playable": false,
+    "gameAreaRef": null,
+    "location": {
+      "address": "No. 1, Guanqian Rd., North Dist., Taichung City, Taiwan",
+      "latitude": 24.157233,
+      "longitude": 120.66606
+    }
+  },
+  {
+    "id": "taichung-theater",
+    "nameEn": "National Taichung Theater",
+    "nameZh": "臺中國家歌劇院",
+    "category": "Performing arts",
+    "description": "A performing arts venue designed by architect Toyo Ito, known for flowing curved walls and connected sound-cave spaces. Visit for its architecture, public spaces and performances.",
+    "officialUrl": "https://www.npac-ntt.org/en/about/architecture/design",
+    "officialSourceTitle": "National Taichung Theater — Architecture: Design",
+    "mapX": 14,
+    "mapY": 16,
+    "playable": false,
+    "gameAreaRef": null,
+    "location": {
+      "address": "No. 101, Sec. 2, Huilai Rd., Xitun Dist., Taichung City, Taiwan",
+      "latitude": 24.162649,
+      "longitude": 120.6403
+    }
+  }
+]

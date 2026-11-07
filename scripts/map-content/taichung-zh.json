@@ -1,0 +1,49 @@
+{
+  "translations": {
+    "Taichung_Text_Welcome": "歡迎來到臺中！\n城市冒險從草悟道開始。",
+    "Taichung_Text_ChooseStarter": "選一隻寶可夢當夥伴。\n接著自由探索這座城市！",
+    "Taichung_Text_StarterChosen": "你的冒險夥伴準備好了！\n背包有補給，出發吧！",
+    "Taichung_Text_TeaRequest": "晴天最適合喝冰茶！\\p能幫我把這份茶點\n送給草悟道導覽員嗎？\\p她在西南邊的花園裡。",
+    "Taichung_Text_TeaAccepted": "你收好了茶點。\\p沿著步道往南走，\n找花園旁的導覽員。\\p慢慢來，享受臺中！",
+    "Taichung_Text_TeaDeclined": "不急！先四處逛逛，\n想幫忙時再來找我。",
+    "Taichung_Text_TeaReminder": "導覽員在西南邊的花園。\n別忘了帶給她茶點！",
+    "Taichung_Text_TeaThanks": "導覽員很喜歡這份茶！\\p好茶、綠意和寶可夢，\n真是美好的臺中日常。",
+    "Taichung_Text_GuideWaiting": "歡迎來到草悟道！\\p我正在等下午茶。\n茶屋就在東北邊。\\p有空請幫我向老闆問好！",
+    "Taichung_Text_GuideThanks": "我的茶！謝謝你\n把這份心意送過來。\\p這瓶傷藥送給你的夥伴。",
+    "Taichung_Text_QuestComplete": "草悟道送茶完成！\n你獲得了一瓶傷藥。\\p想遇見野生寶可夢嗎？\n往北走進高草叢吧！",
+    "Taichung_Text_BagFull": "背包滿了。請先整理，\n再回來領取傷藥。",
+    "Taichung_Text_GuideDone": "北邊高草叢裡\n住著野生寶可夢。\\p先削弱牠，再從背包\n選擇精靈球來捕捉。\\p按開始鍵可以儲存冒險。",
+    "Taichung_Text_FieldStation": "草悟道研究站\n大木博士的寶可夢研究室",
+    "Taichung_Text_GuestHouse": "草悟道旅人之家\n讓每位旅人安心休息",
+    "Taichung_Text_TeaHouse": "臺中茶屋\n放慢腳步，喝杯好茶",
+    "Taichung_Text_TownSign": "臺中・西區\n跟著綠意，找到你的故事",
+    "Taichung_Text_GreenwaySign": "草悟道\\p悠閒漫步，和大家打招呼。\\p茶屋：東北邊\n導覽員：西南邊",
+    "gText_Yes": "是",
+    "gText_No": "否",
+    "gText_YesNo": "是\n否",
+    "gText_WouldYouLikeToSaveTheGame": "要儲存目前的冒險嗎？",
+    "gText_AlreadySaveFile_WouldLikeToOverwrite": "已有儲存資料，\n要覆寫這份存檔嗎？",
+    "gText_DifferentGameFile": "有另一份遊戲存檔。\n確定要取代嗎？",
+    "gText_SavingDontTurnOffThePower": "正在儲存冒險。\n請稍候，不要關閉遊戲。",
+    "gText_PlayerSavedTheGame": "遊戲已儲存！",
+    "gSaveStatName_Player": "訓練家",
+    "gSaveStatName_Badges": "徽章",
+    "gSaveStatName_Pokedex": "圖鑑",
+    "gSaveStatName_Time": "時間",
+    "gText_BattleMenu": "{PALETTE 5}{COLOR_HIGHLIGHT_SHADOW 13 14 15}戰鬥{CLEAR_TO 56}背包\n寶可夢{CLEAR_TO 56}逃跑",
+    "Taichung_Text_LanguageChanged": "已切換為繁體中文。\n可從開始選單再次切換。"
+  },
+  "menus": {
+    "starters": [
+      "小火龍",
+      "妙蛙種子",
+      "傑尼龜",
+      "皮卡丘"
+    ],
+    "language": [
+      "English",
+      "繁體中文"
+    ]
+  },
+  "additionalCharacters": "圖鑑寶可夢背包騎腳踏車下車訓練家儲存語言設定關閉英繁體中文選擇語言已切換為英文已切換為繁體中文以後可以從選單切換按開始鍵開啟選單"
+}

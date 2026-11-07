@@ -1,0 +1,23 @@
+{
+  "name": "taichung-quest-web",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "prepare:emulator": "node scripts/prepare-emulator.mjs",
+    "predev": "npm run prepare:emulator",
+    "dev": "vite --host 127.0.0.1",
+    "check": "tsc --noEmit",
+    "prebuild": "npm run prepare:emulator",
+    "build": "npm run check && vite build",
+    "preview": "vite preview --host 127.0.0.1"
+  },
+  "dependencies": {
+    "@thenick775/mgba-wasm": "2.6.0"
+  },
+  "devDependencies": {
+    "@types/emscripten": "^1.41.3",
+    "typescript": "~5.9.3",
+    "vite": "^7.2.0"
+  }
+}
