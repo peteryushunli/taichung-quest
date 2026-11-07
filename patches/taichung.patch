@@ -342453,10 +342453,10 @@ index 0000000..e723b48
 +    sys.exit(0 if result["passed"] else 1)
 diff --git a/tools/taichung/landmarks/check_old_core.py b/tools/taichung/landmarks/check_old_core.py
 new file mode 100644
-index 0000000..1572088
+index 0000000..75595c7
 --- /dev/null
 +++ b/tools/taichung/landmarks/check_old_core.py
-@@ -0,0 +1,685 @@
+@@ -0,0 +1,916 @@
 +#!/usr/bin/env python3
 +"""Independent checks of the actual OldCity clone/bank/map, with no source writes.
 +
@@ -342672,6 +342672,226 @@ index 0000000..1572088
 +    if not match:
 +        raise ValueError(f"Missing script block {label}")
 +    return script_lines(match.group(1))
++
++
++
++# Exact source-reviewed opt-in onboarding; this is not native runtime acceptance.
++REVIEWED_ONBOARDING = {'sourceCommit': '856cb930fdad99bde1d15316f28ac0ebc7817620',
++ 'signsBaseCommit': 'd3803a86b606675bb2b5c6ff33f3763278beccfc',
++ 'glyphPrefixRows': 476,
++ 'allowedLegacyBlockAlternatives': ['Taichung_Welcome',
++                                    'Taichung_ChooseStarter',
++                                    'Taichung_GiveStarter',
++                                    'Taichung_OpeningAlreadyDone'],
++ 'sourceSha256': {'include/taichung_onboarding.h': 'a014d0e5c706d73ecf930eab345fa17231fb581d295685c7ee5d2bb0a0444468',
++                  'src/taichung_onboarding.c': '6f22db10b8a92e154e7b165eaa757b396d0b9a35ab989daaad162b2e0c26f424',
++                  'src/taichung_onboarding_protocol.c': '4b3449fa48dee2f51695f6368e2f695d23652cf6ab9c5c76bf2f473b1f1b08fc',
++                  'src/taichung_onboarding_text.c': '29bed2ad9ba5fa061fa947d0f9c5655a20e1e96d21bc996db478fb8d98ff45ce',
++                  'src/main.c': '7294213a51815a22e1ded2a730920c1f33e99f5b4dd12c0ee34f42743e396838',
++                  'src/new_game.c': '1515eafac358af23eb8b882527afe65f4923fa5e9e4e82fd24fcc40a0b78d2db',
++                  'src/field_control_avatar.c': '9a770fe8ae9c4f747b31e545e21a812110579979edf4e311be579a6df837e8bc',
++                  'src/taichung_starter.c': 'a05db6a86d41f7506ba9d0b2afc42c324a2805ca2ff89f5556cd6c51e18805eb',
++                  'include/taichung_starter.h': 'c5af90f3cd19c1c1a5f259627a67c282a3933e4e68cbea52360fd1ca9af65f7d',
++                  'src/taichung_starter_menu.c': '84a9520af88e85503ec105382dbf2a81b640191663cf9b9e0b304c3ebc4d36fc',
++                  'src/taichung_team.c': 'f590125604141b41f3763168ed2df35b16f034ec4bc5a11c3ff40e0f0bbbf862',
++                  'src/taichung_language.c': '992db14cda48b4098cae36fc7a4557c962dbb590a8c6020f53d79aef9f8e382e',
++                  'src/taichung_language_bridge.c': 'b3f45ef85ff7d1caa3e9535d41e9ba9e15cd75cd80af34ae8b196d503f0bf525',
++                  'src/taichung_language_bridge_protocol.c': '2648a19ca54ce93fa2644bf01b96d3fb059828476a03be4d2bd8244b059687b4',
++                  'include/taichung_language_bridge.h': 'fca8f43fb07f6ffd400d55aa517f5ac4ee96f5cdf7685f743a400b0eca02ebc1',
++                  'tools/taichung_gameplay/extend-chinese-glyphs.py': '3b9e4f1984699243c8c93708ad899cc21cbcfa6e70afa7c5f4107944b6110500',
++                  'tools/taichung_gameplay/chinese_glyph_font.py': 'd81c0d9a4140c53661910c04273b1f7400412b37f8ffd14a63ab63aeeec74364',
++                  'tools/taichung_gameplay/refresh-chinese-glyphs.py': '57fcfdbabd4daf55277435489c212d1906f7284f7d8e02bfeaaa57f15996668e',
++                  'assets/fonts/taichung-native-font.json': 'de7ec1ce859f3cf3e34bbadb7626c78c61cda3168b759758500cca32a081892e',
++                  'assets/fonts/fusion-pixel-12/fusion-pixel-12px-monospaced-zh_tw.bdf.gz': 'f30c78b63e263284257c5263d0664af514bf434445ead0552720dc519a7b5f61',
++                  'assets/fonts/fusion-pixel-12/OFL.txt': 'bc518cf64b8032c07690f33cc270c35c179255a6ac8efa7c165ebae7e8f76a63',
++                  'assets/fonts/fusion-pixel-12/LICENSES/ark-pixel/OFL.txt': '3ab41567e68e3988ba1ef16dd2644eca95ca5648ea12e7d46e6287fc0bbe5aee',
++                  'assets/fonts/fusion-pixel-12/LICENSES/cubic-11/OFL.txt': '2b6e5938e5cffa0b9e183bd05f8c363e174e7ebed1a0556e2855fd1707fa2188',
++                  'assets/fonts/fusion-pixel-12/LICENSES/galmuri/LICENSE.txt': '86a3ee9495f942f0243f18c103da9faca27adb88142613edb8bb852e56c892c1',
++                  'assets/fonts/fusion-pixel-12/NOTICE.md': 'f0384b2c8a787b3cbe029a57e8944fd9a1f1c13ad3d2a8844cce7f47d5dc937e'},
++ 'frozenScriptFilesSha256': {'data/maps/PalletTown/scripts.inc': 'c387d91a3580affa62f3571a23bd5b5dcb970b3080e41fc92ce357de0d20d9f6',
++                             'data/maps/TaichungOldCity/scripts.inc': 'c33fc5d5c01a1d1d3b0faa29af6469e1da84f97834ac6e2d3f90945c7a028008',
++                             'data/maps/PalletTown/text.inc': '272c28ca08d2a2bfa26e46240603ab0bad33ed32c805a6188cd3df9a359f3ceb',
++                             'data/event_scripts.s': '0a4cbacab289deb1f962c252a10d2d26ef1d41a9b9213b9f143dd9d819cf16df'},
++ 'scriptBlocks': {'data/maps/PalletTown/scripts.inc': ['Taichung_OnTransition',
++                                                       'Taichung_MigrateLegacyStarter',
++                                                       'Taichung_OnFrame',
++                                                       'Taichung_InitLanguage',
++                                                       'Taichung_OnboardingLanguageReady',
++                                                       'Taichung_InitLanguageLegacy',
++                                                       'Taichung_ChooseLanguageCore',
++                                                       'Taichung_SetEnglish',
++                                                       'Taichung_SetChinese',
++                                                       'Taichung_Welcome',
++                                                       'Taichung_ChooseStarter',
++                                                       'Taichung_PickCharmander',
++                                                       'Taichung_PickBulbasaur',
++                                                       'Taichung_PickSquirtle',
++                                                       'Taichung_PickPikachu',
++                                                       'Taichung_GiveStarter',
++                                                       'Taichung_OpeningGoOutside',
++                                                       'Taichung_OpeningAlreadyDone',
++                                                       'Taichung_OpeningRelease'],
++                  'data/maps/TaichungOldCity/scripts.inc': ['TaichungOldCity_MapScripts',
++                                                            'TaichungOldCity_OnboardingStart',
++                                                            'TaichungOldCity_OnboardingTopic',
++                                                            'TaichungOldCity_OnboardingRelease'],
++                  'data/maps/PalletTown/text.inc': ['Taichung_Text_Welcome',
++                                                    'Taichung_Text_ChooseStarter',
++                                                    'Taichung_Text_StarterChosen'],
++                  'data/event_scripts.s': ['EventScript_ResetAllMapFlags']},
++ 'onboardingBaseCommit': '5e503b47806ac70488afaf01cff246f70b59963b',
++ 'codebookBaseCommit': '5e503b47806ac70488afaf01cff246f70b59963b',
++ 'charmapPrefixSha256': '125f76ce39e69c5dfdbc315468cffdfed0db2b18a12ef255f2a7c9521bef3602',
++ 'glyphHeaderSha256': '1735da5da3d3d136e7dd9e06b1e43ade0e73a26093b3c47e72ebc0bbc31e9fb5',
++ 'fontProfile': 'Fusion Pixel12px zh_tw; fixed476codebook'}
++
++def reviewed_onboarding_profile(current):
++    """Only the exact reviewed opt-in flow may replace four legacy blocks."""
++    result = {"active":False,"passed":False,"errors":[],"allowedBlocks":{}}
++    try:
++        scripts = current.text("data/maps/PalletTown/scripts.inc")
++        hooks = "\n".join(current.text(path) for path in ("src/main.c","src/new_game.c","src/field_control_avatar.c"))
++        result["active"] = bool(re.search(r"callnative\s+TaichungOnboarding_",scripts)
++                                or re.search(r"\bTaichungOnboarding_\w+\s*\(",hooks))
++        if not result["active"]:
++            return result
++        profile = REVIEWED_ONBOARDING
++        approved = Files(current.source,profile["sourceCommit"])
++        for path, expected in profile["sourceSha256"].items():
++            if digest(approved.read(path)) != expected or digest(current.read(path)) != expected:
++                result["errors"].append("Reviewed onboarding source changed: "+path)
++        for path, labels in profile["scriptBlocks"].items():
++            if digest(approved.read(path)) != profile["frozenScriptFilesSha256"][path]:
++                result["errors"].append("Immutable onboarding script attestation changed: "+path)
++            for label in labels:
++                if path.endswith("/text.inc"):
++                    pattern = rf"^{re.escape(label)}::\s*\n(.*?)(?=^\w+::|\Z)"
++                    actual = re.search(pattern,current.text(path),re.S|re.M)
++                    frozen = re.search(pattern,approved.text(path),re.S|re.M)
++                    same = actual is not None and frozen is not None and actual[1] == frozen[1]
++                else:
++                    actual = script_block(current.text(path),label)
++                    frozen = script_block(approved.text(path),label)
++                    if label == "EventScript_ResetAllMapFlags":
++                        # The include list after this script's terminal end is
++                        # outside onboarding. Keep the executable reset exact.
++                        actual = actual[:actual.index("end")+1]
++                        frozen = frozen[:frozen.index("end")+1]
++                    same = actual == frozen
++                if not same:
++                    result["errors"].append("Reviewed onboarding block changed: "+path+":"+label)
++        if not result["errors"]:
++            # Parser and shared bitmap provider are pinned above. Validation
++            # only compares in-memory masks; no source writes, network or CLI.
++            path = current.source/"tools/taichung_gameplay/extend-chinese-glyphs.py"
++            spec = importlib.util.spec_from_file_location("old_core_reviewed_onboarding_glyphs",path)
++            parser = importlib.util.module_from_spec(spec);spec.loader.exec_module(parser)
++            # Source/helper/license pins above are checked before dynamic import.
++            codebook = Files(current.source,profile["codebookBaseCommit"])
++            if (digest(codebook.read("charmap.txt")) != profile["charmapPrefixSha256"]
++                    or approved.read("charmap.txt") != codebook.read("charmap.txt")
++                    or digest(approved.read("src/data/taichung_glyphs.h")) != profile["glyphHeaderSha256"]):
++                raise ValueError("Immutable reviewed font/codebook attestation changed")
++            frozen = parser.parse_existing(approved.read("charmap.txt"),approved.read("src/data/taichung_glyphs.h"))
++            actual = parser.parse_existing(current.read("charmap.txt"),current.read("src/data/taichung_glyphs.h"))
++            count = profile["glyphPrefixRows"]
++            same = (len(frozen["rows"]) == count and actual["rows"][:count] == frozen["rows"]
++                    and current.read("charmap.txt").startswith(approved.read("charmap.txt"))
++                    and actual["header"].startswith(frozen["header"][:frozen["closeAt"]])
++                    and actual["header"][actual["closeAt"]:] == frozen["header"][frozen["closeAt"]:]
++                    and all(actual["mappings"].get(char) == code for char,code in frozen["mappings"].items()))
++            suffix = current.read("charmap.txt")[len(approved.read("charmap.txt")):].decode().splitlines()
++            suffix = [line for line in suffix if line.strip()]
++            extras = actual["rows"][count:]
++            if len(suffix) != len(extras):
++                same = False
++            for line,row in zip(suffix,extras):
++                expected = [0xFC,0x19,row["index"]%240+1,row["index"]//240+1]
++                match = re.fullmatch(r"'(.)'[ \t]*=[ \t]*([0-9A-Fa-f]{2}(?:[ \t]+[0-9A-Fa-f]{2}){3})[ \t]*",line)
++                if match is None or match[1] != row["character"] or [int(token,16) for token in match[2].split()] != expected:
++                    same = False
++            # Approved476prefix stays exact; any later appended rows must use
++            # the same pinned bitmap source rather than silently mix fonts.
++            font = parser.load_font(current.source)
++            if any(font.render(row["character"]) != row["masks"] for row in actual["rows"]):
++                same = False
++            if not same:
++                result["errors"].append("Reviewed 476-row font/codebook prefix or same-source glyph tail changed")
++        if not result["errors"]:
++            result["allowedBlocks"] = {label:script_block(approved.text("data/maps/PalletTown/scripts.inc"),label)
++                                       for label in profile["allowedLegacyBlockAlternatives"]}
++            result["passed"] = True
++    except (ValueError,KeyError,IndexError,FileNotFoundError,AssertionError,subprocess.CalledProcessError) as error:
++        result["errors"].append(str(error))
++    return result
++
++
++def onboarding_profile_fault_probes(current):
++    probes = {}
++    def rejects(name,path,data):
++        changed = Files(current.source);changed.cache.update(current.cache);changed.cache[str(path)] = data
++        result = reviewed_onboarding_profile(changed)
++        probes["Onboarding"+name+"Rejected"] = result["active"] and not result["passed"]
++    script_path = "data/maps/PalletTown/scripts.inc"
++    scripts = current.text(script_path)
++    for label in REVIEWED_ONBOARDING["allowedLegacyBlockAlternatives"]:
++        marker = label+"::\n"
++        rejects(label,script_path,scripts.replace(marker,marker+"\tnop\n",1).encode())
++    rejects("MissingLanguageGate",script_path,scripts.replace("\tcallnative TaichungOnboarding_ScriptBeginStartup\n","",1).encode())
++    rejects("MissingAlreadyPartnerBranch",script_path,scripts.replace("\tgoto_if_eq VAR_RESULT, 2, Taichung_OpeningAlreadyDone\n","",1).encode())
++    rejects("EnglishOpeningTextByte","data/maps/PalletTown/text.inc",current.read("data/maps/PalletTown/text.inc").replace(b"You made it!",b"You  made it!",1))
++    rejects("StarterGuard","src/taichung_starter.c",current.read("src/taichung_starter.c")+b"\n")
++    rejects("StageAndPacketABI","include/taichung_onboarding.h",current.read("include/taichung_onboarding.h").replace(b"0xA1FF",b"0xA109",1))
++    rejects("UnknownStageExemption","src/taichung_onboarding_protocol.c",current.read("src/taichung_onboarding_protocol.c").replace(b"stage <= TAICHUNG_ONBOARDING_STAGE_BASE",b"stage < TAICHUNG_ONBOARDING_STAGE_BASE",1))
++    rejects("ReadinessContextGuard","src/taichung_onboarding_protocol.c",current.read("src/taichung_onboarding_protocol.c").replace(b"context == 0 || context != p->contextSequence",b"context == 0",1))
++    rejects("NewGameOptIn","src/new_game.c",current.read("src/new_game.c").replace(b"    TaichungOnboarding_InitNewGame();\n",b"",1))
++    rejects("MainTick","src/main.c",current.read("src/main.c").replace(b"        TaichungOnboarding_Tick(sGameCallbacksRan);\n",b"",1))
++    rejects("MandatoryFieldGate","src/field_control_avatar.c",current.read("src/field_control_avatar.c").replace(b"    if (TaichungOnboarding_TryRunOutdoorScript())\n        return TRUE;\n",b"",1))
++    outdoor = current.text("data/maps/TaichungOldCity/scripts.inc")
++    old = "\tmsgbox gStringVar4\n\tcallnative TaichungOnboarding_ScriptFinish"
++    new = "\tcallnative TaichungOnboarding_ScriptFinish\n\tmsgbox gStringVar4"
++    rejects("PrematureFarewellCompletion","data/maps/TaichungOldCity/scripts.inc",outdoor.replace(old,new,1).encode())
++    rejects("UntouchedOpeningRelease",script_path,scripts.replace("Taichung_OpeningRelease::\n","Taichung_OpeningRelease::\n\tnop\n",1).encode())
++    rejects("GlyphPrefix","src/data/taichung_glyphs.h",current.read("src/data/taichung_glyphs.h").replace(b"0x000",b"0x001",1))
++    events = current.text("data/event_scripts.s")
++    end = events.index("\tend",events.index("EventScript_ResetAllMapFlags::"))
++    rejects("ResetClearsStage","data/event_scripts.s",(events[:end]+"\tsetvar VAR_0x40F6, 0\n"+events[end:]).encode())
++    extra = Files(current.source);extra.cache.update(current.cache)
++    extra.cache["data/event_scripts.s"] = (events+'\n\t.include "data/scripts/taichung_miyahara_gym.inc"\n').encode()
++    probes["OnboardingUnrelatedPostResetIncludeOutsideProfile"] = reviewed_onboarding_profile(extra)["passed"]
++    legacy = reviewed_onboarding_profile(Files(current.source,REVIEWED_ONBOARDING["signsBaseCommit"]))
++    probes["OnboardingLegacySignsFlowStillInactive"] = not legacy["active"] and not legacy["errors"]
++    # Only well-formed appended glyph rows are allowed beyond the pinned prefix.
++    path = current.source/"tools/taichung_gameplay/extend-chinese-glyphs.py"
++    spec = importlib.util.spec_from_file_location("old_core_onboarding_append_probe",path)
++    parser = importlib.util.module_from_spec(spec);spec.loader.exec_module(parser)
++    old = parser.parse_existing(current.read("charmap.txt"),current.read("src/data/taichung_glyphs.h"))
++    font = parser.load_font(current.source)
++    character = next(chr(code) for code in sorted(font.glyphs) if 0x3400 <= code <= 0x9FFF and chr(code) not in old["mappings"])
++    index = len(old["rows"])
++    addition = [{"character":character,"index":index,"encoding":[0xFC,0x19,index%240+1,index//240+1],"masks":font.render(character)}]
++    mapping,header = parser.extend(current.read("charmap.txt"),current.read("src/data/taichung_glyphs.h"),old,addition)
++    appended = Files(current.source);appended.cache.update(current.cache)
++    appended.cache.update({"charmap.txt":mapping,"src/data/taichung_glyphs.h":header})
++    probes["OnboardingSafeAppendOnlyGlyphTailAllowed"] = reviewed_onboarding_profile(appended)["passed"]
++    # Narrow regressions introduced by the5e protocol fix and Fusion pipeline.
++    rejects("BusyTextAckRollback","src/taichung_onboarding_protocol.c",
++            Files(current.source,"a3dfc56e7a19cc60a77128f3326de5dba595a0a2").read("src/taichung_onboarding_protocol.c"))
++    for name,path in (("AppendHelper","tools/taichung_gameplay/extend-chinese-glyphs.py"),
++                      ("BitmapProvider","tools/taichung_gameplay/chinese_glyph_font.py"),
++                      ("RefreshHelper","tools/taichung_gameplay/refresh-chinese-glyphs.py"),
++                      ("FontManifest","assets/fonts/taichung-native-font.json"),
++                      ("FontSource","assets/fonts/fusion-pixel-12/fusion-pixel-12px-monospaced-zh_tw.bdf.gz")):
++        rejects(name,path,current.read(path)+b"\n")
++    for index,path in enumerate(REVIEWED_ONBOARDING["sourceSha256"]):
++        if path.startswith("assets/fonts/") and path.endswith(".txt"):
++            rejects("FontLicense"+str(index),path,current.read(path)+b"\n")
++    broken = [{**addition[0],"masks":[1]*14}]
++    bad_mapping,bad_header = parser.extend(current.read("charmap.txt"),current.read("src/data/taichung_glyphs.h"),old,broken)
++    mixed = Files(current.source);mixed.cache.update(current.cache)
++    mixed.cache.update({"charmap.txt":bad_mapping,"src/data/taichung_glyphs.h":bad_header})
++    probes["OnboardingMixedFontTailRejected"] = not reviewed_onboarding_profile(mixed)["passed"]
++    return probes
 +
 +
 +def check(source, manifest_path, audit_ref, opening_ref, self_test=False):
@@ -343054,8 +343274,13 @@ index 0000000..1572088
 +        checks.require(data["warp_events"]==[], "Unexpected physical warp added to the pending-opening room")
 +        path = "data/maps/TaichungStationWelcome/scripts.inc"
 +        checks.require(script_lines(current.text(path))==script_lines(opening.text(path)), "Welcome frame/transition/resume scripts changed from 21c08cb")
++        onboarding = reviewed_onboarding_profile(current)
++        checks.require(not onboarding["active"] or onboarding["passed"], "Unreviewed onboarding source profile: "+"; ".join(onboarding["errors"]))
 +        for label in ("Taichung_Welcome","Taichung_ChooseStarter","Taichung_GiveStarter","Taichung_OpeningGoOutside","Taichung_OpeningAlreadyDone","Taichung_OpeningRelease"):
-+            checks.require(script_block(current.text("data/maps/PalletTown/scripts.inc"),label)==script_block(opening.text("data/maps/PalletTown/scripts.inc"),label), f"Main opening hook changed: {label}")
++            actual = script_block(current.text("data/maps/PalletTown/scripts.inc"),label)
++            legacy = script_block(opening.text("data/maps/PalletTown/scripts.inc"),label)
++            reviewed = onboarding["passed"] and label in REVIEWED_ONBOARDING["allowedLegacyBlockAlternatives"] and actual == onboarding["allowedBlocks"][label]
++            checks.require(actual == legacy or reviewed, f"Main opening hook changed: {label}")
 +        checks.require(script_lines(current.text("src/taichung_opening.c"))==script_lines(opening.text("src/taichung_opening.c")), "Main opening C guards changed")
 +        warp = "SetWarpDestination(MAP_GROUP(MAP_TAICHUNG_STATION_WELCOME), MAP_NUM(MAP_TAICHUNG_STATION_WELCOME), -1, 6, 6);"
 +        checks.require(warp in current.text("src/new_game.c"), "New-game welcome spawn changed")
@@ -343071,6 +343296,10 @@ index 0000000..1572088
 +        floor = {(x,y) for y in range(room.height) for x in range(room.width) if room.walkable(x,y)}
 +        checks.require((6,3) in room.actors and len(floor)==65, "Expected integrated guide reservation/floor count changed")
 +        return {"reference":opening_ref,"guideLocalId":"LOCALID_TAICHUNG_WELCOME_GUIDE","walkableCellsAfterGuide":len(floor),"frameTransitionResumeAndStarterGuardsRetained":True,
++                "reviewedOnboardingProfile":({"sourceCommit":REVIEWED_ONBOARDING["sourceCommit"],"sourceOnly":True,
++                    "glyphPrefixRows":REVIEWED_ONBOARDING["glyphPrefixRows"],"allowedLegacyBlockAlternatives":REVIEWED_ONBOARDING["allowedLegacyBlockAlternatives"],
++                    "onboardingBaseCommit":REVIEWED_ONBOARDING["onboardingBaseCommit"],"codebookBaseCommit":REVIEWED_ONBOARDING["codebookBaseCommit"],"fontProfile":REVIEWED_ONBOARDING["fontProfile"]}
++                    if onboarding["active"] and onboarding["passed"] else None),
 +                "approvedNamedGuideGraphicsChange":({"localId":"LOCALID_TAICHUNG_WELCOME_GUIDE",
 +                    "from":"OBJ_EVENT_GFX_WOMAN_1", "to":"OBJ_EVENT_GFX_TAICHUNG_XIAOYU"}
 +                    if same_guide_map and not same_json_value(expected,data) else None)}
@@ -343113,6 +343342,8 @@ index 0000000..1572088
 +            changed = deepcopy(approved)
 +            changed["object_events"].append(deepcopy(changed["object_events"][index]))
 +            probes[map_name+"ExtraActorRejected"] = not matches_approved_xiaoyu_graphics(original,changed,map_name)
++        if reviewed_onboarding_profile(current)["active"]:
++            probes.update(onboarding_profile_fault_probes(current))
 +        checks.require(all(probes.values()), "An in-memory native fault probe failed")
 +        checks.results["faultProbes"]={"passed":all(probes.values()),**probes}
 +    checks.warnings.append("Runtime door animation/primary reloads, walking/cycling layering and Main-owned old-save map-cache migration remain unproven by static checks.")
