@@ -905,13 +905,13 @@
   "plannedMaps": [],
   "geometryFingerprintSha256": "924380bc2dfe7176686fd81395a52b8489ff18ff6401442acdf06a5d41331722",
   "sourceSha256": {
-    "docs/taichung-city-contract.json": "9131fbc2b4e605961f764e391604d57ebb9bcd5678260ef98d0838c2c52bf844",
+    "docs/taichung-city-contract.json": "a997dd9628e52548af403a458ab86831cb7a048e04231345fca4ebcf5eceba7e",
     "data/maps/map_groups.json": "309d15d83c0518c88d4371e60f036f10309ced1747fa84748877397a6355ed86",
-    "data/layouts/layouts.json": "6578a102da842f623a7ec83d985667b1adde5abff0590d6efa6971a43fdc8b20",
+    "data/layouts/layouts.json": "387f08a4a13ff7c270b4bcbfa409ab71be3d977557a985cdfc87fbc283c857e2",
     "data/maps/TaichungOldCity/map.json": "a531c4e981c24a6cfb46fe6b13958af3a33ec5f9fb7e62a382c3472574f1664f",
     "data/maps/TaichungGreenway/map.json": "866f38dafa36799a8f97c59a03df0e39841377e851c79d410745e2e230eca6b4",
     "data/maps/TaichungXitun/map.json": "930975695176c6bfc0e8e8c0f1dad9a9f340b20c666481b8f19f70e34a743491",
-    "data/maps/TaichungOldStation_Gym/map.json": "70cc7f4fdb0e066de22b5a85ea156453d81ff973a943937f78a05020c2043472",
+    "data/maps/TaichungOldStation_Gym/map.json": "bd1094aa59f183062c457d597b48ec7cd51781fcf037e30e4a26096ad9535e3d",
     "data/maps/TaichungPark_Gym/map.json": "a5704abc1fd6e56b520d05ccda6c86def9e6972e39bda7f8a943041c58bd66bd",
     "data/maps/TaichungMiyahara_Gym/map.json": "514e6090e4d825164f535300373f92f8dd85445148bad69327e2ca87ab07bb52",
     "data/maps/TaichungScienceMuseum_Gym/map.json": "4cc549bfc4721c73996c240f68d3939f5a28113d189911a7a697f6a53ebe47d9",
@@ -922,7 +922,7 @@
     "data/maps/TaichungMapleGarden_Gym/map.json": "c625ab0ae6c2e2ac1b8440965112113674091b906f72256e87545ea014b3a983",
     "data/maps/TaichungTheater_Gym/map.json": "4840cc447ce6f0c4dce67c0fc3de667576e461c6c2f75a0ba6285ef34283ea42",
     "docs/station-welcome-map-contract.json": "94fd4991b2a1e940748e96a77ddb4d3a7951468bb19d508300f0b5b71a636bc7",
-    "data/maps/TaichungStationWelcome/map.json": "5279c5352eaa61429e41ef565a0210f8afd8e5e0f7ceba521a6b6303fc3dba87",
+    "data/maps/TaichungStationWelcome/map.json": "6e4a92704eb1cfd8199d435bb8006817a825c2004701fefa735e76be51c3bfa4",
     "include/fieldmap.h": "e7d93120d2695043c7d75067f3c768344622c198503b0671d47292d6aa708a43"
   },
   "validation": {

@@ -6,7 +6,7 @@ Private playable preview: <https://taichung-quest-hackday.helpfulwren.chatgpt.si
 
 A Pokémon FireRed modification set in a compressed, fictionalized Taichung. A real Game Boy Advance ROM runs in the browser through mGBA WebAssembly.
 
-Explore Old City, Greenway and Xitun in a native Pokémon game, with ten enterable landmark halls. Begin inside Old Taichung Station, choose one of four partners from their animated icons and large portraits, then step directly into the plaza beside the custom Station facade. The Station has the first optional native leader battle; the other nine halls are explorable placeholders.
+Explore Old City, Greenway and Xitun in a native Pokémon game, with ten enterable landmark halls. Begin inside Old Taichung Station, choose one of four partners from their animated icons and large portraits, then step into the plaza. Ride through recognizable Station, Miyahara and Taichung Park facades. Station leader Jun has custom field and battle art and short bilingual dialogue; the other nine battles remain in development.
 
 The ten-landmark roster is approved. The remaining nine gym battles and the expanded city are later integrations. [docs/game-design.md](docs/game-design.md) records decisions and open design work.
 
@@ -41,17 +41,17 @@ For a static/Vercel build, run `bash scripts/build-site.sh` from the root after 
 
 ## First playable scope
 
-Choose English or Traditional Chinese, independent Off / Low / Normal encounter settings, and Charmander, Bulbasaur, Squirtle or Pikachu. The native TEAM menu freely adds or replaces up to six Pokémon from species 001–150, including evolved forms, with level-50 stats and useful moves. Accepted Station challenges heal the team; city battles avoid EXP and evolution gates. Genuine victory records one Station stamp in the ten-landmark City Pass; defeat heals and returns to the nearby plaza for a retry. Bike/Get off is available in the native menu. Other landmark halls remain explorable placeholders.
+Choose English or Traditional Chinese, independent Off / Low / Normal encounter settings, and Charmander, Bulbasaur, Squirtle or Pikachu. The native TEAM menu freely adds or replaces up to six Pokémon from species 001–150, including evolved forms, with level-50 stats and useful moves. Accepted Station challenges heal the team; city battles avoid EXP and evolution gates. Genuine victory records one Station stamp in the ten-landmark City Pass; defeat heals and returns to the nearby plaza for a retry. A fresh B press toggles the bike in eligible outdoor exploration; city cycling takes three native frames per tile, twice the original bike speed. The native menu remains available, and doors automatically dismount the player.
 
-The bilingual City Map describes all ten real places with original illustrations and official visitor links. It distinguishes playable areas from unfinished gym content and does not simulate live location or earned stamps.
+The bilingual City Map describes all ten real places with original illustrations and official visitor links. A separate live minimap reads a coherent native position packet, shows mapped interiors at their landmark entrance, and hides during menus, battles, transitions or stale data. Its remembered On/Off option defaults to On. The browser never writes navigation memory or invents earned stamps.
 
 Native Traditional Chinese covers custom city text, district names, starters, City Pass, exploration settings, menu actions and common save/battle labels. Original FireRed story, Pokémon/move names and many detail screens remain English. The browser and native language controls synchronize through a versioned packet validated against the exact ROM. Changes wait while the game is busy or paused. See [docs/native-localization.md](docs/native-localization.md) for coverage.
 
-Native saves survive reloads and can be exported/imported. Version-2 migration preserves older Taichung parties and progress, refreshes cached Station tiles, and preserves valid saved positions; six newly blocked facade cells fall back to the safe plaza. Browser snapshots are isolated by ROM digest. Use native Save before exporting a backup or changing ROM revisions.
+Native saves survive reloads and can be exported/imported. Version-3 migration refreshes cached tiles across the connected districts, including Continue through quest-log replay. It preserves valid positions and relocates only exact newly blocked cells to verified safe positions, preserving parties and progress. Older saves inside Station also refresh Jun's cached field art. Browser snapshots are isolated by ROM digest. Use native Save before exporting a backup or changing ROM revisions.
 
 ## Design input
 
-The map and story chats own the next creative pass: broader neighborhoods and ordinary streets, recognizable landmark silhouettes, and fictional leaders with paired English/Traditional Chinese dialogue. The common level is 50; final leader teams and balance remain open. Live minimap, faster contextual cycling, expanded city blocks and further landmark facades are deferred from the submission build. The three-district blockout is the working baseline for those additions.
+The common level is 50; final leader teams and balance remain open. Additional landmark facades, custom leaders and the remaining nine gym challenges are later work. The original submission is preserved at the `submission-2026-11-07` tag; subsequent presentation improvements do not replace that fallback.
 
 Source reconstruction and emulator licenses do not grant publication rights to Pokémon's game content. Keep attribution and licenses for the emulator and dependencies with the browser build.
 
