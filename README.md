@@ -33,11 +33,11 @@ npm ci
 npm run dev
 ```
 
-Open the local address printed by Vite. Start the player with the page's Play button. The browser needs cross-origin isolation for the emulator; the development server sets the required headers. A production host must also apply the rules in `web/public/_headers`.
+Open the local address printed by Vite. Start the player with the page's Play button. The browser needs cross-origin isolation for the emulator; the development server sets the required headers. A production host must send COOP and COEP on its actual responses; copying `_headers` alone is not sufficient on every host.
 
 For game compiler prerequisites and baseline verification, see [docs/game-build.md](docs/game-build.md). After editing the vendor game source, run `bash scripts/build-game.sh` and reload the browser player. Export the finished source changes with `bash scripts/export-game-patch.sh`.
 
-For a deployment build, run `bash scripts/build-site.sh` from the root after building the ROM. It writes the complete static app to `dist/`. `.openai/hosting.json` binds that output to the existing private Site. Public source excludes generated game images, saves, dependencies, and local tools; the website artifact contains the built game required by the player.
+For a static/Vercel build, run `bash scripts/build-site.sh` from the root after building the ROM. For the existing private Site, run `node scripts/build-sites-worker.mjs` followed by `node scripts/validate-sites-worker.mjs`; this packages the same files in a Worker that supplies the required response headers. `.openai/hosting.json` retains the existing Site identity. See [Sites hosting](docs/sites-worker-hosting.md) and [deployment verification](docs/deployment.md). Public source excludes generated game images, saves, dependencies, and local tools; the website artifact contains the built game required by the player.
 
 ## First playable scope
 
