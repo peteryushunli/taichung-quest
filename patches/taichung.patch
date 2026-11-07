@@ -326436,10 +326436,10 @@ index 0000000..a6ee075
 +                      "crossDedup": result["crossDedupMeasured"], "capacity": result["capacityArithmetic"]}, indent=2))
 diff --git a/tools/taichung/landmarks/check_cmp.py b/tools/taichung/landmarks/check_cmp.py
 new file mode 100644
-index 0000000..35d8db4
+index 0000000..0de54d2
 --- /dev/null
 +++ b/tools/taichung/landmarks/check_cmp.py
-@@ -0,0 +1,232 @@
+@@ -0,0 +1,303 @@
 +#!/usr/bin/env python3
 +"""Read-only independent checks for the approved CMP private-bank increment.
 +
@@ -326465,6 +326465,18 @@ index 0000000..35d8db4
 +LABELS = ('gTileset_TaichungGreenwayPrivate', 'gTileset_TaichungGreenwayCmp')
 +NAMES = ('TaichungOldCity', 'TaichungGreenway', 'TaichungXitun')
 +MID = 'MAP_TAICHUNG_GREENWAY'
++
++# Exact Main-reviewed source-only profile. Runtime acceptance is recorded separately.
++# A new migration requires another explicit review; no version-number exemption.
++REVIEWED_MAIN_SAVE = {'name': 'main-cmp-v6',
++ 'sourceCommit': '5d6039c5dec0088f958807af6ddf0880db0d2b98',
++ 'sha256': {'src/taichung_save.c': 'f94f0d203c693ea2f29a2655382f0206e2ce8f576e66577ce3783fd8655c24d9',
++            'include/taichung_save.h': '7560d159592e95cc98b1f8f6f64f08dac764a953e870d4ef24e7e32be52360cb'},
++ 'geometrySha256': {'data/layouts/TaichungGreenway/map.bin': '6b1130bc4d5df317d919e4c93e108d1e4501634436986c6a5fb39161e971c5c0',
++                    'data/layouts/layouts.json': '469fc89e1d602ed47806ac18f188875024396379c9e40ddce180dbb42732e6c4',
++                    'data/taichung/landmarks/cmp-native/manifest.json': '8cab81e257864ccd4d96f7cd1f64339b08161842bc26f9ed71a1a3d7633d053b',
++                    'data/taichung/landmarks/cmp-native/baseline-map.bin': 'f128cdb0518070ccbc41ff840975b3b1858a4599476dd6f2738dfe5c0484e9ba',
++                    'data/taichung/landmarks/cmp-native/map.bin': '6b1130bc4d5df317d919e4c93e108d1e4501634436986c6a5fb39161e971c5c0'}}
 +
 +
 +def load(name, path):
@@ -326651,17 +326663,76 @@ index 0000000..35d8db4
 +        tests.errors.extend('geometry: '+e for e in geometry.errors)
 +        return {'directedSeams':len(connections),'donorCells':cells_checked,'reachableExteriorNodes':len(getattr(geometry,'distances',{}))}
 +
-+    for name,function in (('identity',identity),('nativeBankFormatAndCBindings',formats_and_binding),('conditionalPrimaryReloadAndReleasedBindings',camera_reload),('releasedRenderingAndProtectedSlots',preservation),('approvedArtAndExactMap',art_and_map),('exactConnectedStripsAndGeometry',seams_and_geometry)):
++
++    def stable_opening_rooms_and_ids():
++        # These were mandatory in the e9 guard; private-bank delegation must
++        # retain them. Their 16625 and frozen38c baseline bytes are identical.
++        groups = now.json('data/maps/map_groups.json')
++        tests.require(groups == old.json('data/maps/map_groups.json'), 'Numeric map group/ID registry changed')
++        names = {old.json(f'data/maps/{name}/map.json')['id']: name for name in groups['gMapGroup_Taichung']}
++        frozen_contract = old.json('docs/taichung-city-contract.json')
++        for item in frozen_contract['landmarks']:
++            path = f"data/maps/{names[item['gymMap']]}/map.json"
++            tests.require(now.json(path) == old.json(path), f"Gym interface/actor changed: {item['id']}")
++        for path in ('data/maps/TaichungStationWelcome/map.json', 'data/maps/TaichungStationWelcome/scripts.inc',
++                     'data/layouts/TaichungStationWelcome/map.bin'):
++            tests.require(now.read(path) == old.read(path), 'Unrelated opening source changed: '+path)
++        for scene in scenes.values():
++            width, height = scene['layout']['width'], scene['layout']['height']
++            painted = {(x,y) for y in range(height) for x in range(width)
++                       if scene['bank'].attr(scene['grid'][y*width+x]&1023)&0x1ff == 0x69}
++            paired = {(warp['x'],warp['y']) for warp in scene['data']['warp_events']}
++            tests.require(painted == paired, 'Unpaired active exterior door: '+scene['name'])
++        return {'stableGymRooms':10,'byteExactOpeningFiles':3,'numericMapIdsPreserved':True,
++                'allThreeExteriorDoorSetsPaired':True}
++
++    def reviewed_main_save_source():
++        profile = REVIEWED_MAIN_SAVE
++        actual = {path:support.digest(now.read(path)) for path in profile['sha256']}
++        tests.require(actual == profile['sha256'], 'Save source/header is not the exact reviewed Main CMP-v6 pair')
++        accepted = support.Files(source, profile['sourceCommit'])
++        tests.require({path:support.digest(accepted.read(path)) for path in profile['sha256']} == profile['sha256'],
++                      'Reviewed CMP-v6 attestation differs from its immutable Git source')
++        geometry = {path:support.digest(now.read(path)) for path in profile['geometrySha256']}
++        tests.require(geometry == profile['geometrySha256'], 'Reviewed CMP-v6 migration geometry differs')
++        tests.require({path:support.digest(accepted.read(path)) for path in geometry} == geometry,
++                      'Reviewed CMP-v6 geometry differs from its immutable Git source')
++        return {'profile':profile['name'],'sourceCommit':profile['sourceCommit'],'filesSha256':actual,
++                'geometrySha256':geometry,'runtimeMigrationProof':False}
++
++    for name,function in (('identity',identity),('nativeBankFormatAndCBindings',formats_and_binding),('conditionalPrimaryReloadAndReleasedBindings',camera_reload),('releasedRenderingAndProtectedSlots',preservation),('approvedArtAndExactMap',art_and_map),('exactConnectedStripsAndGeometry',seams_and_geometry),('stableOpeningRoomsAndMapIds',stable_opening_rooms_and_ids),('reviewedMainSaveSource',reviewed_main_save_source)):
 +        tests.section(name,function)
 +    result={'baselineCommit':BASE,'passed':not tests.errors,'checks':tests.results,'errors':tests.errors,'warnings':['Native primary transition/upload, door/layers, weather/tint and Main-owned old-cache migration require separate actual ROM acceptance.']}
 +    if self_test and not tests.errors:
 +        probes={}
-+        def rejects(name,path,data): probes[name]=not check(source,{path:data})['passed']
++        def rejects(name,path,data,gate=None):
++            report=check(source,{path:data})
++            probes[name]=not report['passed'] and (gate is None or not report['checks'][gate]['passed'])
 +        image=now.image(f'{PRIMARY}/tiles.png');image.putpixel((0,0),(image.getpixel((0,0))+1)%16);buf=BytesIO();image.save(buf,format='PNG');rejects('protected-raw-pixel',f'{PRIMARY}/tiles.png',buf.getvalue())
 +        pal=now.text(f'{SECONDARY}/palettes/08.pal').splitlines();pal[4]='248 0 248';rejects('used-palette-entry',f'{SECONDARY}/palettes/08.pal',('\n'.join(pal)+'\n').encode())
 +        raw=bytearray(now.read(scene['layout']['blockdata_filepath']));struct.pack_into('<H',raw,(36*40+22)*2,0x3175);rejects('native-door-removed',scene['layout']['blockdata_filepath'],bytes(raw))
 +        attr=bytearray(now.read(f'{SECONDARY}/metatile_attributes.bin'));n=next(iter(manifest['landmarks'][0]['localMetatileIds'].values()));struct.pack_into('<I',attr,(n-640)*4,0x40000000);rejects('foreground-layer-corruption',f'{SECONDARY}/metatile_attributes.bin',bytes(attr))
 +        rejects('old-secondary-only-camera-loader','src/overworld.c',old.read('src/overworld.c'))
++
++        save_path,header_path='src/taichung_save.c','include/taichung_save.h'
++        rejects('unreviewed-save-byte',save_path,now.read(save_path)+b'\n','reviewedMainSaveSource')
++        rejects('unreviewed-save-header-byte',header_path,now.read(header_path)+b'\n','reviewedMainSaveSource')
++        rejects('unreviewed-save-version',header_path,now.read(header_path).replace(b'#define TAICHUNG_SAVE_VERSION 6',b'#define TAICHUNG_SAVE_VERSION 7'),'reviewedMainSaveSource')
++        rejects('removed-park-transient-reset',save_path,now.read(save_path).replace(b'    TaichungGymCancelChallenge();\n',b'',1),'reviewedMainSaveSource')
++        prior=support.Files(source,'1ae34efb0fcc3ffb7403961a73e159fe1eed839a')
++        report=check(source,{save_path:prior.read(save_path),header_path:prior.read(header_path)})
++        probes['v5-source-pair-under-cmp-rejected']=not report['passed'] and not report['checks']['reviewedMainSaveSource']['passed']
++        for path in REVIEWED_MAIN_SAVE['geometrySha256']:
++            if path.endswith('.json') and 'layouts.json' not in path:
++                rejects('changed-bound-geometry:'+path,path,now.read(path)+b'\n','reviewedMainSaveSource')
++        for path in ('data/maps/TaichungStationWelcome/map.json','data/maps/TaichungStationWelcome/scripts.inc','data/layouts/TaichungStationWelcome/map.bin'):
++            rejects('changed-frozen-opening:'+path,path,now.read(path)+b'\n','stableOpeningRoomsAndMapIds')
++        room_path='data/maps/TaichungGreenway_Gym/map.json'
++        room=now.json(room_path);room['object_events'][0]['script']='UNAPPROVED_SCRIPT'
++        rejects('changed-gym-host-script',room_path,json.dumps(room).encode(),'stableOpeningRoomsAndMapIds')
++        registry=now.json('data/maps/map_groups.json');registry['gMapGroup_Taichung'][0:2]=registry['gMapGroup_Taichung'][1::-1]
++        rejects('changed-native-map-ids','data/maps/map_groups.json',json.dumps(registry).encode(),'stableOpeningRoomsAndMapIds')
++
 +        result['adversarialProbes']=probes;result['passed']=all(probes.values())
 +        if not result['passed']:result['errors'].append('A corruption probe escaped independent checks')
 +    return result
@@ -326674,10 +326745,10 @@ index 0000000..35d8db4
 +    print(json.dumps(result,indent=2));raise SystemExit(0 if result['passed'] else 1)
 diff --git a/tools/taichung/landmarks/check_greenway_science.py b/tools/taichung/landmarks/check_greenway_science.py
 new file mode 100644
-index 0000000..4c1e681
+index 0000000..e723b48
 --- /dev/null
 +++ b/tools/taichung/landmarks/check_greenway_science.py
-@@ -0,0 +1,461 @@
+@@ -0,0 +1,485 @@
 +#!/usr/bin/env python3
 +"""Independently validate installed Greenway landmark increments, read-only.
 +
@@ -326773,7 +326844,25 @@ index 0000000..4c1e681
 +    return {(x, y) for y in range(y0, y1 + 1) for x in range(x0, x1 + 1)}
 +
 +
++
++def registered_cmp_guard(source, overrides=None):
++    support = load('greenway_dispatch_bank', ROOT/'tools/taichung/landmarks/check_old_core.py')
++    files = support.Files(source)
++    files.cache.update(overrides or {})
++    data = files.json('data/maps/TaichungGreenway/map.json')
++    layout = next(item for item in files.json('data/layouts/layouts.json')['layouts'] if item.get('id') == data['layout'])
++    if (layout['primary_tileset'],layout['secondary_tileset']) != ('gTileset_TaichungGreenwayPrivate','gTileset_TaichungGreenwayCmp'):
++        return None
++    return load('greenway_registered_cmp_guard', source/'tools/taichung/landmarks/check_cmp.py')
++
++
 +def check(source, manifest_path=MANIFEST, baseline_ref=BASE, overrides=None):
++    cmp = registered_cmp_guard(source, overrides)
++    if cmp is not None:
++        result = cmp.check(source, overrides=overrides)
++        return {"schemaVersion":1,"passed":result["passed"],"scope":"Independent registered CMP source proof; no runtime/save claim.",
++                "baselineCommit":result["baselineCommit"],"manifest":cmp.MANIFEST,"registeredCmpIncrement":True,
++                "results":result["checks"],"errors":result["errors"],"warnings":result["warnings"]}
 +    support = load("greenway_independent_bank", ROOT / "tools/taichung/landmarks/check_old_core.py")
 +    strips = load("greenway_independent_strip", ROOT / "tools/taichung/landmarks/analyze_theater_cohort.py")
 +    now, before = support.Files(source), support.Files(source, baseline_ref)
@@ -327071,6 +327160,12 @@ index 0000000..4c1e681
 +
 +
 +def failure_probes(source, manifest_path, baseline_ref):
++    cmp = registered_cmp_guard(source)
++    if cmp is not None:
++        result = cmp.check(source, self_test=True)
++        return [{"probe":name,"rejected":rejected,"expectedGate":"registered CMP exact guard","errors":[]}
++                for name,rejected in result.get("adversarialProbes",{}).items()] or [
++                    {"probe":"CMP self-test unavailable","rejected":False,"expectedGate":"registered CMP exact guard","errors":result["errors"]}]
 +    support = load("greenway_probe_bank", ROOT / "tools/taichung/landmarks/check_old_core.py")
 +    files = support.Files(source)
 +    manifest = files.json(manifest_path)
