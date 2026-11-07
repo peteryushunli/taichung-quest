@@ -5,7 +5,7 @@ The main session owns integration, source-patch export, the canonical ROM, publi
 ## Checkpoints
 
 - Upstream game baseline: `ce6406d8c2eaf46d543c8a2606de0c3cb1951982`.
-- Integrated native source: `a1ff057980cf3480b5552ffbbc6ea4a3beaac9c6` on `integration/taichung`.
+- Integrated native source: `54fe5af0a30445fddb587dca6532881acc83d18b` on `integration/taichung`.
 - Browser guide checkpoint: `922fcdab327c9eb98f8a99dc59d15d755d6a39fa` (merged into parent `main`).
 - Combined ROM: SHA-1 `ae0ada352b1cd0b0d281c09fdde42a95446c9b4f`, 16 MiB. Exact source commit, SHA-256 and bridge symbol address are in ignored `build.json`.
 - Preserved working English ROM: `artifacts/taichung-before-bilingual.gba`, SHA-1 `c73d860e373eb7255cddcea2c10c5e1a37886406`.
@@ -25,7 +25,7 @@ The English checkpoint passed actual browser checks for all four level-five star
 
 The first three feature worktrees were created and verified at the checkpoints above. The user then promoted the existing Landmarks chat to the mapping implementation owner; its fourth feature worktree starts at `ee75ad0` and must not be duplicated. All `.worktrees/` paths are ignored by the public source repository. The game repository's wholesale source/assets and local commits remain local; the public project contains the consolidated patch, original additions, pinned references, and build workflow.
 
-Current integration includes the verified native/browser language bridge, ten-name City Pass, real Station challenge, independent exploration preferences, authored park encounter table, three connected outdoor districts and ten landmark halls. The browser guide has ten bilingual cards and a tested fresh-runtime restart/import flow. Final recovery/preference checks and private hosting are release-owner work. Mapping is preparing the next broader-neighborhood and custom-art pass separately; story content is authored for later reviewed integration.
+Current integration includes the verified native/browser language bridge, ten-name City Pass, real Station challenge, independent exploration preferences, authored park encounter table, three connected outdoor districts and ten landmark halls. The browser guide has ten bilingual cards and a tested fresh-runtime restart/import flow. Recovery, preferences, capture and saved progress checks pass; private hosting remains release-owner work. Mapping is preparing the next broader-neighborhood and custom-art pass separately; story content is authored for later reviewed integration.
 
 The integrated start is Old Taichung Station plaza. The mapper's source-owned `docs/taichung-city-contract.json` defines `MAP_TAICHUNG_OLD_CITY`, `MAP_TAICHUNG_GREENWAY`, and `MAP_TAICHUNG_XITUN`, ten room IDs and safe drop-off anchors. Main owns canonical spawn/healing wiring. The full bike loop and Station/Theater doors have native runtime proof; all ten doors pass static validation. Only the Station currently has an implemented gym battle.
 

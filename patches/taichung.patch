@@ -3798,7 +3798,7 @@ index 0000000..a528128
 +}
 diff --git a/docs/taichung-encounters.md b/docs/taichung-encounters.md
 new file mode 100644
-index 0000000..b9dc53a
+index 0000000..398305c
 --- /dev/null
 +++ b/docs/taichung-encounters.md
 @@ -0,0 +1,21 @@
@@ -3822,13 +3822,13 @@ index 0000000..b9dc53a
 +
 +Run `python3 tools/taichung_gameplay/validate-encounters.py` from the game checkout. It resolves real metatile encounter attributes, checks that actual accessible Old City land-encounter grass exactly matches the announced habitats, verifies walking reachability and a route to every landmark that avoids this grass, validates native slot weights/species/levels, and reports weighted species shares. It reads the mapper contract and does not regenerate or modify maps.
 +
-+Native field sampling and catching/battle balance still require emulator verification after the city and exploration settings are integrated. A host rate test and a valid table do not prove observed random-encounter frequency.
++Native walking/Normal sampling passed on combined ROM `4ca4606d`: a real level-4 Pidgey appeared in the Station garden and was caught with one Tackle and the first gift Poké Ball, then saved as the second party member. See `taichung-exploration.md` for artifacts and exact scope. This confirms the encounter/capture loop; it does not establish calibrated frequency or final battle balance.
 diff --git a/docs/taichung-exploration.md b/docs/taichung-exploration.md
 new file mode 100644
-index 0000000..62aede5
+index 0000000..3f58518
 --- /dev/null
 +++ b/docs/taichung-exploration.md
-@@ -0,0 +1,36 @@
+@@ -0,0 +1,53 @@
 +# Saved exploration preferences
 +
 +The two controls target automatic interruptions while exploring. They do not disable deliberate battles or alter an active battle.
@@ -3864,13 +3864,30 @@ index 0000000..62aede5
 +
 +`bash tools/taichung_gameplay/test-progress.sh` separately retains the ten-gym win/loss/retry/duplicate guards. Forced outcomes exist only in host tests; the ROM has no automatic completion command.
 +
-+The first isolated build passes with 334 Chinese glyphs and EWRAM 261,060 bytes (8 bytes beyond the preceding City Pass build). After merging the native city, bridge, checkpoint/migration, and Old City encounter table, the combined build uses EWRAM 261,096 bytes (1,048 bytes remain). Integration must still regenerate the glyph union with the city translation slice. Native screen layout, preference Save/Continue, and representative field interruption checks must be proven in the browser after compilation; host mocks are not a native save-file proof.
++The first isolated build passes with 334 Chinese glyphs and EWRAM 261,060 bytes (8 bytes beyond the preceding City Pass build). After merging the native city, bridge, checkpoint/migration, and Old City encounter table, the combined build uses EWRAM 261,096 bytes (1,048 bytes remain). Integration must still regenerate the glyph union with the city translation slice. The native checks below supplement the host policy tests; host mocks alone are not a native save-file proof.
++
++### Native browser acceptance on the combined gameplay ROM
++
++ROM SHA-1 `4ca4606dba95807cb3a317a5056216007511a755` was run through mGBA in the isolated browser QA fixture (fresh named native save, no forced battle/progress state).
++
++- Fresh language and real Bulbasaur starter selection reached the compact Normal/Normal screen. Its initial Continue cursor accepted both defaults with one A and returned directly to Station exploration.
++- OPTION reopened Exploration. GAME OPTIONS opened the original native settings screen, and B returned to Exploration.
++- Wild Off and Trainer Sight Low were independently selected, then written through native Save. Exported SRAM `qa-exploration-off-low.sav` has checksum-valid sectors 1/2, F8=1, F9=2, one real starter, mask 0, and Station position `(30,66)`.
++- Cartridge reset showed the native Continue preview with GYMS 0/10. Continue and skipping the original quest recap restored the map without repeating onboarding; reopening OPTION still showed Off/Low.
++- Switching native language to Traditional Chinese preserved the adventure. The Chinese labels, all mode choices, and two-line help fit the screen. Wild was then changed to Normal independently of Trainer Sight Off.
++- Walking naturally into the existing Station garden triggered a genuine level-4 Pidgey encounter. One Tackle and the first supplied Poké Ball caught it; the standard Pokédex/nickname flow returned to the city. Native Save then stored party count 2 at Old City `(23,62)`, F8=3, F9=1, language 2, and mask 0. No gym stamp was awarded for the wild capture.
++
++Root ignored artifacts include `qa-exploration-startup-defaults.jpg`, `qa-exploration-en-off-low.jpg`, `qa-exploration-native-continue.jpg`, `qa-exploration-after-continue.jpg`, `qa-exploration-zh-normal-off.jpg`, `qa-exploration-wild-pidgey.jpg`, `qa-exploration-pidgey-caught.jpg`, and `qa-exploration-caught-save.jpg`. The two exported SRAM/JSON pairs are `qa-exploration-off-low.{sav,json}` and `qa-exploration-pidgey-caught.{sav,json}`.
++
++The native sample proves walking/Normal initiation and capture, bilingual menu operation, independent saved values, and native Continue. Low's rate, trainer-sight distances, Off's temporary-reset independence, and voluntary/active-gym eligibility are covered by actual policy-module tests plus native hook compilation. This pass did not separately sample cycling/surfing encounters or add an on-sight trainer fixture to the city. It does not claim calibrated encounter frequency or final balance.
++
++`python3 tools/taichung_gameplay/inspect-save.py SAVE --expect-wild off --expect-sight low --expect-gyms 0` reads the current variables from a native SRAM export. It verifies the relevant matching sector checksums/counter, accepts mGBA's optional 16-byte RTC trailer, and never writes the save. It checks only sectors 1/2; the actual native Continue above is the full save/load acceptance.
 diff --git a/docs/taichung-gym-progress.md b/docs/taichung-gym-progress.md
 new file mode 100644
-index 0000000..e1590dc
+index 0000000..f292d1e
 --- /dev/null
 +++ b/docs/taichung-gym-progress.md
-@@ -0,0 +1,56 @@
+@@ -0,0 +1,58 @@
 +# Ten landmark gym progress
 +
 +This module is a foundation for ten landmark gyms. It supplies saved completion state, a native City Pass, and one optional battle adapter. It does not add the final ten leader teams, rewards, balancing, or geometry. Those decisions remain open.
@@ -3912,7 +3929,7 @@ index 0000000..e1590dc
 +
 +## Station battle adapter for the map owner
 +
-+Exported script entry: `TaichungGym_EventScript_StationChallenge` in `data/scripts/taichung_gyms.inc`. The map owner can point `TaichungCity_Host_OldStation` at this entry once the geometry branch is frozen. This gameplay change deliberately does not edit a map, room host, door, warp, connection, or spawn.
++Exported script entry: `TaichungGym_EventScript_StationChallenge` in `data/scripts/taichung_gyms.inc`. The integrated city now points `TaichungCity_Host_OldStation` at this entry. Main supplies the Station respawn/checkpoint and save migration. This gameplay change deliberately does not edit a map, room host, door, warp, connection, or spawn.
 +
 +The adapter offers an optional yes/no challenge. Declining returns immediately to exploration. The first win records Station bit 0; later interactions acknowledge the existing stamp and do not battle or reward again. A loss follows the real engine's whiteout and permits a later retry. Dialogue and battle intro/defeat text follow the current native language.
 +
@@ -3926,7 +3943,9 @@ index 0000000..e1590dc
 +
 +The isolated source build uses the root project's `scripts/build-game.sh` with `TAICHUNG_GAME_SOURCE` set to this worktree. Generated Chinese glyph/charmap/menu changes are kept separate from gameplay source; integration must regenerate the union of native map, menu, and dialogue text.
 +
-+Actual Station battle/whiteout/Continue acceptance requires the map owner's adapter hook and the parent's Station respawn wiring. Compiling the optional unhooked script and host-testing the win guard do not by themselves prove that integrated gameplay path.
++Actual City Pass UI checks passed in both languages: all ten names/count fit; A opens the original eight-badge Trainer Card; B returns to the pass and then the field menu. Save and Continue summaries show the separate gym count. Screenshots are root ignored artifacts `qa-city-pass-{zh,en,trainer-card,save-gyms}.jpg`.
++
++Main separately verified the real Station win and native Save/Continue 1/10 state. The readonly SRAM inspector accepts its exported `qa-station-victory.sav`: checksum-valid matching sectors, mask 1, count 1, and party retained. The bounded loss/recovery runtime check belongs to Main/localization; this gameplay UI pass does not claim it. Host-forced outcomes alone are not a native battle/whiteout proof.
 diff --git a/docs/taichung-language-bridge.md b/docs/taichung-language-bridge.md
 new file mode 100644
 index 0000000..56af0d1
@@ -4376,13 +4395,92 @@ index 0000000..8c92af3
 +native Continue. The new version is persisted on the next native Save.
 +
 +Runtime validation of the combined release is recorded by the integrator.
+diff --git a/docs/taichung-whiteout-qa.md b/docs/taichung-whiteout-qa.md
+new file mode 100644
+index 0000000..9c9ed14
+--- /dev/null
++++ b/docs/taichung-whiteout-qa.md
+@@ -0,0 +1,57 @@
++# Native Station loss and checkpoint verification
++
++The controlled loss test passed against the unchanged combined release:
++
++- Source: `a1ff057980cf3480b5552ffbbc6ea4a3beaac9c6`
++- ROM SHA-1: `ae0ada352b1cd0b0d281c09fdde42a95446c9b4f`
++- ROM SHA-256: `629bcd40965e7e5af51c3e1ffbb6fa436f76fe454fbb9f21aa7015e3dd6a2185`
++
++## Controlled fixture
++
++The input was the real pre-gym native save with Pikachu's current HP changed from 19 to 1 and its sector checksum corrected. Comparing the two 131,088-byte files found exactly two changed bytes: HP at `0x308E` and checksum at `0x3FF6`. This is a deliberate HP1 QA fixture, not organic player progress. No other save state or ROM data was edited for the test.
++
++Fixture SHA-256: `a3b3ed2b108646dea8e7c9d7daafb59d6abfeccf05721abd009413c7b7a9d141`.
++
++The read-only save inspector validated matching checksum-correct SaveBlock1 sectors 1 and 2. The game then loaded the file through its actual cartridge Continue menu in a fresh isolated runtime with snapshot restoration disabled. Its initial state was map group 43/map 0, position `(30, 66)`, one level-five Pikachu at 1/19 HP, zero gym stamps, save version 1 and English. Both unset exploration preferences retained their Normal defaults.
++
++## Runtime sequence and result
++
++1. Walked through the Station door, approached JUN and accepted the native Yes/No challenge.
++2. Selected only Growl. On the second turn, the real opposing level-five Rattata used Tackle and reduced Pikachu to 0/19 HP. The game displayed fainting, defeat, its normal money-loss messages and whiteout.
++3. The native whiteout path returned the player to the outdoor Station checkpoint, without a nurse/counter scene. Start and Save controls worked immediately.
++4. Used the actual native Save action before moving. Its summary displayed `GYMS 0/10`. Exported the native SRAM file and inspected it independently.
++5. Walked right and left, re-entered the Station through the real door and approached JUN again. The normal challenge offer and Yes/No menu appeared again; declined it normally. This checks the retry offer without running a second battle.
++
++The post-loss save confirms:
++
++| Value | Before | After native loss/save |
++| --- | --- | --- |
++| Save counter | 2 | 3 |
++| Map group / number | 43 / 0 | 43 / 0 |
++| Position | `(30, 66)` | `(30, 66)` |
++| Party | One Pikachu, level 5 | One Pikachu, level 5 |
++| Current / maximum HP | 1 / 19 | 19 / 19 |
++| Status | 0 | 0 |
++| Raw gym-completion mask | 0 | 0 |
++| Save version / language / starter | 1 / 1 / 25 | 1 / 1 / 25 |
++| Wild / trainer-sight raw preferences | 0 / 0 | 0 / 0 |
++| Last-heal warp | `(43, 0, -1, 30, 66)` | `(43, 0, -1, 30, 66)` |
++
++The exported save includes the runtime's 16-byte RTC trailer and has SHA-256 `2a4e95ce2fa761b2ea1dddfc32b51a9fac2a486bbfb5008667061154848b64b4`. The advanced save counter distinguishes this native save from the initial fixture. No stamp was awarded for defeat, the party healed, and field/menu/door controls recovered. No engine correction was required.
++
++## Evidence
++
++Evidence is retained in the parent project's ignored `artifacts/worktrees/8d9e3f9b98e8/` directory:
++
++- `qa-whiteout-battle-hp1.jpg`
++- `qa-whiteout-growl-selected.jpg`
++- `qa-whiteout-rattata-tackle.jpg`
++- `qa-whiteout-confirmed-loss.jpg`
++- `qa-whiteout-station-return.jpg`
++- `qa-whiteout-save-zero-gyms.jpg`
++- `qa-whiteout-retry-offer.jpg`
++- `qa-whiteout-final-state.txt`
++- `qa-station-loss-after.sav`
++- `qa-whiteout-save-inspection.json`
++
++The isolated Chrome tab and loopback server were closed after verification. Canonical ROM/source outputs and the original input saves were left untouched. This commit records QA only; it does not change native code or game balance.
 diff --git a/docs/taichung-world-status.md b/docs/taichung-world-status.md
 new file mode 100644
-index 0000000..c4697d4
+index 0000000..a5ff222
 --- /dev/null
 +++ b/docs/taichung-world-status.md
-@@ -0,0 +1,123 @@
+@@ -0,0 +1,139 @@
 +# Taichung world and native-menu status
++
++## Current reference after city/gameplay integration
++
++The checkpoint record below is historical. Current map geometry and IDs are in `docs/taichung-city-contract.json` and `docs/taichung-mapping.md`. The integrated world has three connected districts (group 43: Old City 0, Greenway 1, Xitun 2), ten landmark rooms (3–12), and a Station start/checkpoint at `(30,66)`.
++
++Gameplay now includes one optional provisional Station battle, ten independent City Pass states, menu cycling, two saved exploration preferences, and a provisional Old City grass table. The final ten leader teams, campaign balance, and art remain open. See `taichung-gym-progress.md`, `taichung-exploration.md`, and `taichung-encounters.md` for current contracts and actual validation scope.
++
++Geometry/layouts/connections/warps belong to the mapping workstream. `feature/world-gyms` owns gameplay, progression, encounters, transport, and `src/start_menu.c`; it must not compete with mapping changes. Main owns integration, spawn/checkpoint/migration wiring, and the canonical ROM. Localization owns the font/core translation pipeline; browser/guide owns web presentation and synchronization.
++
++The current save registry is F7 save version, F8 automatic wild, F9 automatic trainer sight, FA ten-gym mask, FB language, FC selected starter, FD optional tea errand (all in `VAR_0x40xx`). The native menu keeps nine rows: the Player row opens PASS and OPTION opens Exploration with a link to original Game Options. Original Kanto badge/HM behavior remains separate.
++
++Combined gameplay ROM `4ca4606dba95807cb3a317a5056216007511a755` passed the native exploration/capture checks recorded in `taichung-exploration.md`. Static EWRAM is 261,096 bytes, leaving 1,048 bytes. The binary and ignored artifacts remain under root `artifacts/worktrees/3c6cc7b4e276/`; final canonical integration/font regeneration is Main's responsibility.
++
++## Archived checkpoint 1c8d243
++
++Everything below describes the earlier single-neighborhood foundation and its original ownership assumptions. It is retained as a reproducibility record; use the current references above for new work.
 +
 +This document records the playable foundation at game checkpoint `1c8d243002fb4d36f2ef28e217e46f17235dff80` and the isolated `feature/world-gyms` worktree verification on 7 November 2026. No new world areas or custom gyms are added by this status commit.
 +
@@ -9408,6 +9506,64 @@ index 0000000..888b46a
 +
 +if __name__ == "__main__":
 +    sys.exit(main())
+diff --git a/tools/taichung_gameplay/inspect-save.py b/tools/taichung_gameplay/inspect-save.py
+new file mode 100644
+index 0000000..14370b2
+--- /dev/null
++++ b/tools/taichung_gameplay/inspect-save.py
+@@ -0,0 +1,52 @@
++#!/usr/bin/env python3
++"""Inspect native saved gameplay preferences in a QA-exported FireRed SRAM file.
++
++Checks the two relevant SaveBlock1 sector checksums/counter. This is not a full
++14-sector save validator; native Continue remains the end-to-end acceptance.
++"""
++import argparse
++import hashlib
++import json
++from pathlib import Path
++import struct
++
++parser = argparse.ArgumentParser(description=__doc__)
++parser.add_argument('save', type=Path)
++parser.add_argument('--expect-wild', choices=['off','low','normal'])
++parser.add_argument('--expect-sight', choices=['off','low','normal'])
++parser.add_argument('--expect-gyms', type=int, choices=range(11))
++args = parser.parse_args()
++raw = args.save.read_bytes()
++if len(raw) not in (0x20000,0x20010):
++    raise SystemExit('Expected a native SRAM save, not an emulator snapshot.')
++flash = raw[:0x20000] # mGBA may append a 16-byte RTC trailer.
++sectors = {}
++for offset in range(0,len(flash),0x1000):
++    sector_id, stored_checksum, signature, counter = struct.unpack_from('<HHII',raw,offset+0xFF4)
++    if sector_id not in (1,2) or signature != 0x08012025:
++        continue
++    payload = raw[offset:offset+0xF80]
++    total = sum(struct.unpack('<992I',payload)) & 0xFFFFFFFF
++    checksum = ((total >> 16)+total) & 0xFFFF
++    if checksum == stored_checksum:
++        sectors.setdefault(counter,{})[sector_id] = payload
++complete = [counter for counter,parts in sectors.items() if 1 in parts and 2 in parts]
++if not complete:
++    raise SystemExit('No checksum-valid matching SaveBlock1 sector pair; finish a native Save first.')
++counter = max(complete)
++block = sectors[counter][1]+sectors[counter][2]
++variables = {name:struct.unpack_from('<H',block,0x1000+(number-0x4000)*2)[0]
++             for name,number in [('version',0x40F7),('wild',0x40F8),('sight',0x40F9),('gyms',0x40FA),('language',0x40FB),('starter',0x40FC),('tea',0x40FD)]}
++mode = lambda value: {1:'off',2:'low',3:'normal'}.get(value,'normal')
++count = bin(variables['gyms'] & 0x3FF).count('1')
++result = {'bytes':len(raw),'rtcTrailerBytes':len(raw)-len(flash),'sha256':hashlib.sha256(raw).hexdigest(),'saveCounter':counter,
++          'checkedSectors':[1,2], 'position':{'x':struct.unpack_from('<h',block,0)[0],'y':struct.unpack_from('<h',block,2)[0],'mapGroup':block[4],'mapNumber':block[5]},
++          'partyCount':block[0x34], 'rawVariables':variables,
++          'wildMode':mode(variables['wild']),'sightMode':mode(variables['sight']),'completedGyms':count}
++print(json.dumps(result,indent=2))
++if args.expect_wild and result['wildMode'] != args.expect_wild:
++    raise SystemExit('Unexpected saved wild setting')
++if args.expect_sight and result['sightMode'] != args.expect_sight:
++    raise SystemExit('Unexpected saved sight setting')
++if args.expect_gyms is not None and count != args.expect_gyms:
++    raise SystemExit('Unexpected saved completed-gym count')
 diff --git a/tools/taichung_gameplay/test-exploration.sh b/tools/taichung_gameplay/test-exploration.sh
 new file mode 100644
 index 0000000..cd8c987
