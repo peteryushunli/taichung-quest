@@ -1,8 +1,10 @@
-# Presentation candidate — 7 November 2026
+# Presentation release — 7 November 2026
 
 The original submission remains frozen at `submission-2026-11-07`. This increment adds recognizable Old Station, Miyahara and Taichung Park facades and working entrances; a native two-times-speed city bike with safe B-toggle; a read-only live minimap; and Jun-only field/battle art with short English/Traditional Chinese dialogue. Station remains the only active gym challenge. Other leader battles and full authored conversation hubs are not included.
 
-## Exact candidate
+Published at 15:36 Taipei to the existing private Site from parent source `79c903a423c7ff1a9f1cbc52b8de8bbd27823bed`. The final native cartridge and Wasm were read back and hash-verified after deployment.
+
+## Exact cartridge
 
 - Native source: `d7053fd115b3744b22a2ba3160b4240f5cc80355`.
 - Cartridge: 16,777,216 bytes.

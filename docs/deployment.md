@@ -86,3 +86,9 @@ Validation: 13 tests, TypeScript, production build, 51 complete asset-response c
 ## Frozen submission, version 9
 
 Deployment `appgdep_6aeec9213cf48191bc625e4ad1f07b8a` succeeded at14:46 Taipei from source `e6dbee134ffe375ebc41be8010a66bbc8664cc6f`, retaining the same owner-private Site. Native cartridge is now `ea482a326672ac9fec2595e235ab669f9db0dd10`, source `21c08cbda8e1787b4504eb3a1131d628fc77222f`. All 51 Worker asset checks pass; authorized live reads verify exact full ROM/Wasm hashes and isolation headers. See [submission-release.md](submission-release.md) for playable scope and precise native acceptance.
+
+## One-minute presentation release
+
+Deployment `appgdep_6aeed4d82e6881918a53fb839e1a0e6b` succeeded at 15:36 Taipei on 7 November 2026 from source `79c903a423c7ff1a9f1cbc52b8de8bbd27823bed`, preserving the same private audience and URL. Native source is `d7053fd115b3744b22a2ba3160b4240f5cc80355`; cartridge SHA-256 is `5f73c133956c9c1d0013748d51d2fdfa2794adb7c1a574a45d58c4064fa3d765`. Authorized live reads returned the exact full cartridge and pinned Wasm with correct MIME and isolation headers. All 51 Worker response checks passed.
+
+This release includes the three Old City landmark facades, Jun's field/battle art and short bilingual dialogue, native 2× cycling, live minimap and old-save migration including quest replay. The actual final cartridge passed the landmark route and Jun conversation; the browser client also displayed Jun's native battle intro with the HUD hidden. The badgeless level-50 presenter save passed fresh import and Continue. See [presentation-release.md](presentation-release.md); local demo files and live verification are in `artifacts/presentation-demo/`. The original submission tag and frozen cartridge remain intact.
