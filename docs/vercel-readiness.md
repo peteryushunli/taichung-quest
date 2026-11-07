@@ -1,6 +1,6 @@
 # Vercel preparation — separate integration item
 
-This is a local configuration and deployment-artifact handoff. No Vercel account, project, credentials, remote build, upload or deployment was created. Main owns integration and authenticated preview/publication.
+This document began as a local configuration handoff. Main has since created and linked the existing-account `taichung-quest` project and deployed the accepted Theater/Park build at https://taichung-quest.vercel.app. A separate Greenway candidate preview is ready; production promotion awaits native/client acceptance. The original GPT Site remains live. See `docs/next-build-integration.md` for release identities and verification limits.
 
 ## Project configuration
 
@@ -59,10 +59,10 @@ Only generated `.vercel/output/` is replaced. Any existing ignored `.vercel/proj
 The output follows Vercel's official [Build Output API format](https://vercel.com/docs/build-output-api/configuration). Once Main has authenticated and linked the intended project, the standard **preview** command is:
 
 ```sh
-vercel deploy --prebuilt
+vercel deploy --prebuilt --target preview
 ```
 
-This command is documented for the integration owner; it has **not** been executed here. It uploads the prepared output without relying on a remote checkout to reconstruct the ignored cartridge. See [prebuilt deployment documentation](https://vercel.com/docs/cli/deploying-from-cli#deploying-from-local-build-prebuilt). Production promotion remains Main's release decision.
+Main has now executed the prebuilt workflow. Use the explicit preview target: on the new project, omitting it made the first deployment production. The explicit preview target produced a separate protected preview. This uploads the prepared output without relying on a remote checkout to reconstruct the ignored cartridge. See [prebuilt deployment documentation](https://vercel.com/docs/cli/deploying-from-cli#deploying-from-local-build-prebuilt). Production promotion remains Main's release decision.
 
 ## Verification and open checks
 
