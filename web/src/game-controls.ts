@@ -3,6 +3,7 @@ import type { GameButton } from './input-state';
 
 export function createGameControls(options: {
   root: HTMLElement;
+  canvas: HTMLCanvasElement;
   canPlay(): boolean;
   focus(): void;
   press(button: GameButton): void;
@@ -20,6 +21,10 @@ export function createGameControls(options: {
       root.dataset.heldInputs = [...held].sort().join(',');
     },
   });
+  function receivesKeys(target: EventTarget | null) {
+    return target === options.canvas || target === document.body ||
+      (target instanceof Element && root.contains(target) && !!target.closest('[data-gba]'));
+  }
 
   function refresh() {
     const enabled = options.canPlay();
@@ -75,14 +80,17 @@ export function createGameControls(options: {
     button.addEventListener('keydown', (event) => {
       if (!['Space', 'Enter'].includes(event.code) || !options.canPlay()) return;
       event.preventDefault();
-      state.set(`control:${binding}`, binding);
+      if (!event.repeat) state.set(`key:${event.code}`, binding);
     });
     button.addEventListener('keyup', (event) => {
       if (!['Space', 'Enter'].includes(event.code)) return;
       event.preventDefault();
-      state.set(`control:${binding}`);
+      state.set(`key:${event.code}`);
     });
-    button.addEventListener('blur', () => state.set(`control:${binding}`));
+    button.addEventListener('blur', () => {
+      state.set('key:Space');
+      state.set('key:Enter');
+    });
     // Assistive technology may activate a button without pointer/key events.
     button.addEventListener('click', (event) => {
       if (event.detail !== 0 || !options.canPlay()) return;
@@ -92,17 +100,21 @@ export function createGameControls(options: {
   }
   window.addEventListener('keydown', (event) => {
     if (!options.canPlay() || event.ctrlKey || event.metaKey || event.altKey) return;
-    if (event.target instanceof Element && event.target.closest('input, textarea, select, button, summary, a, [contenteditable="true"]')) return;
+    if (event.defaultPrevented || !receivesKeys(event.target)) return;
     const button = KEY_BINDINGS[event.code];
     if (!button) return;
     event.preventDefault();
-    state.set(`key:${event.code}`, button);
+    // After a modal, focus loss or rotation, a still-held key must be released
+    // before it can drive the game again. OS repeat must not reacquire it.
+    if (!event.repeat) state.set(`key:${event.code}`, button);
   });
   window.addEventListener('keyup', (event) => {
-    if (!KEY_BINDINGS[event.code]) return;
     state.set(`key:${event.code}`);
   });
+  document.addEventListener('focusin', (event) => { if (!receivesKeys(event.target)) clear(); });
+  document.addEventListener('visibilitychange', () => { if (document.hidden) clear(); });
   window.addEventListener('blur', () => clear());
+  document.addEventListener('fullscreenchange', () => clear());
   window.addEventListener('orientationchange', () => clear());
   matchMedia('(orientation: portrait)').addEventListener('change', () => clear());
   refresh();

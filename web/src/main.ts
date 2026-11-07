@@ -51,6 +51,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
     <div class="adventure-layout">
       <section class="game-column" aria-label="Playable game">
         <div class="console" id="console">
+          <button id="exit-fullscreen-button" class="fullscreen-exit" data-i18n="Exit fullscreen">Exit fullscreen</button>
           <div class="console-top"><span><i class="power-light"></i> TAICHUNG QUEST</span><span>TAICHUNG CITY · 臺中城區</span></div>
           <div class="screen-bezel">
             <div class="screen" id="screen">
@@ -65,8 +66,8 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
           </div>
           <div class="physical-controls" aria-label="Game controls">
             <div class="dpad" aria-label="Movement controls"><span class="dpad-center"></span><button data-gba="Up" class="direction up" aria-label="Move up">▲</button><button data-gba="Left" class="direction left" aria-label="Move left">◀</button><button data-gba="Right" class="direction right" aria-label="Move right">▶</button><button data-gba="Down" class="direction down" aria-label="Move down">▼</button></div>
-            <div class="middle-controls"><div class="small-control-pair"><button data-gba="Start" aria-label="Open game menu. Keyboard M or Enter."><span data-i18n="Menu">Menu</span><small>M / Enter · START</small></button><button data-gba="Select" aria-label="Select button"><span data-i18n="Select">Select</span><small>SELECT</small></button><button id="touch-city-map-button" class="touch-map-control" aria-haspopup="dialog" aria-controls="city-guide">${icon('map')}<span data-i18n="City Map">City Map</span></button></div><span class="console-model">TC—01</span></div>
-            <div class="action-buttons"><button data-gba="A" class="action a" aria-label="Interact or confirm. Keyboard F; game A."><span data-i18n="Interact / Confirm">Interact / Confirm</span><small data-i18n="F key · game A">F key · game A</small></button><button data-gba="B" class="action b" aria-label="Go back or cancel. Keyboard D; game B."><span data-i18n="Back">Back</span><small data-i18n="D key · game B">D key · game B</small></button></div>
+            <div class="middle-controls"><div class="small-control-pair"><button data-gba="Start" aria-label="Open game menu. Keyboard M or Enter."><span data-i18n="Menu">Menu</span><small><span class="physical-key-hint">M / Enter · </span>START</small></button><button data-gba="Select" aria-label="Select button"><span data-i18n="Select">Select</span><small>SELECT</small></button><button id="touch-city-map-button" class="touch-map-control" aria-haspopup="dialog" aria-controls="city-guide">${icon('map')}<span data-i18n="City Map">City Map</span></button></div><span class="console-model">TC—01</span></div>
+            <div class="action-buttons"><button data-gba="A" class="action a" aria-label="Interact or confirm. Keyboard F; game A."><span data-i18n="Interact / Confirm">Interact / Confirm</span><small class="physical-key-hint" data-i18n="F key · game A">F key · game A</small><small class="touch-key-hint" aria-hidden="true">A</small></button><button data-gba="B" class="action b" aria-label="Go back or cancel. Keyboard D; game B."><span data-i18n="Back">Back</span><small class="physical-key-hint" data-i18n="D key · game B">D key · game B</small><small class="touch-key-hint" aria-hidden="true">B</small></button></div>
           </div>
           <div class="console-bottom"><span data-i18n="A LITTLE CURIOSITY GOES A LONG WAY">A LITTLE CURIOSITY GOES A LONG WAY</span><div class="speaker" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div></div>
         </div>
@@ -342,6 +343,9 @@ async function startGame() {
     setStatus('OUT EXPLORING');
     message(freshCartridgeBoot ? cartridgeBootIntent === 'import' ? 'Save imported. Choose Continue from the game’s title screen.' : 'Cartridge restarted. Continue your in-game save or begin a new adventure.' : emulator.getAutoSaveState() ? 'Welcome back. Your last saved spot is waiting for you.' : 'New adventures begin at the old station. Use City Map to discover ten landmarks.');
     canvas.focus({ preventScroll: true });
+    // The Play button may have scrolled the intro into view. Collapsing that
+    // intro must not leave a phone looking below its newly positioned game.
+    if (matchMedia('(max-width:800px), (max-width:1000px) and (max-height:540px) and (min-aspect-ratio:6/5)').matches) window.scrollTo({ top: 0, behavior: 'instant' });
     startSaveTimer();
     cityGuide.onGameStarted();
     void connectNativeLanguage(romSha256, rom.length);
@@ -396,11 +400,16 @@ el('sound-button').addEventListener('click', () => {
   focusGame();
 });
 el('save-button').addEventListener('click', () => { releaseInputs(); void persist(true); focusGame(); });
-el('fullscreen-button').addEventListener('click', () => {
-  if (document.fullscreenElement) void document.exitFullscreen();
-  else void el('console').requestFullscreen().catch(() => message('Fullscreen isn’t available in this browser. You can still explore right here.'));
+async function toggleFullscreen() {
+  releaseInputs();
+  try {
+    if (document.fullscreenElement) await document.exitFullscreen();
+    else await el('console').requestFullscreen();
+  } catch { message('Fullscreen isn’t available in this browser. You can still explore right here.'); }
   focusGame();
-});
+}
+el('fullscreen-button').addEventListener('click', () => { void toggleFullscreen(); });
+el('exit-fullscreen-button').addEventListener('click', () => { void toggleFullscreen(); });
 el('restart-button').addEventListener('click', () => { void restartCartridge(); });
 
 async function restartCartridge(importedSave?: Uint8Array) {
@@ -502,6 +511,7 @@ el<HTMLInputElement>('save-file').addEventListener('change', async (event) => {
 
 gameInput = createGameControls({
   root: document.querySelector<HTMLElement>('.physical-controls')!,
+  canvas,
   canPlay: () => running && !paused && !restarting && !confirmationOpen && !cityGuide.isOpen,
   focus: focusGame,
   press: (button) => emulator?.buttonPress(button),

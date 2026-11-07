@@ -9,6 +9,7 @@
     "dev": "vite --host 127.0.0.1",
     "check": "tsc --noEmit",
     "test": "node --experimental-strip-types --test tests/*.test.mjs",
+    "build:control-tests": "vite build --config tests/vite.config.ts",
     "prebuild": "npm run prepare:emulator",
     "build": "npm run check && vite build",
     "preview": "vite preview --host 127.0.0.1"

@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Taichung input regression fixture</title>
+<style>
+body { font: 16px/1.5 system-ui; max-width: 800px; margin: 24px auto; padding: 0 16px; }
+button { min-height: 48px; padding: 8px 16px; }
+.physical-controls { display: flex; align-items: center; gap: 20px; padding: 20px; border: 1px solid; }
+.dpad { position: relative; width: 144px; height: 144px; }
+.direction { position: absolute; width: 48px; height: 48px; padding: 0; }
+.up { top: 0; left: 48px; } .right { top: 48px; left: 96px; }
+.down { top: 96px; left: 48px; } .left { top: 48px; left: 0; }
+.pressed { background: #adf; } #results { white-space: pre-wrap; }
+</style>
+<h1>Taichung input regression fixture</h1>
+<p>Exercises real DOM listeners with synthetic events and stub emulator callbacks. Pointer capture is stubbed for synthetic pointer IDs. This does not test physical multi-touch or a Wasm core.</p>
+<button id="run">Run input regression checks</button>
+<canvas tabindex="0" width="240" height="160" aria-label="Fixture game surface"></canvas>
+<div class="physical-controls">
+  <div class="dpad"><button data-gba="Up" class="direction up">Up</button><button data-gba="Right" class="direction right">Right</button><button data-gba="Down" class="direction down">Down</button><button data-gba="Left" class="direction left">Left</button></div>
+  <button data-gba="A">Interact / Confirm</button><button data-gba="B">Back</button><button id="map">City Map</button>
+</div>
+<input aria-label="Text field" placeholder="Typing must not reach the game">
+<div contenteditable="plaintext-only" tabindex="0">Editable text</div>
+<dialog><button>Close fixture dialog</button></dialog>
+<pre id="results" role="status">Ready.</pre>
+<script type="module" src="./controls-browser.ts"></script>
+</html>

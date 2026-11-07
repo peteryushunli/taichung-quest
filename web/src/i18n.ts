@@ -44,6 +44,7 @@ const zh: Record<string, string> = {
   'Select': '選擇',
   'Interact / Confirm': '互動／確認',
   'Back': '返回',
+  'Exit fullscreen': '離開全螢幕',
   'F key · game A': 'F 鍵・遊戲 A',
   'D key · game B': 'D 鍵・遊戲 B',
   'Open game menu. Keyboard M or Enter.': '開啟遊戲選單，鍵盤按 M 或 Enter。',
