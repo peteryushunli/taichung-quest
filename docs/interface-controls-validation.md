@@ -1,6 +1,6 @@
 # Portrait-first controls review
 
-This is a reviewable interface pass on `feature/web-guide`, continuing preserved checkpoint `6f42ebc`. The user selected portrait first, with landscape supported. Layout feedback is pending in the visible Interface and controls chat; this is not a production publication.
+This is a reviewable interface pass on `feature/web-guide`, continuing preserved checkpoint `6f42ebc`. The user selected portrait first, with landscape supported, and accepted this iteration with **“Keep this layout.”** Preserve its control positions and sizes unless new user feedback changes that decision. This acceptance does not claim physical-phone or sustained fullscreen verification, and this is not a production publication.
 
 ## Changes
 
