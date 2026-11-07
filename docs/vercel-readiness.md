@@ -1,6 +1,6 @@
 # Vercel deployment and origin verification
 
-This document began as a local configuration handoff. Main has since created and linked the existing-account `taichung-quest` project and deployed and verified the Greenway update at https://taichung-quest.vercel.app, after a separate protected preview and native/client acceptance. Vercel is the sole production frontend for future releases and client QA, with Main as the sole publisher. The legacy GPT Site was last observed active; retirement is requested but shutdown is not yet verified. No further GPT Site publications are planned. See `docs/next-build-integration.md` for release identities and verification limits.
+This document began as a local configuration handoff. Main has since created and linked the existing-account `taichung-quest` project and deployed and verified the CMP Park Lane update at https://taichung-quest.vercel.app, after a separate protected preview and native/client acceptance. Vercel is the sole production frontend for future releases and client QA, with Main as the sole publisher. The legacy GPT Site was last observed active; retirement is requested but shutdown is not yet verified. No further GPT Site publications are planned. See `docs/next-build-integration.md` for release identities and verification limits.
 
 ## Project configuration
 

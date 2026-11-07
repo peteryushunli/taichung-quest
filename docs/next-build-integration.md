@@ -2,7 +2,7 @@
 
 > Current hosting policy: [Vercel](https://taichung-quest.vercel.app) is the sole production frontend for future releases and client QA. Follow [the Vercel release workflow](vercel-readiness.md). Legacy GPT Site deployments and commands below are historical records; do not publish new versions there. The legacy host was last observed active, and shutdown has not yet been verified. Preserve its source archives and `.openai/hosting.json` identity.
 
-The Greenway release is published on both https://taichung-quest.vercel.app and the existing private Site. It adds Science Museum, Shen Ji and Fine Arts to the accepted Theater/Park build. Station and Park remain the two playable battles. Earlier presentation and Theater/Park deployments remain available as fallbacks.
+The CMP release is published on https://taichung-quest.vercel.app. It adds CMP Park Lane to the prior Greenway release, which added Science Museum, Shen Ji and Fine Arts. The legacy GPT Site remains on the earlier Greenway version. Station and Park remain the two playable battles. Earlier presentation and Theater/Park deployments remain available as fallbacks.
 
 ## Integrated source
 
@@ -66,7 +66,7 @@ Actual Vercel-origin testing on the immediately preceding e65 cartridge proved t
 
 To move progress between origins, use the native in-game Save, then **Download save** on the old site and **Import save** on Vercel. Browser snapshots do not transfer between origins. Both sites remain available; no original user save was overwritten. CMP/Fengjia/Maple installations, the Miyahara battle and the focused street-layout increment continue separately behind their native acceptance gates.
 
-## CMP version-six integration candidate — not yet published
+## CMP version-six integration and acceptance
 
 The frozen candidate is native `5d6039c5dec0088f958807af6ddf0880db0d2b98`, ROM SHA-256 `b3ffea97a71c8a2aff141192677430ac1b4fdce79cb94dc111562a8c5e03c40c`. Main integrated approved study inputs `7108863`, CMP art/conditional primary-bank reload `fefe500`, and the version-six migration `5d6039c`. Source from the isolated Miyahara street layout, remaining Xitun facades, Miyahara battle and revised onboarding is excluded.
 
@@ -74,8 +74,18 @@ Frozen C1 native acceptance covers the CMP entrance/returns, collision/layering,
 
 Integrated host migration checks pass all 57 exact repairs for versions 1–5, 1,938 retained valid positions, the older 86-position Greenway union, pending/authored return priority, protected party/inventory/preferences/checkpoint/progress, and Park notice lifetime. Immutable source checks bind 137 map/bank/interface inputs. Actual linked cartridge inspection confirms both graphics banks, palettes, metatiles, callbacks and the Greenway layout/map match committed source. Minimap geometry is unchanged, and all 28 frontend tests pass.
 
-Release remains gated on the combined cartridge's two native old-cache Continue/Save cases and final client acceptance. The organic v5 save at (17,40) must remain there; the labeled synthetic v5 (18,36) fixture must move only to (17,36). Both must retain protected state and save version six. The Greenway v5 cartridge remains production until these gates pass. Future publication is Vercel only.
+The release was gated on the combined cartridge's two native old-cache Continue/Save cases and final client acceptance; those gates subsequently passed. The organic v5 save at (17,40) must remain there; the labeled synthetic v5 (18,36) fixture must move only to (17,36). Both must retain protected state and save version six. The Greenway v5 cartridge remained production until those gates passed. Future publication is Vercel only.
 
-The protected CMP preview is Ready at https://taichung-quest-3c86ucqg8-peteryushunli-6635s-projects.vercel.app (`dpl_EHeuq3aSAjhgVo3zBneJUuWuq8BC`), packaged from clean parent `2c24ff3`. Exact metadata, the full 16 MiB ROM and isolation/no-store headers pass. It has not been promoted. Evidence: `artifacts/cmp-v6-candidate/vercel-preview-edge.json`.
+The protected CMP preview is Ready at https://taichung-quest-3c86ucqg8-peteryushunli-6635s-projects.vercel.app (`dpl_EHeuq3aSAjhgVo3zBneJUuWuq8BC`), packaged from clean parent `2c24ff3`. Exact metadata, the full 16 MiB ROM and isolation/no-store headers pass. It was subsequently promoted after all acceptance gates passed. Evidence: `artifacts/cmp-v6-candidate/vercel-preview-edge.json`.
 
 Checker-only native follow-up `31aae01` preserves the frozen cartridge source `5d6039c`; no rebuild is required. It routes the exact registered CMP pair through eight guarded sections, including immutable v6 source/geometry and unchanged opening/room/ID checks. All 16 corruption probes pass through the canonical Greenway entry point. Existing e9 profiles remain intact. The portable source patch includes this tooling follow-up, while preview metadata continues to identify the actual frozen cartridge source.
+
+Both combined CMP migration cases now pass on the frozen `5d6039c` cartridge. Organic v5 (17,40) stays there and saves as v6 (counter 8, SHA-256 `072519111dc3b34753eb0947e1cc50cc87e30c22bb071dee9978b28f48b3d06d`). The labeled synthetic (18,36) case repairs to (17,36) and saves as v6 (counter 8, SHA-256 `c64c5b9d1734c3e6a6b48f553c853ede99c069534a469877377db330fbbe971e`). Both retain all six raw party slots/count, decoded inventory/currency, checkpoint and every variable except the expected version change. Actual cached facade word (18,36) refreshes from old `0x3175` to CMP `0x0797`. Final browser acceptance and production promotion subsequently passed. Evidence: `artifacts/game-build-runtime/cmp-v6/`.
+
+## Final CMP publication receipt
+
+Published on Vercel only: production deployment `dpl_HrYT4iT6D52FGr1W5MJNWah8GpYi`, Ready, https://taichung-quest.vercel.app; immutable URL https://taichung-quest-ebhv7yznm-peteryushunli-6635s-projects.vercel.app. Frozen parent `2c24ff33498e3dbd136fad40036c37a5282f2b1f`, native `5d6039c5dec0088f958807af6ddf0880db0d2b98`, ROM SHA-256 `b3ffea97a71c8a2aff141192677430ac1b4fdce79cb94dc111562a8c5e03c40c`. Final public edge checks confirm exact full ROM, metadata and HTML, page/metadata/Wasm isolation headers, no-store metadata and Wasm MIME. Evidence: `artifacts/cmp-v6-candidate/vercel-production-edge.json`.
+
+The final local production-client check passed actual copied-v6 import/Continue, exact Greenway (17,40), refreshed CMP art, live HUD, native-saved Chinese synchronization, guide pause/HUD clearing, queued English application proven by the native Start menu, and return to one focused canvas at the same position. Original save export remained unchanged. Evidence: `artifacts/browser-game-runtime/cmp-v6-client-2c24ff3/client-smoke-report.json`. This was desktop Chrome on exact copied production files, not a physical-phone or repeated Vercel-origin playthrough. The file chooser took 1004 seconds despite requested timeouts, then succeeded; no OS lock or approval denial was reported.
+
+The eight facade landmarks are installed; Station and Park remain the two playable battles. The bilingual short-sign, revised onboarding, Miyahara battle, focused street layout, and final Fengjia/Maple facades remain separate unpublished candidates. Tiger City is deferred at the user's request.
