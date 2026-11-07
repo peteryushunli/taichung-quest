@@ -64,6 +64,7 @@ python3 - "$GAME_DIR" "$ROM_DIR" "$UPSTREAM_COMMIT" <<'PY'
 import hashlib
 import json
 import pathlib
+import re
 import subprocess
 import sys
 
@@ -97,6 +98,40 @@ for line in symbols.splitlines():
             'magicB': 0x3130474E,
         }
         break
+navigation_symbols = [
+    columns for line in symbols.splitlines()
+    if (columns := line.split()) and columns[-1] == 'gTaichungNavigationBridge'
+]
+if navigation_symbols:
+    if len(navigation_symbols) != 1 or len(navigation_symbols[0]) != 4:
+        raise SystemExit('Unexpected native navigation bridge symbol; refusing incompatible metadata.')
+    try:
+        address, size = (int(value, 16) for value in navigation_symbols[0][:2])
+    except ValueError:
+        raise SystemExit('Unexpected native navigation bridge layout; refusing incompatible metadata.')
+    if size != 48 or address % 4 or not 0x02000000 <= address <= 0x02040000 - size:
+        raise SystemExit('Unexpected native navigation bridge layout; refusing incompatible metadata.')
+    contract_path = source / 'data/taichung/minimap-contract.json'
+    try:
+        contract = json.loads(contract_path.read_text())
+    except (OSError, ValueError) as error:
+        raise SystemExit(f'Cannot read navigation minimap contract {contract_path}: {error}')
+    if not isinstance(contract, dict) or type(contract.get('schemaVersion')) is not int or contract['schemaVersion'] != 1:
+        raise SystemExit('Unsupported minimap contract schema; refusing incompatible metadata.')
+    fingerprint = contract.get('geometryFingerprintSha256')
+    if not isinstance(fingerprint, str) or re.fullmatch(r'[0-9a-f]{64}', fingerprint) is None:
+        raise SystemExit('Invalid minimap geometry fingerprint; refusing incompatible metadata.')
+    metadata['navigationBridge'] = {
+        'version': 1,
+        'size': size,
+        'address': address,
+        'magicA': 0x414E4354,
+        'magicB': 0x31303056,
+    }
+    metadata['minimap'] = {
+        'schemaVersion': contract['schemaVersion'],
+        'geometryFingerprintSha256': fingerprint,
+    }
 (rom.parent / 'build.json').write_text(json.dumps(metadata, indent=2) + '\n')
 print(f"ROM ready: {rom} ({len(data):,} bytes)")
 PY
