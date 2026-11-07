@@ -2,15 +2,11 @@ import './style.css';
 import './confirm.css';
 import './controls.css';
 import './immersive.css';
-import './intro.css';
 import './minimap.css';
-import oldStationArt from './assets/landmarks/old-station.png';
-import theaterArt from './assets/landmarks/theater.png';
-import miyaharaArt from './assets/landmarks/miyahara.png';
-import parkArt from './assets/landmarks/taichung-park.png';
 import type { mGBAEmulator } from '@thenick775/mgba-wasm';
 import { createCityGuide } from './city-guide';
-import { getLocale, initializeLocalization, languageControl, onLocaleChange, setLocale, t } from './i18n';
+import { initializeLocalization, languageControl, onLocaleChange, setLocale, t } from './i18n';
+import { createLanding } from './landing';
 import { NativeLanguageBridge, parseLanguageBridgeMetadata } from './language-bridge';
 import type { LanguageBridgeState } from './language-bridge';
 import { createGameControls } from './game-controls';
@@ -30,12 +26,15 @@ type LanguageRuntime = mGBAEmulator & { getTaichungHeapU8?: () => Uint8Array };
 
 const ROM_URL = '/roms/taichung-firered.gba';
 const SAVE_PATH = '/data/saves/taichung-firered.sav';
+const SAVE_DATABASE = '/data';
+const SAVE_STORE = 'FILE_DATA';
 const SAVE_STAMP = 'taichung-quest-save-time';
 const CARTRIDGE_BOOT_PARAM = 'cartridge-boot';
 const cartridgeBootIntent = new URL(window.location.href).searchParams.get(CARTRIDGE_BOOT_PARAM);
 let bootFromCartridge = cartridgeBootIntent === '1' || cartridgeBootIntent === 'import';
 let savedAt: string | null = null;
 try { savedAt = localStorage.getItem(SAVE_STAMP); } catch { /* Storage can be disabled in private browser sessions. */ }
+let hasSave = savedAt !== null;
 
 const icons = {
   play: '<path d="m9 5 11 7-11 7z"/>',
@@ -51,16 +50,8 @@ const icons = {
 const icon = (name: keyof typeof icons) => `<svg viewBox="0 0 24 24" aria-hidden="true">${icons[name]}</svg>`;
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
-  <header class="site-header">
-    <a class="wordmark" href="/" aria-label="Taichung Quest home"><span class="brand-mark" aria-hidden="true">✳</span> TAICHUNG QUEST</a>
-    <span class="header-note"><span class="live-dot"></span><span data-i18n="A TAICHUNG ADVENTURE">A TAICHUNG ADVENTURE</span></span>
-    <div class="header-settings">${languageControl('interface-language')}<span class="edition"><span data-i18n="FIELD EDITION">FIELD EDITION</span> <b>001</b></span></div>
-  </header>
-  <main>
-    <section class="intro" aria-labelledby="page-title">
-      <div><p class="eyebrow" data-i18n="POKÉMON × TAICHUNG">POKÉMON × TAICHUNG</p><h1 id="page-title" data-i18n="Explore Taichung.&#10;The Pokémon way.">Explore Taichung.<br>The Pokémon way.</h1></div>
-      <div class="intro-copy"><p><span data-i18n="Step into a Pokémon world built around Taichung. Explore real landmarks reimagined as gyms, battle their leaders, and collect badges across the city.">Step into a Pokémon world built around Taichung. Explore real landmarks reimagined as gyms, battle their leaders, and collect badges across the city.</span> <a class="landmark-intro-link" href="#landmark-art" data-i18n="Discover the landmarks.">Discover the landmarks.</a></p><button class="start-button" id="landing-play-button">${icon('play')} <span>Play Pokémon × Taichung</span></button></div>
-    </section>
+  <div id="landing"></div>
+  <div class="player-view">
     <div class="adventure-layout">
       <section class="game-column" aria-label="Playable game">
         <div class="console" id="console">
@@ -87,44 +78,27 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
           <p id="player-notice" class="player-notice" role="alert" hidden></p>
           <div class="handheld-details" aria-hidden="true"><span class="handheld-brand">TAICHUNG QUEST<b>GAME BOY</b></span><div class="speaker"><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
         </div>
-        <div class="game-navigation"><span><span data-i18n="Get to know the city.">Get to know the city.</span><small data-i18n="Real places behind the adventure.">Real places behind the adventure.</small></span><button id="city-map-button" class="city-map-button" aria-haspopup="dialog" aria-controls="city-guide">${icon('map')} <span data-i18n="City Map">City Map</span> <span class="city-map-chinese" lang="zh-Hant">城市地圖</span></button></div>
         <div class="game-toolbar" aria-label="Emulator controls">
           <div class="toolbar-group"><button id="pause-button" class="tool-button" disabled>${icon('pause')} <span>Pause</span></button><button id="sound-button" class="tool-button" disabled aria-pressed="false">${icon('sound')} <span>Sound on</span></button></div>
           <div class="toolbar-group"><button id="save-button" class="tool-button" disabled>${icon('save')} <span data-i18n="Save spot">Save spot</span></button><button id="restart-button" class="tool-button" disabled aria-label="Restart game">${icon('restart')} <span data-i18n="Restart">Restart</span></button></div>
         </div>
-        <p class="feedback" id="feedback" role="status" aria-live="polite">${savedAt ? 'Your last saved spot is waiting in this browser.' : 'Begin at the old station. Get to know Taichung, one landmark at a time.'}</p>
-        <p class="prototype-scope" data-i18n="Three districts and ten visitor halls are open. The Station and Taichung Park gyms have playable battles; the other eight challenges are still being built.">Three districts and ten visitor halls are open. The Station and Taichung Park gyms have playable battles; the other eight challenges are still being built.</p>
-        <section class="landmark-gallery" id="landmark-art" aria-labelledby="landmark-art-title" tabindex="-1">
-          <div class="landmark-art-heading"><h2 id="landmark-art-title" data-i18n="A little Taichung, in pixels.">A little Taichung, in pixels.</h2><span data-i18n="LANDMARK ART">LANDMARK ART</span></div>
-          <div class="landmark-art-grid">
-            <figure class="landmark-postcard station-postcard"><div class="landmark-image"><img src="${oldStationArt}" width="192" height="128" alt="" loading="lazy"></div><figcaption><span class="postcard-number" aria-hidden="true">01</span><span data-i18n="Old Taichung Station">Old Taichung Station</span></figcaption></figure>
-            <figure class="landmark-postcard theater-postcard"><div class="landmark-image"><img src="${theaterArt}" width="256" height="160" alt="" loading="lazy"></div><figcaption><span class="postcard-number" aria-hidden="true">02</span><span data-i18n="National Taichung Theater">National Taichung Theater</span></figcaption></figure>
-            <figure class="landmark-postcard miyahara-postcard"><div class="landmark-image"><img src="${miyaharaArt}" width="160" height="128" alt="" loading="lazy"></div><figcaption><span class="postcard-number" aria-hidden="true">03</span><span data-i18n="Miyahara">Miyahara</span></figcaption></figure>
-            <figure class="landmark-postcard park-postcard"><div class="landmark-image"><img src="${parkArt}" width="192" height="128" alt="" loading="lazy"></div><figcaption><span class="postcard-number" aria-hidden="true">04</span><span data-i18n="Taichung Park">Taichung Park</span></figcaption></figure>
-          </div>
-        </section>
-      </section>
-      <aside class="field-notes" aria-label="Adventure guide">
-        <div class="notebook-heading"><span class="eyebrow" data-i18n="A FEW FIELD NOTES">A FEW FIELD NOTES</span><span class="note-number">NO. 01</span></div>
-        <div class="destination"><span class="destination-caption" data-i18n="FIRST STOP">FIRST STOP</span><h2><span class="district-name" data-i18n="Old Taichung Station">Old Taichung Station</span><span class="district-chinese" lang="zh-Hant">舊臺中車站</span></h2><p data-i18n="Start beside the old station. Three connected city districts are ready to explore.">Start beside the old station. Three connected city districts are ready to explore.</p><div class="stamp" aria-hidden="true">TAICHUNG<br><b>24° N</b><br>TAIWAN</div></div>
-        <div class="note-section"><span class="note-index">01</span><div><h3 data-i18n="Follow your curiosity.">Follow your curiosity.</h3><p data-i18n="Meet the landmark hosts. Challenge Jun for your first City Pass stamp.">Meet the landmark hosts. Challenge Jun for your first City Pass stamp.</p></div></div>
-        <div class="note-section"><span class="note-index">02</span><div><h3 data-i18n="Say hello.">Say hello.</h3><p data-i18n="Walk up to someone and press F, or tap Interact / Confirm.">Walk up to someone and press F, or tap Interact / Confirm.</p></div></div>
-        <div class="keyboard-guide"><h3 data-i18n="Make yourself at home.">Make yourself at home.</h3><div class="key-row"><span><kbd>↑</kbd><kbd>←</kbd><kbd>↓</kbd><kbd>→</kbd></span><span data-i18n="Wander around">Wander around</span></div><div class="key-row"><span><kbd>F</kbd> <small>/</small> <kbd>D</kbd></span><span data-i18n="Interact / back">Interact / back</span></div><div class="key-row"><span><kbd>M</kbd> <small>/</small> <kbd>ENTER</kbd></span><span data-i18n="Open the menu">Open the menu</span></div><p data-i18n="Touch controls work too. A little old-school, wherever you are.">Touch controls work too. A little old-school, wherever you are.</p><p data-i18n="Language covers custom Taichung content. Original FireRed screens remain English.">Language covers custom Taichung content. Original FireRed screens remain English.</p></div>
         <details class="save-details"><summary><span data-i18n="Your saved adventures">Your saved adventures</span><span class="details-plus">+</span></summary><p data-i18n="Your spot is saved here every 20 seconds. Keep an extra backup using a game save from the in-game menu.">Your spot is saved here every 20 seconds. Keep an extra backup using a game save from the in-game menu.</p><div class="save-actions"><button id="export-button" disabled><span data-i18n="Download save">Download save</span> ${icon('arrow')}</button><button id="import-button" disabled><span data-i18n="Import save">Import save</span> ${icon('arrow')}</button></div><input type="file" id="save-file" accept=".sav" hidden></details>
-        <div class="notebook-footer"><span class="tiny-sun" aria-hidden="true">✳</span><span data-i18n="MADE FOR A SUNNY AFTERNOON.">MADE FOR A SUNNY AFTERNOON.</span></div>
-      </aside>
+      </section>
     </div>
-  </main>
-  <footer class="site-footer"><span>TAICHUNG QUEST <span class="footer-dot">·</span> <span data-i18n="AN EXPERIMENT IN LOCAL ADVENTURE">AN EXPERIMENT IN LOCAL ADVENTURE</span></span><span><span data-i18n="POWERED BY">POWERED BY</span> <a href="https://github.com/thenick775/mgba/tree/feature/wasm" target="_blank" rel="noreferrer">mGBA</a> <span class="footer-dot">/</span> <a href="/emulator/SOURCE.txt" target="_blank" data-i18n="RUNTIME LICENSE">RUNTIME LICENSE</a> <span class="footer-dot">/</span> <a href="/licenses/NotoSansTC-OFL.txt" target="_blank" rel="noopener" data-i18n="FONT LICENSE">FONT LICENSE</a></span></footer>
+  </div>
 `;
 
 function el<T extends HTMLElement = HTMLElement>(id: string): T {
   return document.getElementById(id) as T;
 }
 
+const landing = createLanding(el('landing'), {
+  startNewGame,
+  continueGame: openGame,
+  getState: () => ({ running, starting, immersive: gameView.immersive, hasSave }),
+});
 const canvas = el<HTMLCanvasElement>('game-canvas');
 const playButton = el<HTMLButtonElement>('play-button');
-const landingPlayButton = el<HTMLButtonElement>('landing-play-button');
 const feedback = el('feedback');
 const status = el('game-status');
 let emulator: mGBAEmulator | undefined;
@@ -144,7 +118,7 @@ let saveInterval: ReturnType<typeof setInterval> | undefined;
 let filesystemWrites: Promise<void> = Promise.resolve();
 let gameInput: ReturnType<typeof createGameControls> | undefined;
 let statusText = 'READY WHEN YOU ARE';
-let feedbackText = cartridgeBootIntent === 'import' ? 'Save imported. Start exploring, then choose Continue from the game’s title screen.' : bootFromCartridge ? 'Cartridge restarted. Start exploring to continue your in-game save or begin a new adventure.' : savedAt ? 'Your last saved spot is waiting in this browser.' : 'Begin at the old station. Get to know Taichung, one landmark at a time.';
+let feedbackText = cartridgeBootIntent === 'import' ? 'Save imported. Choose Continue saved game, then Continue on the title screen.' : bootFromCartridge ? 'Cartridge restarted. Continue your saved game or start a new one.' : savedAt ? 'Your last saved spot is waiting in this browser.' : '';
 
 function message(text: string, error = false) {
   feedbackText = text;
@@ -169,7 +143,7 @@ function refreshLanguageConnection() {
     element.dataset.languagePhase = phase ?? 'interface';
     element.textContent = t(hint);
   });
-  document.querySelectorAll<HTMLSelectElement>('[data-locale-select]').forEach((select) => { select.disabled = restarting || phase === 'pending'; });
+  document.querySelectorAll<HTMLSelectElement | HTMLButtonElement>('[data-locale-select], [data-locale-toggle]').forEach((control) => { control.disabled = restarting || phase === 'pending'; });
 }
 
 async function connectNativeLanguage(romSha256: string, romBytes: number) {
@@ -277,7 +251,7 @@ function confirmAction(title: string, explanation: string, action: string): Prom
   proceed.textContent = t(action);
   actions.append(cancel, proceed);
   dialog.append(heading, body, actions);
-  el('console').append(dialog);
+  (gameView.immersive ? el('console') : document.body).append(dialog);
   return new Promise((resolve) => {
     dialog.addEventListener('close', () => {
       const accepted = dialog.returnValue === 'confirm';
@@ -357,7 +331,7 @@ async function startGame() {
   if (starting || running) return;
   starting = true;
   playButton.disabled = true;
-  landingPlayButton.disabled = true;
+  landing.refresh();
   playButton.querySelector('span')!.textContent = t('Packing your bag…');
   setStatus('LOADING YOUR ADVENTURE');
   message('Getting your adventure ready…');
@@ -436,7 +410,7 @@ async function startGame() {
     canvas.classList.add('playing');
     document.querySelectorAll<HTMLButtonElement>('#pause-button, #sound-button, #save-button, #restart-button, #export-button, #import-button').forEach((button) => button.disabled = false);
     setStatus('OUT EXPLORING');
-    message(freshCartridgeBoot ? cartridgeBootIntent === 'import' ? 'Save imported. Choose Continue from the game’s title screen.' : 'Cartridge restarted. Continue your in-game save or begin a new adventure.' : emulator.getAutoSaveState() ? 'Welcome back. Your last saved spot is waiting for you.' : 'New adventures begin at the old station. Use City Map to discover ten landmarks.');
+    message(freshCartridgeBoot && cartridgeBootIntent ? cartridgeBootIntent === 'import' ? 'Save imported. Choose Continue from the game’s title screen.' : 'Cartridge restarted. Continue your in-game save or begin a new adventure.' : !freshCartridgeBoot && emulator.getAutoSaveState() ? 'Welcome back. Your last saved spot is waiting for you.' : 'New adventures begin at the old station. Use City Map to discover ten landmarks.');
     canvas.focus({ preventScroll: true });
     // The Play button may have scrolled the intro into view. Collapsing that
     // intro must not leave a phone looking below its newly positioned game.
@@ -452,7 +426,6 @@ async function startGame() {
   } finally {
     starting = false;
     playButton.disabled = false;
-    landingPlayButton.disabled = false;
     refreshRuntimeLabels();
   }
 }
@@ -489,7 +462,7 @@ el('console').append(el('city-guide'));
 el('options-toolbar-slot').append(document.querySelector('.game-toolbar')!);
 el('options-save-slot').append(document.querySelector('.save-details')!);
 const gameView = createGameView({
-  console: el('console'), dialog: el<HTMLDialogElement>('game-options'), returnTarget: landingPlayButton,
+  console: el('console'), dialog: el<HTMLDialogElement>('game-options'), returnTarget: el('hero-play'),
   getState: () => ({ running, paused }), pause: () => setPaused(true), resume: () => setPaused(false),
   release: releaseInputs, refresh: () => { gameInput?.refresh(); refreshRuntimeLabels(); },
 });
@@ -501,7 +474,7 @@ const minimap = createMinimap({
   screen: el('screen'), toggle: el<HTMLSelectElement>('minimap-visibility'), hint: el('minimap-hint'), geometry: minimapGeometry,
   openGuide: () => cityGuide.open(el('live-minimap')),
 });
-for (const id of ['city-map-button', 'touch-city-map-button']) el(id).addEventListener('click', () => cityGuide.open(el(id)));
+el('touch-city-map-button').addEventListener('click', () => cityGuide.open(el('touch-city-map-button')));
 
 function openGame() {
   if (starting || restarting) return;
@@ -509,8 +482,20 @@ function openGame() {
   if (running) { setPaused(false); focusGame(); }
   else void startGame();
 }
+
+// A new game boots to the title screen, where the native menu offers New Game.
+// The in-game save survives until the player saves over it; only an emulator
+// snapshot is discarded, and that needs a confirmation.
+async function startNewGame() {
+  if (starting || restarting) return;
+  if (running) { void restartCartridge(); return; }
+  if (savedAt && !bootFromCartridge && !(await confirmAction('Start a new game?', 'The cartridge restarts at its title screen, where you can choose New Game. Your in-game save is kept until you save over it; progress since that save will be lost.', 'Restart'))) return;
+  bootFromCartridge = true;
+  savedAt = null;
+  try { localStorage.removeItem(SAVE_STAMP); } catch { /* The snapshot itself is stored separately in IndexedDB. */ }
+  openGame();
+}
 playButton.addEventListener('click', openGame);
-landingPlayButton.addEventListener('click', openGame);
 el('resume-button').addEventListener('click', openGame);
 el('exit-fullscreen-button').addEventListener('click', () => gameView.leave());
 el('game-options-button').addEventListener('click', () => gameView.openOptions(el('game-options-button')));
@@ -544,7 +529,7 @@ async function restartCartridge(importedSave?: Uint8Array) {
   // the running core after a native save in the pinned emulator distribution.
   gameInput?.forgetAll();
   if (saveInterval) { clearInterval(saveInterval); saveInterval = undefined; }
-  document.querySelectorAll<HTMLButtonElement>('#pause-button, #resume-button, #sound-button, #save-button, #restart-button, #import-button, #city-map-button, #touch-city-map-button').forEach((button) => button.disabled = true);
+  document.querySelectorAll<HTMLButtonElement>('#pause-button, #resume-button, #sound-button, #save-button, #restart-button, #import-button, #touch-city-map-button').forEach((button) => button.disabled = true);
   setStatus('RESTARTING CARTRIDGE');
   message(importedSave ? 'Importing your save and restarting the cartridge…' : 'Keeping your in-game save and restarting the cartridge…');
   let cancelSaveWrite = false;
@@ -585,7 +570,7 @@ async function restartCartridge(importedSave?: Uint8Array) {
     }
     restarting = false;
     refreshLanguageConnection();
-    document.querySelectorAll<HTMLButtonElement>('#pause-button, #resume-button, #sound-button, #save-button, #restart-button, #import-button, #city-map-button, #touch-city-map-button').forEach((button) => button.disabled = false);
+    document.querySelectorAll<HTMLButtonElement>('#pause-button, #resume-button, #sound-button, #save-button, #restart-button, #import-button, #touch-city-map-button').forEach((button) => button.disabled = false);
     paused = wasPaused;
     gameInput?.refresh();
     refreshNavigation();
@@ -648,10 +633,10 @@ function refreshRuntimeLabels() {
   setStatus(statusText);
   message(feedbackText, feedback.classList.contains('error'));
   playButton.querySelector('span')!.textContent = t(starting ? 'Packing your bag…' : 'Start exploring');
-  landingPlayButton.querySelector('span')!.textContent = t(starting ? 'Packing your bag…' : running ? 'Return to game' : 'Play Pokémon × Taichung');
+  landing.refresh();
   el('pause-button').innerHTML = `${icon(paused ? 'play' : 'pause')} <span>${t(paused ? 'Resume' : 'Pause')}</span>`;
   el('sound-button').innerHTML = `${icon(muted ? 'mute' : 'sound')} <span>${t(muted ? 'Sound off' : 'Sound on')}</span>`;
-  document.title = getLocale() === 'zh-Hant' ? 'Taichung Quest · 台中小冒險' : 'Taichung Quest · A little adventure';
+  document.title = t('Taichung, shrunk to fit a Game Boy.');
   refreshNavigation();
 }
 onLocaleChange(refreshRuntimeLabels);
@@ -664,6 +649,29 @@ onLocaleChange(({ locale, source }) => {
 });
 initializeLocalization();
 refreshRuntimeLabels();
+
+// The emulator only loads on Play, so read its IndexedDB store directly to see
+// whether this browser already holds an in-game save.
+async function hasStoredSave() {
+  const databases = await indexedDB.databases?.();
+  if (!databases?.some(({ name }) => name === SAVE_DATABASE)) return false;
+  return new Promise<boolean>((resolve) => {
+    const open = indexedDB.open(SAVE_DATABASE);
+    open.onerror = () => resolve(false);
+    open.onsuccess = () => {
+      const database = open.result;
+      if (!database.objectStoreNames.contains(SAVE_STORE)) { database.close(); resolve(false); return; }
+      const count = database.transaction(SAVE_STORE).objectStore(SAVE_STORE).count(SAVE_PATH);
+      count.onerror = () => { database.close(); resolve(false); };
+      count.onsuccess = () => { database.close(); resolve(count.result > 0); };
+    };
+  });
+}
+if (!hasSave) void hasStoredSave().then((found) => { if (found) { hasSave = true; landing.refresh(); } }).catch(() => undefined);
+
+// A cartridge restart reloads the page; bring the player back to the Play section.
+const initialTarget = cartridgeBootIntent ? 'play' : window.location.hash.slice(1);
+if (initialTarget) document.getElementById(initialTarget)?.scrollIntoView({ behavior: 'instant' });
 
 // A compact, read-only hook for local game verification; no gameplay state is sent anywhere.
 Object.assign(window, { taichungQuest: {
