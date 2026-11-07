@@ -39,7 +39,10 @@ avoid double compression: [Response API](https://developers.cloudflare.com/worke
 The bundle is checked against a conservative 32 MiB local cap, below the
 current platform limit: [Worker limits](https://developers.cloudflare.com/workers/platform/limits/).
 
-Live response verification must use ordinary authorized browser sign-in or
-explicitly authorized service access. Automatic approval review rejected Main's
-service-credential diagnostic pending specific user authorization; do not
-silently retry it via another process or chat.
+Live response verification uses ordinary authorized browser sign-in or
+explicitly authorized service access. After an initial automatic approval
+rejection, the user explicitly allowed read-only service-token checks. Main
+verified the deployed headers and full ROM/Wasm hashes through that authorized
+path, without printing/persisting the token or following redirects. The user
+then confirmed successful game startup on iPhone Chrome. This does not imply
+authorization to rotate credentials, widen access or use the token elsewhere.
