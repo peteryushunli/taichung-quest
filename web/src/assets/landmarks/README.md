@@ -1,6 +1,6 @@
 # Introduction landmark artwork
 
-These PNGs are unchanged copies of the mapping owner's existing, user-approved architectural directions, converted to native pixel artwork. Source checkout: `.worktrees/game-mapping`, relative to the project root. The introduction labels them **landmark art**; they are not screenshots or a promise that all four facades are in the published ROM.
+These PNGs are unchanged copies of the mapping owner's existing, user-approved architectural directions, converted to native pixel artwork. Source checkout: `.worktrees/game-mapping`, relative to the project root. The gallery below the player labels them **landmark art**; they are not screenshots or a promise that all four facades are in the published ROM.
 
 | Web asset | Source under `data/taichung/landmarks/` | Pixels | Native status at copy |
 | --- | --- | --- | --- |

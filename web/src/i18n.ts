@@ -11,6 +11,7 @@ const zh: Record<string, string> = {
   'POKÉMON × TAICHUNG': '寶可夢 × 台中',
   'A little Taichung, in pixels.': '一座像素台中，等你探索。',
   'LANDMARK ART': '地標美術',
+  'Preview the landmark art.': '看看地標美術。',
   'National Taichung Theater': '臺中國家歌劇院',
   'Miyahara': '宮原眼科',
   'Taichung Park': '臺中公園',
