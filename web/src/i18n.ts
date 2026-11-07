@@ -38,7 +38,7 @@ const zh: Record<string, string> = {
   'Taichung Park': '臺中公園',
   'Explore Taichung.\nThe Pokémon way.': '走進寶可夢世界，\n探索台中。',
   'Step into a Pokémon world built around Taichung. Explore real landmarks reimagined as gyms, battle their leaders, and collect badges across the city.': '走進以台中為舞台的寶可夢世界。探索化身道館的真實地標、挑戰館主，收集徽章，展開你的城市冒險。',
-  'Three districts and ten visitor halls are open. The Station and Taichung Park gyms have playable battles; the other eight challenges are still being built.': '目前可探索三個街區與十個地標大廳。車站與臺中公園道館已可對戰，其餘八個挑戰仍在製作中。',
+  'Three districts and ten visitor halls are open. The Station, Taichung Park and Miyahara gyms have playable battles; the other seven challenges are still being built.': '目前可探索三個街區與十個地標大廳。車站、臺中公園與宮原眼科道館已可對戰，其餘七個挑戰仍在製作中。',
   'Play Pokémon × Taichung': '開始寶可夢台中冒險',
   'Pokémon ×\nTaichung.': '寶可夢 ×\n台中。',
   'Choose your Pokémon. Explore Taichung.': '選擇你的寶可夢，探索台中。',

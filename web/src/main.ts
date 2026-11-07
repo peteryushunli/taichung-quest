@@ -95,7 +95,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
           <div class="toolbar-group"><button id="save-button" class="tool-button" disabled>${icon('save')} <span data-i18n="Save spot">Save spot</span></button><button id="restart-button" class="tool-button" disabled aria-label="Restart game">${icon('restart')} <span data-i18n="Restart">Restart</span></button></div>
         </div>
         <p class="feedback" id="feedback" role="status" aria-live="polite">${savedAt ? 'Your last saved spot is waiting in this browser.' : 'Begin at the old station. Get to know Taichung, one landmark at a time.'}</p>
-        <p class="prototype-scope" data-i18n="Three districts and ten visitor halls are open. The Station and Taichung Park gyms have playable battles; the other eight challenges are still being built.">Three districts and ten visitor halls are open. The Station and Taichung Park gyms have playable battles; the other eight challenges are still being built.</p>
+        <p class="prototype-scope" data-i18n="Three districts and ten visitor halls are open. The Station, Taichung Park and Miyahara gyms have playable battles; the other seven challenges are still being built.">Three districts and ten visitor halls are open. The Station, Taichung Park and Miyahara gyms have playable battles; the other seven challenges are still being built.</p>
         <section class="landmark-gallery" id="landmark-art" aria-labelledby="landmark-art-title" tabindex="-1">
           <div class="landmark-art-heading"><h2 id="landmark-art-title" data-i18n="A little Taichung, in pixels.">A little Taichung, in pixels.</h2><span data-i18n="LANDMARK ART">LANDMARK ART</span></div>
           <div class="landmark-art-grid">
