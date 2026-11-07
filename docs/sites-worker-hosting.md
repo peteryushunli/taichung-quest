@@ -1,5 +1,7 @@
 # Explicit emulator response headers on Sites
 
+> Current hosting policy: [Vercel](https://taichung-quest.vercel.app) is the sole production frontend for future releases and client QA. Follow [the Vercel release workflow](vercel-readiness.md). Legacy GPT Site deployments and commands below are historical records; do not publish new versions there. The legacy host was last observed active, and shutdown has not yet been verified. Preserve its source archives and `.openai/hosting.json` identity.
+
 The version-2 static Site served the app and Wasm without COOP/COEP in
 Interface's authenticated response checks. Its copied `_headers` file was not
 applied by Sites static dispatch. That prevents the threaded emulator's

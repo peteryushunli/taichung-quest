@@ -1,6 +1,6 @@
 # Vercel deployment and origin verification
 
-This document began as a local configuration handoff. Main has since created and linked the existing-account `taichung-quest` project and deployed and verified the Greenway update at https://taichung-quest.vercel.app, after a separate protected preview and native/client acceptance. The original GPT Site remains live. See `docs/next-build-integration.md` for release identities and verification limits.
+This document began as a local configuration handoff. Main has since created and linked the existing-account `taichung-quest` project and deployed and verified the Greenway update at https://taichung-quest.vercel.app, after a separate protected preview and native/client acceptance. Vercel is the sole production frontend for future releases and client QA, with Main as the sole publisher. The legacy GPT Site was last observed active; retirement is requested but shutdown is not yet verified. No further GPT Site publications are planned. See `docs/next-build-integration.md` for release identities and verification limits.
 
 ## Project configuration
 
@@ -74,13 +74,13 @@ Local packaging was refreshed against Main's intermediate Theater/cast pair: nat
 
 Actual Vercel-origin Play, native-save import/Continue, language/navigation bridges, byte-identical save export and fresh-cartridge reload passed on the Theater/Park build. The final Greenway cartridge separately passed native migration and production-client local Chrome checks; its promoted production assets and headers match exactly. Full release identities and evidence are in `docs/next-build-integration.md`. No physical iPhone/Android retest is claimed.
 
-Saves belong to each browser/origin. Download/import can move a cartridge save from the existing host to Vercel; browser snapshots do not automatically migrate. Keep the existing preview/release available during that transition.
+Saves belong to each browser/origin. Download/import can move a cartridge save from the existing host to Vercel; browser snapshots do not automatically migrate. Export remaining old-origin progress while that player is accessible. New releases do not require dual-host publication.
 
 ## Moving an existing adventure to Vercel
 
-1. On the existing Site, use the game's own menu to Save. Then open Game options → Your saved adventures → Download save and retain the `.sav` file.
+1. If your progress is on the [legacy GPT Site](https://taichung-quest-hackday.helpfulwren.chatgpt.site) and it remains accessible, use the game's own menu to Save. Then open Game options → Your saved adventures → Download save and retain the `.sav` file.
 2. Open [the Vercel player](https://taichung-quest.vercel.app) in the phone/browser you intend to use. If that origin already has progress, export its native save before replacing it.
 3. Start the player, then use Game options → Your saved adventures → Import save. Choose the copied `.sav` file and confirm the cartridge restart.
 4. Start exploring and choose native Continue. Check the party, badges and saved location before continuing the adventure.
 
-Browser Save spot snapshots remain tied to their original browser/origin. Native `.sav` export/import is the transfer path; the existing Site stays available as fallback.
+Browser Save spot snapshots remain tied to their original browser/origin. Native `.sav` export/import is the transfer path; use Vercel for subsequent play. Legacy shutdown is tracked separately.

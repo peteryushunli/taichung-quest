@@ -2,7 +2,7 @@
 
 Public source: <https://github.com/peteryushunli/taichung-quest>
 
-Private playable preview: <https://taichung-quest-hackday.helpfulwren.chatgpt.site> (ChatGPT sign-in required).
+Play: <https://taichung-quest.vercel.app> — the canonical production frontend.
 
 A Pokémon FireRed modification set in a compressed, fictionalized Taichung. A real Game Boy Advance ROM runs in the browser through mGBA WebAssembly.
 
@@ -37,7 +37,7 @@ Open the local address printed by Vite. Start the player with the page's Play bu
 
 For game compiler prerequisites and baseline verification, see [docs/game-build.md](docs/game-build.md). After editing the vendor game source, run `bash scripts/build-game.sh` and reload the browser player. Export the finished source changes with `bash scripts/export-game-patch.sh`.
 
-For a static/Vercel build, run `bash scripts/build-site.sh` from the root after building the ROM. For the existing private Site, run `node scripts/build-sites-worker.mjs` followed by `node scripts/validate-sites-worker.mjs`; this packages the same files in a Worker that supplies the required response headers. `.openai/hosting.json` retains the existing Site identity. See [Sites hosting](docs/sites-worker-hosting.md) and [deployment verification](docs/deployment.md). Public source excludes generated game images, saves, dependencies, and local tools; the website artifact contains the built game required by the player.
+For production, use the frozen ROM and matching metadata in a clean release checkout, run `node scripts/prepare-vercel.mjs`, then `vercel deploy --prebuilt --target preview`. Verify the preview before promoting it to production. Vercel is the sole target for future releases; see [deployment instructions](docs/vercel-readiness.md). The legacy Sites helpers and `.openai/hosting.json` remain archival records, not release targets. Public source excludes generated game images, saves, dependencies, and local tools; the website artifact contains the built game required by the player.
 
 ## First playable scope
 

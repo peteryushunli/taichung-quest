@@ -1,5 +1,7 @@
 # Private playable preview
 
+> Current hosting policy: [Vercel](https://taichung-quest.vercel.app) is the sole production frontend for future releases and client QA. Follow [the Vercel release workflow](vercel-readiness.md). Legacy GPT Site deployments and commands below are historical records; do not publish new versions there. The legacy host was last observed active, and shutdown has not yet been verified. Preserve its source archives and `.openai/hosting.json` identity.
+
 URL: https://taichung-quest-hackday.helpfulwren.chatgpt.site
 
 The existing owner-private Site published successfully on 7 November 2026.

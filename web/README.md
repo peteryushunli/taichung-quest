@@ -4,6 +4,8 @@ A Vite + TypeScript frontend for the source-built Taichung FireRed cartridge. Th
 
 The introduction sells exploring Taichung in the Pokémon world: real landmarks as gyms, leader battles and badges. An inline link leads to a gallery below the player with four existing pixel landmark assets: Old Station, National Taichung Theater, Miyahara and Taichung Park. Current build availability is explained below the player. The gallery uses four columns on wide desktops and two on mobile or narrower player columns, with English/Traditional Chinese captions. Asset provenance and native integration status are recorded in `src/assets/landmarks/README.md`; the gallery is labeled landmark art rather than gameplay screenshots.
 
+The canonical player and release/client-QA origin is [Taichung Quest on Vercel](https://taichung-quest.vercel.app), with Main as the sole production publisher. Move old-origin progress using [native save export/import](../docs/vercel-readiness.md#moving-an-existing-adventure-to-vercel); browser snapshots remain tied to their original origin.
+
 ## Run
 
 ```sh

@@ -1,5 +1,7 @@
 # Next build integration — 7 November 2026
 
+> Current hosting policy: [Vercel](https://taichung-quest.vercel.app) is the sole production frontend for future releases and client QA. Follow [the Vercel release workflow](vercel-readiness.md). Legacy GPT Site deployments and commands below are historical records; do not publish new versions there. The legacy host was last observed active, and shutdown has not yet been verified. Preserve its source archives and `.openai/hosting.json` identity.
+
 The Greenway release is published on both https://taichung-quest.vercel.app and the existing private Site. It adds Science Museum, Shen Ji and Fine Arts to the accepted Theater/Park build. Station and Park remain the two playable battles. Earlier presentation and Theater/Park deployments remain available as fallbacks.
 
 ## Integrated source
