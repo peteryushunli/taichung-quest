@@ -1,6 +1,6 @@
 .live-minimap { position: absolute; z-index: 3; top: 6px; left: 6px; width: clamp(64px, 22%, 108px); padding: 3px; border: 1px solid #abc1a6; border-radius: 5px; background: #f2f1ddef; color: #254a39; box-shadow: 0 2px 5px #18372555; cursor: pointer; }
 .live-minimap[hidden] { display: none; }
-.live-minimap svg { display: block; width: 100%; aspect-ratio: 1; overflow: visible; }
+.live-minimap svg { display: block; width: 100%; height: auto; aspect-ratio: 1; overflow: visible; }
 .live-minimap .minimap-ground { fill: #e4e8d0; }
 .live-minimap [data-district] { fill: #b6c9a6; stroke: #e4e8d0; stroke-width: 2; }
 .live-minimap [data-district].current { fill: #82ad89; stroke: #4b805d; stroke-width: 1.5; }

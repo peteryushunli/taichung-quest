@@ -41,3 +41,16 @@ Verification:
 - The final normal build removes the development fixtures from the production output.
 
 Review images (ignored): `artifacts/interface-qa/minimap-name-after-en-320.jpg`, `minimap-indoor-after-en-320.jpg` and `minimap-indoor-after-en-390.jpg`.
+
+## Shared button-icon sizing regression
+
+Actual Theater client verification found a CSS integration defect absent from the earlier isolated fixture: the shared `button svg { height: 18px }` rule constrained the minimap drawing to 66.4×18px in the 390px game view. Its own width and aspect ratio did not override that explicit height.
+
+The minimap SVG now explicitly uses `height: auto`, restoring its intended square drawing at the existing width. The browser fixture imports the real shared stylesheet and checks that the map stays square, rather than testing the HUD in isolation from the app's button rules.
+
+- Real native Theater field at 390×844: drawing 66.4×66.4px; outer HUD 74.4×88.8px. Previously the outer HUD was only 40.4px high because the drawing was constrained.
+- Real native Theater field and hall at 320×568: drawing 56×56px, outer HUD 64×78.4px, footer fits its 56px content width, and no horizontal page overflow. The indoor marker remains at the authored Theater entrance and the Chinese indoor badge is visible.
+- All 12 browser fixture checks pass at both portrait sizes with the shared stylesheet, including ten distinct names in both languages and unchanged footprint when entering a hall. Production TypeScript/Vite build passes.
+- Native location parsing, ROM binding, controls and readiness statuses are unchanged. A final normal build removes the fixtures.
+
+Actual-game review images: `artifacts/interface-qa/theater-cast-square-hud.jpg` and `theater-cast-square-hud-indoor-320.jpg`. These are desktop browser viewport checks, not physical-phone tests.

@@ -64,6 +64,31 @@ Native save evidence (ignored):
 - `artifacts/interface-qa/minimap-*-live-evidence.json`: DOM HUD/label observations per candidate.
 - `artifacts/interface-qa/questlog-repaired-replay.jpg`, `minimap-final-station-indoors.jpg`, `minimap-final-station-after-warp.jpg`, `minimap-final-jun-dialogue.jpg`, `minimap-final-native-battle.jpg`.
 
+## Intermediate Theater and cast candidate
+
+Main supplied the frozen `artifacts/theater-cast-candidate/roms` pair for client acceptance while Park battle testing continued. This is not the final release pair. Source is `a9587ae9b4d8988cf89f9c72ecf413d3c6fa7d85`, ROM SHA-256 `38e48bf5110c16910f3f769ef72540e11b16538e0143d1fb18078342e416cb6b`, 16,777,216 bytes. Exact language/navigation addresses remain 33813640/33813676; the bundled geometry fingerprint matches. Final provenance refresh and a new attachment check remain required when Main freezes the Park build, whose addresses may change.
+
+Only the immutable files were copied into the assigned frontend worktree. A copy of the authentic post-install v3 Theater save was imported through the normal UI on a separate local origin (`127.0.0.1:5176`), preserving the presentation origin and source save. No native source/build, canonical artifact, presenter save or hosting changed.
+
+Actual client results:
+
+- Continue and native quest replay restore the installed Theater facade at exterior 43:2, tile 12,48; the compact English footer is “Theater” and the tooltip/ARIA retain “National Taichung Theater.”
+- The native door enters the hall. Walking inside leaves the live marker at its explicit world entrance 12,44 with a separate Indoors badge and D/Back. Leaving returns to Xitun tile 12,45 with native Bike eligibility.
+- Tapping the live HUD pauses and clears location/input. The full guide selects Theater and accurately describes its gym challenge as still in development. Escape restores canvas focus and the same indoor anchor, with exactly one game canvas.
+- Browser options and Back to introduction clear the live location and held inputs. Return resumes the same field without a title replay or new canvas.
+- Native Save migrates the supplied v3/counter7 file to v4/counter8 at tile12,45. The party record is byte-identical; saved wild/sight/gyms/language/starter/tea values are all unchanged. Matching SaveBlock1 sectors 1/2 were checksum-validated; this is not a complete fourteen-sector validator.
+- A second fresh cartridge Continue from the saved v4 checkpoint restores the correct facade and tile12,45. Minimap Off survives the reload and still permits the fresh native Bike label. On is restored afterward.
+- The Chinese compact footer reads 國家歌劇院, with full 臺中國家歌劇院 in tooltip/ARIA. The shared button-icon height defect found in this real view is corrected and verified at 320×568 and 390×844; the fixture now imports shared app CSS and passes 12/12 checks. See `docs/navigation-usability-validation.md` for measured before/after dimensions.
+
+Ignored evidence under `artifacts/interface-qa/`:
+
+- `theater-cast-input-v3.sav`, SHA-256 `78c8b761e800dd8be7cfbf2fb2dc35cf6e710c1af6fd547afb0ce9ab48e4de25`.
+- `theater-cast-saved-v4.sav`, SHA-256 `77e460431506d6d945e88a59a0c1f4802a4e2184e960b8f3ffdb0039ffb0fb4c`.
+- `theater-cast-v3-v4-preservation.json` and `theater-cast-live-evidence.json`.
+- `theater-cast-continued.jpg`, `theater-cast-indoors.jpg`, `theater-cast-returned.jpg`, `theater-cast-guide-en.jpg`, `theater-cast-zh.jpg`, `theater-cast-square-hud.jpg` and `theater-cast-square-hud-indoor-320.jpg`.
+
+Theater battle remains in development. Park readiness, final source-export provenance, final build attachment and physical-phone coverage are not established by this intermediate check.
+
 ## One-minute presenter preload
 
 1. Open the current private release and Play before presenting.

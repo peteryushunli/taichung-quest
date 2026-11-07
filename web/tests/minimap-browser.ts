@@ -1,3 +1,4 @@
+import '../src/style.css';
 import '../src/minimap.css';
 import { createMinimap } from '../src/minimap';
 import { initializeLocalization, languageControl, onLocaleChange, setLocale } from '../src/i18n';
@@ -43,6 +44,10 @@ document.querySelector<HTMLButtonElement>('#run')!.addEventListener('click', () 
     assert(player.getAttribute('transform') === 'translate(110.5 114.5)', 'Incorrect mapped tile center');
     assert(button.querySelectorAll('[data-landmark]').length === 10, 'Expected ten authored anchors');
     assert(button.querySelectorAll('[data-district].current').length === 1, 'Expected one current district');
+  });
+  check('shared button icon styles do not shrink the map drawing', () => {
+    const drawing = button.querySelector('svg')!.getBoundingClientRect();
+    assert(drawing.width >= 56 && Math.abs(drawing.width - drawing.height) < 1, 'Expected a square map at the HUD content width');
   });
   check('menu Off hides immediately and persists for a reconstructed HUD', () => {
     preference('off');
