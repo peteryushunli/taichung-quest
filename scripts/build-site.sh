@@ -9,4 +9,5 @@ if [[ ! -f "$rom" ]]; then
 fi
 
 cd "$project_root/web"
+node scripts/verify-cartridge.mjs
 npm run build -- --outDir ../dist --emptyOutDir

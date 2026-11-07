@@ -1,12 +1,13 @@
 import './style.css';
 import './confirm.css';
+import './controls.css';
 import type { mGBAEmulator } from '@thenick775/mgba-wasm';
 import { createCityGuide } from './city-guide';
 import { getLocale, initializeLocalization, languageControl, onLocaleChange, setLocale, t } from './i18n';
 import { NativeLanguageBridge, parseLanguageBridgeMetadata } from './language-bridge';
 import type { LanguageBridgeState } from './language-bridge';
+import { createGameControls } from './game-controls';
 
-type Button = 'Up' | 'Down' | 'Left' | 'Right' | 'A' | 'B' | 'Start' | 'Select' | 'L' | 'R';
 type RuntimeFactory = (options: { canvas: HTMLCanvasElement }) => Promise<mGBAEmulator>;
 type RuntimeWindow = Window & { taichungCreateEmulator?: RuntimeFactory };
 // These Emscripten exports pause the JavaScript scheduler without entering the
@@ -50,10 +51,11 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
     <div class="adventure-layout">
       <section class="game-column" aria-label="Playable game">
         <div class="console" id="console">
+          <button id="exit-fullscreen-button" class="fullscreen-exit" data-i18n="Exit fullscreen">Exit fullscreen</button>
           <div class="console-top"><span><i class="power-light"></i> TAICHUNG QUEST</span><span>TAICHUNG CITY · 臺中城區</span></div>
           <div class="screen-bezel">
             <div class="screen" id="screen">
-              <canvas id="game-canvas" width="240" height="160" tabindex="0" aria-label="Taichung Quest game screen. Arrow keys to move, Z to interact, X to go back, Enter for menu."></canvas>
+              <canvas id="game-canvas" width="240" height="160" tabindex="0" aria-label="Taichung Quest game screen. Arrow keys move. F interacts or confirms. D goes back. M or Enter opens the menu."></canvas>
               <div class="start-screen" id="start-screen">
                 <div class="pixel-postcard" aria-hidden="true"><div class="pixel-cloud cloud-one"></div><div class="pixel-cloud cloud-two"></div><div class="pixel-sun"></div><div class="postcard-hill"></div><div class="pixel-path"></div><div class="pixel-tree tree-one"></div><div class="pixel-tree tree-two"></div><div class="pixel-tree tree-three"></div><div class="pixel-shop"><span></span></div><div class="pixel-person"></div></div>
                 <div class="start-content"><p class="screen-eyebrow" data-i18n="YOUR NEXT LITTLE ADVENTURE">YOUR NEXT LITTLE ADVENTURE</p><h2 data-i18n="Next stop:&#10;Taichung.">Next stop:<br>Taichung.</h2><button class="start-button" id="play-button">${icon('play')} <span>Start exploring</span></button><p class="start-hint" data-i18n="Begin at the old station. Make the city your own.">Begin at the old station. Make the city your own.</p></div>
@@ -64,8 +66,8 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
           </div>
           <div class="physical-controls" aria-label="Game controls">
             <div class="dpad" aria-label="Movement controls"><span class="dpad-center"></span><button data-gba="Up" class="direction up" aria-label="Move up">▲</button><button data-gba="Left" class="direction left" aria-label="Move left">◀</button><button data-gba="Right" class="direction right" aria-label="Move right">▶</button><button data-gba="Down" class="direction down" aria-label="Move down">▼</button></div>
-            <div class="middle-controls"><div class="small-control-pair"><button data-gba="Select">SELECT</button><button data-gba="Start">START</button></div><span class="console-model">TC—01</span></div>
-            <div class="action-buttons"><button data-gba="B" class="action b" aria-label="B button, back"><b>B</b></button><button data-gba="A" class="action a" aria-label="A button, interact"><b>A</b></button></div>
+            <div class="middle-controls"><div class="small-control-pair"><button data-gba="Start" aria-label="Open game menu. Keyboard M or Enter."><span data-i18n="Menu">Menu</span><small><span class="physical-key-hint">M / Enter · </span>START</small></button><button data-gba="Select" aria-label="Select button"><span data-i18n="Select">Select</span><small>SELECT</small></button><button id="touch-city-map-button" class="touch-map-control" aria-haspopup="dialog" aria-controls="city-guide">${icon('map')}<span data-i18n="City Map">City Map</span></button></div><span class="console-model">TC—01</span></div>
+            <div class="action-buttons"><button data-gba="A" class="action a" aria-label="Interact or confirm. Keyboard F; game A."><span data-i18n="Interact / Confirm">Interact / Confirm</span><small class="physical-key-hint" data-i18n="F key · game A">F key · game A</small><small class="touch-key-hint" aria-hidden="true">A</small></button><button data-gba="B" class="action b" aria-label="Go back or cancel. Keyboard D; game B."><span data-i18n="Back">Back</span><small class="physical-key-hint" data-i18n="D key · game B">D key · game B</small><small class="touch-key-hint" aria-hidden="true">B</small></button></div>
           </div>
           <div class="console-bottom"><span data-i18n="A LITTLE CURIOSITY GOES A LONG WAY">A LITTLE CURIOSITY GOES A LONG WAY</span><div class="speaker" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div></div>
         </div>
@@ -80,8 +82,8 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
         <div class="notebook-heading"><span class="eyebrow" data-i18n="A FEW FIELD NOTES">A FEW FIELD NOTES</span><span class="note-number">NO. 01</span></div>
         <div class="destination"><span class="destination-caption" data-i18n="FIRST STOP">FIRST STOP</span><h2><span class="district-name" data-i18n="Old Taichung Station">Old Taichung Station</span><span class="district-chinese" lang="zh-Hant">舊臺中車站</span></h2><p data-i18n="Start beside the old station. Three connected city districts are ready to explore.">Start beside the old station. Three connected city districts are ready to explore.</p><div class="stamp" aria-hidden="true">TAICHUNG<br><b>24° N</b><br>TAIWAN</div></div>
         <div class="note-section"><span class="note-index">01</span><div><h3 data-i18n="Follow your curiosity.">Follow your curiosity.</h3><p data-i18n="Meet the landmark hosts. Challenge Jun for your first City Pass stamp.">Meet the landmark hosts. Challenge Jun for your first City Pass stamp.</p></div></div>
-        <div class="note-section"><span class="note-index">02</span><div><h3 data-i18n="Say hello.">Say hello.</h3><p><span data-i18n="Walk up to someone and press">Walk up to someone and press</span> <kbd>Z</kbd> <span data-i18n="or">or</span> <kbd>A</kbd> <span data-i18n="to see what they have to say.">to see what they have to say.</span></p></div></div>
-        <div class="keyboard-guide"><h3 data-i18n="Make yourself at home.">Make yourself at home.</h3><div class="key-row"><span><kbd>↑</kbd><kbd>←</kbd><kbd>↓</kbd><kbd>→</kbd></span><span data-i18n="Wander around">Wander around</span></div><div class="key-row"><span><kbd>Z</kbd> <small>/</small> <kbd>X</kbd></span><span data-i18n="Interact / back">Interact / back</span></div><div class="key-row"><span><kbd>ENTER</kbd></span><span data-i18n="Open the menu">Open the menu</span></div><p data-i18n="Touch controls work too. A little old-school, wherever you are.">Touch controls work too. A little old-school, wherever you are.</p><p data-i18n="Language covers custom Taichung content. Original FireRed screens remain English.">Language covers custom Taichung content. Original FireRed screens remain English.</p></div>
+        <div class="note-section"><span class="note-index">02</span><div><h3 data-i18n="Say hello.">Say hello.</h3><p data-i18n="Walk up to someone and press F, or tap Interact / Confirm.">Walk up to someone and press F, or tap Interact / Confirm.</p></div></div>
+        <div class="keyboard-guide"><h3 data-i18n="Make yourself at home.">Make yourself at home.</h3><div class="key-row"><span><kbd>↑</kbd><kbd>←</kbd><kbd>↓</kbd><kbd>→</kbd></span><span data-i18n="Wander around">Wander around</span></div><div class="key-row"><span><kbd>F</kbd> <small>/</small> <kbd>D</kbd></span><span data-i18n="Interact / back">Interact / back</span></div><div class="key-row"><span><kbd>M</kbd> <small>/</small> <kbd>ENTER</kbd></span><span data-i18n="Open the menu">Open the menu</span></div><p data-i18n="Touch controls work too. A little old-school, wherever you are.">Touch controls work too. A little old-school, wherever you are.</p><p data-i18n="Language covers custom Taichung content. Original FireRed screens remain English.">Language covers custom Taichung content. Original FireRed screens remain English.</p></div>
         <details class="save-details"><summary><span data-i18n="Your saved adventures">Your saved adventures</span><span class="details-plus">+</span></summary><p data-i18n="Your spot is saved here every 20 seconds. Keep an extra backup using a game save from the in-game menu.">Your spot is saved here every 20 seconds. Keep an extra backup using a game save from the in-game menu.</p><div class="save-actions"><button id="export-button" disabled><span data-i18n="Download save">Download save</span> ${icon('arrow')}</button><button id="import-button" disabled><span data-i18n="Import save">Import save</span> ${icon('arrow')}</button></div><input type="file" id="save-file" accept=".sav" hidden></details>
         <div class="notebook-footer"><span class="tiny-sun" aria-hidden="true">✳</span><span data-i18n="MADE FOR A SUNNY AFTERNOON.">MADE FOR A SUNNY AFTERNOON.</span></div>
       </aside>
@@ -111,7 +113,7 @@ let restarting = false;
 let confirmationOpen = false;
 let saveInterval: ReturnType<typeof setInterval> | undefined;
 let filesystemWrites: Promise<void> = Promise.resolve();
-const pressed = new Map<string, Button>();
+let gameInput: ReturnType<typeof createGameControls> | undefined;
 let statusText = 'READY WHEN YOU ARE';
 let feedbackText = cartridgeBootIntent === 'import' ? 'Save imported. Start exploring, then choose Continue from the game’s title screen.' : bootFromCartridge ? 'Cartridge restarted. Start exploring to continue your in-game save or begin a new adventure.' : savedAt ? 'Your last saved spot is waiting in this browser.' : 'Begin at the old station. Get to know Taichung, one landmark at a time.';
 
@@ -163,6 +165,7 @@ function confirmAction(title: string, explanation: string, action: string): Prom
   if (confirmationOpen) return Promise.resolve(false);
   releaseInputs();
   confirmationOpen = true;
+  gameInput?.refresh();
   const returnFocus = document.activeElement instanceof HTMLElement ? document.activeElement : null;
   const dialog = document.createElement('dialog');
   dialog.className = 'cartridge-confirm';
@@ -192,6 +195,7 @@ function confirmAction(title: string, explanation: string, action: string): Prom
     dialog.addEventListener('close', () => {
       const accepted = dialog.returnValue === 'confirm';
       confirmationOpen = false;
+      gameInput?.refresh();
       dialog.remove();
       returnFocus?.focus({ preventScroll: true });
       resolve(accepted);
@@ -241,22 +245,7 @@ function getRuntimeFactory(): Promise<RuntimeFactory> {
 }
 
 function releaseInputs() {
-  for (const button of new Set(pressed.values())) emulator?.buttonUnpress(button);
-  pressed.clear();
-  document.querySelectorAll('[data-gba].pressed').forEach((button) => button.classList.remove('pressed'));
-}
-
-function press(source: string, button: Button) {
-  if (!running || paused || restarting || confirmationOpen || !emulator || pressed.has(source)) return;
-  pressed.set(source, button);
-  emulator.buttonPress(button);
-}
-
-function unpress(source: string) {
-  const button = pressed.get(source);
-  if (!button) return;
-  pressed.delete(source);
-  if (![...pressed.values()].includes(button)) emulator?.buttonUnpress(button);
+  gameInput?.releaseAll();
 }
 
 async function persist(showFeedback = false) {
@@ -346,12 +335,17 @@ async function startGame() {
     void emulator.SDL2?.audioContext?.resume();
     running = true;
     paused = false;
+    document.body.classList.add('game-active');
+    gameInput?.refresh();
     el('start-screen').hidden = true;
     canvas.classList.add('playing');
     document.querySelectorAll<HTMLButtonElement>('#pause-button, #sound-button, #save-button, #restart-button, #export-button, #import-button').forEach((button) => button.disabled = false);
     setStatus('OUT EXPLORING');
     message(freshCartridgeBoot ? cartridgeBootIntent === 'import' ? 'Save imported. Choose Continue from the game’s title screen.' : 'Cartridge restarted. Continue your in-game save or begin a new adventure.' : emulator.getAutoSaveState() ? 'Welcome back. Your last saved spot is waiting for you.' : 'New adventures begin at the old station. Use City Map to discover ten landmarks.');
     canvas.focus({ preventScroll: true });
+    // The Play button may have scrolled the intro into view. Collapsing that
+    // intro must not leave a phone looking below its newly positioned game.
+    if (matchMedia('(max-width:800px), (max-width:1000px) and (max-height:540px) and (min-aspect-ratio:6/5)').matches) window.scrollTo({ top: 0, behavior: 'instant' });
     startSaveTimer();
     cityGuide.onGameStarted();
     void connectNativeLanguage(romSha256, rom.length);
@@ -382,6 +376,7 @@ function setPaused(value: boolean) {
   el('pause-screen').hidden = !paused;
   el('pause-button').innerHTML = `${icon(paused ? 'play' : 'pause')} <span>${t(paused ? 'Resume' : 'Pause')}</span>`;
   setStatus(paused ? 'TAKING A BREATHER' : 'OUT EXPLORING');
+  gameInput?.refresh();
 }
 
 const cityGuide = createCityGuide({
@@ -390,7 +385,7 @@ const cityGuide = createCityGuide({
   resume: () => setPaused(false),
   releaseInputs,
 });
-el('city-map-button').addEventListener('click', () => cityGuide.open(el('city-map-button')));
+for (const id of ['city-map-button', 'touch-city-map-button']) el(id).addEventListener('click', () => cityGuide.open(el(id)));
 
 playButton.addEventListener('click', () => { void startGame(); });
 el('pause-button').addEventListener('click', () => setPaused(!paused));
@@ -405,11 +400,16 @@ el('sound-button').addEventListener('click', () => {
   focusGame();
 });
 el('save-button').addEventListener('click', () => { releaseInputs(); void persist(true); focusGame(); });
-el('fullscreen-button').addEventListener('click', () => {
-  if (document.fullscreenElement) void document.exitFullscreen();
-  else void el('console').requestFullscreen().catch(() => message('Fullscreen isn’t available in this browser. You can still explore right here.'));
+async function toggleFullscreen() {
+  releaseInputs();
+  try {
+    if (document.fullscreenElement) await document.exitFullscreen();
+    else await el('console').requestFullscreen();
+  } catch { message('Fullscreen isn’t available in this browser. You can still explore right here.'); }
   focusGame();
-});
+}
+el('fullscreen-button').addEventListener('click', () => { void toggleFullscreen(); });
+el('exit-fullscreen-button').addEventListener('click', () => { void toggleFullscreen(); });
 el('restart-button').addEventListener('click', () => { void restartCartridge(); });
 
 async function restartCartridge(importedSave?: Uint8Array) {
@@ -418,14 +418,14 @@ async function restartCartridge(importedSave?: Uint8Array) {
   const previousSave = importedSave ? emulator.getSave()?.slice() : undefined;
   const wasPaused = paused;
   restarting = true;
+  gameInput?.refresh();
   refreshLanguageConnection();
   // Navigation will destroy the runtime and release native inputs. Do not call
   // any core functions here: even live boolean setters can interrupt and hang
   // the running core after a native save in the pinned emulator distribution.
-  pressed.clear();
-  document.querySelectorAll('[data-gba].pressed').forEach((button) => button.classList.remove('pressed'));
+  gameInput?.forgetAll();
   if (saveInterval) { clearInterval(saveInterval); saveInterval = undefined; }
-  document.querySelectorAll<HTMLButtonElement>('#pause-button, #resume-button, #sound-button, #save-button, #restart-button, #import-button, #city-map-button').forEach((button) => button.disabled = true);
+  document.querySelectorAll<HTMLButtonElement>('#pause-button, #resume-button, #sound-button, #save-button, #restart-button, #import-button, #city-map-button, #touch-city-map-button').forEach((button) => button.disabled = true);
   setStatus('RESTARTING CARTRIDGE');
   message(importedSave ? 'Importing your save and restarting the cartridge…' : 'Keeping your in-game save and restarting the cartridge…');
   let cancelSaveWrite = false;
@@ -466,8 +466,9 @@ async function restartCartridge(importedSave?: Uint8Array) {
     }
     restarting = false;
     refreshLanguageConnection();
-    document.querySelectorAll<HTMLButtonElement>('#pause-button, #resume-button, #sound-button, #save-button, #restart-button, #import-button, #city-map-button').forEach((button) => button.disabled = false);
+    document.querySelectorAll<HTMLButtonElement>('#pause-button, #resume-button, #sound-button, #save-button, #restart-button, #import-button, #city-map-button, #touch-city-map-button').forEach((button) => button.disabled = false);
     paused = wasPaused;
+    gameInput?.refresh();
     if (!wasPaused) (emulator as SchedulerRuntime).resumeMainLoop();
     el('pause-screen').hidden = !paused;
     el('pause-button').innerHTML = `${icon(paused ? 'play' : 'pause')} <span>${t(paused ? 'Resume' : 'Pause')}</span>`;
@@ -508,39 +509,14 @@ el<HTMLInputElement>('save-file').addEventListener('change', async (event) => {
   } finally { input.value = ''; }
 });
 
-const keyboard: Record<string, Button> = {
-  ArrowUp: 'Up', KeyW: 'Up', ArrowDown: 'Down', KeyS: 'Down',
-  ArrowLeft: 'Left', KeyA: 'Left', ArrowRight: 'Right', KeyD: 'Right',
-  KeyZ: 'A', KeyX: 'B', Enter: 'Start', ShiftRight: 'Select', Backspace: 'Select', KeyQ: 'L', KeyE: 'R',
-};
-window.addEventListener('keydown', (event) => {
-  if (cityGuide.isOpen || confirmationOpen) return;
-  if (event.ctrlKey || event.metaKey || event.altKey || (event.target instanceof HTMLElement && ['INPUT', 'TEXTAREA', 'SELECT', 'BUTTON', 'SUMMARY', 'A'].includes(event.target.tagName))) return;
-  const button = keyboard[event.code];
-  if (!button || !running || paused) return;
-  event.preventDefault();
-  press(`key:${event.code}`, button);
+gameInput = createGameControls({
+  root: document.querySelector<HTMLElement>('.physical-controls')!,
+  canvas,
+  canPlay: () => running && !paused && !restarting && !confirmationOpen && !cityGuide.isOpen,
+  focus: focusGame,
+  press: (button) => emulator?.buttonPress(button),
+  release: (button) => emulator?.buttonUnpress(button),
 });
-window.addEventListener('keyup', (event) => { if (cityGuide.isOpen || confirmationOpen) return; if (keyboard[event.code]) { if (running) event.preventDefault(); unpress(`key:${event.code}`); } });
-document.querySelectorAll<HTMLButtonElement>('[data-gba]').forEach((button) => {
-  const input = button.dataset.gba as Button;
-  button.addEventListener('pointerdown', (event) => {
-    event.preventDefault();
-    if (!running || paused) return;
-    focusGame();
-    button.setPointerCapture(event.pointerId);
-    button.classList.add('pressed');
-    press(`pointer:${event.pointerId}`, input);
-  });
-  const release = (event: PointerEvent) => { button.classList.remove('pressed'); unpress(`pointer:${event.pointerId}`); };
-  button.addEventListener('pointerup', release);
-  button.addEventListener('pointercancel', release);
-  button.addEventListener('lostpointercapture', release);
-  button.addEventListener('keydown', (event) => { if (event.code === 'Space' || event.code === 'Enter') { event.preventDefault(); button.classList.add('pressed'); press(`button:${input}`, input); } });
-  button.addEventListener('keyup', (event) => { if (event.code === 'Space' || event.code === 'Enter') { event.preventDefault(); button.classList.remove('pressed'); unpress(`button:${input}`); } });
-  button.addEventListener('contextmenu', (event) => event.preventDefault());
-});
-window.addEventListener('blur', releaseInputs);
 document.addEventListener('visibilitychange', () => { if (!restarting && !confirmationOpen && document.hidden && running && !paused) setPaused(true); });
 window.addEventListener('pagehide', () => { languageBridge?.stop(); releaseInputs(); if (saveInterval) clearInterval(saveInterval); });
 

@@ -33,11 +33,15 @@ The emulator modules are loaded through `public/emulator-loader.js`, using a nat
 
 ## Controls and saves
 
-- Arrows or WASD: movement.
-- Z / X: A / B.
-- Enter: Start; Backspace or right Shift: Select.
+- Arrow keys: movement.
+- **F: Interact / Confirm** (native A); **D: Back / Cancel** (native B). D never moves right.
+- M or Enter: Menu (Start); Backspace or right Shift: Select.
+- Z / X remain legacy A / B aliases. E remains the R shoulder button.
 - Q / E: L / R.
-- Onscreen buttons support pointer and touch input.
+- Onscreen buttons support pointer and touch input. In portrait, the game sits above a 144px directional pad and large semantic action buttons; short landscape layouts place the controls beside the complete game frame. Each direction and system control has a 48px target. City Map is a separate browser guide action, not a game key.
+- Drag within the pad to change direction; its center and outside edge release movement. Multiple fingers and keyboard presses own their holds independently. Inputs release on cancellation, lost capture, focus loss, rotation, fullscreen transitions, pause and modal opening. A held key must be released before it can drive the game again after focus or modal changes.
+- Game shortcuts operate on the game canvas and focused game controls. Text fields, language selectors, guide/dialog controls, links and ordinary page buttons keep their own keyboard behavior. Enter/Space activate a focused game button; F/D remain its primary action shortcuts.
+- Fullscreen keeps touch controls and an explicit exit button when the browser supports the Fullscreen API. Unsupported browsers display an inline explanation and keep the page usable.
 - Save spot captures an emulator snapshot. Snapshots are also stored every 20 seconds and restored on the next visit.
 - In-game saves persist in IndexedDB and can be downloaded/imported as `.sav` files. Use the game's own Save menu before downloading a save. Raw 64/128 KiB files and the pinned mGBA runtime's backups with a 16-byte trailer are accepted unchanged.
 - Restart keeps the in-game save, flushes browser storage and reloads the page through a fresh Play gate. The new runtime discards only this build's automatic CPU snapshot before loading the cartridge. Choose Continue on its title screen; progress since the last in-game Save is lost. Import uses the same fresh-runtime path after replacing SRAM.
@@ -50,6 +54,8 @@ Emulator snapshots are namespaced by the first 16 hexadecimal characters of the 
 The wrapper owns the 20-second snapshot timer; mGBA's duplicate internal timer is disabled before the game loads. Restart/import never call `quickReload`, `quitGame`, or change live boolean core settings. The pinned runtime's live setting path interrupts the native thread and froze Chrome after a cartridge save during QA. Confirmations use asynchronous HTML dialogs to keep the threaded player's event loop responsive. The one-time `cartridge-boot` query is consumed only after Play successfully loads the cartridge, so a failed load can be retried without restoring the discarded CPU state.
 
 For sustained runtime QA, use `npm run build` and `npm run preview`. Editing source with Vite HMR while a threaded game is running can leave a development tab unresponsive during its automatic reload; production builds have no HMR client.
+
+`npm test` covers the held-input model and native-language bridge. For synthetic DOM input regression checks, run `npm run build:control-tests` **after** a normal build, then open `/control-tests/controls-browser.html` on the local preview and run the checks. This fixture stubs the emulator callbacks and OS pointer-capture boundary; it is not evidence of physical multi-touch or Wasm behavior. The next normal build removes the fixture from `dist/`, so release builds do not include it. Physical iPhone Safari and Android Chrome testing remains separate from desktop viewport checks.
 
 ## City Map and interface language
 
