@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Minimap development fixture · simulated navigation</title>
+<style>
+body{margin:24px auto;padding:0 16px;max-width:760px;font:14px/1.5 system-ui;color:#263d32;background:#f6f3e9}h1{font-size:23px}.fixture-warning{background:#fff0ce;border:1px solid #c49448;padding:12px}.fixture-screen{position:relative;aspect-ratio:3/2;background:repeating-linear-gradient(0deg,#b4ca94 0 30px,#a8c48b 30px 32px);border:3px solid #345140;overflow:hidden}.field-label{position:absolute;right:10px;bottom:12px;color:#36573b;font-size:11px;max-width:150px;text-align:right}.fixture-controls{display:flex;gap:12px;flex-wrap:wrap;margin:16px 0}button,select{min-height:44px;padding:8px}#results{white-space:pre-wrap;font-size:12px}.language-control{display:flex;gap:12px;align-items:center}.language-control small{display:none}
+</style>
+<h1>Minimap development fixture</h1>
+<p class="fixture-warning">SIMULATED NAVIGATION DATA. Tests the real HUD and options UI; this is not live gameplay or evidence of native movement.</p>
+<div id="locale"></div>
+<div class="fixture-controls"><button id="run">Run minimap UI checks</button><label>Simulated context <select id="context"><option value="field">Station plaza</option><option value="indoor">Station gym indoors</option><option value="welcome">Station welcome room</option><option value="menu">Menu / dialogue / battle</option><option value="stale">Stale / paused</option><option value="unsupported">Unsupported ROM</option></select></label></div>
+<div class="fixture-screen"><span class="field-label">Synthetic field viewport<br>240×160 aspect ratio</span></div>
+<label class="minimap-setting"><span data-i18n="Minimap">Minimap</span><select id="minimap-visibility"><option value="on" data-i18n="On">On</option><option value="off" data-i18n="Off">Off</option></select><small id="minimap-hint"></small></label>
+<pre id="results">Checks have not run.</pre>
+<script type="module" src="./minimap-browser.ts"></script>
+</html>

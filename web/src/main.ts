@@ -3,6 +3,7 @@ import './confirm.css';
 import './controls.css';
 import './immersive.css';
 import './intro.css';
+import './minimap.css';
 import oldStationArt from './assets/landmarks/old-station.png';
 import theaterArt from './assets/landmarks/theater.png';
 import miyaharaArt from './assets/landmarks/miyahara.png';
@@ -14,6 +15,11 @@ import { NativeLanguageBridge, parseLanguageBridgeMetadata } from './language-br
 import type { LanguageBridgeState } from './language-bridge';
 import { createGameControls } from './game-controls';
 import { createGameView } from './game-view';
+import { NativeNavigationBridge, parseNavigationMetadata } from './navigation-bridge';
+import type { NavigationState } from './navigation-bridge';
+import { createMinimap } from './minimap';
+import { projectNavigation, secondaryAction } from './minimap-model';
+import minimapGeometry from './data/minimap-contract.json';
 
 type RuntimeFactory = (options: { canvas: HTMLCanvasElement }) => Promise<mGBAEmulator>;
 type RuntimeWindow = Window & { taichungCreateEmulator?: RuntimeFactory };
@@ -124,6 +130,8 @@ const status = el('game-status');
 let emulator: mGBAEmulator | undefined;
 let languageBridge: NativeLanguageBridge | undefined;
 let languageState: LanguageBridgeState | undefined;
+let navigationBridge: NativeNavigationBridge | undefined;
+let navigationState: NavigationState = { phase: 'unavailable' };
 let gamePath: string | undefined;
 let starting = false;
 let running = false;
@@ -187,6 +195,56 @@ async function connectNativeLanguage(romSha256: string, romBytes: number) {
   }
 }
 
+function canPlayGame() {
+  return running && !paused && !restarting && !confirmationOpen && !cityGuide.isOpen && gameView.immersive && !gameView.optionsOpen && !document.hidden;
+}
+
+function renderNavigation() {
+  const state: NavigationState = canPlayGame() ? navigationState : { phase: navigationState.phase === 'unavailable' ? 'unavailable' : 'hidden' };
+  minimap.update(state);
+  const packet = state.phase === 'live' ? state.snapshot : undefined;
+  const position = packet ? projectNavigation(packet, minimapGeometry) : undefined;
+  const action = secondaryAction(packet, position);
+  const secondary = document.querySelector<HTMLButtonElement>('.physical-controls [data-gba="B"]')!;
+  const label = secondary.querySelector<HTMLElement>('[data-i18n]')!;
+  label.dataset.i18n = action;
+  label.textContent = t(action);
+  const accessible = action === 'Bike' ? 'Ride bike. Keyboard D; game B.' : action === 'Get off' ? 'Get off bike. Keyboard D; game B.' : 'Go back or cancel. Keyboard D; game B.';
+  secondary.dataset.i18nLabel = accessible;
+  secondary.setAttribute('aria-label', t(accessible));
+  const canvasHint = action === 'Bike' ? 'Taichung Quest game screen. Arrow keys move. F interacts or confirms. D rides your bike. M or Enter opens the menu.' : action === 'Get off' ? 'Taichung Quest game screen. Arrow keys move. F interacts or confirms. D gets off your bike. M or Enter opens the menu.' : 'Taichung Quest game screen. Arrow keys move. F interacts or confirms. D goes back. M or Enter opens the menu.';
+  canvas.dataset.i18nLabel = canvasHint;
+  canvas.setAttribute('aria-label', t(canvasHint));
+  const help = document.querySelector<HTMLElement>('.options-key-help')!;
+  const hint = action === 'Bike' ? 'Arrow keys move. F interacts or confirms. D rides your bike. M opens the game menu.' : action === 'Get off' ? 'Arrow keys move. F interacts or confirms. D gets off your bike. M opens the game menu.' : 'Arrow keys move. F interacts or confirms. D goes back. M opens the game menu.';
+  help.dataset.i18n = hint;
+  help.textContent = t(hint);
+}
+
+function refreshNavigation() { navigationBridge?.refresh(); renderNavigation(); }
+
+async function connectNativeNavigation(romSha256: string, romBytes: number) {
+  navigationBridge?.stop();
+  navigationBridge = undefined;
+  navigationState = { phase: 'connecting' };
+  renderNavigation();
+  try {
+    const response = await fetch('/roms/build.json', { cache: 'no-store' });
+    const metadata = response.ok ? parseNavigationMetadata(await response.json(), romSha256, romBytes, minimapGeometry.geometryFingerprintSha256) : undefined;
+    if (!metadata || !(emulator as LanguageRuntime | undefined)?.getTaichungHeapU8) throw new Error('Matching navigation metadata/runtime is unavailable.');
+    if (restarting || !running) return;
+    navigationBridge = new NativeNavigationBridge({
+      metadata, getHeap: () => (emulator as LanguageRuntime | undefined)?.getTaichungHeapU8?.(), isActive: canPlayGame,
+      onState: (state) => { navigationState = state; renderNavigation(); },
+    });
+    void navigationBridge.start();
+  } catch (error) {
+    console.info('City Map available without live navigation:', error);
+    navigationState = { phase: 'unavailable' };
+    renderNavigation();
+  }
+}
+
 function focusGame() { if (running && !paused && !restarting && !confirmationOpen && !cityGuide.isOpen && !gameView.optionsOpen && gameView.immersive) canvas.focus({ preventScroll: true }); }
 
 function confirmAction(title: string, explanation: string, action: string): Promise<boolean> {
@@ -194,6 +252,7 @@ function confirmAction(title: string, explanation: string, action: string): Prom
   releaseInputs();
   confirmationOpen = true;
   gameInput?.refresh();
+  refreshNavigation();
   const returnFocus = document.activeElement instanceof HTMLElement ? document.activeElement : null;
   const dialog = document.createElement('dialog');
   dialog.className = 'cartridge-confirm';
@@ -224,6 +283,7 @@ function confirmAction(title: string, explanation: string, action: string): Prom
       const accepted = dialog.returnValue === 'confirm';
       confirmationOpen = false;
       gameInput?.refresh();
+      refreshNavigation();
       dialog.remove();
       returnFocus?.focus({ preventScroll: true });
       resolve(accepted);
@@ -328,6 +388,7 @@ async function startGame() {
       emulator.addCoreCallbacks({
         coreCrashedCallback: () => {
           if (restarting) return;
+          navigationBridge?.stop();
           setStatus('ADVENTURE INTERRUPTED');
           message('The game stopped unexpectedly. Restart it to return to your saved progress.', true);
         },
@@ -383,6 +444,7 @@ async function startGame() {
     startSaveTimer();
     cityGuide.onGameStarted();
     void connectNativeLanguage(romSha256, rom.length);
+    void connectNativeNavigation(romSha256, rom.length);
   } catch (error) {
     const reason = error instanceof Error ? error.message : 'Something went wrong while loading the game.';
     message(reason, true);
@@ -412,6 +474,7 @@ function setPaused(value: boolean) {
   el('pause-button').innerHTML = `${icon(paused ? 'play' : 'pause')} <span>${t(paused ? 'Resume' : 'Pause')}</span>`;
   setStatus(paused ? 'TAKING A BREATHER' : 'OUT EXPLORING');
   gameInput?.refresh();
+  refreshNavigation();
 }
 
 const cityGuide = createCityGuide({
@@ -429,6 +492,14 @@ const gameView = createGameView({
   console: el('console'), dialog: el<HTMLDialogElement>('game-options'), returnTarget: landingPlayButton,
   getState: () => ({ running, paused }), pause: () => setPaused(true), resume: () => setPaused(false),
   release: releaseInputs, refresh: () => { gameInput?.refresh(); refreshRuntimeLabels(); },
+});
+const minimapSetting = document.createElement('label');
+minimapSetting.className = 'minimap-setting';
+minimapSetting.innerHTML = '<span id="minimap-label" data-i18n="Minimap">Minimap</span><select id="minimap-visibility" aria-labelledby="minimap-label" aria-describedby="minimap-hint"><option value="on" data-i18n="On">On</option><option value="off" data-i18n="Off">Off</option></select><small id="minimap-hint"></small>';
+el('options-toolbar-slot').before(minimapSetting);
+const minimap = createMinimap({
+  screen: el('screen'), toggle: el<HTMLSelectElement>('minimap-visibility'), hint: el('minimap-hint'), geometry: minimapGeometry,
+  openGuide: () => cityGuide.open(el('live-minimap')),
 });
 for (const id of ['city-map-button', 'touch-city-map-button']) el(id).addEventListener('click', () => cityGuide.open(el(id)));
 
@@ -466,6 +537,7 @@ async function restartCartridge(importedSave?: Uint8Array) {
   const wasPaused = paused;
   restarting = true;
   gameInput?.refresh();
+  refreshNavigation();
   refreshLanguageConnection();
   // Navigation will destroy the runtime and release native inputs. Do not call
   // any core functions here: even live boolean setters can interrupt and hang
@@ -516,6 +588,7 @@ async function restartCartridge(importedSave?: Uint8Array) {
     document.querySelectorAll<HTMLButtonElement>('#pause-button, #resume-button, #sound-button, #save-button, #restart-button, #import-button, #city-map-button, #touch-city-map-button').forEach((button) => button.disabled = false);
     paused = wasPaused;
     gameInput?.refresh();
+    refreshNavigation();
     if (!wasPaused) (emulator as SchedulerRuntime).resumeMainLoop();
     el('pause-screen').hidden = !paused;
     el('pause-button').innerHTML = `${icon(paused ? 'play' : 'pause')} <span>${t(paused ? 'Resume' : 'Pause')}</span>`;
@@ -559,13 +632,13 @@ el<HTMLInputElement>('save-file').addEventListener('change', async (event) => {
 gameInput = createGameControls({
   root: document.querySelector<HTMLElement>('.physical-controls')!,
   canvas,
-  canPlay: () => running && !paused && !restarting && !confirmationOpen && !cityGuide.isOpen && gameView.immersive && !gameView.optionsOpen,
+  canPlay: canPlayGame,
   focus: focusGame,
   press: (button) => emulator?.buttonPress(button),
   release: (button) => emulator?.buttonUnpress(button),
 });
 document.addEventListener('visibilitychange', () => { if (!restarting && !confirmationOpen && document.hidden && running && !paused) setPaused(true); });
-window.addEventListener('pagehide', () => { languageBridge?.stop(); releaseInputs(); if (saveInterval) clearInterval(saveInterval); });
+window.addEventListener('pagehide', () => { languageBridge?.stop(); navigationBridge?.stop(); releaseInputs(); if (saveInterval) clearInterval(saveInterval); });
 
 // Locale refresh updates existing nodes, preserving the live emulator canvas.
 document.querySelectorAll<HTMLElement>('[aria-label]').forEach((element) => {
@@ -579,6 +652,7 @@ function refreshRuntimeLabels() {
   el('pause-button').innerHTML = `${icon(paused ? 'play' : 'pause')} <span>${t(paused ? 'Resume' : 'Pause')}</span>`;
   el('sound-button').innerHTML = `${icon(muted ? 'mute' : 'sound')} <span>${t(muted ? 'Sound off' : 'Sound on')}</span>`;
   document.title = getLocale() === 'zh-Hant' ? 'Taichung Quest · 台中小冒險' : 'Taichung Quest · A little adventure';
+  refreshNavigation();
 }
 onLocaleChange(refreshRuntimeLabels);
 onLocaleChange(({ locale, source }) => {

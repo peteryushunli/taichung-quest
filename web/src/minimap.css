@@ -1,0 +1,17 @@
+.live-minimap { position: absolute; z-index: 3; top: 6px; left: 6px; width: clamp(64px, 22%, 108px); padding: 3px; border: 1px solid #abc1a6; border-radius: 5px; background: #f2f1ddef; color: #254a39; box-shadow: 0 2px 5px #18372555; cursor: pointer; }
+.live-minimap[hidden] { display: none; }
+.live-minimap svg { display: block; width: 100%; aspect-ratio: 1; overflow: visible; }
+.live-minimap .minimap-ground { fill: #e4e8d0; }
+.live-minimap [data-district] { fill: #b6c9a6; stroke: #e4e8d0; stroke-width: 2; }
+.live-minimap [data-district].current { fill: #82ad89; stroke: #4b805d; stroke-width: 1.5; }
+.live-minimap [data-landmark] { fill: #f7f0d9; stroke: #365d47; stroke-width: 1; }
+.live-minimap [data-landmark].nearest { fill: #efd58e; stroke: #8c5d30; stroke-width: 1.6; }
+.minimap-player circle { fill: #fff9e9; stroke: #213e32; stroke-width: 1; }
+.minimap-player path { fill: #b54832; stroke: #fff5de; stroke-width: .6; }
+.minimap-player.indoors circle { stroke-dasharray: 2 1; }
+.live-minimap text { fill: #3b5c42; font: 9px Arial, sans-serif; }
+.minimap-context { display: block; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; margin: 3px 0 1px; font: 8px/1.3 Arial, sans-serif; }
+.live-minimap:focus-visible { outline: 2px solid #b54832; outline-offset: 2px; }
+.minimap-setting { display: grid; grid-template-columns: 1fr auto; gap: 8px; margin-top: 16px; padding-top: 16px; border-top: 1px solid #c6d1ba; font-size: 13px; align-items: center; }
+.minimap-setting select { min-height: 44px; min-width: 100px; padding: 8px; border: 1px solid #b5c5a8; border-radius: 6px; background: #e8ecde; color: #244d3c; font-size: 14px; }
+.minimap-setting small { grid-column: 1 / -1; font-size: 11px; line-height: 1.5; color: #64735b; }

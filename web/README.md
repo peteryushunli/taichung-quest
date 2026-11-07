@@ -36,7 +36,7 @@ The emulator modules are loaded through `public/emulator-loader.js`, using a nat
 ## Controls and saves
 
 - Arrow keys: movement.
-- **F: Interact / Confirm** (native A); **D: Back / Cancel** (native B). D never moves right.
+- **F: Interact / Confirm** (native A); **D: the displayed secondary action** (native B). It remains Back / Cancel without fresh navigation support; exact-ROM native eligibility can label it Bike / Get off during safe outdoor exploration. D never moves right.
 - M or Enter: Menu (Start); Backspace or right Shift: Select.
 - Z / X remain legacy A / B aliases. E remains the R shoulder button.
 - Q / E: L / R.
@@ -52,6 +52,18 @@ The emulator modules are loaded through `public/emulator-loader.js`, using a nat
 - Losing page visibility pauses the game and releases held buttons.
 
 Browser saves belong to the current origin. Downloads provide a portable backup across browsers or deployment URLs.
+
+## Live minimap
+
+The compact north-up HUD sits in the upper-left of the game viewport. Game options has a bilingual Minimap On/Off selector, defaulting On and remembering the choice in browser storage. Tapping a visible minimap opens the existing City Map and pauses/releases game input. The accepted portrait controls do not move.
+
+Live output requires matching `/roms/build.json` metadata: the loaded cartridge's exact SHA-256 and byte count, `navigationBridge` version 1 / size 48/magic/symbol address, and `minimap.schemaVersion=1` with the bundled mapper geometry fingerprint. Missing or incompatible metadata keeps the HUD hidden and D labeled Back. No demo packet or fallback player coordinate exists in the production app.
+
+`navigation-bridge.ts` reads the separate `TCNAV001` packet without writes, verifies its seqlock/header/reserved fields, discovers the sole advancing allocation and requires fresh frames. Frozen state expires after one second. Pause, options, guide, confirmation, restart and page exit clear live presentation; reset or heap replacement needs new freshness. Native menus/dialogue/battles/unknown contexts also hide it. The 32-byte language bridge stays unchanged.
+
+`data/minimap-contract.json` is the exact Mapper 42dd4a2 export: three districts, ten gym entrances and the Station welcome room. Exterior tiles project through their authored world origins. Indoors use the explicit parent entrance with an indoor label; room coordinates never become city coordinates. Unknown maps, wrong layout dimensions and out-of-bounds tiles hide the marker. Native `CAN_TOGGLE_BIKE` alone permits Bike/Get off labels on a fresh mapped outdoor snapshot; the actual B-button latch/speed/eligibility remains native-owned.
+
+`npm test` covers protocol coherence, freshness, exact build binding and every mapped exterior tile. `npm run build:control-tests` additionally emits `/control-tests/minimap-browser.html` with clearly labeled simulated data and nine UI checks, alongside the existing thirteen input/view checks. A normal production build removes these fixtures. See `docs/minimap-validation.md` for proof and remaining actual-ROM checks.
 
 Emulator snapshots are namespaced by the first 16 hexadecimal characters of the actual cartridge's SHA-256 digest. A rebuilt ROM therefore starts without restoring incompatible CPU/memory state from another build. The normal in-game `.sav` path stays stable so Continue remains available across builds. Older snapshots are retained, while obsolete downloaded cartridge copies are removed from IndexedDB to avoid storing another 16 MB for every build.
 
