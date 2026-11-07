@@ -3,7 +3,13 @@ import { createHash } from 'node:crypto';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-export async function verifyCartridge(directory) {
+const geometryFields = ['schemaVersion', 'coordinateSystem', 'world', 'mapsByNativeKey', 'markersById', 'seams'];
+const bundledGeometry = new URL('../src/data/minimap-contract.json', import.meta.url);
+// Match the native exporter's sorted UTF-8 JSON fingerprint, excluding source provenance.
+const canonical = (value) => Array.isArray(value) ? value.map(canonical) : value && typeof value === 'object'
+  ? Object.fromEntries(Object.keys(value).sort().map((key) => [key, canonical(value[key])])) : value;
+
+export async function verifyCartridge(directory, { geometryFile = bundledGeometry } = {}) {
   let rom, metadata;
   try {
     [rom, metadata] = await Promise.all([
@@ -23,6 +29,26 @@ export async function verifyCartridge(directory) {
   if (!packet || packet.version !== 1 || packet.size !== 32 || packet.magicA !== 0x414c4354 || packet.magicB !== 0x3130474e ||
       !Number.isInteger(packet.address) || packet.address % 4 || packet.address < 0x02000000 || packet.address > 0x02040000 - 32) {
     throw new Error('The release requires matching version-1 native language-bridge metadata.');
+  }
+  const navigation = metadata.navigationBridge;
+  if (!navigation || navigation.version !== 1 || navigation.size !== 48 || navigation.magicA !== 0x414e4354 || navigation.magicB !== 0x31303056 ||
+      !Number.isInteger(navigation.address) || navigation.address % 4 || navigation.address < 0x02000000 || navigation.address > 0x02040000 - 48) {
+    throw new Error('The release requires matching version-1 native navigation-bridge metadata.');
+  }
+  let geometry;
+  try {
+    geometry = JSON.parse(await readFile(geometryFile, 'utf8'));
+    if (!geometry || geometry.schemaVersion !== 1 || !geometryFields.every((key) => Object.hasOwn(geometry, key)) ||
+        typeof geometry.geometryFingerprintSha256 !== 'string' || !/^[a-f\d]{64}$/.test(geometry.geometryFingerprintSha256)) throw new Error();
+    const layout = Object.fromEntries(geometryFields.map((key) => [key, geometry[key]]));
+    const fingerprint = createHash('sha256').update(JSON.stringify(canonical(layout))).digest('hex');
+    if (fingerprint !== geometry.geometryFingerprintSha256) throw new Error();
+  } catch {
+    throw new Error('Bundled minimap geometry is missing, unsupported or has a stale layout fingerprint. Use Main’s authoritative export.');
+  }
+  if (!metadata.minimap || metadata.minimap.schemaVersion !== geometry.schemaVersion ||
+      metadata.minimap.geometryFingerprintSha256 !== geometry.geometryFingerprintSha256) {
+    throw new Error('The release minimap metadata does not match the bundled geometry schema/fingerprint.');
   }
   return metadata;
 }

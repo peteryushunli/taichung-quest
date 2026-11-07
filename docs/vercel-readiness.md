@@ -34,7 +34,9 @@ build.json
 
 Main can generate that pair with the existing source/build workflow, or copy an already-verified pair. Do not rebuild native source in another owner's checkout, commit generated ROMs, mix metadata from another build, or fetch a cartridge from an arbitrary external URL.
 
-`node web/scripts/verify-cartridge.mjs` validates the header, byte count, SHA-256, SHA-1, native source commit and version-1 language-bridge contract. This validates the build identity; it does not substitute for testing native gameplay.
+`node web/scripts/verify-cartridge.mjs` validates the header, byte count, SHA-256, SHA-1, native source commit and version-1 language-bridge contract. It also requires the version-1/48-byte navigation packet, supported magic values and an aligned address wholly inside EWRAM. The address comes from the release metadata rather than a fixed previous build address.
+
+Both the static site build and the Vercel packager require `minimap.schemaVersion` and `geometryFingerprintSha256` to match the frontend's bundled `web/src/data/minimap-contract.json`. The verifier independently recomputes the native exporter's sorted UTF-8 JSON fingerprint over schema, coordinates, world, map layouts, markers and seams. A stale edited layout therefore fails even if its old fingerprint string still matches the metadata. Source-provenance-only refreshes remain valid when geometry is unchanged. Missing/unsupported navigation or geometry rejects the build before fresh output is produced. These checks establish metadata consistency; native gameplay and exact final-build attachment still need testing.
 
 ## Reproducible local artifact
 
@@ -64,7 +66,11 @@ This command is documented for the integration owner; it has **not** been execut
 
 ## Verification and open checks
 
-Local preparation passed with the frozen 16MiB `ae0ada35` cartridge, SHA-256 `629bcd40965e7e5af51c3e1ffbb6fa436f76fe454fbb9f21aa7015e3dd6a2185`, and its exact metadata. TypeScript/build and all 13 unit tests passed, including fail-closed cases for missing, mismatched and unsupported bridge metadata. The prepared output contains 15 fingerprinted files, explicit isolation headers and the Wasm content type. Optional browser test fixtures are excluded from normal release builds.
+The original local preparation used the older `ae0ada35` cartridge. It is historical evidence, not proof of a current release.
+
+The new deployment gate passes all 28 unit tests, including missing/unsupported navigation metadata, invalid packet addresses, missing/mismatched minimap bindings, an edited Theater layout with a stale fingerprint, a missing geometry file and a provenance-only refresh. Existing ROM digest/source and language checks remain covered.
+
+Local packaging was refreshed against Main's intermediate Theater/cast pair: native `a9587ae9b4d8988cf89f9c72ecf413d3c6fa7d85`, 16MiB ROM SHA-256 `38e48bf5110c16910f3f769ef72540e11b16538e0143d1fb18078342e416cb6b`, navigation address 33813676 and geometry fingerprint `924380bc2dfe7176686fd81395a52b8489ff18ff6401442acdf06a5d41331722`. The 19 output file hashes, isolation headers, Wasm content type and fixture exclusion were checked. This is an intermediate packaging check; Main must regenerate from the clean integrated final Park source/metadata and verify that final attachment before deploying.
 
 An actual Vercel preview still needs Main to verify response headers/MIME types, `crossOriginIsolated`/`SharedArrayBuffer`, worker startup and a complete Play/save/reload flow at that origin. Local Vite headers and artifact inspection do not prove Vercel edge behavior. No remote deployment or physical iPhone/Android test is claimed.
 
