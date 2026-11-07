@@ -11,7 +11,9 @@
    browser grants the direct Play gesture; it is never a prerequisite. */
 #console:is(:fullscreen, [data-immersive]) {
   position: fixed; inset: 0; z-index: 50; width: 100vw; height: 100dvh; max-width: none; min-height: 0;
-  margin: 0; border: 0; border-radius: 0; box-shadow: none; background: #e1e6d6;
+  margin: 0; border: 1px solid #b9bdb0; border-radius: 12px 12px 56px 12px;
+  box-shadow: inset 3px 3px 4px #ffffffb0, inset -7px -6px 12px #818a7850;
+  background: linear-gradient(to bottom, transparent 74px, #9ba49455 75px, #ffffff80 77px, transparent 78px), linear-gradient(110deg, #ebeade, #d8ddcd);
   padding: calc(64px + env(safe-area-inset-top)) max(14px, env(safe-area-inset-right)) max(14px, env(safe-area-inset-bottom)) max(14px, env(safe-area-inset-left));
   display: flex; flex-direction: column; justify-content: flex-start; gap: 0;
   align-items: center; overflow: auto;
@@ -22,7 +24,9 @@
 #console:is(:fullscreen, [data-immersive]) .immersive-bar { display: flex; position: absolute; top: env(safe-area-inset-top); left: max(14px, env(safe-area-inset-left)); right: max(14px, env(safe-area-inset-right)); height: 56px; align-items: center; justify-content: space-between; gap: 12px; }
 #console .immersive-bar>span { font: 600 10px/1.3 var(--mono); letter-spacing: 1px; color: #526b4d; text-align: center; }
 #console .immersive-bar button { display: inline-flex; position: static; align-items: center; justify-content: center; min-height: 44px; padding: 8px 12px; border: 1px solid #aabda0; border-radius: 7px; background: #f3f4e9; color: #244d3c; font-size: 12px; }
-#console:is(:fullscreen, [data-immersive]) .screen-bezel { display: block; flex: none; padding: 5px; width: min(100%, max(240px, calc((100dvh - 320px - env(safe-area-inset-top) - env(safe-area-inset-bottom)) * 1.5))); height: auto; margin: auto auto 0; border-radius: 7px; }
+#console:is(:fullscreen, [data-immersive]) .screen-bezel { display: block; position: relative; flex: none; padding: 10px 7px 16px; width: min(100%, max(240px, calc((100dvh - 345px - env(safe-area-inset-top) - env(safe-area-inset-bottom)) * 1.5))); height: auto; margin: auto auto 0; border: 2px solid #70776d; border-radius: 14px 14px 30px 14px; background: #5b6468; box-shadow: inset 1px 2px 3px #ffffff55, 1px 4px 0 #9ca592; }
+#console:is(:fullscreen, [data-immersive]) .screen-bezel::before { content: ''; position: absolute; left: 10px; right: 10px; top: 4px; height: 2px; background: linear-gradient(to right, #a36e8e 0 65%, transparent 65% 70%, #6c85aa 70%); }
+#console:is(:fullscreen, [data-immersive]) .screen-bezel::after { content: 'TAICHUNG QUEST'; position: absolute; bottom: 3px; right: 18px; color: #d7dfca; font: 6px/1 var(--mono); letter-spacing: 1.3px; }
 #console:is(:fullscreen, [data-immersive]) .screen { width: 100%; height: auto; aspect-ratio: 3/2; }
 #console:is(:fullscreen, [data-immersive]) .physical-controls { display: grid; flex: none; width: min(100%, calc(100vw - 50px)); max-width: 680px; grid-template-columns: 144px minmax(0, 1fr); grid-template-areas: 'pad actions' 'system system'; gap: 10px 12px; padding: 15px 4px 8px; margin: 0 0 auto; }
 #console:is(:fullscreen, [data-immersive]) .dpad { grid-area: pad; }
@@ -60,6 +64,12 @@
 #console #options-feedback.error { color: #963e2a; }
 #console .options-key-help { padding-top: 12px; border-top: 1px solid #c6d1ba; color: #64735b; }
 
+#console:is(:fullscreen, [data-immersive]) .handheld-details { display: flex; position: absolute; left: 28px; right: 32px; bottom: max(34px, env(safe-area-inset-bottom)); height: 46px; align-items: center; justify-content: space-between; pointer-events: none; }
+.handheld-brand { display: flex; flex-direction: column; gap: 4px; color: #424e74; font: 7px/1 var(--mono); letter-spacing: 1.8px; }
+.handheld-brand b { font: italic 700 25px/1 Arial, sans-serif; letter-spacing: -.8px; }
+#console .handheld-details .speaker { margin: 0; gap: 5px; transform: rotate(-18deg); }
+#console .handheld-details .speaker i { width: 4px; height: 42px; border-radius: 4px; background: #adb5a3; box-shadow: inset 1px 1px 2px #75816c88, 1px 1px 0 #f3f4e6; }
 @media(max-width:600px) { #console .immersive-bar>span { display: none; } }
+@media(max-height:700px) { #console:is(:fullscreen, [data-immersive]) .handheld-details { display: none; } }
 .intro h1 { white-space: pre-line; }
 .site-header .language-control select { min-height: 44px; font-size: 11px; }
