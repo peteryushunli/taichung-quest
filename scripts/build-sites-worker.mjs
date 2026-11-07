@@ -13,7 +13,7 @@ const manifest = JSON.parse(await readFile(path.join(root, '.openai/hosting.json
 if (!manifest.project_id || manifest.static != null) throw new Error('Sites Worker requires the existing project ID and no static dispatch configuration.');
 execFileSync('bash', ['scripts/build-site.sh'], { cwd: root, stdio: 'inherit' });
 const cartridge = await verifyCartridge(path.join(dist, 'roms'));
-const types = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.mjs': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8', '.json': 'application/json', '.svg': 'image/svg+xml', '.wasm': 'application/wasm', '.gba': 'application/octet-stream', '.txt': 'text/plain; charset=utf-8' };
+const types = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.mjs': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8', '.json': 'application/json', '.svg': 'image/svg+xml', '.png': 'image/png', '.wasm': 'application/wasm', '.gba': 'application/octet-stream', '.txt': 'text/plain; charset=utf-8' };
 const assets = {};
 const files = {};
 async function collect(directory, prefix = '') {
