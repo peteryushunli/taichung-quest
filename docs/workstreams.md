@@ -19,7 +19,7 @@ The English checkpoint passed actual browser checks for all four level-five star
 | Main session | Parent `main`; game `integration/taichung` | Project root; `vendor/pokefirered` | Integrate reviewed commits, build/release, export the consolidated patch. |
 | Localization agent | Game `feature/zh-tw` | `.worktrees/game-localization` | Chinese renderer, encoding, generated glyphs, native translations, startup language/starter scripts. |
 | Gameplay agent | Game `feature/world-gyms` | `.worktrees/game-world` | Trainer/gym battle mechanisms, encounters, ten-landmark progression and transport. Owns `src/start_menu.c`; no exterior/room geometry edits. |
-| Web/guide agent | Parent `feature/web-guide` | `.worktrees/web-guide` | Browser player, City Map, interface translation, guide data and illustrations. No Site registration or publication calls. |
+| Interface and controls chat | Parent `feature/web-guide` | `.worktrees/web-guide` | Sole web/UI writer after checkpoint `6f42ebc`; desktop/mobile controls, bilingual interface and Vercel preparation. Main retains integration and Site publication. Previous subagent is frozen. |
 | Landmarks chat / mapping owner | Game `feature/city-map` | `.worktrees/game-mapping` | Actual district grids, landmark blockouts, paths/collision, connections, room geometry/warps, and arrival/drop-off anchors. |
 | Story and characters chat | Shared local content only | `content/story/`; optional `assets/story/` | Bilingual narrative/cast proposals and structured dialogue; no engine, map, browser, font or shared Git mutations. |
 
