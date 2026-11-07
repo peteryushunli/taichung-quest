@@ -6,11 +6,11 @@ The main session owns integration, source-patch export, the canonical ROM, publi
 
 - Upstream game baseline: `ce6406d8c2eaf46d543c8a2606de0c3cb1951982`.
 - Local game checkpoint: `1c8d243002fb4d36f2ef28e217e46f17235dff80` on `integration/taichung`.
-- Parent project checkpoint: recorded after the initial parent commit and web worktree creation.
+- Parent project checkpoint: `b00ed77e901b8f75917dc8466785560bb74df86b` on `main`.
 - Current compiled ROM: SHA-1 `8d0b2a311d40e14cfff035df28f9506e4801f569`, 16 MiB. Source commit and digests are emitted into the ignored ROM `build.json`.
 - Preserved working English ROM: `artifacts/taichung-before-bilingual.gba`, SHA-1 `c73d860e373eb7255cddcea2c10c5e1a37886406`.
 
-The English checkpoint passed actual browser checks for all four level-five starters, cancellation protection, native Save/Continue, free exploration without the tea errand, and a wild encounter. The current bilingual checkpoint compiles and has passed actual Chinese greeting/starter/menu rendering and bicycle mount/dismount checks. Language-switch and indoor-bike checks are in progress. The 24×28 map passes reachability, doors, NPC, and route validation.
+The English checkpoint passed actual browser checks for all four level-five starters, cancellation protection, native Save/Continue, free exploration without the tea errand, and a wild encounter. The bilingual checkpoint compiles and passed actual Chinese greeting/starter/menu rendering, bicycle mount/dismount, dynamic Get off labels, indoor riding rejection with restored controls, and switching native language while preserving party and position. The 24×28 map passes reachability, doors, NPC, and route validation. Runtime screenshots are preserved under ignored `artifacts/qa-native-*.jpg`.
 
 ## Worktree ownership
 
@@ -21,7 +21,9 @@ The English checkpoint passed actual browser checks for all four level-five star
 | World/gameplay agent | Game `feature/world-gyms` | `.worktrees/game-world` | Map layout/collision and native bicycle/menu gameplay. Owns `src/start_menu.c`; coordinate language callback/labels with localization. |
 | Web/guide agent | Parent `feature/web-guide` | `.worktrees/web-guide` | Browser player, City Map, interface translation, guide data and illustrations. No Site registration or publication calls. |
 
-The two game worktrees have been created at the local game checkpoint. The web/guide worktree follows the initial parent checkpoint. All `.worktrees/` paths are ignored by the public source repository. The game repository's wholesale source/assets and local commits remain local; the public project contains the consolidated patch, original additions, pinned references, and build workflow.
+All three feature worktrees have been created and verified: both game worktrees start at `1c8d243`, and web/guide starts at `b00ed77`. All `.worktrees/` paths are ignored by the public source repository. The game repository's wholesale source/assets and local commits remain local; the public project contains the consolidated patch, original additions, pinned references, and build workflow.
+
+Current bounded handoffs: localization verifies canonical regeneration and saved language persistence; world/gameplay verifies a fully isolated build and records map/bike contracts; web/guide verifies the bilingual companion map, pause/resume, and font attribution. Feature commits are reviewed and integrated by the main session before the release artifact is rebuilt.
 
 ## Build and handoff contract
 

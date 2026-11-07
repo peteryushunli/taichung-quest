@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Render source metatiles for map QA; this is not the browser game renderer."""
 import argparse
+import hashlib
 import json
 import os
 import struct
@@ -9,6 +10,9 @@ from PIL import Image, ImageDraw
 
 ROOT = Path(__file__).resolve().parents[1]
 GAME = Path(os.environ.get('TAICHUNG_GAME_SOURCE', ROOT / 'vendor/pokefirered')).resolve()
+DEFAULT_OUTPUT = ROOT / 'docs/taichung-map.png'
+if GAME != (ROOT / 'vendor/pokefirered').resolve():
+    DEFAULT_OUTPUT = ROOT / 'artifacts/worktrees' / hashlib.sha256(str(GAME).encode()).hexdigest()[:12] / 'taichung-map.png'
 
 
 def words(path):
@@ -52,7 +56,7 @@ def render_metatiles():
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--output', default=str(ROOT / 'docs/taichung-map.png'))
+    parser.add_argument('--output', default=str(DEFAULT_OUTPUT))
     parser.add_argument('--atlas', action='store_true')
     parser.add_argument('--grid', action='store_true')
     args = parser.parse_args()
