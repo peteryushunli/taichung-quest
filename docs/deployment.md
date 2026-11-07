@@ -6,12 +6,30 @@ The existing owner-private Site published successfully on 7 November 2026.
 Its audience was preserved; the public GitHub repository is a separate source
 publication and excludes generated ROMs, saves, tools and in-progress drafts.
 
-- Site version: 3 (hosted emulator startup fix).
-- Published source: `701adb53f5c98c813f4e71ae8e434ae813053147`.
+- Site version: 5 (Pokémon/Taichung introduction and portrait Game Boy view).
+- Published source: `2d43fb203ac60b2d68c9c9e0e370b63f3e5b03dd`.
 - Native source: `54fe5af0a30445fddb587dca6532881acc83d18b`.
 - ROM SHA-1: `ae0ada352b1cd0b0d281c09fdde42a95446c9b4f`.
-- Static build includes the matching ROM metadata, same-origin emulator assets,
-  runtime/font license notices and declared COOP/COEP response headers.
+- Worker build includes the matching ROM metadata, same-origin emulator assets,
+  runtime/font license notices and explicit COOP/COEP response headers.
+
+Version 4 integrated the functional introduction/immersive view from `5c1bc72`
+at source `f91c6fb4c5975b5ab2ec4d82249adabb9c8ccb70`. Version 5 adds the
+CSS-only Game Boy casing from `a32b228`. Play immediately fills the viewport
+and requests native fullscreen, with a CSS fallback; options, City Map and
+Back/Return retain the same live canvas. Startup failures appear beside Play.
+The phone layout follows the user's later portrait-only direction.
+
+Version 5 deployment `appgdep_6aeec224b2a481919b2aead96c5c2b0f` succeeded at
+14:16 Taipei time on 7 November 2026. Main verified the deployed JS/CSS hashes
+against the built files and checked isolation headers again. The combined
+source passed TypeScript, production build, 13 unit tests and 39 complete
+Worker asset-response checks. Interface's expanded browser fixture passed
+13/13 cases. Main also checked the integrated 390×844 view, options,
+Back/Return and CSS fallback in the local browser. See
+[immersive-player-validation.md](immersive-player-validation.md) and
+[gameboy-casing-review.md](gameboy-casing-review.md). Physical-phone coverage of
+these new view changes remains separate from the confirmed version-3 startup.
 
 The owner confirmed on iPhone Chrome after refreshing version 3: **“Yes, the
 game starts.”** Hosted startup now has physical-phone user confirmation.
