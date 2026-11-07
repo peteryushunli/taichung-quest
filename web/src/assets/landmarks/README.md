@@ -1,13 +1,15 @@
 # Introduction landmark artwork
 
-These PNGs are unchanged copies of the mapping owner's existing, user-approved architectural directions, converted to native pixel artwork. Source checkout: `.worktrees/game-mapping`, relative to the project root. The gallery below the player labels them **landmark art**; they are not screenshots or a promise that all four facades are in the published ROM.
+These PNGs are unchanged copies of the mapping owner's existing, user-approved architectural directions, converted to native pixel artwork. Source checkout: `.worktrees/game-mapping`, relative to the project root. The gallery below the player labels them **landmark art**. The table records the accepted integrated candidate's native status; Main owns publication of that candidate.
 
-| Web asset | Source under `data/taichung/landmarks/` | Pixels | Native status at copy |
+| Web asset | Source under `data/taichung/landmarks/` | Pixels | Accepted native status |
 | --- | --- | --- | --- |
-| `old-station.png` | `old-station/native.png` | 192×128 | Isolated ROM entry, return, layering and Save/Continue verified; Main owns release integration. |
-| `theater.png` | `theater/candidate/candidate-native.png` | 256×160 | Approved architecture, encoded candidate; ROM registration/runtime checks pending. |
-| `miyahara.png` | `miyahara/candidate-v2/candidate-native.png` | 160×128 | Approved architecture, finer lattice-preserving candidate; combined bank/integration pending. |
-| `taichung-park.png` | `taichung-park/candidate/candidate-native.png` | 192×128 | Approved architecture, encoded candidate; entrance cleanup/integration pending. |
+| `old-station.png` | `old-station/native.png` | 192×128 | Installed facade and hall; Jun battle playable. |
+| `theater.png` | `theater/candidate/candidate-native.png` | 256×160 | Installed facade and enterable hall; door/return/Continue verified in the actual client. Gym battle remains in development. |
+| `miyahara.png` | `miyahara/candidate-v2/candidate-native.png` | 160×128 | Installed facade and hall; gym battle remains in development. |
+| `taichung-park.png` | `taichung-park/candidate/candidate-native.png` | 192×128 | Installed facade and hall; Lian battle accepted by Main after its native progression/save checks. |
+
+Main accepted Park's battle integration at native `7360766`, after the Theater/cast installation and its client checks. Station and Park are the two playable battles; the other eight challenges remain in development. All ten landmark hosts have installed character art. Final cartridge/bridge metadata and native-contract synchronization remain Main-owned; the gallery PNG bytes and their original source paths below are unchanged.
 
 Copies made 7 November 2026. No photo reference, external URL, generated study, or native map/source mutation is included. Total image payload: 21,606 bytes. Vite imports produce content-hashed, same-origin assets. CSS preserves hard pixels and transparency.
 

@@ -38,3 +38,11 @@ Both headline and copy have Traditional Chinese translations. The existing build
 - At 320×568, English and Traditional Chinese both fit without horizontal overflow; Chinese Play remains 48px tall.
 - The localized intro link still points to `#landmark-art`; the availability paragraph is outside the intro.
 - Review images: `artifacts/interface-qa/intro-pokemon-pitch-en.jpg` and `intro-pokemon-pitch-zh.jpg`.
+
+## Accepted Station and Park readiness copy
+
+Main accepted Park's native battle/progression/save checks and integrated `7360766`, followed by the frozen native source `e65ee871fa62d10d9670e1c4e34602678f1a1d7d`. The bilingual availability paragraph now identifies Station and Taichung Park as the two playable battles, with the other eight challenges still in development. Park alone changes from planned to playable in the guide catalog. Ready gym cards describe speaking to the leader and winning a badge; the Theater card continues to describe an explorable hall and a challenge in development.
+
+Web documentation now records the installed Theater facade/hall and all ten hosts' installed art, and describes Main's authoritative per-release native minimap export instead of the obsolete original Mapper commit. Gallery PNG bytes and original source paths are unchanged. Root README and native-contract synchronization remain Main-owned.
+
+Production TypeScript/Vite build and all 28 existing tests pass. A source/catalog consistency check confirms exactly two playable battles, eight planned challenges, matching English translation keys/content and a Chinese counterpart. Browser verification of the final frozen cartridge and readiness text waits for Main's explicit UI handoff; it is not claimed by these file checks.

@@ -91,7 +91,7 @@ export function createCityGuide(host: GuideHost) {
     if (officialUrl.protocol !== 'https:') throw new Error('Landmark information must use a secure official visitor URL.');
     const areaLabel = !place.playable ? 'PLANNED AREA · NOT PLAYABLE' : place.phase === 'arrival' ? 'ARRIVAL AREA · EXPLORABLE' : 'EXPLORABLE GAME AREA';
     const areaNote = place.playable ? 'Explore this landmark’s district and visitor hall.' : 'This landmark is in the city plan; its game area is not playable in this build.';
-    const gymNote = place.gymStatus === 'playable' ? 'A prototype gym battle is playable here. Talk to the hall host. Its leader and team are provisional.' : place.gymStatus === 'pending-verification' ? 'This gym challenge is being verified. The district and visitor hall are explorable.' : 'This landmark’s fictional gym challenge is still in development.';
+    const gymNote = place.gymStatus === 'playable' ? 'A gym battle is playable here. Speak to the leader and win to earn a badge.' : place.gymStatus === 'pending-verification' ? 'This gym challenge is being verified. The district and visitor hall are explorable.' : 'This landmark’s fictional gym challenge is still in development.';
     const artLabel = chinese ? `${place.nameZh}原創插圖` : `Original illustration of ${place.nameEn}`;
     dialog.querySelector('#landmark-detail')!.innerHTML = `
       <div class="landmark-art">${landmarkSketch(place.id, artLabel)}<span>${t('ORIGINAL FIELD SKETCH')}</span></div>
