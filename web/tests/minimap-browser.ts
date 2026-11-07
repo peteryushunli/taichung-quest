@@ -2,6 +2,7 @@ import '../src/minimap.css';
 import { createMinimap } from '../src/minimap';
 import { initializeLocalization, languageControl, onLocaleChange, setLocale } from '../src/i18n';
 import geometry from '../src/data/minimap-contract.json';
+import landmarkCatalog from '../src/data/landmarks.json';
 import type { NavigationSnapshot } from '../src/navigation-bridge';
 
 document.querySelector('#locale')!.innerHTML = languageControl('fixture-language');
@@ -80,9 +81,44 @@ document.querySelector<HTMLButtonElement>('#run')!.addEventListener('click', () 
     showField({ ...field, mapNumber: 99 });
     assert(button.hidden, 'Unknown native map was rendered');
   });
+  check('all ten compact names fit the minimum HUD width in both languages', () => {
+    const previousWidth = screen.style.width;
+    screen.style.width = '240px';
+    try {
+      for (const locale of ['en', 'zh-Hant'] as const) {
+        setLocale(locale);
+        const shown = new Set<string>();
+        for (const marker of Object.values(geometry.markersById)) {
+          const map = geometry.mapsByNativeKey[marker.exteriorNativeKey as keyof typeof geometry.mapsByNativeKey];
+          const [mapGroup, mapNumber] = marker.exteriorNativeKey.split(':').map(Number);
+          showField({ ...field, mapGroup, mapNumber, width: map.width, height: map.height, x: marker.localEntrance[0], y: marker.localEntrance[1] });
+          const label = button.querySelector<HTMLElement>('.minimap-context')!;
+          const place = landmarkCatalog.find((entry) => entry.id === marker.id)!;
+          const fullName = locale === 'en' ? place.nameEn : place.nameZh;
+          assert(label.scrollWidth <= label.clientWidth, `${locale} ${marker.id} clips at ${label.clientWidth}px`);
+          assert(button.title.includes(fullName) && button.getAttribute('aria-label')!.includes(fullName), 'Full landmark identity was lost');
+          shown.add(label.textContent!);
+        }
+        assert(shown.size === 10, 'Compact names must distinguish all ten landmarks');
+      }
+    } finally { screen.style.width = previousWidth; setLocale('en'); showField(); }
+  });
+  check('indoor badge preserves landmark name and HUD size, then clears on hidden state', () => {
+    showField();
+    const before = button.getBoundingClientRect();
+    showField({ ...field, flags: 23, mapNumber: 3, x: 6, y: 5, width: 13, height: 16, mapType: 8 });
+    const badge = button.querySelector<HTMLElement>('.minimap-indoor')!;
+    const after = button.getBoundingClientRect();
+    assert(!badge.hidden && badge.textContent === 'Indoors', 'Expected visible indoor status');
+    assert(button.querySelector('.minimap-context')!.textContent === 'Old Station', 'Indoor prefix displaced landmark identity');
+    assert(before.width === after.width && before.height === after.height, 'Indoor status expanded the HUD');
+    hud.update({ phase: 'hidden' });
+    assert(badge.hidden && !badge.textContent, 'Hidden state retained an indoor label');
+  });
   check('language refresh preserves the same HUD and localizes landmark context', () => {
     showField(); setLocale('zh-Hant');
-    assert(screen.querySelector('#live-minimap') === button && button.textContent!.includes('舊臺中車站'), 'Chinese context or node identity failed');
+    assert(screen.querySelector('#live-minimap') === button && button.querySelector('.minimap-context')!.textContent === '舊車站', 'Chinese context or node identity failed');
+    assert(button.getAttribute('aria-label')!.includes('舊臺中車站'), 'Full Chinese name was lost');
   });
   check('tapping the minimap opens the existing City Map action once', () => {
     const before = opened;

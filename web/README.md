@@ -55,7 +55,7 @@ Browser saves belong to the current origin. Downloads provide a portable backup 
 
 ## Live minimap
 
-The compact north-up HUD sits in the upper-left of the game viewport. Game options has a bilingual Minimap On/Off selector, defaulting On and remembering the choice in browser storage. Tapping a visible minimap opens the existing City Map and pauses/releases game input. The accepted portrait controls do not move.
+The compact north-up HUD sits in the upper-left of the game viewport. Its footer uses unique compact landmark names in both languages; the tooltip and accessible name retain the official full name. Indoor status has a separate badge without increasing the HUD footprint. Game options has a bilingual Minimap On/Off selector, defaulting On and remembering the choice in browser storage. Tapping a visible minimap opens the existing City Map and pauses/releases game input. The accepted portrait controls do not move.
 
 Live output requires matching `/roms/build.json` metadata: the loaded cartridge's exact SHA-256 and byte count, `navigationBridge` version 1 / size 48/magic/symbol address, and `minimap.schemaVersion=1` with the bundled mapper geometry fingerprint. Missing or incompatible metadata keeps the HUD hidden and D labeled Back. No demo packet or fallback player coordinate exists in the production app.
 
@@ -63,7 +63,7 @@ Live output requires matching `/roms/build.json` metadata: the loaded cartridge'
 
 `data/minimap-contract.json` is the exact Mapper 42dd4a2 export: three districts, ten gym entrances and the Station welcome room. Exterior tiles project through their authored world origins. Indoors use the explicit parent entrance with an indoor label; room coordinates never become city coordinates. Unknown maps, wrong layout dimensions and out-of-bounds tiles hide the marker. Native `CAN_TOGGLE_BIKE` alone permits Bike/Get off labels on a fresh mapped outdoor snapshot; the actual B-button latch/speed/eligibility remains native-owned.
 
-`npm test` covers protocol coherence, freshness, exact build binding and every mapped exterior tile. `npm run build:control-tests` additionally emits `/control-tests/minimap-browser.html` with clearly labeled simulated data and nine UI checks, alongside the existing thirteen input/view checks. A normal production build removes these fixtures. See `docs/minimap-validation.md` for proof and remaining actual-ROM checks.
+`npm test` covers protocol coherence, freshness, exact build binding and every mapped exterior tile. `npm run build:control-tests` additionally emits `/control-tests/minimap-browser.html` with clearly labeled simulated data and eleven UI checks, alongside the existing thirteen input/view checks. A normal production build removes these fixtures. See `docs/minimap-validation.md` for proof and remaining actual-ROM checks.
 
 Emulator snapshots are namespaced by the first 16 hexadecimal characters of the actual cartridge's SHA-256 digest. A rebuilt ROM therefore starts without restoring incompatible CPU/memory state from another build. The normal in-game `.sav` path stays stable so Continue remains available across builds. Older snapshots are retained, while obsolete downloaded cartridge copies are removed from IndexedDB to avoid storing another 16 MB for every build.
 

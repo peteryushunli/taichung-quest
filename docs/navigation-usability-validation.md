@@ -25,3 +25,19 @@ Before/after review artifacts (ignored):
 - Existing full map demo: `released-city-map-desktop.jpg` and `released-city-map-card-portrait.jpg`.
 
 Existing demo actions: click/tap the live minimap or the separate City Map button. On desktop, select a marker and Escape returns to play. On mobile, select a named landmark and use Back to adventure below its card; × closes the overview directly. The next-cycle target-size fix is not required for or installed in the current live demo.
+
+## Compact landmark names
+
+The live HUD's full landmark names clipped at its smallest width. The footer now uses ten distinct compact English and Traditional Chinese names from the shared landmark catalog. For example, National Taichung Theater appears as “Theater” and the National Museum of Natural Science as “Science.” Official full names remain in the tooltip and accessible button name; the full City Map keeps its existing names.
+
+Indoor status moves to a separate badge inside the existing HUD, leaving the footer available for the place name. Native indoor anchoring, location freshness, guide action, Off/On preference and geometry/build checks are unchanged. The badge and cached landmark identity clear when native location becomes unavailable.
+
+Verification:
+
+- TypeScript/Vite production build passes and all 26 unit checks pass.
+- The isolated browser fixture passes 11/11 checks at 320×568 and 390×844. These include all ten labels in both languages at the minimum 64px HUD width / 56px footer, unique names, and retention of every official full accessible name.
+- At the minimum width, switching from field to indoors keeps the HUD at 64×78.4px. At 390px, the fixture HUD stays 77.4×91.8px before and after the badge appears.
+- This is presentation verification with explicitly simulated navigation. Acceptance against the next frozen Theater/Park ROM and its exact metadata remains separate.
+- The final normal build removes the development fixtures from the production output.
+
+Review images (ignored): `artifacts/interface-qa/minimap-name-after-en-320.jpg`, `minimap-indoor-after-en-320.jpg` and `minimap-indoor-after-en-390.jpg`.

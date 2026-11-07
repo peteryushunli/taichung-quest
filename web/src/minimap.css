@@ -11,6 +11,7 @@
 .minimap-player.indoors circle { stroke-dasharray: 2 1; }
 .live-minimap text { fill: #3b5c42; font: 9px Arial, sans-serif; }
 .minimap-context { display: block; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; margin: 3px 0 1px; font: 8px/1.3 Arial, sans-serif; }
+.minimap-indoor { position: absolute; top: 4px; right: 4px; padding: 1px 3px; border-radius: 2px; background: #f2f1dd; color: #365840; font: 8px/1.3 Arial, sans-serif; }
 .live-minimap:focus-visible { outline: 2px solid #b54832; outline-offset: 2px; }
 .minimap-setting { display: grid; grid-template-columns: 1fr auto; gap: 8px; margin-top: 16px; padding-top: 16px; border-top: 1px solid #c6d1ba; font-size: 13px; align-items: center; }
 .minimap-setting select { min-height: 44px; min-width: 100px; padding: 8px; border: 1px solid #b5c5a8; border-radius: 6px; background: #e8ecde; color: #244d3c; font-size: 14px; }
