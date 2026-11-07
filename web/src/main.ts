@@ -52,8 +52,8 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
   </header>
   <main>
     <section class="intro" aria-labelledby="page-title">
-      <div><p class="eyebrow" data-i18n="POKÉMON × TAICHUNG">POKÉMON × TAICHUNG</p><h1 id="page-title" data-i18n="Your Pokémon.&#10;A whole new Taichung.">Your Pokémon.<br>A whole new Taichung.</h1></div>
-      <div class="intro-copy"><p><span data-i18n="Choose Charmander, Bulbasaur, Squirtle or Pikachu, then explore a miniature Taichung. Discover ten real landmarks and their fictional Pokémon gyms.">Choose Charmander, Bulbasaur, Squirtle or Pikachu, then explore a miniature Taichung. Discover ten real landmarks and their fictional Pokémon gyms.</span> <a class="landmark-intro-link" href="#landmark-art" data-i18n="Preview the landmark art.">Preview the landmark art.</a></p><p class="prototype-scope" data-i18n="Three districts and ten visitor halls are open. The Station gym has a playable battle; the other nine challenges are still being built.">Three districts and ten visitor halls are open. The Station gym has a playable battle; the other nine challenges are still being built.</p><button class="start-button" id="landing-play-button">${icon('play')} <span>Play Pokémon × Taichung</span></button></div>
+      <div><p class="eyebrow" data-i18n="POKÉMON × TAICHUNG">POKÉMON × TAICHUNG</p><h1 id="page-title" data-i18n="Explore Taichung.&#10;The Pokémon way.">Explore Taichung.<br>The Pokémon way.</h1></div>
+      <div class="intro-copy"><p><span data-i18n="Step into a Pokémon world built around Taichung. Explore real landmarks reimagined as gyms, battle their leaders, and collect badges across the city.">Step into a Pokémon world built around Taichung. Explore real landmarks reimagined as gyms, battle their leaders, and collect badges across the city.</span> <a class="landmark-intro-link" href="#landmark-art" data-i18n="Discover the landmarks.">Discover the landmarks.</a></p><button class="start-button" id="landing-play-button">${icon('play')} <span>Play Pokémon × Taichung</span></button></div>
     </section>
     <div class="adventure-layout">
       <section class="game-column" aria-label="Playable game">
@@ -87,6 +87,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
           <div class="toolbar-group"><button id="save-button" class="tool-button" disabled>${icon('save')} <span data-i18n="Save spot">Save spot</span></button><button id="restart-button" class="tool-button" disabled aria-label="Restart game">${icon('restart')} <span data-i18n="Restart">Restart</span></button></div>
         </div>
         <p class="feedback" id="feedback" role="status" aria-live="polite">${savedAt ? 'Your last saved spot is waiting in this browser.' : 'Begin at the old station. Get to know Taichung, one landmark at a time.'}</p>
+        <p class="prototype-scope" data-i18n="Three districts and ten visitor halls are open. The Station gym has a playable battle; the other nine challenges are still being built.">Three districts and ten visitor halls are open. The Station gym has a playable battle; the other nine challenges are still being built.</p>
         <section class="landmark-gallery" id="landmark-art" aria-labelledby="landmark-art-title" tabindex="-1">
           <div class="landmark-art-heading"><h2 id="landmark-art-title" data-i18n="A little Taichung, in pixels.">A little Taichung, in pixels.</h2><span data-i18n="LANDMARK ART">LANDMARK ART</span></div>
           <div class="landmark-art-grid">
