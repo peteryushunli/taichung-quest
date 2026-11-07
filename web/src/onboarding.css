@@ -44,3 +44,13 @@
 .language-choice-card small:lang(zh-Hant) { font-size: 13px; line-height: 1.6; }
 .coach-illustration figcaption:lang(zh-Hant) { font-size: 13px; }
 .coach-availability:lang(zh-Hant) { font-size: 14px; }
+
+@media (max-height: 620px) {
+  .onboarding-dialog { padding-top: 16px; padding-bottom: 16px; }
+  .onboarding-dialog .onboarding-eyebrow { margin-bottom: 10px; }
+  .onboarding-dialog h2 { margin-bottom: 10px; }
+  .language-choice-subtitle { margin-bottom: 12px; }
+  .onboarding-dialog .onboarding-copy { margin-bottom: 16px; }
+  .onboarding-actions { margin-top: 16px; }
+  .coach-illustration { margin-top: 16px; padding-top: 12px; padding-bottom: 10px; }
+}
