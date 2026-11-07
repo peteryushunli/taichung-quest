@@ -76,3 +76,18 @@ test('deployment binds the bundled geometry and rejects missing, mismatched or s
     assert.equal((await verifyCartridge(directory, { geometryFile })).sha256, metadata.sha256);
   } finally { await rm(directory, { recursive: true, force: true }); }
 });
+
+test('legacy cartridges remain valid while optional onboarding metadata must match its bounded protocol', async () => {
+  const { directory, metadata, writeMetadata } = await fixture();
+  const onboardingBridge = { version: 1, size: 48, address: 0x0203d000, magicA: 0x4e494354, magicB: 0x314f5254 };
+  try {
+    await writeMetadata(metadata);
+    assert.equal((await verifyCartridge(directory)).onboardingBridge, undefined);
+    await writeMetadata({ ...metadata, onboardingBridge });
+    assert.deepEqual((await verifyCartridge(directory)).onboardingBridge, onboardingBridge);
+    for (const change of [{ version: 2 }, { size: 32 }, { magicA: 0 }, { address: 0x0203fff0 }, { address: 0x02000001 }]) {
+      await writeMetadata({ ...metadata, onboardingBridge: { ...onboardingBridge, ...change } });
+      await assert.rejects(verifyCartridge(directory), /onboarding-bridge metadata/);
+    }
+  } finally { await rm(directory, { recursive: true, force: true }); }
+});

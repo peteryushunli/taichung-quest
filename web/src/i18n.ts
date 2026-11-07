@@ -8,6 +8,26 @@ const listeners = new Set<(change: LocaleChange) => void>();
 const boundControls = new WeakSet<HTMLSelectElement>();
 
 const zh: Record<string, string> = {
+  'The opening connection is unavailable. Use Interact to continue with the game’s language menu.': '開場連線暫時無法使用。請按「互動／確認」，從遊戲內的語言選單繼續。',
+  'Choose your language in the game to continue. You can switch it later in Game options.': '請從遊戲內的語言選單繼續。之後也能在遊戲選項中切換。',
+  'Connecting your language choice…': '正在設定開場語言…',
+  'Choose a language when you’re ready to begin.': '準備好出發時，再選擇你的語言。',
+  'YOUR TAICHUNG FIELD GUIDE': '你的台中冒險指南',
+  'See the city on two wheels.': '騎上單車，探索這座城市。',
+  'After your guide finishes, tap Bike or press D to ride. Use the D-pad or arrow keys to steer, then tap Get off to walk again.': '導覽結束後，點選「騎車」或按 D 就能騎上單車。使用方向鍵移動，再點選「下車」即可步行。',
+  'A little map, a bigger adventure.': '一張小地圖，展開大冒險。',
+  'The minimap helps you find your way while exploring. Tap it or City Map to see all ten landmarks. City Map still works when the minimap is off.': '探索時，小地圖會幫你辨認方向。點選小地圖或「城市地圖」，就能查看十個地標。關閉小地圖後，仍可使用城市地圖。',
+  'Your starter is just the beginning.': '初始夥伴，只是冒險的開始。',
+  'Open Menu, then Team to choose Pokémon for free. Try different companions and build a party you love as you explore Taichung.': '開啟「選單」，再選「隊伍」，就能免費選擇寶可夢。探索台中的同時，也可以隨時嘗試不同夥伴，組成喜歡的隊伍。',
+  'Taichung is yours to discover.': '台中的故事，等你親自發現。',
+  'Old Taichung Station, Miyahara and Taichung Park are nearby. Visit their halls, meet the hosts, and use City Map to see which gym challenges are open.': '舊臺中車站、宮原眼科與臺中公園就在附近。走進地標大廳、認識接待員，也能從城市地圖查看哪些道館已開放挑戰。',
+  'Team': '隊伍',
+  'Tutorial illustration · your adventure is paused': '導覽示意圖・冒險已暫停',
+  'These controls become available when your guide finishes.': '導覽結束後，就能使用這些功能。',
+  'Returning to your guide…': '正在返回導覽…',
+  'Continue later': '稍後繼續',
+  'Let’s explore': '出發探索',
+  'Next tip': '下一個提示',
   'POKÉMON × TAICHUNG': '寶可夢 × 台中',
   'A little Taichung, in pixels.': '一座像素台中，等你探索。',
   'LANDMARK ART': '地標美術',
@@ -202,6 +222,12 @@ const zh: Record<string, string> = {
 };
 
 export function getLocale() { return locale; }
+export function getRememberedLocale(): Locale | undefined {
+  try {
+    const value = localStorage.getItem(STORAGE_KEY);
+    return value === 'en' || value === 'zh-Hant' ? value : undefined;
+  } catch { return undefined; }
+}
 export function t(english: string) { return locale === 'zh-Hant' ? (zh[english] ?? english) : english; }
 
 export function localizeTree(root: ParentNode = document) {
