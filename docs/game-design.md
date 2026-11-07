@@ -10,6 +10,12 @@ The existing West District / Calligraphy Greenway prototype is the first playabl
 
 Geography should support exploration: short connections between memorable destinations, a readable route structure, and a clear distinction between buildings, safe circulation space, and encounter areas. This is a design recommendation; exact topology is still to be chosen.
 
+### Landmark scope update
+
+After reviewing the real-location map, the user excluded **Gaomei Wetlands** and **Dajia Jenn Lann Temple**. **Luce Memorial Chapel** and **Dakeng** are likely exclusions and are on hold, not definitively rejected. Omit all four from the current working-map comparison and do not schedule work for the tentative pair unless the user restores them.
+
+The remaining comparison pool is urban Taichung: the Theater, Greenway/Civic Square, Old Station, Taichung Park, Fengjia, Science Museum, plus Miyahara, Shen Ji New Village, and the Fine Arts Museum as additional candidates. This is not confirmation of all nine, and it does not set the final gym count. The previously proposed coastal and hill districts are no longer mandatory map requirements. See `landmark-shortlist.md` for the working roster.
+
 ## Player-facing city map and landmark guide
 
 The game must provide an accessible city-map feature that helps players understand Taichung's landmarks. Promoting the real city is part of its purpose, so the map should do more than provide navigation or gym locations.

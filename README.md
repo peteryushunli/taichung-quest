@@ -39,7 +39,9 @@ For a deployment build, run `bash scripts/build-site.sh` from the root after bui
 
 ## First playable scope
 
-Choose Charmander, Bulbasaur, Squirtle, or Pikachu, then explore a small daytime Greenway neighborhood with a plaza, tea shop, and optional local errand. Changes to the game map must retain valid collisions, door warps, and NPC positions. English dialogue and Romanized place names fit the original game's font; Traditional Chinese needs a separate font and text-engine project.
+Choose English or Traditional Chinese and one of Charmander, Bulbasaur, Squirtle, or Pikachu, then explore a small daytime Greenway neighborhood with a plaza, tea shop, and optional local errand. The native menu includes immediate Bike/Get off and language switching. The companion City Map explains five researched example landmarks and distinguishes the playable area from guide previews.
+
+Native Traditional Chinese covers the custom Taichung content, starter/menu actions and common save/battle labels. Original FireRed story, Pokémon/move names and many detail screens remain English. The browser/guide and ROM currently have independent, clearly labeled language controls. See [docs/native-localization.md](docs/native-localization.md) for exact coverage.
 
 ## Design input
 

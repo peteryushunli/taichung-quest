@@ -8,6 +8,23 @@ The user has explicitly directed the main build chat to checkpoint current work 
 
 The reconstructed FireRed source compiles locally. The unmodified build matched the original FireRed SHA-1, and a modified game image has been produced. Browser boot, the fast four-starter opening, and playability are still being verified. There is no remaining general-purpose ROM-to-source conversion step.
 
+## Next dependency: landmark selection
+
+The user is selecting landmarks in a separate session and wants that choice settled before downstream content is committed. Do not repeat the landmark discussion in this design/process chat or assume a researched shortlist is approved.
+
+The next content milestone is an approved landmark roster with first-release scope. Its lightweight handoff should identify each chosen place, a stable ID, English/Traditional Chinese display names, approximate placement or district, a visual reference, and whether it belongs in the first release or later. Missing optional details should remain explicit rather than being invented as final decisions.
+
+Use one approved landmark catalog shared by world mapping, gyms, art, scripts, localization, and the visitor guide. Avoid independent lists that drift. Once the roster and first-release scope are approved, map placement, art briefs, and landmark-specific writing/translation can proceed in parallel against those IDs. Gym teams, final dialogue, and polished art need not all be resolved before that handoff.
+
+While selection is pending:
+
+- **Integration:** maintain the working ROM/browser baseline, merge bounded infrastructure fixes, and keep source/build isolation reliable.
+- **World/gameplay:** continue reusable gym, encounter, movement, and map-generation mechanisms; preserve the existing prototype. Defer final city topology, bespoke landmark interiors, and landmark-specific art commitments.
+- **Localization:** continue fonts, text rendering, language switching, common menus, and translation tooling. Defer bulk translation of unapproved landmark names, biographies, and story scripts.
+- **Web/guide:** continue the map/guide component, catalog schema, cards, controls, saves, and deployment. Existing example markers must remain provisional; defer finalized landmark positions, images, and visitor copy.
+
+Execution sequence: **approved roster and first-release scope → shared landmark catalog → parallel map/art/content/localization work → integrated playable release**. This is a content dependency, not a request to pause the main session or generic systems work.
+
 ## Independent workstreams
 
 | Stream | Deliverable | Dependency / boundary |
