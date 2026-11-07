@@ -53,16 +53,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
   <main>
     <section class="intro" aria-labelledby="page-title">
       <div><p class="eyebrow" data-i18n="POKÉMON × TAICHUNG">POKÉMON × TAICHUNG</p><h1 id="page-title" data-i18n="Your Pokémon.&#10;A whole new Taichung.">Your Pokémon.<br>A whole new Taichung.</h1></div>
-      <div class="intro-copy"><p data-i18n="Choose Charmander, Bulbasaur, Squirtle or Pikachu, then explore a miniature Taichung. Discover ten real landmarks and their fictional Pokémon gyms.">Choose Charmander, Bulbasaur, Squirtle or Pikachu, then explore a miniature Taichung. Discover ten real landmarks and their fictional Pokémon gyms.</p><p class="prototype-scope" data-i18n="Three districts and ten visitor halls are open. The Station gym has a playable battle; the other nine challenges are still being built.">Three districts and ten visitor halls are open. The Station gym has a playable battle; the other nine challenges are still being built.</p><button class="start-button" id="landing-play-button">${icon('play')} <span>Play Pokémon × Taichung</span></button></div>
-      <div class="intro-landmarks" role="group" aria-labelledby="landmark-art-title">
-        <div class="landmark-art-heading"><p id="landmark-art-title" data-i18n="A little Taichung, in pixels.">A little Taichung, in pixels.</p><span data-i18n="LANDMARK ART">LANDMARK ART</span></div>
-        <div class="landmark-art-grid">
-          <figure class="landmark-postcard station-postcard"><div class="landmark-image"><img src="${oldStationArt}" width="192" height="128" alt="" fetchpriority="high"></div><figcaption><span class="postcard-number" aria-hidden="true">01</span><span data-i18n="Old Taichung Station">Old Taichung Station</span></figcaption></figure>
-          <figure class="landmark-postcard theater-postcard"><div class="landmark-image"><img src="${theaterArt}" width="256" height="160" alt=""></div><figcaption><span class="postcard-number" aria-hidden="true">02</span><span data-i18n="National Taichung Theater">National Taichung Theater</span></figcaption></figure>
-          <figure class="landmark-postcard miyahara-postcard"><div class="landmark-image"><img src="${miyaharaArt}" width="160" height="128" alt=""></div><figcaption><span class="postcard-number" aria-hidden="true">03</span><span data-i18n="Miyahara">Miyahara</span></figcaption></figure>
-          <figure class="landmark-postcard park-postcard"><div class="landmark-image"><img src="${parkArt}" width="192" height="128" alt=""></div><figcaption><span class="postcard-number" aria-hidden="true">04</span><span data-i18n="Taichung Park">Taichung Park</span></figcaption></figure>
-        </div>
-      </div>
+      <div class="intro-copy"><p><span data-i18n="Choose Charmander, Bulbasaur, Squirtle or Pikachu, then explore a miniature Taichung. Discover ten real landmarks and their fictional Pokémon gyms.">Choose Charmander, Bulbasaur, Squirtle or Pikachu, then explore a miniature Taichung. Discover ten real landmarks and their fictional Pokémon gyms.</span> <a class="landmark-intro-link" href="#landmark-art" data-i18n="Preview the landmark art.">Preview the landmark art.</a></p><p class="prototype-scope" data-i18n="Three districts and ten visitor halls are open. The Station gym has a playable battle; the other nine challenges are still being built.">Three districts and ten visitor halls are open. The Station gym has a playable battle; the other nine challenges are still being built.</p><button class="start-button" id="landing-play-button">${icon('play')} <span>Play Pokémon × Taichung</span></button></div>
     </section>
     <div class="adventure-layout">
       <section class="game-column" aria-label="Playable game">
@@ -96,6 +87,15 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
           <div class="toolbar-group"><button id="save-button" class="tool-button" disabled>${icon('save')} <span data-i18n="Save spot">Save spot</span></button><button id="restart-button" class="tool-button" disabled aria-label="Restart game">${icon('restart')} <span data-i18n="Restart">Restart</span></button></div>
         </div>
         <p class="feedback" id="feedback" role="status" aria-live="polite">${savedAt ? 'Your last saved spot is waiting in this browser.' : 'Begin at the old station. Get to know Taichung, one landmark at a time.'}</p>
+        <section class="landmark-gallery" id="landmark-art" aria-labelledby="landmark-art-title" tabindex="-1">
+          <div class="landmark-art-heading"><h2 id="landmark-art-title" data-i18n="A little Taichung, in pixels.">A little Taichung, in pixels.</h2><span data-i18n="LANDMARK ART">LANDMARK ART</span></div>
+          <div class="landmark-art-grid">
+            <figure class="landmark-postcard station-postcard"><div class="landmark-image"><img src="${oldStationArt}" width="192" height="128" alt="" loading="lazy"></div><figcaption><span class="postcard-number" aria-hidden="true">01</span><span data-i18n="Old Taichung Station">Old Taichung Station</span></figcaption></figure>
+            <figure class="landmark-postcard theater-postcard"><div class="landmark-image"><img src="${theaterArt}" width="256" height="160" alt="" loading="lazy"></div><figcaption><span class="postcard-number" aria-hidden="true">02</span><span data-i18n="National Taichung Theater">National Taichung Theater</span></figcaption></figure>
+            <figure class="landmark-postcard miyahara-postcard"><div class="landmark-image"><img src="${miyaharaArt}" width="160" height="128" alt="" loading="lazy"></div><figcaption><span class="postcard-number" aria-hidden="true">03</span><span data-i18n="Miyahara">Miyahara</span></figcaption></figure>
+            <figure class="landmark-postcard park-postcard"><div class="landmark-image"><img src="${parkArt}" width="192" height="128" alt="" loading="lazy"></div><figcaption><span class="postcard-number" aria-hidden="true">04</span><span data-i18n="Taichung Park">Taichung Park</span></figcaption></figure>
+          </div>
+        </section>
       </section>
       <aside class="field-notes" aria-label="Adventure guide">
         <div class="notebook-heading"><span class="eyebrow" data-i18n="A FEW FIELD NOTES">A FEW FIELD NOTES</span><span class="note-number">NO. 01</span></div>

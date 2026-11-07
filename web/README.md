@@ -2,7 +2,7 @@
 
 A Vite + TypeScript frontend for the source-built Taichung FireRed cartridge. The canvas displays the real game running in mGBA WebAssembly.
 
-The introduction showcases four existing pixel landmark assets: Old Station, National Taichung Theater, Miyahara and Taichung Park. It uses a four-column desktop row and a two-column mobile grid, with English/Traditional Chinese captions. Asset provenance and native integration status are recorded in `src/assets/landmarks/README.md`; the gallery is labeled landmark art rather than gameplay screenshots.
+An inline introduction link leads to a gallery directly below the player with four existing pixel landmark assets: Old Station, National Taichung Theater, Miyahara and Taichung Park. It uses four columns on wide desktops and two on mobile or narrower player columns, with English/Traditional Chinese captions. Asset provenance and native integration status are recorded in `src/assets/landmarks/README.md`; the gallery is labeled landmark art rather than gameplay screenshots.
 
 ## Run
 
