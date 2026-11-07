@@ -1,6 +1,6 @@
 # Vercel preparation — separate integration item
 
-This document began as a local configuration handoff. Main has since created and linked the existing-account `taichung-quest` project and deployed the accepted Theater/Park build at https://taichung-quest.vercel.app. A separate Greenway candidate preview is ready; production promotion awaits native/client acceptance. The original GPT Site remains live. See `docs/next-build-integration.md` for release identities and verification limits.
+This document began as a local configuration handoff. Main has since created and linked the existing-account `taichung-quest` project and deployed and verified the Greenway update at https://taichung-quest.vercel.app, after a separate protected preview and native/client acceptance. The original GPT Site remains live. See `docs/next-build-integration.md` for release identities and verification limits.
 
 ## Project configuration
 
