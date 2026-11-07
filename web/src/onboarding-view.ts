@@ -84,6 +84,7 @@ export function createOnboardingView(options: {
   function renderCard() {
     if (!card) return;
     const content = topics[card.topic];
+    coach.lang = getLocale();
     const step = topicOrder.indexOf(card.topic) + 1;
     coach.innerHTML = `<p class="onboarding-eyebrow"><span data-i18n="YOUR TAICHUNG FIELD GUIDE">${t('YOUR TAICHUNG FIELD GUIDE')}</span><span>${step} / 4</span></p>
       <h2 id="outdoor-coach-title" tabindex="-1">${t(content.title)}</h2>
