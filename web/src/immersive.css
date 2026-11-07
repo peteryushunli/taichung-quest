@@ -72,3 +72,9 @@
 @media(max-height:700px) { #console:is(:fullscreen, [data-immersive]) .handheld-details { display: none; } }
 .intro h1 { white-space: pre-line; }
 .site-header .language-control select { min-height: 44px; font-size: 11px; }
+
+/* Keep sound available beside options without covering the game canvas. */
+#console .immersive-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+#console .immersive-bar #game-sound-button { width: 44px; min-width: 44px; height: 44px; padding: 0; }
+#console .immersive-bar .fullscreen-exit { min-width: 0; flex-shrink: 1; }
+@media(max-width:600px) { #console .immersive-bar { gap: 8px; } }

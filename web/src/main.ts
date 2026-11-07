@@ -16,6 +16,8 @@ import type { NavigationState } from './navigation-bridge';
 import { createMinimap } from './minimap';
 import { projectNavigation, secondaryAction } from './minimap-model';
 import minimapGeometry from './data/minimap-contract.json';
+import { createOnboarding } from './onboarding';
+import { parseOnboardingMetadata } from './onboarding-bridge';
 
 type RuntimeFactory = (options: { canvas: HTMLCanvasElement }) => Promise<mGBAEmulator>;
 type RuntimeWindow = Window & { taichungCreateEmulator?: RuntimeFactory };
@@ -55,7 +57,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
     <div class="adventure-layout">
       <section class="game-column" aria-label="Playable game">
         <div class="console" id="console">
-          <div class="immersive-bar"><button id="exit-fullscreen-button" class="fullscreen-exit" data-i18n="Back to introduction">Back to introduction</button><span>POKÉMON × TAICHUNG</span><button id="game-options-button" aria-haspopup="dialog" aria-controls="game-options" data-i18n="Game options">Game options</button></div>
+          <div class="immersive-bar"><button id="exit-fullscreen-button" class="fullscreen-exit" data-i18n="Back to introduction">Back to introduction</button><span>POKÉMON × TAICHUNG</span><div class="immersive-actions"><button id="game-sound-button" disabled aria-label="Sound off" title="Sound off" aria-pressed="true">${icon('mute')}</button><button id="game-options-button" aria-haspopup="dialog" aria-controls="game-options" data-i18n="Game options">Game options</button></div></div>
           <dialog id="game-options" class="player-options" aria-labelledby="game-options-title"><div class="options-heading"><h2 id="game-options-title" data-i18n="Game options">Game options</h2><button data-close-options data-i18n="Close">Close</button></div>${languageControl('player-language')}<div id="options-toolbar-slot"></div><div id="options-save-slot"></div><p id="options-feedback" role="status"></p><p class="options-key-help" data-i18n="Arrow keys move. F interacts or confirms. D goes back. M opens the game menu.">Arrow keys move. F interacts or confirms. D goes back. M opens the game menu.</p></dialog>
           <div class="console-top"><span><i class="power-light"></i> TAICHUNG QUEST</span><span>TAICHUNG CITY · 臺中城區</span></div>
           <div class="screen-bezel">
@@ -79,7 +81,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
           <div class="handheld-details" aria-hidden="true"><span class="handheld-brand">TAICHUNG QUEST<b>GAME BOY</b></span><div class="speaker"><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
         </div>
         <div class="game-toolbar" aria-label="Emulator controls">
-          <div class="toolbar-group"><button id="pause-button" class="tool-button" disabled>${icon('pause')} <span>Pause</span></button><button id="sound-button" class="tool-button" disabled aria-pressed="false">${icon('sound')} <span>Sound on</span></button></div>
+          <div class="toolbar-group"><button id="pause-button" class="tool-button" disabled>${icon('pause')} <span>Pause</span></button><button id="sound-button" class="tool-button" disabled aria-pressed="true">${icon('mute')} <span>Sound off</span></button></div>
           <div class="toolbar-group"><button id="save-button" class="tool-button" disabled>${icon('save')} <span data-i18n="Save spot">Save spot</span></button><button id="restart-button" class="tool-button" disabled aria-label="Restart game">${icon('restart')} <span data-i18n="Restart">Restart</span></button></div>
         </div>
         <details class="save-details"><summary><span data-i18n="Your saved adventures">Your saved adventures</span><span class="details-plus">+</span></summary><p data-i18n="Your spot is saved here every 20 seconds. Keep an extra backup using a game save from the in-game menu.">Your spot is saved here every 20 seconds. Keep an extra backup using a game save from the in-game menu.</p><div class="save-actions"><button id="export-button" disabled><span data-i18n="Download save">Download save</span> ${icon('arrow')}</button><button id="import-button" disabled><span data-i18n="Import save">Import save</span> ${icon('arrow')}</button></div><input type="file" id="save-file" accept=".sav" hidden></details>
@@ -106,11 +108,12 @@ let languageBridge: NativeLanguageBridge | undefined;
 let languageState: LanguageBridgeState | undefined;
 let navigationBridge: NativeNavigationBridge | undefined;
 let navigationState: NavigationState = { phase: 'unavailable' };
+let onboarding: ReturnType<typeof createOnboarding> | undefined;
 let gamePath: string | undefined;
 let starting = false;
 let running = false;
 let paused = false;
-let muted = false;
+let muted = true;
 let saving = false;
 let restarting = false;
 let confirmationOpen = false;
@@ -137,7 +140,7 @@ function setStatus(text: string) { statusText = text; status.textContent = t(tex
 
 function refreshLanguageConnection() {
   const phase = languageState?.phase;
-  const hint = phase === 'discovering' ? 'Connecting to game…' : phase === 'startup' ? 'Choose inside the game first' : phase === 'ready' ? 'Taichung text + City Map' : phase === 'pending' ? 'Queued until gameplay resumes' : phase === 'unavailable' ? 'Game: use its Language menu' : 'Player & City Map';
+  const hint = phase === 'discovering' ? 'Connecting to game…' : phase === 'startup' ? onboarding?.supported ? 'Connecting your language choice…' : 'Choose inside the game first' : phase === 'ready' ? 'Taichung text + City Map' : phase === 'pending' ? 'Queued until gameplay resumes' : phase === 'unavailable' ? 'Game: use its Language menu' : 'Player & City Map';
   document.querySelectorAll<HTMLElement>('[data-language-hint]').forEach((element) => {
     element.dataset.i18n = hint;
     element.dataset.languagePhase = phase ?? 'interface';
@@ -170,10 +173,11 @@ async function connectNativeLanguage(romSha256: string, romBytes: number) {
 }
 
 function canPlayGame() {
-  return running && !paused && !restarting && !confirmationOpen && !cityGuide.isOpen && gameView.immersive && !gameView.optionsOpen && !document.hidden;
+  return running && !paused && !restarting && !confirmationOpen && !cityGuide.isOpen && gameView.immersive && !gameView.optionsOpen && !onboarding?.blocksInput && !document.hidden;
 }
 
 function renderNavigation() {
+  el<HTMLButtonElement>('touch-city-map-button').disabled = restarting || !!onboarding?.blocksCityMap;
   const state: NavigationState = canPlayGame() ? navigationState : { phase: navigationState.phase === 'unavailable' ? 'unavailable' : 'hidden' };
   minimap.update(state);
   const packet = state.phase === 'live' ? state.snapshot : undefined;
@@ -219,7 +223,7 @@ async function connectNativeNavigation(romSha256: string, romBytes: number) {
   }
 }
 
-function focusGame() { if (running && !paused && !restarting && !confirmationOpen && !cityGuide.isOpen && !gameView.optionsOpen && gameView.immersive) canvas.focus({ preventScroll: true }); }
+function focusGame() { if (running && !paused && !restarting && !confirmationOpen && !cityGuide.isOpen && !gameView.optionsOpen && !onboarding?.blocksInput && gameView.immersive) canvas.focus({ preventScroll: true }); }
 
 function confirmAction(title: string, explanation: string, action: string): Promise<boolean> {
   if (confirmationOpen) return Promise.resolve(false);
@@ -339,13 +343,25 @@ async function startGame() {
     if (!window.crossOriginIsolated || typeof SharedArrayBuffer === 'undefined') {
       throw new Error('This preview cannot start the game yet. Try the latest link in Safari or Chrome; the host may need an update.');
     }
-    const response = await fetch(ROM_URL, { cache: 'no-store' });
+    const [response, metadataResponse] = await Promise.all([
+      fetch(ROM_URL, { cache: 'no-store' }),
+      fetch('/roms/build.json', { cache: 'no-store' }).catch(() => undefined),
+    ]);
     if (!response.ok) throw new Error('The game cartridge is still being built. Try again once the Taichung build is ready.');
     const rom = new Uint8Array(await response.arrayBuffer());
     if (rom.length < 192 || rom[0xb2] !== 0x96) throw new Error('The game cartridge is not ready yet. Build the Taichung ROM, then try again.');
     const digest = new Uint8Array(await crypto.subtle.digest('SHA-256', rom));
     const romSha256 = [...digest].map((byte) => byte.toString(16).padStart(2, '0')).join('');
     const buildId = romSha256.slice(0, 16);
+    const metadata = metadataResponse?.ok ? await metadataResponse.json().catch(() => undefined) : undefined;
+    const onboardingMetadata = parseOnboardingMetadata(metadata, romSha256, rom.length);
+    // No native runtime exists yet for the first readable language choice.
+    if (onboarding && !(await onboarding.prepareLanguage(!!onboardingMetadata, !!savedAt || cartridgeBootIntent === 'import'))) {
+      gameView.leave();
+      setStatus('READY WHEN YOU ARE');
+      message('Choose a language when you’re ready to begin.');
+      return;
+    }
     if (!emulator) {
       const createEmulator = await getRuntimeFactory();
       emulator = await createEmulator({ canvas });
@@ -363,6 +379,7 @@ async function startGame() {
         coreCrashedCallback: () => {
           if (restarting) return;
           navigationBridge?.stop();
+          onboarding?.stop();
           setStatus('ADVENTURE INTERRUPTED');
           message('The game stopped unexpectedly. Restart it to return to your saved progress.', true);
         },
@@ -391,6 +408,8 @@ async function startGame() {
       message('Your game is ready. Tap Play when you want to enter.');
       return;
     }
+    // Silence the output before loadGame can start the native audio thread.
+    emulator.setVolume(0);
     if (!emulator.loadGame(gamePath, SAVE_PATH)) throw new Error('The emulator could not open this game cartridge.');
     if (freshCartridgeBoot) {
       bootFromCartridge = false;
@@ -400,15 +419,14 @@ async function startGame() {
     }
     emulator.toggleInput(false);
     emulator.setVolume(muted ? 0 : 0.55);
-    emulator.resumeAudio();
-    void emulator.SDL2?.audioContext?.resume();
+    if (!muted) { emulator.resumeAudio(); void emulator.SDL2?.audioContext?.resume(); }
     running = true;
     paused = false;
     document.body.classList.add('game-active');
     gameInput?.refresh();
     el('start-screen').hidden = true;
     canvas.classList.add('playing');
-    document.querySelectorAll<HTMLButtonElement>('#pause-button, #sound-button, #save-button, #restart-button, #export-button, #import-button').forEach((button) => button.disabled = false);
+    document.querySelectorAll<HTMLButtonElement>('#pause-button, #sound-button, #game-sound-button, #save-button, #restart-button, #export-button, #import-button').forEach((button) => button.disabled = false);
     setStatus('OUT EXPLORING');
     message(freshCartridgeBoot && cartridgeBootIntent ? cartridgeBootIntent === 'import' ? 'Save imported. Choose Continue from the game’s title screen.' : 'Cartridge restarted. Continue your in-game save or begin a new adventure.' : !freshCartridgeBoot && emulator.getAutoSaveState() ? 'Welcome back. Your last saved spot is waiting for you.' : 'New adventures begin at the old station. Use City Map to discover ten landmarks.');
     canvas.focus({ preventScroll: true });
@@ -417,6 +435,9 @@ async function startGame() {
     if (matchMedia('(max-width:800px), (max-width:1000px) and (max-height:540px) and (min-aspect-ratio:6/5)').matches) window.scrollTo({ top: 0, behavior: 'instant' });
     startSaveTimer();
     cityGuide.onGameStarted();
+    // Metadata is already bound to the loaded ROM; don't start a fresh network
+    // round trip while the initialized native startup gate is waiting.
+    onboarding?.attach(onboardingMetadata);
     void connectNativeLanguage(romSha256, rom.length);
     void connectNativeNavigation(romSha256, rom.length);
   } catch (error) {
@@ -438,9 +459,10 @@ function setPaused(value: boolean) {
     emulator.pauseGame();
     void persist();
   } else {
+    // resumeGame also resumes native audio; apply mute before that happens.
+    emulator.setVolume(muted ? 0 : 0.55);
     emulator.resumeGame();
-    if (muted) emulator.setVolume(0);
-    else { emulator.resumeAudio(); void emulator.SDL2?.audioContext?.resume(); }
+    if (!muted) { emulator.resumeAudio(); void emulator.SDL2?.audioContext?.resume(); }
     canvas.focus({ preventScroll: true });
   }
   el('pause-screen').hidden = !paused;
@@ -448,6 +470,7 @@ function setPaused(value: boolean) {
   setStatus(paused ? 'TAKING A BREATHER' : 'OUT EXPLORING');
   gameInput?.refresh();
   refreshNavigation();
+  onboarding?.refresh();
 }
 
 const cityGuide = createCityGuide({
@@ -472,9 +495,16 @@ minimapSetting.innerHTML = '<span id="minimap-label" data-i18n="Minimap">Minimap
 el('options-toolbar-slot').before(minimapSetting);
 const minimap = createMinimap({
   screen: el('screen'), toggle: el<HTMLSelectElement>('minimap-visibility'), hint: el('minimap-hint'), geometry: minimapGeometry,
-  openGuide: () => cityGuide.open(el('live-minimap')),
+  openGuide: () => { if (!onboarding?.blocksCityMap) cityGuide.open(el('live-minimap')); },
 });
-el('touch-city-map-button').addEventListener('click', () => cityGuide.open(el('touch-city-map-button')));
+onboarding = createOnboarding({
+  host: el('console'),
+  getState: () => ({ running, paused, restarting, immersive: gameView.immersive }),
+  getHeap: () => (emulator as LanguageRuntime | undefined)?.getTaichungHeapU8?.(),
+  pause: () => setPaused(true), resume: () => setPaused(false), leaveGame: () => gameView.leave(),
+  releaseInputs, refreshInput: () => { gameInput?.refresh(); renderNavigation(); }, message,
+});
+el('touch-city-map-button').addEventListener('click', () => { if (!onboarding?.blocksCityMap) cityGuide.open(el('touch-city-map-button')); });
 
 function openGame() {
   if (starting || restarting) return;
@@ -497,21 +527,32 @@ async function startNewGame() {
 }
 playButton.addEventListener('click', openGame);
 el('resume-button').addEventListener('click', openGame);
-el('exit-fullscreen-button').addEventListener('click', () => gameView.leave());
+el('exit-fullscreen-button').addEventListener('click', () => { onboarding?.beforeLeave(); gameView.leave(); });
 el('game-options-button').addEventListener('click', () => gameView.openOptions(el('game-options-button')));
 el('pause-button').addEventListener('click', () => {
   if (gameView.optionsOpen) { gameView.closeOptions(); setPaused(false); }
   else setPaused(!paused);
 });
-el('sound-button').addEventListener('click', () => {
-  if (!emulator) return;
+function refreshSoundControls() {
+  const label = t(muted ? 'Sound off' : 'Sound on');
+  el('sound-button').innerHTML = `${icon(muted ? 'mute' : 'sound')} <span>${label}</span>`;
+  el('sound-button').setAttribute('aria-pressed', String(muted));
+  const screenSound = el('game-sound-button');
+  screenSound.innerHTML = icon(muted ? 'mute' : 'sound');
+  screenSound.setAttribute('aria-label', label);
+  screenSound.setAttribute('title', label);
+  screenSound.setAttribute('aria-pressed', String(muted));
+}
+function toggleSound() {
+  if (!emulator || !running || restarting) return;
   muted = !muted;
   emulator.setVolume(muted ? 0 : 0.55);
   if (!muted && !paused) { emulator.resumeAudio(); void emulator.SDL2?.audioContext?.resume(); }
-  el('sound-button').innerHTML = `${icon(muted ? 'mute' : 'sound')} <span>${t(muted ? 'Sound off' : 'Sound on')}</span>`;
-  el('sound-button').setAttribute('aria-pressed', String(muted));
+  refreshSoundControls();
   focusGame();
-});
+}
+el('sound-button').addEventListener('click', toggleSound);
+el('game-sound-button').addEventListener('click', toggleSound);
 el('save-button').addEventListener('click', () => { releaseInputs(); void persist(true); focusGame(); });
 el('restart-button').addEventListener('click', () => { void restartCartridge(); });
 
@@ -529,7 +570,7 @@ async function restartCartridge(importedSave?: Uint8Array) {
   // the running core after a native save in the pinned emulator distribution.
   gameInput?.forgetAll();
   if (saveInterval) { clearInterval(saveInterval); saveInterval = undefined; }
-  document.querySelectorAll<HTMLButtonElement>('#pause-button, #resume-button, #sound-button, #save-button, #restart-button, #import-button, #touch-city-map-button').forEach((button) => button.disabled = true);
+  document.querySelectorAll<HTMLButtonElement>('#pause-button, #resume-button, #sound-button, #game-sound-button, #save-button, #restart-button, #import-button, #touch-city-map-button').forEach((button) => button.disabled = true);
   setStatus('RESTARTING CARTRIDGE');
   message(importedSave ? 'Importing your save and restarting the cartridge…' : 'Keeping your in-game save and restarting the cartridge…');
   let cancelSaveWrite = false;
@@ -570,7 +611,7 @@ async function restartCartridge(importedSave?: Uint8Array) {
     }
     restarting = false;
     refreshLanguageConnection();
-    document.querySelectorAll<HTMLButtonElement>('#pause-button, #resume-button, #sound-button, #save-button, #restart-button, #import-button, #touch-city-map-button').forEach((button) => button.disabled = false);
+    document.querySelectorAll<HTMLButtonElement>('#pause-button, #resume-button, #sound-button, #game-sound-button, #save-button, #restart-button, #import-button, #touch-city-map-button').forEach((button) => button.disabled = false);
     paused = wasPaused;
     gameInput?.refresh();
     refreshNavigation();
@@ -623,7 +664,7 @@ gameInput = createGameControls({
   release: (button) => emulator?.buttonUnpress(button),
 });
 document.addEventListener('visibilitychange', () => { if (!restarting && !confirmationOpen && document.hidden && running && !paused) setPaused(true); });
-window.addEventListener('pagehide', () => { languageBridge?.stop(); navigationBridge?.stop(); releaseInputs(); if (saveInterval) clearInterval(saveInterval); });
+window.addEventListener('pagehide', () => { languageBridge?.stop(); navigationBridge?.stop(); onboarding?.stop(); releaseInputs(); if (saveInterval) clearInterval(saveInterval); });
 
 // Locale refresh updates existing nodes, preserving the live emulator canvas.
 document.querySelectorAll<HTMLElement>('[aria-label]').forEach((element) => {
@@ -635,13 +676,13 @@ function refreshRuntimeLabels() {
   playButton.querySelector('span')!.textContent = t(starting ? 'Packing your bag…' : 'Start exploring');
   landing.refresh();
   el('pause-button').innerHTML = `${icon(paused ? 'play' : 'pause')} <span>${t(paused ? 'Resume' : 'Pause')}</span>`;
-  el('sound-button').innerHTML = `${icon(muted ? 'mute' : 'sound')} <span>${t(muted ? 'Sound off' : 'Sound on')}</span>`;
+  refreshSoundControls();
   document.title = t('Taichung, shrunk to fit a Game Boy.');
   refreshNavigation();
 }
 onLocaleChange(refreshRuntimeLabels);
 onLocaleChange(({ locale, source }) => {
-  if (source === 'user' && languageState?.phase === 'ready') {
+  if (source === 'user' && languageState?.phase === 'ready' && !onboarding?.startupLanguagePending) {
     const requested = languageBridge?.request(locale === 'zh-Hant' ? 2 : 1);
     if (!requested && languageState.activeLanguage) setLocale(languageState.activeLanguage === 2 ? 'zh-Hant' : 'en', 'native');
   }

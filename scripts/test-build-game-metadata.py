@@ -17,6 +17,7 @@ SCRIPT = Path(__file__).with_name('build-game.sh')
 METADATA_CODE = SCRIPT.read_text().split("<<'PY'\n", 1)[1].rsplit('\nPY', 1)[0]
 LANGUAGE = '0203e000 00000020 B gTaichungLanguageBridge'
 NAVIGATION = '0203d080 00000030 B gTaichungNavigationBridge'
+ONBOARDING = '0203d100 00000030 B gTaichungOnboardingBridge'
 BASELINE = '1' * 40
 SOURCE_COMMIT = '2' * 40
 FINGERPRINT = 'a' * 64
@@ -138,6 +139,65 @@ class MetadataTests(unittest.TestCase):
                 else:
                     self.contract.write_text(document if isinstance(document, str) else json.dumps(document))
                 self.assert_rejected(NAVIGATION)
+
+
+    def test_absent_onboarding_keeps_legacy_schema_and_ignores_similar_names(self):
+        legacy = self.run_metadata(LANGUAGE + '\n' + NAVIGATION)
+        self.assertNotIn('onboardingBridge', legacy)
+        self.assertEqual(set(legacy), {
+            'file', 'bytes', 'sha1', 'sha256', 'upstreamCommit', 'sourceCommit',
+            'modified', 'languageBridge', 'navigationBridge', 'minimap',
+        })
+        legacy_bytes = self.build.read_bytes()
+        similar = ONBOARDING.replace('gTaichungOnboardingBridge', 'gTaichungOnboardingBridgeCandidate')
+        self.run_metadata(LANGUAGE + '\n' + NAVIGATION + '\n' + similar)
+        self.assertEqual(self.build.read_bytes(), legacy_bytes)
+        self.contract.unlink()
+        language_only = self.run_metadata(LANGUAGE)
+        self.assertNotIn('onboardingBridge', language_only)
+        self.assertNotIn('navigationBridge', language_only)
+
+    def test_onboarding_binds_exact_optional_symbol_without_changing_other_fields(self):
+        legacy = self.run_metadata(LANGUAGE + '\n' + NAVIGATION)
+        for symbols in [
+            '\n'.join([ONBOARDING, LANGUAGE, NAVIGATION]),
+            '\n'.join([NAVIGATION, ONBOARDING, LANGUAGE]),
+            '\n'.join([LANGUAGE, NAVIGATION, ONBOARDING]),
+        ]:
+            with self.subTest(symbols=symbols):
+                metadata = self.run_metadata(symbols)
+                self.assertEqual(metadata.pop('onboardingBridge'), {
+                    'version': 1, 'size': 48, 'address': 0x0203D100,
+                    'magicA': 0x4E494354, 'magicB': 0x314F5254,
+                })
+                self.assertEqual(metadata, legacy)
+        self.contract.unlink()
+        for address in [0x02000000, 0x02040000 - 48]:
+            with self.subTest(address=address):
+                metadata = self.run_metadata(f'{address:08x} 00000030 B gTaichungOnboardingBridge')
+                self.assertEqual(metadata['onboardingBridge']['address'], address)
+                self.assertNotIn('navigationBridge', metadata)
+                self.assertNotIn('minimap', metadata)
+
+    def test_incompatible_onboarding_never_replaces_previous_metadata(self):
+        for symbol in [
+            '0203d100 00000020 B gTaichungOnboardingBridge',
+            '0203d100 00000034 B gTaichungOnboardingBridge',
+            '0203d100 00000000 B gTaichungOnboardingBridge',
+            '0203d101 00000030 B gTaichungOnboardingBridge',
+            '01fffffc 00000030 B gTaichungOnboardingBridge',
+            '0203ffd4 00000030 B gTaichungOnboardingBridge',
+            '08000000 00000030 B gTaichungOnboardingBridge',
+            '-1 00000030 B gTaichungOnboardingBridge',
+            'nothex 00000030 B gTaichungOnboardingBridge',
+            '0203d100 nothex B gTaichungOnboardingBridge',
+            '0203d100 B gTaichungOnboardingBridge',
+            'gTaichungOnboardingBridge',
+            ONBOARDING + '\n' + ONBOARDING,
+            ONBOARDING + '\n0203d200 00000030 B gTaichungOnboardingBridge',
+        ]:
+            with self.subTest(symbol=symbol):
+                self.assert_rejected(LANGUAGE + '\n' + NAVIGATION + '\n' + symbol)
 
 
 if __name__ == '__main__':

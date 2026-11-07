@@ -8,5 +8,6 @@ export default defineConfig({
   build: { outDir: '../dist/control-tests', emptyOutDir: true, rollupOptions: { input: {
     controls: fileURLToPath(new URL('controls-browser.html', import.meta.url)),
     minimap: fileURLToPath(new URL('minimap-browser.html', import.meta.url)),
+    onboarding: fileURLToPath(new URL('onboarding-browser.html', import.meta.url)),
   } } },
 });

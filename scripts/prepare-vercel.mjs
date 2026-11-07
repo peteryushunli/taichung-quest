@@ -16,7 +16,7 @@ const config = JSON.parse(await readFile(path.join(root, 'vercel.json'), 'utf8')
 await verifyCartridge(path.join(root, 'web/public/roms'));
 execFileSync('bash', ['scripts/build-site.sh'], { cwd: root, stdio: 'inherit' });
 const cartridge = await verifyCartridge(path.join(dist, 'roms'));
-for (const file of ['index.html', 'emulator-loader.js', 'emulator/mgba.js', 'emulator/mgba.wasm', 'emulator/LICENSE.txt', 'emulator/SOURCE.txt', 'emulator/prepare-emulator.mjs', 'licenses/NotoSansTC-OFL.txt']) {
+for (const file of ['index.html', 'emulator-loader.js', 'emulator/mgba.js', 'emulator/mgba.wasm', 'emulator/LICENSE.txt', 'emulator/SOURCE.txt', 'emulator/prepare-emulator.mjs', 'licenses/NotoSansTC-OFL.txt', 'licenses/native-font.txt']) {
   await readFile(path.join(dist, file));
 }
 const buildConfig = {

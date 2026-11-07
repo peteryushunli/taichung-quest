@@ -50,6 +50,12 @@ export async function verifyCartridge(directory, { geometryFile = bundledGeometr
       metadata.minimap.geometryFingerprintSha256 !== geometry.geometryFingerprintSha256) {
     throw new Error('The release minimap metadata does not match the bundled geometry schema/fingerprint.');
   }
+  const onboarding = metadata.onboardingBridge;
+  if (onboarding !== undefined && (!onboarding || onboarding.version !== 1 || onboarding.size !== 48 ||
+      onboarding.magicA !== 0x4e494354 || onboarding.magicB !== 0x314f5254 || !Number.isInteger(onboarding.address) ||
+      onboarding.address % 4 || onboarding.address < 0x02000000 || onboarding.address > 0x02040000 - 48)) {
+    throw new Error('Optional onboarding requires matching version-1 native onboarding-bridge metadata.');
+  }
   return metadata;
 }
 
