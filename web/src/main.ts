@@ -2,7 +2,9 @@ import './style.css';
 import './confirm.css';
 import type { mGBAEmulator } from '@thenick775/mgba-wasm';
 import { createCityGuide } from './city-guide';
-import { getLocale, initializeLocalization, languageControl, onLocaleChange, t } from './i18n';
+import { getLocale, initializeLocalization, languageControl, onLocaleChange, setLocale, t } from './i18n';
+import { NativeLanguageBridge, parseLanguageBridgeMetadata } from './language-bridge';
+import type { LanguageBridgeState } from './language-bridge';
 
 type Button = 'Up' | 'Down' | 'Left' | 'Right' | 'A' | 'B' | 'Start' | 'Select' | 'L' | 'R';
 type RuntimeFactory = (options: { canvas: HTMLCanvasElement }) => Promise<mGBAEmulator>;
@@ -10,6 +12,7 @@ type RuntimeWindow = Window & { taichungCreateEmulator?: RuntimeFactory };
 // These Emscripten exports pause the JavaScript scheduler without entering the
 // native core's thread-interrupt path (unlike live boolean core settings).
 type SchedulerRuntime = mGBAEmulator & { pauseMainLoop(): void; resumeMainLoop(): void };
+type LanguageRuntime = mGBAEmulator & { getTaichungHeapU8?: () => Uint8Array };
 
 const ROM_URL = '/roms/taichung-firered.gba';
 const SAVE_PATH = '/data/saves/taichung-firered.sav';
@@ -78,7 +81,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
         <div class="destination"><span class="destination-caption" data-i18n="FIRST STOP">FIRST STOP</span><h2><span class="district-name" data-i18n="West District">West District</span><span class="district-chinese" lang="zh-Hant">西區</span></h2><p data-i18n="Leafy paths, neighborhood corners, and a tea break along the way.">Leafy paths, neighborhood corners, and a tea break along the way.</p><div class="stamp" aria-hidden="true">TAICHUNG<br><b>24° N</b><br>TAIWAN</div></div>
         <div class="note-section"><span class="note-index">01</span><div><h3 data-i18n="Follow your curiosity.">Follow your curiosity.</h3><p data-i18n="Explore the Greenway, meet the locals, and find your first little errand.">Explore the Greenway, meet the locals, and find your first little errand.</p></div></div>
         <div class="note-section"><span class="note-index">02</span><div><h3 data-i18n="Say hello.">Say hello.</h3><p><span data-i18n="Walk up to someone and press">Walk up to someone and press</span> <kbd>Z</kbd> <span data-i18n="or">or</span> <kbd>A</kbd> <span data-i18n="to see what they have to say.">to see what they have to say.</span></p></div></div>
-        <div class="keyboard-guide"><h3 data-i18n="Make yourself at home.">Make yourself at home.</h3><div class="key-row"><span><kbd>↑</kbd><kbd>←</kbd><kbd>↓</kbd><kbd>→</kbd></span><span data-i18n="Wander around">Wander around</span></div><div class="key-row"><span><kbd>Z</kbd> <small>/</small> <kbd>X</kbd></span><span data-i18n="Interact / back">Interact / back</span></div><div class="key-row"><span><kbd>ENTER</kbd></span><span data-i18n="Open the menu">Open the menu</span></div><p data-i18n="Touch controls work too. A little old-school, wherever you are.">Touch controls work too. A little old-school, wherever you are.</p></div>
+        <div class="keyboard-guide"><h3 data-i18n="Make yourself at home.">Make yourself at home.</h3><div class="key-row"><span><kbd>↑</kbd><kbd>←</kbd><kbd>↓</kbd><kbd>→</kbd></span><span data-i18n="Wander around">Wander around</span></div><div class="key-row"><span><kbd>Z</kbd> <small>/</small> <kbd>X</kbd></span><span data-i18n="Interact / back">Interact / back</span></div><div class="key-row"><span><kbd>ENTER</kbd></span><span data-i18n="Open the menu">Open the menu</span></div><p data-i18n="Touch controls work too. A little old-school, wherever you are.">Touch controls work too. A little old-school, wherever you are.</p><p data-i18n="Language covers custom Taichung content. Original FireRed screens remain English.">Language covers custom Taichung content. Original FireRed screens remain English.</p></div>
         <details class="save-details"><summary><span data-i18n="Your saved adventures">Your saved adventures</span><span class="details-plus">+</span></summary><p data-i18n="Your spot is saved here every 20 seconds. Keep an extra backup using a game save from the in-game menu.">Your spot is saved here every 20 seconds. Keep an extra backup using a game save from the in-game menu.</p><div class="save-actions"><button id="export-button" disabled><span data-i18n="Download save">Download save</span> ${icon('arrow')}</button><button id="import-button" disabled><span data-i18n="Import save">Import save</span> ${icon('arrow')}</button></div><input type="file" id="save-file" accept=".sav" hidden></details>
         <div class="notebook-footer"><span class="tiny-sun" aria-hidden="true">✳</span><span data-i18n="MADE FOR A SUNNY AFTERNOON.">MADE FOR A SUNNY AFTERNOON.</span></div>
       </aside>
@@ -96,6 +99,8 @@ const playButton = el<HTMLButtonElement>('play-button');
 const feedback = el('feedback');
 const status = el('game-status');
 let emulator: mGBAEmulator | undefined;
+let languageBridge: NativeLanguageBridge | undefined;
+let languageState: LanguageBridgeState | undefined;
 let gamePath: string | undefined;
 let starting = false;
 let running = false;
@@ -117,6 +122,40 @@ function message(text: string, error = false) {
 }
 
 function setStatus(text: string) { statusText = text; status.textContent = t(text); }
+
+function refreshLanguageConnection() {
+  const phase = languageState?.phase;
+  const hint = phase === 'discovering' ? 'Connecting to game…' : phase === 'startup' ? 'Choose inside the game first' : phase === 'ready' ? 'Taichung text + City Map' : phase === 'pending' ? 'Queued until gameplay resumes' : phase === 'unavailable' ? 'Game: use its Language menu' : 'Player & City Map';
+  document.querySelectorAll<HTMLElement>('[data-language-hint]').forEach((element) => {
+    element.dataset.i18n = hint;
+    element.dataset.languagePhase = phase ?? 'interface';
+    element.textContent = t(hint);
+  });
+  document.querySelectorAll<HTMLSelectElement>('[data-locale-select]').forEach((select) => { select.disabled = restarting || phase === 'pending'; });
+}
+
+async function connectNativeLanguage(romSha256: string, romBytes: number) {
+  languageBridge?.stop();
+  languageState = { phase: 'discovering', activeLanguage: 0 };
+  refreshLanguageConnection();
+  try {
+    const response = await fetch('/roms/build.json', { cache: 'no-store' });
+    const metadata = response.ok ? parseLanguageBridgeMetadata(await response.json(), romSha256, romBytes) : undefined;
+    if (!metadata || !(emulator as LanguageRuntime | undefined)?.getTaichungHeapU8) throw new Error('Matching language metadata/runtime is unavailable.');
+    if (restarting || !running) return;
+    languageBridge = new NativeLanguageBridge({
+      metadata,
+      getHeap: () => (emulator as LanguageRuntime | undefined)?.getTaichungHeapU8?.(),
+      onState: (state) => { languageState = state; refreshLanguageConnection(); },
+      onNativeLanguage: (language) => setLocale(language === 2 ? 'zh-Hant' : 'en', 'native'),
+    });
+    void languageBridge.start();
+  } catch (error) {
+    console.info('Using interface-only language selection:', error);
+    languageState = { phase: 'unavailable', activeLanguage: 0 };
+    refreshLanguageConnection();
+  }
+}
 
 function focusGame() { if (running && !paused && !restarting && !confirmationOpen && !cityGuide.isOpen) canvas.focus({ preventScroll: true }); }
 
@@ -253,7 +292,8 @@ async function startGame() {
     const rom = new Uint8Array(await response.arrayBuffer());
     if (rom.length < 192 || rom[0xb2] !== 0x96) throw new Error('The game cartridge is not ready yet. Build the Taichung ROM, then try again.');
     const digest = new Uint8Array(await crypto.subtle.digest('SHA-256', rom));
-    const buildId = [...digest].map((byte) => byte.toString(16).padStart(2, '0')).join('').slice(0, 16);
+    const romSha256 = [...digest].map((byte) => byte.toString(16).padStart(2, '0')).join('');
+    const buildId = romSha256.slice(0, 16);
     if (!emulator) {
       const createEmulator = await getRuntimeFactory();
       emulator = await createEmulator({ canvas });
@@ -314,6 +354,7 @@ async function startGame() {
     canvas.focus({ preventScroll: true });
     startSaveTimer();
     cityGuide.onGameStarted();
+    void connectNativeLanguage(romSha256, rom.length);
   } catch (error) {
     const reason = error instanceof Error ? error.message : 'Something went wrong while loading the game.';
     message(reason, true);
@@ -377,6 +418,7 @@ async function restartCartridge(importedSave?: Uint8Array) {
   const previousSave = importedSave ? emulator.getSave()?.slice() : undefined;
   const wasPaused = paused;
   restarting = true;
+  refreshLanguageConnection();
   // Navigation will destroy the runtime and release native inputs. Do not call
   // any core functions here: even live boolean setters can interrupt and hang
   // the running core after a native save in the pinned emulator distribution.
@@ -423,6 +465,7 @@ async function restartCartridge(importedSave?: Uint8Array) {
       void flushFilesystem().catch(() => undefined);
     }
     restarting = false;
+    refreshLanguageConnection();
     document.querySelectorAll<HTMLButtonElement>('#pause-button, #resume-button, #sound-button, #save-button, #restart-button, #import-button, #city-map-button').forEach((button) => button.disabled = false);
     paused = wasPaused;
     if (!wasPaused) (emulator as SchedulerRuntime).resumeMainLoop();
@@ -499,10 +542,9 @@ document.querySelectorAll<HTMLButtonElement>('[data-gba]').forEach((button) => {
 });
 window.addEventListener('blur', releaseInputs);
 document.addEventListener('visibilitychange', () => { if (!restarting && !confirmationOpen && document.hidden && running && !paused) setPaused(true); });
-window.addEventListener('pagehide', () => { releaseInputs(); if (saveInterval) clearInterval(saveInterval); });
+window.addEventListener('pagehide', () => { languageBridge?.stop(); releaseInputs(); if (saveInterval) clearInterval(saveInterval); });
 
-// These labels describe the browser player and City Map. The cartridge's own
-// language is selected inside the game; changing this control never resets it.
+// Locale refresh updates existing nodes, preserving the live emulator canvas.
 document.querySelectorAll<HTMLElement>('[aria-label]').forEach((element) => {
   if (!element.hasAttribute('data-i18n-label') && !element.matches('[data-locale-select]')) element.dataset.i18nLabel = element.getAttribute('aria-label')!;
 });
@@ -515,6 +557,13 @@ function refreshRuntimeLabels() {
   document.title = getLocale() === 'zh-Hant' ? 'Taichung Quest · 台中小冒險' : 'Taichung Quest · A little adventure';
 }
 onLocaleChange(refreshRuntimeLabels);
+onLocaleChange(({ locale, source }) => {
+  if (source === 'user' && languageState?.phase === 'ready') {
+    const requested = languageBridge?.request(locale === 'zh-Hant' ? 2 : 1);
+    if (!requested && languageState.activeLanguage) setLocale(languageState.activeLanguage === 2 ? 'zh-Hant' : 'en', 'native');
+  }
+  refreshLanguageConnection();
+});
 initializeLocalization();
 refreshRuntimeLabels();
 

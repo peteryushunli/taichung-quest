@@ -29,7 +29,7 @@ Cross-Origin-Embedder-Policy: require-corp
 
 Vite sets these headers for dev and preview. `public/_headers` supplies them for compatible static hosts. The game must run in a top-level tab or in an iframe whose parent permits cross-origin isolation. The player explains the requirement if `crossOriginIsolated` or `SharedArrayBuffer` is unavailable.
 
-The unmodified emulator modules are loaded through `public/emulator-loader.js`, using a native HTML module script rather than a Vite source import. This preserves the script URL used by mGBA's pthread worker.
+The emulator modules are loaded through `public/emulator-loader.js`, using a native HTML module script rather than a Vite source import. This preserves the script URL used by mGBA's pthread worker.
 
 ## Controls and saves
 
@@ -57,7 +57,11 @@ The persistent City Map button opens a native modal visitor guide. Five example 
 
 Opening the guide releases held inputs and pauses an active game. Closing it, including with Escape, restores the prior running/paused state and returns keyboard focus to the opener. The guide does not simulate visited places, badges, player position, or progression.
 
-The header and guide language selectors switch the browser interface and all five visitor descriptions between English and Traditional Chinese without replacing the canvas or resetting the emulator. The preference persists as `taichung-quest-interface-language` in localStorage. The cartridge's own language is selected independently inside the game; this UI selector does not modify cartridge state.
+The header and guide language selectors switch the browser interface and all five visitor descriptions between English and Traditional Chinese without replacing the canvas or resetting the emulator. Before the cartridge chooses its startup language, this remains an interface preference only. Once the matching native bridge publishes a language, the game becomes authoritative and the selectors request subsequent native changes. A queued request waits while gameplay is paused or a native menu/script is busy. Native Language-menu choices, including re-selecting the current language, supersede a pending browser request. The controls show when a request is queued; they never claim it applied before native acknowledgement.
+
+The interface preference persists as `taichung-quest-interface-language` in localStorage. The native language persists through the game's own Save menu; Continue publishes that saved language back to the browser. Coverage is custom Taichung content and menus; original FireRed screens remain English. A cartridge without exact matching bridge metadata still has usable interface controls, explicitly labeled to use the in-game Language menu separately.
+
+The client in `src/language-bridge.ts` checks the fetched ROM's SHA-256 and size against `public/roms/build.json`. It scans the current shared Wasm heap in yielding chunks and requires a unique advancing packet with both magic words, supported version/size, and the exact EWRAM symbol address from metadata. Frozen ROM/snapshot copies and ambiguous candidates cannot receive requests. Only the request-language byte and aligned request-sequence word may be written; party, position and other gameplay state are untouched. Heap replacement triggers a fresh liveness probe. `npm test` covers these fail-closed and conflict-handling cases with synthetic shared heaps.
 
 ## Runtime source and license
 
@@ -65,4 +69,4 @@ The header and guide language selectors switch the browser interface and all fiv
 
 https://github.com/thenick775/mgba/tree/c0d196432c4437ff06827dccd1a785de2afab5b8
 
-The distributed runtime is unmodified. `licenses/MPL-2.0.txt` is copied next to its assets, along with a source notice. The emulator's license covers its runtime; the game project has separate upstream provenance.
+The WebAssembly core is unmodified. `scripts/prepare-emulator.mjs` verifies the exact upstream JavaScript SHA-256, then adds only `getTaichungHeapU8()`, a getter for its current private heap view. It does not itself modify game memory. The complete modified glue, preferred reproducible patch script, `licenses/MPL-2.0.txt`, and explicit modification/source notice are served together under `/emulator/`. A changed upstream glue file fails preparation until reviewed. The emulator's license covers its runtime; the game project has separate upstream provenance.
