@@ -132,6 +132,26 @@ if navigation_symbols:
         'schemaVersion': contract['schemaVersion'],
         'geometryFingerprintSha256': fingerprint,
     }
+onboarding_symbols = [
+    columns for line in symbols.splitlines()
+    if (columns := line.split()) and columns[-1] == 'gTaichungOnboardingBridge'
+]
+if onboarding_symbols:
+    if len(onboarding_symbols) != 1 or len(onboarding_symbols[0]) != 4:
+        raise SystemExit('Unexpected native onboarding bridge symbol; refusing incompatible metadata.')
+    try:
+        address, size = (int(value, 16) for value in onboarding_symbols[0][:2])
+    except ValueError:
+        raise SystemExit('Unexpected native onboarding bridge layout; refusing incompatible metadata.')
+    if size != 48 or address % 4 or not 0x02000000 <= address <= 0x02040000 - size:
+        raise SystemExit('Unexpected native onboarding bridge layout; refusing incompatible metadata.')
+    metadata['onboardingBridge'] = {
+        'version': 1,
+        'size': size,
+        'address': address,
+        'magicA': 0x4E494354,
+        'magicB': 0x314F5254,
+    }
 (rom.parent / 'build.json').write_text(json.dumps(metadata, indent=2) + '\n')
 print(f"ROM ready: {rom} ({len(data):,} bytes)")
 PY
