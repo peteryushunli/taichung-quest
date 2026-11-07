@@ -66,3 +66,8 @@ html[lang="zh-Hant"] .landmark-tab-names b { font-size: 9px; color: #99a28b; }
   .landmark-tabs .landmark-tab-names>span { font-size: 9px; }
   .visitor-address address { font-size: 11px; }
 }
+
+/* Match the player's touch targets without changing the guide's flow. */
+.city-guide .guide-close { width: 44px; height: 44px; min-width: 44px; min-height: 44px; }
+.city-guide .guide-return { min-height: 44px; }
+.city-guide .guide-close, .city-guide .guide-return { touch-action: manipulation; }
