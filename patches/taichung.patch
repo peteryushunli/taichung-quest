@@ -12526,10 +12526,10 @@ index 0000000..be81428
 +  "encodingPolicy": "Preserve every existing FC19 character index; only regenerate bitmap rows and append missing characters."
 +}
 diff --git a/charmap.txt b/charmap.txt
-index b9d0ed9..5fea1fb 100644
+index b9d0ed9..047402a 100644
 --- a/charmap.txt
 +++ b/charmap.txt
-@@ -910,3 +910,481 @@ EMOJI_BIGANGER = F9 FE
+@@ -910,3 +910,511 @@ EMOJI_BIGANGER = F9 FE
  '\l' = FA @ scroll up window text
  '\p' = FB @ new paragraph
  '\n' = FE @ new line
@@ -13011,8 +13011,38 @@ index b9d0ed9..5fea1fb 100644
 +'都' = FC 19 EA 02
 +'靠' = FC 19 EB 02
 +'項' = FC 19 EC 02
++'亮' = FC 19 ED 02
++'低' = FC 19 EE 02
++'作' = FC 19 EF 02
++'保' = FC 19 F0 02
++'值' = FC 19 01 03
++'做' = FC 19 02 03
++'功' = FC 19 03 03
++'呢' = FC 19 04 03
++'堆' = FC 19 05 03
++'夠' = FC 19 06 03
++'專' = FC 19 07 03
++'尾' = FC 19 08 03
++'層' = FC 19 09 03
++'平' = FC 19 0A 03
++'持' = FC 19 0B 03
++'掌' = FC 19 0C 03
++'握' = FC 19 0D 03
++'搭' = FC 19 0E 03
++'擺' = FC 19 0F 03
++'沉' = FC 19 10 03
++'沛' = FC 19 11 03
++'溫' = FC 19 12 03
++'漂' = FC 19 13 03
++'琪' = FC 19 14 03
++'盤' = FC 19 15 03
++'衡' = FC 19 16 03
++'裝' = FC 19 17 03
++'講' = FC 19 18 03
++'配' = FC 19 19 03
++'飾' = FC 19 1A 03
 diff --git a/data/event_scripts.s b/data/event_scripts.s
-index 88d7594..55eac6d 100644
+index 88d7594..1f66234 100644
 --- a/data/event_scripts.s
 +++ b/data/event_scripts.s
 @@ -23,6 +23,7 @@
@@ -13023,7 +13053,7 @@ index 88d7594..55eac6d 100644
  #include "constants/battle_setup.h"
  #include "constants/map_scripts.h"
  #include "constants/cable_club.h"
-@@ -1360,3 +1361,7 @@ Text_TestMsg::
+@@ -1360,3 +1361,8 @@ Text_TestMsg::
  	.include "data/text/save.inc"
  	.include "data/text/new_game_intro.inc"
  	.include "data/text/pokedude.inc"
@@ -13031,6 +13061,7 @@ index 88d7594..55eac6d 100644
 +	.include "data/scripts/taichung_city.inc"
 +	.include "data/scripts/taichung_gyms.inc"
 +	.include "data/scripts/taichung_park_gym.inc"
++	.include "data/scripts/taichung_miyahara_gym.inc"
 diff --git a/data/layouts/PalletTown/map.bin b/data/layouts/PalletTown/map.bin
 index f2113394f22d6f0180f364071301b5ed06588773..bf1cbe2eb7b76e808e1fde8621cdf33a1a71beb2 100644
 GIT binary patch
@@ -15604,10 +15635,10 @@ index 8c382f5..058aea0 100644
  }
 diff --git a/data/scripts/taichung_city.inc b/data/scripts/taichung_city.inc
 new file mode 100644
-index 0000000..02ea822
+index 0000000..daaf113
 --- /dev/null
 +++ b/data/scripts/taichung_city.inc
-@@ -0,0 +1,215 @@
+@@ -0,0 +1,214 @@
 +@ Native city geometry and shared Station checkpoint.
 +TaichungCity_OnTransition::
 +	callnative TaichungSaveSetStationCheckpoint
@@ -15693,8 +15724,7 @@ index 0000000..02ea822
 +	end
 +
 +TaichungCity_Host_Miyahara::
-+	msgbox TaichungCity_Text_Host_Miyahara, MSGBOX_NPC
-+	end
++	goto TaichungGym_EventScript_MiyaharaChallenge
 +
 +TaichungCity_Text_Miyahara::
 +	.string "Miyahara\n"
@@ -15882,6 +15912,86 @@ index 0000000..f96f61f
 +
 +TaichungGym_StationMessage::
 +	callnative TaichungGym_ScriptGetStationMessage
++	msgbox gStringVar4
++	release
++	end
+diff --git a/data/scripts/taichung_miyahara_gym.inc b/data/scripts/taichung_miyahara_gym.inc
+new file mode 100644
+index 0000000..159f572
+--- /dev/null
++++ b/data/scripts/taichung_miyahara_gym.inc
+@@ -0,0 +1,74 @@
++@ Miyahara-only voluntary challenge. Never write progress or trainer-fought flags.
++TaichungGym_EventScript_MiyaharaChallenge::
++	lock
++	faceplayer
++	goto_if_questlog TaichungGym_MiyaharaReplaySkipped
++	setvar VAR_0x8004, TAICHUNG_GYM_MIYAHARA
++	callnative TaichungGym_ScriptIsComplete
++	goto_if_eq VAR_RESULT, TRUE, TaichungGym_MiyaharaAlreadyComplete
++	callnative TaichungGym_ScriptConsumeMiyaharaLossNotice
++	goto_if_ne VAR_RESULT, TRUE, TaichungGym_MiyaharaGreeting
++	setvar VAR_0x8005, TAICHUNG_GYM_MESSAGE_LOSS
++	callnative TaichungGym_ScriptGetMiyaharaMessage
++	msgbox gStringVar4
++
++TaichungGym_MiyaharaGreeting::
++	setvar VAR_0x8005, TAICHUNG_GYM_MESSAGE_GREETING
++	callnative TaichungGym_ScriptGetMiyaharaMessage
++	msgbox gStringVar4
++	setvar VAR_0x8005, TAICHUNG_GYM_MESSAGE_OFFER
++	callnative TaichungGym_ScriptGetMiyaharaMessage
++	msgbox gStringVar4, MSGBOX_YESNO
++	goto_if_eq VAR_RESULT, NO, TaichungGym_MiyaharaDeclined
++	setvar VAR_0x8004, TAICHUNG_GYM_MIYAHARA
++	setvar VAR_0x8005, TRAINER_TAICHUNG_MIYAHARA_PEIQI
++	callnative TaichungGym_ScriptPrepareChallenge
++	goto_if_eq VAR_RESULT, FALSE, TaichungGym_MiyaharaUnavailable
++	goto_if_eq VAR_0x40FB, 2, TaichungGym_MiyaharaBattleChinese
++	trainerbattle_single TRAINER_TAICHUNG_MIYAHARA_PEIQI, TaichungGym_Text_MiyaharaIntroEn, TaichungGym_Text_MiyaharaDefeatEn, TaichungGym_MiyaharaAfterBattle
++	goto TaichungGym_MiyaharaBattleSkipped
++
++TaichungGym_MiyaharaBattleChinese::
++	trainerbattle_single TRAINER_TAICHUNG_MIYAHARA_PEIQI, TaichungGym_Text_MiyaharaIntroZh, TaichungGym_Text_MiyaharaDefeatZh, TaichungGym_MiyaharaAfterBattle
++	goto TaichungGym_MiyaharaBattleSkipped
++
++TaichungGym_MiyaharaBattleSkipped::
++	callnative TaichungGym_ScriptCancelChallenge
++	goto TaichungGym_MiyaharaNotRecorded
++
++@ Native quest-log trainer replay can set a fought flag without running an
++@ actual battle. Exit before preparation or trainerbattle is ever reached.
++TaichungGym_MiyaharaReplaySkipped::
++	callnative TaichungGym_ScriptCancelChallenge
++	release
++	end
++
++TaichungGym_MiyaharaAfterBattle::
++	setvar VAR_0x8004, TAICHUNG_GYM_MIYAHARA
++	callnative TaichungGym_ScriptGetResult
++	goto_if_ne VAR_RESULT, TAICHUNG_GYM_RESULT_WON, TaichungGym_MiyaharaNotRecorded
++	callnative TaichungGym_ScriptIsComplete
++	goto_if_ne VAR_RESULT, TRUE, TaichungGym_MiyaharaNotRecorded
++	setvar VAR_0x8005, TAICHUNG_GYM_MESSAGE_COMPLETE
++	goto TaichungGym_MiyaharaMessage
++
++TaichungGym_MiyaharaAlreadyComplete::
++	setvar VAR_0x8005, TAICHUNG_GYM_MESSAGE_ALREADY_COMPLETE
++	goto TaichungGym_MiyaharaMessage
++
++TaichungGym_MiyaharaDeclined::
++	setvar VAR_0x8005, TAICHUNG_GYM_MESSAGE_DECLINED
++	goto TaichungGym_MiyaharaMessage
++
++TaichungGym_MiyaharaUnavailable::
++	setvar VAR_0x8005, TAICHUNG_GYM_MESSAGE_UNAVAILABLE
++	goto TaichungGym_MiyaharaMessage
++
++TaichungGym_MiyaharaNotRecorded::
++	setvar VAR_0x8005, TAICHUNG_GYM_MESSAGE_NOT_RECORDED
++
++TaichungGym_MiyaharaMessage::
++	callnative TaichungGym_ScriptGetMiyaharaMessage
 +	msgbox gStringVar4
 +	release
 +	end
@@ -321451,6 +321561,162 @@ index 0000000..efe9747
 +spawn, all landmark arrivals and approaches, every return warp, traversable
 +interiors/hosts, closed boundaries, seam targets and the old group/map IDs.
 +Emulator QA separately covers scripts, actual movement/warps, menus and saves.
+diff --git a/docs/taichung-miyahara-gym-qa.md b/docs/taichung-miyahara-gym-qa.md
+new file mode 100644
+index 0000000..e121f1e
+--- /dev/null
++++ b/docs/taichung-miyahara-gym-qa.md
+@@ -0,0 +1,104 @@
++# Miyahara native acceptance
++
++All required bounded cases pass on frozen functional source
++`4e7a863139e34af6fd48eded4faa4628ebe4e2a0`, above accepted `e65ee87`.
++QA-only `ea0da4a` adds read-only party inspection; `f08b52d` tests exact
++trainer745 with previous badges and wrong-hall guards. Neither changes ROM
++inputs. This document also changes no ROM input.
++
++ROM SHA-1 `128d55658e39986aec13c6d9cbacb1f90c70ce6a`; SHA-256
++`3cdfa0abce4ec9f2d087b29cef8995d872f0849e08b6a9343ea5b49660bba3a5`.
++Exact bridge addresses: language33813644, navigation33813680. Native party
++symbols are player0x02024284 and enemy0x0202402c. No source, ROM, RAM, emulator
++snapshot or speed changes produced the runtime results.
++
++## Genuine win and completed repeats
++
++The unchanged genuine Park-win input retained Jun/Park mask3. Actual native
++Continue upgraded save3→4, skipped the normal recap, and used real streets and
++Miyahara's existing door. Peiqi's Chinese greeting and voluntary offer rendered.
++B declined; native Save retained all600 party bytes, inventory, money and
++preferences, with only the expected save-version upgrade and location change.
++
++Voluntary Yes restored Mewtwo119→181HP and full PP, retaining identity,
++EXP156250, EV0, item0 and mail255. Actual decrypted native enemy parties verified
++all3 level50, full HP/PP, EV0 and authored moves:
++
++| Partner | Move IDs | Full PP |
++| --- | --- | --- |
++| Seel86 | 57,58,34,156 | 15,10,15,10 |
++| Cloyster91 | 57,58,191,182 | 15,10,20,10 |
++| Lapras131 | 57,58,85,34 | 15,10,15,15 |
++
++Normal turns genuinely defeated all3. One Psychic and four Thunderbolts were
++spent; the initial repeated-A advance selected Psychic. Subsequent inputs
++waited for each sequence to finish. Synchronized postbattle Mewtwo94/181HP,
++PP9/10/11/20, unchanged identity/EXP/EV/item/mail and all3 enemyHP0 were recorded.
++Generic Chinese earned text displayed. Native Save showed3/10 and raw mask7;
++Jun743, Park744 and Peiqi745 fought flags were true. Native payout5000 happened
++once, money12600→17600, with bag/coins/PC items/registered item retained.
++
++Original Already and independent fresh-Continue Already interactions started
++no battle or preparation. Their actual native Saves preserved every600 party
++byte, decoded money/inventory, preferences, all3 flags and mask7. The separate
++instance used actual Continue/normal recap skip and restored Miyahara43/5(6,6)
++with the same94HP/PP and no enemy party. All protected comparisons pass.
++
++## Genuine loss, retry and Continue
++
++The loss branch explicitly used a synthetic party-only fixture: one complete
++native Magikarp record from an earlier genuine healed-loss save was copied into
++the genuine Jun/Park-win SRAM, updating only sector1 checksum. All other base
++bytes remained exact;70 bytes changed. This is not an authentic Team-menu swap
++or fabricated battle result. Provenance and reproducible fixture script remain
++with the runtime evidence.
++
++Actual Continue loaded it, and native LANGUAGE selected English. Peiqi's
++ordinary English greeting, offer and intro rendered. Real Splash turns produced
++Magikarp0HP and the native loss to Peiqi. Ordinary whiteout returned to
++Station30,66, healed95/95 and full PP, and retained species/identity/EXP156250,
++EV0, item0/mail255 and Jun/Park mask3. Native Save retained version4, Off/Off,
++English,743/744 true and745 false. Native whiteout money cost400 was retained;
++this does not claim every encrypted party byte stayed identical across defeat.
++
++In that same runtime Park showed its own Already text. Returning to Peiqi then
++showed her genuine-loss line, proving wrong-hall interaction did not consume
++it. Loss→greeting→offer was observed; B declined. A fresh interaction began at
++the ordinary greeting without repeating the loss. A later Yes reopened a real
++native battle with healed Magikarp and a fresh full-HP/full-PP opponent party.
++That retry test stopped at its first command menu, with no second result/Save.
++
++An independent instance imported the actual recovered-loss Save made while
++the first runtime still had its notice pending. Actual Continue/recap skip and
++real travel to Miyahara showed the ordinary greeting first, then voluntary
++offer/B decline. City Pass displayed only Station/Park earned,2/10. Its native
++Save preserved all600 party bytes, money12200, inventory, preferences, mask3
++and trainer flags against the recovered-loss Save. No new battle occurred.
++
++## Exact SRAM and limits
++
++| Export | SHA-256 |
++| --- | --- |
++| Declined | `7a219d734c7f790daa5b4e4d96a1c3f5330cbe33bfbc74c54127423ee3ec9745` |
++| Win | `c60b08d2b023d06e11383f939f8e597561fc7b738739a6424f01f7cceccda03f` |
++| Original repeat | `46e5f7264cdb34b6f08676704f10f126cc5e390af127d591d3a1d40f7a5af65f` |
++| Fresh Continue repeat | `66db3802d12cd7fc9d81d5a29ebab8b3ca3d66ebeb0b571b1d83b9ca4aea291d` |
++| Recovered loss | `02b923fd7c278c54a498b26afc42c64f218c837fa43d8322822913538b37d269` |
++| Fresh loss Continue | `a0fc14da7a1a2418b1fdc1a6e7cb454cc6590123add2271ec8dea9038c027e28` |
++
++Evidence is under parent `artifacts/worktrees/3c6cc7b4e276/miyahara-runtime-v1/`;
++`FINAL-STATUS.json` supersedes the historical paused status. Matching native
++sectors0/1/2 and BoxPokemon checksums are verified; no complete14-sector
++validator is claimed. Actual fresh Continue supplies end-to-end load proof.
++Read-only double party snapshots reduce torn reads but are not global locks.
++
++Paired greeting/offer/decline/intro/earned/Already and genuine-loss prose were
++observed; brief native defeat/first postbattle prose pages were not separately
++captured. Shared battle narration remains English. Exact roster/balance/prose
++remain revisable defaults; no unapproved named badge is used.
++
++All417 prior glyph codes/rows remain exact,33 appended→450, idempotent rerun0.
++Geometry fingerprint remains924380bc…31722. Host progress/team/save/Peiqi-cache
++checks pass. Own tabs/servers are closed; Maps' paused tab/server is untouched.
++Main must integrate the bounded source serially with current glyphs/migrations,
++derive exact combined metadata and perform combined-build smoke/publication.
+diff --git a/docs/taichung-miyahara-gym.md b/docs/taichung-miyahara-gym.md
+new file mode 100644
+index 0000000..d915c51
+--- /dev/null
++++ b/docs/taichung-miyahara-gym.md
+@@ -0,0 +1,40 @@
++# Miyahara gym slice
++
++Built separately from accepted native `e65ee87` (Theater, Park, save v4,
++reviewed cast). The existing hall, entrances, geometry, Jun and Park remain
++unchanged. Main owns canonical integration, source export and publication.
++
++Peiqi uses the already integrated field graphics154, portrait150 and palette
++tag0x1202. Trainer745 is appended after Jun743 and Lian744. Its voluntary host
++script prepares only after Yes; No/B returns to the field without preparation.
++Quest-log replay exits before preparation or the native trainer command.
++
++The roster is a revisable implementation default based on Story's reviewed
++landmark identity. Exact balance, moves, wording and named badge remain open;
++the earned message uses the generic Miyahara badge wording.
++
++| Partner | Level | Authored moves |
++| --- | --- | --- |
++| Seel86 | 50 | Surf, Ice Beam, Body Slam, Rest |
++| Cloyster91 | 50 | Surf, Ice Beam, Spikes, Protect |
++| Lapras131 | 50 | Surf, Ice Beam, Thunderbolt, Body Slam |
++
++All have native IV input255 (31 after construction), no held items, and the
++custom-moves party flag. Shared normalization retains authored moves and
++restores full PP. Player identity, held mail and level50 policy use the accepted
++shared preparation path.
++
++Only the existing matching real-battle callback writes completion bit2.
++Postbattle success prose requires both WON and Miyahara's own bit. Already
++complete interactions start no battle or preparation. Genuine loss prose uses
++the shared volatile consume-once notice for gym2; wrong halls cannot consume
++it. New Game/Continue clear transient state before every return path.
++
++The append-only glyph helper adds33 characters after the accepted417, retaining
++every old mapping and bitmap row. Map geometry fingerprint stays
++`924380bc2dfe7176686fd81395a52b8489ff18ff6401442acdf06a5d41331722`.
++
++Host progress, party, save-v4 and Peiqi-cache tests pass. Complete native
++acceptance on the exact frozen cartridge is recorded in
++`docs/taichung-miyahara-gym-qa.md`, including genuine win/loss, prior badges,
++retry/cancel/wrong-hall guards and original/fresh native Save/Continue.
 diff --git a/docs/taichung-navigation-bike-qa.md b/docs/taichung-navigation-bike-qa.md
 new file mode 100644
 index 0000000..459fc10
@@ -324473,15 +324739,16 @@ index 7c36f36..015fe25 100644
  
  #define LISTMENU_BADGES                    0
 diff --git a/include/constants/opponents.h b/include/constants/opponents.h
-index 3b893f2..2df3730 100644
+index 3b893f2..970ab28 100644
 --- a/include/constants/opponents.h
 +++ b/include/constants/opponents.h
-@@ -746,12 +746,14 @@
+@@ -746,12 +746,15 @@
  #define TRAINER_CHAMPION_REMATCH_BULBASAUR       740
  #define TRAINER_CHAMPION_REMATCH_CHARMANDER      741
  #define TRAINER_CUE_BALL_PAXTON                  742
 +#define TRAINER_TAICHUNG_STATION_JUN             743
 +#define TRAINER_TAICHUNG_PARK_LIAN               744
++#define TRAINER_TAICHUNG_MIYAHARA_PEIQI          745
  
  // NOTE: Because each Trainer uses a flag to determine when they are defeated, there is 
 -//       only space for 25 additional trainers before trainer flag space overflows.
@@ -324489,7 +324756,7 @@ index 3b893f2..2df3730 100644
  //       MAX_TRAINERS_COUNT can be increased but will take up additional saveblock space
  
 -#define NUM_TRAINERS                             743
-+#define NUM_TRAINERS                             745
++#define NUM_TRAINERS                             746
  #define MAX_TRAINERS_COUNT                       768
  
  #endif  // GUARD_CONSTANTS_OPPONENTS_H
@@ -326346,10 +326613,10 @@ index 601bff6..b9acdb6 100644
  }
 diff --git a/src/data/taichung_glyphs.h b/src/data/taichung_glyphs.h
 new file mode 100644
-index 0000000..8118192
+index 0000000..5c3f9c7
 --- /dev/null
 +++ b/src/data/taichung_glyphs.h
-@@ -0,0 +1,480 @@
+@@ -0,0 +1,510 @@
 +// Generated by tools/taichung_gameplay/refresh-chinese-glyphs.py.
 +// Taichung Native Bitmap12; source/licenses: assets/fonts/taichung-native-font.json
 +static const u16 sTaichungChineseGlyphs[][14] = {
@@ -326829,6 +327096,36 @@ index 0000000..8118192
 +    {0x000, 0x000, 0x784, 0x4af, 0x494, 0x28c, 0x2bf, 0x484, 0x4be, 0x4a3, 0x3be, 0x0a2, 0x0be, 0x000}, // 473: 都
 +    {0x000, 0x000, 0x022, 0x3fe, 0x021, 0x7ff, 0x202, 0x3fe, 0x088, 0x78f, 0x088, 0x78f, 0x084, 0x000}, // 474: 靠
 +    {0x000, 0x000, 0x7f0, 0x087, 0x7f2, 0x412, 0x7f2, 0x412, 0x7f2, 0x416, 0x7f3, 0x220, 0x410, 0x000}, // 475: 項
++    {0x000, 0x000, 0x020, 0x7ff, 0x104, 0x1fc, 0x000, 0x7ff, 0x401, 0x088, 0x088, 0x484, 0x783, 0x000}, // 476: 亮
++    {0x000, 0x000, 0x304, 0x0f4, 0x092, 0x092, 0x7f3, 0x092, 0x092, 0x112, 0x572, 0x602, 0x4f2, 0x000}, // 477: 低
++    {0x000, 0x000, 0x024, 0x024, 0x7e2, 0x052, 0x04b, 0x7c2, 0x042, 0x042, 0x7c2, 0x042, 0x042, 0x000}, // 478: 作
++    {0x000, 0x000, 0x3f4, 0x214, 0x212, 0x3f2, 0x083, 0x082, 0x7fa, 0x1c2, 0x2a2, 0x49a, 0x082, 0x000}, // 479: 保
++    {0x000, 0x000, 0x084, 0x7f4, 0x082, 0x3f2, 0x213, 0x3f2, 0x212, 0x3f2, 0x212, 0x212, 0x7fa, 0x000}, // 480: 值
++    {0x000, 0x000, 0x094, 0x094, 0x7ba, 0x252, 0x293, 0x292, 0x2ba, 0x2aa, 0x12a, 0x2aa, 0x47a, 0x000}, // 481: 做
++    {0x000, 0x000, 0x040, 0x04f, 0x7f4, 0x444, 0x444, 0x444, 0x444, 0x44c, 0x423, 0x420, 0x310, 0x000}, // 482: 功
++    {0x000, 0x000, 0x7f0, 0x417, 0x415, 0x7f5, 0x015, 0x055, 0x055, 0x7d5, 0x057, 0x450, 0x788, 0x000}, // 483: 呢
++    {0x000, 0x000, 0x0a2, 0x122, 0x7f2, 0x117, 0x7fa, 0x112, 0x112, 0x7f6, 0x113, 0x110, 0x7f0, 0x000}, // 484: 堆
++    {0x000, 0x000, 0x042, 0x7de, 0x451, 0x42a, 0x5c4, 0x543, 0x55e, 0x551, 0x5ca, 0x404, 0x303, 0x000}, // 485: 夠
++    {0x000, 0x000, 0x020, 0x7ff, 0x222, 0x3fe, 0x222, 0x3fe, 0x220, 0x7ff, 0x104, 0x108, 0x1c0, 0x000}, // 486: 專
++    {0x000, 0x000, 0x7fe, 0x402, 0x7fe, 0x182, 0x07a, 0x3c2, 0x07a, 0x7c2, 0x07a, 0x442, 0x7c1, 0x000}, // 487: 尾
++    {0x000, 0x000, 0x7fe, 0x402, 0x7fe, 0x48a, 0x5aa, 0x48a, 0x7fa, 0x212, 0x3f1, 0x211, 0x3f0, 0x000}, // 488: 層
++    {0x000, 0x000, 0x3fe, 0x020, 0x222, 0x124, 0x020, 0x7ff, 0x020, 0x020, 0x020, 0x020, 0x020, 0x000}, // 489: 平
++    {0x000, 0x000, 0x082, 0x7f2, 0x087, 0x082, 0x7e2, 0x206, 0x7f3, 0x222, 0x242, 0x202, 0x383, 0x000}, // 490: 持
++    {0x000, 0x000, 0x124, 0x7ff, 0x401, 0x1fc, 0x104, 0x3fe, 0x020, 0x3fe, 0x020, 0x7ff, 0x020, 0x000}, // 491: 掌
++    {0x000, 0x000, 0x7f2, 0x412, 0x7f7, 0x012, 0x7f2, 0x256, 0x5f3, 0x112, 0x7d2, 0x112, 0x7eb, 0x000}, // 492: 握
++    {0x000, 0x000, 0x222, 0x77a, 0x227, 0x1c2, 0x222, 0x5da, 0x007, 0x7f2, 0x412, 0x412, 0x7f3, 0x000}, // 493: 搭
++    {0x000, 0x000, 0x7f2, 0x552, 0x7f7, 0x122, 0x752, 0x176, 0x653, 0x172, 0x752, 0x172, 0x64b, 0x000}, // 494: 擺
++    {0x000, 0x000, 0x7f9, 0x40a, 0x408, 0x121, 0x122, 0x120, 0x120, 0x122, 0x522, 0x511, 0x709, 0x000}, // 495: 沉
++    {0x000, 0x000, 0x082, 0x084, 0x7f0, 0x081, 0x7f2, 0x490, 0x490, 0x492, 0x692, 0x081, 0x081, 0x000}, // 496: 沛
++    {0x000, 0x000, 0x3e2, 0x2a4, 0x360, 0x221, 0x3e2, 0x000, 0x7f0, 0x552, 0x552, 0x551, 0x7f9, 0x000}, // 497: 溫
++    {0x000, 0x000, 0x7f2, 0x144, 0x7f0, 0x551, 0x7f2, 0x000, 0x3e0, 0x002, 0x7f2, 0x2a1, 0x491, 0x000}, // 498: 漂
++    {0x000, 0x000, 0x220, 0x7f7, 0x222, 0x3e2, 0x222, 0x3e7, 0x222, 0x7f2, 0x006, 0x223, 0x410, 0x000}, // 499: 琪
++    {0x000, 0x000, 0x3c4, 0x25e, 0x632, 0x3d6, 0x252, 0x19f, 0x652, 0x3fe, 0x252, 0x252, 0x7ff, 0x000}, // 500: 盤
++    {0x000, 0x000, 0x774, 0x04a, 0x0f9, 0x7ac, 0x2fa, 0x2ab, 0x2fa, 0x222, 0x2fa, 0x252, 0x38a, 0x000}, // 501: 衡
++    {0x000, 0x000, 0x111, 0x7ff, 0x110, 0x11f, 0x7d4, 0x012, 0x7ff, 0x228, 0x247, 0x184, 0x63e, 0x000}, // 502: 裝
++    {0x000, 0x000, 0x121, 0x7fa, 0x127, 0x7f8, 0x127, 0x7f8, 0x297, 0x3f0, 0x297, 0x7fd, 0x217, 0x000}, // 503: 講
++    {0x000, 0x000, 0x7df, 0x40a, 0x40a, 0x41f, 0x415, 0x7d5, 0x05b, 0x051, 0x45f, 0x451, 0x79f, 0x000}, // 504: 配
++    {0x000, 0x000, 0x022, 0x7e5, 0x090, 0x087, 0x7f5, 0x497, 0x495, 0x497, 0x491, 0x695, 0x08b, 0x000}, // 505: 飾
 +};
 diff --git a/src/data/taichung_team_presets.h b/src/data/taichung_team_presets.h
 new file mode 100644
@@ -327339,10 +327636,10 @@ index c2ad6ac..f1d7b36 100644
 +    TRAINER_PAL(TAICHUNG_LING, gTrainerPalette_TaichungLing),
  };
 diff --git a/src/data/trainer_parties.h b/src/data/trainer_parties.h
-index 2e57800..7786dfb 100644
+index 2e57800..8b1383e 100644
 --- a/src/data/trainer_parties.h
 +++ b/src/data/trainer_parties.h
-@@ -10860,3 +10860,26 @@ static const struct TrainerMonNoItemDefaultMoves sParty_CueBallPaxton[] = {
+@@ -10860,3 +10860,43 @@ static const struct TrainerMonNoItemDefaultMoves sParty_CueBallPaxton[] = {
          .species = SPECIES_MUK,
      },
  };
@@ -327369,11 +327666,28 @@ index 2e57800..7786dfb 100644
 +        .moves = {MOVE_FLY, MOVE_STEEL_WING, MOVE_QUICK_ATTACK, MOVE_FEATHER_DANCE},
 +    },
 +};
++
++// Revisable Miyahara/Peiqi chilled-dessert roster. Common level 50; the
++// authored moves initially match the shared city presets, with no held items.
++static const struct TrainerMonNoItemCustomMoves sParty_TaichungMiyaharaPeiqi[] = {
++    {
++        .iv = 255, .lvl = TAICHUNG_TEAM_LEVEL, .species = SPECIES_SEEL,
++        .moves = {MOVE_SURF, MOVE_ICE_BEAM, MOVE_BODY_SLAM, MOVE_REST},
++    },
++    {
++        .iv = 255, .lvl = TAICHUNG_TEAM_LEVEL, .species = SPECIES_CLOYSTER,
++        .moves = {MOVE_SURF, MOVE_ICE_BEAM, MOVE_SPIKES, MOVE_PROTECT},
++    },
++    {
++        .iv = 255, .lvl = TAICHUNG_TEAM_LEVEL, .species = SPECIES_LAPRAS,
++        .moves = {MOVE_SURF, MOVE_ICE_BEAM, MOVE_THUNDERBOLT, MOVE_BODY_SLAM},
++    },
++};
 diff --git a/src/data/trainers.h b/src/data/trainers.h
-index 02afbfd..619c075 100644
+index 02afbfd..8762300 100644
 --- a/src/data/trainers.h
 +++ b/src/data/trainers.h
-@@ -7422,4 +7422,25 @@ const struct Trainer gTrainers[] = {
+@@ -7422,4 +7422,36 @@ const struct Trainer gTrainers[] = {
          .aiFlags = AI_SCRIPT_CHECK_BAD_MOVE,
          .party = NO_ITEM_DEFAULT_MOVES(sParty_CueBallPaxton),
      },
@@ -327397,6 +327711,17 @@ index 02afbfd..619c075 100644
 +        .doubleBattle = FALSE,
 +        .aiFlags = AI_SCRIPT_CHECK_BAD_MOVE,
 +        .party = NO_ITEM_CUSTOM_MOVES(sParty_TaichungParkLian),
++    },
++    // Revisable Miyahara default using Story's reviewed Peiqi identity.
++    [TRAINER_TAICHUNG_MIYAHARA_PEIQI] = {
++        .trainerClass = TRAINER_CLASS_LEADER,
++        .encounterMusic_gender = TRAINER_ENCOUNTER_MUSIC_FEMALE | F_TRAINER_FEMALE,
++        .trainerPic = TRAINER_PIC_TAICHUNG_PEIQI,
++        .trainerName = _("PEIQI"),
++        .items = {},
++        .doubleBattle = FALSE,
++        .aiFlags = AI_SCRIPT_CHECK_BAD_MOVE,
++        .party = NO_ITEM_CUSTOM_MOVES(sParty_TaichungMiyaharaPeiqi),
 +    },
  };
 diff --git a/src/data/wild_encounters.json b/src/data/wild_encounters.json
@@ -330099,6 +330424,71 @@ index 0000000..093dd02
 +    warp->x = gSaveBlock1Ptr->pos.x;
 +    warp->y = gSaveBlock1Ptr->pos.y;
 +    SetContinueGameWarpStatus();
++}
+diff --git a/src/taichung_miyahara_gym.c b/src/taichung_miyahara_gym.c
+new file mode 100644
+index 0000000..9036376
+--- /dev/null
++++ b/src/taichung_miyahara_gym.c
+@@ -0,0 +1,59 @@
++#include "global.h"
++#include "event_data.h"
++#include "string_util.h"
++#include "taichung_gym_progress.h"
++#include "taichung_language.h"
++
++// Story-authored draft. Exact roster, moves, prose and badge title remain
++// revisable; only a matching native win may award Miyahara bit 2.
++const u8 TaichungGym_Text_MiyaharaIntroEn[] = _("Keep it cool. Build the layers.\nTime for our finishing touch!");
++const u8 TaichungGym_Text_MiyaharaIntroZh[] = _("保持低溫，堆出層次。\n讓夥伴來完成最後的收尾！");
++const u8 TaichungGym_Text_MiyaharaDefeatEn[] = _("A finish worth savoring!");
++const u8 TaichungGym_Text_MiyaharaDefeatZh[] = _("這個收尾，值得細細回味！");
++static const u8 sGreetingEn[] = _("I'm Peiqi. Pastry chef.\nChill first. Then the flourish.");
++static const u8 sGreetingZh[] = _("我是沛琪，專做甜點。\n先掌握溫度，再講究擺盤。");
++static const u8 sOfferEn[] = _("Try a Miyahara gym challenge?\nA win earns this gym's badge.");
++static const u8 sOfferZh[] = _("想挑戰宮原道館嗎？\n獲勝就能得到這裡的徽章。");
++static const u8 sCompleteEn[] = _("Cool nerves. Lovely balance.\nA beautifully finished round.\pMiyahara badge recorded!\nKeep exploring at your pace.");
++static const u8 sCompleteZh[] = _("夠沉著，搭配也平衡。\n這一場，收尾真漂亮。\p宮原徽章已記在城市護照。\n照你的步調，繼續探索吧。");
++static const u8 sAlreadyEn[] = _("Your Miyahara badge is recorded.\nI'm still fixing the garnish.");
++static const u8 sAlreadyZh[] = _("宮原徽章已經記好了。\n我還在調整最後的裝飾呢。");
++static const u8 sDeclinedEn[] = _("Of course. A little time helps.\nI'm perfecting the garnish.");
++static const u8 sDeclinedZh[] = _("當然，多留一點時間也好。\n我再調整一下裝飾。");
++static const u8 sLossEn[] = _("Not every batch sets first try.\nRest. We can adjust the mix.");
++static const u8 sLossZh[] = _("不是每次試作都一次成功。\n歇一下，下次再調整配方。");
++static const u8 sNotRecordedEn[] = _("No new badge was recorded.\nYou're welcome to try again.");
++static const u8 sNotRecordedZh[] = _("這次沒有新增徽章。\n歡迎再次挑戰。");
++static const u8 sUnavailableEn[] = _("Bring a POKéMON partner\nwhen you're ready to battle.");
++static const u8 sUnavailableZh[] = _("準備對戰時，\n請帶著你的寶可夢夥伴。");
++
++static const u8 *const sMessages[][2] = {
++    [TAICHUNG_GYM_MESSAGE_OFFER] = {sOfferEn, sOfferZh},
++    [TAICHUNG_GYM_MESSAGE_COMPLETE] = {sCompleteEn, sCompleteZh},
++    [TAICHUNG_GYM_MESSAGE_ALREADY_COMPLETE] = {sAlreadyEn, sAlreadyZh},
++    [TAICHUNG_GYM_MESSAGE_DECLINED] = {sDeclinedEn, sDeclinedZh},
++    [TAICHUNG_GYM_MESSAGE_NOT_RECORDED] = {sNotRecordedEn, sNotRecordedZh},
++    [TAICHUNG_GYM_MESSAGE_UNAVAILABLE] = {sUnavailableEn, sUnavailableZh},
++    [TAICHUNG_GYM_MESSAGE_GREETING] = {sGreetingEn, sGreetingZh},
++    [TAICHUNG_GYM_MESSAGE_LOSS] = {sLossEn, sLossZh},
++};
++
++void TaichungGym_ScriptConsumeMiyaharaLossNotice(void)
++{
++    gSpecialVar_Result = TaichungGymConsumeLossNotice(TAICHUNG_GYM_MIYAHARA);
++}
++
++void TaichungGym_ScriptGetMiyaharaMessage(void)
++{
++    u16 message = gSpecialVar_0x8005;
++    if (message >= ARRAY_COUNT(sMessages))
++        message = TAICHUNG_GYM_MESSAGE_UNAVAILABLE;
++    if (message == TAICHUNG_GYM_MESSAGE_COMPLETE
++     && (TaichungGymGetLastResult() != TAICHUNG_GYM_RESULT_WON
++      || !TaichungGymIsComplete(TAICHUNG_GYM_MIYAHARA)))
++        message = TAICHUNG_GYM_MESSAGE_NOT_RECORDED;
++    if (message == TAICHUNG_GYM_MESSAGE_ALREADY_COMPLETE
++     && !TaichungGymIsComplete(TAICHUNG_GYM_MIYAHARA))
++        message = TAICHUNG_GYM_MESSAGE_NOT_RECORDED;
++    StringCopy(gStringVar4, TaichungText(sMessages[message][0], sMessages[message][1]));
 +}
 diff --git a/src/taichung_navigation_bridge.c b/src/taichung_navigation_bridge.c
 new file mode 100644
@@ -333598,10 +333988,10 @@ index 0000000..fd44393
 +}
 diff --git a/tests/taichung_gym_progress_test.c b/tests/taichung_gym_progress_test.c
 new file mode 100644
-index 0000000..de64321
+index 0000000..2a95041
 --- /dev/null
 +++ b/tests/taichung_gym_progress_test.c
-@@ -0,0 +1,178 @@
+@@ -0,0 +1,218 @@
 +#include "global.h"
 +#include "taichung_gym_progress.h"
 +#include "constants/battle.h"
@@ -333711,12 +334101,52 @@ index 0000000..de64321
 +    assert(TaichungGymGetCompletedMask() == (earned | (1 << TAICHUNG_GYM_PARK)) && sWrites == 1);
 +}
 +
++static void TestMiyaharaWithPriorBadges(void)
++{
++    u16 before[256];
++    reset();
++    sVariables[0xF7] = 4;
++    sVariables[0xF8] = 1;
++    sVariables[0xF9] = 1;
++    sVariables[0xFA] = (1 << TAICHUNG_GYM_OLD_STATION) | (1 << TAICHUNG_GYM_PARK);
++    sVariables[0xFB] = 2;
++    sVariables[0xFC] = 4;
++    sVariables[0xFD] = 1;
++    memcpy(before, sVariables, sizeof(before));
++
++    assert(TRAINER_TAICHUNG_MIYAHARA_PEIQI < NUM_TRAINERS);
++    assert(TaichungGymPrepareChallenge(TAICHUNG_GYM_MIYAHARA, TRAINER_TAICHUNG_MIYAHARA_PEIQI));
++    TaichungGymOnTrainerBattleStart(TRAINER_TAICHUNG_MIYAHARA_PEIQI);
++    TaichungGymOnTrainerBattleEnd(TRAINER_TAICHUNG_MIYAHARA_PEIQI, B_OUTCOME_LOST);
++    assert(!TaichungGymConsumeLossNotice(TAICHUNG_GYM_PARK));
++    assert(!TaichungGymPrepareChallenge(TAICHUNG_GYM_PARK, TRAINER_TAICHUNG_PARK_LIAN));
++    assert(TaichungGymConsumeLossNotice(TAICHUNG_GYM_MIYAHARA));
++    assert(!TaichungGymConsumeLossNotice(TAICHUNG_GYM_MIYAHARA));
++    assert(sWrites == 0 && memcmp(before, sVariables, sizeof(before)) == 0);
++
++    assert(TaichungGymPrepareChallenge(TAICHUNG_GYM_MIYAHARA, TRAINER_TAICHUNG_MIYAHARA_PEIQI));
++    TaichungGymOnTrainerBattleStart(TRAINER_TAICHUNG_MIYAHARA_PEIQI);
++    TaichungGymOnTrainerBattleEnd(TRAINER_TAICHUNG_PARK_LIAN, B_OUTCOME_WON);
++    assert(sWrites == 0 && memcmp(before, sVariables, sizeof(before)) == 0);
++
++    assert(TaichungGymPrepareChallenge(TAICHUNG_GYM_MIYAHARA, TRAINER_TAICHUNG_MIYAHARA_PEIQI));
++    TaichungGymOnTrainerBattleStart(TRAINER_TAICHUNG_MIYAHARA_PEIQI);
++    TaichungGymOnTrainerBattleEnd(TRAINER_TAICHUNG_MIYAHARA_PEIQI, B_OUTCOME_WON);
++    before[0xFA] |= 1 << TAICHUNG_GYM_MIYAHARA;
++    assert(TaichungGymGetCompletedMask() == 7 && TaichungGymGetCompletedCount() == 3);
++    assert(sWrites == 1 && memcmp(before, sVariables, sizeof(before)) == 0);
++    assert(!TaichungGymPrepareChallenge(TAICHUNG_GYM_MIYAHARA, TRAINER_TAICHUNG_MIYAHARA_PEIQI));
++    TaichungGymOnTrainerBattleEnd(TRAINER_TAICHUNG_MIYAHARA_PEIQI, B_OUTCOME_WON);
++    assert(sWrites == 1 && memcmp(before, sVariables, sizeof(before)) == 0);
++}
++
 +int main(void)
 +{
 +    u16 gym;
 +    u8 outcome;
 +    const char *expected[] = {"old-taichung-station","taichung-park","miyahara","natural-science-museum","calligraphy-greenway","shen-ji-new-village","fine-arts-museum","fengjia-night-market","maple-garden","taichung-theater"};
 +    TestLossNotice();
++    TestMiyaharaWithPriorBadges();
 +    reset();
 +    assert(TaichungGymGetCompletedCount()==0);
 +    assert(!TaichungGymIsComplete(10) && !TaichungGymIsComplete(65535));
