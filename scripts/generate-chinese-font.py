@@ -78,9 +78,10 @@ def main():
     if hashlib.sha256(FONT.read_bytes()).hexdigest() != SHA256:
         raise SystemExit('Noto Sans TC checksum mismatch')
     corpus = json.dumps(CONFIG, ensure_ascii=False)
-    # Include independent Start-menu labels without scanning legacy Japanese text.
-    start_menu = (GAME / 'src/start_menu.c').read_text()
-    corpus += '\n'.join(re.findall(r'_(\("[^"\n]*"\))', start_menu))
+    # Include project-owned native labels while leaving legacy Japanese text alone.
+    native_label_sources = [GAME / 'src/start_menu.c', *sorted((GAME / 'src').glob('taichung*.c'))]
+    for source in native_label_sources:
+        corpus += '\n'.join(re.findall(r'_(\("[^"\n]*"\))', source.read_text()))
     original_charmap = subprocess.check_output(['git', '-C', str(GAME), 'show', f'{BASE}:charmap.txt'], text=True)
     existing_chars = set(re.findall(r"^'(.)'\s*=", original_charmap, flags=re.MULTILINE))
     # Retain original Japanese punctuation encodings: fixed-size legacy player
@@ -113,7 +114,7 @@ def main():
     lines = ['#include "global.h"', '#include "event_data.h"', '#include "taichung_language.h"', '']
     for symbol, text in translations.items():
         lines.extend([f'extern const u8 {symbol}[];', f'static const u8 sZh_{symbol}[] = _({c_string(text)});'])
-    lines.extend(['', 'bool8 TaichungIsChinese(void)', '{', '    return gSaveBlock1Ptr != NULL && VarGet(TAICHUNG_LANGUAGE_VAR) == TAICHUNG_LANGUAGE_ZH;', '}', '', 'const u8 *TaichungText(const u8 *english, const u8 *chinese)', '{', '    return TaichungIsChinese() ? chinese : english;', '}', '', 'const u8 *TaichungTranslate(const u8 *text)', '{', '    if (!TaichungIsChinese())', '        return text;'])
+    lines.extend(['', 'bool8 TaichungIsChinese(void)', '{', '    // A quest-log replay must not replace the current saved preference.', '    return gSaveBlock1Ptr != NULL && gSaveBlock1Ptr->vars[TAICHUNG_LANGUAGE_VAR - VARS_START] == TAICHUNG_LANGUAGE_ZH;', '}', '', 'const u8 *TaichungText(const u8 *english, const u8 *chinese)', '{', '    return TaichungIsChinese() ? chinese : english;', '}', '', 'const u8 *TaichungTranslate(const u8 *text)', '{', '    if (!TaichungIsChinese())', '        return text;'])
     for symbol in translations:
         lines.extend([f'    if (text == {symbol})', f'        return sZh_{symbol};'])
     lines.extend(['    return text;', '}', ''])

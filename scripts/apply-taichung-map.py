@@ -26,6 +26,9 @@ def save_json(path, data):
 
 
 def main():
+    if (GAME / 'docs/taichung-city-contract.json').exists():
+        raise SystemExit('This legacy prototype generator would overwrite the integrated city. '
+                         'Edit the native city source instead; see docs/taichung-mapping.md.')
     layouts = json.loads(upstream('data/layouts/layouts.json'))
     layout = next(l for l in layouts['layouts'] if l.get('id') == 'LAYOUT_PALLET_TOWN')
     width, height = 24, 28

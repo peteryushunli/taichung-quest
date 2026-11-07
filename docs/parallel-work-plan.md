@@ -25,12 +25,23 @@ While selection is pending:
 
 Execution sequence: **approved roster and first-release scope → shared landmark catalog → parallel map/art/content/localization work → integrated playable release**. This is a content dependency, not a request to pause the main session or generic systems work.
 
+## Map transformation ownership
+
+The user wants the existing **Landmarks** chat to carry its decisions and visualization through to actual map implementation. It now owns the compressed-city map transformation end to end, with a dedicated native-game worktree at `.worktrees/game-mapping` on `feature/city-map`, created from integrated game commit `ee75ad0`.
+
+Landmarks owns district layouts and connections, landmark placement and blockout graphics, paths, collision, doors/warps, safe arrival points, station starting-area geometry, and the mapping contract consumed by gameplay and the visitor guide. First deliver a traversable station area and a tested district connection, then expand against the approved city plan. Completion requires committed playable game-map changes and validation, not only a visualization or design brief.
+
+The main session continues to own integration and the canonical working build. Its world/gameplay worker should focus on gym/trainer battles, encounter behavior, progression, and transport/gameplay mechanics; it must not concurrently author the map layouts assigned to Landmarks. Localization and web/guide remain independent feature streams. Main owns shared startup/menu integration and resolves identifiers across branches.
+
+Use the existing `TAICHUNG_GAME_SOURCE` build interface for the mapping worktree and keep all generated outputs isolated. Map work must not overwrite the canonical ROM, edit other workers' worktrees, export the central release patch, or publish a release. Handoffs include commit IDs, a map/door/landmark ID contract, source-map renders, build results, and traversal validation. Main reviews and integrates the commits.
+
 ## Independent workstreams
 
 | Stream | Deliverable | Dependency / boundary |
 | --- | --- | --- |
 | Build and integration | Reproducible game build, working baseline, verified combined releases | One integrator owns the assembled game and release artifact. |
-| World mapping | Compressed city topology, landmark locations, connected maps, doors, collision, habitat regions | Can use existing tiles and placeholder buildings. Coordinate identifiers and entry points with scripting. |
+| Map transformation — Landmarks chat | Compressed city topology, landmark locations, connected maps, doors, collision, habitat regions, playable native map commits | Owns `.worktrees/game-mapping`; uses existing tiles and placeholder buildings, coordinates IDs/entry points with gameplay and guide owners. |
+| World/gameplay | Gym/trainer battles, Off/Low/Normal encounter and automatic-challenge preferences, progression, transport mechanics | Consumes the map/landmark contract; does not concurrently edit the Landmarks-owned layouts. Encounter settings can proceed independently of final map geometry. |
 | City map and visitor guide | Selectable city overview, bilingual landmark cards, verified visitor descriptions and location links | Can be built in the browser independently of ROM scripts; consumes shared landmark IDs and map layout. Live ROM-state tracking is a separate integration. |
 | Art and character design | Landmark graphics, fictional leader concepts and sprites, signs and visual identity | Starts with references and concepts. Final asset production follows the existing FireRed dimensions, palettes, and animation formats. |
 | Game scripting and data | Brief intro, four-starter choice, menu cycling, reusable gym battle flow, badges, dialogue, encounter tables | Uses placeholder art and interiors. Final teams and encounter allocations remain undecided until selected. |
@@ -58,6 +69,8 @@ Recommended transition:
 
 Suggested active allocation is one integration owner plus three implementation branches: `feature/zh-tw` for ROM fonts/localization, `feature/world-gyms` for maps/encounters/gym content, and `feature/web-guide` for browser/visitor-guide/release work. The integration owner can finish fast-start and menu cycling while those branches progress. Art concepts and landmark research can proceed alongside the world branch; split an additional implementation branch only when file ownership and worker capacity allow.
 
+This allocation has now been extended by the user's map-ownership direction: the existing Landmarks chat owns `feature/city-map` in its dedicated worktree. `feature/world-gyms` focuses on gameplay rather than map-layout authoring. This uses an existing user-owned chat as an implementation stream; it does not require another new chat or duplicate map worker.
+
 Worktrees prevent accidental edits to the same working files, but do not prevent logical conflicts. Shared menus, map/gym IDs, flags, and the landmark catalog need an assigned owner or agreed interface. For example, localization and transport should not independently redesign the start menu.
 
 Use short branches and frequent integration. GitHub provides checkpoint sharing and optional PR review; worktrees provide local isolation. Both help, but extra publication alone does not make shared-folder edits safe.
@@ -73,6 +86,7 @@ Keep these lightweight; a small table is sufficient.
 3. **Game-to-browser handoff:** the build emits `web/public/roms/taichung-firered.gba` plus `build.json`. The player loads that artifact without needing to know the source-map structure. Version releases explicitly and consider save compatibility when changing map or progression data.
 4. **Language preference:** define where the preference is stored and how startup, ROM menus, browser controls, and visitor-guide text honor it. Agree translated string IDs and font/encoding requirements before parallel translation work; report actual coverage.
 5. **Transport anchors:** landmark catalog entries should reserve safe game-map drop-off coordinates for later fast travel. Station visuals, bike state, and boarding/arrival scripts need named owners. Do not couple immediate menu cycling to completion of the station or vehicle-animation systems.
+6. **Encounter preferences:** gameplay owns two independent saved Off/Low/Normal modes for random wild encounters and automatic trainer challenges. Agree variable IDs and menu/startup wiring with integration/localization before editing shared files. This feature does not require the mapper to finish the city; test its native hooks in an existing area or an isolated fixture while geometry work continues.
 
 ## Integration cadence
 

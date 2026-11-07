@@ -6,15 +6,17 @@ Source of truth for the game direction discussed on 7 November 2026. These decis
 
 The preferred direction is a shrunken version of Taichung as a whole. Compress distances and omit most minor streets. Preserve the city's identity through prominent, recognizable landmarks and distinct urban, park, and natural areas.
 
-The existing West District / Calligraphy Greenway prototype is the first playable part of this larger world. It is a technical foundation, not the final boundary of the game. Final landmark selection, relative placement, scale, and the number of connected maps remain open.
+The initial West District / Calligraphy Greenway prototype is the technical foundation. The current three-district blockout connects Old City, Greenway and Xitun. The ten included landmarks are approved below; final geographic scale and neighborhood coverage remain open.
 
 Geography should support exploration: short connections between memorable destinations, a readable route structure, and a clear distinction between buildings, safe circulation space, and encounter areas. This is a design recommendation; exact topology is still to be chosen.
 
 ### Landmark scope update
 
-After reviewing the real-location map, the user excluded **Gaomei Wetlands** and **Dajia Jenn Lann Temple**. **Luce Memorial Chapel** and **Dakeng** are likely exclusions and are on hold, not definitively rejected. Omit all four from the current working-map comparison and do not schedule work for the tentative pair unless the user restores them.
+After reviewing the real-location map, the user excluded **Gaomei Wetlands**, **Dajia Jenn Lann Temple**, **Luce Memorial Chapel**, and **Dakeng**. The latter pair was initially tentative, then explicitly removed. All four are out of the working roster.
 
-The remaining comparison pool is urban Taichung: the Theater, Greenway/Civic Square, Old Station, Taichung Park, Fengjia, Science Museum, plus Miyahara, Shen Ji New Village, and the Fine Arts Museum as additional candidates. This is not confirmation of all nine, and it does not set the final gym count. The previously proposed coastal and hill districts are no longer mandatory map requirements. See `landmark-shortlist.md` for the working roster.
+The user explicitly added **Maple Garden / 秋紅谷**, then accepted the remaining suggested additions. The included urban roster is now ten places: the Theater, Greenway/Civic Square, Old Station, Taichung Park, Fengjia, Science Museum, Maple Garden, Miyahara, Shen Ji New Village, and the Fine Arts Museum. Their fictional leaders, teams, and detailed layouts remain open. The previously proposed coastal and hill districts are out. See `landmark-shortlist.md` for the roster and `world-map-plan.md` for the proposed tile-world structure.
+
+The user accepted **Old Taichung Station plaza** as the starting location. Preserve the brief welcome, four-starter selection, immediate exploration, and menu cycling when migrating the existing Greenway prototype opening. See `starting-location.md` for the accepted sequence. Do not add a multi-start selection feature; the earlier Greenway and Maple Garden alternatives were discussion options.
 
 ## Player-facing city map and landmark guide
 
@@ -42,7 +44,7 @@ Each featured prominent landmark should become its own gym. Replace the original
 
 Open decisions:
 
-- Which landmarks are featured and the final gym count.
+- Detailed layouts and integration of the ten approved landmark gyms.
 - Fictional leaders' names, personalities, appearances, and dialogue.
 - Pokémon rosters, themes or types, levels, badges, battle order, and scaling.
 - Whether every gym can be challenged immediately or some progression applies.
@@ -57,6 +59,29 @@ Species, habitat allocations, encounter triggers, encounter rates, and level ran
 
 Candidate habitat categories for later allocation are urban streets and service alleys, parks and gardens, waterways or wetlands, and wooded trails. These are planning categories, not finalized species tables.
 
+## Encounter and automatic trainer-challenge settings
+
+The user wants startup and in-game-menu controls for wild Pokémon and strangers initiating battles, each with **Off / Low / Normal** options. Implement these as two independent saved settings so a player can, for example, keep wild encounters while disabling unsolicited trainer challenges.
+
+Implementation is explicitly approved. The gameplay workstream owns the native encounter/trainer behavior and settings; Main session coordinates shared startup/menu wiring and save-variable allocation, with localization providing bilingual text. Proceed in parallel with map production, using existing map/test fixtures where needed rather than waiting for the city maps to finish.
+
+Recommended semantics:
+
+| Setting | Off | Low | Normal |
+| --- | --- | --- | --- |
+| Wild encounters | Suppress automatic/random wild battles during exploration | Reduce the area's configured encounter probability; an initial tuning candidate is roughly one quarter of normal | Use the area's configured encounter behavior |
+| Automatic trainer challenges | NPC trainers do not initiate battles on sight | Reduce trainer detection distance so they challenge only at close range | Use each trainer's configured detection behavior |
+
+These controls target interruptions during exploration. Deliberately initiating a gym or trainer battle remains available. The wild setting must clearly describe its random-encounter scope; do not accidentally disable all explicit battle interactions or award gym completion without fighting.
+
+Keep startup fast with one compact settings screen and sensible defaults. Provide later access through an **Exploration** or equivalent options submenu rather than crowding the main menu with separate entries. Settings persist in the native save and can be changed without restarting or losing party, map position, or progress. Changes affect subsequent encounters, not an already-running battle. Expose the controls and explanations in English and Traditional Chinese.
+
+Recommended compatibility default is Normal for unset/older saves. Reserve named save variables without conflicting with language, starter, quest, gym-completion, or bridge fields. Specific numeric rates and close-range tuning are implementation defaults to verify, not finalized balance decisions.
+
+Source inspection confirms appropriate native hooks: `StandardWildEncounter` / `DoWildEncounterRateTest` in `src/wild_encounter.c`, and `CheckForTrainersWantingBattle` / `GetTrainerApproachDistance` in `src/trainer_see.c`. There is already a temporary wild-disable check, but the requested preference must be saved and respected independently of scripts re-enabling encounters. Low trainer mode should use stable detection rules; a fresh random gate every frame could still trigger an unwanted battle almost immediately.
+
+Validation should cover each mode, independent combinations, walking and cycling (plus surfing if exposed), unchanged voluntary gym challenges, switching modes in the field, bilingual menu layout, and save/reload persistence. Normal must preserve existing gameplay; Off must remain off after map transitions and script-controlled encounter resets.
+
 ## Fast opening
 
 The required new-game sequence is:
@@ -70,6 +95,8 @@ Skip the original extended introduction and early-game ramp. No compulsory deliv
 The four choices must work inside the actual ROM. Do not seed a fixed starter and present a cosmetic web choice. Continuing an existing save should resume that save instead of rerunning starter selection.
 
 Starting levels, supplies, player naming/customization, and the exact introductory dialogue are implementation defaults that can be revised. Keep them separate from the fixed four-species choice.
+
+The startup also exposes the requested encounter/trainer options without adding a prolonged tutorial. A compact initial preferences step can combine these choices with the language flow.
 
 ## Faster movement and transport
 
@@ -119,6 +146,7 @@ An early technical checkpoint should render a real Traditional Chinese dialogue 
 - The map contains actual layout changes, valid collision, working doors, and reachable NPCs.
 - Players can open a city map, identify the featured landmarks, and read what those places are. The guide distinguishes the compressed game geography and fictional gyms from real visitor information.
 - Menu cycling is available immediately, and mounting/dismounting preserves valid map movement and transitions.
+- Players can choose and later change independent Off/Low/Normal settings for random wild encounters and automatic trainer challenges; preferences persist, and voluntary gym challenges remain available.
 - The current build's implemented areas and provisional landmark/gym content are described honestly.
 
 Language selection is an additional required feature, not a completed capability of the current prototype. Before claiming bilingual support, verify actual in-game Traditional Chinese rendering, startup selection, saved preference, and later menu switching. YouBike stations and ride-hailing remain later-stage enhancements.

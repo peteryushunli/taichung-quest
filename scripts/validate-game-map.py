@@ -4,6 +4,8 @@ import json
 import os
 import re
 import struct
+import subprocess
+import sys
 from collections import deque
 from pathlib import Path
 
@@ -17,6 +19,14 @@ def require(condition, message):
 
 
 def main():
+    city_contract = GAME / 'docs/taichung-city-contract.json'
+    if city_contract.exists():
+        # The native source owns the multi-district collision/warp contract.
+        # Keep the original prototype validator available for older checkouts.
+        subprocess.run([sys.executable, str(GAME / 'tools/taichung/validate_city.py'),
+                        '--source', str(GAME), '--baseline',
+                        'ce6406d8c2eaf46d543c8a2606de0c3cb1951982', '--json'], check=True)
+        return
     layouts = {item['id']: item for item in json.loads((GAME/'data/layouts/layouts.json').read_text())['layouts'] if 'id' in item}
     data = json.loads((GAME/'data/maps/PalletTown/map.json').read_text())
     layout = layouts[data['layout']]

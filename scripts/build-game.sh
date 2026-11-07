@@ -80,6 +80,23 @@ metadata = {
     'sourceCommit': subprocess.check_output(['git', '-C', str(source), 'rev-parse', 'HEAD'], text=True).strip(),
     'modified': bool(subprocess.check_output(['git', '-C', str(source), 'diff', '--name-only', baseline], text=True).strip()) or bool(subprocess.check_output(['git', '-C', str(source), 'status', '--porcelain'], text=True).strip()),
 }
+symbols = subprocess.check_output(
+    ['arm-none-eabi-nm', '--defined-only', '--print-size', str(source / 'pokefirered.elf')], text=True
+)
+for line in symbols.splitlines():
+    columns = line.split()
+    if len(columns) == 4 and columns[-1] == 'gTaichungLanguageBridge':
+        address, size = int(columns[0], 16), int(columns[1], 16)
+        if size != 32 or not 0x02000000 <= address <= 0x02040000 - size:
+            raise SystemExit('Unexpected native language bridge layout; refusing incompatible metadata.')
+        metadata['languageBridge'] = {
+            'version': 1,
+            'size': size,
+            'address': address,
+            'magicA': 0x414C4354,
+            'magicB': 0x3130474E,
+        }
+        break
 (rom.parent / 'build.json').write_text(json.dumps(metadata, indent=2) + '\n')
 print(f"ROM ready: {rom} ({len(data):,} bytes)")
 PY

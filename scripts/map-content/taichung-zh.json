@@ -1,6 +1,6 @@
 {
   "translations": {
-    "Taichung_Text_Welcome": "歡迎來到臺中！\n城市冒險從草悟道開始。",
+    "Taichung_Text_Welcome": "歡迎來到臺中！\n從這裡展開城市冒險。",
     "Taichung_Text_ChooseStarter": "選一隻寶可夢當夥伴。\n接著自由探索這座城市！",
     "Taichung_Text_StarterChosen": "你的冒險夥伴準備好了！\n背包有補給，出發吧！",
     "Taichung_Text_TeaRequest": "晴天最適合喝冰茶！\\p能幫我把這份茶點\n送給草悟道導覽員嗎？\\p她在西南邊的花園裡。",
@@ -31,7 +31,29 @@
     "gSaveStatName_Pokedex": "圖鑑",
     "gSaveStatName_Time": "時間",
     "gText_BattleMenu": "{PALETTE 5}{COLOR_HIGHLIGHT_SHADOW 13 14 15}戰鬥{CLEAR_TO 56}背包\n寶可夢{CLEAR_TO 56}逃跑",
-    "Taichung_Text_LanguageChanged": "已切換為繁體中文。\n可從開始選單再次切換。"
+    "Taichung_Text_LanguageChanged": "已切換為繁體中文。\n可從開始選單再次切換。",
+    "TaichungCity_Text_StationGuide": "歡迎來到舊臺中車站！\\p你的寶可夢已恢復精神。\n開啟選單就能騎腳踏車。\\p宮原眼科就在西北方。\n往西走可前往草悟道。",
+    "TaichungCity_Text_GreenwayGuide": "這條綠廊串起藝術、\n科學與街區生活。\\p西邊：秋紅谷、歌劇院。\n東邊：舊車站、臺中公園。",
+    "TaichungCity_Text_OldStation": "舊臺中車站\\p地標會館：歡迎入內探索。",
+    "TaichungCity_Text_Host_OldStation": "歡迎來到這座地標會館！\\p城市聯盟正為這裡\n準備未來的挑戰。",
+    "TaichungCity_Text_Park": "臺中公園\\p地標會館：歡迎入內探索。",
+    "TaichungCity_Text_Host_Park": "歡迎來到臺中公園！\\p城市聯盟正為這裡\n準備未來的挑戰。",
+    "TaichungCity_Text_Miyahara": "宮原眼科\\p地標會館：歡迎入內探索。",
+    "TaichungCity_Text_Host_Miyahara": "歡迎來到宮原眼科！\\p城市聯盟正為這裡\n準備未來的挑戰。",
+    "TaichungCity_Text_ScienceMuseum": "國立自然科學博物館\\p地標會館：歡迎入內探索。",
+    "TaichungCity_Text_Host_ScienceMuseum": "歡迎來到國立自然科學博物館！\\p城市聯盟正為這裡\n準備未來的挑戰。",
+    "TaichungCity_Text_Greenway": "草悟道／市民廣場\\p地標會館：歡迎入內探索。",
+    "TaichungCity_Text_Host_Greenway": "歡迎來到這座地標會館！\\p城市聯盟正為這裡\n準備未來的挑戰。",
+    "TaichungCity_Text_ShenJi": "審計新村\\p地標會館：歡迎入內探索。",
+    "TaichungCity_Text_Host_ShenJi": "歡迎來到這座地標會館！\\p城市聯盟正為這裡\n準備未來的挑戰。",
+    "TaichungCity_Text_FineArts": "國立臺灣美術館\\p地標會館：歡迎入內探索。",
+    "TaichungCity_Text_Host_FineArts": "歡迎來到國立臺灣美術館！\\p城市聯盟正為這裡\n準備未來的挑戰。",
+    "TaichungCity_Text_Fengjia": "逢甲夜市\\p地標會館：歡迎入內探索。",
+    "TaichungCity_Text_Host_Fengjia": "歡迎來到這座地標會館！\\p城市聯盟正為這裡\n準備未來的挑戰。",
+    "TaichungCity_Text_MapleGarden": "秋紅谷\\p地標會館：歡迎入內探索。",
+    "TaichungCity_Text_Host_MapleGarden": "歡迎來到秋紅谷！\\p城市聯盟正為這裡\n準備未來的挑戰。",
+    "TaichungCity_Text_Theater": "臺中國家歌劇院\\p地標會館：歡迎入內探索。",
+    "TaichungCity_Text_Host_Theater": "歡迎來到這座地標會館！\\p城市聯盟正為這裡\n準備未來的挑戰。"
   },
   "menus": {
     "starters": [

@@ -50,7 +50,7 @@ const zh: Record<string, string> = {
   'Old Taichung Station': '舊臺中車站',
   'Start beside the old station. Three connected city districts are ready to explore.': '從舊車站旁出發，探索三個相連的城市街區。',
   'Follow your curiosity.': '跟著好奇心走。',
-  'Meet the landmark hosts and collect visits in your City Pass.': '認識各地標的接待員，把到訪紀錄收進城市護照。',
+  'Meet the landmark hosts. Challenge Jun for your first City Pass stamp.': '拜訪地標會館，挑戰俊，取得第一枚城市護照印記。',
   'Say hello.': '打聲招呼。',
   'Walk up to someone and press': '走近居民，按下',
   'or': '或',

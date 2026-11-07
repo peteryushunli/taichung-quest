@@ -6,11 +6,11 @@ The ROM now has a real language choice before its Taichung introduction and four
 
 Persistent event variable `0x40FB` stores the language: zero is unset, one is English and two is Traditional Chinese. Starter selection remains independently stored in `0x40FC`; the optional tea errand uses `0x40FD`. The language selection ignores B and retries unexpected menu results. The preference is included in the normal cartridge save when the player uses Save; continuing that save retains it.
 
-Implemented Traditional Chinese coverage is the custom Taichung introduction, starter names/menu, all custom Greenway signs and tea-errand dialogue, native Start actions including Bike/Get off/Language, common Yes/No options, normal Save prompts/stat labels, and the four battle actions. English remains available for the same content.
+Implemented Traditional Chinese coverage includes the custom introduction and starter menu, all city signs/hall dialogue, three district names, native ten-landmark City Pass, Station challenge, exploration settings, Start actions including Bike/Get off/Language, common Yes/No options, normal Save prompts/stat labels, and the four battle actions. Legacy prototype Greenway signs and tea dialogue remain translated. English is available for the same content.
 
-This is not a complete translation of FireRed. Original Kanto story dialogue, most original Bag/party/options/Pokédex detail screens, Pokémon and move names, and most battle narration retain their original English. The English map-name banner is also retained. Future translations should be added to the catalog and verified in their actual windows before expanding the stated coverage.
+Original Kanto story dialogue, most Bag/party/options/Pokédex detail screens, Pokémon and move names, and most battle narration retain English. Future translations should be added to the catalog and verified in their actual windows before expanding the stated coverage. The three custom district names use compact Chinese strings that fit the engine's 19-byte map-name buffer.
 
-The browser player and City Map have their own explicitly labeled interface-language preference. This release does not synchronize that preference with the ROM in real time. The two controls must not be presented as one shared setting.
+The browser player, City Map and native ROM synchronize through the versioned language bridge. The native startup choice remains authoritative. Browser requests wait until a safe field frame, while menus, battles, messages, replay or pause are active. Explicit native choices override older pending browser requests. Metadata must match the actual ROM digest and symbol address, and the client attaches only to one advancing live packet. See [bridge validation](web-language-bridge-validation.md).
 
 ## Font and encoding
 
@@ -26,7 +26,7 @@ The native renderer consumes the complete four-byte sequence, colors the glyph w
 
 Ordinary source builds use the checked-in generated font header, translation source and character map; Pillow and a font download are only needed when regenerating them.
 
-To regenerate after editing `scripts/map-content/taichung-zh.json` or adding native Start-menu Chinese labels:
+To regenerate after editing `scripts/map-content/taichung-zh.json` or adding Chinese labels in project-owned `src/taichung*.c` modules:
 
 ```sh
 python3 -m pip install Pillow
@@ -36,7 +36,7 @@ bash scripts/build-game.sh
 
 The generator downloads the pinned font only when missing and verifies its hash. It updates the compact glyph header, appended character map, native translations and custom starter/language menus. It also creates `artifacts/chinese-glyphs.json` and `artifacts/chinese-font-proof.png` for review. Repeating it without content changes preserves generated source contents. `TAICHUNG_GAME_SOURCE` can select another game checkout/worktree; the font and catalog remain in the project root.
 
-`scripts/apply-taichung-map.py` deliberately restores the initial map design and then regenerates its bilingual menus/font. It does not reset the independently maintained Start-menu implementation or core rendering changes.
+`scripts/apply-taichung-map.py` is a legacy prototype generator. It refuses to run over the integrated city because doing so would overwrite later map content. Normal builds apply the consolidated patch and use the checked-in generated font; they do not rerun either map generator.
 
 ## Runtime verification
 
