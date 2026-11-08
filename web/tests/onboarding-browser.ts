@@ -48,7 +48,7 @@ document.querySelector('#run')!.addEventListener('click', async () => {
     view.cancelLanguage();
     assert(await chosen === undefined, 'Cancel started a language request');
   });
-  await check('all four compact frames stay inside the game screen without a modal backdrop or illustration', () => {
+  await check('all four native-message hit regions stay in the game screen without repainting its dialogue', () => {
     for (const locale of ['en', 'zh-Hant'] as const) {
       setLocale(locale);
       for (let index = 0; index < topics.length; index++) {
@@ -57,26 +57,30 @@ document.querySelector('#run')!.addEventListener('click', async () => {
         assert(dialog.open && !!dialog.querySelector('h2')!.textContent && !!dialog.querySelector('.coach-copy')!.textContent, 'Missing readable topic');
         assert(!dialog.matches(':modal') && dialog.parentElement?.id === 'screen', 'Guide escaped its game viewport');
         assert(!dialog.querySelector('figure, svg, figcaption'), 'Large tutorial illustration remains');
-        assert(dialog.querySelector('.coach-cue')!.textContent?.includes('A'), 'Native A prompt is missing');
+        assert(dialog.querySelector('[data-next-tip]')!.getAttribute('aria-label')?.includes('A'), 'Accessible native A action is missing');
+        assert(!dialog.querySelector('.coach-footer, .coach-cue, [data-continue-later]'), 'Modern progress or pause strip remains');
+        assert(getComputedStyle(dialog).backgroundColor === 'rgba(0, 0, 0, 0)' && getComputedStyle(dialog).borderTopWidth === '0px', 'A web box obscures the native dialogue');
+        assert(!!dialog.querySelector('.native-advance-arrow'), 'Original native arrow is missing');
         assert(!/\b[FD]\s*[\/／]/.test(dialog.textContent ?? ''), 'Keyboard F/D hint leaked into the tutorial');
         if (topics[index] === 'bike') assert(dialog.querySelector('.coach-copy')!.textContent?.includes('B'), 'Native B bike prompt is missing');
         const frame = dialog.getBoundingClientRect(), screen = dialog.parentElement!.getBoundingClientRect();
         assert(frame.left >= screen.left && frame.right <= screen.right && frame.bottom <= screen.bottom && frame.top >= screen.top, 'Frame lies outside game viewport');
-        assert(dialog.querySelector<HTMLButtonElement>('[data-continue-later]')!.getBoundingClientRect().width >= 44, 'Continue later lost its touch target');
+        const target = dialog.querySelector<HTMLButtonElement>('[data-next-tip]')!.getBoundingClientRect();
+        assert(target.width >= 44 && target.height >= 44, 'Native message lost its touch target');
         assert(!dialog.querySelector('.minimap-player'), 'Tutorial created a live player marker');
         assert(dialog.scrollWidth <= dialog.clientWidth, 'Card overflows horizontally');
       }
     }
     view.closeCard();
   });
-  await check('Escape does not mark mandatory teaching as read; Continue later remains available', () => {
+  await check('Escape does not mark mandatory teaching as read; leaving preserves the unread stage', () => {
     view.showCard({ topic: 'bike', context: 301, phase: 5 });
     const dialog = document.querySelector<HTMLDialogElement>('#outdoor-coach')!;
     const before = continued;
     const cancel = new Event('cancel', { cancelable: true });
     dialog.dispatchEvent(cancel);
     assert(cancel.defaultPrevented && dialog.open && continued === before, 'Escape bypassed teaching');
-    dialog.querySelector<HTMLButtonElement>('[data-continue-later]')!.click();
+    view.closeCard();
     assert(!view.cardOpen && continued === before, 'Pause advanced native state');
   });
   await check('pending acknowledgement blocks duplicate actions and keeps context stable', () => {
@@ -141,8 +145,8 @@ document.querySelector('#run-adapter')!.addEventListener('click', async () => {
     for (const phase of [5, 6, 7, 8]) {
       await waitFor(() => (words[6] & 255) === phase && !!document.querySelector<HTMLDialogElement>('#outdoor-coach')!.open && !document.querySelector<HTMLButtonElement>('#outdoor-coach [data-next-tip]')?.disabled);
       if (phase === 6) {
-        document.querySelector<HTMLButtonElement>('#outdoor-coach [data-continue-later]')!.click();
-        assert(!host.immersive && (words[6] & 255) === 6, 'Continue later advanced native progress');
+        adapter.beforeLeave(); host.immersive = false; host.paused = true; adapter.refresh();
+        assert(!host.immersive && (words[6] & 255) === 6, 'Leaving advanced native progress');
         host.immersive = true; host.paused = false; adapter.refresh();
         await waitFor(() => document.querySelector<HTMLDialogElement>('#outdoor-coach')!.open);
       }
@@ -170,7 +174,7 @@ document.querySelector('#run-adapter')!.addEventListener('click', async () => {
     publish(9, 1);
     await waitFor(() => !adapter.blocksCityMap);
     assert(!adapter.blocksInput, 'Completing the native guide kept ordinary input blocked');
-    status.textContent = 'PASS simulated adapter: dedicated language handshake, four in-screen frames, F/Interact/tap routes, fresh resume/context ACKs, Continue later without progress, and phase9 native farewell. No actual ROM/party or physical-device coverage.';
+    status.textContent = 'PASS simulated adapter: dedicated language handshake, four native-message hit regions, F/Interact/tap routes, fresh resume/context ACKs, leaving without progress, and phase9 native farewell. No actual ROM/party or physical-device coverage.';
   } catch (error) { status.textContent = `FAIL simulated adapter: ${error}`; }
   finally { clearInterval(timer); adapter.destroy(); view = makeView(); }
 });
