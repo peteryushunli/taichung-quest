@@ -34,7 +34,9 @@
       "y": 64
     },
     "landmarkHallRef": "MAP_TAICHUNG_OLD_STATION_GYM",
-    "gymStatus": "playable"
+    "gymStatus": "playable",
+    "gymLeaderEn": "Jun",
+    "gymLeaderZh": "俊"
   },
   {
     "id": "taichung-park",
@@ -71,7 +73,9 @@
       "y": 30
     },
     "landmarkHallRef": "MAP_TAICHUNG_PARK_GYM",
-    "gymStatus": "playable"
+    "gymStatus": "playable",
+    "gymLeaderEn": "Lian",
+    "gymLeaderZh": "莉安"
   },
   {
     "id": "miyahara",
@@ -108,6 +112,8 @@
       "x": 20,
       "y": 52
     },
+    "gymLeaderEn": "Peiqi",
+    "gymLeaderZh": "沛琪",
     "landmarkHallRef": "MAP_TAICHUNG_MIYAHARA_GYM",
     "gymStatus": "playable"
   },
@@ -183,6 +189,7 @@
       "y": 36
     },
     "landmarkHallRef": "MAP_TAICHUNG_GREENWAY_GYM",
+    "landingNameEn": "Greenway",
     "gymStatus": "planned"
   },
   {
@@ -221,6 +228,7 @@
       "y": 44
     },
     "landmarkHallRef": "MAP_TAICHUNG_SHEN_JI_GYM",
+    "landingNameEn": "Shen Ji",
     "gymStatus": "planned"
   },
   {

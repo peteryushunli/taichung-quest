@@ -2,7 +2,7 @@
 
 A Vite + TypeScript frontend for the source-built Taichung FireRed cartridge. The canvas displays the real game running in mGBA WebAssembly.
 
-The introduction sells exploring Taichung in the Pokémon world: real landmarks as gyms, leader battles and badges. An inline link leads to a gallery below the player with four existing pixel landmark assets: Old Station, National Taichung Theater, Miyahara and Taichung Park. Current build availability is explained below the player. The gallery uses four columns on wide desktops and two on mobile or narrower player columns, with English/Traditional Chinese captions. Asset provenance and native integration status are recorded in `src/assets/landmarks/README.md`; the gallery is labeled landmark art rather than gameplay screenshots.
+The landing page (`src/landing.ts`, `src/landing.css`) sits in front of the player in the same document, so Play keeps its direct gesture for fullscreen and audio. It sells exploring Taichung through an interactive landmark map, gym cards, how-to steps and Start/Continue actions. Landmark data comes only from `src/data/landmarks.json`, and gym claims derive from `gymStatus` in `src/landing-model.ts`. The product name is still a dashed placeholder. Imagery slots live in `src/landing-assets.ts`: set a URL there and the matching placeholder is replaced. Facade provenance is in `src/assets/landmarks/README.md`; the reel and stills in `src/assets/landing/` are real captures of the current game.
 
 The canonical player and release/client-QA origin is [Taichung Quest on Vercel](https://taichung-quest.vercel.app), with Main as the sole production publisher. Move old-origin progress using [native save export/import](../docs/vercel-readiness.md#moving-an-existing-adventure-to-vercel); browser snapshots remain tied to their original origin.
 
@@ -20,7 +20,7 @@ npm run build
 npm run preview
 ```
 
-`build` runs the TypeScript check, copies the pinned emulator distribution into `public/emulator/`, and builds `dist/`. Emulator files are served from this application's origin; no CDN or external font requests are needed.
+`build` runs the TypeScript check, copies the pinned emulator distribution into `public/emulator/`, and builds `dist/`. Emulator files are served from this application's origin; the player needs no CDN. The landing page loads its web fonts from Google Fonts in CORS mode, which keeps cross-origin isolation intact.
 
 ## Browser requirements
 
@@ -45,7 +45,7 @@ The emulator modules are loaded through `public/emulator-loader.js`, using a nat
 - Onscreen buttons support pointer and touch input. In portrait, the game sits above a 144px directional pad and large semantic action buttons. Each direction and system control has a 48px target. City Map is a separate browser guide action, not a game key.
 - Drag within the pad to change direction; its center and outside edge release movement. Multiple fingers and keyboard presses own their holds independently. Inputs release on cancellation, lost capture, focus loss, rotation, fullscreen transitions, pause and modal opening. A held key must be released before it can drive the game again after focus or modal changes.
 - Game shortcuts operate on the game canvas and focused game controls. Text fields, language selectors, guide/dialog controls, links and ordinary page buttons keep their own keyboard behavior. Enter/Space activate a focused game button; F/D remain its primary action shortcuts.
-- Play enters a viewport-filling portrait game view and requests native fullscreen directly in the click gesture. The CSS view works when the browser declines or lacks that API. Back to introduction pauses the live game; Return to game resumes the same canvas/runtime.
+- Start a new game and Continue saved game enter a viewport-filling portrait game view and requests native fullscreen directly in the click gesture. The CSS view works when the browser declines or lacks that API. Back to introduction pauses the live game and returns to the landing page, where every Play action becomes Return to game and resumes the same canvas/runtime.
 - Game options keeps language, sound, snapshot save, cartridge restart and save download/import inside the player. Opening options releases controls and preserves the prior pause state on close. City Map remains a separate control. Loading and preflight failures appear beside Play, including when hosting lacks the isolation headers.
 - Mobile layout is portrait-only at the user's request. No dedicated landscape mode is provided. The responsive page and desktop F/D/arrow controls remain available.
 - Save spot captures an emulator snapshot. Snapshots are also stored every 20 seconds and restored on the next visit.
