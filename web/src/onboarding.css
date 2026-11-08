@@ -27,6 +27,7 @@
   box-sizing: border-box; width: auto; height: auto; max-width: none; max-height: none;
   margin: 0; padding: 0; border: 0; border-radius: 0;
   background: transparent; box-shadow: none; overflow: visible;
+  mix-blend-mode: multiply;
 }
 .outdoor-coach[open] { display: block; }
 .outdoor-coach [data-next-tip] {
@@ -41,7 +42,7 @@
   position: absolute; right: 2cqw; bottom: 0;
   width: 6.666667cqw; height: 6.666667cqw;
   background: url('./assets/native-dialogue/down-arrows.png') 0 0 / 800% 100% no-repeat;
-  image-rendering: pixelated; mix-blend-mode: multiply; pointer-events: none;
+  image-rendering: pixelated; pointer-events: none;
   animation: native-advance-bob .8s steps(1, end) infinite;
 }
 @keyframes native-advance-bob {
