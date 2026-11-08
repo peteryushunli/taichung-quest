@@ -1,5 +1,6 @@
 import { createGameControls } from '../src/game-controls';
 import { createGameView } from '../src/game-view';
+import { protectGameDisplay } from '../src/game-display';
 
 const root = document.querySelector<HTMLElement>('.physical-controls')!;
 const canvas = document.querySelector('canvas')!;
@@ -55,6 +56,40 @@ run.addEventListener('click', async () => {
   await check('F confirms, D only goes back, arrows move', () => {
     for (const code of ['KeyF', 'KeyD', 'ArrowRight']) { key('keydown', code); key('keyup', code); }
     equal(events, ['+A', '-A', '+B', '-B', '+Right', '-Right']);
+  });
+  await check('game display blocks selection, callouts and dragging without consuming clicks or keys', () => {
+    const display = document.createElement('div');
+    display.className = 'screen';
+    display.innerHTML = '<button><svg><text>Fine Arts</text></svg><span>Fine Arts</span></button><button data-next-tip>A / Continue</button>';
+    document.body.append(display);
+    protectGameDisplay(display);
+    let clicks = 0;
+    for (const button of display.querySelectorAll('button')) button.addEventListener('click', () => clicks++);
+    try {
+      for (const target of display.querySelectorAll('text, span, [data-next-tip]')) {
+        const style = getComputedStyle(target);
+        equal(style.userSelect, 'none');
+        equal(style.getPropertyValue('-webkit-user-select'), 'none');
+        for (const type of ['selectstart', 'contextmenu', 'dragstart']) {
+          const event = new Event(type, { bubbles: true, cancelable: true });
+          target.dispatchEvent(event);
+          equal(event.defaultPrevented, true);
+          const outside = new Event(type, { bubbles: true, cancelable: true });
+          document.querySelector('input')!.dispatchEvent(outside);
+          equal(outside.defaultPrevented, false);
+        }
+      }
+      for (const button of display.querySelectorAll('button')) button.click();
+      equal(clicks, 2);
+      const parent = canvas.parentElement!, next = canvas.nextSibling;
+      display.append(canvas);
+      try {
+        canvas.focus();
+        equal(document.activeElement, canvas);
+        key('keydown', 'KeyF'); key('keyup', 'KeyF');
+        equal(events, ['+A', '-A']);
+      } finally { parent.insertBefore(canvas, next); }
+    } finally { display.remove(); }
   });
   await check('two pointers and a key hold independently, with directional drag', () => {
     pointer('pointerdown', 1, pad, .5, .1);

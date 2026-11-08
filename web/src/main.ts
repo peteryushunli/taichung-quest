@@ -11,6 +11,7 @@ import { NativeLanguageBridge, parseLanguageBridgeMetadata } from './language-br
 import type { LanguageBridgeState } from './language-bridge';
 import { createGameControls } from './game-controls';
 import { createGameView } from './game-view';
+import { protectGameDisplay } from './game-display';
 import { NativeNavigationBridge, parseNavigationMetadata } from './navigation-bridge';
 import type { NavigationState } from './navigation-bridge';
 import { createMinimap } from './minimap';
@@ -100,6 +101,7 @@ const landing = createLanding(el('landing'), {
   getState: () => ({ running, starting, immersive: gameView.immersive, hasSave }),
 });
 const canvas = el<HTMLCanvasElement>('game-canvas');
+protectGameDisplay(el('screen'));
 const playButton = el<HTMLButtonElement>('play-button');
 const feedback = el('feedback');
 const status = el('game-status');
