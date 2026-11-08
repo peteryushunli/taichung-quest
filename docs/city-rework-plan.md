@@ -81,6 +81,6 @@ Greenway belongs to the Old City session in this plan because its north extensio
 Each has a recommendation, and work proceeds on the recommendation unless told otherwise.
 
 1. **Grow outward for the highway** (recommended) or take 3 columns from the existing maps?
-2. **Extend Greenway and Old City north to a straight edge** (recommended, adds 32 to 48 rows of city each) or keep the stepped edge and bend the highway?
+2. ~~Extend Greenway and Old City north to a straight edge, or keep the stepped edge?~~ **Decided 8 November 2026: extend north.** Greenway becomes 40×104 and Old City 40×120, and the north highway runs straight from x = 0 to x = 120.
 3. **No Surf on any water** (recommended) or allow Surf on the inner canals?
 4. **Use the real road and river names in the game** (recommended, after sourcing) or leave them unnamed?
