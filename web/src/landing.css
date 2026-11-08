@@ -46,9 +46,14 @@ html[lang="zh-Hant"] .lp-display { font-family: var(--lp-zh); font-weight: 500; 
 /* Header */
 .lp-header { position: sticky; top: 0; z-index: 20; background: #f6f3e9ee; -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); border-bottom: 1px solid var(--lp-line); }
 .lp-header-inner { max-width: 1240px; height: 72px; margin: 0 auto; padding: 0 var(--lp-gutter); display: flex; align-items: center; justify-content: space-between; gap: 24px; }
-.landing .lp-brand { display: flex; align-items: center; gap: 12px; color: var(--lp-pine); text-decoration: none; }
-.lp-brand-glyph { font-family: var(--lp-zh); font-size: 30px; line-height: 1; }
-.lp-brand-title { font-weight: 700; font-size: 16px; white-space: nowrap; }
+.landing .lp-brand { display: flex; align-items: center; gap: 10px; min-width: 0; color: var(--lp-pine); text-decoration: none; }
+.lp-flag { flex: none; width: 48px; height: 52px; margin-top: -4px; }
+.lp-flag-frame { visibility: hidden; }
+.lp-flag-frame:first-child { visibility: visible; }
+.lp-wordmark { font: 18px/1 var(--lp-pixel); letter-spacing: .5px; text-transform: uppercase; text-shadow: 2px 2px 0 var(--lp-meadow); white-space: nowrap; }
+.lp-wordmark-quest { color: var(--lp-coral); }
+.lp-brand-party { display: flex; margin-left: 2px; }
+.lp-mon { display: block; flex: none; width: 32px; height: 32px; background: 0 0 / 100% 200% no-repeat; image-rendering: pixelated; }
 .lp-nav { display: flex; align-items: center; gap: 28px; font-size: 14px; }
 .landing .lp-nav-link { color: var(--lp-body); text-decoration: none; white-space: nowrap; }
 .lp-lang { display: flex; flex: none; border: 1px solid #cad4bd; border-radius: 3px; overflow: hidden; font: 11px var(--lp-mono-face); }
@@ -72,7 +77,7 @@ html[lang="zh-Hant"] .lp-display { font-family: var(--lp-zh); font-weight: 500; 
 .lp-bezel { padding: 16px; border-radius: 8px 8px 22px 8px; background: var(--lp-bezel); }
 .lp-screen { position: relative; aspect-ratio: 3/2; overflow: hidden; border: 3px solid #1c342b; border-radius: 2px; background: var(--lp-meadow); }
 .lp-screen video { display: block; width: 100%; height: 100%; object-fit: cover; }
-.lp-partner { position: absolute; right: -22px; bottom: -34px; width: 120px; height: 120px; overflow: hidden; border-radius: 6px; background: var(--lp-cream); box-shadow: 0 0 0 1px var(--lp-card-line); }
+.lp-partner { position: absolute; right: -22px; bottom: -34px; width: 128px; height: 128px; overflow: hidden; border-radius: 6px; background: var(--lp-cream); box-shadow: 0 0 0 1px var(--lp-card-line); }
 .lp-partner img { display: block; width: 100%; height: 100%; object-fit: contain; }
 .lp-status { margin: 0 6px; padding-right: 110px; font-size: 13px; line-height: 1.6; color: var(--lp-muted); }
 .lp-status b { color: var(--lp-pine); font-weight: 600; }
@@ -83,19 +88,12 @@ html[lang="zh-Hant"] .lp-display { font-family: var(--lp-zh); font-weight: 500; 
 .lp-map-section .lp-h2 { color: inherit; }
 .lp-map-section .lp-section-side { color: var(--lp-map-text); }
 .lp-map-body { display: flex; flex-wrap: wrap; gap: 24px; align-items: stretch; }
-.lp-map { position: relative; flex: 2 1 520px; min-width: 0; aspect-ratio: 5/4; overflow: hidden; border-radius: 6px; background: var(--lp-meadow); box-shadow: inset 0 0 0 1px #ffffff30; }
-.lp-map-art { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-.lp-map-grid { position: absolute; inset: 0; background-image: linear-gradient(#c9d09a55 1px, transparent 1px), linear-gradient(90deg, #c9d09a55 1px, transparent 1px); background-size: 4% 5%; }
-.lp-map-route { position: absolute; inset: 0; width: 100%; height: 100%; }
-.lp-map-route path { fill: none; vector-effect: non-scaling-stroke; }
-.lp-district { position: absolute; border: 2px solid; border-radius: 4px; }
-.lp-district-xitun { left: 5%; top: 6%; width: 32%; height: 42%; background: #c8dcd0; border-color: #a9c2b4; }
-.lp-district-greenway { left: 34%; top: 36%; width: 25%; height: 46%; background: #b1c48c; border-color: #98ad74; }
-.lp-district-old { left: 68%; top: 52%; width: 27%; height: 43%; background: #e6d3b8; border-color: #cdb595; }
-.lp-district-name { position: absolute; font: 12px var(--lp-pixel); white-space: nowrap; }
-.lp-name-xitun { left: 7%; top: 8.5%; color: #3f6a5b; }
-.lp-name-greenway { left: 45.5%; top: 78.5%; color: #3d5b2e; }
-.lp-name-old { left: 70%; top: 54.5%; color: #7b5434; }
+/* The map is the game's own tiles; its grid marks every 8 tiles of the world. */
+.lp-map { position: relative; flex: 2 1 520px; min-width: 0; aspect-ratio: 1; overflow: hidden; border-radius: 6px; background: var(--lp-meadow) linear-gradient(#c9d09a66 1px, transparent 1px) 0 0 / 6.6667% 6.6667%; box-shadow: inset 0 0 0 1px #ffffff30; }
+.lp-map::before { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, #c9d09a66 1px, transparent 1px) 0 0 / 6.6667% 6.6667%; }
+.lp-map-art { position: absolute; inset: 0; width: 100%; height: 100%; filter: drop-shadow(0 5px 0 #24392d40); }
+.lp-district-name { position: absolute; font: 12px/1 var(--lp-pixel); letter-spacing: 1px; color: var(--lp-pine); white-space: nowrap; }
+.lp-district-above { transform: translateY(-100%); }
 .lp-map-chip { position: absolute; right: 2%; top: 3%; padding: 4px 7px; border-radius: 2px; background: #f6f3e9cc; font: 10px var(--lp-mono-face); color: #6b7a5a; }
 .lp-map-legend { position: absolute; left: 3%; bottom: 3%; display: flex; gap: 14px; padding: 7px 10px; border-radius: 2px; background: #f6f3e9e8; font-size: 11px; color: var(--lp-pine); }
 .lp-map-legend span { display: flex; align-items: center; gap: 6px; }
@@ -132,6 +130,7 @@ html[lang="zh-Hant"] .lp-detail-names span { font-family: inherit; font-size: 14
 .lp-leader-name small { color: var(--lp-muted); font-size: 12px; }
 .lp-leader-name b { font-weight: 600; }
 .lp-team-sprites { display: flex; flex: none; gap: 6px; }
+.lp-team-sprites[role="group"] i { border-style: solid; border-color: #c8d2bb; font-style: normal; }
 .lp-team-sprites i { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; border: 1.5px dashed var(--lp-dash); border-radius: 50%; background: var(--lp-pale); color: var(--lp-muted); font: 10px var(--lp-mono-face); }
 .lp-real-life { display: flex; justify-content: space-between; gap: 10px; }
 .lp-real-life > span { color: var(--lp-muted); }
@@ -163,8 +162,9 @@ html[lang="zh-Hant"] .lp-card-other { font-family: inherit; font-size: 12px; let
 .lp-step-one-copy p { font-size: 16px; line-height: 1.6; color: var(--lp-map-text); text-wrap: pretty; }
 .lp-starters { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 16px; }
 .lp-starter { display: flex; flex-direction: column; overflow: hidden; border-radius: 4px; background: var(--lp-cream); color: var(--lp-ink); }
-.lp-starter-art { position: relative; aspect-ratio: 1; }
-.lp-starter-art img { display: block; width: 100%; height: 100%; object-fit: contain; }
+.lp-starter-art { position: relative; display: flex; align-items: center; justify-content: center; aspect-ratio: 1; }
+/* Whole-number scales keep every sprite pixel square. */
+.lp-starter-art img { display: block; width: 192px; height: 192px; max-width: 100%; max-height: 100%; }
 .lp-starter-body { display: flex; flex-direction: column; gap: 8px; padding: 14px; }
 .lp-starter-meta { display: flex; justify-content: space-between; align-items: center; font: 11px var(--lp-mono-face); color: var(--lp-muted); }
 .lp-type { padding: 2px 8px; border-radius: 2px; }
@@ -175,7 +175,7 @@ html[lang="zh-Hant"] .lp-card-other { font-family: inherit; font-size: 12px; let
 .lp-team-copy p { font-size: 15px; line-height: 1.6; color: var(--lp-map-text); }
 .lp-party { display: flex; flex-wrap: wrap; gap: 10px; }
 .lp-party-slot { display: flex; align-items: center; justify-content: center; flex: none; width: 72px; height: 72px; overflow: hidden; border-radius: 4px; background: var(--lp-pale); }
-.lp-party-slot img { width: 100%; height: 100%; object-fit: contain; }
+.lp-party-slot .lp-mon { width: 64px; height: 64px; }
 .lp-party-empty { border: 1.5px dashed var(--lp-dash); font: 10px var(--lp-mono-face); color: var(--lp-muted); }
 .lp-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr)); gap: 32px; }
 .lp-step { display: flex; flex-direction: column; gap: 16px; }
@@ -207,9 +207,23 @@ html[lang="zh-Hant"] .lp-cta-zh { display: none; }
 .lp-footer-note { max-width: 640px; }
 .lp-footer-links { display: flex; gap: 20px; }
 
+/* Party icons flip frames like the in-game party menu; the pennant cycles three frames. */
+@keyframes lp-mon-frames { 50% { background-position: 0 100%; } }
+@keyframes lp-flag-wave { 0% { visibility: visible; } 33.333% { visibility: hidden; } }
+@media (prefers-reduced-motion: no-preference) {
+  .lp-mon { animation: lp-mon-frames .6s step-end infinite; animation-delay: calc(var(--i, 0) * -.15s); }
+  .lp-flag-frame { animation: lp-flag-wave .9s step-end infinite; }
+  .lp-flag-frame:nth-child(2) { animation-delay: .3s; }
+  .lp-flag-frame:nth-child(3) { animation-delay: .6s; }
+  .lp-brand-party .lp-mon { transition: transform .12s steps(2); transition-delay: calc(var(--i, 0) * 50ms); }
+}
 @media (hover: hover) and (prefers-reduced-motion: no-preference) {
   .lp-card { transition: border-color .15s, transform .15s; }
   .lp-card:hover { transform: translateY(-2px); }
+  .lp-brand:hover .lp-brand-party .lp-mon { transform: translateY(-6px); }
+}
+@media (max-width: 600px) {
+  .lp-brand-party { display: none; }
 }
 @media (max-width: 900px) {
   .lp-nav { gap: 14px; }
@@ -224,12 +238,17 @@ html[lang="zh-Hant"] .lp-cta-zh { display: none; }
   .lp-map-chip { font-size: 8px; }
   .lp-map-legend { gap: 10px; padding: 5px 7px; font-size: 10px; }
   .lp-status { padding-right: 76px; }
-  .lp-partner { right: -8px; bottom: -28px; width: 84px; height: 84px; }
+  .lp-partner { right: -8px; bottom: -28px; width: 96px; height: 96px; }
+  .lp-starter-art img { width: 128px; height: 128px; }
   .lp-casing { padding: 14px 14px 24px; border-radius: 12px 12px 36px 12px; }
   .lp-bezel { padding: 10px; }
   .lp-casing-top { font-size: 9px; letter-spacing: .6px; }
 }
+@media (max-width: 480px) {
+  .lp-flag { width: 36px; height: 39px; margin-top: -2px; }
+  .lp-wordmark { font-size: 13px; line-height: 1.2; }
+  .lp-wordmark > span { display: block; }
+}
 @media (max-width: 380px) {
-  .lp-brand-title { display: none; }
   .lp-team-sprites i { width: 32px; height: 32px; }
 }

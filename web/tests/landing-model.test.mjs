@@ -4,6 +4,7 @@ import { readFileSync } from 'node:fs';
 import { districtCount, gymStatusSummary, isGymOpen, localizedPlace, markerPosition } from '../src/landing-model.ts';
 
 const landmarks = JSON.parse(readFileSync(new URL('../src/data/landmarks.json', import.meta.url), 'utf8'));
+const city = JSON.parse(readFileSync(new URL('../src/data/minimap-contract.json', import.meta.url), 'utf8'));
 const assets = readFileSync(new URL('../src/landing-assets.ts', import.meta.url), 'utf8');
 const open = landmarks.filter(isGymOpen);
 
@@ -41,14 +42,16 @@ test('the gym status line follows the data in both languages', () => {
   assert.equal(gymStatusSummary(all, 'en'), 'All gyms are battle-ready.');
 });
 
-test('stats and marker positions come from the landmark data', () => {
+test('stats come from the landmark data', () => {
   assert.equal(landmarks.length, 10);
   assert.equal(districtCount(landmarks), 3);
-  const maple = landmarks.find((place) => place.id === 'maple-garden');
-  assert.deepEqual(markerPosition(maple), { x: maple.mapX, y: 28.4 });
-  for (const place of landmarks.filter((candidate) => candidate.id !== 'maple-garden')) {
-    assert.deepEqual(markerPosition(place), { x: place.mapX, y: place.mapY });
-  }
+});
+
+test('map pins sit on each entrance tile of the rendered city, labels facing the middle', () => {
+  for (const place of landmarks) assert.ok(city.markersById[place.id], place.id);
+  assert.deepEqual(markerPosition(city.markersById['old-taichung-station'].world, city.world), { x: 93.75, y: 93.75, side: 'left' });
+  assert.deepEqual(markerPosition([59, 0], { width: 120, height: 120 }).side, 'right');
+  assert.deepEqual(markerPosition([60, 0], { width: 120, height: 120 }).side, 'left');
 });
 
 test('localized places use their own language and secure links', () => {
@@ -74,8 +77,8 @@ test('every landmark has facade art wired in', () => {
   }
 });
 
-test('every open gym has its leader portrait wired in', () => {
+test('every open gym has its leader portrait and team wired in', () => {
   for (const place of open) {
-    assert.match(assets, new RegExp(`'?${place.id}'?: \\{[^}]*leader: \\w+`), place.id);
+    assert.match(assets, new RegExp(`'?${place.id}'?: \\{[^}]*leader: \\w+, team: \\[mon\\(`), place.id);
   }
 });

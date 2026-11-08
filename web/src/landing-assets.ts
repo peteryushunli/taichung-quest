@@ -1,4 +1,5 @@
 import bikeShot from './assets/landing/bike-greenway.png';
+import cityMap from './assets/landing/city-map.png';
 import heroPoster from './assets/landing/hero-poster.png';
 import heroReel from './assets/landing/hero-reel.mp4';
 import fengjia from './assets/landmarks/fengjia.png';
@@ -14,18 +15,44 @@ import theater from './assets/landmarks/theater.png';
 import jun from './assets/leaders/jun.png';
 import lian from './assets/leaders/lian.png';
 import peiqi from './assets/leaders/peiqi.png';
+import bulbasaurFront from './assets/pokemon/front/bulbasaur.png';
+import charmanderFront from './assets/pokemon/front/charmander.png';
+import pikachuFront from './assets/pokemon/front/pikachu.png';
+import squirtleFront from './assets/pokemon/front/squirtle.png';
+import bulbasaurIcon from './assets/pokemon/icon/bulbasaur.png';
+import charizardIcon from './assets/pokemon/icon/charizard.png';
+import charmanderIcon from './assets/pokemon/icon/charmander.png';
+import cloysterIcon from './assets/pokemon/icon/cloyster.png';
+import dragoniteIcon from './assets/pokemon/icon/dragonite.png';
+import eeveeIcon from './assets/pokemon/icon/eevee.png';
+import gengarIcon from './assets/pokemon/icon/gengar.png';
+import goldeenIcon from './assets/pokemon/icon/goldeen.png';
+import gyaradosIcon from './assets/pokemon/icon/gyarados.png';
+import laprasIcon from './assets/pokemon/icon/lapras.png';
+import pidgeottoIcon from './assets/pokemon/icon/pidgeotto.png';
+import pidgeyIcon from './assets/pokemon/icon/pidgey.png';
+import pikachuIcon from './assets/pokemon/icon/pikachu.png';
+import psyduckIcon from './assets/pokemon/icon/psyduck.png';
+import rattataIcon from './assets/pokemon/icon/rattata.png';
+import seelIcon from './assets/pokemon/icon/seel.png';
+import snorlaxIcon from './assets/pokemon/icon/snorlax.png';
+import squirtleIcon from './assets/pokemon/icon/squirtle.png';
 
-export interface LandmarkArt { facade?: string; tint: string; leader?: string }
+/** A two-frame party-menu icon: 32×64, frames stacked top to bottom. */
+export interface PokemonIcon { name: string; icon: string }
+export interface LandmarkArt { facade?: string; tint: string; leader?: string; team?: PokemonIcon[] }
 
+const mon = (name: string, icon: string): PokemonIcon => ({ name, icon });
 const brick = '#ede2d9';
 const park = '#e0e8dc';
 const modern = '#e3e9e6';
 const neutral = '#eee8dc';
 
+// Leader teams follow the native trainer parties (src/data/trainer_parties.h), in battle order.
 export const landmarkArt: Record<string, LandmarkArt> = {
-  'old-taichung-station': { facade: oldStation, tint: brick, leader: jun },
-  'taichung-park': { facade: taichungPark, tint: park, leader: lian },
-  miyahara: { facade: miyahara, tint: brick, leader: peiqi },
+  'old-taichung-station': { facade: oldStation, tint: brick, leader: jun, team: [mon('Rattata', rattataIcon), mon('Pidgey', pidgeyIcon)] },
+  'taichung-park': { facade: taichungPark, tint: park, leader: lian, team: [mon('Goldeen', goldeenIcon), mon('Psyduck', psyduckIcon), mon('Pidgeotto', pidgeottoIcon)] },
+  miyahara: { facade: miyahara, tint: brick, leader: peiqi, team: [mon('Seel', seelIcon), mon('Cloyster', cloysterIcon), mon('Lapras', laprasIcon)] },
   'natural-science-museum': { facade: scienceMuseum, tint: modern },
   'calligraphy-greenway': { facade: greenway, tint: park },
   'shen-ji-new-village': { facade: shenJi, tint: neutral },
@@ -35,25 +62,23 @@ export const landmarkArt: Record<string, LandmarkArt> = {
   'taichung-theater': { facade: theater, tint: modern },
 };
 
-/**
- * Art still to be supplied. Each empty slot renders a labelled placeholder;
- * set a URL here and the page picks it up. Set mapMode to 'art' once mapArt
- * exists, so the markers draw over the rendered city instead of the schematic.
- */
+/** Page media. An empty slot renders a labelled placeholder. */
 export const landingMedia: {
   heroReel?: string;
   heroPoster?: string;
   heroPartner?: string;
   bikeShot?: string;
-  mapArt?: string;
-  mapMode: 'schematic' | 'art';
+  cityMap: string;
   starters: Partial<Record<'charmander' | 'bulbasaur' | 'squirtle' | 'pikachu', string>>;
-  party: (string | undefined)[];
+  starterIcons: PokemonIcon[];
+  party: (PokemonIcon | undefined)[];
 } = {
   heroReel,
   heroPoster,
+  heroPartner: pikachuFront,
   bikeShot,
-  mapMode: 'schematic',
-  starters: {},
-  party: [],
+  cityMap,
+  starters: { charmander: charmanderFront, bulbasaur: bulbasaurFront, squirtle: squirtleFront, pikachu: pikachuFront },
+  starterIcons: [mon('Charmander', charmanderIcon), mon('Bulbasaur', bulbasaurIcon), mon('Squirtle', squirtleIcon), mon('Pikachu', pikachuIcon)],
+  party: [mon('Charizard', charizardIcon), mon('Gengar', gengarIcon), mon('Snorlax', snorlaxIcon), mon('Gyarados', gyaradosIcon), mon('Dragonite', dragoniteIcon), mon('Eevee', eeveeIcon)],
 };
