@@ -25,10 +25,10 @@ function key(type: string, code: string, target: Element = canvas, repeat = fals
   target.dispatchEvent(event);
   return event;
 }
-function pointer(type: string, id: number, target: Element, x = .5, y = .5) {
+function pointer(type: string, id: number, target: Element, x = .5, y = .5, pointerType = 'touch') {
   const rect = target.getBoundingClientRect();
   if (['pointerup', 'pointercancel', 'lostpointercapture'].includes(type)) captured.delete(id);
-  target.dispatchEvent(new PointerEvent(type, { pointerId: id, pointerType: 'touch', button: 0, buttons: type === 'pointerup' ? 0 : 1,
+  target.dispatchEvent(new PointerEvent(type, { pointerId: id, pointerType, button: 0, buttons: type === 'pointerup' ? 0 : 1,
     clientX: rect.left + rect.width * x, clientY: rect.top + rect.height * y, bubbles: true, cancelable: true }));
 }
 function equal(actual: unknown, expected: unknown) {
@@ -81,6 +81,71 @@ run.addEventListener('click', async () => {
     pointer('lostpointercapture', 4, root);
     held('');
     equal(events, ['+Left', '-Left', '+Right', '-Right', '+B', '-B']);
+  });
+  await check('off-root pointerup clears native Right and its pressed appearance even when bubbling is stopped', () => {
+    pointer('pointerdown', 70, pad, .9, .5);
+    held('Right'); equal(root.querySelector('[data-gba="Right"]')!.classList.contains('pressed'), true);
+    document.body.addEventListener('pointerup', event => event.stopPropagation(), { once: true });
+    pointer('pointerup', 70, document.body);
+    held(''); equal(root.querySelector('[data-gba="Right"]')!.classList.contains('pressed'), false);
+    equal(events, ['+Right', '-Right']);
+  });
+  await check('off-root cancellation and capture loss clear only the ending owner, including a disabled target', () => {
+    pointer('pointerdown', 71, pad, .9, .5);
+    pointer('pointerdown', 72, action);
+    action.disabled = true;
+    pointer('pointercancel', 71, document.body);
+    held('A');
+    pointer('lostpointercapture', 72, document.body);
+    held(''); equal(action.classList.contains('pressed'), false);
+    pointer('pointerdown', 80, pad, .9, .5);
+    // A child's implicit capture can be lost when capture transfers to root.
+    pad.dispatchEvent(new PointerEvent('lostpointercapture', { pointerId: 80, bubbles: true }));
+    held('Right');
+    pointer('pointerup', 80, document.body); held('');
+    equal(events, ['+Right', '+A', '-Right', '-A', '+Right', '-Right']);
+  });
+  await check('last-touch fallback preserves another active finger and recovers a missed terminal pointer event', () => {
+    pointer('pointerdown', 73, pad, .9, .5);
+    pointer('pointerdown', 74, action);
+    // Touch.identifier is independent of pointerId. Do not assume they match.
+    const rightTouch = new Touch({ identifier: 901, target: pad });
+    const actionTouch = new Touch({ identifier: 902, target: action });
+    document.body.dispatchEvent(new TouchEvent('touchend', { bubbles: true, touches: [actionTouch], changedTouches: [rightTouch] }));
+    held('A,Right'); // A surviving touch must not trigger blanket touch cleanup.
+    pointer('pointerup', 73, document.body);
+    held('A'); equal(root.querySelector('[data-gba="Right"]')!.classList.contains('pressed'), false);
+    document.body.dispatchEvent(new TouchEvent('touchcancel', { bubbles: true, touches: [], changedTouches: [actionTouch] }));
+    held(''); equal(events, ['+Right', '+A', '-Right', '-A']);
+  });
+  await check('continuous holds survive time and another finger ending; final touch preserves keyboard/mouse owners', async () => {
+    pointer('pointerdown', 75, pad, .9, .5);
+    await new Promise(resolve => setTimeout(resolve, 1200));
+    held('Right');
+    pointer('pointerdown', 76, action);
+    const rightTouch = new Touch({ identifier: 903, target: pad });
+    const actionTouch = new Touch({ identifier: 904, target: action });
+    pointer('pointerup', 76, document.body);
+    document.body.dispatchEvent(new TouchEvent('touchend', { bubbles: true, touches: [rightTouch], changedTouches: [actionTouch] }));
+    held('Right');
+    key('keydown', 'ArrowRight');
+    pointer('pointerdown', 81, back, .5, .5, 'mouse');
+    document.body.dispatchEvent(new TouchEvent('touchend', { bubbles: true, touches: [], changedTouches: [rightTouch] }));
+    held('B,Right');
+    pointer('pointerup', 81, document.body, .5, .5, 'mouse');
+    held('Right');
+    key('keyup', 'ArrowRight'); held('');
+    equal(events, ['+Right', '+A', '-A', '+B', '-B', '-Right']);
+  });
+  await check('a no-contact move outside the root releases its pointer and page lifecycle clears all owners', () => {
+    pointer('pointerdown', 77, pad, .9, .5);
+    document.body.dispatchEvent(new PointerEvent('pointermove', { pointerId: 77, pointerType: 'touch', buttons: 0, bubbles: true }));
+    held('');
+    pointer('pointerdown', 78, pad, .9, .5); key('keydown', 'KeyF');
+    window.dispatchEvent(new PageTransitionEvent('pagehide', { persisted: true })); held('');
+    pointer('pointerdown', 79, action);
+    window.dispatchEvent(new PageTransitionEvent('pageshow', { persisted: true })); held('');
+    equal(events, ['+Right', '-Right', '+Right', '+A', '-Right', '-A', '+A', '-A']);
   });
   await check('text, editable content and City Map cannot leak keys', () => {
     key('keydown', 'ArrowUp');

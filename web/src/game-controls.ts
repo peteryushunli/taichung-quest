@@ -12,7 +12,7 @@ export function createGameControls(options: {
   const { root } = options;
   const buttons = [...root.querySelectorAll<HTMLButtonElement>('[data-gba]')];
   const pad = root.querySelector<HTMLElement>('.dpad')!;
-  const pointers = new Map<number, { pad: true } | { button: HTMLButtonElement }>();
+  const pointers = new Map<number, ({ pad: true } | { button: HTMLButtonElement }) & { pointerType: string }>();
   const state = new InputState({
     press: options.press,
     release: options.release,
@@ -35,8 +35,17 @@ export function createGameControls(options: {
     state.clear(releaseNative);
     const captured = [...pointers.keys()];
     pointers.clear();
-    for (const id of captured) if (root.hasPointerCapture(id)) root.releasePointerCapture(id);
+    for (const id of captured) releaseCapture(id);
     refresh();
+  }
+  function releaseCapture(id: number) {
+    // A browser may already have ended the pointer during focus/lifecycle work.
+    try { if (root.hasPointerCapture(id)) root.releasePointerCapture(id); } catch { /* Already released. */ }
+  }
+  function releasePointer(id: number) {
+    if (!pointers.delete(id)) return;
+    state.set(`pointer:${id}`);
+    releaseCapture(id);
   }
   function direction(event: PointerEvent) {
     const rect = pad.getBoundingClientRect();
@@ -53,26 +62,39 @@ export function createGameControls(options: {
   root.addEventListener('pointerdown', (event) => {
     if (!options.canPlay() || event.button !== 0 || !(event.target instanceof Element)) return;
     const button = event.target.closest<HTMLButtonElement>('[data-gba]');
-    if (pad.contains(event.target)) pointers.set(event.pointerId, { pad: true });
-    else if (button && root.contains(button)) pointers.set(event.pointerId, { button });
+    if (pad.contains(event.target)) pointers.set(event.pointerId, { pad: true, pointerType: event.pointerType });
+    else if (button && root.contains(button)) pointers.set(event.pointerId, { button, pointerType: event.pointerType });
     else return;
     event.preventDefault();
     options.focus();
-    root.setPointerCapture(event.pointerId);
+    if (!pointers.has(event.pointerId)) return;
+    // Global terminal listeners remain responsible even if capture is unavailable.
+    try { root.setPointerCapture(event.pointerId); } catch { /* Use global delivery. */ }
     state.set(`pointer:${event.pointerId}`, pointerButton(event));
   });
-  root.addEventListener('pointermove', (event) => {
+  window.addEventListener('pointermove', (event) => {
     if (!pointers.has(event.pointerId)) return;
+    if (!(event.buttons & 1)) { releasePointer(event.pointerId); return; }
     event.preventDefault();
     state.set(`pointer:${event.pointerId}`, pointerButton(event));
-  });
-  const releasePointer = (event: PointerEvent) => {
-    state.set(`pointer:${event.pointerId}`);
-    pointers.delete(event.pointerId);
+  }, { capture: true });
+  // Terminal events can land outside the controls or on a disabled/removed
+  // target. Capture them before target handlers can stop their propagation.
+  window.addEventListener('pointerup', event => releasePointer(event.pointerId), { capture: true });
+  window.addEventListener('pointercancel', event => releasePointer(event.pointerId), { capture: true });
+  window.addEventListener('lostpointercapture', event => {
+    // Ignore loss of a child's implicit capture while capture moves to root.
+    if (!root.hasPointerCapture(event.pointerId)) releasePointer(event.pointerId);
+  }, { capture: true });
+  const releaseFinalTouches = (event: TouchEvent) => {
+    if (event.touches.length) return;
+    // iOS may end its touch stream without delivering our pointer terminal
+    // event. Touch identifiers are not pointer IDs: only the last-touch signal
+    // authorizes clearing touch owners; keyboard/mouse/pen holds stay intact.
+    for (const [id, pointer] of pointers) if (pointer.pointerType === 'touch') releasePointer(id);
   };
-  root.addEventListener('pointerup', releasePointer);
-  root.addEventListener('pointercancel', releasePointer);
-  root.addEventListener('lostpointercapture', releasePointer);
+  window.addEventListener('touchend', releaseFinalTouches, { capture: true, passive: true });
+  window.addEventListener('touchcancel', releaseFinalTouches, { capture: true, passive: true });
   root.addEventListener('contextmenu', (event) => event.preventDefault());
 
   for (const button of buttons) {
@@ -110,10 +132,12 @@ export function createGameControls(options: {
   });
   window.addEventListener('keyup', (event) => {
     state.set(`key:${event.code}`);
-  });
+  }, { capture: true });
   document.addEventListener('focusin', (event) => { if (!receivesKeys(event.target)) clear(); });
   document.addEventListener('visibilitychange', () => { if (document.hidden) clear(); });
   window.addEventListener('blur', () => clear());
+  window.addEventListener('pagehide', () => clear());
+  window.addEventListener('pageshow', () => clear());
   document.addEventListener('fullscreenchange', () => clear());
   window.addEventListener('orientationchange', () => clear());
   matchMedia('(orientation: portrait)').addEventListener('change', () => clear());
