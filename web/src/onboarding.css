@@ -20,30 +20,40 @@
 .onboarding-dialog .onboarding-actions .onboarding-primary { flex: 1.4; background: #2d523e; border-color: #2d523e; color: #fff9e9; }
 .onboarding-dialog button:disabled { opacity: .55; cursor: wait; }
 .onboarding-dialog button:focus-visible { outline: 3px solid #bd7c4f; outline-offset: 3px; }
-/* The guide sits where native dialogue belongs; it never covers the city with a backdrop. */
+/* Real dialogue remains on the game canvas. This is only its A/tap hit region. */
 .screen:has(>.outdoor-coach) { container-type: inline-size; }
 .outdoor-coach {
-  position: absolute; inset: auto 4px 4px; z-index: 6;
-  box-sizing: border-box; width: auto; max-width: none; min-height: 29%; margin: 0; padding: 0;
-  border: 3px double #425f8b; border-radius: 3px;
-  background: #fffef0; color: #283347; box-shadow: 0 0 0 1px #fffef0;
-  font: clamp(16px, 3cqw, 26px)/1.3 var(--font-ui); font-synthesis: none;
+  position: absolute; inset: 72.5% 2.5% 2.5%; z-index: 6;
+  box-sizing: border-box; width: auto; height: auto; max-width: none; max-height: none;
+  margin: 0; padding: 0; border: 0; border-radius: 0;
+  background: transparent; box-shadow: none; overflow: visible;
+  mix-blend-mode: multiply;
 }
-.outdoor-coach[open] { display: flex; align-items: stretch; }
-.outdoor-coach button { border: 0; border-radius: 0; background: transparent; color: inherit; touch-action: manipulation; }
-.outdoor-coach [data-next-tip] { flex: 1; min-width: 0; min-height: 60px; padding: 7px 9px 5px; display: flex; flex-direction: column; justify-content: space-between; gap: 4px; text-align: left; font: inherit; }
-.coach-copy { display: block; }
-.coach-footer { display: flex; width: 100%; justify-content: space-between; align-items: center; gap: 8px; margin-top: 4px; color: #596a7e; font: clamp(11px, 1.8cqw, 15px)/1.3 var(--font-ui); }
-.coach-cue { text-align: right; }
-.coach-cue>span { color: #415d8a; padding-left: 4px; }
-.outdoor-coach [data-continue-later] { flex: 0 0 44px; min-height: 44px; padding: 0; border-left: 1px solid #ced5d7; color: #58677c; font: 700 19px/1 var(--font-ui); }
-.outdoor-coach button:focus-visible { outline: 2px solid #5475a8; outline-offset: -3px; }
-.outdoor-coach button:disabled { opacity: .65; cursor: wait; }
+.outdoor-coach[open] { display: block; }
+.outdoor-coach [data-next-tip] {
+  position: relative; display: block; width: 100%; height: 100%;
+  margin: 0; padding: 0; border: 0; border-radius: 0;
+  background: transparent; touch-action: manipulation; cursor: pointer;
+}
+/* The native caret is the focused advance cue, with no second rectangle. */
+.outdoor-coach [data-next-tip]:focus-visible { outline: none; }
+.outdoor-coach [data-next-tip]:disabled { opacity: 1; cursor: wait; }
+.native-advance-arrow {
+  position: absolute; right: 2cqw; bottom: 0;
+  width: 6.666667cqw; height: 6.666667cqw;
+  background: url('./assets/native-dialogue/down-arrows.png') 0 0 / 800% 100% no-repeat;
+  image-rendering: pixelated; pointer-events: none;
+  animation: native-advance-bob .8s steps(1, end) infinite;
+}
+@keyframes native-advance-bob {
+  0%, 100% { background-position: 0 0; }
+  25% { background-position: 14.285714% 0; }
+  50% { background-position: 28.571429% 0; }
+  75% { background-position: 42.857143% 0; }
+}
+@media (prefers-reduced-motion: reduce) { .native-advance-arrow { animation: none; } }
 .coach-sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
-/* The native game is paused at its waiting stage, but its screen remains visible. */
 .screen:has(>.outdoor-coach[open])>.pause-screen { visibility: hidden; }
-.outdoor-coach:lang(zh-Hant) { font-family: var(--font-ui-tc); line-height: 1.4; line-break: strict; }
-.outdoor-coach:lang(zh-Hant) .coach-footer { font-family: var(--font-ui-tc); }
 @media (max-width: 360px) { .onboarding-dialog { padding: 20px; } .onboarding-dialog h2 { font-size: 25px; } .language-choice-card { min-height: 76px; padding: 12px; } .onboarding-actions { gap: 8px; } .onboarding-dialog .onboarding-actions button { font-size: 13px; } }
 
 /* Chinese uses full-resolution system glyphs and its own reading rhythm. */
