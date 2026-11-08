@@ -1,5 +1,13 @@
 # Taichung Quest — game decisions
 
+## Current integration direction — 8 November 2026
+
+PR8 combines Claude's authored Xitun, Nantun/temple and Old City map work with Codex's seven remaining gym implementations. Claude retains map and building ownership; Codex's resumed scope is gym activation and bug fixes. Main owns the combined native source, glyph codebook, one portable patch and matching release package. Source consolidation is authorized before every runtime check finishes; production publication still requires the combined release gates.
+
+Keep ten permanent gym IDs and real-win badge bits. The two temple halls are visits, without extra badges. Reuse the accepted characters and bilingual drafts, original150 species, six-partner Team menu, level50 presets and challenge-time HP/status/PP recovery. Existing badges must survive party changes and Save/Continue.
+
+The compact tutorial presentation has screenshot approval and is included, with native A/B hints and the released touch controls preserved. The shorter opening and configurable keyboard setup remain isolated review proposals. YouBike/taxi, player-art expansion and poster work are outside this release. Older priorities below are historical where they conflict with this section.
+
 Source of truth for the game direction discussed on 7 November 2026. These decisions supersede the earlier assumption that the final world would be one literal West District neighborhood.
 
 ## World map

@@ -56,6 +56,12 @@ export function createOnboarding(options: {
   });
   const stopLocaleListener = onLocaleChange(({ locale, source }) => { if (source === 'user') startupLocale = locale; });
 
+  function canAdvanceGuide() {
+    const host = options.getState();
+    return view.cardOpen && !view.cardPending && ownsPause && host.running && host.immersive &&
+      !host.restarting && !document.hidden && !options.host.querySelector('dialog[open]:not(#outdoor-coach)');
+  }
+
   function onAcknowledgement(ack: OnboardingAcknowledgement) {
     if (ack.command === 1 && ack.result === 1 && ack.activeLanguage) {
       startupWaiting = false;
@@ -136,8 +142,8 @@ export function createOnboarding(options: {
       const host = options.getState();
       if (!host.running || host.paused || host.restarting) return;
       ownsPause = true;
-      // Native is explicitly waiting, with text already printed. The illustration
-      // is labeled paused; the actual live HUD keeps its normal hidden policy.
+      // Native is explicitly waiting. Keep its city visible behind the small
+      // dialogue frame; input remains blocked until the exact-context ACK.
       view.showCard({ topic, phase: packet.phase, context: packet.context });
       options.pause();
       options.refreshInput();
@@ -190,5 +196,7 @@ export function createOnboarding(options: {
     get blocksInput() { return inputBlocked(); },
     get blocksCityMap() { return inputBlocked() || (nativeGuideActive && options.getState().immersive); },
     get currentState() { return state; },
+    get canAdvanceGuide() { return canAdvanceGuide(); },
+    advanceGuide() { if (canAdvanceGuide()) view.continueCard(); },
   };
 }

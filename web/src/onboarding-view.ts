@@ -1,31 +1,15 @@
 import './onboarding.css';
-import { getLocale, initializeLocalization, onLocaleChange, setLocale, t } from './i18n';
+import { getLocale, onLocaleChange, setLocale, t } from './i18n';
 import type { Locale } from './i18n';
 
 export type TutorialTopic = 'bike' | 'map' | 'team' | 'landmarks';
 export type TutorialCard = { topic: TutorialTopic; context: number; phase: number };
 
-const topics: Record<TutorialTopic, { title: string; body: string; illustration: string }> = {
-  bike: {
-    title: 'See the city on two wheels.',
-    body: 'After your guide finishes, tap Bike or press D to ride. Use the D-pad or arrow keys to steer, then tap Get off to walk again.',
-    illustration: '<div class="coach-control-example"><span data-i18n="Bike">Bike</span><kbd>D</kbd><span class="coach-example-arrow" aria-hidden="true">↔</span><span data-i18n="Get off">Get off</span></div>',
-  },
-  map: {
-    title: 'A little map, a bigger adventure.',
-    body: 'The minimap helps you find your way while exploring. Tap it or City Map to see all ten landmarks. City Map still works when the minimap is off.',
-    illustration: '<svg class="coach-map-example" viewBox="0 0 280 108" aria-hidden="true"><rect x="12" y="12" width="76" height="70" rx="5"/><rect x="96" y="26" width="76" height="70" rx="5"/><rect x="180" y="14" width="86" height="82" rx="5"/><path d="M50 12v70m46-20h76m52-48v82"/><circle cx="224" cy="78" r="7"/><circle cx="207" cy="53" r="5"/><circle cx="244" cy="33" r="5"/></svg><span class="coach-map-name" data-i18n="City Map">City Map</span>',
-  },
-  team: {
-    title: 'Your starter is just the beginning.',
-    body: 'Open Menu, then Team to choose Pokémon for free. Try different companions and build a party you love as you explore Taichung.',
-    illustration: '<div class="coach-control-example"><span data-i18n="Menu">Menu</span><kbd>M</kbd><span class="coach-example-arrow" aria-hidden="true">→</span><span data-i18n="Team">Team</span></div>',
-  },
-  landmarks: {
-    title: 'Taichung is yours to discover.',
-    body: 'Old Taichung Station, Miyahara and Taichung Park are nearby. Visit their halls, meet the hosts, and use City Map to see which gym challenges are open.',
-    illustration: '<div class="coach-place-examples"><span data-i18n="Old Taichung Station">Old Taichung Station</span><span data-i18n="Miyahara">Miyahara</span><span data-i18n="Taichung Park">Taichung Park</span></div>',
-  },
+const topics: Record<TutorialTopic, { title: string; body: string }> = {
+  bike: { title: 'Bike', body: 'After the tour: B / Bike to ride outdoors. Press again to get off.' },
+  map: { title: 'City Map', body: 'Tap Minimap or City Map to find all landmarks.' },
+  team: { title: 'Team', body: 'Menu → Team: add or swap. All 150 choices are free and join at Lv50.' },
+  landmarks: { title: 'Nearby landmarks', body: 'South to the road, then west. Find nearby gyms on City Map.' },
 };
 const topicOrder: TutorialTopic[] = ['bike', 'map', 'team', 'landmarks'];
 
@@ -51,14 +35,18 @@ export function createOnboardingView(options: {
     </fieldset><div class="onboarding-actions"><button type="button" data-cancel-language><span lang="en">Back</span> / <span lang="zh-Hant">返回</span></button><button type="submit" value="confirm" class="onboarding-primary"><span lang="en">Let’s begin</span> / <span lang="zh-Hant">開始冒險</span></button></div></form>`;
   const coach = document.createElement('dialog');
   coach.id = 'outdoor-coach';
-  coach.className = 'onboarding-dialog outdoor-coach';
+  coach.className = 'outdoor-coach';
+  coach.setAttribute('aria-modal', 'false');
   coach.setAttribute('aria-labelledby', 'outdoor-coach-title');
   coach.setAttribute('aria-describedby', 'outdoor-coach-copy');
-  options.host.append(language, coach);
+  options.host.append(language);
+  // Keep dialogue inside the real game viewport, including native fullscreen.
+  (options.host.querySelector('#screen') ?? options.host).append(coach);
   let languageResolve: ((value: Locale | undefined) => void) | undefined;
   let languageReturn: HTMLElement | undefined;
   let card: TutorialCard | undefined;
   let pending = false;
+  let cardReturn: HTMLElement | undefined;
 
   language.querySelector('[data-cancel-language]')!.addEventListener('click', () => language.close('cancel'));
   language.addEventListener('close', () => {
@@ -71,14 +59,23 @@ export function createOnboardingView(options: {
     if (!value) languageReturn?.focus({ preventScroll: true });
     resolve?.(value);
   });
-  // Mandatory teaching may be paused, but Escape must not mark a topic read.
+  // Escape may leave fullscreen, but never marks mandatory teaching as read.
   coach.addEventListener('cancel', (event) => event.preventDefault());
+  function continueCard() {
+    if (!coach.open || pending || !card) return;
+    options.releaseInputs();
+    options.onCardContinue({ ...card });
+  }
+  coach.addEventListener('keydown', (event) => {
+    if (!['KeyF', 'KeyZ'].includes(event.code) || event.ctrlKey || event.metaKey || event.altKey) return;
+    event.preventDefault();
+    if (!event.repeat) continueCard();
+  });
   coach.addEventListener('click', (event) => {
     const target = (event.target as Element).closest<HTMLButtonElement>('button');
     if (!target || pending || !card) return;
-    options.releaseInputs();
-    if (target.hasAttribute('data-next-tip')) options.onCardContinue({ ...card });
-    if (target.hasAttribute('data-continue-later')) options.onContinueLater();
+    if (target.hasAttribute('data-next-tip')) continueCard();
+    if (target.hasAttribute('data-continue-later')) { options.releaseInputs(); options.onContinueLater(); }
   });
 
   function renderCard() {
@@ -86,15 +83,15 @@ export function createOnboardingView(options: {
     const content = topics[card.topic];
     coach.lang = getLocale();
     const step = topicOrder.indexOf(card.topic) + 1;
-    const caption = pending ? 'Tutorial illustration · returning to your guide' : 'Tutorial illustration · your adventure is paused';
-    coach.innerHTML = `<p class="onboarding-eyebrow"><span data-i18n="YOUR TAICHUNG FIELD GUIDE">${t('YOUR TAICHUNG FIELD GUIDE')}</span><span>${step} / 4</span></p>
-      <h2 id="outdoor-coach-title" tabindex="-1">${t(content.title)}</h2>
-      <p id="outdoor-coach-copy" class="onboarding-copy">${t(content.body)}</p>
-      <figure class="coach-illustration">${content.illustration}<figcaption data-i18n="${caption}">${t(caption)}</figcaption></figure>
-      <p class="coach-availability" data-i18n="These controls become available when your guide finishes.">${t('These controls become available when your guide finishes.')}</p>
-      <p class="onboarding-progress" role="status" aria-live="polite">${pending ? t('Returning to your guide…') : ''}</p>
-      <div class="onboarding-actions"><button data-continue-later ${pending ? 'disabled' : ''}>${t('Continue later')}</button><button data-next-tip class="onboarding-primary" ${pending ? 'disabled' : ''}>${t(step === 4 ? 'Let’s explore' : 'Next tip')}</button></div>`;
-    initializeLocalization(coach);
+    const restoreFocus = coach.contains(document.activeElement) && !pending;
+    coach.innerHTML = `<h2 id="outdoor-coach-title" class="coach-sr-only">${t(content.title)}</h2>
+      <button type="button" data-next-tip aria-describedby="outdoor-coach-copy" ${pending ? 'disabled' : ''}>
+        <span id="outdoor-coach-copy" class="coach-copy">${t(content.body)}</span>
+        <span class="coach-footer"><span>${step} / 4</span><span class="coach-cue">${pending ? t('Returning to your guide…') : t('A / Interact')} <span aria-hidden="true">▾</span></span></span>
+      </button>
+      <button type="button" data-continue-later aria-label="${t('Continue later')}" title="${t('Continue later')}" ${pending ? 'disabled' : ''}><span aria-hidden="true">Ⅱ</span></button>`;
+    coach.setAttribute('aria-busy', String(pending));
+    if (restoreFocus) coach.querySelector<HTMLButtonElement>('[data-next-tip]')!.focus({ preventScroll: true });
   }
   const stopLocaleListener = onLocaleChange(() => { if (coach.open) renderCard(); });
 
@@ -115,14 +112,25 @@ export function createOnboardingView(options: {
       card = { ...next };
       pending = false;
       renderCard();
-      if (!coach.open) coach.showModal();
-      coach.querySelector<HTMLElement>('h2')!.focus({ preventScroll: true });
+      if (!coach.open) {
+        cardReturn = document.activeElement instanceof HTMLElement ? document.activeElement : undefined;
+        coach.show();
+      }
+      coach.querySelector<HTMLButtonElement>('[data-next-tip]')!.focus({ preventScroll: true });
     },
     setPending(value: boolean) { pending = value; renderCard(); },
-    closeCard() { if (coach.open) coach.close(); card = undefined; pending = false; },
+    closeCard() {
+      const restoreFocus = coach.contains(document.activeElement);
+      if (coach.open) coach.close();
+      card = undefined; pending = false;
+      if (restoreFocus && cardReturn?.isConnected) cardReturn.focus({ preventScroll: true });
+      cardReturn = undefined;
+    },
+    continueCard,
     cancelLanguage() { if (language.open) language.close('cancel'); },
     get languageOpen() { return language.open; },
     get cardOpen() { return coach.open; },
+    get cardPending() { return pending; },
     get activeCard() { return card ? { ...card } : undefined; },
     destroy() { stopLocaleListener(); language.remove(); coach.remove(); },
   };

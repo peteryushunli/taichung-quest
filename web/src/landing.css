@@ -252,3 +252,7 @@ html[lang="zh-Hant"] .lp-cta-zh { display: none; }
 @media (max-width: 380px) {
   .lp-team-sprites i { width: 32px; height: 32px; }
 }
+
+/* Visit stops are distinct from open or planned gyms. */
+.is-visit > .lp-marker { background: var(--lp-cream); border-style: double; }
+.lp-swatch-visit { background: var(--lp-cream); border: 1px solid var(--lp-pine); }

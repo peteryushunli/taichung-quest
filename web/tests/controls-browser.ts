@@ -1,5 +1,6 @@
 import { createGameControls } from '../src/game-controls';
 import { createGameView } from '../src/game-view';
+import { protectGameDisplay } from '../src/game-display';
 
 const root = document.querySelector<HTMLElement>('.physical-controls')!;
 const canvas = document.querySelector('canvas')!;
@@ -10,6 +11,8 @@ const results = document.querySelector<HTMLElement>('#results')!;
 const run = document.querySelector<HTMLButtonElement>('#run')!;
 const events: string[] = [];
 let enabled = true;
+let guideAvailable = false;
+let guideAdvances = 0;
 const captured = new Set<number>();
 // Synthetic PointerEvents have no OS pointer to capture. Keep all other DOM
 // listeners unchanged and make this boundary explicit in the fixture's UI.
@@ -18,6 +21,7 @@ root.hasPointerCapture = (id) => captured.has(id);
 root.releasePointerCapture = (id) => { captured.delete(id); };
 const controls = createGameControls({
   root, canvas, canPlay: () => enabled, focus: () => canvas.focus(),
+  tutorialInteract: { available: () => guideAvailable, advance() { guideAdvances++; guideAvailable = false; } },
   press: (button) => events.push(`+${button}`), release: (button) => events.push(`-${button}`),
 });
 function key(type: string, code: string, target: Element = canvas, repeat = false) {
@@ -44,7 +48,7 @@ run.addEventListener('click', async () => {
   run.disabled = true;
   const lines: string[] = [];
   async function check(name: string, test: () => void | Promise<void>) {
-    enabled = true;
+    enabled = true; guideAvailable = false; guideAdvances = 0;
     controls.releaseAll();
     events.length = 0;
     canvas.focus();
@@ -55,6 +59,62 @@ run.addEventListener('click', async () => {
   await check('F confirms, D only goes back, arrows move', () => {
     for (const code of ['KeyF', 'KeyD', 'ArrowRight']) { key('keydown', code); key('keyup', code); }
     equal(events, ['+A', '-A', '+B', '-B', '+Right', '-Right']);
+  });
+  await check('game display blocks selection, callouts and dragging without consuming clicks or keys', () => {
+    const display = document.createElement('div');
+    display.className = 'screen';
+    display.innerHTML = '<button><svg><text>Fine Arts</text></svg><span>Fine Arts</span></button><button data-next-tip>A / Continue</button>';
+    document.body.append(display);
+    protectGameDisplay(display);
+    let clicks = 0;
+    for (const button of display.querySelectorAll('button')) button.addEventListener('click', () => clicks++);
+    try {
+      for (const target of display.querySelectorAll('text, span, [data-next-tip]')) {
+        const style = getComputedStyle(target);
+        equal(style.userSelect, 'none');
+        equal(style.getPropertyValue('-webkit-user-select'), 'none');
+        for (const type of ['selectstart', 'contextmenu', 'dragstart']) {
+          const event = new Event(type, { bubbles: true, cancelable: true });
+          target.dispatchEvent(event);
+          equal(event.defaultPrevented, true);
+          const outside = new Event(type, { bubbles: true, cancelable: true });
+          document.querySelector('input')!.dispatchEvent(outside);
+          equal(outside.defaultPrevented, false);
+        }
+      }
+      for (const button of display.querySelectorAll('button')) button.click();
+      equal(clicks, 2);
+      const parent = canvas.parentElement!, next = canvas.nextSibling;
+      display.append(canvas);
+      try {
+        canvas.focus();
+        equal(document.activeElement, canvas);
+        key('keydown', 'KeyF'); key('keyup', 'KeyF');
+        equal(events, ['+A', '-A']);
+      } finally { parent.insertBefore(canvas, next); }
+    } finally { display.remove(); }
+  });
+  await check('tutorial Interact routes F, touch and assistive activation without native input or pending repeats', () => {
+    enabled = false; guideAvailable = true; controls.refresh();
+    equal(action.disabled, false); equal(back.disabled, true);
+    key('keydown', 'KeyD'); key('keydown', 'ArrowRight');
+    key('keydown', 'KeyF', canvas, true); equal(guideAdvances, 0);
+    key('keydown', 'KeyF'); equal(guideAdvances, 1); equal(action.disabled, true);
+    key('keydown', 'KeyF'); pointer('pointerdown', 70, action);
+    equal(guideAdvances, 1); equal(events, []); held('');
+    guideAvailable = true; controls.refresh();
+    pointer('pointerdown', 71, action); pointer('pointerup', 71, root);
+    equal(guideAdvances, 2); equal(events, []); held('');
+    guideAvailable = true; controls.refresh();
+    action.dispatchEvent(new MouseEvent('click', { bubbles: true, detail: 0 }));
+    equal(guideAdvances, 3); equal(events, []);
+    guideAvailable = true; controls.refresh();
+    key('keydown', 'Enter', action); key('keyup', 'Enter', action);
+    equal(guideAdvances, 4); equal(events, []);
+    enabled = true; controls.refresh();
+    key('keydown', 'KeyF', canvas, true); held('');
+    key('keyup', 'KeyF'); key('keydown', 'KeyF'); key('keyup', 'KeyF');
+    equal(events, ['+A', '-A']);
   });
   await check('two pointers and a key hold independently, with directional drag', () => {
     pointer('pointerdown', 1, pad, .5, .1);

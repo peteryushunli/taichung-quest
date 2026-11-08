@@ -7,7 +7,7 @@ import type { Locale } from './i18n';
 import { landingMedia, landmarkArt } from './landing-assets';
 import type { PokemonIcon } from './landing-assets';
 import { pixelFlag } from './landing-flag';
-import { districtCount, gymStatusSummary, isGymOpen, localizedPlace, markerPosition } from './landing-model';
+import { cityPlaceSummary, districtCount, gymStatusSummary, isGym, isGymOpen, localizedPlace, markerPosition, placeStatus } from './landing-model';
 import type { LandingLandmark } from './landing-model';
 import type { MinimapGeometry } from './minimap-model';
 
@@ -18,13 +18,16 @@ interface LandingHost {
 }
 
 const landmarks = landmarkCatalog as LandingLandmark[];
+const gyms = landmarks.filter(isGym);
 const city = cityGeometry as MinimapGeometry;
 // District names sit in the empty space beside each district, not over its tiles.
+// Each label sits on blank canvas beside its district: above it, or to its right where a neighbour fills the space above.
 const districtLabels = [
-  { key: '43:2', label: 'XITUN 西屯', below: true },
-  { key: '43:1', label: 'GREENWAY 草悟道', below: false },
-  { key: '43:0', label: 'OLD CITY 舊城', below: false },
-];
+  { key: '43:2', label: 'XITUN 西屯', side: 'right' },
+  { key: '43:1', label: 'GREENWAY 草悟道', side: 'above' },
+  { key: '43:0', label: 'OLD CITY 舊城', side: 'above' },
+  { key: '43:15', label: 'NANTUN 南屯', side: 'right', rows: 24 },
+] as const;
 const DEFAULT_LANDMARK = 'old-taichung-station';
 const GITHUB_URL = 'https://github.com/peteryushunli/taichung-quest';
 const starters = [
@@ -44,15 +47,18 @@ const monIcon = (mon: PokemonIcon, index: number, labelled = true) => `<span cla
 
 function cityMap() {
   const { width, height } = city.world;
-  const labels = districtLabels.map(({ key, label, below }) => {
-    const [left, top, , bottom] = city.mapsByNativeKey[key].worldRect!;
-    return `<span class="lp-district-name${below ? '' : ' lp-district-above'}" style="left:${(left + 1) / width * 100}%;top:${(below ? bottom + .5 : top - .5) / height * 100}%">${label}</span>`;
+  const labels = districtLabels.map((entry) => {
+    const { key, label, side } = entry;
+    const [left, top, right] = city.mapsByNativeKey[key].worldRect!;
+    // Nantun's label drops below OldCity, which fills the canvas right of Wanhe's top rows.
+    const [x, y] = side === 'right' ? [right + 1, top + 1.5 + ('rows' in entry ? entry.rows : 0)] : [left + 1, top - .5];
+    return `<span class="lp-district-name${side === 'above' ? ' lp-district-above' : ''}" style="left:${x / width * 100}%;top:${y / height * 100}%">${label}</span>`;
   }).join('');
   return `<img class="lp-map-art" src="${escapeHtml(landingMedia.cityMap)}" width="${width * 16}" height="${height * 16}" alt="">${labels}<span class="lp-map-chip">${copy('IN-GAME MAP')}</span>`;
 }
 
-function sectionHead(eyebrow: string, title: string, side?: string) {
-  return `<div class="lp-section-head"><div class="lp-section-title"><p class="lp-eyebrow">${copy(eyebrow)}</p><h2 class="lp-h2 lp-display">${copy(title)}</h2></div>${side ? `<p class="lp-section-side">${copy(side)}</p>` : ''}</div>`;
+function sectionHead(eyebrow: string, title: string, side?: string, titleId?: string) {
+  return `<div class="lp-section-head"><div class="lp-section-title"><p class="lp-eyebrow">${copy(eyebrow)}</p><h2 class="lp-h2 lp-display"${titleId ? ` id="${titleId}"` : ''}>${titleId ? escapeHtml(title) : copy(title)}</h2></div>${side ? `<p class="lp-section-side">${copy(side)}</p>` : ''}</div>`;
 }
 
 function heroScreen() {
@@ -79,7 +85,7 @@ function markup() {
         <div class="lp-hero-copy">
           <p class="lp-eyebrow lp-eyebrow-dot">${copy('A POKÉMON FIRERED ADVENTURE · 臺中')}</p>
           <h1 class="lp-h1 lp-display">${copy('Taichung, shrunk to fit a Game Boy.')}</h1>
-          <p class="lp-lede">${copy('A custom Pokémon adventure set in a pocket-sized Taichung. Ten real landmarks — from Old Taichung Station to the National Theater — each host a gym. Pick a partner, hop on a bike, and play it free in your browser.')}</p>
+          <p class="lp-lede">${copy('Explore Taichung in the world of Pokémon. Challenge leaders at ten real landmark gyms, collect badges, and visit two temples in Nantun. Pick a partner, hop on a bike, and play free in your browser.')}</p>
           <div class="lp-actions"><a class="lp-btn" id="hero-play" href="#play" data-play-link><span aria-hidden="true">▶</span> <span data-play-label="Play in your browser">${escapeHtml(t('Play in your browser'))}</span></a><a class="lp-text-link" href="#map">${copy('Explore the map ↓')}</a></div>
           <div class="lp-facts"><span>${landmarks.length} ${copy('landmarks')}</span><span>${districtCount(landmarks)} ${copy('districts')}</span><span>English · 繁體中文</span>${copy('No install')}</div>
         </div>
@@ -94,12 +100,12 @@ function markup() {
       </section>
 
       <section class="lp-map-section" id="map"><div class="lp-wrap">
-        ${sectionHead('01 — THE MAP', 'Three districts. Ten real places.', "Distances are compressed and side streets are gone, but the city keeps its shape: the old city around the station, the Greenway's museums in the middle, Xitun's theater and night market to the northwest.")}
+        ${sectionHead('01 — THE MAP', cityPlaceSummary(landmarks, getLocale()), "Distances are compressed and side streets are gone, but the city keeps its shape: the old city around the station, the Greenway's museums in the middle, Xitun's theater and night market to the northwest, and Nantun's temple precinct to the south.", 'lp-map-heading')}
         <div class="lp-map-body">
-          <div class="lp-map" id="lp-map" role="group" aria-label="${escapeHtml(t('Choose a landmark'))}" data-i18n-label="Choose a landmark">
+          <div class="lp-map" id="lp-map" style="aspect-ratio:${city.world.width} / ${city.world.height};background-size:${800 / city.world.width}% ${800 / city.world.height}%" role="group" aria-label="${escapeHtml(t('Choose a landmark'))}" data-i18n-label="Choose a landmark">
             ${cityMap()}
             <div id="lp-markers"></div>
-            <div class="lp-map-legend"><span><i class="lp-swatch-open"></i>${copy('Gym open')}</span><span><i class="lp-swatch-planned"></i>${copy('In development')}</span></div>
+            <div class="lp-map-legend"><span><i class="lp-swatch-open"></i>${copy('Gym open')}</span><span><i class="lp-swatch-visit"></i>${copy('Visit')}</span><span><i class="lp-swatch-planned"></i>${copy('In development')}</span></div>
           </div>
           <aside class="lp-detail" id="lp-detail" aria-live="polite"></aside>
         </div>
@@ -135,7 +141,7 @@ function markup() {
             <p>${copy('The bike is yours from the start — tap B. Turn wild encounters and trainer challenges to Off, Low or Normal.')}</p>
           </div>
           <div class="lp-step">
-            <div class="lp-pass">${landmarks.map((place, index) => `<div class="lp-stamp ${isGymOpen(place) ? 'is-earned' : ''}">${number(index)}</div>`).join('')}</div>
+            <div class="lp-pass">${gyms.map((place, index) => `<div class="lp-stamp ${isGymOpen(place) ? 'is-earned' : ''}">${number(index)}</div>`).join('')}</div>
             <span class="lp-step-label">${copy('STEP 3')}</span>
             <h3>${copy('Fill your City Pass')}</h3>
             <p>${copy("Beat a landmark's leader to earn its stamp. Lose, and you're healed back at the plaza for another try.")}</p>
@@ -169,7 +175,7 @@ function renderMarkers(selected: string) {
   return landmarks.map((place, index) => {
     const { x, y, side } = markerPosition(city.markersById[place.id].world, city.world);
     const { name, mapLabel } = localizedPlace(place, locale);
-    const state = `${isGymOpen(place) ? 'is-open' : 'is-planned'}${place.id === selected ? ' is-selected' : ''}`;
+    const state = `${!isGym(place) ? 'is-visit' : isGymOpen(place) ? 'is-open' : 'is-planned'}${place.id === selected ? ' is-selected' : ''}`;
     return `<div class="lp-pin ${state} lp-side-${side}" data-pin="${escapeHtml(place.id)}" style="left:${x}%;top:${y}%">
       <button type="button" class="lp-marker" data-select="${escapeHtml(place.id)}" aria-label="${escapeHtml(name)}" aria-pressed="${place.id === selected}">${number(index)}</button>
       <span class="lp-pin-label" data-select="${escapeHtml(place.id)}" aria-hidden="true">${escapeHtml(mapLabel)}</span>
@@ -184,7 +190,7 @@ function renderDetail(id: string) {
   const art = landmarkArt[id];
   const facade = art?.facade
     ? `<div class="lp-facade" role="img" aria-label="${escapeHtml(info.name)}" style="background-image:url('${escapeHtml(art.facade)}')"></div>`
-    : `<div class="lp-facade-pending">${copy('Facade art pending')}</div>`;
+    : `<div class="lp-facade-pending">${copy(isGym(place) ? 'Facade art pending' : 'Temple visit')}</div>`;
   const portrait = art?.leader && info.leader
     ? `<div class="lp-portrait lp-portrait-art" role="img" aria-label="${escapeHtml(info.leader)}" style="background-image:url('${escapeHtml(art.leader)}')"></div>`
     : '<div class="lp-portrait">?</div>';
@@ -195,12 +201,12 @@ function renderDetail(id: string) {
   return `
     <div class="lp-detail-art">${facade}</div>
     <div class="lp-detail-body">
-      <div class="lp-detail-meta"><span>No. ${number(index)} · ${escapeHtml(info.district)}</span><span class="lp-chip ${isGymOpen(place) ? 'is-open' : ''}">${copy(isGymOpen(place) ? 'GYM OPEN' : 'IN DEVELOPMENT')}</span></div>
+      <div class="lp-detail-meta"><span>No. ${number(index)} · ${escapeHtml(info.district)}</span><span class="lp-chip ${isGymOpen(place) ? 'is-open' : ''}">${copy(!isGym(place) ? 'Visit' : isGymOpen(place) ? 'GYM OPEN' : 'IN DEVELOPMENT')}</span></div>
       <div class="lp-detail-names"><h3 class="lp-display">${escapeHtml(info.name)}</h3><span>${escapeHtml(info.otherName)}</span></div>
       <p class="lp-detail-text">${escapeHtml(info.description)}</p>
       <div class="lp-detail-foot">
-        <div class="lp-leader">${portrait}<div class="lp-leader-name"><small>${copy('Gym leader')}</small><b>${info.leader ? escapeHtml(info.leader) : copy('To be revealed')}</b></div>${teamSprites}</div>
-        <div class="lp-real-life"><span>${copy('In real life')}</span><a href="${escapeHtml(info.url)}" target="_blank" rel="noopener">${copy('Visitor info ↗')}</a></div>
+        ${isGym(place) ? `<div class="lp-leader">${portrait}<div class="lp-leader-name"><small>${copy('Gym leader')}</small><b>${info.leader ? escapeHtml(info.leader) : copy('To be revealed')}</b></div>${teamSprites}</div>` : `<p>${copy('Visit the hall and meet its host. This stop has no gym battle or badge.')}</p>`}
+        ${info.url ? `<div class="lp-real-life"><span>${copy('In real life')}</span><a href="${escapeHtml(info.url)}" target="_blank" rel="noopener">${copy('Visitor info ↗')}</a></div>` : ''}
       </div>
     </div>`;
 }
@@ -211,8 +217,8 @@ function renderGallery() {
     const info = localizedPlace(place, locale);
     const art = landmarkArt[place.id];
     return `<button type="button" class="lp-card" data-card="${escapeHtml(place.id)}">
-      <span class="lp-card-art" style="background:${art?.tint ?? '#eee8dc'}">${art?.facade ? `<span class="lp-card-facade" style="background-image:url('${escapeHtml(art.facade)}')"></span>` : `<span class="lp-card-pending">${copy('facade art')}</span>`}</span>
-      <span class="lp-card-body"><span class="lp-card-meta"><span>No. ${number(index)}</span><span class="${isGymOpen(place) ? 'is-open' : 'is-planned'}">● ${copy(isGymOpen(place) ? 'Gym open' : 'In dev')}</span></span><span class="lp-card-name">${escapeHtml(info.shortName)}</span><span class="lp-card-other">${escapeHtml(info.otherName)}</span></span>
+      <span class="lp-card-art" style="background:${art?.tint ?? '#eee8dc'}">${art?.facade ? `<span class="lp-card-facade" style="background-image:url('${escapeHtml(art.facade)}')"></span>` : `<span class="lp-card-pending">${copy(isGym(place) ? 'facade art' : 'Temple visit')}</span>`}</span>
+      <span class="lp-card-body"><span class="lp-card-meta"><span>No. ${number(index)}</span><span class="${!isGym(place) ? 'is-visit' : isGymOpen(place) ? 'is-open' : 'is-planned'}">● ${copy(placeStatus(place))}</span></span><span class="lp-card-name">${escapeHtml(info.shortName)}</span><span class="lp-card-other">${escapeHtml(info.otherName)}</span></span>
     </button>`;
   }).join('');
 }
@@ -232,6 +238,7 @@ export function createLanding(root: HTMLElement, host: LandingHost) {
     markers.innerHTML = renderMarkers(selected);
     detail.innerHTML = renderDetail(selected);
     gallery.innerHTML = renderGallery();
+    root.querySelector('#lp-map-heading')!.textContent = cityPlaceSummary(landmarks, getLocale());
     root.querySelector('#lp-gym-status')!.textContent = gymStatusSummary(landmarks, getLocale());
     root.querySelectorAll<HTMLImageElement>('[data-i18n-alt]').forEach((image) => { image.alt = t(image.dataset.i18nAlt!); });
     root.querySelectorAll<HTMLButtonElement>('[data-locale-toggle]').forEach((button) => button.setAttribute('aria-pressed', String(button.dataset.localeToggle === getLocale())));

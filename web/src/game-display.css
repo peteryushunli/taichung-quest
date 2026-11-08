@@ -1,0 +1,8 @@
+/* Game pixels and HUD labels remain interactive rather than browser-selectable. */
+.screen,
+.screen * {
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-user-drag: none;
+}

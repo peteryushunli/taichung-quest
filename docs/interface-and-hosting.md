@@ -1,5 +1,13 @@
 # Desktop/mobile interface and Vercel readiness
 
+## Current interface and release status — 8 November 2026
+
+Vercel at https://taichung-quest.vercel.app is the sole canonical production frontend. The old GPT Site remains private/login-protected; retirement is not active work.
+
+Sound starts Off and can be toggled with the speaker icon beside Game options. The touch-release fix is user-confirmed on iPhone/Chrome, and the location banner now clears the default top-left minimap. See the existing sound, touch-hotfix and location-popup release records for their concrete verification limits.
+
+PR8 retains the120×176 world and combines the new gym catalog, accepted portraits and exact team icons. Native runtime evidence must be bound to its ROM; an older gym-only run is not combined-ROM acceptance. The screenshot-approved compact tutorial is included. The unrelated shorter-opening and keyboard-setting proposals remain parked for explicit review. Older feasibility and proposed directions below are historical where they conflict with this section.
+
 The user wants the browser game to feel usable on both desktop and mobile. Directional movement feels intuitive, while learning A/B actions feels awkward. Vercel is the user's likely preferred hosting target; this is a feasibility/preparation direction, not a request to create an account or publish a new production deployment immediately.
 
 ## Ownership

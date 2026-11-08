@@ -1,5 +1,11 @@
 # Parallel work plan
 
+## Current shared-PR contract — 8 November 2026
+
+Use isolated branches/worktrees and deliver exact commit IDs with checks and limitations. Main is the sole PR8 integration writer: preserve Claude's authored map changes, combine native code at source level, export one matching patch, and reconcile any remote advancement before a non-force push. Do not replace the city patch with the older standalone gym export.
+
+Native and public-root repositories are separate. Feature workers do not regenerate the central patch or publish. Main binds ROM, metadata and minimap contract, records source/build evidence separately from actual runtime evidence, and publishes only a verified combined release. The screenshot-approved compact tutorial and restored native encounter setup are included; unrelated opening/keyboard-setting proposals remain excluded.
+
 User-approved process for the time-constrained first release. The game decisions in `game-design.md` remain authoritative. The original build chat owns integration and a working build; the design fork should not edit game or web source concurrently.
 
 The user has explicitly directed the main build chat to checkpoint current work and set up separate worktrees for localization, world/gameplay, and web/guide. The main chat should carry out this transition at the next safe checkpoint, preserve all in-progress changes, and record the actual checkpoint commits, worktree paths, branch ownership, and build status. Setup is not complete until those exist and are verified.

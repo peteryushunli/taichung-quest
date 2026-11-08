@@ -11,6 +11,7 @@ import { NativeLanguageBridge, parseLanguageBridgeMetadata } from './language-br
 import type { LanguageBridgeState } from './language-bridge';
 import { createGameControls } from './game-controls';
 import { createGameView } from './game-view';
+import { protectGameDisplay } from './game-display';
 import { NativeNavigationBridge, parseNavigationMetadata } from './navigation-bridge';
 import type { NavigationState } from './navigation-bridge';
 import { createMinimap } from './minimap';
@@ -100,6 +101,7 @@ const landing = createLanding(el('landing'), {
   getState: () => ({ running, starting, immersive: gameView.immersive, hasSave }),
 });
 const canvas = el<HTMLCanvasElement>('game-canvas');
+protectGameDisplay(el('screen'));
 const playButton = el<HTMLButtonElement>('play-button');
 const feedback = el('feedback');
 const status = el('game-status');
@@ -428,7 +430,7 @@ async function startGame() {
     canvas.classList.add('playing');
     document.querySelectorAll<HTMLButtonElement>('#pause-button, #sound-button, #game-sound-button, #save-button, #restart-button, #export-button, #import-button').forEach((button) => button.disabled = false);
     setStatus('OUT EXPLORING');
-    message(freshCartridgeBoot && cartridgeBootIntent ? cartridgeBootIntent === 'import' ? 'Save imported. Choose Continue from the game’s title screen.' : 'Cartridge restarted. Continue your in-game save or begin a new adventure.' : !freshCartridgeBoot && emulator.getAutoSaveState() ? 'Welcome back. Your last saved spot is waiting for you.' : 'New adventures begin at the old station. Use City Map to discover ten landmarks.');
+    message(freshCartridgeBoot && cartridgeBootIntent ? cartridgeBootIntent === 'import' ? 'Save imported. Choose Continue from the game’s title screen.' : 'Cartridge restarted. Continue your in-game save or begin a new adventure.' : !freshCartridgeBoot && emulator.getAutoSaveState() ? 'Welcome back. Your last saved spot is waiting for you.' : 'New adventures begin at the old station. Use City Map to discover Taichung’s landmarks.');
     canvas.focus({ preventScroll: true });
     // The Play button may have scrolled the intro into view. Collapsing that
     // intro must not leave a phone looking below its newly positioned game.
@@ -659,6 +661,7 @@ gameInput = createGameControls({
   root: document.querySelector<HTMLElement>('.physical-controls')!,
   canvas,
   canPlay: canPlayGame,
+  tutorialInteract: { available: () => !!onboarding?.canAdvanceGuide, advance: () => onboarding?.advanceGuide() },
   focus: focusGame,
   press: (button) => emulator?.buttonPress(button),
   release: (button) => emulator?.buttonUnpress(button),
