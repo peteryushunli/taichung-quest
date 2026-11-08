@@ -13433,14 +13433,14 @@ HcmV?d00001
 
 diff --git a/data/layouts/TaichungXitun/map.bin b/data/layouts/TaichungXitun/map.bin
 new file mode 100644
-index 0000000000000000000000000000000000000000..bc2cce3c72a57dcde2fdcc45dc8d26c3f9f664e8
+index 0000000000000000000000000000000000000000..28c4ec8828eb6a54a4c8c8cf6dba98584ecfe625
 GIT binary patch
 literal 5120
-zcmb_f1(zH}5azhP`LGZ)!CfNA?)D`?a!K$A5)bb1a9><5xg^Ai9wfot-95NI93J}M
+zcmb_f1(zH}5azhP`LGZ)!CfNA?&gw4a!K$A5)bb1a9><5xg^Ai9wfot-95NI93J}M
 z!rkv+>T18Mp4r*W<R05^wyJx(zxt}Gr@D77{y_)YqxNW3{3Kg%M*i-`yDR#?n&PdD
 z*jD#w91)p+RPmZzc55hT8|}upv2L8BEEl!Sie^W1q5*E88{`IeV<;ZiRZCqr-c4{5
-z-6Th;qjRHq(fnvZRB%OCa^7w3`Z~qyQ_$8>AcG{Y$!?09>ZUnL#akFHiWWypqGmV5
-z4Rym@Ki9t-uM>tx28zd?u1|k2jh02rqZQF`HzIB$d-!z)cx0e>?4^;i`{dUV;H4v|
+z-6Th;qjRHq(fnvZRB%OCazotauCG(PJ_T(J1u{tTn(U^yscxF1RJ?`JqG)lnBx-g;
+z-7x1}Ki9t-uM>tx28zd?u1|k2jh02rqZQF`HzIB$d-!z)cx0e>?4^;i`{dUV;H4v|
 zD=)_tC>O89Rq?m9t8q=NF*cN0@yo_5<62yY>v02a#7(#vx8T+okI|sa;zwJG%ie8h
 z#dOR-8)jk_X5)6uiSZZ>$}E1grFiVk#XQW%0xZNL+=0bdf~6JD!$=Chf4ko|%P(yy
 z9(&8M94pX{JJI4+Vii{7?hHKPw>E{Bj^CPMvX!g)#?a!IMzOx3H8z`WnxU187Qb+`
@@ -13453,15 +13453,15 @@ zc+bD@*Tf#D{pGGJ7kQqOU;6#{03YHbe2h>0r~Whlx&Oj{8OM<^=6>O>D;Ig5C;90L
 z`Toj(?OWV8{#*YYzV|=)AMsNKFZ9>uQ>(@AXa7sQ{#XB-|K0!L|MY)VqL<Du^TAU!
 zn_puy?N!S#zm^Z4s<rr4<8UPO*Yd$rHJcyTW=UC5oe$1je}19AL@_DWtR8HD25g8%
 zI5Z&wun{)KCfF34p-<0w5c->azmj?&?^|DNfi1BWw#GKt7X8p4+hKd`fE}?DcE&DH
-zq|o2m_bYkdcExVk9eZF;?1jCt5B9|X48$M|#(vlz2SAaM{xT1gVf+q60Y#MH(TpJ&
-zieWei2jdVNis5L%h>FKae=TyViA~n4kr;);a5#>@kvIxR;~0#_7>va@9E;;{d<8G*
+zq|o2m_bYkdcExVk9eZF;?1jCt5B9|X48$M|#(vlz2SAaM{xT1gVf+q60Y#KB1kD(V
+zVemKz2jdVNis5L%h>FKae=TyViA~n4kr;);a5#>@kvIxR;~0#_7>va@9E;;{d<8G*
 zFZXl0zR3G~0>)zkCSnpMV+y8X8cxJXI2otlRGfy>EAb2cwf&q`U(UdpI16Xv9Gr{u
 zaDIHxy8svBB3z71a49aU#4q&M_Vc>xOFAyr5B<$sU-G`cW`$aqUykLGyuZkLjewql
 zmf!sME4yK7_0k9^3*(pf_9ydrW2^Rr{5sd;{ulD&{$o8Aeo_zge5<xsYeeH``;YZh
 z`0;)~TPo%L&Rd;H;_LZq`>*=_r7cRqqfW`&M(uja_;rA`C<Tu?B~K&bk*!I~FZVj7
 z;8CZvb-Zubh-$_!{fovgJ<7iBR`!xo>lHIjDR|T=lj~~r6ptCF6g=vbmXBIkGOl>c
 zIHllGr?h;m8!tVhe*8FFs%zMoU%gLqmdM`WF~41Cs{7AF?1m35hhx+=eob}%d5GQc
-JAznB}{XY`PG{pb_
+JAznB}{XakQHFW?0
 
 literal 0
 HcmV?d00001
@@ -16774,6 +16774,1031 @@ index 0000000..b76dee5
 +++ b/data/scripts/taichung_theater_gym.inc
 @@ -0,0 +1 @@
 +	taichung_landmark_gym Theater, TAICHUNG_GYM_THEATER, TRAINER_TAICHUNG_THEATER_LING
+diff --git a/data/taichung/landmark-collision/README.md b/data/taichung/landmark-collision/README.md
+new file mode 100644
+index 0000000..86b9acd
+--- /dev/null
++++ b/data/taichung/landmark-collision/README.md
+@@ -0,0 +1,44 @@
++# Landmark object collision
++
++Collision-only fix against released native `6366b9e5c037647ce4d2a007efa3d3dfbedcdb48`.
++All 10 gym exteriors, the Fine Arts sculpture and the two visit-temple facades
++are checked. Source-art alpha defines occupied native 16×16 cells; transparent
++corners and courtyard gaps stay ordinary city space. The procedural temples
++use their registered facade reserves. Older contract rectangles describe some
++retired facades and are not substituted for the installed artwork masks.
++
++Only 44 Maple Garden words in `data/layouts/TaichungXitun/map.bin` change.
++Each change adds collision bit `0x0400`, retaining the exact metatile ID,
++elevation, art, attributes and rendering layer. Painted paths, decking and grass
++belong to the landmark illustration and are now solid. All other audited
++landmark objects were already solid. No ordinary prop, street, event, warp,
++map size, encounter or cycling eligibility changes.
++
++Maple's native door `(12,32)`, approach `(12,33)` and arrival `(12,35)` remain
++exact. The approach deliberately replaces one raster cell and must stay open.
++Walking and bike both call `CheckForObjectEventCollision`, which calls
++`GetCollisionAtCoords`; its collision-bit rejection happens before elevation
++matching. The changed cells retain normal behavior 0, so ledge/bridge/forced
++movement exceptions do not turn them into traversable terrain.
++
++Run from the native source checkout:
++
++```sh
++python3 -B tools/taichung/check_landmark_collision.py --self-test
++```
++
++The guard reconstructs the delta independently from pinned artwork alpha and
++the release map, checks unchanged graphics/attributes/layers, all 12 paired
++landmark rooms and all directed district crossings, and rejects reopened art,
++blocked approaches, removed doors and edits to public streets. It also checks
++that no previously reachable non-object cell becomes stranded. JASC palettes
++are compared as complete text lines because Git normalizes their CRLF endings.
++
++`delta.json` records all old/new words and actual saved coordinates. Only native
++map `(43,2)` needs position repair: its 44 listed cells were reachable in the
++released game. Nantun has no newly solid cells. A genuine released-v8 test save
++can be made on `(11,33)`, reached normally from `(11,34)`; the fixed map must
++relocate that saved position to valid exterior ground. `(12,35)` remains a safe
++Maple arrival. Main owns the versioned save/cache migration, derived source
++pins, integrated build and publication. This collision commit does not change
++save code and must not be released without that migration and runtime checks.
+diff --git a/data/taichung/landmark-collision/delta.json b/data/taichung/landmark-collision/delta.json
+new file mode 100644
+index 0000000..b0f16e3
+--- /dev/null
++++ b/data/taichung/landmark-collision/delta.json
+@@ -0,0 +1,749 @@
++{
++  "result": "pass",
++  "errors": [],
++  "baselineCommit": "6366b9e5c037647ce4d2a007efa3d3dfbedcdb48",
++  "scope": "Source footprint/collision, actor-aware walking graph and native shared collision path; runtime and save migration require separate acceptance.",
++  "footprints": [
++    {
++      "id": "old-taichung-station",
++      "mapId": "MAP_TAICHUNG_OLD_CITY",
++      "solidObjectCells": 65,
++      "nativeExceptions": [
++        [
++          32,
++          64
++        ]
++      ]
++    },
++    {
++      "id": "miyahara",
++      "mapId": "MAP_TAICHUNG_OLD_CITY",
++      "solidObjectCells": 39,
++      "nativeExceptions": [
++        [
++          20,
++          52
++        ]
++      ]
++    },
++    {
++      "id": "taichung-park",
++      "mapId": "MAP_TAICHUNG_OLD_CITY",
++      "solidObjectCells": 51,
++      "nativeExceptions": [
++        [
++          32,
++          30
++        ]
++      ]
++    },
++    {
++      "id": "natural-science-museum",
++      "mapId": "MAP_TAICHUNG_GREENWAY",
++      "solidObjectCells": 29,
++      "nativeExceptions": [
++        [
++          24,
++          20
++        ]
++      ]
++    },
++    {
++      "id": "shen-ji-new-village",
++      "mapId": "MAP_TAICHUNG_GREENWAY",
++      "solidObjectCells": 38,
++      "nativeExceptions": [
++        [
++          10,
++          44
++        ]
++      ]
++    },
++    {
++      "id": "fine-arts-museum",
++      "mapId": "MAP_TAICHUNG_GREENWAY",
++      "solidObjectCells": 29,
++      "nativeExceptions": [
++        [
++          10,
++          62
++        ]
++      ]
++    },
++    {
++      "id": "fine-arts-sculpture",
++      "mapId": "MAP_TAICHUNG_GREENWAY",
++      "solidObjectCells": 2,
++      "nativeExceptions": []
++    },
++    {
++      "id": "calligraphy-greenway",
++      "mapId": "MAP_TAICHUNG_GREENWAY",
++      "solidObjectCells": 80,
++      "nativeExceptions": [
++        [
++          22,
++          36
++        ]
++      ]
++    },
++    {
++      "id": "taichung-theater",
++      "mapId": "MAP_TAICHUNG_XITUN",
++      "solidObjectCells": 109,
++      "nativeExceptions": [
++        [
++          12,
++          44
++        ]
++      ]
++    },
++    {
++      "id": "fengjia-night-market",
++      "mapId": "MAP_TAICHUNG_XITUN",
++      "solidObjectCells": 45,
++      "nativeExceptions": [
++        [
++          24,
++          12
++        ]
++      ]
++    },
++    {
++      "id": "maple-garden",
++      "mapId": "MAP_TAICHUNG_XITUN",
++      "solidObjectCells": 64,
++      "nativeExceptions": [
++        [
++          12,
++          32
++        ],
++        [
++          12,
++          33
++        ]
++      ]
++    },
++    {
++      "id": "wanhe-temple",
++      "mapId": "MAP_TAICHUNG_NANTUN_WANHE",
++      "solidObjectCells": 62,
++      "nativeExceptions": [
++        [
++          26,
++          33
++        ]
++      ]
++    },
++    {
++      "id": "wenchang-temple",
++      "mapId": "MAP_TAICHUNG_NANTUN_WANHE",
++      "solidObjectCells": 41,
++      "nativeExceptions": [
++        [
++          16,
++          33
++        ]
++      ]
++    }
++  ],
++  "changedMapWords": 44,
++  "newlySolidPositions": [
++    {
++      "mapId": "MAP_TAICHUNG_XITUN",
++      "nativeMap": [
++        43,
++        2
++      ],
++      "x": 11,
++      "y": 27,
++      "before": "0x339D",
++      "after": "0x379D",
++      "oldReachable": true,
++      "landmark": "maple-garden"
++    },
++    {
++      "mapId": "MAP_TAICHUNG_XITUN",
++      "nativeMap": [
++        43,
++        2
++      ],
++      "x": 12,
++      "y": 27,
++      "before": "0x339E",
++      "after": "0x379E",
++      "oldReachable": true,
++      "landmark": "maple-garden"
++    },
++    {
++      "mapId": "MAP_TAICHUNG_XITUN",
++      "nativeMap": [
++        43,
++        2
++      ],
++      "x": 13,
++      "y": 27,
++      "before": "0x339F",
++      "after": "0x379F",
++      "oldReachable": true,
++      "landmark": "maple-garden"
++    },
++    {
++      "mapId": "MAP_TAICHUNG_XITUN",
++      "nativeMap": [
++        43,
++        2
++      ],
++      "x": 15,
++      "y": 27,
++      "before": "0x33A1",
++      "after": "0x37A1",
++      "oldReachable": true,
++      "landmark": "maple-garden"
++    },
++    {
++      "mapId": "MAP_TAICHUNG_XITUN",
++      "nativeMap": [
++        43,
++        2
++      ],
++      "x": 10,
++      "y": 28,
++      "before": "0x33A4",
++      "after": "0x37A4",
++      "oldReachable": true,
++      "landmark": "maple-garden"
++    },
++    {
++      "mapId": "MAP_TAICHUNG_XITUN",
++      "nativeMap": [
++        43,
++        2
++      ],
++      "x": 11,
++      "y": 28,
++      "before": "0x33A5",
++      "after": "0x37A5",
++      "oldReachable": true,
++      "landmark": "maple-garden"
++    },
++    {
++      "mapId": "MAP_TAICHUNG_XITUN",
++      "nativeMap": [
++        43,
++        2
++      ],
++      "x": 13,
++      "y": 28,
++      "before": "0x33A7",
++      "after": "0x37A7",
++      "oldReachable": true,
++      "landmark": "maple-garden"
++    },
++    {
++      "mapId": "MAP_TAICHUNG_XITUN",
++      "nativeMap": [
++        43,
++        2
++      ],
++      "x": 15,
++      "y": 28,
++      "before": "0x33A9",
++      "after": "0x37A9",
++      "oldReachable": true,
++      "landmark": "maple-garden"
++    },
++    {
++      "mapId": "MAP_TAICHUNG_XITUN",
++      "nativeMap": [
++        43,
++        2
++      ],
++      "x": 16,
++      "y": 28,
++      "before": "0x33AA",
++      "after": "0x37AA",
++      "oldReachable": true,
++      "landmark": "maple-garden"
++    },
++    {
++      "mapId": "MAP_TAICHUNG_XITUN",
++      "nativeMap": [
++        43,
++        2
++      ],
++      "x": 17,
++      "y": 28,
++      "before": "0x33AB",
++      "after": "0x37AB",
++      "oldReachable": true,
++      "landmark": "maple-garden"
++    },
++    {
++      "mapId": "MAP_TAICHUNG_XITUN",
++      "nativeMap": [
++        43,
++        2
++      ],
++      "x": 19,
++      "y": 28,
++      "before": "0x33AD",
++      "after": "0x37AD",
++      "oldReachable": true,
++      "landmark": "maple-garden"
++    },
++    {
++      "mapId": "MAP_TAICHUNG_XITUN",
++      "nativeMap": [
++        43,
++        2
++      ],
++      "x": 11,
++      "y": 29,
++      "before": "0x33AF",
++      "after": "0x37AF",
++      "oldReachable": true,
++      "landmark": "maple-garden"
++    },
++    {
++      "mapId": "MAP_TAICHUNG_XITUN",
++      "nativeMap": [
++        43,
++        2
++      ],
++      "x": 12,
++      "y": 29,
++      "before": "0x33B0",
++      "after": "0x37B0",
++      "oldReachable": true,
++      "landmark": "maple-garden"
++    },
++    {
++      "mapId": "MAP_TAICHUNG_XITUN",
++      "nativeMap": [
++        43,
++        2
++      ],
++      "x": 13,
++      "y": 29,
++      "before": "0x33B1",
++      "after": "0x37B1",
++      "oldReachable": true,
++      "landmark": "maple-garden"
++    },
++    {
++      "mapId": "MAP_TAICHUNG_XITUN",
++      "nativeMap": [
++        43,
++        2
++      ],
++      "x": 14,
++      "y": 29,
++      "before": "0x33B2",
++      "after": "0x37B2",
++      "oldReachable": true,
++      "landmark": "maple-garden"
++    },
++    {
++      "mapId": "MAP_TAICHUNG_XITUN",
++      "nativeMap": [
++        43,
++        2
++      ],
++      "x": 15,
++      "y": 29,
++      "before": "0x33B3",
++      "after": "0x37B3",
++      "oldReachable": true,
++      "landmark": "maple-garden"
++    },
++    {
++      "mapId": "MAP_TAICHUNG_XITUN",
++      "nativeMap": [
++        43,
++        2
++      ],
++      "x": 17,
++      "y": 29,
++      "before": "0x33B5",
++      "after": "0x37B5",
++      "oldReachable": true,
++      "landmark": "maple-garden"
++    },
++    {
++      "mapId": "MAP_TAICHUNG_XITUN",
++      "nativeMap": [
++        43,
++        2
++      ],
++      "x": 18,
++      "y": 29,
++      "before": "0x33B6",
++      "after": "0x37B6",
++      "oldReachable": true,
++      "landmark": "maple-garden"
++    },
++    {
++      "mapId": "MAP_TAICHUNG_XITUN",
++      "nativeMap": [
++        43,
++        2
++      ],
++      "x": 19,
++      "y": 29,
++      "before": "0x33B7",
++      "after": "0x37B7",
++      "oldReachable": true,
++      "landmark": "maple-garden"
++    },
++    {
++      "mapId": "MAP_TAICHUNG_XITUN",
++      "nativeMap": [
++        43,
++        2
++      ],
++      "x": 11,
++      "y": 30,
++      "before": "0x33B9",
++      "after": "0x37B9",
++      "oldReachable": true,
++      "landmark": "maple-garden"
++    },
++    {
++      "mapId": "MAP_TAICHUNG_XITUN",
++      "nativeMap": [
++        43,
++        2
++      ],
++      "x": 12,
++      "y": 30,
++      "before": "0x33BA",
++      "after": "0x37BA",
++      "oldReachable": true,
++      "landmark": "maple-garden"
++    },
++    {
++      "mapId": "MAP_TAICHUNG_XITUN",
++      "nativeMap": [
++        43,
++        2
++      ],
++      "x": 17,
++      "y": 30,
++      "before": "0x33BF",
++      "after": "0x37BF",
++      "oldReachable": true,
++      "landmark": "maple-garden"
++    },
++    {
++      "mapId": "MAP_TAICHUNG_XITUN",
++      "nativeMap": [
++        43,
++        2
++      ],
++      "x": 18,
++      "y": 30,
++      "before": "0x33C0",
++      "after": "0x37C0",
++      "oldReachable": true,
++      "landmark": "maple-garden"
++    },
++    {
++      "mapId": "MAP_TAICHUNG_XITUN",
++      "nativeMap": [
++        43,
++        2
++      ],
++      "x": 14,
++      "y": 31,
++      "before": "0x33C6",
++      "after": "0x37C6",
++      "oldReachable": true,
++      "landmark": "maple-garden"
++    },
++    {
++      "mapId": "MAP_TAICHUNG_XITUN",
++      "nativeMap": [
++        43,
++        2
++      ],
++      "x": 15,
++      "y": 31,
++      "before": "0x33C7",
++      "after": "0x37C7",
++      "oldReachable": true,
++      "landmark": "maple-garden"
++    },
++    {
++      "mapId": "MAP_TAICHUNG_XITUN",
++      "nativeMap": [
++        43,
++        2
++      ],
++      "x": 16,
++      "y": 31,
++      "before": "0x33C8",
++      "after": "0x37C8",
++      "oldReachable": true,
++      "landmark": "maple-garden"
++    },
++    {
++      "mapId": "MAP_TAICHUNG_XITUN",
++      "nativeMap": [
++        43,
++        2
++      ],
++      "x": 17,
++      "y": 31,
++      "before": "0x33C9",
++      "after": "0x37C9",
++      "oldReachable": true,
++      "landmark": "maple-garden"
++    },
++    {
++      "mapId": "MAP_TAICHUNG_XITUN",
++      "nativeMap": [
++        43,
++        2
++      ],
++      "x": 18,
++      "y": 31,
++      "before": "0x33CA",
++      "after": "0x37CA",
++      "oldReachable": true,
++      "landmark": "maple-garden"
++    },
++    {
++      "mapId": "MAP_TAICHUNG_XITUN",
++      "nativeMap": [
++        43,
++        2
++      ],
++      "x": 19,
++      "y": 31,
++      "before": "0x33CB",
++      "after": "0x37CB",
++      "oldReachable": true,
++      "landmark": "maple-garden"
++    },
++    {
++      "mapId": "MAP_TAICHUNG_XITUN",
++      "nativeMap": [
++        43,
++        2
++      ],
++      "x": 10,
++      "y": 32,
++      "before": "0x33CC",
++      "after": "0x37CC",
++      "oldReachable": true,
++      "landmark": "maple-garden"
++    },
++    {
++      "mapId": "MAP_TAICHUNG_XITUN",
++      "nativeMap": [
++        43,
++        2
++      ],
++      "x": 11,
++      "y": 32,
++      "before": "0x33CD",
++      "after": "0x37CD",
++      "oldReachable": true,
++      "landmark": "maple-garden"
++    },
++    {
++      "mapId": "MAP_TAICHUNG_XITUN",
++      "nativeMap": [
++        43,
++        2
++      ],
++      "x": 13,
++      "y": 32,
++      "before": "0x33CF",
++      "after": "0x37CF",
++      "oldReachable": true,
++      "landmark": "maple-garden"
++    },
++    {
++      "mapId": "MAP_TAICHUNG_XITUN",
++      "nativeMap": [
++        43,
++        2
++      ],
++      "x": 14,
++      "y": 32,
++      "before": "0x33D0",
++      "after": "0x37D0",
++      "oldReachable": true,
++      "landmark": "maple-garden"
++    },
++    {
++      "mapId": "MAP_TAICHUNG_XITUN",
++      "nativeMap": [
++        43,
++        2
++      ],
++      "x": 16,
++      "y": 32,
++      "before": "0x33D2",
++      "after": "0x37D2",
++      "oldReachable": true,
++      "landmark": "maple-garden"
++    },
++    {
++      "mapId": "MAP_TAICHUNG_XITUN",
++      "nativeMap": [
++        43,
++        2
++      ],
++      "x": 17,
++      "y": 32,
++      "before": "0x33D3",
++      "after": "0x37D3",
++      "oldReachable": true,
++      "landmark": "maple-garden"
++    },
++    {
++      "mapId": "MAP_TAICHUNG_XITUN",
++      "nativeMap": [
++        43,
++        2
++      ],
++      "x": 19,
++      "y": 32,
++      "before": "0x33D5",
++      "after": "0x37D5",
++      "oldReachable": true,
++      "landmark": "maple-garden"
++    },
++    {
++      "mapId": "MAP_TAICHUNG_XITUN",
++      "nativeMap": [
++        43,
++        2
++      ],
++      "x": 10,
++      "y": 33,
++      "before": "0x33D6",
++      "after": "0x37D6",
++      "oldReachable": true,
++      "landmark": "maple-garden"
++    },
++    {
++      "mapId": "MAP_TAICHUNG_XITUN",
++      "nativeMap": [
++        43,
++        2
++      ],
++      "x": 11,
++      "y": 33,
++      "before": "0x33D7",
++      "after": "0x37D7",
++      "oldReachable": true,
++      "landmark": "maple-garden"
++    },
++    {
++      "mapId": "MAP_TAICHUNG_XITUN",
++      "nativeMap": [
++        43,
++        2
++      ],
++      "x": 13,
++      "y": 33,
++      "before": "0x33D9",
++      "after": "0x37D9",
++      "oldReachable": true,
++      "landmark": "maple-garden"
++    },
++    {
++      "mapId": "MAP_TAICHUNG_XITUN",
++      "nativeMap": [
++        43,
++        2
++      ],
++      "x": 14,
++      "y": 33,
++      "before": "0x33DA",
++      "after": "0x37DA",
++      "oldReachable": true,
++      "landmark": "maple-garden"
++    },
++    {
++      "mapId": "MAP_TAICHUNG_XITUN",
++      "nativeMap": [
++        43,
++        2
++      ],
++      "x": 15,
++      "y": 33,
++      "before": "0x33DB",
++      "after": "0x37DB",
++      "oldReachable": true,
++      "landmark": "maple-garden"
++    },
++    {
++      "mapId": "MAP_TAICHUNG_XITUN",
++      "nativeMap": [
++        43,
++        2
++      ],
++      "x": 16,
++      "y": 33,
++      "before": "0x33DC",
++      "after": "0x37DC",
++      "oldReachable": true,
++      "landmark": "maple-garden"
++    },
++    {
++      "mapId": "MAP_TAICHUNG_XITUN",
++      "nativeMap": [
++        43,
++        2
++      ],
++      "x": 17,
++      "y": 33,
++      "before": "0x33DD",
++      "after": "0x37DD",
++      "oldReachable": true,
++      "landmark": "maple-garden"
++    },
++    {
++      "mapId": "MAP_TAICHUNG_XITUN",
++      "nativeMap": [
++        43,
++        2
++      ],
++      "x": 18,
++      "y": 33,
++      "before": "0x33DE",
++      "after": "0x37DE",
++      "oldReachable": true,
++      "landmark": "maple-garden"
++    }
++  ],
++  "repairsByNativeMap": {
++    "43,2": 44
++  },
++  "nativeDoorPairs": 12,
++  "directedSeamCells": 56,
++  "unchangedBankFilesCompared": 160,
++  "previouslyReachableNonObjectCellsStranded": 0,
++  "preservedPublicCells": 14484,
++  "mainOwnedMigration": {
++    "required": true,
++    "coordinatesAreActualSavedPositions": true,
++    "safeExteriorFallback": {
++      "mapId": "MAP_TAICHUNG_XITUN",
++      "nativeMap": [
++        43,
++        2
++      ],
++      "x": 12,
++      "y": 35
++    },
++    "cacheRefreshRequired": true,
++    "saveCodeChanged": false
++  },
++  "runtimeVerified": false
++}
+diff --git a/data/taichung/landmark-collision/spec.json b/data/taichung/landmark-collision/spec.json
+new file mode 100644
+index 0000000..faedbfb
+--- /dev/null
++++ b/data/taichung/landmark-collision/spec.json
+@@ -0,0 +1,214 @@
++{
++  "schemaVersion": 1,
++  "baselineCommit": "6366b9e5c037647ce4d2a007efa3d3dfbedcdb48",
++  "policy": "All occupied landmark illustration cells are solid objects for walking and biking. Preserve exact native portals, deliberate south approaches, arrival cells, transparent surroundings and public streets. No art or layer change.",
++  "nativeCellPixels": 16,
++  "footprints": [
++    {
++      "id": "old-taichung-station",
++      "mapId": "MAP_TAICHUNG_OLD_CITY",
++      "mask": "nontransparent-native-art-cells",
++      "art": "data/taichung/landmarks/old-station/native.png",
++      "artSha256": "22f508c0b0bfdb27a34a7d755169cb5a29bb42da8c55876db9f5575f96cdac0f",
++      "origin": [
++        26,
++        57
++      ],
++      "size": [
++        12,
++        8
++      ],
++      "provenance": "data/taichung/landmarks/old-core-native/manifest.json"
++    },
++    {
++      "id": "miyahara",
++      "mapId": "MAP_TAICHUNG_OLD_CITY",
++      "mask": "nontransparent-native-art-cells",
++      "art": "data/taichung/landmarks/miyahara/candidate-v2/candidate-indexed.png",
++      "artSha256": "9f22beacd501b9dfa9bcf597d1f14a7fbcded03116bbc29d7bd05190340ccf68",
++      "origin": [
++        15,
++        45
++      ],
++      "size": [
++        10,
++        8
++      ],
++      "provenance": "data/taichung/landmarks/old-core-native/manifest.json"
++    },
++    {
++      "id": "taichung-park",
++      "mapId": "MAP_TAICHUNG_OLD_CITY",
++      "mask": "nontransparent-native-art-cells",
++      "art": "data/taichung/landmarks/taichung-park/candidate/candidate-indexed.png",
++      "artSha256": "f32d2853e3dfe5334fb45cea4fc539b93c61f9d580e994d95ed08f9145600899",
++      "origin": [
++        26,
++        23
++      ],
++      "size": [
++        12,
++        8
++      ],
++      "provenance": "data/taichung/landmarks/old-core-native/manifest.json"
++    },
++    {
++      "id": "natural-science-museum",
++      "mapId": "MAP_TAICHUNG_GREENWAY",
++      "mask": "nontransparent-native-art-cells",
++      "art": "data/taichung/landmarks/science-museum/candidate-compact/candidate-indexed.png",
++      "artSha256": "bcad8324859e3f4ad6e1c6e555ee91990a9c685c04f3776ec7aadf932147a73c",
++      "origin": [
++        19,
++        15
++      ],
++      "size": [
++        10,
++        6
++      ],
++      "provenance": "data/taichung/landmarks/greenway-native/manifest.json"
++    },
++    {
++      "id": "shen-ji-new-village",
++      "mapId": "MAP_TAICHUNG_GREENWAY",
++      "mask": "nontransparent-native-art-cells",
++      "art": "data/taichung/landmarks/shen-ji/candidate/nativecourtyard-layout-v2-indexed.png",
++      "artSha256": "ae862fefbff670f9d7d00dd15e17871330d7fa3410f0c9affae146627f47b0a8",
++      "origin": [
++        7,
++        39
++      ],
++      "size": [
++        11,
++        6
++      ],
++      "provenance": "data/taichung/landmarks/greenway-native/manifest.json"
++    },
++    {
++      "id": "fine-arts-museum",
++      "mapId": "MAP_TAICHUNG_GREENWAY",
++      "mask": "nontransparent-native-art-cells",
++      "art": "data/taichung/landmarks/fine-arts/candidate/facade/candidate-indexed.png",
++      "artSha256": "bd1bf35aeb0440911be6ab0d5bf9b47d33d140c13322a0186c720b4ae23c10dd",
++      "origin": [
++        5,
++        57
++      ],
++      "size": [
++        10,
++        6
++      ],
++      "provenance": "data/taichung/landmarks/greenway-native/manifest.json"
++    },
++    {
++      "id": "fine-arts-sculpture",
++      "mapId": "MAP_TAICHUNG_GREENWAY",
++      "mask": "nontransparent-native-art-cells",
++      "art": "data/taichung/landmarks/fine-arts/candidate/sculpture-shared/candidate-indexed.png",
++      "artSha256": "8db475611a7be17e1f7bf78b88f3d25c23074153831c858d2631e57f6efacc01",
++      "origin": [
++        14,
++        64
++      ],
++      "size": [
++        2,
++        2
++      ],
++      "provenance": "data/taichung/landmarks/greenway-native/manifest.json"
++    },
++    {
++      "id": "calligraphy-greenway",
++      "mapId": "MAP_TAICHUNG_GREENWAY",
++      "mask": "nontransparent-native-art-cells",
++      "art": "data/taichung/landmarks/calligraphy-greenway/candidate/candidate-indexed.png",
++      "artSha256": "0333edce300d0e2d1176c8176dafc793448ed6548da8af2f91b7d11303900c0a",
++      "origin": [
++        18,
++        27
++      ],
++      "size": [
++        9,
++        10
++      ],
++      "provenance": "data/taichung/landmarks/cmp-native/manifest.json"
++    },
++    {
++      "id": "taichung-theater",
++      "mapId": "MAP_TAICHUNG_XITUN",
++      "mask": "nontransparent-native-art-cells",
++      "art": "data/taichung/landmarks/theater/candidate/candidate-indexed.png",
++      "artSha256": "ff38c80f6969badd284ed65092305506ce401596d2431261ce546e37a736f6b8",
++      "origin": [
++        4,
++        35
++      ],
++      "size": [
++        16,
++        10
++      ],
++      "provenance": "data/tilesets/secondary/taichung_xitun/compile-manifest.json"
++    },
++    {
++      "id": "fengjia-night-market",
++      "mapId": "MAP_TAICHUNG_XITUN",
++      "mask": "nontransparent-native-art-cells",
++      "art": "data/taichung/landmarks/fengjia/candidate-maxcoverage/candidate-indexed.png",
++      "artSha256": "b20a51b4a8a2d237552617f4f5a6461c855803acb4b31b464b7e4c290c19b78b",
++      "origin": [
++        19,
++        7
++      ],
++      "size": [
++        10,
++        6
++      ],
++      "provenance": "data/taichung/landmarks/xitun-final-native/final-scene/manifest.json"
++    },
++    {
++      "id": "maple-garden",
++      "mapId": "MAP_TAICHUNG_XITUN",
++      "mask": "nontransparent-native-art-cells",
++      "art": "data/taichung/landmarks/maple-garden/candidate-160x112/candidate-indexed.png",
++      "artSha256": "b6c97a1642e6a6edd95ddbb77e496200277db07720f26d338a7238b0738b69e0",
++      "origin": [
++        10,
++        27
++      ],
++      "size": [
++        10,
++        7
++      ],
++      "provenance": "data/taichung/landmarks/xitun-final-native/final-scene/manifest.json"
++    },
++    {
++      "id": "wanhe-temple",
++      "mapId": "MAP_TAICHUNG_NANTUN_WANHE",
++      "mask": "procedural-facade-reserve",
++      "origin": [
++        22,
++        27
++      ],
++      "size": [
++        9,
++        7
++      ],
++      "provenance": "docs/taichung-city-contract.json",
++      "artGenerator": "tools/taichung/nantun/temple_art.py"
++    },
++    {
++      "id": "wenchang-temple",
++      "mapId": "MAP_TAICHUNG_NANTUN_WANHE",
++      "mask": "procedural-facade-reserve",
++      "origin": [
++        13,
++        28
++      ],
++      "size": [
++        7,
++        6
++      ],
++      "provenance": "docs/taichung-city-contract.json",
++      "artGenerator": "tools/taichung/nantun/temple_art.py"
++    }
++  ]
++}
 diff --git a/data/taichung/landmarks/README-archive.md b/data/taichung/landmarks/README-archive.md
 new file mode 100644
 index 0000000..6c73899
@@ -373586,6 +374611,87 @@ index 0000000..aa93989
 +    }
 +  }
 +}
+diff --git a/docs/maple-collision-save-v9.md b/docs/maple-collision-save-v9.md
+new file mode 100644
+index 0000000..6a8a3ba
+--- /dev/null
++++ b/docs/maple-collision-save-v9.md
+@@ -0,0 +1,75 @@
++# Maple collision save migration — v9
++
++Source-only migration on collision commit
++`88979b5f8ca5daafbce3a1fe128b27c2b15122ff`, above released native
++`6366b9e5c037647ce4d2a007efa3d3dfbedcdb48`. No ROM was built and no runtime
++Continue, UI or publication acceptance is claimed by this checkpoint.
++
++## Exact repair and cache scope
++
++Maps' committed `data/taichung/landmark-collision/delta.json` identifies exactly
++44 newly solid Maple illustration cells in Xitun, native map43:2. Each changed
++word is the old word OR0x0400. No art, metatile ID, elevation, door, connection,
++room, route or other map changed. The manifest supplies the qualified fallback
++at Xitun12,35: walkable tile0x3175, collision0, behavior0, elevation3, no actor,
++sign or warp. The native door12,32 and apron12,33 remain unchanged.
++
++The const44-row table applies only before version9, only on Xitun and only to
++explicit-coordinate targets with warpId-1. It runs after all older repairs.
++This ordering matters for the old v7 origins16,29 /16,30 /18,32: their earlier
++fallbacks17,29 /17,30 /19,32 now lie inside the44 newly solid cells and must
++then reach12,35. Source-version8 origins reach that fallback directly; older
++sources retain every earlier age gate before the final v9 repair.
++
++An existing native Continue warp keeps priority. Only its exact explicit
++coordinate target may be repaired; indexed/other warp IDs and unrelated safe
++returns remain unchanged. Without a pending warp, the migration uses actual
++saved `pos`, preserving the existing full map-load/cache refresh path.
++
++Source versions1–7 retain the established OldCity/Greenway/Xitun refreshes for
++the earlier changes. Source version8 refreshes Xitun only. OldCity, Greenway,
++Nantun and all other v8 maps keep their caches and saved positions. Version8
++is explicitly recognized as an established save, so it never falls into the
++legacy prototype/checkpoint path. Established saves change only variable40F7
++to9 plus any required pending return; party, currency/items, checkpoint,
++language, encounter preferences, City Pass, starter and onboarding stage stay
++owned by the save. Current/future versions exit without a migration.
++
++## Facing and memory
++
++The existing one-shot cache-only facing handoff is unchanged. An unchanged
++position refresh retains saved Up/Left; repairs and pending native arrivals
++use normal engine direction rules. Its map/position/warp-ID guards and session
++resets remain intact. `src/overworld.c` and the entire handoff implementation
++are byte-identical to the collision base. No new EWRAM state or save-layout
++field is introduced; the existing handoff remains constrained to8bytes.
++The new relocation table is44×4=176const ROM bytes; final machine-code size
++and ELF addresses remain Main's build output.
++
++## Executed validation
++
++- `bash tools/taichung_gameplay/test-save.sh` passes the full prior migration
++  suite and new v9 cases. The independent44-origin expectation is decoded from
++  released versus current map binaries, not copied from the C repair table.
++- Every origin is exercised at source versions1–8 as a saved field position
++  and as a pending target from another map, with native warp-ID priority.
++  All1,323 retained v8 Xitun walking positions refresh on their own tiles.
++  Historical chains, all other v8 districts/rooms, current/future exits,
++  empty parties, vanilla/prototype behavior and protected fields are covered.
++- The native-engine host harness passes155 cases, retaining the previous20
++  regressions and executing actual warp, avatar, direction, object-reset and
++  facing functions. It adds all44 field/pending repairs, older chains, v8 safe
++  Up/Left and unaffected/current-version cases. Inputs come independently from
++  Maps' committed manifest. Graphics/map-data services are host boundaries;
++  no substitute facing getter or setter is used.
++- `python3.11 -B tools/taichung_gameplay/test-save-facing.py --prove-regression`
++  passes; removing only the existing runtime hook reproduces saved North2
++  becoming South1. `git diff --check` passes.
++
++The host save model checks all600 party-record-sized plus872 inventory-sized
++protected bytes, saved object records, all256 variables and the checkpoint.
++It does not claim encrypted SRAM decoding or complete14-sector/native-Continue
++proof. Main owns the combined ROM build, a genuine v8 saved-origin Continue,
++the safe-facing smoke, current v9 Save/Continue, exact metadata/contract sync,
++and a narrowly rebound source/geometry profile. No existing guard pin or
++geometry assertion was weakened in this branch.
 diff --git a/docs/mapping-handoff.md b/docs/mapping-handoff.md
 new file mode 100644
 index 0000000..7829364
@@ -373904,6 +375010,31 @@ index 0000000..a6d884f
 +After300 native callback frames waiting for startup language, a short standalone fallback hint may appear. This is only a cue, never an automatic chooser. Phase1 may include NATIVE_TEXT while that hint prints while still accepting its bounded language command. Tutorialcard contexts remain READY+ACCEPTS_COMMAND and not NATIVE_TEXT.
 +
 +Story release staging: persistent A109 is pending farewell; distinct A1FF is completed. Continue at A109 resumes only farewell, then commits A1FF after dismissal. Old zero/unknown markers and completed A1FF remain exempt. This changes no mailbox offsets or command semantics.
+diff --git a/docs/nearby-tutorial-review.md b/docs/nearby-tutorial-review.md
+new file mode 100644
+index 0000000..10d2cce
+--- /dev/null
++++ b/docs/nearby-tutorial-review.md
+@@ -0,0 +1,19 @@
++# Nearby tutorial — review draft only
++
++Awaiting explicit user style/copy approval. Based only on released6366b9e5c037647ce4d2a007efa3d3dfbedcdb48. No production integration or publication; exclude from the selector/collision batch.
++
++Only `src/taichung_onboarding_text.c` private `sLandmarksEn`/`sLandmarksZh` payloads change, from five pages to one two-line box per language:
++
++```text
++Miyahara NW. Park north.
++South, then west. Use minimap.
++
++宮原在西北、公園在北。
++先往南再往西，看小地圖。
++```
++
++Native width evidence (released three Latin field-font tables, maximum per-character width plus1spacing; CJK12+1) is EN158/196px, ZH136/149px, below the conservative198px bound in the208px standard field window. The initially suggested full English lines measured218/230px and were shortened to avoid overflow. All characters exist in the released611-entry fixed codebook: zero new glyphs and byte-identical charmap/font header. Native preprocessor and strict C syntax pass using review-only output/stubs; no ROM build. Full evidence: `artifacts/story/nearby-review-6366b9e/validation.json` in the parent workspace.
++
++Source direction evidence: welcome exit OldCity(30,66); Miyahara door(20,52) northwest; Park door(32,30) predominantly north. Sign(29,66) blocks an immediate west step; the first road leg is south, then west. These are area/first-leg directions, not a claim of a direct obstacle-free route. No walking/emulator check was run.
++
++Topic order, pointers, saved stages, lock/ACK/unlock, grant guards, party/settings and existing-save exemption are untouched. Other tutorial pages/web presentation are untouched. No UI screenshot or runtime acceptance is claimed.
 diff --git a/docs/old-core-graphics-budget.md b/docs/old-core-graphics-budget.md
 new file mode 100644
 index 0000000..e0bd8aa
@@ -379835,7 +380966,7 @@ index 0000000..16f3ced
 +#endif
 diff --git a/include/taichung_save.h b/include/taichung_save.h
 new file mode 100644
-index 0000000..35e7d0f
+index 0000000..a229d03
 --- /dev/null
 +++ b/include/taichung_save.h
 @@ -0,0 +1,17 @@
@@ -379845,7 +380976,7 @@ index 0000000..35e7d0f
 +#include "global.h"
 +
 +#define TAICHUNG_SAVE_VERSION_VAR 0x40F7
-+#define TAICHUNG_SAVE_VERSION 8
++#define TAICHUNG_SAVE_VERSION 9
 +
 +void TaichungSaveInitNewGame(void);
 +void TaichungSaveUpgradeOnContinue(void);
@@ -386370,7 +387501,7 @@ index 0000000..527764b
 +}
 diff --git a/src/taichung_onboarding_text.c b/src/taichung_onboarding_text.c
 new file mode 100644
-index 0000000..5a4b6c9
+index 0000000..7d466da
 --- /dev/null
 +++ b/src/taichung_onboarding_text.c
 @@ -0,0 +1,27 @@
@@ -386387,8 +387518,8 @@ index 0000000..5a4b6c9
 +static const u8 sMapZh[] = _("網頁左上角，有小地圖。\n點開就能看城市地圖。\p也能直接開城市地圖。\n在遊戲選項開關小地圖。");
 +static const u8 sTeamEn[] = _("Open Menu with START.\nChoose TEAM to add or swap.\p150 choices. All free.\nReady at Lv50 when added.");
 +static const u8 sTeamZh[] = _("按START開選單。\n選隊伍，加入或更換夥伴。\p150隻任選，完全免費。\n加入就有50級，準備對戰。");
-+static const u8 sLandmarksEn[] = _("Go south onto the main road.\nThen west to the avenue.\pThe Station is behind us.\nJun can take your challenge.\pMiyahara lies northwest.\nThe Park is farther north.\pLian at the Park is ready too.\nWest roads reach the Greenway.\pMore halls are preparing.\nVisit them as you explore.");
-+static const u8 sLandmarksZh[] = _("先往南，走上站前大道。\n再往西，接著沿大道往北。\p身後的車站，有館主俊。\n想挑戰的話，可以找他。\p宮原眼科在西北邊，\n公園在更北邊。\p公園的莉安也準備好對戰了。\n沿西邊道路，可到草悟道。\p其他會館仍在準備挑戰。\n也歡迎先去走走、打聲招呼。");
++static const u8 sLandmarksEn[] = _("Miyahara NW. Park north.\nSouth, then west. Use minimap.");
++static const u8 sLandmarksZh[] = _("宮原在西北、公園在北。\n先往南再往西，看小地圖。");
 +static const u8 sReleaseEn[] = _("All set! The city is yours.\nTake your partner exploring.");
 +static const u8 sReleaseZh[] = _("都認識了，就出發吧！\n帶著夥伴，去轉個彎看看。");
 +
@@ -386583,10 +387714,10 @@ index 0000000..22d2f8b
 +}
 diff --git a/src/taichung_save.c b/src/taichung_save.c
 new file mode 100644
-index 0000000..59c7b19
+index 0000000..5bff035
 --- /dev/null
 +++ b/src/taichung_save.c
-@@ -0,0 +1,1333 @@
+@@ -0,0 +1,1388 @@
 +#include "global.h"
 +#include "event_data.h"
 +#include "load_save.h"
@@ -387740,6 +388871,58 @@ index 0000000..59c7b19
 +    {2, 61, 3, 61},
 +};
 +
++// Collision-only v9: exact 44 newly solid Maple illustration cells.
++// Bound to collision commit 88979b5f8ca5daafbce3a1fe128b27c2b15122ff;
++// data/taichung/landmark-collision/delta.json SHA256 c3b574a0af0cb192d83fcfb0aa5ad80f6d3b383eb71ed606d86e70cc1747c452.
++// Preserve the native door/apron; the validated exterior fallback is (12,35).
++static const struct SavedPositionRelocation sXitunV9Relocations[] =
++{
++    {11, 27, 12, 35},
++    {12, 27, 12, 35},
++    {13, 27, 12, 35},
++    {15, 27, 12, 35},
++    {10, 28, 12, 35},
++    {11, 28, 12, 35},
++    {13, 28, 12, 35},
++    {15, 28, 12, 35},
++    {16, 28, 12, 35},
++    {17, 28, 12, 35},
++    {19, 28, 12, 35},
++    {11, 29, 12, 35},
++    {12, 29, 12, 35},
++    {13, 29, 12, 35},
++    {14, 29, 12, 35},
++    {15, 29, 12, 35},
++    {17, 29, 12, 35},
++    {18, 29, 12, 35},
++    {19, 29, 12, 35},
++    {11, 30, 12, 35},
++    {12, 30, 12, 35},
++    {17, 30, 12, 35},
++    {18, 30, 12, 35},
++    {14, 31, 12, 35},
++    {15, 31, 12, 35},
++    {16, 31, 12, 35},
++    {17, 31, 12, 35},
++    {18, 31, 12, 35},
++    {19, 31, 12, 35},
++    {10, 32, 12, 35},
++    {11, 32, 12, 35},
++    {13, 32, 12, 35},
++    {14, 32, 12, 35},
++    {16, 32, 12, 35},
++    {17, 32, 12, 35},
++    {19, 32, 12, 35},
++    {10, 33, 12, 35},
++    {11, 33, 12, 35},
++    {13, 33, 12, 35},
++    {14, 33, 12, 35},
++    {15, 33, 12, 35},
++    {16, 33, 12, 35},
++    {17, 33, 12, 35},
++    {18, 33, 12, 35},
++};
++
 +static bool8 ApplyRelocation(struct WarpData *warp, const struct SavedPositionRelocation *table, u16 count)
 +{
 +    u16 i;
@@ -387790,9 +388973,11 @@ index 0000000..59c7b19
 +        ApplyRelocation(warp, sXitunV7Relocations, sizeof(sXitunV7Relocations) / sizeof(sXitunV7Relocations[0]));
 +    if (sourceVersion < 8 && IsXitun(warp) && warp->warpId == -1)
 +        ApplyRelocation(warp, sXitunV8Relocations, sizeof(sXitunV8Relocations) / sizeof(sXitunV8Relocations[0]));
++    if (sourceVersion < 9 && IsXitun(warp) && warp->warpId == -1)
++        ApplyRelocation(warp, sXitunV9Relocations, sizeof(sXitunV9Relocations) / sizeof(sXitunV9Relocations[0]));
 +}
 +
-+// OldCity v8 PROPOSAL: city-v3 buildings replace generic apartment blocks.
++// OldCity v8: city-v3 buildings replace generic apartment blocks.
 +// OldCity map SHA256 9fcce4bcd0b3c11cd743a01ce382c40c8e792262d0ef5c69750f655414af0ced
 +// Every replaced cell keeps its collision and elevation, so a saved OldCity cache is only refreshed.
 +// Combined v8 (2026-11-08): the Xitun street layout ships in the same version, and Nantun opens
@@ -387800,9 +388985,10 @@ index 0000000..59c7b19
 +// district once; Xitun positions were repaired by sXitunV8Relocations above.
 +static bool8 UsesChangedCityBanks(const struct WarpData *warp, u16 sourceVersion)
 +{
-+    if (sourceVersion >= TAICHUNG_SAVE_VERSION)
-+        return FALSE;
-+    return IsOldCity(warp) || IsGreenway(warp) || IsXitun(warp);
++    if (sourceVersion < 8 && (IsOldCity(warp) || IsGreenway(warp) || IsXitun(warp)))
++        return TRUE;
++    // Only Xitun collision words changed at v9. Other v8 districts keep their cache.
++    return sourceVersion < 9 && IsXitun(warp);
 +}
 +
 +static void RememberCacheRefreshFacing(const struct WarpData *warp)
@@ -387883,7 +389069,7 @@ index 0000000..59c7b19
 +        || gSaveBlock1Ptr->playerPartyCount == 0)
 +        return;
 +
-+    if (version == 1 || version == 2 || version == 3 || version == 4 || version == 5 || version == 6 || version == 7)
++    if (version == 1 || version == 2 || version == 3 || version == 4 || version == 5 || version == 6 || version == 7 || version == 8)
 +    {
 +        // Versioned city saves already own their language, team and checkpoint.
 +        ReloadCityBanksOnContinue(version);
@@ -388069,10 +389255,10 @@ index 0000000..778fa38
 +}
 diff --git a/src/taichung_starter_menu.c b/src/taichung_starter_menu.c
 new file mode 100644
-index 0000000..1728a06
+index 0000000..355fbd6
 --- /dev/null
 +++ b/src/taichung_starter_menu.c
-@@ -0,0 +1,291 @@
+@@ -0,0 +1,299 @@
 +#include "global.h"
 +#include "gflib.h"
 +#include "main.h"
@@ -388100,6 +389286,7 @@ index 0000000..1728a06
 +static EWRAM_DATA u8 sIcons[STARTER_COUNT] = {};
 +static EWRAM_DATA u8 sSelected = 0;
 +static EWRAM_DATA bool8 sConfirm = FALSE;
++static EWRAM_DATA volatile bool8 sPortraitUpdatePending = FALSE;
 +
 +static void CB2_InitStarterMenu(void);
 +static void CB2_StarterMenu(void);
@@ -388217,6 +389404,9 @@ index 0000000..1728a06
 +
 +static void LoadSelectedPortrait(void)
 +{
++    // Keep the displayed portrait and its palette paired while the replacement
++    // picture and full window redraw are prepared across multiple VBlanks.
++    sPortraitUpdatePending = TRUE;
 +    if (sPortrait != PORTRAIT_NONE)
 +        FreeAndDestroyMonPicSprite(sPortrait);
 +    sPortrait = CreateMonPicSprite_HandleDeoxys(sSpecies[sSelected], 0, 0, TRUE, 52, 74, PORTRAIT_PALETTE, TAG_NONE);
@@ -388250,6 +389440,7 @@ index 0000000..1728a06
 +        sIcons[option] = SPRITE_NONE;
 +    sSelected = 0;
 +    sConfirm = FALSE;
++    sPortraitUpdatePending = FALSE;
 +    gSpecialVar_Result = SPECIES_NONE;
 +    SetMainCallback2(CB2_InitStarterMenu);
 +}
@@ -388262,6 +389453,8 @@ index 0000000..1728a06
 +
 +static void VBlankCB_StarterMenu(void)
 +{
++    if (sPortraitUpdatePending)
++        return;
 +    LoadOam();
 +    ProcessSpriteCopyRequests();
 +    TransferPlttBuffer();
@@ -388316,6 +389509,7 @@ index 0000000..1728a06
 +    RunTextPrinters();
 +    AnimateSprites();
 +    BuildOamBuffer();
++    sPortraitUpdatePending = FALSE;
 +    UpdatePaletteFade();
 +}
 +
@@ -389519,10 +390713,10 @@ index 0000000..37004a7
 +bool8 VarSet(u16 id, u16 value);
 diff --git a/tests/save_host/global.h b/tests/save_host/global.h
 new file mode 100644
-index 0000000..15e863a
+index 0000000..1a45269
 --- /dev/null
 +++ b/tests/save_host/global.h
-@@ -0,0 +1,33 @@
+@@ -0,0 +1,35 @@
 +#ifndef TAICHUNG_SAVE_HOST_GLOBAL_H
 +#define TAICHUNG_SAVE_HOST_GLOBAL_H
 +#define GUARD_GLOBAL_H
@@ -389550,7 +390744,9 @@ index 0000000..15e863a
 +    struct WarpData location, continueGameWarp, lastHealLocation;
 +    u8 playerPartyCount;
 +    u16 vars[256];
-+    u8 preservedPartyAndBag[64];
++    // Six raw party records plus money/items/bag-sized protected bytes. The
++    // host model does not claim native offsets; engine object types below do.
++    u8 preservedPartyAndBag[600 + (0x5F8 - 0x290)];
 +    u16 mapLayoutId;
 +    struct ObjectEvent objectEvents[OBJECT_EVENTS_COUNT];
 +};
@@ -390772,10 +391968,10 @@ index 0000000..1c2d2d8
 +}
 diff --git a/tests/taichung_save_facing_test.c b/tests/taichung_save_facing_test.c
 new file mode 100644
-index 0000000..946ccb7
+index 0000000..111e01a
 --- /dev/null
 +++ b/tests/taichung_save_facing_test.c
-@@ -0,0 +1,218 @@
+@@ -0,0 +1,296 @@
 +#include <assert.h>
 +#include <stdio.h>
 +#include <string.h>
@@ -390844,6 +392040,7 @@ index 0000000..946ccb7
 +void TaichungGymCancelChallenge(void) {}
 +
 +#include "native-engine.inc"
++#include "collision-v9-origins.inc"
 +
 +static void Saved(u16 version, u8 mapNum, s16 x, s16 y, u8 direction)
 +{
@@ -390895,7 +392092,7 @@ index 0000000..946ccb7
 +            Saved(7, map, positions[map][0], positions[map][1], directions[dir]);
 +            before = sSave;
 +            TaichungSaveUpgradeOnContinue();
-+            assert(sSave.vars[0xF7] == 8 && sWarpRequests == 1);
++            assert(sSave.vars[0xF7] == TAICHUNG_SAVE_VERSION && sWarpRequests == 1);
 +            assert(sSave.continueGameWarp.x == before.pos.x && sSave.continueGameWarp.y == before.pos.y);
 +            LoadContinueMap();
 +            if (GetPlayerFacingDirection() != directions[dir])
@@ -390905,7 +392102,7 @@ index 0000000..946ccb7
 +            assert(sSave.pos.x == before.pos.x && sSave.pos.y == before.pos.y);
 +            assert(memcmp(sSave.objectEvents, before.objectEvents, sizeof(sSave.objectEvents)) == 0);
 +            assert(memcmp(sSave.preservedPartyAndBag, before.preservedPartyAndBag, sizeof(sSave.preservedPartyAndBag)) == 0);
-+            before.vars[0xF7] = 8;
++            before.vars[0xF7] = TAICHUNG_SAVE_VERSION;
 +            assert(memcmp(sSave.vars, before.vars, sizeof(sSave.vars)) == 0);
 +            // Consumption must not affect a later ordinary map load.
 +            InitObjectEventsLocal();
@@ -390985,21 +392182,98 @@ index 0000000..946ccb7
 +    LoadContinueMap(); assert(GetPlayerFacingDirection() == DIR_SOUTH); sCases++;
 +}
 +
++static void AssertV9Protected(const struct SaveBlock1 *before)
++{
++    unsigned i;
++    assert(sSave.vars[0xF7] == 9 && sSave.playerPartyCount == before->playerPartyCount);
++    for (i = 0; i < 256; i++)
++        if (i != 0xF7) assert(sSave.vars[i] == before->vars[i]);
++    assert(memcmp(sSave.preservedPartyAndBag, before->preservedPartyAndBag, sizeof(sSave.preservedPartyAndBag)) == 0);
++    assert(memcmp(&sSave.lastHealLocation, &before->lastHealLocation, sizeof(sSave.lastHealLocation)) == 0);
++    assert(memcmp(sSave.objectEvents, before->objectEvents, sizeof(sSave.objectEvents)) == 0);
++}
++
++static void V9CollisionEngineCases(void)
++{
++    struct SaveBlock1 before;
++    unsigned i, version, pending, dir;
++    static const u8 historical[][2] = {{16,29}, {16,30}, {18,32}};
++    static const u8 otherMaps[] = {0,1,3,14,15,16,17};
++    const u8 directions[] = {DIR_NORTH, DIR_WEST};
++    for (dir = 0; dir < sizeof(directions); dir++)
++    {
++        Saved(8, 2, 12, 35, directions[dir]); before = sSave;
++        TaichungSaveUpgradeOnContinue();
++        assert(sWarpRequests == 1);
++        LoadContinueMap();
++        assert(sSave.pos.x == 12 && sSave.pos.y == 35 && GetPlayerFacingDirection() == directions[dir]);
++        AssertV9Protected(&before); sCases++;
++    }
++    assert(sizeof(sCollisionV9Origins) == 44 * 2);
++    for (i = 0; i < 44; i++)
++        for (pending = 0; pending < 2; pending++)
++        {
++            Saved(8, pending ? 3 : 2, sCollisionV9Origins[i][0], sCollisionV9Origins[i][1], DIR_NORTH);
++            if (pending)
++            {
++                sPending = TRUE;
++                sSave.continueGameWarp = (struct WarpData){43, 2, -1, sCollisionV9Origins[i][0], sCollisionV9Origins[i][1]};
++            }
++            before = sSave; TaichungSaveUpgradeOnContinue();
++            assert(sWarpRequests == (pending ? 0u : 1u));
++            LoadContinueMap();
++            assert(sSave.location.mapGroup == 43 && sSave.location.mapNum == 2);
++            assert(sSave.pos.x == 12 && sSave.pos.y == 35 && GetPlayerFacingDirection() == DIR_SOUTH);
++            AssertV9Protected(&before); sCases++;
++        }
++    for (version = 1; version <= 6; version++)
++        for (i = 0; i < sizeof(historical) / sizeof(historical[0]); i++)
++            for (pending = 0; pending < 2; pending++)
++            {
++                Saved(version, pending ? 3 : 2, historical[i][0], historical[i][1], DIR_WEST);
++                if (pending)
++                {
++                    sPending = TRUE;
++                    sSave.continueGameWarp = (struct WarpData){43, 2, -1, historical[i][0], historical[i][1]};
++                }
++                before = sSave; TaichungSaveUpgradeOnContinue();
++                assert(sWarpRequests == (pending ? 0u : 1u));
++                LoadContinueMap();
++                assert(sSave.pos.x == 12 && sSave.pos.y == 35 && GetPlayerFacingDirection() == DIR_SOUTH);
++                AssertV9Protected(&before); sCases++;
++            }
++    for (i = 0; i < sizeof(otherMaps); i++)
++    {
++        Saved(8, otherMaps[i], 12, 35, DIR_NORTH); before = sSave;
++        TaichungSaveUpgradeOnContinue();
++        assert(!sPending && sWarpRequests == 0 && TaichungSaveConsumeContinueFacing() == DIR_NONE);
++        AssertV9Protected(&before); sCases++;
++    }
++    for (version = 9; version <= 10; version++)
++    {
++        Saved(version, 2, 12, 35, DIR_WEST); before = sSave;
++        TaichungSaveUpgradeOnContinue();
++        assert(!sPending && sWarpRequests == 0 && TaichungSaveConsumeContinueFacing() == DIR_NONE);
++        assert(memcmp(&sSave,&before,sizeof(sSave)) == 0); sCases++;
++    }
++}
++
 +int main(void)
 +{
 +    assert(sizeof(struct ObjectEvent) == 0x24);
 +    CacheOnlyCases();
 +    NativeWarpAndRepairPriority();
 +    InvalidAndStaleHandoffs();
-+    printf("PASS: %u compiled native warp/avatar facing cases; safe v7 Up/Left in all3 districts, pending/door and repaired positions, target guard, invalid players and one-shot/session resets\n", sCases);
++    V9CollisionEngineCases();
++    printf("PASS: %u compiled native warp/avatar cases; existing20 facing regressions, v8 Up/Left cache refresh, all44 v9 origins and pending targets, three historical chains, protected save state and unaffected/current versions\n", sCases);
 +    return 0;
 +}
 diff --git a/tests/taichung_save_test.c b/tests/taichung_save_test.c
 new file mode 100644
-index 0000000..c02ed66
+index 0000000..6dc08bf
 --- /dev/null
 +++ b/tests/taichung_save_test.c
-@@ -0,0 +1,4311 @@
+@@ -0,0 +1,4444 @@
 +#include <assert.h>
 +#include <stdio.h>
 +#include <string.h>
@@ -391015,7 +392289,36 @@ index 0000000..c02ed66
 +static unsigned sVariableWrites;
 +static bool8 sHasContinueWarp;
 +static unsigned sChallengeCancels;
++// Independent expected origins come from the actual before/after map words,
++// not from the migration's relocation table.
++static bool8 sV9Solid[64][40];
 +#define V(id) sSave.vars[(id) - VARS_START]
++
++static u16 ReadMapWord(FILE *file)
++{
++    int low = fgetc(file), high = fgetc(file);
++    assert(low != EOF && high != EOF);
++    return low | high << 8;
++}
++
++static void LoadV9CollisionTruth(const char *before, const char *after)
++{
++    FILE *old = fopen(before, "rb"), *now = fopen(after, "rb");
++    unsigned x, y, changed = 0;
++    assert(old && now);
++    for (y = 0; y < 64; y++)
++        for (x = 0; x < 40; x++)
++        {
++            u16 a = ReadMapWord(old), b = ReadMapWord(now);
++            if (a == b) continue;
++            assert(!(a & 0xC00) && b == (a | 0x400));
++            sV9Solid[y][x] = TRUE;
++            changed++;
++        }
++    assert(fgetc(old) == EOF && fgetc(now) == EOF && changed == 44);
++    fclose(old); fclose(now);
++    assert(!sV9Solid[32][12] && !sV9Solid[33][12] && !sV9Solid[35][12]);
++}
 +
 +bool8 VarSet(u16 id, u16 value)
 +{
@@ -391090,6 +392393,8 @@ index 0000000..c02ed66
 +    assert(memcmp(sSave.preservedPartyAndBag, before->preservedPartyAndBag, sizeof(sSave.preservedPartyAndBag)) == 0);
 +    assert(memcmp(&sSave.location, &before->location, sizeof(sSave.location)) == 0);
 +    assert(memcmp(&sSave.pos, &before->pos, sizeof(sSave.pos)) == 0);
++    assert(sSave.mapLayoutId == before->mapLayoutId);
++    assert(memcmp(sSave.objectEvents, before->objectEvents, sizeof(sSave.objectEvents)) == 0);
 +    for (i = 0; i < 256; i++)
 +    {
 +        if (i == TAICHUNG_SAVE_VERSION_VAR - VARS_START)
@@ -392927,7 +394232,7 @@ index 0000000..c02ed66
 +
 +static void AssertSamePartyAndVars(const struct SaveBlock1 *before)
 +{
-+    assert(V(0x40F7) == 8 && sVariableWrites == 1);
++    assert(V(0x40F7) == TAICHUNG_SAVE_VERSION && sVariableWrites == 1);
 +    assert(sChallengeCancels == 1);
 +    AssertProtected(before, FALSE); // Includes checkpoint, all nonversion vars and bag/party bytes.
 +}
@@ -394414,12 +395719,13 @@ index 0000000..c02ed66
 +        }
 +}
 +
-+// Continue chains every Xitun repair the source version predates: v4, then v7, then v8.
++// Continue chains historical repairs before the final collision-only v9 repair.
 +static void AssertXitunAfter(unsigned version, u8 x, u8 y)
 +{
 +    if (version < 4) XitunRelocate(sXitunV4Cases, COUNT(sXitunV4Cases), &x, &y);
 +    if (version < 7) XitunRelocate(sXitunV7Cases, COUNT(sXitunV7Cases), &x, &y);
 +    if (version < 8) XitunRelocate(sXitunV8Cases, COUNT(sXitunV8Cases), &x, &y);
++    if (version < 9 && sV9Solid[y][x]) { x = 12; y = 35; }
 +    AssertXitunWarp(x,y);
 +}
 +
@@ -394517,9 +395823,9 @@ index 0000000..c02ed66
 +    // Legacy prototype recognition/checkpoint behavior survives the added Xitun repair.
 +    Reset(); V(0x40FC) = SPECIES_PIKACHU; InXitun(sXitunV4Cases[0][0],sXitunV4Cases[0][1]); before = sSave;
 +    TaichungSaveUpgradeOnContinue(); AssertXitunAfter(0,sXitunV4Cases[0][0],sXitunV4Cases[0][1]);
-+    assert(V(0x40F7) == 8 && TaichungSaveUsesStationCheckpoint()); AssertProtected(&before,TRUE);
++    assert(V(0x40F7) == TAICHUNG_SAVE_VERSION && TaichungSaveUsesStationCheckpoint()); AssertProtected(&before,TRUE);
 +    // Current/future save versions do not schedule or repair a return.
-+    for (version = 8; version <= 9; version++)
++    for (version = TAICHUNG_SAVE_VERSION; version <= TAICHUNG_SAVE_VERSION + 1; version++)
 +    {
 +        Versioned(version); InXitun(5,38); before = sSave; TaichungSaveUpgradeOnContinue();
 +        assert(memcmp(&sSave,&before,sizeof(sSave)) == 0 && sWarpRequests == 0 && sVariableWrites == 0);
@@ -394662,8 +395968,8 @@ index 0000000..c02ed66
 +    }
 +    Reset(); V(0x40FC) = SPECIES_PIKACHU; InGreenway(8,41); before = sSave;
 +    TaichungSaveUpgradeOnContinue(); AssertGreenwayWarp(8,40);
-+    assert(V(0x40F7) == 8 && TaichungSaveUsesStationCheckpoint() && sChallengeCancels == 1); AssertProtected(&before,TRUE);
-+    for (version = 8; version <= 9; version++)
++    assert(V(0x40F7) == TAICHUNG_SAVE_VERSION && TaichungSaveUsesStationCheckpoint() && sChallengeCancels == 1); AssertProtected(&before,TRUE);
++    for (version = TAICHUNG_SAVE_VERSION; version <= TAICHUNG_SAVE_VERSION + 1; version++)
 +    {
 +        Versioned(version); InGreenway(8,41); before = sSave; TaichungSaveUpgradeOnContinue();
 +        assert(memcmp(&sSave,&before,sizeof(sSave)) == 0 && sWarpRequests == 0 && sVariableWrites == 0 && sChallengeCancels == 1);
@@ -394808,10 +396114,10 @@ index 0000000..c02ed66
 +    }
 +    Reset(); V(0x40FC) = SPECIES_PIKACHU; InGreenway(19,27); before = sSave;
 +    TaichungSaveUpgradeOnContinue(); AssertGreenwayWarp(19,26);
-+    assert(V(0x40F7) == 8 && TaichungSaveUsesStationCheckpoint() && sChallengeCancels == 1);
++    assert(V(0x40F7) == TAICHUNG_SAVE_VERSION && TaichungSaveUsesStationCheckpoint() && sChallengeCancels == 1);
 +    AssertProtected(&before,TRUE);
 +    // Both current6 and future7 retain every save byte, even for pending blocked coordinates.
-+    for (version = 8; version <= 9; version++)
++    for (version = TAICHUNG_SAVE_VERSION; version <= TAICHUNG_SAVE_VERSION + 1; version++)
 +        for (pending = 0; pending < 2; pending++)
 +        {
 +            Versioned(version); InGreenway(19,27); sHasContinueWarp = pending;
@@ -394960,8 +396266,8 @@ index 0000000..c02ed66
 +    assert(memcmp(&sSave.continueGameWarp,&before.continueGameWarp,sizeof(sSave.continueGameWarp)) == 0); AssertSamePartyAndVars(&before);
 +    Reset(); V(0x40FC) = SPECIES_PIKACHU; InXitun(19,8); before = sSave;
 +    TaichungSaveUpgradeOnContinue(); AssertXitunWarp(18,8);
-+    assert(V(0x40F7) == 8 && TaichungSaveUsesStationCheckpoint() && sChallengeCancels == 1); AssertProtected(&before,TRUE);
-+    for (version = 8; version <= 9; version++)
++    assert(V(0x40F7) == TAICHUNG_SAVE_VERSION && TaichungSaveUsesStationCheckpoint() && sChallengeCancels == 1); AssertProtected(&before,TRUE);
++    for (version = TAICHUNG_SAVE_VERSION; version <= TAICHUNG_SAVE_VERSION + 1; version++)
 +        for (pending = 0; pending < 2; pending++)
 +        {
 +            Versioned(version); InXitun(19,8); sHasContinueWarp = pending;
@@ -395046,7 +396352,7 @@ index 0000000..c02ed66
 +    Versioned(7); InXitun(19,8); before = sSave; TaichungSaveUpgradeOnContinue();
 +    AssertXitunAfter(7,19,8); assert(sWarpRequests == 1); AssertSamePartyAndVars(&before);
 +    // Current and future saves keep every byte, with or without a pending return.
-+    for (version = 8; version <= 9; version++)
++    for (version = TAICHUNG_SAVE_VERSION; version <= TAICHUNG_SAVE_VERSION + 1; version++)
 +        for (pending = 0; pending < 2; pending++)
 +        {
 +            Versioned(version); InOldCity(12,47); sHasContinueWarp = pending;
@@ -395085,7 +396391,7 @@ index 0000000..c02ed66
 +        {
 +            Versioned(version); InXitun(sXitunV8Cases[i][0],sXitunV8Cases[i][1]); before = sSave;
 +            TaichungSaveUpgradeOnContinue(); AssertXitunAfter(version,sXitunV8Cases[i][0],sXitunV8Cases[i][1]);
-+            if (version == 7) AssertXitunWarp(sXitunV8Cases[i][2],sXitunV8Cases[i][3]);
++            if (version == 7 && !sV9Solid[sXitunV8Cases[i][3]][sXitunV8Cases[i][2]]) AssertXitunWarp(sXitunV8Cases[i][2],sXitunV8Cases[i][3]);
 +            assert(sWarpRequests == 1); AssertSamePartyAndVars(&before);
 +        }
 +        // Every final valid position keeps its exact tile unless an older table predates it.
@@ -395095,7 +396401,7 @@ index 0000000..c02ed66
 +            {
 +                Versioned(version); InXitun(x,sXitunV8SafeRuns[i][0]); before = sSave;
 +                TaichungSaveUpgradeOnContinue(); AssertXitunAfter(version,x,sXitunV8SafeRuns[i][0]);
-+                if (version == 7) AssertXitunWarp(x,sXitunV8SafeRuns[i][0]);
++                if (version == 7 && !sV9Solid[sXitunV8SafeRuns[i][0]][x]) AssertXitunWarp(x,sXitunV8SafeRuns[i][0]);
 +                assert(sWarpRequests == 1); AssertSamePartyAndVars(&before); count++;
 +            }
 +        assert(count == 1367);
@@ -395173,8 +396479,8 @@ index 0000000..c02ed66
 +    // The earliest prototype chain also ends on the verified fallback.
 +    Reset(); V(0x40FC) = SPECIES_PIKACHU; InXitun(31,30); before = sSave;
 +    TaichungSaveUpgradeOnContinue(); AssertXitunWarp(31,32);
-+    assert(V(0x40F7) == 8 && TaichungSaveUsesStationCheckpoint() && sChallengeCancels == 1); AssertProtected(&before,TRUE);
-+    for (version = 8; version <= 9; version++)
++    assert(V(0x40F7) == TAICHUNG_SAVE_VERSION && TaichungSaveUsesStationCheckpoint() && sChallengeCancels == 1); AssertProtected(&before,TRUE);
++    for (version = TAICHUNG_SAVE_VERSION; version <= TAICHUNG_SAVE_VERSION + 1; version++)
 +        for (pending = 0; pending < 2; pending++)
 +        {
 +            Versioned(version); InXitun(31,30); sHasContinueWarp = pending;
@@ -395191,13 +396497,113 @@ index 0000000..c02ed66
 +    assert(sWarpRequests == 1 && sVariableWrites == 1 && sChallengeCancels == 2);
 +}
 +
-+int main(void)
++static void TestMapleV9Migration(void)
++{
++    struct SaveBlock1 before;
++    unsigned version, x, y, changed, kept = 0, map, i, pending;
++    static const u8 chains[][2] = {{16,29}, {16,30}, {18,32}};
++    static const s8 warpIds[] = {-3, 0, 1, 2};
++    for (version = 1; version <= 8; version++)
++    {
++        changed = 0;
++        for (y = 0; y < 64; y++)
++            for (x = 0; x < 40; x++)
++            {
++                if (!sV9Solid[y][x]) continue;
++                Versioned(version); InXitun(x,y); before = sSave;
++                TaichungSaveUpgradeOnContinue(); AssertXitunAfter(version,x,y);
++                if (version == 8) AssertXitunWarp(12,35);
++                assert(sWarpRequests == 1); AssertSamePartyAndVars(&before);
++                // Pending explicit target is repaired from an unrelated source map.
++                Versioned(version); PendingXitunTarget(x,y); before = sSave;
++                TaichungSaveUpgradeOnContinue(); AssertXitunAfter(version,x,y);
++                if (version == 8) AssertXitunWarp(12,35);
++                assert(sWarpRequests == 0); AssertSamePartyAndVars(&before);
++                // Native warp IDs always take priority over these ignored XYs.
++                for (i = 0; i < COUNT(warpIds); i++)
++                {
++                    Versioned(version); InXitun(11,33); PendingXitunTarget(x,y);
++                    sSave.continueGameWarp.warpId = warpIds[i]; before = sSave;
++                    TaichungSaveUpgradeOnContinue();
++                    assert(sHasContinueWarp && sWarpRequests == 0);
++                    assert(memcmp(&before.continueGameWarp,&sSave.continueGameWarp,sizeof(sSave.continueGameWarp)) == 0);
++                    AssertSamePartyAndVars(&before);
++                }
++                changed++;
++            }
++        assert(changed == 44);
++    }
++    // All three historical v7 fallbacks now need the final v9 repair, after
++    // every older table, for both saved field positions and pending targets.
++    for (version = 1; version <= 6; version++)
++        for (i = 0; i < COUNT(chains); i++)
++        {
++            Versioned(version); InXitun(chains[i][0],chains[i][1]); before = sSave;
++            TaichungSaveUpgradeOnContinue(); AssertXitunWarp(12,35);
++            assert(sWarpRequests == 1); AssertSamePartyAndVars(&before);
++            Versioned(version); PendingXitunTarget(chains[i][0],chains[i][1]); before = sSave;
++            TaichungSaveUpgradeOnContinue(); AssertXitunWarp(12,35);
++            assert(sWarpRequests == 0); AssertSamePartyAndVars(&before);
++        }
++    // Every retained v8 walking tile refreshes in place; only those44 move.
++    for (i = 0; i < COUNT(sXitunV8SafeRuns); i++)
++        for (x = sXitunV8SafeRuns[i][1]; x <= sXitunV8SafeRuns[i][2]; x++)
++        {
++            y = sXitunV8SafeRuns[i][0];
++            if (sV9Solid[y][x]) continue;
++            Versioned(8); InXitun(x,y); before = sSave;
++            TaichungSaveUpgradeOnContinue(); AssertXitunWarp(x,y);
++            assert(sWarpRequests == 1); AssertSamePartyAndVars(&before); kept++;
++        }
++    assert(kept == 1367 - 44);
++    // The one v9 cache invalidation is Xitun only. No version8 save may fall
++    // into prototype recognition or overwrite its own heal checkpoint.
++    for (map = 0; map <= 17; map++)
++    {
++        if (map == MAP_NUM(MAP_TAICHUNG_XITUN)) continue;
++        Versioned(8); InOldCity(11,33); sSave.location.mapNum = map;
++        V(0x40FC) = SPECIES_PIKACHU; before = sSave;
++        TaichungSaveUpgradeOnContinue();
++        assert(!sHasContinueWarp && sWarpRequests == 0);
++        assert(memcmp(&before.continueGameWarp,&sSave.continueGameWarp,sizeof(sSave.continueGameWarp)) == 0);
++        AssertSamePartyAndVars(&before);
++        // An unrelated pending return is unchanged even if the source is blocked.
++        Versioned(8); InXitun(11,33); PendingXitunTarget(11,33);
++        sSave.continueGameWarp.mapNum = map; before = sSave;
++        TaichungSaveUpgradeOnContinue();
++        assert(sHasContinueWarp && sWarpRequests == 0);
++        assert(memcmp(&before.continueGameWarp,&sSave.continueGameWarp,sizeof(sSave.continueGameWarp)) == 0);
++        AssertSamePartyAndVars(&before);
++    }
++    Versioned(8); InXitun(11,33); PendingXitunTarget(12,35); before = sSave;
++    TaichungSaveUpgradeOnContinue(); AssertXitunWarp(12,35);
++    assert(sWarpRequests == 0); AssertSamePartyAndVars(&before);
++    // Current/future saves remain byte-exact, even on a formerly invalid origin.
++    for (version = 9; version <= 10; version++)
++        for (pending = 0; pending < 2; pending++)
++            for (y = 0; y < 64; y++)
++                for (x = 0; x < 40; x++)
++                {
++                    if (!sV9Solid[y][x]) continue;
++                    Versioned(version); InXitun(x,y);
++                    sHasContinueWarp = pending;
++                    sSave.continueGameWarp = sSave.location;
++                    sSave.continueGameWarp.x = x; sSave.continueGameWarp.y = y;
++                    before = sSave; TaichungSaveUpgradeOnContinue();
++                    assert(memcmp(&sSave,&before,sizeof(sSave)) == 0);
++                    assert(sWarpRequests == 0 && sVariableWrites == 0 && sChallengeCancels == 1 && sHasContinueWarp == pending);
++                }
++}
++
++int main(int argc, char **argv)
 +{
 +    static const u16 starters[] = {SPECIES_CHARMANDER, SPECIES_BULBASAUR, SPECIES_SQUIRTLE, SPECIES_PIKACHU};
 +    static const u8 cohortPositions[][2] = {{30,66},{24,23},{24,15}};
 +    struct SaveBlock1 before;
 +    unsigned version, i, map;
 +
++    assert(argc == 3);
++    LoadV9CollisionTruth(argv[1], argv[2]);
 +    TestTransientEntryClears();
 +    TestXitunV4Migration();
 +    TestGreenwayV5Migration();
@@ -395205,6 +396611,7 @@ index 0000000..c02ed66
 +    TestXitunV7Migration();
 +    TestOldCityV8Migration();
 +    TestXitunV8Migration();
++    TestMapleV9Migration();
 +
 +    Reset(); before = sSave;
 +    TaichungSaveUpgradeOnContinue();
@@ -395285,7 +396692,7 @@ index 0000000..c02ed66
 +    {
 +        Reset(); V(0x40FC) = starters[i]; V(0x40FD) = 2; V(0x40FB) = i%2 ? 2 : 0; before = sSave;
 +        TaichungSaveUpgradeOnContinue(); AssertWarp(30,66);
-+        assert(V(0x40F7) == 8 && V(0x40FB) == (i%2 ? 2 : 1) && V(0x40FC) == starters[i]);
++        assert(V(0x40F7) == TAICHUNG_SAVE_VERSION && V(0x40FB) == (i%2 ? 2 : 1) && V(0x40FC) == starters[i]);
 +        AssertProtected(&before,TRUE); assert(TaichungSaveUsesStationCheckpoint());
 +    }
 +    Reset(); V(0x40FD) = 3; before = sSave; TaichungSaveUpgradeOnContinue();
@@ -395295,20 +396702,20 @@ index 0000000..c02ed66
 +        Reset(); V(0x40FC) = SPECIES_PIKACHU; InOldCity(cohortPositions[map][0],cohortPositions[map][1]); sSave.location.mapNum = map;
 +        TaichungSaveUpgradeOnContinue(); assert(sHasContinueWarp && sSave.continueGameWarp.mapNum == (s8)map);
 +    }
-+    for (version = 0; version <= 8; version++)
++    for (version = 0; version <= TAICHUNG_SAVE_VERSION; version++)
 +    {
 +        Versioned(version); sSave.playerPartyCount = 0; before = sSave; TaichungSaveUpgradeOnContinue();
 +        assert(memcmp(&sSave,&before,sizeof(sSave)) == 0 && sWarpRequests == 0 && sVariableWrites == 0);
 +    }
-+    for (version = 8; version <= 9; version++)
++    for (version = TAICHUNG_SAVE_VERSION; version <= TAICHUNG_SAVE_VERSION + 1; version++)
 +    {
 +        Versioned(version); InOldCity(2,2); before = sSave; TaichungSaveUpgradeOnContinue();
 +        assert(memcmp(&sSave,&before,sizeof(sSave)) == 0 && sWarpRequests == 0 && sVariableWrites == 0);
 +    }
 +    Reset(); TaichungSaveInitNewGame();
-+    assert(V(0x40F7) == 8 && V(0x40FB) == 0 && V(0x40FC) == 0 && sWarpRequests == 0);
++    assert(V(0x40F7) == TAICHUNG_SAVE_VERSION && V(0x40FB) == 0 && V(0x40FC) == 0 && sWarpRequests == 0);
 +    assert(TaichungSaveUsesStationCheckpoint());
-+    puts("PASS: OldCity v8 cache-only refresh for v1-v7 with all231 building-side positions kept and a combined pre-v8 OldCity+Greenway+Xitun refresh; Xitun streets v8 exact353 repairs for v1-v7 chained after v4/v7, all1367 final valid Xitun positions, pre-v8 refresh of all three outdoor districts and native pending/door priority; cb-only Xitun v7 exact29 repairs for v1-v6, older62 Xitun union and age gates, all1572 v7 positions, v6 Xitun-only refresh; every prior OldCity/Theater/e9/CMP regression and table, established onboarding stage/bag/team/preferences/checkpoint protection, v8/v9 exits and Park transient lifetime. Separate961 OldCity layout excluded.");
++    puts("PASS: OldCity v8 cache-only refresh for v1-v7 with all231 building-side positions kept and a combined pre-v8 OldCity+Greenway+Xitun refresh; Xitun streets v8 exact353 repairs for v1-v7 chained after v4/v7, all1367 final valid Xitun positions, pre-v8 refresh of all three outdoor districts and native pending/door priority; cb-only Xitun v7 exact29 repairs for v1-v6, older62 Xitun union and age gates, all1572 v7 positions, v6 Xitun-only refresh; every prior OldCity/Theater/e9/CMP regression and table, established onboarding stage/bag/team/preferences/checkpoint protection, v9/v10 exits and Park transient lifetime; Maple v9 covers all44 independent map-diff origins, source versions1..8 and pending/native-door priority. Separate961 OldCity layout excluded.");
 +    return 0;
 +}
 diff --git a/tests/taichung_starter_test.c b/tests/taichung_starter_test.c
@@ -396951,6 +398358,222 @@ index 0000000..998dd2e
 +
 +if __name__=='__main__':
 +    build()
+diff --git a/tools/taichung/check_landmark_collision.py b/tools/taichung/check_landmark_collision.py
+new file mode 100644
+index 0000000..ea41f6a
+--- /dev/null
++++ b/tools/taichung/check_landmark_collision.py
+@@ -0,0 +1,210 @@
++#!/usr/bin/env python3
++"""Apply/check the collision-only landmark object fix against released 6366b9e.
++
++Masks come from pinned artwork alpha, not the proposed collision delta. The
++native city validator independently checks actor-aware routes and all 12 rooms.
++This does not prove runtime door animation or old-save/cache migration.
++"""
++import argparse
++from collections import Counter
++import hashlib
++import json
++from pathlib import Path
++import struct
++import subprocess
++import sys
++
++from PIL import Image
++
++ROOT = Path(__file__).resolve().parents[2]
++SPEC = 'data/taichung/landmark-collision/spec.json'
++DELTA = 'data/taichung/landmark-collision/delta.json'
++sys.path.insert(0, str(ROOT / 'tools/taichung'))
++from validate_city import Validator  # noqa: E402
++from render_maps import tileset_paths  # noqa: E402
++
++
++def sha(raw):
++    return hashlib.sha256(raw).hexdigest()
++
++
++def words(raw):
++    return list(struct.unpack(f'<{len(raw)//2}H', raw))
++
++
++def binary(values):
++    return struct.pack(f'<{len(values)}H', *values)
++
++
++def frozen(source, ref, path):
++    return subprocess.check_output(['git', 'show', f'{ref}:{path}'], cwd=source)
++
++
++def plan(source):
++    spec = json.loads((source / SPEC).read_text())
++    base = spec['baselineCommit']
++    contract = json.loads(frozen(source, base, 'docs/taichung-city-contract.json'))
++    layouts = {x['id']: x for x in json.loads(frozen(source, base, 'data/layouts/layouts.json'))['layouts'] if 'id' in x}
++    landmarks = {x['id']: x for x in contract['landmarks']}
++    assert {x['id'] for x in spec['footprints']} == set(landmarks) | {'fine-arts-sculpture'}, 'Incomplete landmark roster'
++    maps = {}
++    for district in contract['districts']:
++        path = f"data/maps/{district['name']}/map.json" if 'name' in district else None
++        # Native names are registry entries, independent of display labels.
++        if path is None:
++            name = next(name for name in json.loads(frozen(source, base, 'data/maps/map_groups.json'))['gMapGroup_Taichung']
++                        if json.loads(frozen(source, base, f'data/maps/{name}/map.json'))['id'] == district['map'])
++            path = f'data/maps/{name}/map.json'
++        data = json.loads(frozen(source, base, path))
++        layout = layouts[data['layout']]
++        raw = frozen(source, base, layout['blockdata_filepath'])
++        maps[data['id']] = dict(path=layout['blockdata_filepath'], width=layout['width'], before=words(raw), after=words(raw), events=path)
++    coverage, exceptions = {}, {}
++    for item in spec['footprints']:
++        identity, mid = item['id'], item['mapId']
++        ox, oy = item['origin']; width, height = item['size']
++        if 'art' in item:
++            art_raw = (source / item['art']).read_bytes()
++            assert sha(art_raw) == item['artSha256'], f'{identity}: source artwork changed'
++            art = Image.open(source / item['art']).convert('RGBA')
++            assert art.size == (width * 16, height * 16)
++            cells = {(ox+x, oy+y) for y in range(height) for x in range(width)
++                     if art.crop((x*16, y*16, (x+1)*16, (y+1)*16)).getchannel('A').getbbox()}
++        else:
++            cells = {(ox+x, oy+y) for y in range(height) for x in range(width)}
++        parent = landmarks.get(identity, landmarks['fine-arts-museum'] if identity == 'fine-arts-sculpture' else None)
++        assert parent and mid == parent['exteriorMap'], f'{identity}: wrong parent map'
++        allowed = {(parent[k]['x'], parent[k]['y']) for k in ('entrance', 'approach', 'arrival')}
++        coverage[identity] = (mid, cells - allowed)
++        exceptions[identity] = sorted(cells & allowed)
++        m = maps[mid]
++        for x, y in cells - allowed:
++            index = y*m['width']+x
++            value = m['after'][index]
++            if not value & 0xC00:
++                m['after'][index] = value | 0x400
++    changes = []
++    geometry = Validator(source, contract)
++    for mid, item in maps.items():
++        geometry.maps[mid].cells = item['before']
++    geometry.run()
++    assert not geometry.errors, geometry.errors
++    for mid, m in maps.items():
++        group, number = geometry.map_numbers[mid]
++        for index, (before, after) in enumerate(zip(m['before'], m['after'])):
++            if before == after:
++                continue
++            x, y = index % m['width'], index // m['width']
++            assert not before & 0xC00 and after ^ before == 0x400
++            assert geometry.maps[mid].behavior(x, y) == 0, 'New block unexpectedly uses forced movement/bridge/ledge behavior'
++            changes.append(dict(mapId=mid, nativeMap=[group, number], x=x, y=y,
++                                before=f'0x{before:04X}', after=f'0x{after:04X}',
++                                oldReachable=(mid,x,y) in geometry.distances,
++                                landmark=next(identity for identity, (fm, pts) in coverage.items() if fm == mid and (x,y) in pts)))
++    return spec, contract, maps, coverage, exceptions, changes
++
++
++def check(source, proposed=False, overrides=None):
++    spec, contract, maps, coverage, exceptions, changes = plan(source)
++    overrides = overrides or {}
++    errors = []
++    grids = {}
++    for mid, item in maps.items():
++        raw = overrides.get(item['path'], binary(item['after']) if proposed else (source/item['path']).read_bytes())
++        grids[mid] = words(raw)
++        if grids[mid] != item['after']:
++            errors.append(f'{mid}: grid differs from exact alpha-derived collision-only change')
++        if (source / item['events']).read_bytes() != frozen(source, spec['baselineCommit'], item['events']):
++            errors.append(f'{mid}: exterior events changed')
++    for identity, (mid, pts) in coverage.items():
++        width = maps[mid]['width']
++        if any(not grids[mid][y*width+x] & 0xC00 for x,y in pts):
++            errors.append(f'{identity}: landmark illustration is traversable')
++    # The common native collision routine rejects nonzero collision before
++    # elevation checks. Walking and Bike both use CheckForObjectEventCollision.
++    geometry = Validator(source, contract)
++    bank_inputs = set()
++    for m in geometry.maps.values():
++        for key in ('primary_tileset', 'secondary_tileset'):
++            paths = tileset_paths(source, m.layout[key])
++            bank_inputs.add(paths['tiles'])
++            bank_inputs.update((paths['metatiles'].parent / name) for name in ('metatiles.bin','metatile_attributes.bin'))
++            bank_inputs.update((paths['palettes'] / f'{n:02}.pal') for n in range(13))
++    for path in sorted(bank_inputs):
++        rel = str(path.relative_to(source))
++        actual, expected = path.read_bytes(), frozen(source,spec['baselineCommit'],rel)
++        # JASC-PAL is text: Git checkout converts its native CRLF. Compare the
++        # complete lines, including every RGB value, rather than line endings.
++        equal = actual.splitlines() == expected.splitlines() if path.suffix == '.pal' else actual == expected
++        if not equal:
++            errors.append(f'Graphics, attributes or layers changed: {rel}')
++    for mid, grid in grids.items():
++        geometry.maps[mid].cells = grid
++    geometry.run()
++    errors.extend(geometry.errors)
++    old = Validator(source, contract)
++    for mid, item in maps.items():
++        old.maps[mid].cells = item['before']
++    old.run()
++    blocked = {(d['mapId'],d['x'],d['y']) for d in changes}
++    stranded = set(old.distances) - blocked - set(geometry.distances)
++    if stranded:
++        errors.append(f'Previously reachable non-object cells stranded: {sorted(stranded)[:10]}')
++    if set(old.open_edges) != set(geometry.open_edges):
++        errors.append('A directed district crossing changed')
++    fallback = contract['landmarks'][next(i for i,l in enumerate(contract['landmarks']) if l['id']=='maple-garden')]['arrival']
++    return dict(result='fail' if errors else 'pass', errors=errors, baselineCommit=spec['baselineCommit'],
++                scope='Source footprint/collision, actor-aware walking graph and native shared collision path; runtime and save migration require separate acceptance.',
++                footprints=[dict(id=identity,mapId=mid,solidObjectCells=len(pts),nativeExceptions=exceptions[identity]) for identity,(mid,pts) in coverage.items()],
++                changedMapWords=len(changes), newlySolidPositions=changes,
++                repairsByNativeMap={','.join(map(str,k)):v for k,v in Counter(tuple(d['nativeMap']) for d in changes).items()},
++                nativeDoorPairs=len(geometry.landmark_results), directedSeamCells=len(geometry.open_edges),
++                unchangedBankFilesCompared=len(bank_inputs),
++                previouslyReachableNonObjectCellsStranded=len(stranded),
++                preservedPublicCells=sum(len(m['before']) for m in maps.values())-len(changes),
++                mainOwnedMigration=dict(required=bool(changes), coordinatesAreActualSavedPositions=True,
++                                        safeExteriorFallback=dict(mapId='MAP_TAICHUNG_XITUN', nativeMap=[43,2],x=fallback['x'],y=fallback['y']),
++                                        cacheRefreshRequired=True, saveCodeChanged=False),
++                runtimeVerified=False)
++
++
++def self_test(source):
++    _, _, maps, _, _, changes = plan(source)
++    changed = changes[0]; mid=changed['mapId']; item=maps[mid]; results={}
++    for label,x,y,mutate in [('reopened-object',changed['x'],changed['y'],lambda w:w&~0xC00),
++                              ('blocked-approach',12,33,lambda w:w|0x400),
++                              ('removed-door',12,32,lambda w:0x3175),
++                              ('public-street-edit',12,35,lambda w:w|0x400)]:
++        grid=item['after'][:];index=y*item['width']+x;grid[index]=mutate(grid[index])
++        results[label]=check(source,proposed=True,overrides={item['path']:binary(grid)})['result']=='fail'
++    assert all(results.values()), results
++    return results
++
++
++def main():
++    p=argparse.ArgumentParser(description=__doc__)
++    p.add_argument('--source',type=Path,default=ROOT)
++    p.add_argument('--apply',action='store_true')
++    p.add_argument('--self-test',action='store_true')
++    p.add_argument('--output',type=Path)
++    a=p.parse_args();source=a.source.resolve()
++    if a.apply:
++        candidate=check(source,proposed=True)
++        assert candidate['result']=='pass', candidate['errors']
++        _,_,maps,_,_,_=plan(source)
++        for item in maps.values():
++            if item['before']!=item['after']:
++                (source/item['path']).write_bytes(binary(item['after']))
++        (source/DELTA).write_text(json.dumps(candidate,indent=2)+'\n')
++    report=check(source)
++    if a.self_test:
++        report['rejectedCorruptionProbes']=self_test(source)
++    if a.output:
++        a.output.parent.mkdir(parents=True,exist_ok=True)
++        a.output.write_text(json.dumps(report,indent=2)+'\n')
++    print(json.dumps({k:v for k,v in report.items() if k not in ('newlySolidPositions','footprints')},indent=2))
++    return report['result']!='pass'
++
++
++if __name__=='__main__':
++    raise SystemExit(main())
 diff --git a/tools/taichung/export_minimap.py b/tools/taichung/export_minimap.py
 new file mode 100644
 index 0000000..3d054cb
@@ -399711,10 +401334,10 @@ index 0000000..a6ee075
 +                      "crossDedup": result["crossDedupMeasured"], "capacity": result["capacityArithmetic"]}, indent=2))
 diff --git a/tools/taichung/landmarks/check_cmp.py b/tools/taichung/landmarks/check_cmp.py
 new file mode 100644
-index 0000000..487d6bc
+index 0000000..b10ab2d
 --- /dev/null
 +++ b/tools/taichung/landmarks/check_cmp.py
-@@ -0,0 +1,453 @@
+@@ -0,0 +1,505 @@
 +#!/usr/bin/env python3
 +"""Read-only independent checks for the approved CMP private-bank increment.
 +
@@ -399802,6 +401425,38 @@ index 0000000..487d6bc
 +                    'tools/taichung/nantun/edge_art.py': 'f776afdb9a69c907f1ca06648c4fd354c10632150acdfa3fb2b53332bd77eefc',
 +                    'tools/taichung/streetscape/xitun_streets_layout.py': '04f48d8d15b9bba120d22bd5995cb155c1c39dff452d3ec027b292cc64b57963'}}
 +
++
++# Main alone fills this exact immutable source/geometry profile after the guard
++# code is committed. Empty hashes and the placeholder intentionally fail closed.
++REVIEWED_LANDMARK_COLLISION_V9_SAVE = {'name': 'landmark-collision-v9',
++ 'sourceCommit': '8c4ed88b9f9a15f75abc8f0057fd71d243efd624',
++ 'sha256': {'src/taichung_save.c': 'bde3f3b575837a1aebd2b4cdcd3b552b125dd7d4749f083f81783e09439f4582',
++            'include/taichung_save.h': '93237ad5056fd96b90406a7e998584884a32635397200a5a810fe68ff86c3bac',
++            'src/overworld.c': '5e437a504b2cb4f7b9301096bd846588707d5280ac1ab424e71db471bbf81bca'},
++ 'geometrySha256': {'data/layouts/TaichungOldCity/map.bin': '9fcce4bcd0b3c11cd743a01ce382c40c8e792262d0ef5c69750f655414af0ced',
++                    'data/layouts/TaichungGreenway/map.bin': '8733519e16ca981421e91d325e68e9fa904041ba7e3e24965d66977e700f216c',
++                    'data/layouts/TaichungXitun/map.bin': '1925352ab3b91494278cbe920eec61eba33c8b7798bc95e39d05d71452afb898',
++                    'data/layouts/layouts.json': '6cf1e6de5ad6f8bb2add81fa5b524902b905bcbed5934ae5909c8e5ef13219a9',
++                    'data/taichung/landmarks/cmp-native/manifest.json': '8cab81e257864ccd4d96f7cd1f64339b08161842bc26f9ed71a1a3d7633d053b',
++                    'data/taichung/landmarks/cmp-native/baseline-map.bin': 'f128cdb0518070ccbc41ff840975b3b1858a4599476dd6f2738dfe5c0484e9ba',
++                    'data/taichung/landmarks/cmp-native/map.bin': '6b1130bc4d5df317d919e4c93e108d1e4501634436986c6a5fb39161e971c5c0',
++                    'data/taichung/landmarks/xitun-final-native/final-scene/manifest.json': 'e95883af0d0b2c3e3d8161bf49c55613b9297b60aa4cd031b08a27f67fd6227a',
++                    'data/taichung/landmarks/xitun-final-native/final-scene/baseline-map.bin': 'e3ca837e16cf382d63943f5ebede6b23c3c8cec5cbd4db8c22af26f4f9ad2622',
++                    'data/taichung/landmarks/xitun-final-native/final-scene/map.bin': '10128a6dac3b9f1584ee6d985c839943a4bb51d0af7be0d6e9b93474f5144001',
++                    'data/taichung/xitun-streets/kit.json': '71e7e09de8d0a4188770f0805ed268d2e36e52a830cc91002eb1ed667b5efa8a',
++                    'data/taichung/xitun-streets/bank.json': '91143a9a9a76e1518f2b5d46f539945ffe4281f15ea52db8cab2d17e36c9346c',
++                    'data/taichung/xitun-streets/ground.txt': '0610b864e3f393556c4b7d88c4d7f9e77085601e1f18b7bd990583bbb8715916',
++                    'data/taichung/xitun-streets/objects.json': '9711d9331239e255860fc391606910954ac8e2870fbbadb43dd6e60639b73318',
++                    'tools/taichung/landmarks/check_xitun_final.py': '7c96ea9988a554c33d9c4de595a6caaab9c6e6e41d0b65ee3bb9c7e993404b9d',
++                    'tools/taichung/streetscape/check_xitun_streets.py': 'a66b53d89dd2f806efe08212052d198c97646f05184e8078e9a7bf2e4b2fb52b',
++                    'tools/taichung/streetscape/xitun_streets.py': '940f0bf22d0dac136b81c9233eff86c5a8e741fc2d1c86f2065b5354c3f701f6',
++                    'tools/taichung/nantun/edge_art.py': 'f776afdb9a69c907f1ca06648c4fd354c10632150acdfa3fb2b53332bd77eefc',
++                    'tools/taichung/streetscape/xitun_streets_layout.py': '04f48d8d15b9bba120d22bd5995cb155c1c39dff452d3ec027b292cc64b57963',
++                    'data/taichung/landmark-collision/spec.json': '8293bffc490638ff4f0cc2b55b4d50b24fdf1144249ef04ad03ddef3a6a2b7d7',
++                    'data/taichung/landmark-collision/delta.json': 'c3b574a0af0cb192d83fcfb0aa5ad80f6d3b383eb71ed606d86e70cc1747c452',
++                    'tools/taichung/check_landmark_collision.py': '6dd78d01c98d1d266db9f27dba83aab068d363b0f51ce3039072def33104bd90'}}
++
++
 +def load(name, path):
 +    spec = importlib.util.spec_from_file_location(name, path)
 +    mod = importlib.util.module_from_spec(spec); spec.loader.exec_module(mod)
@@ -399836,7 +401491,10 @@ index 0000000..487d6bc
 +    final_xitun = (xitun_scene['layout']['primary_tileset'], xitun_scene['layout']['secondary_tileset']) == FINAL_XITUN_PAIR
 +    xitun_report = None
 +    street_layout = final_xitun and support.digest(now.read(xitun_scene['layout']['blockdata_filepath'])) != REVIEWED_FINAL_XITUN_SAVE['geometrySha256']['data/layouts/TaichungXitun/map.bin']
-+    save_profile = REVIEWED_RELEASE_CITY_BATCH_V8_SAVE if street_layout else REVIEWED_FINAL_XITUN_SAVE if final_xitun else REVIEWED_MAIN_SAVE
++    collision_registered = ((source/'data/taichung/landmark-collision/spec.json').is_file()
++                            or 'data/taichung/landmark-collision/spec.json' in (overrides or {}))
++    save_profile = (REVIEWED_LANDMARK_COLLISION_V9_SAVE if collision_registered else
++                    REVIEWED_RELEASE_CITY_BATCH_V8_SAVE if street_layout else REVIEWED_FINAL_XITUN_SAVE if final_xitun else REVIEWED_MAIN_SAVE)
 +    streets_report = None
 +
 +    def streets_proof():
@@ -400096,14 +401754,24 @@ index 0000000..487d6bc
 +        tests.errors.extend('OldCity buildings increment: '+error for error in proof.errors)
 +        return {**report,'sharedFilesCheckedUnderneath':sorted(buildings_delta)}
 +
-+    for name,function in (('identity',identity),('nativeBankFormatAndCBindings',formats_and_binding),('conditionalPrimaryReloadAndReleasedBindings',camera_reload),('releasedRenderingAndProtectedSlots',preservation),('approvedArtAndExactMap',art_and_map),('exactConnectedStripsAndGeometry',seams_and_geometry),('stableOpeningRoomsAndMapIds',stable_opening_rooms_and_ids),('reviewedMainSaveSource',reviewed_main_save_source),('registeredNantunIncrement',registered_nantun_increment),('registeredOldCityBuildingsIncrement',registered_oldcity_buildings_increment)):
++    def registered_landmark_collision_increment():
++        if not collision_registered: return {'registered':False}
++        report = streets_proof()
++        proof = report['checks'].get('registeredLandmarkCollisionIncrement',{})
++        tests.require(street_layout and report['passed'] and proof.get('passed',False) and proof.get('registered',False),
++                      'Registered collision increment failed its independent actual-v9 proof')
++        tests.errors.extend('collision increment: '+error for error in report['errors'])
++        return {**{key:value for key,value in proof.items() if key != 'passed'},
++                'registered':True,'guard':'tools/taichung/streetscape/check_xitun_streets.py'}
++
++    for name,function in (('identity',identity),('nativeBankFormatAndCBindings',formats_and_binding),('conditionalPrimaryReloadAndReleasedBindings',camera_reload),('releasedRenderingAndProtectedSlots',preservation),('approvedArtAndExactMap',art_and_map),('exactConnectedStripsAndGeometry',seams_and_geometry),('stableOpeningRoomsAndMapIds',stable_opening_rooms_and_ids),('reviewedMainSaveSource',reviewed_main_save_source),('registeredNantunIncrement',registered_nantun_increment),('registeredOldCityBuildingsIncrement',registered_oldcity_buildings_increment),('registeredLandmarkCollisionIncrement',registered_landmark_collision_increment)):
 +        tests.section(name,function)
 +    result={'baselineCommit':BASE,'passed':not tests.errors,'checks':tests.results,'errors':tests.errors,'warnings':['Native primary transition/upload, door/layers, weather/tint and Main-owned old-cache migration require separate actual ROM acceptance.']}
 +    if self_test and not tests.errors:
 +        probes={}
 +        def rejects(name,path,data,gate=None):
 +            report=check(source,{path:data})
-+            probes[name]=not report['passed'] and (gate is None or not report['checks'][gate]['passed'])
++            probes[name]=tree.read(path) != data and not report['passed'] and (gate is None or not report['checks'][gate]['passed'])
 +        image=now.image(f'{PRIMARY}/tiles.png');image.putpixel((0,0),(image.getpixel((0,0))+1)%16);buf=BytesIO();image.save(buf,format='PNG');rejects('protected-raw-pixel',f'{PRIMARY}/tiles.png',buf.getvalue())
 +        pal=now.text(f'{SECONDARY}/palettes/08.pal').splitlines();pal[4]='248 0 248';rejects('used-palette-entry',f'{SECONDARY}/palettes/08.pal',('\n'.join(pal)+'\n').encode())
 +        raw=bytearray(now.read(scene['layout']['blockdata_filepath']));struct.pack_into('<H',raw,(36*40+22)*2,0x3175);rejects('native-door-removed',scene['layout']['blockdata_filepath'],bytes(raw))
@@ -400147,6 +401815,13 @@ index 0000000..487d6bc
 +            path='data/layouts/TaichungXitun/map.bin'
 +            report=check(source,{path:prior.read(path)})
 +            probes['v8-source-pair-with-pre-street-map-rejected']=not report['passed'] and not report['checks']['reviewedMainSaveSource']['passed']
++        if collision_registered:
++            prior=support.Files(source,'6366b9e5c037647ce4d2a007efa3d3dfbedcdb48')
++            report=check(source,{path:prior.read(path) for path in ('src/taichung_save.c','include/taichung_save.h')})
++            probes['v8-source-pair-under-collision-map-rejected']=not report['passed'] and not report['checks']['reviewedMainSaveSource']['passed']
++            path='data/layouts/TaichungXitun/map.bin'
++            report=check(source,{path:prior.read(path)})
++            probes['v9-pair-under-pre-collision-map-rejected']=not report['passed'] and not report['checks']['reviewedMainSaveSource']['passed']
 +        for path in save_profile['geometrySha256']:
 +            if path.endswith('.json') and 'layouts.json' not in path:
 +                rejects('changed-bound-geometry:'+path,path,now.read(path)+b'\n','reviewedMainSaveSource')
@@ -400661,10 +402336,10 @@ index 0000000..e723b48
 +    sys.exit(0 if result["passed"] else 1)
 diff --git a/tools/taichung/landmarks/check_old_core.py b/tools/taichung/landmarks/check_old_core.py
 new file mode 100644
-index 0000000..51efdc2
+index 0000000..6d5d80e
 --- /dev/null
 +++ b/tools/taichung/landmarks/check_old_core.py
-@@ -0,0 +1,1019 @@
+@@ -0,0 +1,1094 @@
 +#!/usr/bin/env python3
 +"""Independent checks of the actual OldCity clone/bank/map, with no source writes.
 +
@@ -401036,6 +402711,65 @@ index 0000000..51efdc2
 + 'glyphHeaderSha256': '1735da5da3d3d136e7dd9e06b1e43ade0e73a26093b3c47e72ebc0bbc31e9fb5',
 + 'fontProfile': 'Fusion Pixel12px zh_tw; fixed476codebook'}
 +
++
++# Main-reviewed released encounter setup and approved native tutorial/portrait fixes.
++# Original profile remains immutable; current variants preserve all611 released glyphs.
++REVIEWED_RELEASED_ONBOARDING = {**REVIEWED_ONBOARDING,
++    'sourceCommit': '6366b9e5c037647ce4d2a007efa3d3dfbedcdb48',
++    'glyphPrefixRows': 611,
++    'frozenScriptFilesSha256': {'data/maps/PalletTown/scripts.inc': '49ea3f01a156fff8c2412402e765d3c59e95c32088451c37558ce42f16007065',
++     'data/maps/TaichungOldCity/scripts.inc': 'c33fc5d5c01a1d1d3b0faa29af6469e1da84f97834ac6e2d3f90945c7a028008',
++     'data/maps/PalletTown/text.inc': '272c28ca08d2a2bfa26e46240603ab0bad33ed32c805a6188cd3df9a359f3ceb',
++     'data/event_scripts.s': 'c6358698c4cda7006b55fb48e46a9dc885bc14154ae8518e7809719d9df650cc'},
++    'codebookBaseCommit': '6366b9e5c037647ce4d2a007efa3d3dfbedcdb48',
++    'charmapPrefixSha256': 'a819d04804472f387d2c723fd8c89c211c23a845b14b8c8035cf59377a096343',
++    'glyphHeaderSha256': '7bf02be2de70114fa47d0dc3d2a6dae504e50a43d56905730399a8d12479385b',
++    'fontProfile': 'Fusion Pixel12px zh_tw; fixed611released codebook',
++}
++REVIEWED_POST_RELEASE_ONBOARDING = {**REVIEWED_RELEASED_ONBOARDING,
++    'sourceCommit': '8c4ed88b9f9a15f75abc8f0057fd71d243efd624',
++    'sourceSha256': {'include/taichung_onboarding.h': 'a014d0e5c706d73ecf930eab345fa17231fb581d295685c7ee5d2bb0a0444468',
++     'src/taichung_onboarding.c': '6f22db10b8a92e154e7b165eaa757b396d0b9a35ab989daaad162b2e0c26f424',
++     'src/taichung_onboarding_protocol.c': '4b3449fa48dee2f51695f6368e2f695d23652cf6ab9c5c76bf2f473b1f1b08fc',
++     'src/taichung_onboarding_text.c': 'e6705cccc5bd4c63d9a8e1ef399ef96e114437036d34c6b446b4e4010d03de3d',
++     'src/main.c': '7294213a51815a22e1ded2a730920c1f33e99f5b4dd12c0ee34f42743e396838',
++     'src/new_game.c': '1515eafac358af23eb8b882527afe65f4923fa5e9e4e82fd24fcc40a0b78d2db',
++     'src/field_control_avatar.c': '9a770fe8ae9c4f747b31e545e21a812110579979edf4e311be579a6df837e8bc',
++     'src/taichung_starter.c': 'a05db6a86d41f7506ba9d0b2afc42c324a2805ca2ff89f5556cd6c51e18805eb',
++     'include/taichung_starter.h': 'c5af90f3cd19c1c1a5f259627a67c282a3933e4e68cbea52360fd1ca9af65f7d',
++     'src/taichung_starter_menu.c': 'dc05a86324953912faa0a2921841a116f0f4632146dd258e1c23118a0681c37e',
++     'src/taichung_team.c': 'f590125604141b41f3763168ed2df35b16f034ec4bc5a11c3ff40e0f0bbbf862',
++     'src/taichung_language.c': '992db14cda48b4098cae36fc7a4557c962dbb590a8c6020f53d79aef9f8e382e',
++     'src/taichung_language_bridge.c': 'b3f45ef85ff7d1caa3e9535d41e9ba9e15cd75cd80af34ae8b196d503f0bf525',
++     'src/taichung_language_bridge_protocol.c': '2648a19ca54ce93fa2644bf01b96d3fb059828476a03be4d2bd8244b059687b4',
++     'include/taichung_language_bridge.h': 'fca8f43fb07f6ffd400d55aa517f5ac4ee96f5cdf7685f743a400b0eca02ebc1',
++     'tools/taichung_gameplay/extend-chinese-glyphs.py': '3b9e4f1984699243c8c93708ad899cc21cbcfa6e70afa7c5f4107944b6110500',
++     'tools/taichung_gameplay/chinese_glyph_font.py': 'd81c0d9a4140c53661910c04273b1f7400412b37f8ffd14a63ab63aeeec74364',
++     'tools/taichung_gameplay/refresh-chinese-glyphs.py': '57fcfdbabd4daf55277435489c212d1906f7284f7d8e02bfeaaa57f15996668e',
++     'assets/fonts/taichung-native-font.json': 'de7ec1ce859f3cf3e34bbadb7626c78c61cda3168b759758500cca32a081892e',
++     'assets/fonts/fusion-pixel-12/fusion-pixel-12px-monospaced-zh_tw.bdf.gz': 'f30c78b63e263284257c5263d0664af514bf434445ead0552720dc519a7b5f61',
++     'assets/fonts/fusion-pixel-12/OFL.txt': 'bc518cf64b8032c07690f33cc270c35c179255a6ac8efa7c165ebae7e8f76a63',
++     'assets/fonts/fusion-pixel-12/LICENSES/ark-pixel/OFL.txt': '3ab41567e68e3988ba1ef16dd2644eca95ca5648ea12e7d46e6287fc0bbe5aee',
++     'assets/fonts/fusion-pixel-12/LICENSES/cubic-11/OFL.txt': '2b6e5938e5cffa0b9e183bd05f8c363e174e7ebed1a0556e2855fd1707fa2188',
++     'assets/fonts/fusion-pixel-12/LICENSES/galmuri/LICENSE.txt': '86a3ee9495f942f0243f18c103da9faca27adb88142613edb8bb852e56c892c1',
++     'assets/fonts/fusion-pixel-12/NOTICE.md': 'f0384b2c8a787b3cbe029a57e8944fd9a1f1c13ad3d2a8844cce7f47d5dc937e'},
++    'frozenScriptFilesSha256': {'data/maps/PalletTown/scripts.inc': '49ea3f01a156fff8c2412402e765d3c59e95c32088451c37558ce42f16007065',
++     'data/maps/TaichungOldCity/scripts.inc': 'c33fc5d5c01a1d1d3b0faa29af6469e1da84f97834ac6e2d3f90945c7a028008',
++     'data/maps/PalletTown/text.inc': '272c28ca08d2a2bfa26e46240603ab0bad33ed32c805a6188cd3df9a359f3ceb',
++     'data/event_scripts.s': 'c6358698c4cda7006b55fb48e46a9dc885bc14154ae8518e7809719d9df650cc'},
++}
++
++def current_onboarding_profile(current):
++    if all(digest(current.read(path)) == expected
++           for path,expected in REVIEWED_POST_RELEASE_ONBOARDING["sourceSha256"].items()):
++        return REVIEWED_POST_RELEASE_ONBOARDING
++    # Version8 introduced the released startup preference restoration. A missing
++    # call cannot silently fall back to the older, otherwise valid script profile.
++    version = re.search(r"#define TAICHUNG_SAVE_VERSION (\d+)",current.text("include/taichung_save.h"))
++    if version is not None and int(version[1]) >= 8:
++        return REVIEWED_RELEASED_ONBOARDING
++    return REVIEWED_ONBOARDING
++
 +def reviewed_onboarding_profile(current):
 +    """Only the exact reviewed opt-in flow may replace four legacy blocks."""
 +    result = {"active":False,"passed":False,"errors":[],"allowedBlocks":{}}
@@ -401046,7 +402780,7 @@ index 0000000..51efdc2
 +                                or re.search(r"\bTaichungOnboarding_\w+\s*\(",hooks))
 +        if not result["active"]:
 +            return result
-+        profile = REVIEWED_ONBOARDING
++        profile = current_onboarding_profile(current)
 +        approved = Files(current.source,profile["sourceCommit"])
 +        for path, expected in profile["sourceSha256"].items():
 +            if digest(approved.read(path)) != expected or digest(current.read(path)) != expected:
@@ -401101,16 +402835,17 @@ index 0000000..51efdc2
 +                match = re.fullmatch(r"'(.)'[ \t]*=[ \t]*([0-9A-Fa-f]{2}(?:[ \t]+[0-9A-Fa-f]{2}){3})[ \t]*",line)
 +                if match is None or match[1] != row["character"] or [int(token,16) for token in match[2].split()] != expected:
 +                    same = False
-+            # Approved476prefix stays exact; any later appended rows must use
++            # The selected reviewed prefix stays exact; later appended rows must use
 +            # the same pinned bitmap source rather than silently mix fonts.
 +            font = parser.load_font(current.source)
 +            if any(font.render(row["character"]) != row["masks"] for row in actual["rows"]):
 +                same = False
 +            if not same:
-+                result["errors"].append("Reviewed 476-row font/codebook prefix or same-source glyph tail changed")
++                result["errors"].append(f"Reviewed {count}-row font/codebook prefix or same-source glyph tail changed")
 +        if not result["errors"]:
 +            result["allowedBlocks"] = {label:script_block(approved.text("data/maps/PalletTown/scripts.inc"),label)
 +                                       for label in profile["allowedLegacyBlockAlternatives"]}
++            result["profile"] = profile
 +            result["passed"] = True
 +    except (ValueError,KeyError,IndexError,FileNotFoundError,AssertionError,subprocess.CalledProcessError) as error:
 +        result["errors"].append(str(error))
@@ -401121,6 +402856,7 @@ index 0000000..51efdc2
 +    probes = {}
 +    def rejects(name,path,data):
 +        changed = Files(current.source);changed.cache.update(current.cache);changed.cache[str(path)] = data
++        assert data != current.read(path), "Onboarding mutation was a no-op: "+name
 +        result = reviewed_onboarding_profile(changed)
 +        probes["Onboarding"+name+"Rejected"] = result["active"] and not result["passed"]
 +    script_path = "data/maps/PalletTown/scripts.inc"
@@ -401182,6 +402918,19 @@ index 0000000..51efdc2
 +    mixed = Files(current.source);mixed.cache.update(current.cache)
 +    mixed.cache.update({"charmap.txt":bad_mapping,"src/data/taichung_glyphs.h":bad_header})
 +    probes["OnboardingMixedFontTailRejected"] = not reviewed_onboarding_profile(mixed)["passed"]
++    released = Files(current.source,REVIEWED_RELEASED_ONBOARDING["sourceCommit"])
++    probes["OnboardingReleasedStartupProfileAccepted"] = reviewed_onboarding_profile(released)["passed"]
++    original = Files(current.source,REVIEWED_ONBOARDING["sourceCommit"])
++    probes["OnboardingHistoricalProfileAccepted"] = reviewed_onboarding_profile(original)["passed"]
++    startup_call = b"\tcallnative TaichungExploration_ScriptOpenStartup\n\twaitstate\n"
++    damaged = Files(current.source,REVIEWED_RELEASED_ONBOARDING["sourceCommit"])
++    changed = released.read(script_path).replace(startup_call,b"",1)
++    assert changed != released.read(script_path)
++    damaged.cache[script_path] = changed
++    probes["OnboardingReleasedStartupPreferencesMissingRejected"] = not reviewed_onboarding_profile(damaged)["passed"]
++    rejects("CurrentStartupPreferencesMissing",script_path,current.read(script_path).replace(startup_call,b"",1))
++    rejects("NearbyStaleSpeechRollback","src/taichung_onboarding_text.c",released.read("src/taichung_onboarding_text.c"))
++    rejects("PortraitFenceRollback","src/taichung_starter_menu.c",released.read("src/taichung_starter_menu.c"))
 +    return probes
 +
 +
@@ -401578,11 +403327,12 @@ index 0000000..51efdc2
 +        path = "data/maps/TaichungStationWelcome/scripts.inc"
 +        checks.require(script_lines(current.text(path))==script_lines(opening.text(path)), "Welcome frame/transition/resume scripts changed from 21c08cb")
 +        onboarding = reviewed_onboarding_profile(current)
++        approved_profile = onboarding.get("profile",REVIEWED_ONBOARDING)
 +        checks.require(not onboarding["active"] or onboarding["passed"], "Unreviewed onboarding source profile: "+"; ".join(onboarding["errors"]))
 +        for label in ("Taichung_Welcome","Taichung_ChooseStarter","Taichung_GiveStarter","Taichung_OpeningGoOutside","Taichung_OpeningAlreadyDone","Taichung_OpeningRelease"):
 +            actual = script_block(current.text("data/maps/PalletTown/scripts.inc"),label)
 +            legacy = script_block(opening.text("data/maps/PalletTown/scripts.inc"),label)
-+            reviewed = onboarding["passed"] and label in REVIEWED_ONBOARDING["allowedLegacyBlockAlternatives"] and actual == onboarding["allowedBlocks"][label]
++            reviewed = onboarding["passed"] and label in approved_profile["allowedLegacyBlockAlternatives"] and actual == onboarding["allowedBlocks"][label]
 +            checks.require(actual == legacy or reviewed, f"Main opening hook changed: {label}")
 +        checks.require(script_lines(current.text("src/taichung_opening.c"))==script_lines(opening.text("src/taichung_opening.c")), "Main opening C guards changed")
 +        warp = "SetWarpDestination(MAP_GROUP(MAP_TAICHUNG_STATION_WELCOME), MAP_NUM(MAP_TAICHUNG_STATION_WELCOME), -1, 6, 6);"
@@ -401599,9 +403349,9 @@ index 0000000..51efdc2
 +        floor = {(x,y) for y in range(room.height) for x in range(room.width) if room.walkable(x,y)}
 +        checks.require((6,3) in room.actors and len(floor)==65, "Expected integrated guide reservation/floor count changed")
 +        return {"reference":opening_ref,"guideLocalId":"LOCALID_TAICHUNG_WELCOME_GUIDE","walkableCellsAfterGuide":len(floor),"frameTransitionResumeAndStarterGuardsRetained":True,
-+                "reviewedOnboardingProfile":({"sourceCommit":REVIEWED_ONBOARDING["sourceCommit"],"sourceOnly":True,
-+                    "glyphPrefixRows":REVIEWED_ONBOARDING["glyphPrefixRows"],"allowedLegacyBlockAlternatives":REVIEWED_ONBOARDING["allowedLegacyBlockAlternatives"],
-+                    "onboardingBaseCommit":REVIEWED_ONBOARDING["onboardingBaseCommit"],"codebookBaseCommit":REVIEWED_ONBOARDING["codebookBaseCommit"],"fontProfile":REVIEWED_ONBOARDING["fontProfile"]}
++                "reviewedOnboardingProfile":({"sourceCommit":approved_profile["sourceCommit"],"sourceOnly":True,
++                    "glyphPrefixRows":approved_profile["glyphPrefixRows"],"allowedLegacyBlockAlternatives":approved_profile["allowedLegacyBlockAlternatives"],
++                    "onboardingBaseCommit":approved_profile["onboardingBaseCommit"],"codebookBaseCommit":approved_profile["codebookBaseCommit"],"fontProfile":approved_profile["fontProfile"]}
 +                    if onboarding["active"] and onboarding["passed"] else None),
 +                "approvedNamedGuideGraphicsChange":({"localId":"LOCALID_TAICHUNG_WELCOME_GUIDE",
 +                    "from":"OBJ_EVENT_GFX_WOMAN_1", "to":"OBJ_EVENT_GFX_TAICHUNG_XIAOYU"}
@@ -408757,10 +410507,10 @@ index 0000000..eb41981
 +if __name__=='__main__':unittest.main(verbosity=2)
 diff --git a/tools/taichung/streetscape/check_xitun_streets.py b/tools/taichung/streetscape/check_xitun_streets.py
 new file mode 100644
-index 0000000..c74f65f
+index 0000000..8ec1c63
 --- /dev/null
 +++ b/tools/taichung/streetscape/check_xitun_streets.py
-@@ -0,0 +1,454 @@
+@@ -0,0 +1,668 @@
 +#!/usr/bin/env python3
 +"""Read-only proof for the Xitun street layout and its proposed save v8 repairs.
 +
@@ -408829,6 +410579,112 @@ index 0000000..c74f65f
 +    "|| version == 6 || version == 7)",
 +)
 +
++# Independently registered collision-only layer. Historical street/v8 constants
++# above remain unchanged; Main separately binds the final whole-source profile.
++COLLISION_BASE = "6366b9e5c037647ce4d2a007efa3d3dfbedcdb48"
++COLLISION_COMMIT = "88979b5f8ca5daafbce3a1fe128b27c2b15122ff"
++COLLISION_MAP = "data/layouts/TaichungXitun/map.bin"
++COLLISION_PINS = {
++    "data/taichung/landmark-collision/spec.json": "8293bffc490638ff4f0cc2b55b4d50b24fdf1144249ef04ad03ddef3a6a2b7d7",
++    "data/taichung/landmark-collision/delta.json": "c3b574a0af0cb192d83fcfb0aa5ad80f6d3b383eb71ed606d86e70cc1747c452",
++    "tools/taichung/check_landmark_collision.py": "6dd78d01c98d1d266db9f27dba83aab068d363b0f51ce3039072def33104bd90",
++}
++COLLISION_SPEC = "data/taichung/landmark-collision/spec.json"
++COLLISION_OLD_MAP_SHA = "65432cf516b2b3981b5b99d740806c4f433baed23a4ae3c49f8c8275e4831f5d"
++COLLISION_NEW_MAP_SHA = "1925352ab3b91494278cbe920eec61eba33c8b7798bc95e39d05d71452afb898"
++
++
++def registered_collision(source, overrides=None):
++    """Prove the actual layer before returning only its exact map underlay.
++
++    Expected masks use immutable registration and current override-aware PNG
++    bytes, never delta rows or C repair data. No save or bank bytes are hidden.
++    """
++    source = Path(source).resolve()
++    edits = overrides or {}
++    if not (source / COLLISION_SPEC).is_file() and COLLISION_SPEC not in edits:
++        return {"active": False, "passed": True, "errors": [], "underlay": {}, "positions": set()}
++    support = load("xitun_collision_support", source / "tools/taichung/landmarks/check_old_core.py")
++    now, base, registration = support.Files(source), support.Files(source, COLLISION_BASE), support.Files(source, COLLISION_COMMIT)
++    now.cache.update(edits)
++    tests = support.Checks(); expected = {}; positions = set()
++
++    def proof():
++        for path, expected_sha in COLLISION_PINS.items():
++            tests.require(support.digest(registration.read(path)) == expected_sha, "Immutable collision registration differs: " + path)
++            tests.require(support.digest(now.read(path)) == expected_sha, "Collision registration changed: " + path)
++        spec = registration.json(COLLISION_SPEC)
++        tests.require(spec["baselineCommit"] == COLLISION_BASE, "Collision baseline is not released6366")
++        for path in ("docs/taichung-city-contract.json", "data/layouts/layouts.json", "data/maps/map_groups.json",
++                     "src/data/tilesets/graphics.h", "src/data/tilesets/headers.h", "src/data/tilesets/metatiles.h", "src/graphics.c"):
++            tests.require(now.read(path) == base.read(path), "Collision changed an unrelated interface/bank binding: " + path)
++        contract = base.json("docs/taichung-city-contract.json")
++        landmarks = {item["id"]: item for item in contract["landmarks"]}
++        tests.require({item["id"] for item in spec["footprints"]} == set(landmarks) | {"fine-arts-sculpture"}, "Collision roster is incomplete")
++        layouts = {item["id"]: item for item in base.json("data/layouts/layouts.json")["layouts"] if "id" in item}
++        maps = {}
++        for name in base.json("data/maps/map_groups.json")["gMapGroup_Taichung"]:
++            path = f"data/maps/{name}/map.json"; data = base.json(path)
++            tests.require(now.read(path) == base.read(path), "Collision changed actors/warps/map metadata: " + path)
++            if data["id"] not in {district["map"] for district in contract["districts"]}:
++                continue
++            layout = layouts[data["layout"]]; grid = base.words(layout["blockdata_filepath"])
++            maps[data["id"]] = (layout, grid, grid[:])
++            tests.require(now.read(layout["border_filepath"]) == base.read(layout["border_filepath"]), "Collision changed border bytes")
++        for item in spec["footprints"]:
++            mid = item["mapId"]; ox, oy = item["origin"]; width, height = item["size"]
++            if "art" in item:
++                tests.require(support.digest(now.read(item["art"])) == item["artSha256"], "Pinned collision alpha artwork changed: " + item["id"])
++                art = now.image(item["art"]).convert("RGBA")
++                tests.require(art.size == (width * 16, height * 16), "Collision art size changed")
++                cells = {(ox+x, oy+y) for y in range(height) for x in range(width)
++                         if art.crop((x*16, y*16, (x+1)*16, (y+1)*16)).getchannel("A").getbbox()}
++            else:
++                cells = {(ox+x, oy+y) for y in range(height) for x in range(width)}
++            parent = landmarks[item["id"] if item["id"] != "fine-arts-sculpture" else "fine-arts-museum"]
++            tests.require(parent["exteriorMap"] == mid, "Collision object moved to another map")
++            cells -= {(parent[key]["x"], parent[key]["y"]) for key in ("entrance", "approach", "arrival")}
++            layout, before, after = maps[mid]
++            for x, y in cells:
++                index = y * layout["width"] + x
++                if not after[index] & 0xC00:
++                    after[index] |= 0x400
++        derived = []
++        for mid, (layout, before, after) in maps.items():
++            path = layout["blockdata_filepath"]; raw = struct.pack(f"<{len(after)}H", *after)
++            expected[path] = raw
++            tests.require(now.read(path) == raw, "Actual collision grid differs from exact alpha-derived layer: " + mid)
++            for index, (a, b) in enumerate(zip(before, after)):
++                if a == b: continue
++                x, y = index % layout["width"], index // layout["width"]
++                tests.require(mid == "MAP_TAICHUNG_XITUN" and b == a | 0x400 and not a & 0xC00, "Collision changed more than Xitun collision bits")
++                positions.add((x, y)); derived.append((x, y, f"0x{a:04X}", f"0x{b:04X}"))
++        tests.require(len(positions) == len(derived) == 44, "Collision increment is not exactly44 cells")
++        delta = registration.json("data/taichung/landmark-collision/delta.json")
++        tests.require(sorted(derived) == sorted((r["x"],r["y"],r["before"],r["after"]) for r in delta["newlySolidPositions"]), "Alpha-derived words differ from registered delta")
++        tests.require(support.digest(base.read(COLLISION_MAP)) == COLLISION_OLD_MAP_SHA, "Historical v8 map changed")
++        tests.require(support.digest(now.read(COLLISION_MAP)) == COLLISION_NEW_MAP_SHA, "Current collision map SHA differs")
++        return {"baselineCommit": COLLISION_BASE, "registrationCommit": COLLISION_COMMIT, "alphaObjects": len(spec["footprints"]),
++                "exactNewBlocks": len(positions), "oldMapSha256": COLLISION_OLD_MAP_SHA, "newMapSha256": COLLISION_NEW_MAP_SHA}
++    tests.section("registeredAlphaLayer", proof)
++    return {"active": True, "passed": not tests.errors, "errors": tests.errors, "checks": tests.results,
++            "underlay": {COLLISION_MAP: base.read(COLLISION_MAP)} if not tests.errors else {}, "positions": positions}
++
++
++def function_body(text, name):
++    match = re.search(r"\b" + re.escape(name) + r"\s*\([^;]*?\)\s*\{", text, re.S)
++    if match is None: raise ValueError("Missing native function: " + name)
++    start, level = match.end() - 1, 1
++    end = start + 1
++    while level and end < len(text):
++        level += (text[end] == "{") - (text[end] == "}"); end += 1
++    if level: raise ValueError("Unclosed native function: " + name)
++    return text[start:end]
++
++
++def compact(text):
++    return " ".join(re.sub(r"//[^\n]*", "", text).split())
++
 +
 +def load(name, path):
 +    spec = importlib.util.spec_from_file_location(name, path)
@@ -408871,8 +410727,11 @@ index 0000000..c74f65f
 +    rules = load("xitun_streets_rules", source / "tools/taichung/validate_city.py")
 +    strips = load("xitun_streets_strips", source / "tools/taichung/landmarks/analyze_theater_cohort.py")
 +    tool = load("xitun_streets_tool", source / "tools/taichung/streetscape/xitun_streets.py")
-+    now, old = support.Files(source), support.Files(source, tool.BASE)
-+    now.cache.update(overrides or {})
++    now, old, actual = support.Files(source), support.Files(source, tool.BASE), support.Files(source)
++    now.cache.update(overrides or {}); actual.cache.update(overrides or {})
++    collision = registered_collision(source, overrides)
++    # Only this proven map layer is removed. Native source and test bytes stay current.
++    now.cache.update(collision["underlay"])
 +    tests = support.Checks()
 +    data = tool.DATA
 +    kit = now.json(f"{data}/kit.json")
@@ -408896,6 +410755,7 @@ index 0000000..c74f65f
 +    after, after_bank = scene(now, "TaichungXitun")
 +    before, before_bank = scene(old, "TaichungXitun")
 +    greenway, greenway_bank = scene(now, "TaichungGreenway")
++    current, current_bank = scene(actual, "TaichungXitun")
 +    valid_before = {(x, y) for y in range(HEIGHT) for x in range(WIDTH) if before.walkable(x, y)}
 +    valid_after = {(x, y) for y in range(HEIGHT) for x in range(WIDTH) if after.walkable(x, y)}
 +    invalid = valid_before - valid_after
@@ -409065,14 +410925,23 @@ index 0000000..c74f65f
 +
 +    def version_gates():
 +        header = re.search(r"#define TAICHUNG_SAVE_VERSION (\d+)", now.text(HEADER))
-+        tests.require(header is not None and header.group(1) == "8", "Save version is not exactly 8")
-+        code = " ".join(re.sub(r"//[^\n]*", "", now.text(SAVE)).split())
++        expected_version = "9" if collision["active"] else "8"
++        tests.require(header is not None and header.group(1) == expected_version, "Save version is not exactly " + expected_version)
++        code = compact(now.text(SAVE))
++        # Preserve the exact old v8 logic contract against its immutable source;
++        # current v9 cache/established-save logic is proved separately below.
++        historical = compact(support.Files(source, COLLISION_BASE).text(SAVE)) if collision["active"] else code
 +        positions = []
 +        for fragment in REQUIRED_SAVE_LOGIC:
-+            tests.require(fragment in code, "Required v8 logic missing: " + fragment)
-+            positions.append(code.find(fragment))
++            value = historical if collision["active"] and fragment in REQUIRED_SAVE_LOGIC[3:] else code
++            tests.require(fragment in value, "Required v8 logic missing: " + fragment)
++            positions.append(value.find(fragment))
 +        tests.require(positions[0] < positions[1] < positions[2], "Xitun repairs do not chain v4, v7, then v8")
-+        return {"version": 8, "fragments": len(REQUIRED_SAVE_LOGIC)}
++        if collision["active"]:
++            tests.require("|| version == 6 || version == 7 || version == 8)" in code, "Known v7/v8 saves are not established")
++            cache = compact(function_body(now.text(SAVE), "UsesChangedCityBanks"))
++            tests.require(cache == "{ if (sourceVersion < 8 && (IsOldCity(warp) || IsGreenway(warp) || IsXitun(warp))) return TRUE; return sourceVersion < 9 && IsXitun(warp); }", "Current v9 cache cohort differs")
++        return {"version": int(expected_version), "historicalV8Fragments": len(REQUIRED_SAVE_LOGIC)}
 +
 +    def host_test_data():
 +        text = now.text(TEST)
@@ -409083,9 +410952,64 @@ index 0000000..c74f65f
 +        tests.require(f"assert(count == {len(valid_after)});" in text, "Host test does not assert the final position count")
 +        return {"cases": len(table(text, "sXitunV8Cases")), "safePositions": len(covered)}
 +
++    def collision_increment():
++        if not collision["active"]: return {"registered": False}
++        tests.require(collision["passed"], "Registered collision alpha layer failed")
++        tests.errors.extend("collision: " + error for error in collision["errors"])
++        baseline = support.Files(source, COLLISION_BASE)
++        before_valid = valid_after
++        current_valid = {(x,y) for y in range(HEIGHT) for x in range(WIDTH) if current.walkable(x,y)}
++        tests.require(before_valid - current_valid == collision["positions"] and not current_valid - before_valid,
++                      "Actual native walking delta differs from44 collision cells")
++        tests.require(len(current_valid) == 1323, "Current v9 retained walking set is not1323")
++        connected, queue = {FENGJIA_ARRIVAL}, deque([FENGJIA_ARRIVAL])
++        while queue:
++            x,y = queue.popleft()
++            for p in ((x-1,y),(x+1,y),(x,y-1),(x,y+1)):
++                if p not in connected and current.inside(*p) and current.can_step(x,y,current,*p):
++                    connected.add(p); queue.append(p)
++        tests.require(current_valid <= connected, "Current collision layer strands ordinary positions")
++        tests.require((12,35) in current_valid & connected and current.behavior(12,35) == 0 and (12,35) not in DOORS,
++                      "V9 fallback is not ordinary, actor-free connected ground")
++        save, previous = now.text(SAVE), baseline.text(SAVE)
++        rows = table(save,"sXitunV9Relocations")
++        tests.require(len(rows) == 44 and sorted(rows) == sorted((x,y,12,35) for x,y in collision["positions"]),
++                      "V9 rows/fallback differ from actual collision delta")
++        pattern = r"static const struct SavedPositionRelocation\s+(\w+)\[\]\s*=\s*(\{.*?\};)"
++        old_tables, new_tables = dict(re.findall(pattern,previous,re.S)), dict(re.findall(pattern,save,re.S))
++        tests.require(all(new_tables.get(name) == body for name,body in old_tables.items()), "A historical relocation table changed")
++        tests.require(save[:save.index("static u16 SavedVar")] == previous[:previous.index("static u16 SavedVar")], "Continue-facing storage/size changed")
++        for name in ("SavedVar", "TaichungSaveInitNewGame", "RememberCacheRefreshFacing", "TaichungSaveConsumeContinueFacing", "ReloadCityBanksOnContinue", "ApplyRelocation"):
++            tests.require(function_body(save,name) == function_body(previous,name), "Protected native hook changed: " + name)
++        tests.require(actual.read("src/overworld.c") == baseline.read("src/overworld.c"), "Runtime facing/Continue hooks changed")
++        tests.require(actual.read(HEADER) == baseline.read(HEADER).replace(b"TAICHUNG_SAVE_VERSION 8",b"TAICHUNG_SAVE_VERSION 9",1), "V9 header changed beyond version")
++        chain = compact(function_body(save,"RepairChangedCityPosition"))
++        addition = "if (sourceVersion < 9 && IsXitun(warp) && warp->warpId == -1) ApplyRelocation(warp, sXitunV9Relocations, sizeof(sXitunV9Relocations) / sizeof(sXitunV9Relocations[0]));"
++        tests.require(chain.count(addition) == 1 and chain.replace(addition, "").split() == compact(function_body(previous,"RepairChangedCityPosition")).split(),
++                      "V9 repair changed/reordered historical gates or lacks native warp priority")
++        tests.require(chain.find("sXitunV8Relocations") < chain.find("sXitunV9Relocations"), "V9 repair does not run last")
++        upgrade = function_body(save,"TaichungSaveUpgradeOnContinue")
++        tests.require(upgrade.replace(" || version == 8", "", 1) == function_body(previous,"TaichungSaveUpgradeOnContinue"),
++                      "Current/future exits, explicit known8, prototype, checkpoint or transient hooks changed")
++        # Also cover older helpers and non-relocation constants: only the new
++        # table, last repair, cache cohort and explicit known8 may change code.
++        normalized = compact(save)
++        declaration = "static const struct SavedPositionRelocation sXitunV9Relocations[] = " + new_tables["sXitunV9Relocations"]
++        normalized = normalized.replace(compact(declaration), "", 1).replace(addition, "", 1)
++        normalized = normalized.replace(compact(function_body(save,"UsesChangedCityBanks")),
++                                        compact(function_body(previous,"UsesChangedCityBanks")),1)
++        normalized = normalized.replace(" || version == 8)", ")", 1)
++        tests.require(compact(normalized) == compact(previous), "Native save code changed outside the reviewed v9 additions")
++        tests.require("assert(kept == 1367 - 44);" in now.text(TEST), "Current host retention count is missing")
++        return {"registered": True, "baselineCommit": COLLISION_BASE, "registrationCommit": COLLISION_COMMIT,
++                "historicalV8MapSha256": COLLISION_OLD_MAP_SHA, "currentMapSha256": COLLISION_NEW_MAP_SHA,
++                "alphaObjects": 13, "currentV9RepairRows":len(rows), "currentRetainedPositions":len(current_valid),
++                "historicalV8SafePositions":len(before_valid), "oldTablesByteExact":True, "protectedNativeHooksRetained":True,
++                "runtimeMigrationProof":False}
++
 +    for name, function in (("inputsAndScope", inputs_and_scope), ("bank", bank), ("map", map_layout), ("seams", seams),
 +                           ("edges", edges), ("geometry", geometry), ("repairTable", repair_table), ("versionGates", version_gates),
-+                           ("hostTestData", host_test_data)):
++                           ("hostTestData", host_test_data), ("registeredLandmarkCollisionIncrement", collision_increment)):
 +        tests.section(name, function)
 +    return {"passed": not tests.errors, "checks": tests.results, "errors": tests.errors, "runtimeMigrationProof": False}
 +
@@ -409186,6 +411110,46 @@ index 0000000..c74f65f
 +        "oldCityBeyondInstallContract": ("inputsAndScope", {OLDCITY_MAP: bytes(old_city)}),
 +        "signMoved": ("inputsAndScope", {"data/maps/TaichungXitun/map.json": (json.dumps(xitun_json, indent=2) + "\n").encode()}),
 +    }
++    if (source / COLLISION_SPEC).is_file():
++        # Same historical counterexamples, with mutators aimed at actual v9 code.
++        faults["xitunNotReloaded"] = ("versionGates", {SAVE: save.replace(b"return sourceVersion < 9 && IsXitun(warp);", b"return sourceVersion < 9 && IsGreenway(warp);",1)})
++        faults["v7NotMigrated"] = ("versionGates", {SAVE: save.replace(b"|| version == 6 || version == 7 || version == 8)",b"|| version == 6 || version == 8)",1)})
++        faults["versionNotEight"] = ("versionGates", {HEADER: header.replace(b"TAICHUNG_SAVE_VERSION 9",b"TAICHUNG_SAVE_VERSION 10",1)})
++        support = load("collision_fault_support",source/"tools/taichung/landmarks/check_old_core.py")
++        current = support.Files(source)
++        new_rows = table(save.decode(),"sXitunV9Relocations"); first = new_rows[0]
++        special = "registeredLandmarkCollisionIncrement"
++        old8 = b"    if (sourceVersion < 8 && IsXitun(warp) && warp->warpId == -1)\n        ApplyRelocation(warp, sXitunV8Relocations, sizeof(sXitunV8Relocations) / sizeof(sXitunV8Relocations[0]));"
++        new9 = old8.replace(b"< 8",b"< 9").replace(b"V8Relocations",b"V9Relocations")
++        alpha_path = current.json(COLLISION_SPEC)["footprints"][0]["art"]
++        image = current.image(alpha_path).convert("RGBA");pixel=image.getpixel((0,0));image.putpixel((0,0),(pixel[0]^1,*pixel[1:]))
++        from io import BytesIO
++        encoded=BytesIO();image.save(encoded,format="PNG")
++        faults.update({
++            "v9RowMissing": (special,{SAVE:save.replace(b"    {%d, %d, %d, %d},\n" % first,b"",1)}),
++            "v9FallbackChanged": (special,{SAVE:save.replace(b"{%d, %d, %d, %d}" % first,b"{%d, %d, 12, 33}" % first[:2],1)}),
++            "v9WarpPriorityRemoved": (special,{SAVE:save.replace(b"sourceVersion < 9 && IsXitun(warp) && warp->warpId == -1",b"sourceVersion < 9 && IsXitun(warp)",1)}),
++            "v9AgeGateTooLow": (special,{SAVE:save.replace(b"sourceVersion < 9 && IsXitun",b"sourceVersion < 8 && IsXitun",1)}),
++            "v9BeforeHistoricalV8": (special,{SAVE:save.replace(old8+b"\n"+new9,new9+b"\n"+old8,1)}),
++            "known8Missing": ("versionGates",{SAVE:save.replace(b" || version == 8)",b")",1)}),
++            "oldDistrictRefreshLost": ("versionGates",{SAVE:save.replace(b"IsOldCity(warp) || IsGreenway(warp) || IsXitun(warp)",b"IsXitun(warp)",1)}),
++            "historicalV8MapShaChanged": ("repairTable",{SAVE:save.replace(COLLISION_OLD_MAP_SHA.encode(),b"0"*64,1)}),
++            "parkNewGameResetRemoved": (special,{SAVE:save.replace(b"    TaichungGymCancelChallenge();\n",b"",1)}),
++            "parkContinueResetRemoved": (special,{SAVE:save.replace(b"    TaichungGymCancelChallenge();\n",b"",2)}),
++            "facingHandoffRemoved": (special,{SAVE:save.replace(b"    RememberCacheRefreshFacing(warp);",b"    /* removed handoff */",1)}),
++            "nativeHookChanged": (special,{"src/overworld.c":read("src/overworld.c")+b"\n"}),
++            "historicalCheckpointHelperChanged": (special,{SAVE:save.replace(b"    warp->x = 30;",b"    warp->x = 31;",1)}),
++            "collisionArtChanged": (special,{alpha_path:encoded.getvalue()}),
++            "objectReopened": (special,{tool.MAP:map_with(first[0],first[1],struct.unpack_from("<H",read(tool.MAP),(first[1]*WIDTH+first[0])*2)[0]&~0xC00)}),
++            "extra45thBlock": (special,{tool.MAP:map_with(12,35,0x3575)}),
++            "collisionMetatileChanged": (special,{tool.MAP:map_with(first[0],first[1],struct.unpack_from("<H",read(tool.MAP),(first[1]*WIDTH+first[0])*2)[0]^1)}),
++            "collisionElevationChanged": (special,{tool.MAP:map_with(first[0],first[1],struct.unpack_from("<H",read(tool.MAP),(first[1]*WIDTH+first[0])*2)[0]^0x1000)}),
++            "nativeDoorChanged": (special,{tool.MAP:map_with(12,32,0x3175)}),
++            "v8HeaderUnderCollisionMap": ("versionGates",{HEADER:header.replace(b"TAICHUNG_SAVE_VERSION 9",b"TAICHUNG_SAVE_VERSION 8",1)}),
++            "v9UnderHistoricalMap": (special,{tool.MAP:support.Files(source,COLLISION_BASE).read(tool.MAP)}),
++        })
++        for path in COLLISION_PINS:
++            faults["collisionPinChanged:"+path]=(special,{path:read(path)+b"\n"})
 +    results = {}
 +    for name, (section, edits) in faults.items():
 +        changed = all(read(path) != content for path, content in edits.items())
@@ -414876,10 +416840,10 @@ index 0000000..56e0154
 +"$GAME_ROOT/build/taichung-tests/progress"
 diff --git a/tools/taichung_gameplay/test-save-facing.py b/tools/taichung_gameplay/test-save-facing.py
 new file mode 100644
-index 0000000..d5f94fc
+index 0000000..b5f506d
 --- /dev/null
 +++ b/tools/taichung_gameplay/test-save-facing.py
-@@ -0,0 +1,127 @@
+@@ -0,0 +1,136 @@
 +#!/usr/bin/env python3
 +"""Compile real migration/warp/avatar functions; stub only map/GBA services.
 +
@@ -414889,6 +416853,7 @@ index 0000000..d5f94fc
 +No source-pattern assertions or substitute facing implementation are used.
 +"""
 +import argparse
++import json
 +from pathlib import Path
 +import re
 +import subprocess
@@ -414971,6 +416936,14 @@ index 0000000..d5f94fc
 +    generated = prefix + '\n'.join(prototypes) + '\n' + '\n'.join(bodies)
 +    include = out / 'native-engine.inc'
 +    include.write_text(generated)
++    collision = json.loads((game / 'data/taichung/landmark-collision/delta.json').read_text())
++    origins = collision['newlySolidPositions']
++    if len(origins) != 44 or any(item['nativeMap'] != [43, 2] for item in origins):
++        raise ValueError('Expected the reviewed44 Xitun-only collision origins')
++    # Independent runtime test inputs come from Maps' committed collision
++    # manifest, not from the C migration table being tested.
++    (out / 'collision-v9-origins.inc').write_text('static const u8 sCollisionV9Origins[][2] = {\n' +
++        ''.join(f"    {{{item['x']}, {item['y']}}},\n" for item in origins) + '};\n')
 +    # FRLG retains unused-parameter false-return compatibility functions from
 +    # RSE in this unchanged native file; keep that exception scoped to it.
 +    behaviors = out / 'metatile-behavior.o'
@@ -415009,10 +416982,10 @@ index 0000000..d5f94fc
 +    main()
 diff --git a/tools/taichung_gameplay/test-save.sh b/tools/taichung_gameplay/test-save.sh
 new file mode 100644
-index 0000000..61d35c5
+index 0000000..cace96c
 --- /dev/null
 +++ b/tools/taichung_gameplay/test-save.sh
-@@ -0,0 +1,9 @@
+@@ -0,0 +1,12 @@
 +#!/usr/bin/env bash
 +set -euo pipefail
 +GAME_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
@@ -415020,7 +416993,10 @@ index 0000000..61d35c5
 +cc -std=c99 -Wall -Wextra -Werror -I"$GAME_ROOT/tests/save_host" -I"$GAME_ROOT/include" \
 +  "$GAME_ROOT/src/taichung_save.c" "$GAME_ROOT/tests/taichung_save_test.c" \
 +  -o "$GAME_ROOT/build/taichung-tests/save"
-+"$GAME_ROOT/build/taichung-tests/save"
++# Independent collision truth for the v9 tests; never copy its expected origin
++# set from the C implementation. This writes only ignored host-test output.
++git -C "$GAME_ROOT" show 6366b9e5c037647ce4d2a007efa3d3dfbedcdb48:data/layouts/TaichungXitun/map.bin > "$GAME_ROOT/build/taichung-tests/xitun-before-v9.bin"
++"$GAME_ROOT/build/taichung-tests/save" "$GAME_ROOT/build/taichung-tests/xitun-before-v9.bin" "$GAME_ROOT/data/layouts/TaichungXitun/map.bin"
 +python3 "$GAME_ROOT/tools/taichung_gameplay/test-save-facing.py"
 diff --git a/tools/taichung_gameplay/test-starter.sh b/tools/taichung_gameplay/test-starter.sh
 new file mode 100644

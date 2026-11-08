@@ -1,4 +1,10 @@
-# Native dialogue style — isolated review draft
+# Native dialogue style — approved review
+
+Approved on 2026-11-08: the user replied “yes this is good” to the final
+English/Chinese desktop/phone screenshots for source
+`4f36d6cc8c653384156abafa29ea50c99842cc4d`. Main integrated that exact
+presentation in the post-release batch. The text below records the original
+isolated review scope; its pending-review statements are historical.
 
 Base: released main `0ffa9c9dabd9c212927aeba4b84c800b4deabad4`.
 Branch: `codex/native-dialogue-style-review`. This style is a draft for user
