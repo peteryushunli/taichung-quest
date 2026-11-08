@@ -33,3 +33,12 @@ owns the UI lease. Main will coordinate combined full-client checks.
 Selection/callout fix `80d8c156947744a0049ab78cc0de7d0fd2bdcffb` is independent
 on `codex/game-display-no-selection` and may be integrated separately. Main alone
 owns shared PR8 integration, combined runtime acceptance and publication.
+
+Matched-client followup: frontend `36d627e`, native `6366b9e` / ROM
+`9550aaff…` passed real English and Chinese startup checks. All four compact
+topics were observed across these runs; A/tap acknowledgement and the disabled
+pending barrier passed. Native Save/Continue retained Wild Off / Trainer Sight
+Low and did not repeat startup. At desktop and 390px, controls/selection passed
+20/20 and presentation passed 5/5; simulated ACK passed separately. Screenshots
+and UI observations are retained in `artifacts/pr8-client-qa-36d627e/`. This is
+client evidence, separate from the native save-v8 migration checks.

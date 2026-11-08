@@ -6,7 +6,7 @@ PR8 combines Claude's authored Xitun, Nantun/temple and Old City map work with C
 
 Keep ten permanent gym IDs and real-win badge bits. The two temple halls are visits, without extra badges. Reuse the accepted characters and bilingual drafts, original150 species, six-partner Team menu, level50 presets and challenge-time HP/status/PP recovery. Existing badges must survive party changes and Save/Continue.
 
-The shorter opening, revised tutorial and configurable keyboard setup remain isolated review proposals requiring explicit screenshot approval before integration or publication. YouBike/taxi, player-art expansion and poster work are outside this release. Older priorities below are historical where they conflict with this section.
+The compact tutorial presentation has screenshot approval and is included, with native A/B hints and the released touch controls preserved. The shorter opening and configurable keyboard setup remain isolated review proposals. YouBike/taxi, player-art expansion and poster work are outside this release. Older priorities below are historical where they conflict with this section.
 
 Source of truth for the game direction discussed on 7 November 2026. These decisions supersede the earlier assumption that the final world would be one literal West District neighborhood.
 
