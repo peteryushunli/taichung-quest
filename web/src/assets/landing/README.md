@@ -1,6 +1,6 @@
 # Landing page media
 
-Real captures of the game, taken from the WebAssembly player's canvas at 240×160 and 60fps, on a development ROM (SHA-256 `933dbf12…`) older than the frozen CMP candidate. Nothing here is drawn or generated. These frames show Pokémon game content, so read the publication-rights note in the root README before publishing them.
+The video and stills are real captures of the game, taken from the WebAssembly player's canvas at 240×160 and 60fps, on a development ROM (SHA-256 `933dbf12…`) older than the frozen CMP candidate. The city map is rendered from the game's source tiles. Nothing here is drawn by hand. These files show Pokémon game content, so read the publication-rights note in the root README before publishing them.
 
 | File | Contents |
 | --- | --- |
@@ -8,4 +8,6 @@ Real captures of the game, taken from the WebAssembly player's canvas at 240×16
 | `hero-poster.png` | Native-size still of the ride at Miyahara, shown until the reel starts and for reduced motion. |
 | `bike-greenway.png` | Native-size still from the same ride for How it plays, Step 2. |
 
-Everything else the design calls for (partner and starter sprites, team slots, rendered map) stays a labelled placeholder until art is set in `../../landing-assets.ts`.
+| `city-map.png` | The three exterior districts rendered from the game's own metatiles at native commit `a72bd0e` (the published cartridge source), placed at their City Map world origins from `../../data/minimap-contract.json`. 1920×1920 (16px per tile), 161-colour indexed PNG; outside the districts is transparent, and sprites and object events are not drawn. Regenerate with `python3 web/scripts/render-landing-map.py --source vendor/pokefirered`. SHA-256 `d26f3d246beec978ca78ae7f8f7503ad54916841059b65ca085433ee4f8b37e4`. |
+
+The Pokémon sprites live in `../pokemon/`.

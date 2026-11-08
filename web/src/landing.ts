@@ -1,11 +1,15 @@
 import landmarkCatalog from './data/landmarks.json';
+import cityGeometry from './data/minimap-contract.json';
 import './landing.css';
 import { escapeHtml } from './city-guide';
 import { getLocale, onLocaleChange, setLocale, t } from './i18n';
 import type { Locale } from './i18n';
 import { landingMedia, landmarkArt } from './landing-assets';
+import type { PokemonIcon } from './landing-assets';
+import { pixelFlag } from './landing-flag';
 import { districtCount, gymStatusSummary, isGymOpen, localizedPlace, markerPosition } from './landing-model';
 import type { LandingLandmark } from './landing-model';
+import type { MinimapGeometry } from './minimap-model';
 
 interface LandingHost {
   startNewGame(): void;
@@ -14,6 +18,13 @@ interface LandingHost {
 }
 
 const landmarks = landmarkCatalog as LandingLandmark[];
+const city = cityGeometry as MinimapGeometry;
+// District names sit in the empty space beside each district, not over its tiles.
+const districtLabels = [
+  { key: '43:2', label: 'XITUN 西屯', below: true },
+  { key: '43:1', label: 'GREENWAY 草悟道', below: false },
+  { key: '43:0', label: 'OLD CITY 舊城', below: false },
+];
 const DEFAULT_LANDMARK = 'old-taichung-station';
 const GITHUB_URL = 'https://github.com/peteryushunli/taichung-quest';
 const starters = [
@@ -26,16 +37,18 @@ const starters = [
 const copy = (text: string) => `<span data-i18n="${escapeHtml(text)}">${escapeHtml(t(text))}</span>`;
 const number = (index: number) => String(index + 1).padStart(2, '0');
 const placeholder = (label: string, extra = '') => `<div class="lp-slot ${extra}">${copy(label)}</div>`;
-const pixelImage = (url: string, alt = '') => `<img class="lp-px" src="${escapeHtml(url)}" alt="${escapeHtml(alt)}" loading="lazy">`;
+const pixelImage = (url: string, alt = '') => `<img class="lp-px" src="${escapeHtml(url)}" alt="${escapeHtml(t(alt))}"${alt ? ` data-i18n-alt="${escapeHtml(alt)}"` : ''} loading="lazy">`;
 const reducedMotion = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
+// Party-menu icons flip between their two frames; `index` staggers a row of them.
+const monIcon = (mon: PokemonIcon, index: number, labelled = true) => `<span class="lp-mon" ${labelled ? `role="img" aria-label="${escapeHtml(t(mon.name))}" data-i18n-label="${escapeHtml(mon.name)}"` : 'aria-hidden="true"'} style="--i:${index};background-image:url('${escapeHtml(mon.icon)}')"></span>`;
 
-function schematicLayer() {
-  const route = 'M22 30 C 32 40, 40 44, 48 52 S 70 70, 84 76';
-  return `<div class="lp-map-grid"></div>
-    <svg class="lp-map-route" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path d="${route}" stroke="#efe9cf" stroke-width="3.2"/><path d="${route}" stroke="#c9b98a" stroke-width="1" stroke-dasharray="5 5"/></svg>
-    <div class="lp-district lp-district-xitun"></div><div class="lp-district lp-district-greenway"></div><div class="lp-district lp-district-old"></div>
-    <span class="lp-district-name lp-name-xitun">XITUN 西屯</span><span class="lp-district-name lp-name-greenway">GREENWAY 草悟道</span><span class="lp-district-name lp-name-old">OLD CITY 舊城</span>
-    <span class="lp-map-chip">${copy('SCHEMATIC · NOT TO SCALE')}</span>`;
+function cityMap() {
+  const { width, height } = city.world;
+  const labels = districtLabels.map(({ key, label, below }) => {
+    const [left, top, , bottom] = city.mapsByNativeKey[key].worldRect!;
+    return `<span class="lp-district-name${below ? '' : ' lp-district-above'}" style="left:${(left + 1) / width * 100}%;top:${(below ? bottom + .5 : top - .5) / height * 100}%">${label}</span>`;
+  }).join('');
+  return `<img class="lp-map-art" src="${escapeHtml(landingMedia.cityMap)}" width="${width * 16}" height="${height * 16}" alt="">${labels}<span class="lp-map-chip">${copy('IN-GAME MAP')}</span>`;
 }
 
 function sectionHead(eyebrow: string, title: string, side?: string) {
@@ -52,7 +65,7 @@ function markup() {
   return `
   <div class="landing">
     <header class="lp-header"><div class="lp-header-inner">
-      <a class="lp-brand" href="#top"><span class="lp-brand-glyph" lang="zh-Hant">臺</span><span class="lp-brand-title" lang="en">Taichung Quest</span></a>
+      <a class="lp-brand" href="#top" aria-label="Taichung Quest">${pixelFlag}<span class="lp-wordmark" lang="en" aria-hidden="true"><span>Taichung</span> <span class="lp-wordmark-quest">Quest</span></span><span class="lp-brand-party" aria-hidden="true">${landingMedia.starterIcons.map((mon, index) => monIcon(mon, index, false)).join('')}</span></a>
       <nav class="lp-nav" aria-label="Page sections">
         <a class="lp-nav-link" href="#map">${copy('Map')}</a>
         <a class="lp-nav-link" href="#gyms">${copy('Landmarks')}</a>
@@ -74,7 +87,7 @@ function markup() {
           <div class="lp-casing">
             <div class="lp-casing-top"><span class="lp-power"><i></i>臺中 · TAICHUNG</span>${copy('OLD STATION PLAZA')}</div>
             <div class="lp-bezel"><div class="lp-screen">${heroScreen()}</div></div>
-            <div class="lp-partner">${landingMedia.heroPartner ? pixelImage(landingMedia.heroPartner) : placeholder('Partner Pokémon sprite', 'lp-slot-fill')}</div>
+            <div class="lp-partner">${landingMedia.heroPartner ? pixelImage(landingMedia.heroPartner, 'Pikachu') : placeholder('Partner Pokémon sprite', 'lp-slot-fill')}</div>
           </div>
           <p class="lp-status"><b>${copy('Early access.')}</b> <span id="lp-gym-status"></span></p>
         </div>
@@ -84,7 +97,7 @@ function markup() {
         ${sectionHead('01 — THE MAP', 'Three districts. Ten real places.', "Distances are compressed and side streets are gone, but the city keeps its shape: the old city around the station, the Greenway's museums in the middle, Xitun's theater and night market to the northwest.")}
         <div class="lp-map-body">
           <div class="lp-map" id="lp-map" role="group" aria-label="${escapeHtml(t('Choose a landmark'))}" data-i18n-label="Choose a landmark">
-            ${landingMedia.mapMode === 'art' && landingMedia.mapArt ? `<img class="lp-map-art lp-px" src="${escapeHtml(landingMedia.mapArt)}" alt="">` : schematicLayer()}
+            ${cityMap()}
             <div id="lp-markers"></div>
             <div class="lp-map-legend"><span><i class="lp-swatch-open"></i>${copy('Gym open')}</span><span><i class="lp-swatch-planned"></i>${copy('In development')}</span></div>
           </div>
@@ -111,7 +124,7 @@ function markup() {
           </div>`).join('')}</div>
           <div class="lp-team">
             <div class="lp-team-copy"><span>${copy('Then build a team of six.')}</span><p>${copy('Add any of the original 150 from the TEAM menu, evolved forms included, all at level 50. Swap them out whenever you like.')}</p></div>
-            <div class="lp-party">${[0, 1, 2, 3, 4, 5].map((slot) => landingMedia.party[slot] ? `<div class="lp-party-slot">${pixelImage(landingMedia.party[slot]!)}</div>` : `<div class="lp-party-slot lp-party-empty">${slot + 1}</div>`).join('')}</div>
+            <div class="lp-party">${[0, 1, 2, 3, 4, 5].map((slot) => landingMedia.party[slot] ? `<div class="lp-party-slot">${monIcon(landingMedia.party[slot]!, slot)}</div>` : `<div class="lp-party-slot lp-party-empty">${slot + 1}</div>`).join('')}</div>
           </div>
         </div>
         <div class="lp-steps">
@@ -154,10 +167,10 @@ function markup() {
 function renderMarkers(selected: string) {
   const locale = getLocale();
   return landmarks.map((place, index) => {
-    const { x, y } = markerPosition(place);
+    const { x, y, side } = markerPosition(city.markersById[place.id].world, city.world);
     const { name, mapLabel } = localizedPlace(place, locale);
     const state = `${isGymOpen(place) ? 'is-open' : 'is-planned'}${place.id === selected ? ' is-selected' : ''}`;
-    return `<div class="lp-pin ${state} lp-side-${place.mapLabelSide === 'left' ? 'left' : 'right'}" data-pin="${escapeHtml(place.id)}" style="left:${x}%;top:${y}%">
+    return `<div class="lp-pin ${state} lp-side-${side}" data-pin="${escapeHtml(place.id)}" style="left:${x}%;top:${y}%">
       <button type="button" class="lp-marker" data-select="${escapeHtml(place.id)}" aria-label="${escapeHtml(name)}" aria-pressed="${place.id === selected}">${number(index)}</button>
       <span class="lp-pin-label" data-select="${escapeHtml(place.id)}" aria-hidden="true">${escapeHtml(mapLabel)}</span>
     </div>`;
@@ -175,6 +188,10 @@ function renderDetail(id: string) {
   const portrait = art?.leader && info.leader
     ? `<div class="lp-portrait lp-portrait-art" role="img" aria-label="${escapeHtml(info.leader)}" style="background-image:url('${escapeHtml(art.leader)}')"></div>`
     : '<div class="lp-portrait">?</div>';
+  const team = info.leader ? art?.team : undefined;
+  const teamSprites = team
+    ? `<div class="lp-team-sprites" role="group" aria-label="${escapeHtml(t("Leader's team"))}">${team.map((mon, slot) => `<i>${monIcon(mon, slot)}</i>`).join('')}</div>`
+    : '<div class="lp-team-sprites" aria-hidden="true"><i>?</i><i>?</i><i>?</i></div>';
   return `
     <div class="lp-detail-art">${facade}</div>
     <div class="lp-detail-body">
@@ -182,7 +199,7 @@ function renderDetail(id: string) {
       <div class="lp-detail-names"><h3 class="lp-display">${escapeHtml(info.name)}</h3><span>${escapeHtml(info.otherName)}</span></div>
       <p class="lp-detail-text">${escapeHtml(info.description)}</p>
       <div class="lp-detail-foot">
-        <div class="lp-leader">${portrait}<div class="lp-leader-name"><small>${copy('Gym leader')}</small><b>${info.leader ? escapeHtml(info.leader) : copy('To be revealed')}</b></div><div class="lp-team-sprites" aria-hidden="true"><i>◓</i><i>◓</i><i>◓</i></div></div>
+        <div class="lp-leader">${portrait}<div class="lp-leader-name"><small>${copy('Gym leader')}</small><b>${info.leader ? escapeHtml(info.leader) : copy('To be revealed')}</b></div>${teamSprites}</div>
         <div class="lp-real-life"><span>${copy('In real life')}</span><a href="${escapeHtml(info.url)}" target="_blank" rel="noopener">${copy('Visitor info ↗')}</a></div>
       </div>
     </div>`;

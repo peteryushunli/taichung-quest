@@ -34,9 +34,10 @@ export function isGymOpen(place: Pick<LandingLandmark, 'gymStatus'>) { return pl
 
 export function districtCount(places: Pick<LandingLandmark, 'districtId'>[]) { return new Set(places.map((place) => place.districtId)).size; }
 
-// Maple Garden sits just above the Theater; the nudge keeps their squares apart on phones.
-export function markerPosition(place: Pick<LandingLandmark, 'id' | 'mapX' | 'mapY'>) {
-  return { x: place.mapX, y: place.id === 'maple-garden' ? 28.4 : place.mapY };
+/** Percent position of a world tile's centre on the rendered map; the label faces the middle. */
+export function markerPosition(world: readonly number[], size: { width: number; height: number }) {
+  const [x, y] = world;
+  return { x: (x + .5) / size.width * 100, y: (y + .5) / size.height * 100, side: x < size.width / 2 ? 'right' as const : 'left' as const };
 }
 
 export function gymStatusSummary(places: LandingLandmark[], locale: LandingLocale) {
