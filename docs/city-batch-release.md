@@ -1,16 +1,29 @@
-# City batch: Xitun streets, Nantun and Old City buildings
+# City and gym batch: Xitun, Nantun, Old City and ten battles
 
-This release ships three map workstreams together, with one combined save v8:
+This draft combines three map workstreams and the seven remaining gym implementations, with one combined save v8:
 
 - **Xitun streets.** Xitun gets its street layout. Its west and north edges become a highway instead of a tree wall, and its southern seam opens into Nantun.
 - **Nantun.** Two new outdoor maps: Nantun North (`43:14`) and Wanhe (`43:15`). It adds two temple halls, Wanhe Temple and Wenchang Temple. Nantun's west edge is the same highway, and its border is water. Twelve Greenway seam cells change from trees to pavers.
 - **Old City buildings.** The city-v3 building styles go into Old City.
+- **Ten gym battles.** Codex's seven new leaders join Station, Park and Miyahara. Their existing portraits, bilingual text and level-50 teams share the voluntary challenge and matching-real-win badge flow. Native trainer IDs746–752 use the existing completion bits3–9; the temples remain visits, without extra badges.
 
 The world grows from 120×120 to 120×176 tiles. The in-game minimap, the landing-page map and the minimap contract all follow. The contract now has 5 exteriors, 13 interiors, 12 markers (ten gyms and two temples) and 12 seams.
 
-Miyahara's street layout is not included. Neither is Codex's draft PR 6, which activates the remaining gyms (see "Next release").
+Miyahara's street layout and the unapproved opening/tutorial/settings proposals are not included. PR6's completed gym code is consolidated here at source level; its older standalone patch is not used over the city release.
 
-## Build
+## Current combined draft build
+
+Native `9070c6f197965dd775e8b823f7db85995cfe456f` combines `dc92cf8` and `b7b027d`, preserving both histories. The full portable patch applies to the pinned baseline and produces the exact combined tree `0852449a69f27400e26a9e2dcda5ee73485cf7f3`.
+
+The matching ROM SHA-256 is `ee35dae9ff0e38a4e040dd4f62a137584316fd0cdc8751c54457804528fd93a9` (SHA-1 `c877b45b2ef43ab2e99ed39e38e4e13954312aba`). Fresh ELF extraction verifies language33813644, navigation33813680 and onboarding33813728; the minimap fingerprint remains `f52e2fee43b6fb0b928eeb9a5958bc9898fcb29577bbac3d7262a597ef8e09c0`. EWRAM261236 and IWRAM29824 are unchanged. The frozen ELF independently reproduces the ROM bytes.
+
+All map/layout/tileset/art asset trees are exact to `dc92cf8`; the gym code, trainer parties and appended glyphs match the tested gym-only source. The existing landing-map PNG is retained because its render inputs are unchanged. All506 released glyph mappings/rows are preserved, with105 appended once, for611 total. Combined gym/progress/team/save-v8/preset checks and the map guards pass. This is build/source evidence, not combined runtime acceptance.
+
+Evidence: `artifacts/pr8-codex-consolidation/initial-combined-source-verification.json` and `frozen-9070c6f/README.md`. Actual Science, Greenway and Shen Ji win/save checks on the earlier gym-only ROM `88efa224…` support unchanged gym code, but do not establish acceptance of this combined ROM. Remaining original-ROM gym checks and combined smoke/save-v8 checks are pending.
+
+The combined frontend passes46 tests, TypeScript and the production build with this exact ROM/metadata pair. These checks retain PR8's 120×176 geometry, landing map and existing controls. No production deployment is performed by this consolidation.
+
+## Original map-only baseline build
 
 | | |
 | --- | --- |
@@ -58,9 +71,9 @@ All pass on `dc92cf8`:
 
 Web: TypeScript and 45 web tests pass. `prepare-vercel.mjs` binds frontend `c3f1366` to this ROM with a clean tree.
 
-## Runtime gates
+## Original map-only runtime evidence
 
-All runs used this exact ROM, the ordinary button API and the read-only navigation packet. Every save came from real play, every load used the title-menu Continue, and every save was a native in-game Save. There were no RAM writes, emulator snapshots or speed changes.
+The following runs used the original map-only `5315de1e…` ROM, not the combined candidate above. They used the ordinary button API and the read-only navigation packet. Every save came from real play, every load used the title-menu Continue, and every save was a native in-game Save. There were no RAM writes, emulator snapshots or speed changes. The evidence supports unchanged map behavior; combined runtime acceptance remains separate.
 
 ### Xitun: 7 of 7 pass, plus one extra case
 
@@ -130,6 +143,8 @@ Comparisons that report FAIL in the evidence (`compare-gate6-save.json`, `compar
 - Gameplay in the production web client. The runtime gates used the QA page. On the release build of the web client, I checked that the play page loads this ROM with no console errors and that the minimap is sized to the new world.
 - The landing copy still says "Three districts. Ten real places." and the City Map guide shows only the three original districts. Nantun and its temples have no landmark cards yet.
 
-## Next release
+## Consolidation and pending review followups
 
-Codex's draft PR 6 (gyms, native `b7b027d`) was built from `c8e1495` and re-exports the whole patch. If it were exported as is, it would roll this release back. It needs rebuilding on top of `dc92cf8`. A dry merge of `b7b027d` into `dc92cf8` is clean (tree `f5f904ed`), and the only file both sides touch is `data/scripts/taichung_city.inc`. Codex should also fast-forward native `integration/taichung` to `dc92cf8`.
+The clean native merge retains Claude's map/save-v8 work and all ten gym registrations. Main regenerated one patch from that combined source and rebuilt its matching ROM/metadata; it did not replace the map patch with PR6's older export. The draft also includes the bilingual ten-gym web catalog, all accepted leader portraits and exact team icons.
+
+The review's full City Map/Nantun/temple coverage and saved-facing cache-refresh fixes are being addressed in isolated followups. Keep PR8 in draft, distinguish evidence by exact ROM, and complete combined runtime checks before production publication. Main owns non-force updates to this existing PR head; concurrent author commits must be reconciled rather than overwritten.

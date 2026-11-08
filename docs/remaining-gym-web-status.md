@@ -1,14 +1,16 @@
-# Ten-gym web status patch — pending native runtime acceptance
+# Ten-gym web status — combined PR8 draft
 
-Prepared on frontend base `6202b96d210c9ddf2c3a0f10f2a9b1f2aa788cb3`.
-This isolated branch is a release candidate, not an acceptance or publication
-receipt. Main must accept native runtime proof before integrating or publishing
-the seven new playable claims. Until then, the shipped three-gym status remains
-authoritative.
+Originally prepared on frontend base `6202b96d210c9ddf2c3a0f10f2a9b1f2aa788cb3`,
+then consolidated onto PR8's `edb2744` at the user's explicit request to combine
+finished Codex code before all runtime checks finish. These are draft source
+claims, not a production acceptance receipt. The shipped three-gym release
+remains authoritative until the combined candidate passes its release gates.
 
-The candidate native source is `b7b027d443f213def7d31aa76d2d0aa3cd478b76`,
+The initial combined native source is `9070c6f197965dd775e8b823f7db85995cfe456f`,
 with ROM SHA-256
-`88efa224c2e95fda382e26d79d14ad3964ff1c20407bb7eee46b92e321ba9385`.
+`ee35dae9ff0e38a4e040dd4f62a137584316fd0cdc8751c54457804528fd93a9`.
+Its gym code and party definitions are exact to the original `b7b027d` candidate;
+Claude's map/save-v8 work and 120×176 contract are retained.
 Main's source review matches the installed dialogue to the current Story handoffs;
 source/build/host checks alone do not establish native playability.
 
@@ -58,8 +60,8 @@ portraits and all 21 team icon slots directly against Git blobs at `b7b027d`,
 including party order and PNG dimensions. Every previously tracked PNG and the
 original three leader/team bindings remain byte-for-byte unchanged.
 
-No browser testing or native runtime acceptance is performed by this patch.
-Gameplay retains its exclusive UI lease. Main owns proof acceptance, integration
-with the matching native pair, and publication. If only a subset is accepted,
-Main must retain pending status for every unaccepted gym rather than applying
-this all-ten candidate unchanged.
+No browser testing or native runtime acceptance is established by this web patch.
+Gameplay retains its exclusive UI lease. Main owns proof acceptance and the
+matching native pair. Keep the combined PR in draft and complete its runtime
+gates before publishing the all-ten catalog. Review followups for Nantun and
+visit-only temple coverage are tracked separately from the ten stable gym IDs.
