@@ -152,7 +152,9 @@
       "y": 20
     },
     "landmarkHallRef": "MAP_TAICHUNG_SCIENCE_MUSEUM_GYM",
-    "gymStatus": "planned"
+    "gymStatus": "playable",
+    "gymLeaderEn": "Yicheng",
+    "gymLeaderZh": "以澄"
   },
   {
     "id": "calligraphy-greenway",
@@ -190,7 +192,9 @@
     },
     "landmarkHallRef": "MAP_TAICHUNG_GREENWAY_GYM",
     "landingNameEn": "Greenway",
-    "gymStatus": "planned"
+    "gymStatus": "playable",
+    "gymLeaderEn": "Xingan",
+    "gymLeaderZh": "行安"
   },
   {
     "id": "shen-ji-new-village",
@@ -229,7 +233,9 @@
     },
     "landmarkHallRef": "MAP_TAICHUNG_SHEN_JI_GYM",
     "landingNameEn": "Shen Ji",
-    "gymStatus": "planned"
+    "gymStatus": "playable",
+    "gymLeaderEn": "Axiu",
+    "gymLeaderZh": "阿修"
   },
   {
     "id": "fine-arts-museum",
@@ -266,7 +272,9 @@
       "y": 62
     },
     "landmarkHallRef": "MAP_TAICHUNG_FINE_ARTS_GYM",
-    "gymStatus": "planned"
+    "gymStatus": "playable",
+    "gymLeaderEn": "Caining",
+    "gymLeaderZh": "采寧"
   },
   {
     "id": "fengjia-night-market",
@@ -303,7 +311,9 @@
       "y": 12
     },
     "landmarkHallRef": "MAP_TAICHUNG_FENGJIA_GYM",
-    "gymStatus": "planned"
+    "gymStatus": "playable",
+    "gymLeaderEn": "Jiahe",
+    "gymLeaderZh": "嘉禾"
   },
   {
     "id": "maple-garden",
@@ -341,7 +351,9 @@
       "y": 32
     },
     "landmarkHallRef": "MAP_TAICHUNG_MAPLE_GARDEN_GYM",
-    "gymStatus": "planned"
+    "gymStatus": "playable",
+    "gymLeaderEn": "Muqing",
+    "gymLeaderZh": "沐晴"
   },
   {
     "id": "taichung-theater",
@@ -378,6 +390,8 @@
       "y": 44
     },
     "landmarkHallRef": "MAP_TAICHUNG_THEATER_GYM",
-    "gymStatus": "planned"
+    "gymStatus": "playable",
+    "gymLeaderEn": "Ling",
+    "gymLeaderZh": "聆"
   }
 ]
