@@ -20,3 +20,7 @@ This follows the browser’s [pointer capture/implicit release model](https://ww
 Evidence: ignored `artifacts/touch-release-hotfix/{before.txt,before.jpg,after-final.txt,after-final.jpg}` and `manifest.json`. The final suite extends the same five new case groups with explicit mouse/capture-transfer assertions. No game acceptance sweep or native build was run.
 
 Only `web/src/game-controls.ts`, its existing browser fixture and this evidence note belong to this hotfix. Main owns integration/publication from the current-main base and exact frozen cartridge pair. The scoped QA tab is closed; no user/private or other-session tab was touched.
+
+## Published 8 November 2026
+
+PR #3 merged as `9fa7f4dbe65ef072b5c44502089769e0ffd762b5`. Production `dpl_WTDN5EqeGHvwojpqzANhBvVabdTR` is Ready at https://taichung-quest.vercel.app, frontend `80674769be9b1182a55fcc86a4aae7232406d31a`. The merged Claude landing baseline is included; native `a72bd0e`/ROM `c9e3bf38…` is unchanged. Public HTML/JS/CSS/native metadata/full ROM/font notice hashes and isolation headers match the frozen prebuilt. Receipt: `artifacts/touch-release-production/vercel-production.json`. Physical iPhone retest remains requested; the 18-case browser regression uses real DOM events and stub native callbacks. All unapproved tutorial/settings/copy proposals stay isolated. Codex map/feature work is frozen and Claude owns map/asset placement.
