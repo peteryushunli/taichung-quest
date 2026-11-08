@@ -347870,6 +347870,30 @@ index 5cef7c4..e369127 100644
      AddTextPrinterParameterized3(MAIN_MENU_WINDOW_CONTINUE, FONT_NORMAL, 62, 66, sTextColor2, -1, strbuf);
  }
  
+diff --git a/src/map_name_popup.c b/src/map_name_popup.c
+index e80be27..7732178 100644
+--- a/src/map_name_popup.c
++++ b/src/map_name_popup.c
+@@ -150,7 +150,7 @@ static u16 MapNamePopupCreateWindow(bool32 palintoFadedBuffer)
+ {
+     struct WindowTemplate windowTemplate = {
+         .bg = 0,
+-        .tilemapLeft = 1,
++        .tilemapLeft = 11,
+         .tilemapTop = 29,
+         .width = 14,
+         .height = 2,
+@@ -173,6 +173,10 @@ static u16 MapNamePopupCreateWindow(bool32 palintoFadedBuffer)
+             tileNum = 0x02D;
+         }
+     }
++    // Bias the area banner toward the centre-right, clear of the minimap.
++    // Floor/rooftop variants are wider; reserve the outer right border tile.
++    if (windowTemplate.tilemapLeft + windowTemplate.width + 1 > DISPLAY_WIDTH / 8)
++        windowTemplate.tilemapLeft = DISPLAY_WIDTH / 8 - windowTemplate.width - 1;
+     windowId = AddWindow(&windowTemplate);
+     if (palintoFadedBuffer)
+         LoadPalette(GetTextWindowPalette(3), BG_PLTT_ID(WIN_PAL_NUM), PLTT_SIZE_4BPP);
 diff --git a/src/new_game.c b/src/new_game.c
 index 3768b3c..f6b1777 100644
 --- a/src/new_game.c
