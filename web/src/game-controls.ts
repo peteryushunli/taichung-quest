@@ -8,6 +8,7 @@ export function createGameControls(options: {
   focus(): void;
   press(button: GameButton): void;
   release(button: GameButton): void;
+  tutorialInteract?: { available(): boolean; advance(): void };
 }) {
   const { root } = options;
   const buttons = [...root.querySelectorAll<HTMLButtonElement>('[data-gba]')];
@@ -29,7 +30,13 @@ export function createGameControls(options: {
   function refresh() {
     const enabled = options.canPlay();
     root.dataset.active = String(enabled);
-    for (const button of buttons) button.disabled = !enabled;
+    for (const button of buttons) button.disabled = !enabled && !(button.dataset.gba === 'A' && options.tutorialInteract?.available());
+  }
+  function tutorialInteract(button: GameButton | undefined) {
+    if (button !== 'A' || !options.tutorialInteract?.available()) return false;
+    options.tutorialInteract.advance();
+    refresh();
+    return true;
   }
   function clear(releaseNative = true) {
     state.clear(releaseNative);
@@ -60,8 +67,12 @@ export function createGameControls(options: {
     return owner.button.dataset.gba as GameButton;
   }
   root.addEventListener('pointerdown', (event) => {
-    if (!options.canPlay() || event.button !== 0 || !(event.target instanceof Element)) return;
+    if (event.button !== 0 || !(event.target instanceof Element)) return;
     const button = event.target.closest<HTMLButtonElement>('[data-gba]');
+    if (!options.canPlay()) {
+      if (button && root.contains(button) && tutorialInteract(button.dataset.gba as GameButton)) event.preventDefault();
+      return;
+    }
     if (pad.contains(event.target)) pointers.set(event.pointerId, { pad: true, pointerType: event.pointerType });
     else if (button && root.contains(button)) pointers.set(event.pointerId, { button, pointerType: event.pointerType });
     else return;
@@ -100,7 +111,14 @@ export function createGameControls(options: {
   for (const button of buttons) {
     const binding = button.dataset.gba as GameButton;
     button.addEventListener('keydown', (event) => {
-      if (!['Space', 'Enter'].includes(event.code) || !options.canPlay()) return;
+      if (!['Space', 'Enter'].includes(event.code)) return;
+      if (!options.canPlay()) {
+        if (binding === 'A' && options.tutorialInteract?.available()) {
+          event.preventDefault();
+          if (!event.repeat) tutorialInteract(binding);
+        }
+        return;
+      }
       event.preventDefault();
       if (!event.repeat) state.set(`key:${event.code}`, binding);
     });
@@ -115,16 +133,24 @@ export function createGameControls(options: {
     });
     // Assistive technology may activate a button without pointer/key events.
     button.addEventListener('click', (event) => {
-      if (event.detail !== 0 || !options.canPlay()) return;
+      if (event.detail !== 0) return;
+      if (!options.canPlay()) { tutorialInteract(binding); return; }
       state.set(`assistive:${binding}`, binding);
       setTimeout(() => state.set(`assistive:${binding}`), 100);
     });
   }
   window.addEventListener('keydown', (event) => {
-    if (!options.canPlay() || event.ctrlKey || event.metaKey || event.altKey) return;
+    if (event.ctrlKey || event.metaKey || event.altKey) return;
     if (event.defaultPrevented || !receivesKeys(event.target)) return;
     const button = KEY_BINDINGS[event.code];
     if (!button) return;
+    if (!options.canPlay()) {
+      if (button === 'A' && options.tutorialInteract?.available()) {
+        event.preventDefault();
+        if (!event.repeat) tutorialInteract(button);
+      }
+      return;
+    }
     event.preventDefault();
     // After a modal, focus loss or rotation, a still-held key must be released
     // before it can drive the game again. OS repeat must not reacquire it.

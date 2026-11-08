@@ -48,14 +48,21 @@ document.querySelector('#run')!.addEventListener('click', async () => {
     view.cancelLanguage();
     assert(await chosen === undefined, 'Cancel started a language request');
   });
-  await check('all four cards are readable, labeled as paused illustrations and do not create a live marker', () => {
+  await check('all four compact frames stay inside the game screen without a modal backdrop or illustration', () => {
     for (const locale of ['en', 'zh-Hant'] as const) {
       setLocale(locale);
       for (let index = 0; index < topics.length; index++) {
         view.showCard({ topic: topics[index], context: 200 + index, phase: 5 + index });
         const dialog = document.querySelector<HTMLDialogElement>('#outdoor-coach')!;
-        assert(dialog.open && dialog.querySelector('h2')!.textContent!.length > 8, 'Missing readable topic');
-        assert(dialog.querySelector('figcaption')!.textContent!.includes(locale === 'en' ? 'paused' : '暫停'), 'Illustration claimed live state');
+        assert(dialog.open && !!dialog.querySelector('h2')!.textContent && !!dialog.querySelector('.coach-copy')!.textContent, 'Missing readable topic');
+        assert(!dialog.matches(':modal') && dialog.parentElement?.id === 'screen', 'Guide escaped its game viewport');
+        assert(!dialog.querySelector('figure, svg, figcaption'), 'Large tutorial illustration remains');
+        assert(dialog.querySelector('.coach-cue')!.textContent?.includes('A'), 'Native A prompt is missing');
+        assert(!/\b[FD]\s*[\/／]/.test(dialog.textContent ?? ''), 'Keyboard F/D hint leaked into the tutorial');
+        if (topics[index] === 'bike') assert(dialog.querySelector('.coach-copy')!.textContent?.includes('B'), 'Native B bike prompt is missing');
+        const frame = dialog.getBoundingClientRect(), screen = dialog.parentElement!.getBoundingClientRect();
+        assert(frame.left >= screen.left && frame.right <= screen.right && frame.bottom <= screen.bottom && frame.top >= screen.top, 'Frame lies outside game viewport');
+        assert(dialog.querySelector<HTMLButtonElement>('[data-continue-later]')!.getBoundingClientRect().width >= 44, 'Continue later lost its touch target');
         assert(!dialog.querySelector('.minimap-player'), 'Tutorial created a live player marker');
         assert(dialog.scrollWidth <= dialog.clientWidth, 'Card overflows horizontally');
       }
@@ -130,7 +137,7 @@ document.querySelector('#run-adapter')!.addEventListener('click', async () => {
     assert(commands.join(',') === '1', 'Startup did not use the dedicated command');
     publish(5);
     await waitFor(() => document.querySelector<HTMLDialogElement>('#outdoor-coach')!.open);
-    assert(host.paused && adapter.blocksInput, 'Coach did not pause/release controls');
+    assert(host.paused && adapter.blocksInput && adapter.canAdvanceGuide, 'Coach did not pause/release controls or expose Interact');
     for (const phase of [5, 6, 7, 8]) {
       await waitFor(() => (words[6] & 255) === phase && !!document.querySelector<HTMLDialogElement>('#outdoor-coach')!.open && !document.querySelector<HTMLButtonElement>('#outdoor-coach [data-next-tip]')?.disabled);
       if (phase === 6) {
@@ -139,10 +146,22 @@ document.querySelector('#run-adapter')!.addEventListener('click', async () => {
         host.immersive = true; host.paused = false; adapter.refresh();
         await waitFor(() => document.querySelector<HTMLDialogElement>('#outdoor-coach')!.open);
       }
-      document.querySelector<HTMLButtonElement>('#outdoor-coach [data-next-tip]')!.click();
-      assert(document.querySelector<HTMLDialogElement>('#outdoor-coach')!.open, 'Pending acknowledgement removed the modal input barrier');
+      if (phase === 5) {
+        const modal = document.createElement('dialog');
+        document.querySelector('#preview-host')!.append(modal); modal.showModal();
+        assert(!adapter.canAdvanceGuide, 'Another modal left tutorial Interact active');
+        adapter.advanceGuide();
+        assert((words[6] & 255) === 5, 'Interact advanced behind an options modal');
+        modal.close(); modal.remove();
+        adapter.advanceGuide();
+      } else if (phase === 6) {
+        document.querySelector('#outdoor-coach [data-next-tip]')!.dispatchEvent(new KeyboardEvent('keydown', { code: 'KeyF', bubbles: true, cancelable: true }));
+      } else document.querySelector<HTMLButtonElement>('#outdoor-coach [data-next-tip]')!.click();
+      assert(!adapter.canAdvanceGuide, 'Pending ACK still exposes tutorial Interact');
+      adapter.advanceGuide();
+      assert(document.querySelector<HTMLDialogElement>('#outdoor-coach')!.open, 'Pending acknowledgement removed the dialogue input barrier');
       assert([...document.querySelectorAll<HTMLButtonElement>('#outdoor-coach button')].every(button => button.disabled), 'Pending acknowledgement permits duplicate activation');
-      assert(!document.querySelector('#outdoor-coach figcaption')!.textContent!.includes('paused'), 'Returning guide still claims a paused adventure');
+      assert(document.querySelector('#outdoor-coach')!.getAttribute('aria-busy') === 'true', 'Pending frame does not expose its busy state');
     }
     await waitFor(() => (words[6] & 255) === 9 && !document.querySelector<HTMLDialogElement>('#outdoor-coach')!.open && !adapter.blocksInput);
     assert(commands.join(',') === '1,2,2,2,2', 'Expected one language application and four exact-context acknowledgements');
@@ -151,7 +170,7 @@ document.querySelector('#run-adapter')!.addEventListener('click', async () => {
     publish(9, 1);
     await waitFor(() => !adapter.blocksCityMap);
     assert(!adapter.blocksInput, 'Completing the native guide kept ordinary input blocked');
-    status.textContent = 'PASS simulated adapter: dedicated language handshake, four paused cards, fresh resume/context ACKs, Continue later without progress, and phase9 native farewell. No actual ROM/party or physical-device coverage.';
+    status.textContent = 'PASS simulated adapter: dedicated language handshake, four in-screen frames, F/Interact/tap routes, fresh resume/context ACKs, Continue later without progress, and phase9 native farewell. No actual ROM/party or physical-device coverage.';
   } catch (error) { status.textContent = `FAIL simulated adapter: ${error}`; }
   finally { clearInterval(timer); adapter.destroy(); view = makeView(); }
 });

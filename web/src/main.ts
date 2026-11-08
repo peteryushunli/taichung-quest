@@ -661,6 +661,7 @@ gameInput = createGameControls({
   root: document.querySelector<HTMLElement>('.physical-controls')!,
   canvas,
   canPlay: canPlayGame,
+  tutorialInteract: { available: () => !!onboarding?.canAdvanceGuide, advance: () => onboarding?.advanceGuide() },
   focus: focusGame,
   press: (button) => emulator?.buttonPress(button),
   release: (button) => emulator?.buttonUnpress(button),

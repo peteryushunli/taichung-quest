@@ -20,20 +20,30 @@
 .onboarding-dialog .onboarding-actions .onboarding-primary { flex: 1.4; background: #2d523e; border-color: #2d523e; color: #fff9e9; }
 .onboarding-dialog button:disabled { opacity: .55; cursor: wait; }
 .onboarding-dialog button:focus-visible { outline: 3px solid #bd7c4f; outline-offset: 3px; }
-.coach-illustration { margin: 20px 0 14px; padding: 18px 12px 12px; border: 1px solid #c3cdb5; border-radius: 10px; background: #e8edde; text-align: center; }
-.coach-control-example { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 12px; min-height: 72px; }
-.coach-control-example>span:not(.coach-example-arrow) { padding: 10px 14px; border: 1px solid #9db08e; border-radius: 7px; background: #f8f6ec; font-weight: 600; }
-.coach-control-example kbd { width: 32px; height: 32px; font: 600 15px var(--font-ui); }
-.coach-example-arrow { font-size: 24px; color: #748568; }
-.coach-illustration figcaption { margin-top: 14px; color: #68775f; font-size: 12px; line-height: 1.5; }
-.coach-map-example { display: block; width: 100%; height: auto; max-height: 108px; fill: #c7d5b6; stroke: #78926b; stroke-width: 1.5; }
-.coach-map-example path { fill: none; stroke: #f6f3e9; stroke-width: 5; }
-.coach-map-example circle { fill: #f8e6b9; stroke: #6c7e5f; stroke-width: 2; }
-.coach-map-name { display: block; margin-top: 6px; font-size: 13px; font-weight: 600; }
-.coach-place-examples { display: grid; gap: 8px; padding: 4px 0; font-size: 14px; }
-.coach-availability { margin: 12px 0 0; color: #68775f; font-size: 13px; line-height: 1.6; }
-.onboarding-progress { margin: 8px 0 0; font-size: 13px; color: #315b42; }
-.onboarding-progress:empty { display: none; }
+/* The guide sits where native dialogue belongs; it never covers the city with a backdrop. */
+.screen:has(>.outdoor-coach) { container-type: inline-size; }
+.outdoor-coach {
+  position: absolute; inset: auto 4px 4px; z-index: 6;
+  box-sizing: border-box; width: auto; max-width: none; min-height: 29%; margin: 0; padding: 0;
+  border: 3px double #425f8b; border-radius: 3px;
+  background: #fffef0; color: #283347; box-shadow: 0 0 0 1px #fffef0;
+  font: clamp(16px, 3cqw, 26px)/1.3 var(--font-ui); font-synthesis: none;
+}
+.outdoor-coach[open] { display: flex; align-items: stretch; }
+.outdoor-coach button { border: 0; border-radius: 0; background: transparent; color: inherit; touch-action: manipulation; }
+.outdoor-coach [data-next-tip] { flex: 1; min-width: 0; min-height: 60px; padding: 7px 9px 5px; display: flex; flex-direction: column; justify-content: space-between; gap: 4px; text-align: left; font: inherit; }
+.coach-copy { display: block; }
+.coach-footer { display: flex; width: 100%; justify-content: space-between; align-items: center; gap: 8px; margin-top: 4px; color: #596a7e; font: clamp(11px, 1.8cqw, 15px)/1.3 var(--font-ui); }
+.coach-cue { text-align: right; }
+.coach-cue>span { color: #415d8a; padding-left: 4px; }
+.outdoor-coach [data-continue-later] { flex: 0 0 44px; min-height: 44px; padding: 0; border-left: 1px solid #ced5d7; color: #58677c; font: 700 19px/1 var(--font-ui); }
+.outdoor-coach button:focus-visible { outline: 2px solid #5475a8; outline-offset: -3px; }
+.outdoor-coach button:disabled { opacity: .65; cursor: wait; }
+.coach-sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
+/* The native game is paused at its waiting stage, but its screen remains visible. */
+.screen:has(>.outdoor-coach[open])>.pause-screen { visibility: hidden; }
+.outdoor-coach:lang(zh-Hant) { font-family: var(--font-ui-tc); line-height: 1.4; line-break: strict; }
+.outdoor-coach:lang(zh-Hant) .coach-footer { font-family: var(--font-ui-tc); }
 @media (max-width: 360px) { .onboarding-dialog { padding: 20px; } .onboarding-dialog h2 { font-size: 25px; } .language-choice-card { min-height: 76px; padding: 12px; } .onboarding-actions { gap: 8px; } .onboarding-dialog .onboarding-actions button { font-size: 13px; } }
 
 /* Chinese uses full-resolution system glyphs and its own reading rhythm. */
@@ -42,8 +52,6 @@
 .onboarding-dialog .onboarding-eyebrow:lang(zh-Hant) { font-size: 12px; letter-spacing: .04em; }
 .language-choice .onboarding-copy span:lang(zh-Hant) { font-size: 14px; line-height: 1.7; }
 .language-choice-card small:lang(zh-Hant) { font-size: 13px; line-height: 1.6; }
-.coach-illustration figcaption:lang(zh-Hant) { font-size: 13px; }
-.coach-availability:lang(zh-Hant) { font-size: 14px; }
 
 @media (max-height: 620px) {
   .onboarding-dialog { padding-top: 16px; padding-bottom: 16px; }
@@ -52,10 +60,5 @@
   .language-choice-subtitle { margin-bottom: 12px; }
   .onboarding-dialog .onboarding-copy { margin-bottom: 16px; }
   .onboarding-actions { margin-top: 16px; }
-  .coach-illustration { margin-top: 16px; padding-top: 12px; padding-bottom: 10px; }
-  .coach-control-example { gap: 8px; min-height: 48px; }
-  .coach-control-example>span:not(.coach-example-arrow) { padding-inline: 10px; }
-  .coach-illustration figcaption { margin-top: 8px; }
-  .coach-map-example { max-height: 64px; }
   .onboarding-dialog .onboarding-actions button { padding-inline: 8px; }
 }
