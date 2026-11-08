@@ -13,6 +13,6 @@ Validation completed:
 - All current English and Chinese district names fit the existing 112px text width. Default outer bounds are x80–208; wider floor/rooftop variants remain within the 240px screen.
 - Actual painted-canvas measurements include minimap padding, border, caption and object-fit letterboxing. At 320×568, 390×844 and desktop1606×999, a conservative minimap shadow envelope ends before native x70, leaving at least 10px before the new banner.
 
-Focused normal-entry before/after captures in both languages remain pending. No publication or new physical-iPhone verification is claimed here. Existing broader gameplay and migration matrices are not repeated for a one-file position change.
+Focused normal-entry before/after captures pass in English and Traditional Chinese at 320×568, 390×844 and desktop1606×999. All six updated captures show readable names clear of the unchanged top-left minimap; the banner still animates in and out normally. The comparison uses the same inspected organic native Save checkpoint and ordinary district transitions, with no save/position edits or emulator-state injection. No new physical-iPhone verification is claimed. Existing broader gameplay and migration matrices are not repeated for a one-file position change.
 
 Evidence: ignored `artifacts/location-popup/build-review/`, `artifacts/location-popup/source-audit.json` and `artifacts/location-popup-hud-qa/measurements.json`. Main owns integration and publication. The unapproved tutorial/settings/copy proposals and Claude map/placement work are excluded.
