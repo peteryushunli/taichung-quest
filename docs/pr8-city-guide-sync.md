@@ -1,4 +1,4 @@
-# PR8 frontend map/catalog sync — draft, combined runtime pending
+# PR8 frontend map/catalog sync — validation
 
 Prepared in `codex/pr8-city-guide-sync` from Main's combined frontend source
 `f1f6f8fb088bffacd7a515c4bd2f15bbb9008852`. The earlier isolated gym branch
@@ -56,3 +56,9 @@ preserved catalog entries, contract, assets, bindings and runtime/control files.
 No browser action, screenshot, native UI test, push, PR mutation or deployment was
 performed. Responsive appearance and combined native runtime remain unverified
 by this patch and must not be inferred from source/unit/build checks.
+
+Matched-client followup: frontend36d627e with native6366 / ROM9550aaff passed
+the five-shape120×176 guide, twelve stops, ten stamps and both Visit cards at
+desktop and390px. Native combined migration and facing acceptance is recorded
+separately in `city-batch-release.md`; the original source-only scope above is
+retained as preparation provenance.

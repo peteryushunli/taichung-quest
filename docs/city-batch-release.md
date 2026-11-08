@@ -1,6 +1,6 @@
 # City and gym batch: Xitun, Nantun, Old City and ten battles
 
-This draft combines three map workstreams and the seven remaining gym implementations, with one combined save v8:
+This release candidate combines three map workstreams and the seven remaining gym implementations, with one combined save v8:
 
 - **Xitun streets.** Xitun gets its street layout. Its west and north edges become a highway instead of a tree wall, and its southern seam opens into Nantun.
 - **Nantun.** Two new outdoor maps: Nantun North (`43:14`) and Wanhe (`43:15`). It adds two temple halls, Wanhe Temple and Wenchang Temple. Nantun's west edge is the same highway, and its border is water. Twelve Greenway seam cells change from trees to pavers.
@@ -11,17 +11,21 @@ The world grows from 120×120 to 120×176 tiles. The in-game minimap, the landin
 
 Miyahara's street layout and unrelated opening/settings proposals are not included. The accepted compact tutorial uses an in-game dialogue frame with native A/B hints and retains the shipped touch-release fix. Game-screen text selection, long-press callouts and dragging are suppressed without consuming normal controls. The fresh-game opening restores the existing encounter-preference menu after language selection, before welcome text or partner selection; existing Continue saves keep their choices. PR6's completed gym code is consolidated here at source level; its older standalone patch is not used over the city release.
 
-## Current combined draft build
+## Combined candidate and acceptance
 
 Native `6366b9e5c037647ce4d2a007efa3d3dfbedcdb48` combines `dc92cf8` and `b7b027d`, preserving both histories, and includes the saved-facing review fix plus the restored fresh-game encounter setup. The full portable patch applies to the pinned baseline and produces the exact combined tree `5cdb840ddb710fea1dd81c24eaed512be5e452c5`.
 
 The matching ROM SHA-256 is `9550aaff12089132384e82f244c3359b7c09a3fe57a43696610821f8e0c0a020` (SHA-1 `5fc45a510e69d7323b5b6bdf72399c6c403d1b24`). Fresh ELF extraction verifies language33813644, navigation33813680 and onboarding33813728; the minimap fingerprint remains `f52e2fee43b6fb0b928eeb9a5958bc9898fcb29577bbac3d7262a597ef8e09c0`. EWRAM261244 adds exactly8 transient bytes, leaving900 bytes free; IWRAM29824 is unchanged. The frozen ELF independently reproduces the ROM bytes.
 
-All map/layout/tileset/art asset trees are exact to `dc92cf8`, apart from restoring the startup call in the shared Pallet script; the gym code, trainer parties and appended glyphs match the tested gym-only source. The existing landing-map PNG is retained because its render inputs are unchanged. All506 released glyph mappings/rows are preserved, with105 appended once, for611 total. Combined gym/progress/team/save-v8/preset checks and the map guards pass. This is build/source evidence, not combined runtime acceptance.
+All map/layout/tileset/art asset trees are exact to `dc92cf8`, apart from restoring the startup call in the shared Pallet script; the gym code, trainer parties and appended glyphs match the tested gym-only source. The existing landing-map PNG is retained because its render inputs are unchanged. All506 released glyph mappings/rows are preserved, with105 appended once, for611 total. Combined gym/progress/team/save-v8/preset checks and the map guards pass. These source/build checks are complemented by the exact-ROM runtime acceptance below.
 
-Evidence: `artifacts/pr8-codex-consolidation/startup-combined-source-verification.json` and `frozen-6366b9e/README.md`. The actual ROM bytecode calls the existing exploration menu, waits, then marks language ready; native onboarding and all nine encounter-setting combinations pass. Actual Science, Greenway, Shen Ji, Fine Arts, Fengjia and Maple win/save checks on the earlier gym-only ROM `88efa224…` support unchanged gym code, but do not establish acceptance of this combined ROM. Theater completion and combined smoke/save-v8 checks are pending.
+Source and patch evidence: `artifacts/pr8-codex-consolidation/startup-combined-source-verification.json` and `frozen-6366b9e/README.md`. All seven new gym battles were actually won on the gym-only `b7b027d` / ROM `88efa224…`, with all ten badges surviving native Save, Reset, Continue, City Pass and the completed-gym interaction. Its gym functions and trainer parties are exact to this combined source; the earlier ROM's results are not relabeled as combined battles.
 
-The combined frontend passes50 tests, TypeScript and the production build with this exact ROM/metadata pair. These checks retain PR8's 120×176 geometry, landing map and existing controls. No production deployment is performed by this consolidation.
+On the exact combined `6366b9e` / `9550aaff…` ROM, the genuine ten-badge v7 save migrated to v8, showed ten City Pass stamps, and handled Ling's completed-gym interaction without battle, preparation or additional payout. All600 party bytes, ten trainer flags, money52600, inventory, identity and preferences were preserved. Native saves advanced from counter16 to17 to18. Genuine Old City Up and Greenway Left saves retained their exact positions and facing before any movement, saved as v8 with strict protected-state comparisons, then each walked one ordinary step.
+
+The production client passed actual English and Chinese fresh-start checks, restored startup encounter settings, all four compact tutorial topics across the two runs, sound toggle/placement and five-shape/twelve-stop/ten-stamp guide checks. English native Save/Continue preserved Wild Off / Trainer Sight Low without repeating startup. Controls/selection passed20/20 at desktop and390px; presentation passed5/5 at both sizes. The final count-neutral hint is the only behavior-source delta after that client run; final50 tests, TypeScript and production packaging pass. No physical iPhone/WebKit or physical multitouch test is claimed.
+
+Acceptance evidence: `artifacts/pr8-codex-consolidation/release-acceptance.json`, `artifacts/pr8-client-qa-36d627e/RESULT.md`, and `artifacts/worktrees/3c6cc7b4e276/remaining-gyms/combined-6366/runtime-ledger.json`. The final Vercel preview (`dpl_DERaCcZqyeKJovNMgqcj3YA2FEMG`, frontend `5e99723`) matches all31 frozen static asset hashes, including the full ROM, and passes isolation headers and Wasm MIME checks. Production publication is recorded separately.
 
 ## Original map-only baseline build
 
@@ -143,8 +147,8 @@ Comparisons that report FAIL in the evidence (`compare-gate6-save.json`, `compar
 - Gameplay in the production web client. The runtime gates used the QA page. On the release build of the web client, I checked that the play page loads this ROM with no console errors and that the minimap is sized to the new world.
 - The original map-only frontend omitted Nantun/temple guide coverage. The current source fixes that: five contract shapes, four districts, twelve stops and ten badge stamps. Responsive appearance remains to be checked in the combined client.
 
-## Consolidation and pending review followups
+## Consolidation and completed review followups
 
 The clean native merge retains Claude's map/save-v8 work and all ten gym registrations. Main regenerated one patch from that combined source and rebuilt its matching ROM/metadata; it did not replace the map patch with PR6's older export. The draft also includes the bilingual ten-gym web catalog, all accepted leader portraits and exact team icons.
 
-Both source-level review fixes are now included: the full City Map/catalog follows the contract with visit-only temples, and a guarded8-byte one-shot handoff preserves cache-only saved facing. The source guard binds the reviewed save/header/overworld bytes; pending native warps and position repairs retain priority. Keep PR8 in draft, distinguish evidence by exact ROM, and complete combined runtime checks before production publication. Main owns non-force updates to this existing PR head; concurrent author commits must be reconciled rather than overwritten.
+Both source-level review fixes are now included: the full City Map/catalog follows the contract with visit-only temples, and a guarded8-byte one-shot handoff preserves cache-only saved facing. The source guard binds the reviewed save/header/overworld bytes; pending native warps and position repairs retain priority. Both review fixes now have matching combined runtime/client proof. Distinguish evidence by exact ROM and publish only the verified immutable preview. Main owns non-force updates to this existing PR head; concurrent author commits must be reconciled rather than overwritten.

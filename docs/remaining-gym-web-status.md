@@ -1,10 +1,10 @@
-# Ten-gym web status — combined PR8 draft
+# Ten-gym web status — combined PR8 validation
 
 Originally prepared on frontend base `6202b96d210c9ddf2c3a0f10f2a9b1f2aa788cb3`,
 then consolidated onto PR8's `edb2744` at the user's explicit request to combine
-finished Codex code before all runtime checks finish. These are draft source
-claims, not a production acceptance receipt. The shipped three-gym release
-remains authoritative until the combined candidate passes its release gates.
+finished Codex code before all runtime checks finish. The initial source claims below preceded runtime acceptance. The combined
+candidate has now passed the separately recorded release gates; production
+publication is recorded in the release receipt.
 
 The current combined native source is `6366b9e5c037647ce4d2a007efa3d3dfbedcdb48`,
 with ROM SHA-256
@@ -61,9 +61,11 @@ portraits and all 21 team icon slots directly against Git blobs at `b7b027d`,
 including party order and PNG dimensions. Every previously tracked PNG and the
 original three leader/team bindings remain byte-for-byte unchanged.
 
-No browser testing or native runtime acceptance is established by this web patch.
-Gameplay retains its exclusive UI lease. Main owns proof acceptance and the
-matching native pair. Keep the combined PR in draft and complete its runtime
-gates before publishing the all-ten catalog. The source-level Nantun and
-visit-only temple guide fix is included; its responsive/native runtime checks
-remain separate from the ten stable gym IDs.
+The isolated web patch originally established source checks only. Matched-client
+checks later passed the five-shape City Map, twelve stops, ten passport stamps,
+and visit-only temple cards at desktop and390px. All seven native gym wins were
+accepted on identical gym code in the gym-only ROM. The exact combined6366 ROM
+then passed the genuine10-badge Continue/Save-v8/CityPass/Already checks and both
+safe Up/Left migration cases. See `city-batch-release.md` and
+`artifacts/pr8-codex-consolidation/release-acceptance.json` for exact ROM scope
+and physical-device verification limits. Main owns immutable preview promotion.
