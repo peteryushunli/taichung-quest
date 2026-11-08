@@ -14,11 +14,35 @@ import taichungPark from './assets/landmarks/taichung-park.png';
 import theater from './assets/landmarks/theater.png';
 import jun from './assets/leaders/jun.png';
 import lian from './assets/leaders/lian.png';
+import yicheng from './assets/leaders/yicheng.png';
+import xingan from './assets/leaders/xingan.png';
+import axiu from './assets/leaders/axiu.png';
+import caining from './assets/leaders/caining.png';
+import jiahe from './assets/leaders/jiahe.png';
+import muqing from './assets/leaders/muqing.png';
+import ling from './assets/leaders/ling.png';
 import peiqi from './assets/leaders/peiqi.png';
 import bulbasaurFront from './assets/pokemon/front/bulbasaur.png';
 import charmanderFront from './assets/pokemon/front/charmander.png';
 import pikachuFront from './assets/pokemon/front/pikachu.png';
 import squirtleFront from './assets/pokemon/front/squirtle.png';
+import bellsproutIcon from './assets/pokemon/icon/bellsprout.png';
+import butterfreeIcon from './assets/pokemon/icon/butterfree.png';
+import dittoIcon from './assets/pokemon/icon/ditto.png';
+import farfetchdIcon from './assets/pokemon/icon/farfetchd.png';
+import jigglypuffIcon from './assets/pokemon/icon/jigglypuff.png';
+import jynxIcon from './assets/pokemon/icon/jynx.png';
+import machokeIcon from './assets/pokemon/icon/machoke.png';
+import magmarIcon from './assets/pokemon/icon/magmar.png';
+import magnetonIcon from './assets/pokemon/icon/magneton.png';
+import meowthIcon from './assets/pokemon/icon/meowth.png';
+import mrMimeIcon from './assets/pokemon/icon/mr_mime.png';
+import omastarIcon from './assets/pokemon/icon/omastar.png';
+import poliwhirlIcon from './assets/pokemon/icon/poliwhirl.png';
+import porygonIcon from './assets/pokemon/icon/porygon.png';
+import tangelaIcon from './assets/pokemon/icon/tangela.png';
+import vaporeonIcon from './assets/pokemon/icon/vaporeon.png';
+import vileplumeIcon from './assets/pokemon/icon/vileplume.png';
 import bulbasaurIcon from './assets/pokemon/icon/bulbasaur.png';
 import charizardIcon from './assets/pokemon/icon/charizard.png';
 import charmanderIcon from './assets/pokemon/icon/charmander.png';
@@ -53,13 +77,13 @@ export const landmarkArt: Record<string, LandmarkArt> = {
   'old-taichung-station': { facade: oldStation, tint: brick, leader: jun, team: [mon('Rattata', rattataIcon), mon('Pidgey', pidgeyIcon)] },
   'taichung-park': { facade: taichungPark, tint: park, leader: lian, team: [mon('Goldeen', goldeenIcon), mon('Psyduck', psyduckIcon), mon('Pidgeotto', pidgeottoIcon)] },
   miyahara: { facade: miyahara, tint: brick, leader: peiqi, team: [mon('Seel', seelIcon), mon('Cloyster', cloysterIcon), mon('Lapras', laprasIcon)] },
-  'natural-science-museum': { facade: scienceMuseum, tint: modern },
-  'calligraphy-greenway': { facade: greenway, tint: park },
-  'shen-ji-new-village': { facade: shenJi, tint: neutral },
-  'fine-arts-museum': { facade: fineArts, tint: neutral },
-  'fengjia-night-market': { facade: fengjia, tint: brick },
-  'maple-garden': { facade: mapleGarden, tint: park },
-  'taichung-theater': { facade: theater, tint: modern },
+  'natural-science-museum': { facade: scienceMuseum, tint: modern, leader: yicheng, team: [mon('Magneton', magnetonIcon), mon('Porygon', porygonIcon), mon('Omastar', omastarIcon)] },
+  'calligraphy-greenway': { facade: greenway, tint: park, leader: xingan, team: [mon('Bellsprout', bellsproutIcon), mon('Vileplume', vileplumeIcon), mon('Tangela', tangelaIcon)] },
+  'shen-ji-new-village': { facade: shenJi, tint: neutral, leader: axiu, team: [mon('Meowth', meowthIcon), mon('Machoke', machokeIcon), mon('Ditto', dittoIcon)] },
+  'fine-arts-museum': { facade: fineArts, tint: neutral, leader: caining, team: [mon('Butterfree', butterfreeIcon), mon('Ditto', dittoIcon), mon('Porygon', porygonIcon)] },
+  'fengjia-night-market': { facade: fengjia, tint: brick, leader: jiahe, team: [mon('Farfetch’d', farfetchdIcon), mon('Magmar', magmarIcon), mon('Snorlax', snorlaxIcon)] },
+  'maple-garden': { facade: mapleGarden, tint: park, leader: muqing, team: [mon('Poliwhirl', poliwhirlIcon), mon('Butterfree', butterfreeIcon), mon('Vaporeon', vaporeonIcon)] },
+  'taichung-theater': { facade: theater, tint: modern, leader: ling, team: [mon('Jigglypuff', jigglypuffIcon), mon('Jynx', jynxIcon), mon('Mr. Mime', mrMimeIcon)] },
 };
 
 /** Page media. An empty slot renders a labelled placeholder. */

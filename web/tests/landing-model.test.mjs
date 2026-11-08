@@ -94,8 +94,25 @@ test('every landmark has facade art wired in', () => {
   }
 });
 
-test('the original three leader portraits and teams remain wired in', () => {
-  for (const place of open.slice(0, 3)) {
+test('every open gym has its leader portrait and team wired in', () => {
+  for (const place of open) {
     assert.match(assets, new RegExp(`'?${place.id}'?: \\{[^}]*leader: \\w+, team: \\[mon\\(`), place.id);
+  }
+});
+
+test('the remaining seven team orders match native source b7b027d', () => {
+  const expected = {
+    'natural-science-museum': ['Magneton', 'Porygon', 'Omastar'],
+    'calligraphy-greenway': ['Bellsprout', 'Vileplume', 'Tangela'],
+    'shen-ji-new-village': ['Meowth', 'Machoke', 'Ditto'],
+    'fine-arts-museum': ['Butterfree', 'Ditto', 'Porygon'],
+    'fengjia-night-market': ['Farfetch’d', 'Magmar', 'Snorlax'],
+    'maple-garden': ['Poliwhirl', 'Butterfree', 'Vaporeon'],
+    'taichung-theater': ['Jigglypuff', 'Jynx', 'Mr. Mime'],
+  };
+  for (const [id, names] of Object.entries(expected)) {
+    const entry = assets.split('\n').find((line) => line.includes(`'${id}':`));
+    assert.ok(entry, id);
+    assert.deepEqual([...entry.matchAll(/mon\('([^']+)', \w+\)/g)].map((match) => match[1]), names, id);
   }
 });
