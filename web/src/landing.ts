@@ -20,11 +20,13 @@ interface LandingHost {
 const landmarks = landmarkCatalog as LandingLandmark[];
 const city = cityGeometry as MinimapGeometry;
 // District names sit in the empty space beside each district, not over its tiles.
+// Each label sits on blank canvas beside its district: above it, or to its right where a neighbour fills the space above.
 const districtLabels = [
-  { key: '43:2', label: 'XITUN 西屯', below: true },
-  { key: '43:1', label: 'GREENWAY 草悟道', below: false },
-  { key: '43:0', label: 'OLD CITY 舊城', below: false },
-];
+  { key: '43:2', label: 'XITUN 西屯', side: 'right' },
+  { key: '43:1', label: 'GREENWAY 草悟道', side: 'above' },
+  { key: '43:0', label: 'OLD CITY 舊城', side: 'above' },
+  { key: '43:15', label: 'NANTUN 南屯', side: 'right', rows: 24 },
+] as const;
 const DEFAULT_LANDMARK = 'old-taichung-station';
 const GITHUB_URL = 'https://github.com/peteryushunli/taichung-quest';
 const starters = [
@@ -44,9 +46,12 @@ const monIcon = (mon: PokemonIcon, index: number, labelled = true) => `<span cla
 
 function cityMap() {
   const { width, height } = city.world;
-  const labels = districtLabels.map(({ key, label, below }) => {
-    const [left, top, , bottom] = city.mapsByNativeKey[key].worldRect!;
-    return `<span class="lp-district-name${below ? '' : ' lp-district-above'}" style="left:${(left + 1) / width * 100}%;top:${(below ? bottom + .5 : top - .5) / height * 100}%">${label}</span>`;
+  const labels = districtLabels.map((entry) => {
+    const { key, label, side } = entry;
+    const [left, top, right] = city.mapsByNativeKey[key].worldRect!;
+    // Nantun's label drops below OldCity, which fills the canvas right of Wanhe's top rows.
+    const [x, y] = side === 'right' ? [right + 1, top + 1.5 + ('rows' in entry ? entry.rows : 0)] : [left + 1, top - .5];
+    return `<span class="lp-district-name${side === 'above' ? ' lp-district-above' : ''}" style="left:${x / width * 100}%;top:${y / height * 100}%">${label}</span>`;
   }).join('');
   return `<img class="lp-map-art" src="${escapeHtml(landingMedia.cityMap)}" width="${width * 16}" height="${height * 16}" alt="">${labels}<span class="lp-map-chip">${copy('IN-GAME MAP')}</span>`;
 }
@@ -96,7 +101,7 @@ function markup() {
       <section class="lp-map-section" id="map"><div class="lp-wrap">
         ${sectionHead('01 — THE MAP', 'Three districts. Ten real places.', "Distances are compressed and side streets are gone, but the city keeps its shape: the old city around the station, the Greenway's museums in the middle, Xitun's theater and night market to the northwest.")}
         <div class="lp-map-body">
-          <div class="lp-map" id="lp-map" role="group" aria-label="${escapeHtml(t('Choose a landmark'))}" data-i18n-label="Choose a landmark">
+          <div class="lp-map" id="lp-map" style="aspect-ratio:${city.world.width} / ${city.world.height};background-size:${800 / city.world.width}% ${800 / city.world.height}%" role="group" aria-label="${escapeHtml(t('Choose a landmark'))}" data-i18n-label="Choose a landmark">
             ${cityMap()}
             <div id="lp-markers"></div>
             <div class="lp-map-legend"><span><i class="lp-swatch-open"></i>${copy('Gym open')}</span><span><i class="lp-swatch-planned"></i>${copy('In development')}</span></div>
