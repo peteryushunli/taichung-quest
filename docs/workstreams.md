@@ -1,5 +1,15 @@
 # Integration and isolated workstreams
 
+## Current ownership and QA policy — 8 November 2026
+
+The user requested all completed Codex work be consolidated into existing PR8. Main is the single native/root integration and PR-head writer; Claude retains map/building ownership, Gameplay owns gym mechanisms, Story validates existing bilingual content, and Interface owns the bounded guide changes. Use source-level integration and non-force pushes after checking the current remote head. A clean observed worktree is not proof that another author has stopped writing.
+
+The seven new gym implementations, append-only glyphs and guide assets are draft source until the combined ROM passes its release gates. Preserve ten gym IDs, prior badges and the authored city save-v8 migration. The opening/tutorial/keyboard-setting review branches remain excluded. PR6 is superseded by PR8; do not merge its older standalone patch separately. Current source/build/runtime status is recorded in `city-batch-release.md`; checkpoint tables below are historical.
+
+Save QA screenshots, native saves, party/travel JSON and clips directly under the shared repository's ignored `artifacts/downloads/`. Start native QA through `scripts/serve-gameplay-qa.py`; follow `qa-output-workflow.md` for exact receipts and safe same-origin restarts. Do not trigger personal browser Downloads, change global browser preferences or bulk-stage artifacts. Existing project downloads were migrated with hash manifests in that folder.
+
+Vercel is the sole canonical frontend. The existing sound, touch-release and banner fixes are shipped; the legacy private GPT Site is retained and retirement is inactive. Only Main publishes an exact verified ROM/metadata/contract/frontend package.
+
 The main session owns integration, source-patch export, the canonical ROM, public source publication, and Site releases. Feature workers edit only their assigned worktree and submit small commits for integration.
 
 ## Checkpoints

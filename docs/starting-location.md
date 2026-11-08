@@ -1,5 +1,11 @@
 # Starting location: Old Taichung Station plaza
 
+## Current accepted baseline — 8 November 2026
+
+Arrival is inside Old Station's welcome hall: language/welcome, the four-starter graphical selection, then a direct transition to the station plaza. Keep exactly Charmander, Bulbasaur, Squirtle and Pikachu as the starter choices; no alternate-start selector is planned. Existing/demo saves retain ordinary Continue without repeating the opening.
+
+The separate shorter welcome/tutorial/settings revision remains a review proposal. PR8's map/gym consolidation preserves the accepted opening code; the older outdoor-start discussion below is historical where it conflicts with this baseline.
+
 The user has accepted the recommended Old Taichung Station plaza starting point. The existing Greenway prototype spawn should migrate to the station district as the new world is built. Greenway and Maple Garden remain included landmarks; they are not alternate selectable starting locations.
 
 ## Accepted opening
