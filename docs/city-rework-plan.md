@@ -84,3 +84,5 @@ Each has a recommendation, and work proceeds on the recommendation unless told o
 2. ~~Extend Greenway and Old City north to a straight edge, or keep the stepped edge?~~ **Decided 8 November 2026: extend north.** Greenway becomes 40×104 and Old City 40×120, and the north highway runs straight from x = 0 to x = 120.
 3. **No Surf on any water** (recommended) or allow Surf on the inner canals?
 4. **Use the real road and river names in the game** (recommended, after sourcing) or leave them unnamed?
+
+5. **Decided 8 November 2026: Wanhe grows east to x = 80**, filling the notch below Greenway. Greenway's south edge and Old City's west edge below it become seams with Wanhe, and the river wraps outside (Old City east and south, Wanhe east from y 121). The geometry is in `artifacts/city-rework/masterplan.json` and on the board.
