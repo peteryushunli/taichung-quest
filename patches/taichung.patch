@@ -12526,10 +12526,10 @@ index 0000000..be81428
 +  "encodingPolicy": "Preserve every existing FC19 character index; only regenerate bitmap rows and append missing characters."
 +}
 diff --git a/charmap.txt b/charmap.txt
-index b9d0ed9..047402a 100644
+index b9d0ed9..db740ee 100644
 --- a/charmap.txt
 +++ b/charmap.txt
-@@ -910,3 +910,511 @@ EMOJI_BIGANGER = F9 FE
+@@ -910,3 +910,616 @@ EMOJI_BIGANGER = F9 FE
  '\l' = FA @ scroll up window text
  '\p' = FB @ new paragraph
  '\n' = FE @ new line
@@ -13041,8 +13041,113 @@ index b9d0ed9..047402a 100644
 +'講' = FC 19 18 03
 +'配' = FC 19 19 03
 +'飾' = FC 19 1A 03
++'丁' = FC 19 1B 03
++'乾' = FC 19 1C 03
++'今' = FC 19 1D 03
++'仔' = FC 19 1E 03
++'修' = FC 19 1F 03
++'倒' = FC 19 20 03
++'假' = FC 19 21 03
++'刻' = FC 19 22 03
++'剛' = FC 19 23 03
++'剩' = FC 19 24 03
++'劃' = FC 19 25 03
++'勢' = FC 19 26 03
++'化' = FC 19 27 03
++'又' = FC 19 28 03
++'句' = FC 19 29 03
++'只' = FC 19 2A 03
++'吃' = FC 19 2B 03
++'品' = FC 19 2C 03
++'嘉' = FC 19 2D 03
++'塊' = FC 19 2E 03
++'塘' = FC 19 2F 03
++'太' = FC 19 30 03
++'失' = FC 19 31 03
++'奏' = FC 19 32 03
++'實' = FC 19 33 03
++'寧' = FC 19 34 03
++'己' = FC 19 35 03
++'布' = FC 19 36 03
++'幕' = FC 19 37 03
++'廚' = FC 19 38 03
++'張' = FC 19 39 03
++'彼' = FC 19 3A 03
++'怎' = FC 19 3B 03
++'態' = FC 19 3C 03
++'所' = FC 19 3D 03
++'手' = FC 19 3E 03
++'才' = FC 19 3F 03
++'抓' = FC 19 40 03
++'排' = FC 19 41 03
++'提' = FC 19 42 03
++'改' = FC 19 43 03
++'敗' = FC 19 44 03
++'數' = FC 19 45 03
++'昆' = FC 19 46 03
++'晚' = FC 19 47 03
++'本' = FC 19 48 03
++'果' = FC 19 49 03
++'根' = FC 19 4A 03
++'栽' = FC 19 4B 03
++'棲' = FC 19 4C 03
++'植' = FC 19 4D 03
++'構' = FC 19 4E 03
++'樂' = FC 19 4F 03
++'樣' = FC 19 50 03
++'此' = FC 19 51 03
++'段' = FC 19 52 03
++'比' = FC 19 53 03
++'沐' = FC 19 54 03
++'沾' = FC 19 55 03
++'法' = FC 19 56 03
++'流' = FC 19 57 03
++'測' = FC 19 58 03
++'演' = FC 19 59 03
++'澄' = FC 19 5A 03
++'片' = FC 19 5B 03
++'登' = FC 19 5C 03
++'白' = FC 19 5D 03
++'石' = FC 19 5E 03
++'示' = FC 19 5F 03
++'禾' = FC 19 60 03
++'稿' = FC 19 61 03
++'筆' = FC 19 62 03
++'答' = FC 19 63 03
++'節' = FC 19 64 03
++'紙' = FC 19 65 03
++'組' = FC 19 66 03
++'結' = FC 19 67 03
++'編' = FC 19 68 03
++'縫' = FC 19 69 03
++'纏' = FC 19 6A 03
++'聆' = FC 19 6B 03
++'聊' = FC 19 6C 03
++'膽' = FC 19 6D 03
++'舞' = FC 19 6E 03
++'色' = FC 19 6F 03
++'蟲' = FC 19 70 03
++'行' = FC 19 71 03
++'袖' = FC 19 72 03
++'規' = FC 19 73 03
++'說' = FC 19 74 03
++'越' = FC 19 75 03
++'趣' = FC 19 76 03
++'造' = FC 19 77 03
++'連' = FC 19 78 03
++'采' = FC 19 79 03
++'錯' = FC 19 7A 03
++'長' = FC 19 7B 03
++'阿' = FC 19 7C 03
++'預' = FC 19 7D 03
++'題' = FC 19 7E 03
++'顏' = FC 19 7F 03
++'餐' = FC 19 80 03
++'驗' = FC 19 81 03
++'鬆' = FC 19 82 03
++'麼' = FC 19 83 03
 diff --git a/data/event_scripts.s b/data/event_scripts.s
-index 88d7594..1f66234 100644
+index 88d7594..275ab49 100644
 --- a/data/event_scripts.s
 +++ b/data/event_scripts.s
 @@ -23,6 +23,7 @@
@@ -13053,7 +13158,7 @@ index 88d7594..1f66234 100644
  #include "constants/battle_setup.h"
  #include "constants/map_scripts.h"
  #include "constants/cable_club.h"
-@@ -1360,3 +1361,8 @@ Text_TestMsg::
+@@ -1360,3 +1361,17 @@ Text_TestMsg::
  	.include "data/text/save.inc"
  	.include "data/text/new_game_intro.inc"
  	.include "data/text/pokedude.inc"
@@ -13062,6 +13167,15 @@ index 88d7594..1f66234 100644
 +	.include "data/scripts/taichung_gyms.inc"
 +	.include "data/scripts/taichung_park_gym.inc"
 +	.include "data/scripts/taichung_miyahara_gym.inc"
++
++	.include "data/scripts/taichung_landmark_gym.inc"
++	.include "data/scripts/taichung_science_gym.inc"
++	.include "data/scripts/taichung_greenway_gym.inc"
++	.include "data/scripts/taichung_shen_ji_gym.inc"
++	.include "data/scripts/taichung_fine_arts_gym.inc"
++	.include "data/scripts/taichung_fengjia_gym.inc"
++	.include "data/scripts/taichung_maple_garden_gym.inc"
++	.include "data/scripts/taichung_theater_gym.inc"
 diff --git a/data/layouts/PalletTown/map.bin b/data/layouts/PalletTown/map.bin
 index f2113394f22d6f0180f364071301b5ed06588773..bf1cbe2eb7b76e808e1fde8621cdf33a1a71beb2 100644
 GIT binary patch
@@ -15637,10 +15751,10 @@ index 8c382f5..058aea0 100644
  }
 diff --git a/data/scripts/taichung_city.inc b/data/scripts/taichung_city.inc
 new file mode 100644
-index 0000000..daaf113
+index 0000000..5fb99d1
 --- /dev/null
 +++ b/data/scripts/taichung_city.inc
-@@ -0,0 +1,214 @@
+@@ -0,0 +1,207 @@
 +@ Native city geometry and shared Station checkpoint.
 +TaichungCity_OnTransition::
 +	callnative TaichungSaveSetStationCheckpoint
@@ -15742,8 +15856,7 @@ index 0000000..daaf113
 +	end
 +
 +TaichungCity_Host_ScienceMuseum::
-+	msgbox TaichungCity_Text_Host_ScienceMuseum, MSGBOX_NPC
-+	end
++	goto TaichungGym_EventScript_ScienceChallenge
 +
 +TaichungCity_Text_ScienceMuseum::
 +	.string "Natural Science Museum\n"
@@ -15759,8 +15872,7 @@ index 0000000..daaf113
 +	end
 +
 +TaichungCity_Host_Greenway::
-+	msgbox TaichungCity_Text_Host_Greenway, MSGBOX_NPC
-+	end
++	goto TaichungGym_EventScript_GreenwayChallenge
 +
 +TaichungCity_Text_Greenway::
 +	.string "Calligraphy Greenway\n"
@@ -15776,8 +15888,7 @@ index 0000000..daaf113
 +	end
 +
 +TaichungCity_Host_ShenJi::
-+	msgbox TaichungCity_Text_Host_ShenJi, MSGBOX_NPC
-+	end
++	goto TaichungGym_EventScript_ShenJiChallenge
 +
 +TaichungCity_Text_ShenJi::
 +	.string "Shen Ji New Village\n"
@@ -15793,8 +15904,7 @@ index 0000000..daaf113
 +	end
 +
 +TaichungCity_Host_FineArts::
-+	msgbox TaichungCity_Text_Host_FineArts, MSGBOX_NPC
-+	end
++	goto TaichungGym_EventScript_FineArtsChallenge
 +
 +TaichungCity_Text_FineArts::
 +	.string "Taiwan Fine Arts Museum\n"
@@ -15810,8 +15920,7 @@ index 0000000..daaf113
 +	end
 +
 +TaichungCity_Host_Fengjia::
-+	msgbox TaichungCity_Text_Host_Fengjia, MSGBOX_NPC
-+	end
++	goto TaichungGym_EventScript_FengjiaChallenge
 +
 +TaichungCity_Text_Fengjia::
 +	.string "Fengjia Night Market\n"
@@ -15827,8 +15936,7 @@ index 0000000..daaf113
 +	end
 +
 +TaichungCity_Host_MapleGarden::
-+	msgbox TaichungCity_Text_Host_MapleGarden, MSGBOX_NPC
-+	end
++	goto TaichungGym_EventScript_MapleGardenChallenge
 +
 +TaichungCity_Text_MapleGarden::
 +	.string "Maple Garden\n"
@@ -15844,8 +15952,7 @@ index 0000000..daaf113
 +	end
 +
 +TaichungCity_Host_Theater::
-+	msgbox TaichungCity_Text_Host_Theater, MSGBOX_NPC
-+	end
++	goto TaichungGym_EventScript_TheaterChallenge
 +
 +TaichungCity_Text_Theater::
 +	.string "National Taichung Theater\n"
@@ -15855,6 +15962,27 @@ index 0000000..daaf113
 +	.string "Welcome to this landmark hall!\p"
 +	.string "Our city league is preparing\n"
 +	.string "this hall for future challenges.$"
+diff --git a/data/scripts/taichung_fengjia_gym.inc b/data/scripts/taichung_fengjia_gym.inc
+new file mode 100644
+index 0000000..455957d
+--- /dev/null
++++ b/data/scripts/taichung_fengjia_gym.inc
+@@ -0,0 +1 @@
++	taichung_landmark_gym Fengjia, TAICHUNG_GYM_FENGJIA, TRAINER_TAICHUNG_FENGJIA_JIAHE
+diff --git a/data/scripts/taichung_fine_arts_gym.inc b/data/scripts/taichung_fine_arts_gym.inc
+new file mode 100644
+index 0000000..837d7b2
+--- /dev/null
++++ b/data/scripts/taichung_fine_arts_gym.inc
+@@ -0,0 +1 @@
++	taichung_landmark_gym FineArts, TAICHUNG_GYM_FINE_ARTS, TRAINER_TAICHUNG_FINE_ARTS_CAINING
+diff --git a/data/scripts/taichung_greenway_gym.inc b/data/scripts/taichung_greenway_gym.inc
+new file mode 100644
+index 0000000..bc56d9a
+--- /dev/null
++++ b/data/scripts/taichung_greenway_gym.inc
+@@ -0,0 +1 @@
++	taichung_landmark_gym Greenway, TAICHUNG_GYM_GREENWAY, TRAINER_TAICHUNG_GREENWAY_XINGAN
 diff --git a/data/scripts/taichung_gyms.inc b/data/scripts/taichung_gyms.inc
 new file mode 100644
 index 0000000..f96f61f
@@ -15917,6 +16045,107 @@ index 0000000..f96f61f
 +	msgbox gStringVar4
 +	release
 +	end
+diff --git a/data/scripts/taichung_landmark_gym.inc b/data/scripts/taichung_landmark_gym.inc
+new file mode 100644
+index 0000000..109146d
+--- /dev/null
++++ b/data/scripts/taichung_landmark_gym.inc
+@@ -0,0 +1,88 @@
++@ Shared shipped Miyahara flow: voluntary offer, native preparation, actual
++@ matching win + saved-bit guard, one-shot loss notice, and no rematches.
++	.macro taichung_landmark_gym name, gym, trainer
++	.global TaichungGym_EventScript_\name\()Challenge
++TaichungGym_EventScript_\name\()Challenge:
++	lock
++	faceplayer
++	goto_if_questlog TaichungGym_\name\()ReplaySkipped
++	setvar VAR_0x8004, \gym
++	callnative TaichungGym_ScriptIsComplete
++	goto_if_eq VAR_RESULT, TRUE, TaichungGym_\name\()AlreadyComplete
++	callnative TaichungGym_ScriptConsumeLandmarkLossNotice
++	goto_if_ne VAR_RESULT, TRUE, TaichungGym_\name\()Greeting
++	setvar VAR_0x8005, TAICHUNG_GYM_MESSAGE_LOSS
++	callnative TaichungGym_ScriptGet\name\()Message
++	msgbox gStringVar4
++
++	.global TaichungGym_\name\()Greeting
++TaichungGym_\name\()Greeting:
++	setvar VAR_0x8005, TAICHUNG_GYM_MESSAGE_GREETING
++	callnative TaichungGym_ScriptGet\name\()Message
++	msgbox gStringVar4
++	setvar VAR_0x8005, TAICHUNG_GYM_MESSAGE_OFFER
++	callnative TaichungGym_ScriptGet\name\()Message
++	msgbox gStringVar4, MSGBOX_YESNO
++	goto_if_eq VAR_RESULT, NO, TaichungGym_\name\()Declined
++	setvar VAR_0x8004, \gym
++	setvar VAR_0x8005, \trainer
++	callnative TaichungGym_ScriptPrepareChallenge
++	goto_if_eq VAR_RESULT, FALSE, TaichungGym_\name\()Unavailable
++	goto_if_eq VAR_0x40FB, 2, TaichungGym_\name\()BattleChinese
++	trainerbattle_single \trainer, TaichungGym_Text_\name\()IntroEn, TaichungGym_Text_\name\()DefeatEn, TaichungGym_\name\()AfterBattle
++	goto TaichungGym_\name\()BattleSkipped
++
++	.global TaichungGym_\name\()BattleChinese
++TaichungGym_\name\()BattleChinese:
++	trainerbattle_single \trainer, TaichungGym_Text_\name\()IntroZh, TaichungGym_Text_\name\()DefeatZh, TaichungGym_\name\()AfterBattle
++	goto TaichungGym_\name\()BattleSkipped
++
++	.global TaichungGym_\name\()BattleSkipped
++TaichungGym_\name\()BattleSkipped:
++	callnative TaichungGym_ScriptCancelChallenge
++	goto TaichungGym_\name\()NotRecorded
++
++@ Native quest-log trainer replay can set a fought flag without running an
++@ actual battle. Exit before preparation or trainerbattle is ever reached.
++	.global TaichungGym_\name\()ReplaySkipped
++TaichungGym_\name\()ReplaySkipped:
++	callnative TaichungGym_ScriptCancelChallenge
++	release
++	end
++
++	.global TaichungGym_\name\()AfterBattle
++TaichungGym_\name\()AfterBattle:
++	setvar VAR_0x8004, \gym
++	callnative TaichungGym_ScriptGetResult
++	goto_if_ne VAR_RESULT, TAICHUNG_GYM_RESULT_WON, TaichungGym_\name\()NotRecorded
++	callnative TaichungGym_ScriptIsComplete
++	goto_if_ne VAR_RESULT, TRUE, TaichungGym_\name\()NotRecorded
++	setvar VAR_0x8005, TAICHUNG_GYM_MESSAGE_COMPLETE
++	goto TaichungGym_\name\()Message
++
++	.global TaichungGym_\name\()AlreadyComplete
++TaichungGym_\name\()AlreadyComplete:
++	setvar VAR_0x8005, TAICHUNG_GYM_MESSAGE_ALREADY_COMPLETE
++	goto TaichungGym_\name\()Message
++
++	.global TaichungGym_\name\()Declined
++TaichungGym_\name\()Declined:
++	setvar VAR_0x8005, TAICHUNG_GYM_MESSAGE_DECLINED
++	goto TaichungGym_\name\()Message
++
++	.global TaichungGym_\name\()Unavailable
++TaichungGym_\name\()Unavailable:
++	setvar VAR_0x8005, TAICHUNG_GYM_MESSAGE_UNAVAILABLE
++	goto TaichungGym_\name\()Message
++
++	.global TaichungGym_\name\()NotRecorded
++TaichungGym_\name\()NotRecorded:
++	setvar VAR_0x8005, TAICHUNG_GYM_MESSAGE_NOT_RECORDED
++
++	.global TaichungGym_\name\()Message
++TaichungGym_\name\()Message:
++	callnative TaichungGym_ScriptGet\name\()Message
++	msgbox gStringVar4
++	release
++	end
++	.endm
+diff --git a/data/scripts/taichung_maple_garden_gym.inc b/data/scripts/taichung_maple_garden_gym.inc
+new file mode 100644
+index 0000000..3a7ed69
+--- /dev/null
++++ b/data/scripts/taichung_maple_garden_gym.inc
+@@ -0,0 +1 @@
++	taichung_landmark_gym MapleGarden, TAICHUNG_GYM_MAPLE_GARDEN, TRAINER_TAICHUNG_MAPLE_GARDEN_MUQING
 diff --git a/data/scripts/taichung_miyahara_gym.inc b/data/scripts/taichung_miyahara_gym.inc
 new file mode 100644
 index 0000000..159f572
@@ -16077,6 +16306,27 @@ index 0000000..6cfc156
 +	msgbox gStringVar4
 +	release
 +	end
+diff --git a/data/scripts/taichung_science_gym.inc b/data/scripts/taichung_science_gym.inc
+new file mode 100644
+index 0000000..2e974b5
+--- /dev/null
++++ b/data/scripts/taichung_science_gym.inc
+@@ -0,0 +1 @@
++	taichung_landmark_gym Science, TAICHUNG_GYM_SCIENCE_MUSEUM, TRAINER_TAICHUNG_SCIENCE_YICHENG
+diff --git a/data/scripts/taichung_shen_ji_gym.inc b/data/scripts/taichung_shen_ji_gym.inc
+new file mode 100644
+index 0000000..449ca50
+--- /dev/null
++++ b/data/scripts/taichung_shen_ji_gym.inc
+@@ -0,0 +1 @@
++	taichung_landmark_gym ShenJi, TAICHUNG_GYM_SHEN_JI, TRAINER_TAICHUNG_SHEN_JI_AXIU
+diff --git a/data/scripts/taichung_theater_gym.inc b/data/scripts/taichung_theater_gym.inc
+new file mode 100644
+index 0000000..b76dee5
+--- /dev/null
++++ b/data/scripts/taichung_theater_gym.inc
+@@ -0,0 +1 @@
++	taichung_landmark_gym Theater, TAICHUNG_GYM_THEATER, TRAINER_TAICHUNG_THEATER_LING
 diff --git a/data/taichung/landmarks/README-archive.md b/data/taichung/landmarks/README-archive.md
 new file mode 100644
 index 0000000..6c73899
@@ -341578,6 +341828,43 @@ index 0000000..0ac3c23
 +win preserving Jun's bit, repeat interaction, team-item preservation and native
 +Save followed by fresh-import Continue. The released presentation and its
 +presenter save remain the stable fallback throughout.
+diff --git a/docs/taichung-remaining-gyms.md b/docs/taichung-remaining-gyms.md
+new file mode 100644
+index 0000000..60922c7
+--- /dev/null
++++ b/docs/taichung-remaining-gyms.md
+@@ -0,0 +1,31 @@
++# Remaining landmark gym activation
++
++Base: `c8e1495c9cbbd06b71f0b680f3da72e1e78bf9f0` (save version 7, released banner fix). Existing Station, Park and Miyahara code is retained. Main supplied the only font change, `929ae84`, consumed as `f1c2e04`: 506 prior rows unchanged, 105 appended from the current reviewed seven-gym text union.
++
++| Gym / leader | Trainer | Permanent bit | Level-50 themed team | Source slice |
++| --- | --- | --- | --- | --- |
++| Science / Yicheng | 746 | 3 | Magneton, Porygon, Omastar | f0131b7 |
++| Greenway / Xingan | 747 | 4 | Bellsprout, Vileplume, Tangela | 5a8b4cc |
++| Shen Ji / Axiu | 748 | 5 | Meowth, Machoke, Ditto | ae4d113 |
++| Fine Arts / Caining | 749 | 6 | Butterfree, Ditto, Porygon | 64183f3 |
++| Fengjia / Jiahe | 750 | 7 | Farfetch'd, Magmar, Snorlax | abb38c1 |
++| Maple Garden / Muqing | 751 | 8 | Poliwhirl, Butterfree, Vaporeon | 46e3b5d |
++| Theater / Ling | 752 | 9 | Jigglypuff, Jynx, Mr. Mime | cbc85ce |
++
++All trainer parties use the current legal city presets explicitly, custom-move flags, IV255 (native31), no held items, and no trainer inventory. Ditto has Transform and three intentionally empty slots. Exact teams, balance and prose remain revisable defaults. Existing reviewed field and battle art is reused. NUM_TRAINERS is753, below the unchanged768 trainer-flag capacity. Save bits remain in VAR_0x40FA, with all ten permanent IDs unchanged.
++
++A single event-script macro reuses the Miyahara sequence: lock/face, early quest-log exit, existing-completion check, consume only this gym's real-loss notice, greeting, voluntary Yes/No/B offer, common party preparation only after Yes, language-selected native trainer battle, matching actual-win result plus saved-bit completion guards, and release. One shared C helper enforces the same Complete/Already guards on paired messages. Each leader supplies ten paired text constants from the current Story draft, including combined Win/Earned; unused separate Win/Earned and optional Retry duplicates are omitted. Loss returns through greeting and the same voluntary offer.
++
++No geometry, art, save-version/migration, opening/settings, browser behavior, or canonical/export/publication changes are part of Gameplay's source slices. Main owns integration and release.
++
++Focused host checks (passed):
++
++- `bash tools/taichung_gameplay/test-landmark-gyms.sh`: actual shared progress/message C and all installed text adapters; each gym's exact trainer/bit, all512 prior-badge masks, absent/wrong/cancelled start/end, all15 non-win codes, real-loss notices, duplicate outcomes, retries, no rematches, Continue-style volatile reset, bilingual text guards, and no saved-variable writes except the own earned bit.
++- `bash tools/taichung_gameplay/test-progress.sh`: all ten stable IDs and prior shared outcome regressions.
++- `bash tools/taichung_gameplay/test-team.sh`: actual common preparation, including six existing partners with fainted/damaged state, levels5/80, distinct identity/mail and protected save data; expected normalization/healing/PP with identity/IV/EV/items/mail retained.
++- `bash tools/taichung_gameplay/test-save.sh`: current save-v7 migrations and old-save protection.
++- `python3 tools/taichung_gameplay/validate-team-presets.py`: original150 roster and legal usable GenIII move presets.
++
++Host string tests select UTF8 drafts; native preproc/build must separately verify game encoding. These checks do not establish native runtime acceptance. The frozen ROM hash, actual per-gym portrait/team/win/record checks and combined Save/Continue result are recorded in the external acceptance handoff after they occur.
++
++Evidence/checkpoint: `/Users/peter/devday_hackathon/artifacts/worktrees/3c6cc7b4e276/remaining-gyms/HANDOFF.md`. Prior Miyahara evidence remains unchanged.
 diff --git a/docs/taichung-save-migration.md b/docs/taichung-save-migration.md
 new file mode 100644
 index 0000000..253b713
@@ -344266,16 +344553,30 @@ index 7c36f36..015fe25 100644
  
  #define LISTMENU_BADGES                    0
 diff --git a/include/constants/opponents.h b/include/constants/opponents.h
-index 3b893f2..970ab28 100644
+index 3b893f2..5d80f31 100644
 --- a/include/constants/opponents.h
 +++ b/include/constants/opponents.h
-@@ -746,12 +746,15 @@
+@@ -746,12 +746,29 @@
  #define TRAINER_CHAMPION_REMATCH_BULBASAUR       740
  #define TRAINER_CHAMPION_REMATCH_CHARMANDER      741
  #define TRAINER_CUE_BALL_PAXTON                  742
 +#define TRAINER_TAICHUNG_STATION_JUN             743
 +#define TRAINER_TAICHUNG_PARK_LIAN               744
 +#define TRAINER_TAICHUNG_MIYAHARA_PEIQI          745
++
++#define TRAINER_TAICHUNG_SCIENCE_YICHENG               746
++
++#define TRAINER_TAICHUNG_GREENWAY_XINGAN               747
++
++#define TRAINER_TAICHUNG_SHEN_JI_AXIU                  748
++
++#define TRAINER_TAICHUNG_FINE_ARTS_CAINING             749
++
++#define TRAINER_TAICHUNG_FENGJIA_JIAHE                 750
++
++#define TRAINER_TAICHUNG_MAPLE_GARDEN_MUQING           751
++
++#define TRAINER_TAICHUNG_THEATER_LING                  752
  
  // NOTE: Because each Trainer uses a flag to determine when they are defeated, there is 
 -//       only space for 25 additional trainers before trainer flag space overflows.
@@ -344283,7 +344584,7 @@ index 3b893f2..970ab28 100644
  //       MAX_TRAINERS_COUNT can be increased but will take up additional saveblock space
  
 -#define NUM_TRAINERS                             743
-+#define NUM_TRAINERS                             746
++#define NUM_TRAINERS                             753
  #define MAX_TRAINERS_COUNT                       768
  
  #endif  // GUARD_CONSTANTS_OPPONENTS_H
@@ -344562,6 +344863,21 @@ index 0000000..7c5cebf
 +#ifndef GUARD_TAICHUNG_JUN_H
 +#define GUARD_TAICHUNG_JUN_H
 +void TaichungJunRefreshOnContinue(void);
++#endif
+diff --git a/include/taichung_landmark_gym.h b/include/taichung_landmark_gym.h
+new file mode 100644
+index 0000000..31296d0
+--- /dev/null
++++ b/include/taichung_landmark_gym.h
+@@ -0,0 +1,9 @@
++#ifndef GUARD_TAICHUNG_LANDMARK_GYM_H
++#define GUARD_TAICHUNG_LANDMARK_GYM_H
++
++#include "taichung_gym_progress.h"
++
++// Per-leader text uses the same guarded messages as the shipped Miyahara flow.
++void TaichungGymCopyLandmarkMessage(u16 gymId, const u8 *const messages[][2]);
++
 +#endif
 diff --git a/include/taichung_language.h b/include/taichung_language.h
 new file mode 100644
@@ -346140,10 +346456,10 @@ index 601bff6..b9acdb6 100644
  }
 diff --git a/src/data/taichung_glyphs.h b/src/data/taichung_glyphs.h
 new file mode 100644
-index 0000000..5c3f9c7
+index 0000000..7951ef4
 --- /dev/null
 +++ b/src/data/taichung_glyphs.h
-@@ -0,0 +1,510 @@
+@@ -0,0 +1,615 @@
 +// Generated by tools/taichung_gameplay/refresh-chinese-glyphs.py.
 +// Taichung Native Bitmap12; source/licenses: assets/fonts/taichung-native-font.json
 +static const u16 sTaichungChineseGlyphs[][14] = {
@@ -346653,6 +346969,111 @@ index 0000000..5c3f9c7
 +    {0x000, 0x000, 0x121, 0x7fa, 0x127, 0x7f8, 0x127, 0x7f8, 0x297, 0x3f0, 0x297, 0x7fd, 0x217, 0x000}, // 503: 講
 +    {0x000, 0x000, 0x7df, 0x40a, 0x40a, 0x41f, 0x415, 0x7d5, 0x05b, 0x051, 0x45f, 0x451, 0x79f, 0x000}, // 504: 配
 +    {0x000, 0x000, 0x022, 0x7e5, 0x090, 0x087, 0x7f5, 0x497, 0x495, 0x497, 0x491, 0x695, 0x08b, 0x000}, // 505: 飾
++    {0x000, 0x000, 0x7ff, 0x020, 0x020, 0x020, 0x020, 0x020, 0x020, 0x020, 0x020, 0x020, 0x038, 0x000}, // 506: 丁
++    {0x000, 0x000, 0x044, 0x7df, 0x044, 0x03f, 0x3d1, 0x21f, 0x111, 0x09f, 0x044, 0x45f, 0x784, 0x000}, // 507: 乾
++    {0x000, 0x000, 0x020, 0x050, 0x18c, 0x603, 0x0f8, 0x000, 0x3fe, 0x100, 0x080, 0x040, 0x020, 0x000}, // 508: 今
++    {0x000, 0x000, 0x3f4, 0x204, 0x102, 0x082, 0x083, 0x7f2, 0x082, 0x082, 0x082, 0x082, 0x0e2, 0x000}, // 509: 仔
++    {0x000, 0x000, 0x024, 0x3e4, 0x132, 0x0ca, 0x73b, 0x08a, 0x26a, 0x18a, 0x26a, 0x182, 0x072, 0x000}, // 510: 修
++    {0x000, 0x000, 0x4fc, 0x524, 0x512, 0x54a, 0x5bb, 0x522, 0x522, 0x4fa, 0x422, 0x4e2, 0x71a, 0x000}, // 511: 倒
++    {0x000, 0x000, 0x774, 0x454, 0x452, 0x772, 0x013, 0x772, 0x512, 0x512, 0x272, 0x512, 0x492, 0x000}, // 512: 假
++    {0x000, 0x000, 0x408, 0x57f, 0x504, 0x522, 0x51f, 0x508, 0x544, 0x523, 0x410, 0x42c, 0x743, 0x000}, // 513: 刻
++    {0x000, 0x000, 0x47f, 0x541, 0x563, 0x555, 0x57f, 0x549, 0x56b, 0x56b, 0x47f, 0x441, 0x761, 0x000}, // 514: 剛
++    {0x000, 0x000, 0x430, 0x50e, 0x508, 0x57f, 0x52a, 0x56b, 0x52a, 0x56b, 0x41c, 0x42a, 0x749, 0x000}, // 515: 剩
++    {0x000, 0x000, 0x47e, 0x548, 0x5ff, 0x548, 0x57e, 0x508, 0x5ff, 0x54a, 0x47e, 0x44a, 0x6ff, 0x000}, // 516: 劃
++    {0x000, 0x000, 0x084, 0x3ff, 0x284, 0x2bf, 0x252, 0x4af, 0x424, 0x3ff, 0x210, 0x208, 0x186, 0x000}, // 517: 勢
++    {0x000, 0x000, 0x024, 0x024, 0x022, 0x022, 0x3e3, 0x022, 0x022, 0x022, 0x422, 0x422, 0x7c2, 0x000}, // 518: 化
++    {0x000, 0x000, 0x3fe, 0x202, 0x202, 0x104, 0x104, 0x088, 0x050, 0x020, 0x050, 0x18c, 0x603, 0x000}, // 519: 又
++    {0x000, 0x000, 0x004, 0x7fc, 0x404, 0x402, 0x4fd, 0x484, 0x484, 0x484, 0x4fc, 0x400, 0x300, 0x000}, // 520: 句
++    {0x000, 0x000, 0x3fe, 0x202, 0x202, 0x202, 0x202, 0x3fe, 0x000, 0x000, 0x104, 0x202, 0x401, 0x000}, // 521: 只
++    {0x000, 0x000, 0x020, 0x7e7, 0x015, 0x00d, 0x3f5, 0x105, 0x085, 0x045, 0x027, 0x410, 0x7e0, 0x000}, // 522: 吃
++    {0x000, 0x000, 0x1fc, 0x104, 0x104, 0x104, 0x1fc, 0x000, 0x7df, 0x451, 0x451, 0x451, 0x7df, 0x000}, // 523: 品
++    {0x000, 0x000, 0x7ff, 0x020, 0x3fe, 0x104, 0x1fc, 0x088, 0x7ff, 0x004, 0x7df, 0x452, 0x7d9, 0x000}, // 524: 嘉
++    {0x000, 0x000, 0x022, 0x3f2, 0x252, 0x3f7, 0x252, 0x3f2, 0x142, 0x2a6, 0x3a3, 0x490, 0x788, 0x000}, // 525: 塊
++    {0x000, 0x000, 0x082, 0x7f2, 0x112, 0x7d7, 0x512, 0x7f2, 0x512, 0x7d6, 0x453, 0x450, 0x7c8, 0x000}, // 526: 塘
++    {0x000, 0x000, 0x020, 0x020, 0x020, 0x7ff, 0x020, 0x050, 0x050, 0x088, 0x088, 0x114, 0x623, 0x000}, // 527: 太
++    {0x000, 0x000, 0x024, 0x024, 0x3fc, 0x022, 0x021, 0x020, 0x7ff, 0x050, 0x088, 0x104, 0x603, 0x000}, // 528: 失
++    {0x000, 0x000, 0x020, 0x3fe, 0x010, 0x3fe, 0x008, 0x7ff, 0x174, 0x222, 0x5fd, 0x050, 0x18c, 0x000}, // 529: 奏
++    {0x000, 0x000, 0x020, 0x7ff, 0x525, 0x3fe, 0x124, 0x3fe, 0x202, 0x3fe, 0x202, 0x3fe, 0x603, 0x000}, // 530: 實
++    {0x000, 0x000, 0x020, 0x7ff, 0x429, 0x24a, 0x5f1, 0x000, 0x3fe, 0x252, 0x7ff, 0x020, 0x038, 0x000}, // 531: 寧
++    {0x000, 0x000, 0x3fe, 0x200, 0x200, 0x200, 0x200, 0x3fe, 0x002, 0x002, 0x402, 0x402, 0x7fc, 0x000}, // 532: 己
++    {0x000, 0x000, 0x010, 0x7ff, 0x008, 0x044, 0x042, 0x3fd, 0x244, 0x244, 0x244, 0x344, 0x040, 0x000}, // 533: 布
++    {0x000, 0x000, 0x088, 0x7df, 0x088, 0x3fe, 0x202, 0x7ff, 0x124, 0x3fe, 0x525, 0x1a4, 0x020, 0x000}, // 534: 幕
++    {0x000, 0x000, 0x040, 0x7fe, 0x212, 0x27e, 0x792, 0x27e, 0x2aa, 0x33a, 0x22a, 0x272, 0x30d, 0x000}, // 535: 廚
++    {0x000, 0x000, 0x3f7, 0x014, 0x3f4, 0x017, 0x3f1, 0x011, 0x7ff, 0x054, 0x294, 0x154, 0x633, 0x000}, // 536: 張
++    {0x000, 0x000, 0x084, 0x7f2, 0x491, 0x094, 0x7f2, 0x433, 0x452, 0x292, 0x112, 0x292, 0x46a, 0x000}, // 537: 彼
++    {0x000, 0x000, 0x004, 0x7fc, 0x012, 0x3f1, 0x010, 0x3f0, 0x010, 0x22a, 0x44a, 0x509, 0x1f0, 0x000}, // 538: 怎
++    {0x000, 0x000, 0x042, 0x7c9, 0x05f, 0x791, 0x05f, 0x7d1, 0x05f, 0x791, 0x22a, 0x54a, 0x5f1, 0x000}, // 539: 態
++    {0x000, 0x000, 0x618, 0x1c6, 0x042, 0x05e, 0x7d2, 0x252, 0x25e, 0x242, 0x242, 0x242, 0x221, 0x000}, // 540: 所
++    {0x000, 0x000, 0x3c0, 0x03e, 0x020, 0x020, 0x3fe, 0x020, 0x020, 0x7ff, 0x020, 0x020, 0x038, 0x000}, // 541: 手
++    {0x000, 0x000, 0x080, 0x080, 0x7ff, 0x080, 0x0c0, 0x0a0, 0x090, 0x08c, 0x083, 0x080, 0x0e0, 0x000}, // 542: 才
++    {0x000, 0x000, 0x702, 0x2f2, 0x297, 0x292, 0x292, 0x296, 0x293, 0x292, 0x292, 0x492, 0x48b, 0x000}, // 543: 抓
++    {0x000, 0x000, 0x142, 0x142, 0x777, 0x142, 0x142, 0x776, 0x143, 0x142, 0x772, 0x122, 0x113, 0x000}, // 544: 排
++    {0x000, 0x000, 0x3f2, 0x212, 0x3f7, 0x212, 0x3f2, 0x006, 0x7fb, 0x0a2, 0x7a2, 0x0d2, 0x70b, 0x000}, // 545: 提
++    {0x000, 0x000, 0x040, 0x04f, 0x7c8, 0x228, 0x258, 0x24f, 0x141, 0x141, 0x089, 0x145, 0x633, 0x000}, // 546: 改
++    {0x000, 0x000, 0x04f, 0x049, 0x7cf, 0x229, 0x259, 0x24f, 0x149, 0x14f, 0x080, 0x14a, 0x631, 0x000}, // 547: 敗
++    {0x000, 0x000, 0x088, 0x0be, 0x7aa, 0x27f, 0x2aa, 0x2bf, 0x2a9, 0x2bf, 0x124, 0x29c, 0x463, 0x000}, // 548: 數
++    {0x000, 0x000, 0x3fe, 0x202, 0x3fe, 0x202, 0x3fe, 0x000, 0x042, 0x7de, 0x042, 0x45a, 0x786, 0x000}, // 549: 昆
++    {0x000, 0x000, 0x020, 0x1e7, 0x115, 0x7fd, 0x495, 0x497, 0x7f5, 0x145, 0x545, 0x527, 0x718, 0x000}, // 550: 晚
++    {0x000, 0x000, 0x020, 0x020, 0x7ff, 0x0a8, 0x0a8, 0x0a8, 0x124, 0x124, 0x2fa, 0x421, 0x020, 0x000}, // 551: 本
++    {0x000, 0x000, 0x3fe, 0x222, 0x3fe, 0x222, 0x3fe, 0x020, 0x7ff, 0x0a8, 0x124, 0x623, 0x020, 0x000}, // 552: 果
++    {0x000, 0x000, 0x7e4, 0x424, 0x7ef, 0x424, 0x424, 0x7e6, 0x12e, 0x525, 0x224, 0x2a4, 0x464, 0x000}, // 553: 根
++    {0x000, 0x000, 0x288, 0x4be, 0x088, 0x7ff, 0x080, 0x488, 0x2bf, 0x108, 0x51c, 0x6aa, 0x449, 0x000}, // 554: 栽
++    {0x000, 0x000, 0x084, 0x7f4, 0x28f, 0x7f4, 0x284, 0x3e6, 0x04e, 0x7f5, 0x244, 0x1c4, 0x634, 0x000}, // 555: 棲
++    {0x000, 0x000, 0x084, 0x7f4, 0x08f, 0x3e4, 0x224, 0x3e6, 0x22e, 0x3e5, 0x224, 0x224, 0x7f4, 0x000}, // 556: 植
++    {0x000, 0x000, 0x144, 0x7f4, 0x14f, 0x7f4, 0x144, 0x7f6, 0x2ae, 0x3e5, 0x2a4, 0x7f4, 0x224, 0x000}, // 557: 構
++    {0x000, 0x000, 0x222, 0x171, 0x555, 0x272, 0x555, 0x777, 0x020, 0x7ff, 0x0a8, 0x124, 0x623, 0x000}, // 558: 樂
++    {0x000, 0x000, 0x224, 0x7f4, 0x08f, 0x3e4, 0x084, 0x7f6, 0x04e, 0x6f5, 0x1a4, 0x2a4, 0x4d4, 0x000}, // 559: 樣
++    {0x000, 0x000, 0x088, 0x088, 0x088, 0x08a, 0x7ba, 0x08a, 0x08a, 0x08a, 0x48a, 0x4ba, 0x707, 0x000}, // 560: 此
++    {0x000, 0x000, 0x398, 0x286, 0x282, 0x29e, 0x662, 0x01e, 0x7c2, 0x442, 0x29f, 0x102, 0x6e2, 0x000}, // 561: 段
++    {0x000, 0x000, 0x041, 0x041, 0x041, 0x041, 0x7df, 0x041, 0x041, 0x041, 0x441, 0x459, 0x787, 0x000}, // 562: 比
++    {0x000, 0x000, 0x041, 0x042, 0x7fc, 0x041, 0x0e2, 0x0e0, 0x150, 0x152, 0x24a, 0x445, 0x041, 0x000}, // 563: 沐
++    {0x000, 0x000, 0x082, 0x084, 0x780, 0x081, 0x082, 0x080, 0x7f0, 0x412, 0x412, 0x411, 0x7f1, 0x000}, // 564: 沾
++    {0x000, 0x000, 0x082, 0x084, 0x3f0, 0x081, 0x082, 0x7f8, 0x040, 0x222, 0x222, 0x591, 0x479, 0x000}, // 565: 法
++    {0x000, 0x000, 0x041, 0x7fa, 0x020, 0x211, 0x5fa, 0x000, 0x250, 0x252, 0x252, 0x251, 0x649, 0x000}, // 566: 流
++    {0x000, 0x000, 0x479, 0x54a, 0x578, 0x549, 0x54a, 0x578, 0x548, 0x57a, 0x402, 0x449, 0x685, 0x000}, // 567: 測
++    {0x000, 0x000, 0x081, 0x7fa, 0x408, 0x3f1, 0x082, 0x3f0, 0x290, 0x3f2, 0x292, 0x3f1, 0x619, 0x000}, // 568: 演
++    {0x000, 0x000, 0x572, 0x344, 0x550, 0x221, 0x3f2, 0x408, 0x3f0, 0x212, 0x3f2, 0x121, 0x7f9, 0x000}, // 569: 澄
++    {0x000, 0x000, 0x084, 0x084, 0x084, 0x0fc, 0x004, 0x004, 0x1fc, 0x104, 0x102, 0x102, 0x101, 0x000}, // 570: 片
++    {0x000, 0x000, 0x25e, 0x150, 0x08a, 0x504, 0x3fe, 0x401, 0x1fc, 0x104, 0x1fc, 0x088, 0x7ff, 0x000}, // 571: 登
++    {0x000, 0x000, 0x020, 0x010, 0x3fe, 0x202, 0x202, 0x202, 0x3fe, 0x202, 0x202, 0x202, 0x3fe, 0x000}, // 572: 白
++    {0x000, 0x000, 0x7ff, 0x010, 0x010, 0x008, 0x008, 0x3fc, 0x206, 0x205, 0x204, 0x204, 0x3fc, 0x000}, // 573: 石
++    {0x000, 0x000, 0x3fe, 0x000, 0x000, 0x7ff, 0x020, 0x020, 0x124, 0x224, 0x422, 0x421, 0x020, 0x000}, // 574: 示
++    {0x000, 0x000, 0x3c0, 0x03e, 0x020, 0x020, 0x7ff, 0x070, 0x0a8, 0x124, 0x222, 0x421, 0x020, 0x000}, // 575: 禾
++    {0x000, 0x000, 0x088, 0x7f7, 0x224, 0x3e4, 0x00f, 0x7f4, 0x416, 0x5de, 0x555, 0x5d4, 0x614, 0x000}, // 576: 稿
++    {0x000, 0x000, 0x042, 0x7de, 0x129, 0x3fe, 0x220, 0x7ff, 0x220, 0x3fe, 0x020, 0x7ff, 0x020, 0x000}, // 577: 筆
++    {0x000, 0x000, 0x042, 0x7de, 0x129, 0x070, 0x18c, 0x6fb, 0x000, 0x3fe, 0x202, 0x202, 0x3fe, 0x000}, // 578: 答
++    {0x000, 0x000, 0x042, 0x7de, 0x129, 0x7df, 0x451, 0x45f, 0x451, 0x45f, 0x449, 0x755, 0x053, 0x000}, // 579: 節
++    {0x000, 0x000, 0x302, 0x0f2, 0x091, 0x097, 0x092, 0x7f5, 0x097, 0x110, 0x515, 0x655, 0x435, 0x000}, // 580: 紙
++    {0x000, 0x000, 0x3f2, 0x212, 0x211, 0x3f7, 0x212, 0x215, 0x3f7, 0x210, 0x215, 0x215, 0x7f9, 0x000}, // 581: 組
++    {0x000, 0x000, 0x082, 0x082, 0x7f9, 0x087, 0x082, 0x3f5, 0x007, 0x3f0, 0x215, 0x215, 0x3f5, 0x000}, // 582: 結
++    {0x000, 0x000, 0x3f2, 0x012, 0x7f1, 0x417, 0x7f2, 0x015, 0x7f7, 0x550, 0x7f5, 0x555, 0x549, 0x000}, // 583: 編
++    {0x000, 0x000, 0x08a, 0x792, 0x441, 0x39b, 0x452, 0x115, 0x7cf, 0x110, 0x7d5, 0x115, 0x7e9, 0x000}, // 584: 縫
++    {0x000, 0x000, 0x102, 0x7f2, 0x551, 0x7d7, 0x552, 0x7f5, 0x297, 0x570, 0x7d5, 0x115, 0x7e9, 0x000}, // 585: 纏
++    {0x000, 0x000, 0x39f, 0x449, 0x02f, 0x7e9, 0x009, 0x00f, 0x7e9, 0x489, 0x48f, 0x689, 0x088, 0x000}, // 586: 聆
++    {0x000, 0x000, 0x04f, 0x735, 0x557, 0x555, 0x555, 0x557, 0x555, 0x575, 0x757, 0x125, 0x11c, 0x000}, // 587: 聊
++    {0x000, 0x000, 0x1e7, 0x115, 0x7fd, 0x257, 0x635, 0x095, 0x7f7, 0x015, 0x7d5, 0x455, 0x7cd, 0x000}, // 588: 膽
++    {0x000, 0x000, 0x002, 0x7fe, 0x155, 0x7ff, 0x154, 0x7ff, 0x102, 0x7fe, 0x155, 0x7c8, 0x107, 0x000}, // 589: 舞
++    {0x000, 0x000, 0x004, 0x0fc, 0x082, 0x3ff, 0x222, 0x222, 0x3fe, 0x002, 0x402, 0x402, 0x7fc, 0x000}, // 590: 色
++    {0x000, 0x000, 0x020, 0x3fe, 0x222, 0x1fe, 0x220, 0x7ff, 0x555, 0x555, 0x7df, 0x524, 0x3df, 0x000}, // 591: 蟲
++    {0x000, 0x000, 0x3e4, 0x002, 0x001, 0x7f4, 0x102, 0x103, 0x102, 0x102, 0x102, 0x102, 0x1c2, 0x000}, // 592: 行
++    {0x000, 0x000, 0x081, 0x082, 0x7f7, 0x494, 0x492, 0x49a, 0x7f7, 0x49a, 0x492, 0x492, 0x7f2, 0x000}, // 593: 袖
++    {0x000, 0x000, 0x3e4, 0x224, 0x3ef, 0x224, 0x3e4, 0x22f, 0x3e4, 0x144, 0x54a, 0x52a, 0x711, 0x000}, // 594: 規
++    {0x000, 0x000, 0x121, 0x212, 0x40f, 0x3f0, 0x217, 0x210, 0x3f7, 0x120, 0x527, 0x515, 0x70f, 0x000}, // 595: 說
++    {0x000, 0x000, 0x508, 0x7de, 0x148, 0x548, 0x55f, 0x248, 0x34a, 0x6da, 0x54a, 0x00d, 0x7f1, 0x000}, // 596: 越
++    {0x000, 0x000, 0x1f4, 0x0ae, 0x7e4, 0x4a4, 0x5ef, 0x2a4, 0x2ed, 0x5b5, 0x485, 0x007, 0x7f9, 0x000}, // 597: 趣
++    {0x000, 0x000, 0x091, 0x3f2, 0x088, 0x083, 0x7fa, 0x002, 0x3f1, 0x212, 0x3f2, 0x005, 0x7f9, 0x000}, // 598: 造
++    {0x000, 0x000, 0x081, 0x7fa, 0x080, 0x3f3, 0x292, 0x3f2, 0x291, 0x7fa, 0x082, 0x085, 0x7f9, 0x000}, // 599: 連
++    {0x000, 0x000, 0x380, 0x07e, 0x210, 0x122, 0x084, 0x020, 0x7ff, 0x0a8, 0x124, 0x623, 0x020, 0x000}, // 600: 采
++    {0x000, 0x000, 0x144, 0x3ea, 0x141, 0x14e, 0x7f4, 0x00f, 0x3e4, 0x22d, 0x3e6, 0x22c, 0x3e3, 0x000}, // 601: 錯
++    {0x000, 0x000, 0x3fc, 0x004, 0x1fc, 0x004, 0x1fc, 0x004, 0x7ff, 0x224, 0x144, 0x094, 0x70c, 0x000}, // 602: 長
++    {0x000, 0x000, 0x7f7, 0x205, 0x205, 0x2f5, 0x293, 0x295, 0x295, 0x2f5, 0x207, 0x201, 0x381, 0x000}, // 603: 阿
++    {0x000, 0x000, 0x7df, 0x110, 0x7ca, 0x444, 0x7df, 0x454, 0x7cc, 0x444, 0x7c4, 0x284, 0x446, 0x000}, // 604: 預
++    {0x000, 0x000, 0x7df, 0x111, 0x7df, 0x451, 0x7df, 0x440, 0x7df, 0x284, 0x45d, 0x007, 0x7f9, 0x000}, // 605: 題
++    {0x000, 0x000, 0x7c4, 0x11f, 0x7ca, 0x455, 0x7df, 0x449, 0x7c5, 0x451, 0x7cd, 0x291, 0x44d, 0x000}, // 606: 顏
++    {0x000, 0x000, 0x7de, 0x402, 0x29e, 0x193, 0x67c, 0x104, 0x3ff, 0x504, 0x1fc, 0x244, 0x79f, 0x000}, // 607: 餐
++    {0x000, 0x000, 0x08f, 0x145, 0x22f, 0x5d5, 0x00f, 0x775, 0x55f, 0x778, 0x22a, 0x229, 0x55d, 0x000}, // 608: 驗
++    {0x000, 0x000, 0x63e, 0x182, 0x63e, 0x182, 0x07f, 0x3a4, 0x22f, 0x494, 0x496, 0x245, 0x7f4, 0x000}, // 609: 鬆
++    {0x000, 0x000, 0x040, 0x7fe, 0x112, 0x7fe, 0x3ba, 0x556, 0x042, 0x132, 0x0c2, 0x232, 0x5f9, 0x000}, // 610: 麼
 +};
 diff --git a/src/data/taichung_team_presets.h b/src/data/taichung_team_presets.h
 new file mode 100644
@@ -347235,10 +347656,10 @@ index c2ad6ac..f1d7b36 100644
 +    TRAINER_PAL(TAICHUNG_LING, gTrainerPalette_TaichungLing),
  };
 diff --git a/src/data/trainer_parties.h b/src/data/trainer_parties.h
-index 2e57800..8b1383e 100644
+index 2e57800..b6ad33c 100644
 --- a/src/data/trainer_parties.h
 +++ b/src/data/trainer_parties.h
-@@ -10860,3 +10860,43 @@ static const struct TrainerMonNoItemDefaultMoves sParty_CueBallPaxton[] = {
+@@ -10860,3 +10860,155 @@ static const struct TrainerMonNoItemDefaultMoves sParty_CueBallPaxton[] = {
          .species = SPECIES_MUK,
      },
  };
@@ -347282,11 +347703,123 @@ index 2e57800..8b1383e 100644
 +        .moves = {MOVE_SURF, MOVE_ICE_BEAM, MOVE_THUNDERBOLT, MOVE_BODY_SLAM},
 +    },
 +};
++
++// Revisable landmark team: shared city level and legal native presets.
++static const struct TrainerMonNoItemCustomMoves sParty_TaichungScienceYicheng[] = {
++    {
++        .iv = 255, .lvl = TAICHUNG_TEAM_LEVEL, .species = SPECIES_MAGNETON,
++        .moves = {MOVE_THUNDERBOLT, MOVE_SHOCK_WAVE, MOVE_THUNDER_WAVE, MOVE_REFLECT},
++    },
++    {
++        .iv = 255, .lvl = TAICHUNG_TEAM_LEVEL, .species = SPECIES_PORYGON,
++        .moves = {MOVE_TRI_ATTACK, MOVE_ICE_BEAM, MOVE_THUNDERBOLT, MOVE_RECOVER},
++    },
++    {
++        .iv = 255, .lvl = TAICHUNG_TEAM_LEVEL, .species = SPECIES_OMASTAR,
++        .moves = {MOVE_SURF, MOVE_ICE_BEAM, MOVE_ROCK_SLIDE, MOVE_PROTECT},
++    },
++};
++
++// Revisable landmark team: shared city level and legal native presets.
++static const struct TrainerMonNoItemCustomMoves sParty_TaichungGreenwayXingan[] = {
++    {
++        .iv = 255, .lvl = TAICHUNG_TEAM_LEVEL, .species = SPECIES_BELLSPROUT,
++        .moves = {MOVE_GIGA_DRAIN, MOVE_SLUDGE_BOMB, MOVE_SLEEP_POWDER, MOVE_GROWTH},
++    },
++    {
++        .iv = 255, .lvl = TAICHUNG_TEAM_LEVEL, .species = SPECIES_VILEPLUME,
++        .moves = {MOVE_GIGA_DRAIN, MOVE_SLUDGE_BOMB, MOVE_SLEEP_POWDER, MOVE_MOONLIGHT},
++    },
++    {
++        .iv = 255, .lvl = TAICHUNG_TEAM_LEVEL, .species = SPECIES_TANGELA,
++        .moves = {MOVE_GIGA_DRAIN, MOVE_SLUDGE_BOMB, MOVE_SLEEP_POWDER, MOVE_GROWTH},
++    },
++};
++
++// Revisable landmark team: shared city level and legal native presets.
++static const struct TrainerMonNoItemCustomMoves sParty_TaichungShenJiAxiu[] = {
++    {
++        .iv = 255, .lvl = TAICHUNG_TEAM_LEVEL, .species = SPECIES_MEOWTH,
++        .moves = {MOVE_SLASH, MOVE_SHADOW_BALL, MOVE_BITE, MOVE_FAKE_OUT},
++    },
++    {
++        .iv = 255, .lvl = TAICHUNG_TEAM_LEVEL, .species = SPECIES_MACHOKE,
++        .moves = {MOVE_BRICK_BREAK, MOVE_ROCK_SLIDE, MOVE_EARTHQUAKE, MOVE_BULK_UP},
++    },
++    {
++        .iv = 255, .lvl = TAICHUNG_TEAM_LEVEL, .species = SPECIES_DITTO,
++        .moves = {MOVE_TRANSFORM, MOVE_NONE, MOVE_NONE, MOVE_NONE},
++    },
++};
++
++// Revisable landmark team: shared city level and legal native presets.
++static const struct TrainerMonNoItemCustomMoves sParty_TaichungFineArtsCaining[] = {
++    {
++        .iv = 255, .lvl = TAICHUNG_TEAM_LEVEL, .species = SPECIES_BUTTERFREE,
++        .moves = {MOVE_PSYCHIC, MOVE_GIGA_DRAIN, MOVE_SLEEP_POWDER, MOVE_GUST},
++    },
++    {
++        .iv = 255, .lvl = TAICHUNG_TEAM_LEVEL, .species = SPECIES_DITTO,
++        .moves = {MOVE_TRANSFORM, MOVE_NONE, MOVE_NONE, MOVE_NONE},
++    },
++    {
++        .iv = 255, .lvl = TAICHUNG_TEAM_LEVEL, .species = SPECIES_PORYGON,
++        .moves = {MOVE_TRI_ATTACK, MOVE_ICE_BEAM, MOVE_THUNDERBOLT, MOVE_RECOVER},
++    },
++};
++
++// Revisable landmark team: shared city level and legal native presets.
++static const struct TrainerMonNoItemCustomMoves sParty_TaichungFengjiaJiahe[] = {
++    {
++        .iv = 255, .lvl = TAICHUNG_TEAM_LEVEL, .species = SPECIES_FARFETCHD,
++        .moves = {MOVE_FLY, MOVE_SLASH, MOVE_STEEL_WING, MOVE_SWORDS_DANCE},
++    },
++    {
++        .iv = 255, .lvl = TAICHUNG_TEAM_LEVEL, .species = SPECIES_MAGMAR,
++        .moves = {MOVE_FLAMETHROWER, MOVE_PSYCHIC, MOVE_BRICK_BREAK, MOVE_CONFUSE_RAY},
++    },
++    {
++        .iv = 255, .lvl = TAICHUNG_TEAM_LEVEL, .species = SPECIES_SNORLAX,
++        .moves = {MOVE_BODY_SLAM, MOVE_SHADOW_BALL, MOVE_EARTHQUAKE, MOVE_REST},
++    },
++};
++
++// Revisable landmark team: shared city level and legal native presets.
++static const struct TrainerMonNoItemCustomMoves sParty_TaichungMapleGardenMuqing[] = {
++    {
++        .iv = 255, .lvl = TAICHUNG_TEAM_LEVEL, .species = SPECIES_POLIWHIRL,
++        .moves = {MOVE_SURF, MOVE_ICE_BEAM, MOVE_BODY_SLAM, MOVE_HYPNOSIS},
++    },
++    {
++        .iv = 255, .lvl = TAICHUNG_TEAM_LEVEL, .species = SPECIES_BUTTERFREE,
++        .moves = {MOVE_PSYCHIC, MOVE_GIGA_DRAIN, MOVE_SLEEP_POWDER, MOVE_GUST},
++    },
++    {
++        .iv = 255, .lvl = TAICHUNG_TEAM_LEVEL, .species = SPECIES_VAPOREON,
++        .moves = {MOVE_SURF, MOVE_ICE_BEAM, MOVE_BITE, MOVE_ACID_ARMOR},
++    },
++};
++
++// Revisable landmark team: shared city level and legal native presets.
++static const struct TrainerMonNoItemCustomMoves sParty_TaichungTheaterLing[] = {
++    {
++        .iv = 255, .lvl = TAICHUNG_TEAM_LEVEL, .species = SPECIES_JIGGLYPUFF,
++        .moves = {MOVE_BODY_SLAM, MOVE_PSYCHIC, MOVE_ICE_BEAM, MOVE_SING},
++    },
++    {
++        .iv = 255, .lvl = TAICHUNG_TEAM_LEVEL, .species = SPECIES_JYNX,
++        .moves = {MOVE_ICE_BEAM, MOVE_PSYCHIC, MOVE_LOVELY_KISS, MOVE_CALM_MIND},
++    },
++    {
++        .iv = 255, .lvl = TAICHUNG_TEAM_LEVEL, .species = SPECIES_MR_MIME,
++        .moves = {MOVE_PSYCHIC, MOVE_THUNDERBOLT, MOVE_CALM_MIND, MOVE_ENCORE},
++    },
++};
 diff --git a/src/data/trainers.h b/src/data/trainers.h
-index 02afbfd..8762300 100644
+index 02afbfd..0382a15 100644
 --- a/src/data/trainers.h
 +++ b/src/data/trainers.h
-@@ -7422,4 +7422,36 @@ const struct Trainer gTrainers[] = {
+@@ -7422,4 +7422,113 @@ const struct Trainer gTrainers[] = {
          .aiFlags = AI_SCRIPT_CHECK_BAD_MOVE,
          .party = NO_ITEM_DEFAULT_MOVES(sParty_CueBallPaxton),
      },
@@ -347321,6 +347854,83 @@ index 02afbfd..8762300 100644
 +        .doubleBattle = FALSE,
 +        .aiFlags = AI_SCRIPT_CHECK_BAD_MOVE,
 +        .party = NO_ITEM_CUSTOM_MOVES(sParty_TaichungMiyaharaPeiqi),
++    },
++    // Reviewed existing leader art; no items, common level-50 city rules.
++    [TRAINER_TAICHUNG_SCIENCE_YICHENG] = {
++        .trainerClass = TRAINER_CLASS_LEADER,
++        .encounterMusic_gender = TRAINER_ENCOUNTER_MUSIC_MALE,
++        .trainerPic = TRAINER_PIC_TAICHUNG_YICHENG,
++        .trainerName = _("YICHENG"),
++        .items = {},
++        .doubleBattle = FALSE,
++        .aiFlags = AI_SCRIPT_CHECK_BAD_MOVE,
++        .party = NO_ITEM_CUSTOM_MOVES(sParty_TaichungScienceYicheng),
++    },
++    // Reviewed existing leader art; no items, common level-50 city rules.
++    [TRAINER_TAICHUNG_GREENWAY_XINGAN] = {
++        .trainerClass = TRAINER_CLASS_LEADER,
++        .encounterMusic_gender = TRAINER_ENCOUNTER_MUSIC_MALE,
++        .trainerPic = TRAINER_PIC_TAICHUNG_XINGAN,
++        .trainerName = _("XINGAN"),
++        .items = {},
++        .doubleBattle = FALSE,
++        .aiFlags = AI_SCRIPT_CHECK_BAD_MOVE,
++        .party = NO_ITEM_CUSTOM_MOVES(sParty_TaichungGreenwayXingan),
++    },
++    // Reviewed existing leader art; no items, common level-50 city rules.
++    [TRAINER_TAICHUNG_SHEN_JI_AXIU] = {
++        .trainerClass = TRAINER_CLASS_LEADER,
++        .encounterMusic_gender = TRAINER_ENCOUNTER_MUSIC_MALE,
++        .trainerPic = TRAINER_PIC_TAICHUNG_AXIU,
++        .trainerName = _("AXIU"),
++        .items = {},
++        .doubleBattle = FALSE,
++        .aiFlags = AI_SCRIPT_CHECK_BAD_MOVE,
++        .party = NO_ITEM_CUSTOM_MOVES(sParty_TaichungShenJiAxiu),
++    },
++    // Reviewed existing leader art; no items, common level-50 city rules.
++    [TRAINER_TAICHUNG_FINE_ARTS_CAINING] = {
++        .trainerClass = TRAINER_CLASS_LEADER,
++        .encounterMusic_gender = TRAINER_ENCOUNTER_MUSIC_FEMALE | F_TRAINER_FEMALE,
++        .trainerPic = TRAINER_PIC_TAICHUNG_CAINING,
++        .trainerName = _("CAINING"),
++        .items = {},
++        .doubleBattle = FALSE,
++        .aiFlags = AI_SCRIPT_CHECK_BAD_MOVE,
++        .party = NO_ITEM_CUSTOM_MOVES(sParty_TaichungFineArtsCaining),
++    },
++    // Reviewed existing leader art; no items, common level-50 city rules.
++    [TRAINER_TAICHUNG_FENGJIA_JIAHE] = {
++        .trainerClass = TRAINER_CLASS_LEADER,
++        .encounterMusic_gender = TRAINER_ENCOUNTER_MUSIC_MALE,
++        .trainerPic = TRAINER_PIC_TAICHUNG_JIAHE,
++        .trainerName = _("JIAHE"),
++        .items = {},
++        .doubleBattle = FALSE,
++        .aiFlags = AI_SCRIPT_CHECK_BAD_MOVE,
++        .party = NO_ITEM_CUSTOM_MOVES(sParty_TaichungFengjiaJiahe),
++    },
++    // Reviewed existing leader art; no items, common level-50 city rules.
++    [TRAINER_TAICHUNG_MAPLE_GARDEN_MUQING] = {
++        .trainerClass = TRAINER_CLASS_LEADER,
++        .encounterMusic_gender = TRAINER_ENCOUNTER_MUSIC_FEMALE | F_TRAINER_FEMALE,
++        .trainerPic = TRAINER_PIC_TAICHUNG_MUQING,
++        .trainerName = _("MUQING"),
++        .items = {},
++        .doubleBattle = FALSE,
++        .aiFlags = AI_SCRIPT_CHECK_BAD_MOVE,
++        .party = NO_ITEM_CUSTOM_MOVES(sParty_TaichungMapleGardenMuqing),
++    },
++    // Reviewed existing leader art; no items, common level-50 city rules.
++    [TRAINER_TAICHUNG_THEATER_LING] = {
++        .trainerClass = TRAINER_CLASS_LEADER,
++        .encounterMusic_gender = TRAINER_ENCOUNTER_MUSIC_FEMALE | F_TRAINER_FEMALE,
++        .trainerPic = TRAINER_PIC_TAICHUNG_LING,
++        .trainerName = _("LING"),
++        .items = {},
++        .doubleBattle = FALSE,
++        .aiFlags = AI_SCRIPT_CHECK_BAD_MOVE,
++        .party = NO_ITEM_CUSTOM_MOVES(sParty_TaichungTheaterLing),
 +    },
  };
 diff --git a/src/data/wild_encounters.json b/src/data/wild_encounters.json
@@ -349236,6 +349846,144 @@ index 0000000..f65329e
 +    if (gTasks[taskId].data[0] == 0)
 +        DrawExplorationMenu();
 +}
+diff --git a/src/taichung_fengjia_gym.c b/src/taichung_fengjia_gym.c
+new file mode 100644
+index 0000000..b0c87d2
+--- /dev/null
++++ b/src/taichung_fengjia_gym.c
+@@ -0,0 +1,40 @@
++#include "global.h"
++#include "taichung_landmark_gym.h"
++
++// Story paired draft; roster/moves and exact prose remain revisable defaults.
++const u8 TaichungGym_Text_FengjiaGreetingEn[] = _("I'm Jiahe. Chef on duty!\nGood food takes teamwork.");
++const u8 TaichungGym_Text_FengjiaGreetingZh[] = _("我是嘉禾，今晚主廚是我！\n好料理，也要靠好默契。");
++const u8 TaichungGym_Text_FengjiaOfferEn[] = _("Want a Fengjia gym challenge?\nA win earns this gym's badge.");
++const u8 TaichungGym_Text_FengjiaOfferZh[] = _("想挑戰逢甲道館嗎？\n獲勝就能得到這裡的徽章。");
++const u8 TaichungGym_Text_FengjiaIntroEn[] = _("Good timing brings it all.\nLet's see your combination!");
++const u8 TaichungGym_Text_FengjiaIntroZh[] = _("搭配得好，也要抓對時機。\n讓我看看你的組合吧！");
++const u8 TaichungGym_Text_FengjiaDefeatEn[] = _("Now that hit the spot!");
++const u8 TaichungGym_Text_FengjiaDefeatZh[] = _("這個組合，正對味！");
++const u8 TaichungGym_Text_FengjiaDeclinedEn[] = _("Sure! Go enjoy your evening.\nOr afternoon. I lose track.");
++const u8 TaichungGym_Text_FengjiaDeclinedZh[] = _("好啊，慢慢享受今晚！\n還是下午？我聊到忘了。");
++const u8 TaichungGym_Text_FengjiaAlreadyEn[] = _("Your Fengjia badge is safe.\nNow, have I had dinner yet?");
++const u8 TaichungGym_Text_FengjiaAlreadyZh[] = _("逢甲徽章已經記好了。\n所以，我晚餐吃了沒啊？");
++const u8 TaichungGym_Text_FengjiaLossEn[] = _("That batch came out uneven.\nRest up. Try a new mix.");
++const u8 TaichungGym_Text_FengjiaLossZh[] = _("這一回，火候沒抓得太準。\n休息一下，下次換個搭配。");
++const u8 TaichungGym_Text_FengjiaNotRecordedEn[] = _("No new badge was recorded.\nYou're welcome to try again.");
++const u8 TaichungGym_Text_FengjiaNotRecordedZh[] = _("這次沒有新增徽章。\n歡迎再次挑戰。");
++const u8 TaichungGym_Text_FengjiaUnavailableEn[] = _("Bring a POKéMON partner\nwhen you're ready to battle.");
++const u8 TaichungGym_Text_FengjiaUnavailableZh[] = _("準備對戰時，\n請帶著你的寶可夢夥伴。");
++const u8 TaichungGym_Text_FengjiaCompleteEn[] = _("Good timing. Great teamwork.\nWish I'd thought of that mix.\pFengjia badge recorded!\nKeep exploring at your pace.");
++const u8 TaichungGym_Text_FengjiaCompleteZh[] = _("時機漂亮，默契也好。\n這個搭配，我怎麼沒想到。\p逢甲徽章已記在城市護照。\n照你的步調，繼續探索吧。");
++
++static const u8 *const sMessages[][2] = {
++    [TAICHUNG_GYM_MESSAGE_OFFER] = {TaichungGym_Text_FengjiaOfferEn, TaichungGym_Text_FengjiaOfferZh},
++    [TAICHUNG_GYM_MESSAGE_COMPLETE] = {TaichungGym_Text_FengjiaCompleteEn, TaichungGym_Text_FengjiaCompleteZh},
++    [TAICHUNG_GYM_MESSAGE_ALREADY_COMPLETE] = {TaichungGym_Text_FengjiaAlreadyEn, TaichungGym_Text_FengjiaAlreadyZh},
++    [TAICHUNG_GYM_MESSAGE_DECLINED] = {TaichungGym_Text_FengjiaDeclinedEn, TaichungGym_Text_FengjiaDeclinedZh},
++    [TAICHUNG_GYM_MESSAGE_NOT_RECORDED] = {TaichungGym_Text_FengjiaNotRecordedEn, TaichungGym_Text_FengjiaNotRecordedZh},
++    [TAICHUNG_GYM_MESSAGE_UNAVAILABLE] = {TaichungGym_Text_FengjiaUnavailableEn, TaichungGym_Text_FengjiaUnavailableZh},
++    [TAICHUNG_GYM_MESSAGE_GREETING] = {TaichungGym_Text_FengjiaGreetingEn, TaichungGym_Text_FengjiaGreetingZh},
++    [TAICHUNG_GYM_MESSAGE_LOSS] = {TaichungGym_Text_FengjiaLossEn, TaichungGym_Text_FengjiaLossZh},
++};
++
++void TaichungGym_ScriptGetFengjiaMessage(void)
++{
++    TaichungGymCopyLandmarkMessage(TAICHUNG_GYM_FENGJIA, sMessages);
++}
+diff --git a/src/taichung_fine_arts_gym.c b/src/taichung_fine_arts_gym.c
+new file mode 100644
+index 0000000..3fccd9b
+--- /dev/null
++++ b/src/taichung_fine_arts_gym.c
+@@ -0,0 +1,40 @@
++#include "global.h"
++#include "taichung_landmark_gym.h"
++
++// Story paired draft; roster/moves and exact prose remain revisable defaults.
++const u8 TaichungGym_Text_FineArtsGreetingEn[] = _("I'm Caining. Clay and color!\nMind the wet canvas.");
++const u8 TaichungGym_Text_FineArtsGreetingZh[] = _("我是采寧，畫畫也做雕塑！\n小心，畫布上的顏料還沒乾。");
++const u8 TaichungGym_Text_FineArtsOfferEn[] = _("Try a Fine Arts challenge?\nA win earns this gym's badge.");
++const u8 TaichungGym_Text_FineArtsOfferZh[] = _("想挑戰美術館道館嗎？\n獲勝就能得到這裡的徽章。");
++const u8 TaichungGym_Text_FineArtsIntroEn[] = _("Canvas clear. Colors ready!\nLet's make a bold composition.");
++const u8 TaichungGym_Text_FineArtsIntroZh[] = _("畫布就位，顏色準備好了！\n來一個大膽的構圖吧。");
++const u8 TaichungGym_Text_FineArtsDefeatEn[] = _("Now that is a work of art!");
++const u8 TaichungGym_Text_FineArtsDefeatZh[] = _("這一場，根本就是作品！");
++const u8 TaichungGym_Text_FineArtsDeclinedEn[] = _("Good. Leave a little space.\nSomething might turn up in it.");
++const u8 TaichungGym_Text_FineArtsDeclinedZh[] = _("好啊，先留一點空白。\n說不定會長出新的點子。");
++const u8 TaichungGym_Text_FineArtsAlreadyEn[] = _("Your Fine Arts badge is safe.\nMy sleeves have fresh paint.");
++const u8 TaichungGym_Text_FineArtsAlreadyZh[] = _("美術館徽章已經記好了。\n我的袖口倒是又沾了新顏料。");
++const u8 TaichungGym_Text_FineArtsLossEn[] = _("A rough study, not a failure.\nLet the paint dry. Try again.");
++const u8 TaichungGym_Text_FineArtsLossZh[] = _("這是草稿，不是失敗。\n等顏料乾一點，再來試。");
++const u8 TaichungGym_Text_FineArtsNotRecordedEn[] = _("No new badge was recorded.\nYou're welcome to try again.");
++const u8 TaichungGym_Text_FineArtsNotRecordedZh[] = _("這次沒有新增徽章。\n歡迎再次挑戰。");
++const u8 TaichungGym_Text_FineArtsUnavailableEn[] = _("Bring a POKéMON partner\nwhen you're ready to battle.");
++const u8 TaichungGym_Text_FineArtsUnavailableZh[] = _("準備對戰時，\n請帶著你的寶可夢夥伴。");
++const u8 TaichungGym_Text_FineArtsCompleteEn[] = _("What contrast! What a finish!\nI'll remember those colors.\pFine Arts badge recorded!\nKeep exploring at your pace.");
++const u8 TaichungGym_Text_FineArtsCompleteZh[] = _("這個對比！這個收尾！\n這組配色，我要記下來。\p美術館徽章已記在城市護照。\n照你的步調，繼續探索吧。");
++
++static const u8 *const sMessages[][2] = {
++    [TAICHUNG_GYM_MESSAGE_OFFER] = {TaichungGym_Text_FineArtsOfferEn, TaichungGym_Text_FineArtsOfferZh},
++    [TAICHUNG_GYM_MESSAGE_COMPLETE] = {TaichungGym_Text_FineArtsCompleteEn, TaichungGym_Text_FineArtsCompleteZh},
++    [TAICHUNG_GYM_MESSAGE_ALREADY_COMPLETE] = {TaichungGym_Text_FineArtsAlreadyEn, TaichungGym_Text_FineArtsAlreadyZh},
++    [TAICHUNG_GYM_MESSAGE_DECLINED] = {TaichungGym_Text_FineArtsDeclinedEn, TaichungGym_Text_FineArtsDeclinedZh},
++    [TAICHUNG_GYM_MESSAGE_NOT_RECORDED] = {TaichungGym_Text_FineArtsNotRecordedEn, TaichungGym_Text_FineArtsNotRecordedZh},
++    [TAICHUNG_GYM_MESSAGE_UNAVAILABLE] = {TaichungGym_Text_FineArtsUnavailableEn, TaichungGym_Text_FineArtsUnavailableZh},
++    [TAICHUNG_GYM_MESSAGE_GREETING] = {TaichungGym_Text_FineArtsGreetingEn, TaichungGym_Text_FineArtsGreetingZh},
++    [TAICHUNG_GYM_MESSAGE_LOSS] = {TaichungGym_Text_FineArtsLossEn, TaichungGym_Text_FineArtsLossZh},
++};
++
++void TaichungGym_ScriptGetFineArtsMessage(void)
++{
++    TaichungGymCopyLandmarkMessage(TAICHUNG_GYM_FINE_ARTS, sMessages);
++}
+diff --git a/src/taichung_greenway_gym.c b/src/taichung_greenway_gym.c
+new file mode 100644
+index 0000000..1b4e48f
+--- /dev/null
++++ b/src/taichung_greenway_gym.c
+@@ -0,0 +1,40 @@
++#include "global.h"
++#include "taichung_landmark_gym.h"
++
++// Story paired draft; roster/moves and exact prose remain revisable defaults.
++const u8 TaichungGym_Text_GreenwayGreetingEn[] = _("I'm Xingan. Ink and gardens.\nA good path, a good stroke.");
++const u8 TaichungGym_Text_GreenwayGreetingZh[] = _("我是行安，寫字也造花園。\n好的步道，也有好的筆勢。");
++const u8 TaichungGym_Text_GreenwayOfferEn[] = _("Want a Greenway challenge?\nA win earns this gym's badge.");
++const u8 TaichungGym_Text_GreenwayOfferZh[] = _("想挑戰草悟道道館嗎？\n獲勝就能得到這裡的徽章。");
++const u8 TaichungGym_Text_GreenwayIntroEn[] = _("Brush up. Let the green flow!\nShow me your boldest stroke.");
++const u8 TaichungGym_Text_GreenwayIntroZh[] = _("提筆，讓綠意流動！\n讓我看看你最大膽的一筆。");
++const u8 TaichungGym_Text_GreenwayDefeatEn[] = _("What a lively brushstroke!");
++const u8 TaichungGym_Text_GreenwayDefeatZh[] = _("這一筆，真有生命力！");
++const u8 TaichungGym_Text_GreenwayDeclinedEn[] = _("Sure. Leave some blank space.\nA new stroke can wait.");
++const u8 TaichungGym_Text_GreenwayDeclinedZh[] = _("好啊，先留一點空白。\n下一筆，可以晚點再下。");
++const u8 TaichungGym_Text_GreenwayAlreadyEn[] = _("Your Greenway badge is safe.\nMy garden sketch grows on.");
++const u8 TaichungGym_Text_GreenwayAlreadyZh[] = _("草悟道徽章已經記好了。\n我的植栽草圖倒是越畫越大。");
++const u8 TaichungGym_Text_GreenwayLossEn[] = _("The strokes tangled a little.\nRest. Try a fresh page later.");
++const u8 TaichungGym_Text_GreenwayLossZh[] = _("筆畫剛才有點纏在一起。\n歇一下，下次換張新紙。");
++const u8 TaichungGym_Text_GreenwayNotRecordedEn[] = _("No new badge was recorded.\nYou're welcome to try again.");
++const u8 TaichungGym_Text_GreenwayNotRecordedZh[] = _("這次沒有新增徽章。\n歡迎再次挑戰。");
++const u8 TaichungGym_Text_GreenwayUnavailableEn[] = _("Bring a POKéMON partner\nwhen you're ready to battle.");
++const u8 TaichungGym_Text_GreenwayUnavailableZh[] = _("準備對戰時，\n請帶著你的寶可夢夥伴。");
++const u8 TaichungGym_Text_GreenwayCompleteEn[] = _("Bold strokes. Space to grow.\nThat's a garden I would visit.\pGreenway badge recorded!\nKeep exploring at your pace.");
++const u8 TaichungGym_Text_GreenwayCompleteZh[] = _("筆勢大膽，也留得住空間。\n這樣的花園，我會想去逛。\p草悟道徽章已記在城市護照。\n照你的步調，繼續探索吧。");
++
++static const u8 *const sMessages[][2] = {
++    [TAICHUNG_GYM_MESSAGE_OFFER] = {TaichungGym_Text_GreenwayOfferEn, TaichungGym_Text_GreenwayOfferZh},
++    [TAICHUNG_GYM_MESSAGE_COMPLETE] = {TaichungGym_Text_GreenwayCompleteEn, TaichungGym_Text_GreenwayCompleteZh},
++    [TAICHUNG_GYM_MESSAGE_ALREADY_COMPLETE] = {TaichungGym_Text_GreenwayAlreadyEn, TaichungGym_Text_GreenwayAlreadyZh},
++    [TAICHUNG_GYM_MESSAGE_DECLINED] = {TaichungGym_Text_GreenwayDeclinedEn, TaichungGym_Text_GreenwayDeclinedZh},
++    [TAICHUNG_GYM_MESSAGE_NOT_RECORDED] = {TaichungGym_Text_GreenwayNotRecordedEn, TaichungGym_Text_GreenwayNotRecordedZh},
++    [TAICHUNG_GYM_MESSAGE_UNAVAILABLE] = {TaichungGym_Text_GreenwayUnavailableEn, TaichungGym_Text_GreenwayUnavailableZh},
++    [TAICHUNG_GYM_MESSAGE_GREETING] = {TaichungGym_Text_GreenwayGreetingEn, TaichungGym_Text_GreenwayGreetingZh},
++    [TAICHUNG_GYM_MESSAGE_LOSS] = {TaichungGym_Text_GreenwayLossEn, TaichungGym_Text_GreenwayLossZh},
++};
++
++void TaichungGym_ScriptGetGreenwayMessage(void)
++{
++    TaichungGymCopyLandmarkMessage(TAICHUNG_GYM_GREENWAY, sMessages);
++}
 diff --git a/src/taichung_gym_adapter.c b/src/taichung_gym_adapter.c
 new file mode 100644
 index 0000000..f72cd0a
@@ -349525,6 +350273,37 @@ index 0000000..a90f518
 +    warp->x = gSaveBlock1Ptr->pos.x;
 +    warp->y = gSaveBlock1Ptr->pos.y;
 +    SetContinueGameWarpStatus();
++}
+diff --git a/src/taichung_landmark_gym.c b/src/taichung_landmark_gym.c
+new file mode 100644
+index 0000000..738e189
+--- /dev/null
++++ b/src/taichung_landmark_gym.c
+@@ -0,0 +1,25 @@
++#include "global.h"
++#include "event_data.h"
++#include "string_util.h"
++#include "taichung_landmark_gym.h"
++#include "taichung_language.h"
++
++void TaichungGym_ScriptConsumeLandmarkLossNotice(void)
++{
++    gSpecialVar_Result = TaichungGymConsumeLossNotice(gSpecialVar_0x8004);
++}
++
++void TaichungGymCopyLandmarkMessage(u16 gymId, const u8 *const messages[][2])
++{
++    u16 message = gSpecialVar_0x8005;
++    if (message > TAICHUNG_GYM_MESSAGE_LOSS)
++        message = TAICHUNG_GYM_MESSAGE_UNAVAILABLE;
++    if (message == TAICHUNG_GYM_MESSAGE_COMPLETE
++     && (TaichungGymGetLastResult() != TAICHUNG_GYM_RESULT_WON
++      || !TaichungGymIsComplete(gymId)))
++        message = TAICHUNG_GYM_MESSAGE_NOT_RECORDED;
++    if (message == TAICHUNG_GYM_MESSAGE_ALREADY_COMPLETE
++     && !TaichungGymIsComplete(gymId))
++        message = TAICHUNG_GYM_MESSAGE_NOT_RECORDED;
++    StringCopy(gStringVar4, TaichungText(messages[message][0], messages[message][1]));
 +}
 diff --git a/src/taichung_language.c b/src/taichung_language.c
 new file mode 100644
@@ -350047,6 +350826,52 @@ index 0000000..093dd02
 +    warp->x = gSaveBlock1Ptr->pos.x;
 +    warp->y = gSaveBlock1Ptr->pos.y;
 +    SetContinueGameWarpStatus();
++}
+diff --git a/src/taichung_maple_garden_gym.c b/src/taichung_maple_garden_gym.c
+new file mode 100644
+index 0000000..d025e09
+--- /dev/null
++++ b/src/taichung_maple_garden_gym.c
+@@ -0,0 +1,40 @@
++#include "global.h"
++#include "taichung_landmark_gym.h"
++
++// Story paired draft; roster/moves and exact prose remain revisable defaults.
++const u8 TaichungGym_Text_MapleGardenGreetingEn[] = _("I'm Muqing. I design habitats.\nWater, shade, little lives.");
++const u8 TaichungGym_Text_MapleGardenGreetingZh[] = _("我是沐晴，規劃池塘棲地。\n水、樹蔭、小生命，都要顧到。");
++const u8 TaichungGym_Text_MapleGardenOfferEn[] = _("Try a Maple Garden challenge?\nA win earns this gym's badge.");
++const u8 TaichungGym_Text_MapleGardenOfferZh[] = _("想挑戰秋紅谷道館嗎？\n獲勝就能得到這裡的徽章。");
++const u8 TaichungGym_Text_MapleGardenIntroEn[] = _("Water team. Wings ready.\nLet's connect pond and sky!");
++const u8 TaichungGym_Text_MapleGardenIntroZh[] = _("水邊小隊，翅膀就位。\n把池塘與天空連起來吧！");
++const u8 TaichungGym_Text_MapleGardenDefeatEn[] = _("You saw the whole habitat!");
++const u8 TaichungGym_Text_MapleGardenDefeatZh[] = _("整片棲地，都被你看見了！");
++const u8 TaichungGym_Text_MapleGardenDeclinedEn[] = _("Of course. Take your time.\nI'll check the water's edge.");
++const u8 TaichungGym_Text_MapleGardenDeclinedZh[] = _("當然，照自己的步調逛吧。\n我再去看看池邊。");
++const u8 TaichungGym_Text_MapleGardenAlreadyEn[] = _("Your Maple badge is safe.\nI'm still counting insects.");
++const u8 TaichungGym_Text_MapleGardenAlreadyZh[] = _("秋紅谷徽章已經記好了。\n我的昆蟲倒是還沒數完。");
++const u8 TaichungGym_Text_MapleGardenLossEn[] = _("One small link got missed.\nRest. We can look again later.");
++const u8 TaichungGym_Text_MapleGardenLossZh[] = _("剛才，漏看了一個小連結。\n先歇歇，下次再一起觀察。");
++const u8 TaichungGym_Text_MapleGardenNotRecordedEn[] = _("No new badge was recorded.\nYou're welcome to try again.");
++const u8 TaichungGym_Text_MapleGardenNotRecordedZh[] = _("這次沒有新增徽章。\n歡迎再次挑戰。");
++const u8 TaichungGym_Text_MapleGardenUnavailableEn[] = _("Bring a POKéMON partner\nwhen you're ready to battle.");
++const u8 TaichungGym_Text_MapleGardenUnavailableZh[] = _("準備對戰時，\n請帶著你的寶可夢夥伴。");
++const u8 TaichungGym_Text_MapleGardenCompleteEn[] = _("You watched water and wings.\nYou saw how it all connects.\pMaple Garden badge recorded!\nKeep exploring at your pace.");
++const u8 TaichungGym_Text_MapleGardenCompleteZh[] = _("你顧到水面，也顧到翅膀。\n這就是完整的生態眼光。\p秋紅谷徽章已記在城市護照。\n照你的步調，繼續探索吧。");
++
++static const u8 *const sMessages[][2] = {
++    [TAICHUNG_GYM_MESSAGE_OFFER] = {TaichungGym_Text_MapleGardenOfferEn, TaichungGym_Text_MapleGardenOfferZh},
++    [TAICHUNG_GYM_MESSAGE_COMPLETE] = {TaichungGym_Text_MapleGardenCompleteEn, TaichungGym_Text_MapleGardenCompleteZh},
++    [TAICHUNG_GYM_MESSAGE_ALREADY_COMPLETE] = {TaichungGym_Text_MapleGardenAlreadyEn, TaichungGym_Text_MapleGardenAlreadyZh},
++    [TAICHUNG_GYM_MESSAGE_DECLINED] = {TaichungGym_Text_MapleGardenDeclinedEn, TaichungGym_Text_MapleGardenDeclinedZh},
++    [TAICHUNG_GYM_MESSAGE_NOT_RECORDED] = {TaichungGym_Text_MapleGardenNotRecordedEn, TaichungGym_Text_MapleGardenNotRecordedZh},
++    [TAICHUNG_GYM_MESSAGE_UNAVAILABLE] = {TaichungGym_Text_MapleGardenUnavailableEn, TaichungGym_Text_MapleGardenUnavailableZh},
++    [TAICHUNG_GYM_MESSAGE_GREETING] = {TaichungGym_Text_MapleGardenGreetingEn, TaichungGym_Text_MapleGardenGreetingZh},
++    [TAICHUNG_GYM_MESSAGE_LOSS] = {TaichungGym_Text_MapleGardenLossEn, TaichungGym_Text_MapleGardenLossZh},
++};
++
++void TaichungGym_ScriptGetMapleGardenMessage(void)
++{
++    TaichungGymCopyLandmarkMessage(TAICHUNG_GYM_MAPLE_GARDEN, sMessages);
 +}
 diff --git a/src/taichung_miyahara_gym.c b/src/taichung_miyahara_gym.c
 new file mode 100644
@@ -351869,6 +352694,98 @@ index 0000000..c430523
 +    VarSet(TAICHUNG_SAVE_VERSION_VAR, TAICHUNG_SAVE_VERSION);
 +    TaichungSaveSetStationCheckpoint();
 +}
+diff --git a/src/taichung_science_gym.c b/src/taichung_science_gym.c
+new file mode 100644
+index 0000000..72ec76c
+--- /dev/null
++++ b/src/taichung_science_gym.c
+@@ -0,0 +1,40 @@
++#include "global.h"
++#include "taichung_landmark_gym.h"
++
++// Story paired draft; roster/moves and exact prose remain revisable defaults.
++const u8 TaichungGym_Text_ScienceGreetingEn[] = _("I'm Yicheng. Fossils, forces!\nWant to see an experiment?");
++const u8 TaichungGym_Text_ScienceGreetingZh[] = _("我是以澄，研究化石與物理。\n想看看我的實驗嗎？");
++const u8 TaichungGym_Text_ScienceOfferEn[] = _("Try a Science gym challenge?\nA win earns this gym's badge.");
++const u8 TaichungGym_Text_ScienceOfferZh[] = _("想挑戰科博館道館嗎？\n獲勝就能得到這裡的徽章。");
++const u8 TaichungGym_Text_ScienceIntroEn[] = _("Hypothesis ready. Observe!\nLet's see what the data says.");
++const u8 TaichungGym_Text_ScienceIntroZh[] = _("假設準備好了，開始觀察！\n讓結果來回答我們吧。");
++const u8 TaichungGym_Text_ScienceDefeatEn[] = _("A result worth writing down!");
++const u8 TaichungGym_Text_ScienceDefeatZh[] = _("這個結果，值得記下來！");
++const u8 TaichungGym_Text_ScienceDeclinedEn[] = _("Good. More time to wonder.\nCome back with a fresh idea.");
++const u8 TaichungGym_Text_ScienceDeclinedZh[] = _("好啊，多點時間想點子。\n有新想法，隨時再回來。");
++const u8 TaichungGym_Text_ScienceAlreadyEn[] = _("Your Science badge is safe.\nYour next question is yours.");
++const u8 TaichungGym_Text_ScienceAlreadyZh[] = _("科博館徽章已經記好了。\n下一個問題，就由你來選。");
++const u8 TaichungGym_Text_ScienceLossEn[] = _("One result. Not the last.\nThere's another idea to try.");
++const u8 TaichungGym_Text_ScienceLossZh[] = _("這只是一個結果。\n還有別的點子可以試。");
++const u8 TaichungGym_Text_ScienceNotRecordedEn[] = _("No new badge was recorded.\nYou're welcome to try again.");
++const u8 TaichungGym_Text_ScienceNotRecordedZh[] = _("這次沒有新增徽章。\n歡迎再次挑戰。");
++const u8 TaichungGym_Text_ScienceUnavailableEn[] = _("Bring a POKéMON partner\nwhen you're ready to battle.");
++const u8 TaichungGym_Text_ScienceUnavailableZh[] = _("準備對戰時，\n請帶著你的寶可夢夥伴。");
++const u8 TaichungGym_Text_ScienceCompleteEn[] = _("My prediction was wrong.\nBest thing I've learned today.\pScience badge recorded!\nKeep exploring at your pace.");
++const u8 TaichungGym_Text_ScienceCompleteZh[] = _("我的預測錯了。\n這是我今天最有趣的發現。\p科博館徽章已記在城市護照。\n照你的步調，繼續探索吧。");
++
++static const u8 *const sMessages[][2] = {
++    [TAICHUNG_GYM_MESSAGE_OFFER] = {TaichungGym_Text_ScienceOfferEn, TaichungGym_Text_ScienceOfferZh},
++    [TAICHUNG_GYM_MESSAGE_COMPLETE] = {TaichungGym_Text_ScienceCompleteEn, TaichungGym_Text_ScienceCompleteZh},
++    [TAICHUNG_GYM_MESSAGE_ALREADY_COMPLETE] = {TaichungGym_Text_ScienceAlreadyEn, TaichungGym_Text_ScienceAlreadyZh},
++    [TAICHUNG_GYM_MESSAGE_DECLINED] = {TaichungGym_Text_ScienceDeclinedEn, TaichungGym_Text_ScienceDeclinedZh},
++    [TAICHUNG_GYM_MESSAGE_NOT_RECORDED] = {TaichungGym_Text_ScienceNotRecordedEn, TaichungGym_Text_ScienceNotRecordedZh},
++    [TAICHUNG_GYM_MESSAGE_UNAVAILABLE] = {TaichungGym_Text_ScienceUnavailableEn, TaichungGym_Text_ScienceUnavailableZh},
++    [TAICHUNG_GYM_MESSAGE_GREETING] = {TaichungGym_Text_ScienceGreetingEn, TaichungGym_Text_ScienceGreetingZh},
++    [TAICHUNG_GYM_MESSAGE_LOSS] = {TaichungGym_Text_ScienceLossEn, TaichungGym_Text_ScienceLossZh},
++};
++
++void TaichungGym_ScriptGetScienceMessage(void)
++{
++    TaichungGymCopyLandmarkMessage(TAICHUNG_GYM_SCIENCE_MUSEUM, sMessages);
++}
+diff --git a/src/taichung_shen_ji_gym.c b/src/taichung_shen_ji_gym.c
+new file mode 100644
+index 0000000..463c2df
+--- /dev/null
++++ b/src/taichung_shen_ji_gym.c
+@@ -0,0 +1,40 @@
++#include "global.h"
++#include "taichung_landmark_gym.h"
++
++// Story paired draft; roster/moves and exact prose remain revisable defaults.
++const u8 TaichungGym_Text_ShenJiGreetingEn[] = _("I'm Axiu. I remake old things.\nEach patch tells a new story.");
++const u8 TaichungGym_Text_ShenJiGreetingZh[] = _("我是阿修，專做舊物改造。\n每塊補丁，都還有下一段。");
++const u8 TaichungGym_Text_ShenJiOfferEn[] = _("Try a Shen Ji gym challenge?\nA win earns this gym's badge.");
++const u8 TaichungGym_Text_ShenJiOfferZh[] = _("想挑戰審計道館嗎？\n獲勝就能得到這裡的徽章。");
++const u8 TaichungGym_Text_ShenJiIntroEn[] = _("Hands ready. A new pattern!\nLet's build together.");
++const u8 TaichungGym_Text_ShenJiIntroZh[] = _("動手，試一個新樣式。\n一起做出新的點子吧。");
++const u8 TaichungGym_Text_ShenJiDefeatEn[] = _("Now that is worth keeping.");
++const u8 TaichungGym_Text_ShenJiDefeatZh[] = _("這一招，值得留下來。");
++const u8 TaichungGym_Text_ShenJiDeclinedEn[] = _("Sure. An idea can wait.\nI've got a seam to finish.");
++const u8 TaichungGym_Text_ShenJiDeclinedZh[] = _("好啊，點子可以等。\n我先把這道線縫完。");
++const u8 TaichungGym_Text_ShenJiAlreadyEn[] = _("Your Shen Ji badge is safe.\nMy scrap pile keeps growing.");
++const u8 TaichungGym_Text_ShenJiAlreadyZh[] = _("審計徽章已經記在護照裡。\n我的剩布倒是越堆越多。");
++const u8 TaichungGym_Text_ShenJiLossEn[] = _("A loose thread. Fixable.\nRest first. We'll try again.");
++const u8 TaichungGym_Text_ShenJiLossZh[] = _("線鬆了一點，還能補。\n先休息，想試再回來。");
++const u8 TaichungGym_Text_ShenJiNotRecordedEn[] = _("No new badge was recorded.\nYou're welcome to try again.");
++const u8 TaichungGym_Text_ShenJiNotRecordedZh[] = _("這次沒有新增徽章。\n歡迎再次挑戰。");
++const u8 TaichungGym_Text_ShenJiUnavailableEn[] = _("Bring a POKéMON partner\nwhen you're ready to battle.");
++const u8 TaichungGym_Text_ShenJiUnavailableZh[] = _("準備對戰時，\n請帶著你的寶可夢夥伴。");
++const u8 TaichungGym_Text_ShenJiCompleteEn[] = _("You gave that plan a new use.\nI like a good second idea.\pShen Ji badge recorded!\nKeep exploring at your pace.");
++const u8 TaichungGym_Text_ShenJiCompleteZh[] = _("你把剛才的計畫換了個用法。\n我就喜歡這種新的點子。\p審計徽章已記在城市護照。\n照你的步調，繼續探索吧。");
++
++static const u8 *const sMessages[][2] = {
++    [TAICHUNG_GYM_MESSAGE_OFFER] = {TaichungGym_Text_ShenJiOfferEn, TaichungGym_Text_ShenJiOfferZh},
++    [TAICHUNG_GYM_MESSAGE_COMPLETE] = {TaichungGym_Text_ShenJiCompleteEn, TaichungGym_Text_ShenJiCompleteZh},
++    [TAICHUNG_GYM_MESSAGE_ALREADY_COMPLETE] = {TaichungGym_Text_ShenJiAlreadyEn, TaichungGym_Text_ShenJiAlreadyZh},
++    [TAICHUNG_GYM_MESSAGE_DECLINED] = {TaichungGym_Text_ShenJiDeclinedEn, TaichungGym_Text_ShenJiDeclinedZh},
++    [TAICHUNG_GYM_MESSAGE_NOT_RECORDED] = {TaichungGym_Text_ShenJiNotRecordedEn, TaichungGym_Text_ShenJiNotRecordedZh},
++    [TAICHUNG_GYM_MESSAGE_UNAVAILABLE] = {TaichungGym_Text_ShenJiUnavailableEn, TaichungGym_Text_ShenJiUnavailableZh},
++    [TAICHUNG_GYM_MESSAGE_GREETING] = {TaichungGym_Text_ShenJiGreetingEn, TaichungGym_Text_ShenJiGreetingZh},
++    [TAICHUNG_GYM_MESSAGE_LOSS] = {TaichungGym_Text_ShenJiLossEn, TaichungGym_Text_ShenJiLossZh},
++};
++
++void TaichungGym_ScriptGetShenJiMessage(void)
++{
++    TaichungGymCopyLandmarkMessage(TAICHUNG_GYM_SHEN_JI, sMessages);
++}
 diff --git a/src/taichung_starter.c b/src/taichung_starter.c
 new file mode 100644
 index 0000000..778fa38
@@ -352710,6 +353627,52 @@ index 0000000..8e46850
 +    for (slot = 0; slot < MAX_MON_MOVES; slot++)
 +        SetMonMoveSlot(mon, moves[slot], slot);
 +}
+diff --git a/src/taichung_theater_gym.c b/src/taichung_theater_gym.c
+new file mode 100644
+index 0000000..7b82218
+--- /dev/null
++++ b/src/taichung_theater_gym.c
+@@ -0,0 +1,40 @@
++#include "global.h"
++#include "taichung_landmark_gym.h"
++
++// Story paired draft; roster/moves and exact prose remain revisable defaults.
++const u8 TaichungGym_Text_TheaterGreetingEn[] = _("I'm Ling. I direct the show.\nEvery partner gets a turn.");
++const u8 TaichungGym_Text_TheaterGreetingZh[] = _("我是聆，導演也編曲。\n每位夥伴，都有登場的時刻。");
++const u8 TaichungGym_Text_TheaterOfferEn[] = _("Want a Theater gym challenge?\nA win earns this gym's badge.");
++const u8 TaichungGym_Text_TheaterOfferZh[] = _("想挑戰歌劇院道館嗎？\n獲勝就能得到這裡的徽章。");
++const u8 TaichungGym_Text_TheaterIntroEn[] = _("Voices ready. Curtain up!\nLet's give this scene life.");
++const u8 TaichungGym_Text_TheaterIntroZh[] = _("歌聲準備，開幕！\n讓這一幕活起來吧。");
++const u8 TaichungGym_Text_TheaterDefeatEn[] = _("A cue worth listening for!");
++const u8 TaichungGym_Text_TheaterDefeatZh[] = _("這個提示，值得仔細聽！");
++const u8 TaichungGym_Text_TheaterDeclinedEn[] = _("Of course. We can wait.\nCome back when it feels right.");
++const u8 TaichungGym_Text_TheaterDeclinedZh[] = _("當然，舞臺會等你。\n想來的時候，再回來就好。");
++const u8 TaichungGym_Text_TheaterAlreadyEn[] = _("Your Theater badge is safe.\nMore scenes await in the city.");
++const u8 TaichungGym_Text_TheaterAlreadyZh[] = _("歌劇院徽章已經記好了。\n城市裡，還有別的好戲。");
++const u8 TaichungGym_Text_TheaterLossEn[] = _("We missed each other's cue.\nRest. There's another scene.");
++const u8 TaichungGym_Text_TheaterLossZh[] = _("這次，沒接上彼此的提示。\n先休息，還有下一場。");
++const u8 TaichungGym_Text_TheaterNotRecordedEn[] = _("No new badge was recorded.\nYou're welcome to try again.");
++const u8 TaichungGym_Text_TheaterNotRecordedZh[] = _("這次沒有新增徽章。\n歡迎再次挑戰。");
++const u8 TaichungGym_Text_TheaterUnavailableEn[] = _("Bring a POKéMON partner\nwhen you're ready to battle.");
++const u8 TaichungGym_Text_TheaterUnavailableZh[] = _("準備對戰時，\n請帶著你的寶可夢夥伴。");
++const u8 TaichungGym_Text_TheaterCompleteEn[] = _("What phrasing! What movement!\nThat deserves a curtain call.\pTheater badge recorded!\nKeep exploring at your pace.");
++const u8 TaichungGym_Text_TheaterCompleteZh[] = _("這個樂句！這個動作！\n這一幕，值得好好謝幕。\p歌劇院徽章已記在城市護照。\n照你的步調，繼續探索吧。");
++
++static const u8 *const sMessages[][2] = {
++    [TAICHUNG_GYM_MESSAGE_OFFER] = {TaichungGym_Text_TheaterOfferEn, TaichungGym_Text_TheaterOfferZh},
++    [TAICHUNG_GYM_MESSAGE_COMPLETE] = {TaichungGym_Text_TheaterCompleteEn, TaichungGym_Text_TheaterCompleteZh},
++    [TAICHUNG_GYM_MESSAGE_ALREADY_COMPLETE] = {TaichungGym_Text_TheaterAlreadyEn, TaichungGym_Text_TheaterAlreadyZh},
++    [TAICHUNG_GYM_MESSAGE_DECLINED] = {TaichungGym_Text_TheaterDeclinedEn, TaichungGym_Text_TheaterDeclinedZh},
++    [TAICHUNG_GYM_MESSAGE_NOT_RECORDED] = {TaichungGym_Text_TheaterNotRecordedEn, TaichungGym_Text_TheaterNotRecordedZh},
++    [TAICHUNG_GYM_MESSAGE_UNAVAILABLE] = {TaichungGym_Text_TheaterUnavailableEn, TaichungGym_Text_TheaterUnavailableZh},
++    [TAICHUNG_GYM_MESSAGE_GREETING] = {TaichungGym_Text_TheaterGreetingEn, TaichungGym_Text_TheaterGreetingZh},
++    [TAICHUNG_GYM_MESSAGE_LOSS] = {TaichungGym_Text_TheaterLossEn, TaichungGym_Text_TheaterLossZh},
++};
++
++void TaichungGym_ScriptGetTheaterMessage(void)
++{
++    TaichungGymCopyLandmarkMessage(TAICHUNG_GYM_THEATER, sMessages);
++}
 diff --git a/src/text.c b/src/text.c
 index f3eef07..71e9d53 100644
 --- a/src/text.c
@@ -352982,6 +353945,41 @@ index 0000000..d0430a6
 +++ b/tests/character_host/overworld.h
 @@ -0,0 +1 @@
 +const struct MapHeader *Overworld_GetMapHeaderByGroupAndId(u16, u16);
+diff --git a/tests/gym_host/event_data.h b/tests/gym_host/event_data.h
+new file mode 100644
+index 0000000..660d478
+--- /dev/null
++++ b/tests/gym_host/event_data.h
+@@ -0,0 +1,5 @@
++#ifndef TAICHUNG_GYM_HOST_EVENT_DATA_H
++#define TAICHUNG_GYM_HOST_EVENT_DATA_H
++#include "../host/event_data.h"
++extern u16 gSpecialVar_0x8004, gSpecialVar_0x8005, gSpecialVar_Result;
++#endif
+diff --git a/tests/gym_host/global.h b/tests/gym_host/global.h
+new file mode 100644
+index 0000000..b6f2b68
+--- /dev/null
++++ b/tests/gym_host/global.h
+@@ -0,0 +1,7 @@
++#ifndef TAICHUNG_GYM_HOST_GLOBAL_H
++#define TAICHUNG_GYM_HOST_GLOBAL_H
++#define GUARD_GLOBAL_H
++#include "../host/global.h"
++#define _(text) text
++extern u8 gStringVar4[1024];
++#endif
+diff --git a/tests/gym_host/string_util.h b/tests/gym_host/string_util.h
+new file mode 100644
+index 0000000..300927c
+--- /dev/null
++++ b/tests/gym_host/string_util.h
+@@ -0,0 +1,5 @@
++#ifndef TAICHUNG_GYM_HOST_STRING_UTIL_H
++#define TAICHUNG_GYM_HOST_STRING_UTIL_H
++#include "global.h"
++u8 *StringCopy(u8 *dest, const u8 *src);
++#endif
 diff --git a/tests/host/event_data.h b/tests/host/event_data.h
 new file mode 100644
 index 0000000..4a8391f
@@ -353968,6 +354966,377 @@ index 0000000..a6a6bf7
 +    Reset(); gSaveBlock1Ptr = NULL;
 +    TaichungJunRefreshOnContinue(); assert(sHeaderReads == 0);
 +    puts("PASS: stale Jun cache refresh at saved position; party/badges preserved; current caches, pending warps, unrelated maps and invalid inputs untouched");
++    return 0;
++}
+diff --git a/tests/taichung_landmark_gyms_test.c b/tests/taichung_landmark_gyms_test.c
+new file mode 100644
+index 0000000..0e46678
+--- /dev/null
++++ b/tests/taichung_landmark_gyms_test.c
+@@ -0,0 +1,365 @@
++#include "global.h"
++#include "event_data.h"
++#include "taichung_landmark_gym.h"
++#include "taichung_language.h"
++#include "constants/battle.h"
++#include "constants/opponents.h"
++#include <assert.h>
++#include <stdio.h>
++#include <string.h>
++
++struct Gym { u16 gym, trainer; void (*message)(void); const u8 *text[8][2]; };
++static struct SaveBlock1 sSave;
++struct SaveBlock1 *gSaveBlock1Ptr = &sSave;
++u8 gStringVar4[1024];
++u16 gSpecialVar_0x8004, gSpecialVar_0x8005, gSpecialVar_Result;
++static unsigned sWrites;
++static bool8 sChinese;
++u16 VarGet(u16 id) { (void)id; assert(0 && "No quest-log reads"); return 0; }
++bool8 VarSet(u16 id, u16 value) { assert(id == TAICHUNG_GYM_COMPLETION_VAR); sSave.vars[id-0x4000] = value; sWrites++; return TRUE; }
++u8 *StringCopy(u8 *dest, const u8 *src) { return (u8 *)strcpy((char *)dest, (const char *)src); }
++const u8 *TaichungText(const u8 *en, const u8 *zh) { return sChinese ? zh : en; }
++void TaichungGym_ScriptConsumeLandmarkLossNotice(void);
++
++#ifdef TRAINER_TAICHUNG_SCIENCE_YICHENG
++void TaichungGym_ScriptGetScienceMessage(void);
++extern const u8 TaichungGym_Text_ScienceOfferEn[];
++extern const u8 TaichungGym_Text_ScienceOfferZh[];
++extern const u8 TaichungGym_Text_ScienceCompleteEn[];
++extern const u8 TaichungGym_Text_ScienceCompleteZh[];
++extern const u8 TaichungGym_Text_ScienceAlreadyEn[];
++extern const u8 TaichungGym_Text_ScienceAlreadyZh[];
++extern const u8 TaichungGym_Text_ScienceDeclinedEn[];
++extern const u8 TaichungGym_Text_ScienceDeclinedZh[];
++extern const u8 TaichungGym_Text_ScienceNotRecordedEn[];
++extern const u8 TaichungGym_Text_ScienceNotRecordedZh[];
++extern const u8 TaichungGym_Text_ScienceUnavailableEn[];
++extern const u8 TaichungGym_Text_ScienceUnavailableZh[];
++extern const u8 TaichungGym_Text_ScienceGreetingEn[];
++extern const u8 TaichungGym_Text_ScienceGreetingZh[];
++extern const u8 TaichungGym_Text_ScienceLossEn[];
++extern const u8 TaichungGym_Text_ScienceLossZh[];
++#endif
++
++#ifdef TRAINER_TAICHUNG_GREENWAY_XINGAN
++void TaichungGym_ScriptGetGreenwayMessage(void);
++extern const u8 TaichungGym_Text_GreenwayOfferEn[];
++extern const u8 TaichungGym_Text_GreenwayOfferZh[];
++extern const u8 TaichungGym_Text_GreenwayCompleteEn[];
++extern const u8 TaichungGym_Text_GreenwayCompleteZh[];
++extern const u8 TaichungGym_Text_GreenwayAlreadyEn[];
++extern const u8 TaichungGym_Text_GreenwayAlreadyZh[];
++extern const u8 TaichungGym_Text_GreenwayDeclinedEn[];
++extern const u8 TaichungGym_Text_GreenwayDeclinedZh[];
++extern const u8 TaichungGym_Text_GreenwayNotRecordedEn[];
++extern const u8 TaichungGym_Text_GreenwayNotRecordedZh[];
++extern const u8 TaichungGym_Text_GreenwayUnavailableEn[];
++extern const u8 TaichungGym_Text_GreenwayUnavailableZh[];
++extern const u8 TaichungGym_Text_GreenwayGreetingEn[];
++extern const u8 TaichungGym_Text_GreenwayGreetingZh[];
++extern const u8 TaichungGym_Text_GreenwayLossEn[];
++extern const u8 TaichungGym_Text_GreenwayLossZh[];
++#endif
++
++#ifdef TRAINER_TAICHUNG_SHEN_JI_AXIU
++void TaichungGym_ScriptGetShenJiMessage(void);
++extern const u8 TaichungGym_Text_ShenJiOfferEn[];
++extern const u8 TaichungGym_Text_ShenJiOfferZh[];
++extern const u8 TaichungGym_Text_ShenJiCompleteEn[];
++extern const u8 TaichungGym_Text_ShenJiCompleteZh[];
++extern const u8 TaichungGym_Text_ShenJiAlreadyEn[];
++extern const u8 TaichungGym_Text_ShenJiAlreadyZh[];
++extern const u8 TaichungGym_Text_ShenJiDeclinedEn[];
++extern const u8 TaichungGym_Text_ShenJiDeclinedZh[];
++extern const u8 TaichungGym_Text_ShenJiNotRecordedEn[];
++extern const u8 TaichungGym_Text_ShenJiNotRecordedZh[];
++extern const u8 TaichungGym_Text_ShenJiUnavailableEn[];
++extern const u8 TaichungGym_Text_ShenJiUnavailableZh[];
++extern const u8 TaichungGym_Text_ShenJiGreetingEn[];
++extern const u8 TaichungGym_Text_ShenJiGreetingZh[];
++extern const u8 TaichungGym_Text_ShenJiLossEn[];
++extern const u8 TaichungGym_Text_ShenJiLossZh[];
++#endif
++
++#ifdef TRAINER_TAICHUNG_FINE_ARTS_CAINING
++void TaichungGym_ScriptGetFineArtsMessage(void);
++extern const u8 TaichungGym_Text_FineArtsOfferEn[];
++extern const u8 TaichungGym_Text_FineArtsOfferZh[];
++extern const u8 TaichungGym_Text_FineArtsCompleteEn[];
++extern const u8 TaichungGym_Text_FineArtsCompleteZh[];
++extern const u8 TaichungGym_Text_FineArtsAlreadyEn[];
++extern const u8 TaichungGym_Text_FineArtsAlreadyZh[];
++extern const u8 TaichungGym_Text_FineArtsDeclinedEn[];
++extern const u8 TaichungGym_Text_FineArtsDeclinedZh[];
++extern const u8 TaichungGym_Text_FineArtsNotRecordedEn[];
++extern const u8 TaichungGym_Text_FineArtsNotRecordedZh[];
++extern const u8 TaichungGym_Text_FineArtsUnavailableEn[];
++extern const u8 TaichungGym_Text_FineArtsUnavailableZh[];
++extern const u8 TaichungGym_Text_FineArtsGreetingEn[];
++extern const u8 TaichungGym_Text_FineArtsGreetingZh[];
++extern const u8 TaichungGym_Text_FineArtsLossEn[];
++extern const u8 TaichungGym_Text_FineArtsLossZh[];
++#endif
++
++#ifdef TRAINER_TAICHUNG_FENGJIA_JIAHE
++void TaichungGym_ScriptGetFengjiaMessage(void);
++extern const u8 TaichungGym_Text_FengjiaOfferEn[];
++extern const u8 TaichungGym_Text_FengjiaOfferZh[];
++extern const u8 TaichungGym_Text_FengjiaCompleteEn[];
++extern const u8 TaichungGym_Text_FengjiaCompleteZh[];
++extern const u8 TaichungGym_Text_FengjiaAlreadyEn[];
++extern const u8 TaichungGym_Text_FengjiaAlreadyZh[];
++extern const u8 TaichungGym_Text_FengjiaDeclinedEn[];
++extern const u8 TaichungGym_Text_FengjiaDeclinedZh[];
++extern const u8 TaichungGym_Text_FengjiaNotRecordedEn[];
++extern const u8 TaichungGym_Text_FengjiaNotRecordedZh[];
++extern const u8 TaichungGym_Text_FengjiaUnavailableEn[];
++extern const u8 TaichungGym_Text_FengjiaUnavailableZh[];
++extern const u8 TaichungGym_Text_FengjiaGreetingEn[];
++extern const u8 TaichungGym_Text_FengjiaGreetingZh[];
++extern const u8 TaichungGym_Text_FengjiaLossEn[];
++extern const u8 TaichungGym_Text_FengjiaLossZh[];
++#endif
++
++#ifdef TRAINER_TAICHUNG_MAPLE_GARDEN_MUQING
++void TaichungGym_ScriptGetMapleGardenMessage(void);
++extern const u8 TaichungGym_Text_MapleGardenOfferEn[];
++extern const u8 TaichungGym_Text_MapleGardenOfferZh[];
++extern const u8 TaichungGym_Text_MapleGardenCompleteEn[];
++extern const u8 TaichungGym_Text_MapleGardenCompleteZh[];
++extern const u8 TaichungGym_Text_MapleGardenAlreadyEn[];
++extern const u8 TaichungGym_Text_MapleGardenAlreadyZh[];
++extern const u8 TaichungGym_Text_MapleGardenDeclinedEn[];
++extern const u8 TaichungGym_Text_MapleGardenDeclinedZh[];
++extern const u8 TaichungGym_Text_MapleGardenNotRecordedEn[];
++extern const u8 TaichungGym_Text_MapleGardenNotRecordedZh[];
++extern const u8 TaichungGym_Text_MapleGardenUnavailableEn[];
++extern const u8 TaichungGym_Text_MapleGardenUnavailableZh[];
++extern const u8 TaichungGym_Text_MapleGardenGreetingEn[];
++extern const u8 TaichungGym_Text_MapleGardenGreetingZh[];
++extern const u8 TaichungGym_Text_MapleGardenLossEn[];
++extern const u8 TaichungGym_Text_MapleGardenLossZh[];
++#endif
++
++#ifdef TRAINER_TAICHUNG_THEATER_LING
++void TaichungGym_ScriptGetTheaterMessage(void);
++extern const u8 TaichungGym_Text_TheaterOfferEn[];
++extern const u8 TaichungGym_Text_TheaterOfferZh[];
++extern const u8 TaichungGym_Text_TheaterCompleteEn[];
++extern const u8 TaichungGym_Text_TheaterCompleteZh[];
++extern const u8 TaichungGym_Text_TheaterAlreadyEn[];
++extern const u8 TaichungGym_Text_TheaterAlreadyZh[];
++extern const u8 TaichungGym_Text_TheaterDeclinedEn[];
++extern const u8 TaichungGym_Text_TheaterDeclinedZh[];
++extern const u8 TaichungGym_Text_TheaterNotRecordedEn[];
++extern const u8 TaichungGym_Text_TheaterNotRecordedZh[];
++extern const u8 TaichungGym_Text_TheaterUnavailableEn[];
++extern const u8 TaichungGym_Text_TheaterUnavailableZh[];
++extern const u8 TaichungGym_Text_TheaterGreetingEn[];
++extern const u8 TaichungGym_Text_TheaterGreetingZh[];
++extern const u8 TaichungGym_Text_TheaterLossEn[];
++extern const u8 TaichungGym_Text_TheaterLossZh[];
++#endif
++
++static const struct Gym sGyms[] = {
++#ifdef TRAINER_TAICHUNG_SCIENCE_YICHENG
++    {TAICHUNG_GYM_SCIENCE_MUSEUM, TRAINER_TAICHUNG_SCIENCE_YICHENG, TaichungGym_ScriptGetScienceMessage, {
++        {TaichungGym_Text_ScienceOfferEn, TaichungGym_Text_ScienceOfferZh},
++        {TaichungGym_Text_ScienceCompleteEn, TaichungGym_Text_ScienceCompleteZh},
++        {TaichungGym_Text_ScienceAlreadyEn, TaichungGym_Text_ScienceAlreadyZh},
++        {TaichungGym_Text_ScienceDeclinedEn, TaichungGym_Text_ScienceDeclinedZh},
++        {TaichungGym_Text_ScienceNotRecordedEn, TaichungGym_Text_ScienceNotRecordedZh},
++        {TaichungGym_Text_ScienceUnavailableEn, TaichungGym_Text_ScienceUnavailableZh},
++        {TaichungGym_Text_ScienceGreetingEn, TaichungGym_Text_ScienceGreetingZh},
++        {TaichungGym_Text_ScienceLossEn, TaichungGym_Text_ScienceLossZh},
++    }},
++#endif
++#ifdef TRAINER_TAICHUNG_GREENWAY_XINGAN
++    {TAICHUNG_GYM_GREENWAY, TRAINER_TAICHUNG_GREENWAY_XINGAN, TaichungGym_ScriptGetGreenwayMessage, {
++        {TaichungGym_Text_GreenwayOfferEn, TaichungGym_Text_GreenwayOfferZh},
++        {TaichungGym_Text_GreenwayCompleteEn, TaichungGym_Text_GreenwayCompleteZh},
++        {TaichungGym_Text_GreenwayAlreadyEn, TaichungGym_Text_GreenwayAlreadyZh},
++        {TaichungGym_Text_GreenwayDeclinedEn, TaichungGym_Text_GreenwayDeclinedZh},
++        {TaichungGym_Text_GreenwayNotRecordedEn, TaichungGym_Text_GreenwayNotRecordedZh},
++        {TaichungGym_Text_GreenwayUnavailableEn, TaichungGym_Text_GreenwayUnavailableZh},
++        {TaichungGym_Text_GreenwayGreetingEn, TaichungGym_Text_GreenwayGreetingZh},
++        {TaichungGym_Text_GreenwayLossEn, TaichungGym_Text_GreenwayLossZh},
++    }},
++#endif
++#ifdef TRAINER_TAICHUNG_SHEN_JI_AXIU
++    {TAICHUNG_GYM_SHEN_JI, TRAINER_TAICHUNG_SHEN_JI_AXIU, TaichungGym_ScriptGetShenJiMessage, {
++        {TaichungGym_Text_ShenJiOfferEn, TaichungGym_Text_ShenJiOfferZh},
++        {TaichungGym_Text_ShenJiCompleteEn, TaichungGym_Text_ShenJiCompleteZh},
++        {TaichungGym_Text_ShenJiAlreadyEn, TaichungGym_Text_ShenJiAlreadyZh},
++        {TaichungGym_Text_ShenJiDeclinedEn, TaichungGym_Text_ShenJiDeclinedZh},
++        {TaichungGym_Text_ShenJiNotRecordedEn, TaichungGym_Text_ShenJiNotRecordedZh},
++        {TaichungGym_Text_ShenJiUnavailableEn, TaichungGym_Text_ShenJiUnavailableZh},
++        {TaichungGym_Text_ShenJiGreetingEn, TaichungGym_Text_ShenJiGreetingZh},
++        {TaichungGym_Text_ShenJiLossEn, TaichungGym_Text_ShenJiLossZh},
++    }},
++#endif
++#ifdef TRAINER_TAICHUNG_FINE_ARTS_CAINING
++    {TAICHUNG_GYM_FINE_ARTS, TRAINER_TAICHUNG_FINE_ARTS_CAINING, TaichungGym_ScriptGetFineArtsMessage, {
++        {TaichungGym_Text_FineArtsOfferEn, TaichungGym_Text_FineArtsOfferZh},
++        {TaichungGym_Text_FineArtsCompleteEn, TaichungGym_Text_FineArtsCompleteZh},
++        {TaichungGym_Text_FineArtsAlreadyEn, TaichungGym_Text_FineArtsAlreadyZh},
++        {TaichungGym_Text_FineArtsDeclinedEn, TaichungGym_Text_FineArtsDeclinedZh},
++        {TaichungGym_Text_FineArtsNotRecordedEn, TaichungGym_Text_FineArtsNotRecordedZh},
++        {TaichungGym_Text_FineArtsUnavailableEn, TaichungGym_Text_FineArtsUnavailableZh},
++        {TaichungGym_Text_FineArtsGreetingEn, TaichungGym_Text_FineArtsGreetingZh},
++        {TaichungGym_Text_FineArtsLossEn, TaichungGym_Text_FineArtsLossZh},
++    }},
++#endif
++#ifdef TRAINER_TAICHUNG_FENGJIA_JIAHE
++    {TAICHUNG_GYM_FENGJIA, TRAINER_TAICHUNG_FENGJIA_JIAHE, TaichungGym_ScriptGetFengjiaMessage, {
++        {TaichungGym_Text_FengjiaOfferEn, TaichungGym_Text_FengjiaOfferZh},
++        {TaichungGym_Text_FengjiaCompleteEn, TaichungGym_Text_FengjiaCompleteZh},
++        {TaichungGym_Text_FengjiaAlreadyEn, TaichungGym_Text_FengjiaAlreadyZh},
++        {TaichungGym_Text_FengjiaDeclinedEn, TaichungGym_Text_FengjiaDeclinedZh},
++        {TaichungGym_Text_FengjiaNotRecordedEn, TaichungGym_Text_FengjiaNotRecordedZh},
++        {TaichungGym_Text_FengjiaUnavailableEn, TaichungGym_Text_FengjiaUnavailableZh},
++        {TaichungGym_Text_FengjiaGreetingEn, TaichungGym_Text_FengjiaGreetingZh},
++        {TaichungGym_Text_FengjiaLossEn, TaichungGym_Text_FengjiaLossZh},
++    }},
++#endif
++#ifdef TRAINER_TAICHUNG_MAPLE_GARDEN_MUQING
++    {TAICHUNG_GYM_MAPLE_GARDEN, TRAINER_TAICHUNG_MAPLE_GARDEN_MUQING, TaichungGym_ScriptGetMapleGardenMessage, {
++        {TaichungGym_Text_MapleGardenOfferEn, TaichungGym_Text_MapleGardenOfferZh},
++        {TaichungGym_Text_MapleGardenCompleteEn, TaichungGym_Text_MapleGardenCompleteZh},
++        {TaichungGym_Text_MapleGardenAlreadyEn, TaichungGym_Text_MapleGardenAlreadyZh},
++        {TaichungGym_Text_MapleGardenDeclinedEn, TaichungGym_Text_MapleGardenDeclinedZh},
++        {TaichungGym_Text_MapleGardenNotRecordedEn, TaichungGym_Text_MapleGardenNotRecordedZh},
++        {TaichungGym_Text_MapleGardenUnavailableEn, TaichungGym_Text_MapleGardenUnavailableZh},
++        {TaichungGym_Text_MapleGardenGreetingEn, TaichungGym_Text_MapleGardenGreetingZh},
++        {TaichungGym_Text_MapleGardenLossEn, TaichungGym_Text_MapleGardenLossZh},
++    }},
++#endif
++#ifdef TRAINER_TAICHUNG_THEATER_LING
++    {TAICHUNG_GYM_THEATER, TRAINER_TAICHUNG_THEATER_LING, TaichungGym_ScriptGetTheaterMessage, {
++        {TaichungGym_Text_TheaterOfferEn, TaichungGym_Text_TheaterOfferZh},
++        {TaichungGym_Text_TheaterCompleteEn, TaichungGym_Text_TheaterCompleteZh},
++        {TaichungGym_Text_TheaterAlreadyEn, TaichungGym_Text_TheaterAlreadyZh},
++        {TaichungGym_Text_TheaterDeclinedEn, TaichungGym_Text_TheaterDeclinedZh},
++        {TaichungGym_Text_TheaterNotRecordedEn, TaichungGym_Text_TheaterNotRecordedZh},
++        {TaichungGym_Text_TheaterUnavailableEn, TaichungGym_Text_TheaterUnavailableZh},
++        {TaichungGym_Text_TheaterGreetingEn, TaichungGym_Text_TheaterGreetingZh},
++        {TaichungGym_Text_TheaterLossEn, TaichungGym_Text_TheaterLossZh},
++    }},
++#endif
++};
++
++static void Reset(u16 mask)
++{
++    unsigned i;
++    for (i = 0; i < 256; i++) sSave.vars[i] = (u16)(0xA500 + i);
++    sSave.vars[0xF7] = 7; sSave.vars[0xF8] = 1; sSave.vars[0xF9] = 1;
++    sSave.vars[0xFA] = mask; sSave.vars[0xFB] = 2;
++    sSave.vars[0xFC] = 150; sSave.vars[0xFD] = 1;
++    sWrites = 0;
++    TaichungGymCancelChallenge();
++}
++
++static void Message(const struct Gym *gym, u16 requested, u16 expected)
++{
++    unsigned lang;
++    struct SaveBlock1 before = sSave;
++    unsigned writes = sWrites;
++    for (lang = 0; lang < 2; lang++)
++    {
++        sChinese = lang;
++        gSpecialVar_0x8005 = requested;
++        gym->message();
++        assert(strcmp((char *)gStringVar4, (const char *)gym->text[expected][lang]) == 0);
++        assert(memcmp(&before, &sSave, sizeof(before)) == 0 && writes == sWrites);
++    }
++}
++
++static void Start(const struct Gym *gym)
++{
++    assert(TaichungGymPrepareChallenge(gym->gym, gym->trainer));
++    TaichungGymOnTrainerBattleStart(gym->trainer);
++}
++
++static void TestGym(const struct Gym *gym)
++{
++    u16 mask, other;
++    u8 outcome;
++    unsigned slot;
++    struct SaveBlock1 before;
++    assert(gym->gym >= 3 && gym->gym <= 9);
++    assert(gym->trainer == 743 + gym->gym && gym->trainer < NUM_TRAINERS);
++    Reset(7); before = sSave;
++    Message(gym, TAICHUNG_GYM_MESSAGE_COMPLETE, TAICHUNG_GYM_MESSAGE_NOT_RECORDED);
++    Message(gym, TAICHUNG_GYM_MESSAGE_ALREADY_COMPLETE, TAICHUNG_GYM_MESSAGE_NOT_RECORDED);
++    Message(gym, 8, TAICHUNG_GYM_MESSAGE_UNAVAILABLE);
++    Message(gym, 65535, TAICHUNG_GYM_MESSAGE_UNAVAILABLE);
++    for (slot = 0; slot < 8; slot++)
++        if (slot != TAICHUNG_GYM_MESSAGE_COMPLETE && slot != TAICHUNG_GYM_MESSAGE_ALREADY_COMPLETE)
++            Message(gym, slot, slot);
++
++    // Decline/greeting/offer are read-only. No preparation or award happens.
++    assert(memcmp(&before, &sSave, sizeof(before)) == 0 && sWrites == 0);
++    TaichungGymOnTrainerBattleEnd(gym->trainer, B_OUTCOME_WON); // No prep/start.
++    assert(TaichungGymPrepareChallenge(gym->gym, gym->trainer));
++    TaichungGymOnTrainerBattleEnd(gym->trainer, B_OUTCOME_WON); // No start.
++    assert(TaichungGymPrepareChallenge(gym->gym, gym->trainer));
++    TaichungGymOnTrainerBattleStart(TRAINER_TAICHUNG_STATION_JUN);
++    TaichungGymOnTrainerBattleEnd(gym->trainer, B_OUTCOME_WON); // Wrong start.
++    Start(gym);
++    TaichungGymOnTrainerBattleEnd(TRAINER_TAICHUNG_STATION_JUN, B_OUTCOME_WON); // Wrong end.
++    Start(gym); TaichungGymCancelChallenge();
++    TaichungGymOnTrainerBattleEnd(gym->trainer, B_OUTCOME_WON); // Cancelled.
++    assert(memcmp(&before, &sSave, sizeof(before)) == 0 && sWrites == 0);
++
++    // Every native non-win code preserves all prior badges and all variables.
++    for (outcome = 0; outcome < 16; outcome++)
++    {
++        if (outcome == B_OUTCOME_WON) continue;
++        Start(gym);
++        TaichungGymOnTrainerBattleEnd(gym->trainer, outcome);
++        Message(gym, TAICHUNG_GYM_MESSAGE_COMPLETE, TAICHUNG_GYM_MESSAGE_NOT_RECORDED);
++        for (other = 0; other < TAICHUNG_GYM_COUNT; other++)
++            if (other != gym->gym) assert(!TaichungGymConsumeLossNotice(other));
++        assert(!TaichungGymConsumeLossNotice(65535));
++        gSpecialVar_0x8004 = gym->gym;
++        TaichungGym_ScriptConsumeLandmarkLossNotice();
++        assert(gSpecialVar_Result == (outcome == B_OUTCOME_LOST));
++        TaichungGym_ScriptConsumeLandmarkLossNotice();
++        assert(gSpecialVar_Result == FALSE);
++        TaichungGymOnTrainerBattleEnd(gym->trainer, B_OUTCOME_LOST);
++        assert(!TaichungGymConsumeLossNotice(gym->gym));
++        assert(memcmp(&before, &sSave, sizeof(before)) == 0 && sWrites == 0);
++    }
++
++    // Every possible existing badge combination retains its bits and writes
++    // exactly this gym's bit once. Duplicate outcomes and rematches add nothing.
++    for (mask = 0; mask <= TAICHUNG_GYM_ALL_MASK; mask++)
++    {
++        if (mask & (1 << gym->gym)) continue;
++        Reset(mask); before = sSave;
++        Start(gym);
++        TaichungGymOnTrainerBattleEnd(gym->trainer, B_OUTCOME_WON);
++        before.vars[0xFA] |= 1 << gym->gym;
++        assert(sWrites == 1 && memcmp(&before, &sSave, sizeof(before)) == 0);
++        Message(gym, TAICHUNG_GYM_MESSAGE_COMPLETE, TAICHUNG_GYM_MESSAGE_COMPLETE);
++        Message(gym, TAICHUNG_GYM_MESSAGE_ALREADY_COMPLETE, TAICHUNG_GYM_MESSAGE_ALREADY_COMPLETE);
++        assert(!TaichungGymPrepareChallenge(gym->gym, gym->trainer));
++        TaichungGymOnTrainerBattleStart(gym->trainer);
++        TaichungGymOnTrainerBattleEnd(gym->trainer, B_OUTCOME_WON);
++        assert(sWrites == 1 && memcmp(&before, &sSave, sizeof(before)) == 0);
++        // Continue clears volatile result/notice, preserving the loaded mask.
++        TaichungGymCancelChallenge();
++        Message(gym, TAICHUNG_GYM_MESSAGE_COMPLETE, TAICHUNG_GYM_MESSAGE_NOT_RECORDED);
++        Message(gym, TAICHUNG_GYM_MESSAGE_ALREADY_COMPLETE, TAICHUNG_GYM_MESSAGE_ALREADY_COMPLETE);
++        assert(!TaichungGymConsumeLossNotice(gym->gym));
++    }
++}
++
++int main(void)
++{
++    unsigned i;
++    assert(NUM_TRAINERS <= MAX_TRAINERS_COUNT);
++    for (i = 0; i < sizeof(sGyms)/sizeof(sGyms[0]); i++) TestGym(&sGyms[i]);
++    printf("PASS: %u installed landmark gyms, exact trainer/bit IDs, all 512 prior-badge combinations each, real-start/matching/win guards, non-win/loss/retry/duplicate/Continue reset, bilingual guarded messages; only own bit writes.\n", i);
 +    return 0;
 +}
 diff --git a/tests/taichung_lian_test.c b/tests/taichung_lian_test.c
@@ -357968,10 +359337,10 @@ index 0000000..8eecfaf
 +}
 diff --git a/tests/taichung_team_test.c b/tests/taichung_team_test.c
 new file mode 100644
-index 0000000..d541fee
+index 0000000..1fbeb78
 --- /dev/null
 +++ b/tests/taichung_team_test.c
-@@ -0,0 +1,401 @@
+@@ -0,0 +1,437 @@
 +#include <assert.h>
 +#include <stdio.h>
 +#include <string.h>
@@ -358287,6 +359656,41 @@ index 0000000..d541fee
 +    AssertProtectedSave();
 +}
 +
++static void TestPrepareSixPartners(void)
++{
++    static const u16 species[PARTY_SIZE] = {
++        SPECIES_BULBASAUR, SPECIES_CHARIZARD, SPECIES_PIKACHU,
++        SPECIES_ALAKAZAM, SPECIES_GYARADOS, SPECIES_MEWTWO
++    };
++    struct Pokemon before[PARTY_SIZE];
++    unsigned slot, move;
++    Reset();
++    for (slot = 0; slot < PARTY_SIZE; slot++)
++    {
++        gPlayerParty[slot] = OldPartner(species[slot], slot & 1 ? 80 : 5);
++        gPlayerParty[slot].identity.personality += slot;
++        gPlayerParty[slot].hp = slot & 1 ? 1 : 0;
++        gPlayerParty[slot].mail = slot;
++        memset(gPlayerParty[slot].pp, 0, MAX_MON_MOVES);
++    }
++    memcpy(before, gPlayerParty, sizeof(before));
++    TaichungTeamPrepareParty();
++    assert(gPlayerPartyCount == PARTY_SIZE);
++    assert(sRecalculations == PARTY_SIZE && sPresets == PARTY_SIZE && sHeals == 1);
++    assert(sCreates == 0 && sDexWrites == 0);
++    for (slot = 0; slot < PARTY_SIZE; slot++)
++    {
++        struct Pokemon *mon = &gPlayerParty[slot];
++        assert(mon->species == species[slot] && mon->level == 50);
++        assert(mon->exp == gExperienceTables[gSpeciesInfo[species[slot]].growthRate][50]);
++        assert(mon->hp == mon->maxHp && mon->status == 0);
++        for (move = 0; move < MAX_MON_MOVES; move++) assert(mon->pp[move] == 10);
++        assert(memcmp(&mon->identity, &before[slot].identity, sizeof(mon->identity)) == 0);
++        assert(mon->heldItem == before[slot].heldItem && mon->mail == before[slot].mail);
++    }
++    AssertProtectedSave();
++}
++
 +static void TestPrepareTrainerMoves(void)
 +{
 +    // Pikachu can use all four, and this set deliberately differs from the
@@ -358368,9 +359772,10 @@ index 0000000..d541fee
 +    TestSixSlotsAndReplacement();
 +    TestPrepareExistingMon();
 +    TestPrepareParty();
++    TestPrepareSixPartners();
 +    TestPrepareTrainerMoves();
 +    TestEnsureLevelPreservesExplorationDamage();
-+    puts("PASS: native team slot/capacity/battle guards, evolved choices, held mail, EXP-derived level 50, identity retention, high-level HP recovery, authored trainer moves/full PP versus default presets, eggs/roster bounds, city-only upgrade, no exploration refill and protected save fields.");
++    puts("PASS: native team slot/capacity/battle guards, evolved choices, six-partner preparation, held mail, EXP-derived level 50, identity retention, high-level HP recovery, authored trainer moves/full PP versus default presets, eggs/roster bounds, city-only upgrade, no exploration refill and protected save fields.");
 +    return 0;
 +}
 diff --git a/tests/team_host/global.h b/tests/team_host/global.h
@@ -373134,6 +374539,29 @@ index 0000000..cd8c987
 +  "$GAME_ROOT/src/taichung_exploration.c" "$GAME_ROOT/src/taichung_gym_progress.c" "$GAME_ROOT/tests/taichung_exploration_test.c" \
 +  -o "$GAME_ROOT/build/taichung-tests/exploration"
 +"$GAME_ROOT/build/taichung-tests/exploration"
+diff --git a/tools/taichung_gameplay/test-landmark-gyms.sh b/tools/taichung_gameplay/test-landmark-gyms.sh
+new file mode 100644
+index 0000000..94ccb4b
+--- /dev/null
++++ b/tools/taichung_gameplay/test-landmark-gyms.sh
+@@ -0,0 +1,17 @@
++#!/usr/bin/env bash
++set -euo pipefail
++GAME_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
++mkdir -p "$GAME_ROOT/build/taichung-tests"
++modules=()
++for gym in science greenway shen_ji fine_arts fengjia maple_garden theater; do
++  if [[ -f "$GAME_ROOT/src/taichung_${gym}_gym.c" ]]; then
++    modules+=("$GAME_ROOT/src/taichung_${gym}_gym.c")
++  fi
++done
++# Host strings exercise selection/guards. Native preproc and ROM build verify
++# the game's page escape and glyph encoding separately.
++cc -std=c99 -Wall -Wextra -Werror -Wno-unknown-escape-sequence -I"$GAME_ROOT/tests/gym_host" -I"$GAME_ROOT/include" \
++  "$GAME_ROOT/src/taichung_gym_progress.c" "$GAME_ROOT/src/taichung_landmark_gym.c" \
++  "${modules[@]}" "$GAME_ROOT/tests/taichung_landmark_gyms_test.c" \
++  -o "$GAME_ROOT/build/taichung-tests/landmark-gyms"
++"$GAME_ROOT/build/taichung-tests/landmark-gyms"
 diff --git a/tools/taichung_gameplay/test-navigation-bridge.py b/tools/taichung_gameplay/test-navigation-bridge.py
 new file mode 100644
 index 0000000..b1fb25a
