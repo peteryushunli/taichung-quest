@@ -13660,10 +13660,10 @@ index 802d32d..ea65545 100644
      {
        "type": "sign",
 diff --git a/data/maps/PalletTown/scripts.inc b/data/maps/PalletTown/scripts.inc
-index 1384b7d..10564cc 100644
+index 1384b7d..80b2b21 100644
 --- a/data/maps/PalletTown/scripts.inc
 +++ b/data/maps/PalletTown/scripts.inc
-@@ -1,449 +1,231 @@
+@@ -1,449 +1,235 @@
 -.equ SIGN_LADY_READY, VAR_TEMP_2
 +@ Taichung prototype: dedicated persistent state, separate from the Kanto story.
 +.equ TAICHUNG_LANGUAGE, VAR_0x40FB
@@ -13746,7 +13746,9 @@ index 1384b7d..10564cc 100644
 -	buffernumberstring STR_VAR_2, VAR_0x8009
 -	goto_if_lt VAR_0x8009, 60, PalletTown_EventScript_NotEnoughMonsForNationalDex
 -	msgbox PalletTown_Text_CaughtXImpressiveFollowMe
--	closemessage
++	callnative TaichungOnboarding_ScriptBeginStartup
++	waitstate
+ 	closemessage
 -	playbgm MUS_FOLLOW_ME, 0
 -	applymovement LOCALID_PLAYER, PalletTown_Movement_PlayerWalkToLabFromHouse
 -	applymovement LOCALID_PALLET_PROF_OAK, PalletTown_Movement_OakWalkToLabFromHouse
@@ -13762,35 +13764,36 @@ index 1384b7d..10564cc 100644
 -	setvar VAR_MAP_SCENE_PALLET_TOWN_OAK, 3
 -	setflag FLAG_HIDE_OAK_IN_PALLET_TOWN
 -	warp MAP_PALLET_TOWN_PROFESSOR_OAKS_LAB, 6, 12
-+	callnative TaichungOnboarding_ScriptBeginStartup
++	goto_if_eq VAR_RESULT, TRUE, Taichung_OnboardingLanguageReady
++	call Taichung_ChooseLanguageCore
++Taichung_OnboardingLanguageReady::
++	@ The new opening still uses the native encounter preferences. Finish this
++	@ one-time language branch before advancing to the welcome/starter script.
++	callnative TaichungExploration_ScriptOpenStartup
  	waitstate
--	releaseall
--	end
--
++	callnative TaichungOnboarding_ScriptLanguageReady
+ 	releaseall
+ 	end
+ 
 -PalletTown_EventScript_EndOakRatingScene::
- 	closemessage
+-	closemessage
 -	applymovement LOCALID_PALLET_PROF_OAK, PalletTown_Movement_OakExit
 -	waitmovement 0
 -	removeobject LOCALID_PALLET_PROF_OAK
 -	setvar VAR_MAP_SCENE_PALLET_TOWN_OAK, 3
-+	goto_if_eq VAR_RESULT, TRUE, Taichung_OnboardingLanguageReady
++Taichung_InitLanguageLegacy::
++	lockall
 +	call Taichung_ChooseLanguageCore
-+Taichung_OnboardingLanguageReady::
-+	callnative TaichungOnboarding_ScriptLanguageReady
++	callnative TaichungExploration_ScriptOpenStartup
++	waitstate
  	releaseall
  	end
  
 -PalletTown_EventScript_NotEnoughMonsForNationalDex::
 -	msgbox PalletTown_Text_CaughtXPuttingInHonestEffort
 -	goto PalletTown_EventScript_EndOakRatingScene
-+Taichung_InitLanguageLegacy::
-+	lockall
-+	call Taichung_ChooseLanguageCore
-+	callnative TaichungExploration_ScriptOpenStartup
-+	waitstate
-+	releaseall
- 	end
- 
+-	end
+-
 -PalletTown_EventScript_NotBeenToOneIslandYet::
 -	msgbox PalletTown_Text_OakYouEnjoyingTraveling
 -	goto PalletTown_EventScript_EndOakRatingScene
@@ -373839,10 +373842,10 @@ index 0000000..c18d71b
 +the real source registry and room were unchanged by that check.
 diff --git a/docs/native-onboarding-contract.md b/docs/native-onboarding-contract.md
 new file mode 100644
-index 0000000..ef607c2
+index 0000000..a6d884f
 --- /dev/null
 +++ b/docs/native-onboarding-contract.md
-@@ -0,0 +1,56 @@
+@@ -0,0 +1,58 @@
 +# Native onboarding contract proposal — v1
 +
 +Isolated source: `.worktrees/game-onboarding`, branch `codex/native-onboarding`, native base `5d6039c`, rebased onto signs-first checkpoint `d3803a8` (447-glyph prefix). No changes to the CMP release or existing field-language v1 packet are required.
@@ -373877,6 +373880,8 @@ index 0000000..ef607c2
 +## Startup
 +
 +Frontend presents readable English / 繁體中文 cards before canvas startup, retaining selected preference. It submits command1 only when phase1 and accepts-command are both set. Native opens that bounded gate ONLY from the welcome-room script, after initialized new-game variables and before any welcome text/menu. Native applies the selected language itself, ACKs, closes gate, and resumes the script without native language multichoice. This does not relax the normal field-language bridge's safe-field guard. Only if a fresh native A/B edge is pressed after a release and a two-frame guard, the gate publishes phase10 and closes before invoking the existing standalone native language choice. Elapsed time never opens the native chooser automatically (a slow browser may show a hint). A late request gets stale-context/not-ready; browser must not silently claim success. Existing save Continue stays native-authoritative and uses the existing field bridge after safe-field readiness.
++
++Both fresh-game language routes then open the existing native exploration menu once, before welcome text and partner selection. Wild encounters and trainer sight each retain Off / Low / Normal choices; confirming or returning commits through the existing native preference setters. The language-zero map-script gate prevents this startup prompt from reopening on ordinary Continue or for demo saves, and does not overwrite their saved choices.
 +
 +## Outdoor tutorial without lock deadlocks
 +
