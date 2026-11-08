@@ -379830,10 +379830,10 @@ index 0000000..16f3ced
 +#endif
 diff --git a/include/taichung_save.h b/include/taichung_save.h
 new file mode 100644
-index 0000000..f34caee
+index 0000000..35e7d0f
 --- /dev/null
 +++ b/include/taichung_save.h
-@@ -0,0 +1,14 @@
+@@ -0,0 +1,17 @@
 +#ifndef GUARD_TAICHUNG_SAVE_H
 +#define GUARD_TAICHUNG_SAVE_H
 +
@@ -379844,6 +379844,9 @@ index 0000000..f34caee
 +
 +void TaichungSaveInitNewGame(void);
 +void TaichungSaveUpgradeOnContinue(void);
++// Consume only immediately before recreating the avatar on a Continue map load.
++// DIR_NONE leaves ordinary native warp/repair arrival directions authoritative.
++u8 TaichungSaveConsumeContinueFacing(void);
 +void TaichungSaveSetStationCheckpoint(void);
 +bool8 TaichungSaveUsesStationCheckpoint(void);
 +
@@ -383348,7 +383351,7 @@ index 77dd3db..164f2d0 100644
  
  #define tSpriteTimer                data[0]
 diff --git a/src/overworld.c b/src/overworld.c
-index 339014d..d4a7671 100644
+index 339014d..41b49c6 100644
 --- a/src/overworld.c
 +++ b/src/overworld.c
 @@ -43,6 +43,11 @@
@@ -383450,7 +383453,21 @@ index 339014d..d4a7671 100644
      LoadSaveblockMapHeader();
      LoadSaveblockObjEventScripts();
      UnfreezeObjectEvents();
-@@ -2144,6 +2183,7 @@ static void InitObjectEventsLocal(void)
+@@ -2134,6 +2173,7 @@ static void InitObjectEventsLink(void)
+ static void InitObjectEventsLocal(void)
+ {
+     s16 x, y;
++    u8 continueFacing;
+     struct InitialPlayerAvatarState *player;
+ 
+     gTotalCameraPixelOffsetX = 0;
+@@ -2141,9 +2181,13 @@ static void InitObjectEventsLocal(void)
+     ResetObjectEvents();
+     GetCameraFocusCoords(&x, &y);
+     player = GetInitialPlayerAvatarState();
++    continueFacing = TaichungSaveConsumeContinueFacing();
++    if (continueFacing != DIR_NONE)
++        player->direction = continueFacing;
      InitPlayerAvatar(x, y, player->direction, gSaveBlock2Ptr->playerGender);
      SetPlayerAvatarTransitionFlags(player->transitionFlags);
      ResetInitialPlayerAvatarState();
@@ -383458,7 +383475,7 @@ index 339014d..d4a7671 100644
      TrySpawnObjectEvents(0, 0);
      TryRunOnWarpIntoMapScript();
  }
-@@ -2325,6 +2365,13 @@ void CB2_EnterFieldFromQuestLog(void)
+@@ -2325,6 +2369,13 @@ void CB2_EnterFieldFromQuestLog(void)
      StopMapMusic();
      gGlobalFieldTintMode = QL_TINT_BACKUP_GRAYSCALE;
      ResetSafariZoneFlag_();
@@ -386561,10 +386578,10 @@ index 0000000..22d2f8b
 +}
 diff --git a/src/taichung_save.c b/src/taichung_save.c
 new file mode 100644
-index 0000000..86d7d6c
+index 0000000..59c7b19
 --- /dev/null
 +++ b/src/taichung_save.c
-@@ -0,0 +1,1284 @@
+@@ -0,0 +1,1333 @@
 +#include "global.h"
 +#include "event_data.h"
 +#include "load_save.h"
@@ -386576,6 +386593,14 @@ index 0000000..86d7d6c
 +
 +#define TAICHUNG_STARTER_VAR 0x40FC
 +#define TAICHUNG_TEA_VAR 0x40FD
++
++// One-shot avatar handoff for a same-tile cache refresh, never a native arrival.
++static EWRAM_DATA struct
++{
++    s16 x, y;
++    u8 mapGroup, mapNum, direction;
++} sContinueFacing = {0};
++typedef char ContinueFacingSizeCheck[sizeof(sContinueFacing) == 8 ? 1 : -1];
 +
 +static u16 SavedVar(u16 id)
 +{
@@ -386600,6 +386625,7 @@ index 0000000..86d7d6c
 +
 +void TaichungSaveInitNewGame(void)
 +{
++    sContinueFacing.direction = DIR_NONE;
 +    TaichungGymCancelChallenge();
 +    VarSet(TAICHUNG_SAVE_VERSION_VAR, TAICHUNG_SAVE_VERSION);
 +    TaichungSaveSetStationCheckpoint();
@@ -387774,6 +387800,44 @@ index 0000000..86d7d6c
 +    return IsOldCity(warp) || IsGreenway(warp) || IsXitun(warp);
 +}
 +
++static void RememberCacheRefreshFacing(const struct WarpData *warp)
++{
++    u8 i;
++
++    if (warp->x != gSaveBlock1Ptr->pos.x || warp->y != gSaveBlock1Ptr->pos.y)
++        return; // A repaired/relocated position uses the normal arrival rules.
++    for (i = 0; i < OBJECT_EVENTS_COUNT; i++)
++    {
++        const struct ObjectEvent *object = &gSaveBlock1Ptr->objectEvents[i];
++        if (!object->active || !object->isPlayer)
++            continue;
++        if (sContinueFacing.direction != DIR_NONE
++            || object->facingDirection < DIR_SOUTH || object->facingDirection > DIR_EAST)
++        {
++            sContinueFacing.direction = DIR_NONE;
++            return; // Ambiguous/invalid saved players keep the engine default.
++        }
++        sContinueFacing.x = warp->x;
++        sContinueFacing.y = warp->y;
++        sContinueFacing.mapGroup = warp->mapGroup;
++        sContinueFacing.mapNum = warp->mapNum;
++        sContinueFacing.direction = object->facingDirection;
++    }
++}
++
++u8 TaichungSaveConsumeContinueFacing(void)
++{
++    u8 direction = sContinueFacing.direction;
++    sContinueFacing.direction = DIR_NONE;
++    if (gSaveBlock1Ptr->location.warpId != -1
++        || gSaveBlock1Ptr->location.mapGroup != sContinueFacing.mapGroup
++        || gSaveBlock1Ptr->location.mapNum != sContinueFacing.mapNum
++        || gSaveBlock1Ptr->pos.x != sContinueFacing.x
++        || gSaveBlock1Ptr->pos.y != sContinueFacing.y)
++        return DIR_NONE; // A later native warp always wins, even on this load.
++    return direction;
++}
++
 +static void ReloadCityBanksOnContinue(u16 sourceVersion)
 +{
 +    struct WarpData *warp = &gSaveBlock1Ptr->continueGameWarp;
@@ -387794,6 +387858,7 @@ index 0000000..86d7d6c
 +    warp->x = gSaveBlock1Ptr->pos.x;
 +    warp->y = gSaveBlock1Ptr->pos.y;
 +    RepairChangedCityPosition(warp, sourceVersion);
++    RememberCacheRefreshFacing(warp);
 +
 +    // Continue first overlays mapView, then this warp reloads the authored map.
 +    // Zeroing mapView alone is unsafe: the non-UBFIX emptiness check overreads.
@@ -387805,6 +387870,7 @@ index 0000000..86d7d6c
 +    bool8 inCity;
 +    u16 version = SavedVar(TAICHUNG_SAVE_VERSION_VAR);
 +
++    sContinueFacing.direction = DIR_NONE;
 +    // Both ordinary and quest-log Continue start a fresh transient session,
 +    // even when no save migration is needed. Map/whiteout returns do not.
 +    TaichungGymCancelChallenge();
@@ -389448,10 +389514,10 @@ index 0000000..37004a7
 +bool8 VarSet(u16 id, u16 value);
 diff --git a/tests/save_host/global.h b/tests/save_host/global.h
 new file mode 100644
-index 0000000..031e9b2
+index 0000000..15e863a
 --- /dev/null
 +++ b/tests/save_host/global.h
-@@ -0,0 +1,26 @@
+@@ -0,0 +1,33 @@
 +#ifndef TAICHUNG_SAVE_HOST_GLOBAL_H
 +#define TAICHUNG_SAVE_HOST_GLOBAL_H
 +#define GUARD_GLOBAL_H
@@ -389462,19 +389528,26 @@ index 0000000..031e9b2
 +typedef uint32_t u32;
 +typedef int8_t s8;
 +typedef int16_t s16;
++typedef int32_t s32;
 +typedef uint8_t bool8;
 +typedef uint32_t bool32;
++#define EWRAM_DATA
 +#define TRUE 1
 +#define FALSE 0
 +#define VARS_START 0x4000
++#include "constants/global.h"
 +struct WarpData { s8 mapGroup, mapNum, warpId; s16 x, y; };
 +struct Coords16 { s16 x, y; };
++// Use the native object/avatar definitions, including the saved facing bitfield.
++#include "global.fieldmap.h"
 +struct SaveBlock1 {
 +    struct Coords16 pos;
 +    struct WarpData location, continueGameWarp, lastHealLocation;
 +    u8 playerPartyCount;
 +    u16 vars[256];
 +    u8 preservedPartyAndBag[64];
++    u16 mapLayoutId;
++    struct ObjectEvent objectEvents[OBJECT_EVENTS_COUNT];
 +};
 +extern struct SaveBlock1 *gSaveBlock1Ptr;
 +#endif
@@ -390690,6 +390763,230 @@ index 0000000..1c2d2d8
 +    Reset(); gSaveBlock1Ptr = NULL;
 +    TaichungPeiqiRefreshOnContinue(); assert(sHeaderReads == 0);
 +    puts("PASS: stale Peiqi cache refresh at saved position; party/badges preserved; current caches, pending warps, unrelated maps and invalid inputs untouched");
++    return 0;
++}
+diff --git a/tests/taichung_save_facing_test.c b/tests/taichung_save_facing_test.c
+new file mode 100644
+index 0000000..946ccb7
+--- /dev/null
++++ b/tests/taichung_save_facing_test.c
+@@ -0,0 +1,218 @@
++#include <assert.h>
++#include <stdio.h>
++#include <string.h>
++#include "global.h"
++#include "taichung_save.h"
++#include "metatile_behavior.h"
++#include "constants/maps.h"
++#include "constants/map_types.h"
++#include "constants/metatile_behaviors.h"
++#include "constants/event_object_movement.h"
++#include "constants/trainer_types.h"
++#include "constants/flags.h"
++
++#define MAP_OFFSET 7
++struct SaveBlock2 { u8 playerGender; };
++struct Sprite { u8 unused; };
++static struct SaveBlock1 sSave;
++static struct SaveBlock2 sSave2;
++struct SaveBlock1 *gSaveBlock1Ptr = &sSave;
++struct SaveBlock2 *gSaveBlock2Ptr = &sSave2;
++struct ObjectEvent gObjectEvents[OBJECT_EVENTS_COUNT];
++struct PlayerAvatar gPlayerAvatar;
++struct MapHeader gMapHeader;
++struct WarpData gLastUsedWarp;
++struct Sprite gSprites[1];
++s16 gTotalCameraPixelOffsetX, gTotalCameraPixelOffsetY;
++static bool8 sPending;
++static unsigned sWarpRequests, sCases;
++static u8 sBehavior;
++static const struct MapLayout sLayout = {.width = 40, .height = 72};
++static const struct MapLayout *const gMapLayouts[] = {&sLayout};
++static const struct WarpEvent sDoor = {.x = 6, .y = 14};
++static const struct MapEvents sEvents = {.warpCount = 1, .warps = &sDoor};
++static const struct MapHeader sHeader = {.mapLayout = &sLayout, .mapLayoutId = 1, .events = &sEvents, .mapType = MAP_TYPE_TOWN};
++
++// Only data/graphics/script services are host boundaries. Facing is produced
++// by unmodified native direction, avatar, ObjectEventTurn and getter functions.
++const struct MapHeader *Overworld_GetMapHeaderByGroupAndId(u16 group, u16 num) { (void)group; (void)num; return &sHeader; }
++bool8 FlagGet(u16 flag) { (void)flag; return FALSE; }
++bool8 Overworld_IsBikingAllowed(void) { return TRUE; }
++u8 MapGridGetMetatileBehaviorAt(s16 x, s16 y) { (void)x; (void)y; return sBehavior; }
++void ClearLinkPlayerObjectEvents(void) {}
++void CreateReflectionEffectSprites(void) {}
++u8 GetPlayerAvatarGraphicsIdByStateIdAndGender(u8 state, u8 gender) { (void)state; (void)gender; return 0; }
++u8 CreateWarpArrowSprite(void) { return 0; }
++void StartSpriteAnim(struct Sprite *sprite, u8 anim) { (void)sprite; (void)anim; }
++void SeekSpriteAnim(struct Sprite *sprite, u8 frame) { (void)sprite; (void)frame; }
++u8 GetFaceDirectionAnimNum(u8 direction) { return direction; }
++void SetPlayerAvatarTransitionFlags(u16 flags) { gPlayerAvatar.transitionFlags |= flags; }
++void TaichungCharactersAvoidNpcSpawnOverlap(s16 x, s16 y) { (void)x; (void)y; }
++void TrySpawnObjectEvents(s16 x, s16 y) { (void)x; (void)y; }
++void TryRunOnWarpIntoMapScript(void) {}
++u8 SpawnSpecialObjectEvent(struct ObjectEventTemplate *template)
++{
++    struct ObjectEvent *object = &gObjectEvents[0];
++    object->active = TRUE;
++    object->localId = template->localId;
++    object->movementType = template->objUnion.normal.movementType;
++    object->currentCoords.x = template->x + MAP_OFFSET;
++    object->currentCoords.y = template->y + MAP_OFFSET;
++    return 0; // Allocation only: does not set either direction field.
++}
++bool8 VarSet(u16 id, u16 value) { sSave.vars[id - VARS_START] = value; return TRUE; }
++void SetContinueGameWarpStatus(void) { sPending = TRUE; sWarpRequests++; }
++bool32 UseContinueGameWarp(void) { return sPending; }
++void TaichungGymCancelChallenge(void) {}
++
++#include "native-engine.inc"
++
++static void Saved(u16 version, u8 mapNum, s16 x, s16 y, u8 direction)
++{
++    memset(&sSave, 0, sizeof(sSave));
++    memset(gObjectEvents, 0, sizeof(gObjectEvents));
++    memset(&gPlayerAvatar, 0, sizeof(gPlayerAvatar));
++    sSave.playerPartyCount = 1;
++    memset(sSave.preservedPartyAndBag, 0xA5, sizeof(sSave.preservedPartyAndBag));
++    sSave.vars[0xF7] = version;
++    sSave.vars[0xF6] = 0xA109;
++    sSave.vars[0xF8] = 1;
++    sSave.vars[0xF9] = 2;
++    sSave.vars[0xFA] = 0x7F;
++    sSave.vars[0xFB] = 2;
++    sSave.vars[0xFC] = 25;
++    sSave.location = (struct WarpData){MAP_GROUP(MAP_TAICHUNG_OLD_CITY), mapNum, -1, 7, 8};
++    sSave.pos = (struct Coords16){x, y};
++    sSave.mapLayoutId = 1;
++    // A different-facing NPC in slot0 catches assumptions about player index.
++    sSave.objectEvents[0].active = TRUE;
++    sSave.objectEvents[0].facingDirection = DIR_EAST;
++    sSave.objectEvents[5].active = TRUE;
++    sSave.objectEvents[5].isPlayer = TRUE;
++    sSave.objectEvents[5].facingDirection = direction;
++    sPending = FALSE;
++    sWarpRequests = 0;
++    sBehavior = MB_NORMAL;
++    ResetInitialPlayerAvatarState();
++}
++
++static void LoadContinueMap(void)
++{
++    assert(sPending);
++    sPending = FALSE;
++    SetWarpDestinationToContinueGameWarp();
++    WarpIntoMap();
++    InitObjectEventsLocal();
++}
++
++static void CacheOnlyCases(void)
++{
++    static const s16 positions[][2] = {{30,66}, {17,40}, {12,47}};
++    const u8 directions[] = {DIR_NORTH, DIR_WEST};
++    unsigned map, dir;
++    for (map = 0; map < 3; map++)
++        for (dir = 0; dir < sizeof(directions); dir++)
++        {
++            struct SaveBlock1 before;
++            Saved(7, map, positions[map][0], positions[map][1], directions[dir]);
++            before = sSave;
++            TaichungSaveUpgradeOnContinue();
++            assert(sSave.vars[0xF7] == 8 && sWarpRequests == 1);
++            assert(sSave.continueGameWarp.x == before.pos.x && sSave.continueGameWarp.y == before.pos.y);
++            LoadContinueMap();
++            if (GetPlayerFacingDirection() != directions[dir])
++                fprintf(stderr, "cache-only native facing: expected %u, got %u\n", directions[dir], GetPlayerFacingDirection());
++            assert(GetPlayerFacingDirection() == directions[dir]);
++            assert(gObjectEvents[gPlayerAvatar.objectEventId].movementDirection == directions[dir]);
++            assert(sSave.pos.x == before.pos.x && sSave.pos.y == before.pos.y);
++            assert(memcmp(sSave.objectEvents, before.objectEvents, sizeof(sSave.objectEvents)) == 0);
++            assert(memcmp(sSave.preservedPartyAndBag, before.preservedPartyAndBag, sizeof(sSave.preservedPartyAndBag)) == 0);
++            before.vars[0xF7] = 8;
++            assert(memcmp(sSave.vars, before.vars, sizeof(sSave.vars)) == 0);
++            // Consumption must not affect a later ordinary map load.
++            InitObjectEventsLocal();
++            assert(GetPlayerFacingDirection() == DIR_SOUTH);
++            sCases++;
++        }
++    // A same-position refresh is not a door arrival, even on a door metatile.
++    Saved(7, 0, 30, 66, DIR_NORTH);
++    sBehavior = MB_CAVE_DOOR;
++    TaichungSaveUpgradeOnContinue(); LoadContinueMap();
++    assert(GetPlayerFacingDirection() == DIR_NORTH);
++    sCases++;
++}
++
++static void NativeWarpAndRepairPriority(void)
++{
++    struct WarpData pending;
++    Saved(7, 0, 30, 66, DIR_WEST);
++    pending = (struct WarpData){MAP_GROUP(MAP_TAICHUNG_OLD_CITY), 1, 0, -1, -1};
++    sSave.continueGameWarp = pending; sPending = TRUE;
++    sBehavior = MB_CAVE_DOOR;
++    TaichungSaveUpgradeOnContinue();
++    assert(sWarpRequests == 0 && memcmp(&pending, &sSave.continueGameWarp, sizeof(pending)) == 0);
++    LoadContinueMap();
++    assert(sSave.pos.x == 6 && sSave.pos.y == 14 && GetPlayerFacingDirection() == DIR_SOUTH);
++    sCases++;
++    // An existing same-target return still owns native arrival direction.
++    Saved(7, 0, 30, 66, DIR_NORTH);
++    sSave.continueGameWarp = (struct WarpData){43, 0, -1, 30, 66}; sPending = TRUE;
++    TaichungSaveUpgradeOnContinue(); LoadContinueMap();
++    assert(sWarpRequests == 0 && GetPlayerFacingDirection() == DIR_SOUTH);
++    sCases++;
++    // Actual current relocation tables run before deciding whether to preserve.
++    Saved(7, 2, 31, 30, DIR_WEST);
++    TaichungSaveUpgradeOnContinue(); LoadContinueMap();
++    assert(sSave.pos.x == 31 && sSave.pos.y == 32 && GetPlayerFacingDirection() == DIR_SOUTH);
++    sCases++;
++    Saved(2, 0, 2, 2, DIR_NORTH);
++    TaichungSaveUpgradeOnContinue(); LoadContinueMap();
++    assert(sSave.pos.x == 7 && sSave.pos.y == 2 && GetPlayerFacingDirection() == DIR_SOUTH);
++    sCases++;
++    Saved(7, 0, 30, 66, DIR_NORTH);
++    sSave.continueGameWarp = (struct WarpData){43, 2, -1, 31, 30}; sPending = TRUE;
++    TaichungSaveUpgradeOnContinue(); LoadContinueMap();
++    assert(sSave.pos.x == 31 && sSave.pos.y == 32 && GetPlayerFacingDirection() == DIR_SOUTH);
++    sCases++;
++}
++
++static void InvalidAndStaleHandoffs(void)
++{
++    unsigned invalid;
++    for (invalid = 0; invalid < 3; invalid++)
++    {
++        Saved(7, 0, 30, 66, DIR_NORTH);
++        if (invalid == 0) sSave.objectEvents[5].active = FALSE;
++        if (invalid == 1) sSave.objectEvents[5].facingDirection = DIR_NONE;
++        if (invalid == 2) { sSave.objectEvents[6] = sSave.objectEvents[5]; }
++        TaichungSaveUpgradeOnContinue(); LoadContinueMap();
++        assert(GetPlayerFacingDirection() == DIR_SOUTH);
++        sCases++;
++    }
++    Saved(7, 0, 30, 66, DIR_NORTH); TaichungSaveUpgradeOnContinue();
++    sSave.continueGameWarp.x = 31; // A later native position warp supersedes it.
++    LoadContinueMap(); assert(GetPlayerFacingDirection() == DIR_SOUTH); sCases++;
++    Saved(7, 0, 30, 66, DIR_NORTH); TaichungSaveUpgradeOnContinue();
++    sSave.continueGameWarp.mapNum = 1; // Same coordinates, different map also wins.
++    LoadContinueMap(); assert(GetPlayerFacingDirection() == DIR_SOUTH); sCases++;
++    Saved(7, 1, 6, 14, DIR_NORTH); TaichungSaveUpgradeOnContinue();
++    sSave.continueGameWarp.warpId = 0; // A native door at even the same position wins.
++    sBehavior = MB_CAVE_DOOR;
++    LoadContinueMap(); assert(GetPlayerFacingDirection() == DIR_SOUTH); sCases++;
++    Saved(7, 0, 30, 66, DIR_NORTH); TaichungSaveUpgradeOnContinue();
++    TaichungSaveUpgradeOnContinue(); // Current-version early exit clears stale state.
++    LoadContinueMap(); assert(GetPlayerFacingDirection() == DIR_SOUTH); sCases++;
++    Saved(7, 0, 30, 66, DIR_NORTH); TaichungSaveUpgradeOnContinue();
++    TaichungSaveInitNewGame();
++    LoadContinueMap(); assert(GetPlayerFacingDirection() == DIR_SOUTH); sCases++;
++}
++
++int main(void)
++{
++    assert(sizeof(struct ObjectEvent) == 0x24);
++    CacheOnlyCases();
++    NativeWarpAndRepairPriority();
++    InvalidAndStaleHandoffs();
++    printf("PASS: %u compiled native warp/avatar facing cases; safe v7 Up/Left in all3 districts, pending/door and repaired positions, target guard, invalid players and one-shot/session resets\n", sCases);
 +    return 0;
 +}
 diff --git a/tests/taichung_save_test.c b/tests/taichung_save_test.c
@@ -399409,10 +399706,10 @@ index 0000000..a6ee075
 +                      "crossDedup": result["crossDedupMeasured"], "capacity": result["capacityArithmetic"]}, indent=2))
 diff --git a/tools/taichung/landmarks/check_cmp.py b/tools/taichung/landmarks/check_cmp.py
 new file mode 100644
-index 0000000..6371192
+index 0000000..487d6bc
 --- /dev/null
 +++ b/tools/taichung/landmarks/check_cmp.py
-@@ -0,0 +1,452 @@
+@@ -0,0 +1,453 @@
 +#!/usr/bin/env python3
 +"""Read-only independent checks for the approved CMP private-bank increment.
 +
@@ -399473,12 +399770,13 @@ index 0000000..6371192
 +                    'data/taichung/landmarks/xitun-final-native/final-scene/map.bin': '10128a6dac3b9f1584ee6d985c839943a4bb51d0af7be0d6e9b93474f5144001',
 +                    'tools/taichung/landmarks/check_xitun_final.py': '6ec516bacac0d28a879115909d3865a7864e4d8995257711c10fcd43fc8e5030'}}
 +
-+# Exact combined v8 pair and geometry of the city batch release: Xitun street relocations, and
-+# OldCity, Greenway and Xitun reloading for every pre-v8 save. This is not native acceptance.
++# Main-reviewed v8 city source plus the cache-only saved-facing handoff.
++# Geometry is unchanged; native pending warps/repairs retain priority. Not runtime acceptance.
 +REVIEWED_RELEASE_CITY_BATCH_V8_SAVE = {'name': 'release-city-batch-v8',
-+ 'sourceCommit': 'c2245c31ca08a33174d1c5393ac991f84e179010',
-+ 'sha256': {'src/taichung_save.c': '146ba1a2747e9cf5890bfb4ef478a0e0743e7fa1c4020760a90c6aa43b9b1561',
-+            'include/taichung_save.h': 'd41da5f888d3cbb1f72b1a94f43ba13f6f2ac5f9e131744c991c732a0b14f628'},
++ 'sourceCommit': '359f713e3ba4d56549d8de983c291cf074a215a7',
++ 'sha256': {'src/taichung_save.c': '89597464b499bbb7da8a2dd15515cfaab679c8676a07ca6cd26347b4be425bc8',
++            'include/taichung_save.h': '7e58658401f3eda5b1817aef8c0be1cd438445c9d6b97b669cad2c2af5707817',
++            'src/overworld.c': '5e437a504b2cb4f7b9301096bd846588707d5280ac1ab424e71db471bbf81bca'},
 + 'geometrySha256': {'data/layouts/TaichungOldCity/map.bin': '9fcce4bcd0b3c11cd743a01ce382c40c8e792262d0ef5c69750f655414af0ced',
 +                    'data/layouts/TaichungGreenway/map.bin': '8733519e16ca981421e91d325e68e9fa904041ba7e3e24965d66977e700f216c',
 +                    'data/layouts/TaichungXitun/map.bin': '65432cf516b2b3981b5b99d740806c4f433baed23a4ae3c49f8c8275e4831f5d',
@@ -414571,12 +414869,145 @@ index 0000000..56e0154
 +  "$GAME_ROOT/src/taichung_gym_progress.c" "$GAME_ROOT/tests/taichung_gym_progress_test.c" \
 +  -o "$GAME_ROOT/build/taichung-tests/progress"
 +"$GAME_ROOT/build/taichung-tests/progress"
+diff --git a/tools/taichung_gameplay/test-save-facing.py b/tools/taichung_gameplay/test-save-facing.py
+new file mode 100644
+index 0000000..d5f94fc
+--- /dev/null
++++ b/tools/taichung_gameplay/test-save-facing.py
+@@ -0,0 +1,127 @@
++#!/usr/bin/env python3
++"""Compile real migration/warp/avatar functions; stub only map/GBA services.
++
++Function bodies are copied verbatim from current native sources into a host
++translation unit. Assertions execute them, including native direction selection,
++object reset, InitPlayerAvatar, ObjectEventTurn and the real facing getter.
++No source-pattern assertions or substitute facing implementation are used.
++"""
++import argparse
++from pathlib import Path
++import re
++import subprocess
++
++
++def definition(source, name):
++    match = re.search(r"^[\w *]+\b" + re.escape(name) + r"\([^;{}]*\)\s*\n\{", source, re.M)
++    if not match:
++        raise ValueError(f"Missing native definition: {name}")
++    start = source.index('{', match.start())
++    depth, mode, index = 1, 'code', start + 1
++    while depth:
++        char, pair = source[index], source[index:index + 2]
++        if mode == 'line':
++            if char == '\n':
++                mode = 'code'
++        elif mode == 'block':
++            if pair == '*/':
++                mode = 'code'
++                index += 1
++        elif mode in ('"', "'"):
++            if char == '\\':
++                index += 1
++            elif char == mode:
++                mode = 'code'
++        elif pair == '//':
++            mode = 'line'
++            index += 1
++        elif pair == '/*':
++            mode = 'block'
++            index += 1
++        elif char in ('"', "'"):
++            mode = char
++        elif char == '{':
++            depth += 1
++        elif char == '}':
++            depth -= 1
++        index += 1
++    return source[match.start():index], source[match.start():start].strip() + ';'
++
++
++def main():
++    parser = argparse.ArgumentParser(description=__doc__)
++    parser.add_argument('--prove-regression', action='store_true', help='Also verify the same native engine tests fail without only the new avatar hook')
++    args = parser.parse_args()
++    game = Path(__file__).resolve().parents[2]
++    out = game / 'build/taichung-tests/facing'
++    out.mkdir(parents=True, exist_ok=True)
++    functions = {
++        'src/overworld.c': [
++            'ApplyCurrentWarp', 'LoadCurrentMapData', 'SetPlayerCoordsFromWarp', 'WarpIntoMap',
++            'GetMapLayout', 'SetWarpDestinationToContinueGameWarp', 'ResetInitialPlayerAvatarState',
++            'GetInitialPlayerAvatarState', 'GetAdjustedInitialTransitionFlags',
++            'MetatileBehavior_IsSurfableInSeafoamIslands', 'GetAdjustedInitialDirection',
++            'GetCenterScreenMetatileBehavior', 'GetMapTypeByGroupAndId', 'GetMapTypeByWarpData',
++            'GetCurrentMapType', 'InitObjectEventsLocal',
++        ],
++        'src/fieldmap.c': ['GetCameraFocusCoords'],
++        'src/event_object_movement.c': ['ClearObjectEvent', 'ClearAllObjectEvents', 'ResetObjectEvents',
++                                         'SetObjectEventDirection', 'ObjectEventTurn'],
++        'src/field_player_avatar.c': ['ClearPlayerAvatarInfo', 'SetPlayerAvatarStateMask',
++                                      'InitPlayerAvatar', 'GetPlayerFacingDirection'],
++    }
++    bodies, prototypes = [], []
++    for path, names in functions.items():
++        text = (game / path).read_text()
++        for name in names:
++            body, prototype = definition(text, name)
++            prototypes.append(prototype)
++            bodies.append(f'#line 1 "{path}:{name}"\n{body}\n')
++    # Pull only this native constant; the unrelated event-ID table is generated
++    # by ROM builds and is not a prerequisite for these host avatar tests.
++    player_id = next(line for line in (game / 'include/constants/event_objects.h').read_text().splitlines()
++                     if re.match(r'^#define LOCALID_PLAYER\s', line))
++    prefix = player_id + '\n' + '''struct InitialPlayerAvatarState { u8 transitionFlags, direction; bool8 hasDirectionSet; };
++static struct InitialPlayerAvatarState sInitialPlayerAvatarState;
++static struct WarpData sWarpDestination, sFixedDiveWarp, sFixedHoleWarp;
++static const struct WarpData sDummyWarpData = {-1, -1, -1, -1, -1};
++'''
++    generated = prefix + '\n'.join(prototypes) + '\n' + '\n'.join(bodies)
++    include = out / 'native-engine.inc'
++    include.write_text(generated)
++    # FRLG retains unused-parameter false-return compatibility functions from
++    # RSE in this unchanged native file; keep that exception scoped to it.
++    behaviors = out / 'metatile-behavior.o'
++    subprocess.run(['cc', '-std=c99', '-Wall', '-Wextra', '-Werror', '-Wno-unused-parameter',
++                    '-I' + str(game / 'tests/save_host'), '-I' + str(game / 'include'),
++                    '-c', str(game / 'src/metatile_behavior.c'), '-o', str(behaviors)], check=True)
++    command = ['cc', '-std=c99', '-Wall', '-Wextra', '-Werror', '-Wno-pointer-sign',
++               '-I' + str(game / 'tests/save_host'), '-I' + str(game / 'include'), '-I' + str(out),
++               str(game / 'src/taichung_save.c'), str(behaviors),
++               str(game / 'tests/taichung_save_facing_test.c')]
++    binary = out / 'save-facing'
++    subprocess.run(command + ['-o', str(binary)], check=True)
++    subprocess.run([str(binary)], check=True)
++    if args.prove_regression:
++        # Remove the sole runtime integration hook, not the expected answers or
++        # migration. The real engine must reproduce South instead of saved Up.
++        hook = '''    continueFacing = TaichungSaveConsumeContinueFacing();
++    if (continueFacing != DIR_NONE)
++        player->direction = continueFacing;'''
++        if generated.count(hook) != 1:
++            raise ValueError('Expected one exact avatar hook for the regression control')
++        include.write_text(generated.replace(hook, '    (void)continueFacing;', 1))
++        broken = out / 'save-facing-without-hook'
++        try:
++            subprocess.run(command + ['-o', str(broken)], check=True)
++            result = subprocess.run([str(broken)], capture_output=True)
++            if result.returncode == 0 or b'cache-only native facing: expected 2, got 1' not in result.stderr:
++                raise ValueError('Regression control did not reproduce the specific saved North to South failure')
++            (out / 'without-hook.stderr.txt').write_bytes(result.stderr)
++            print('PASS: removing only the runtime hook reproduces the native saved-facing assertion failure')
++        finally:
++            include.write_text(generated)
++
++
++if __name__ == '__main__':
++    main()
 diff --git a/tools/taichung_gameplay/test-save.sh b/tools/taichung_gameplay/test-save.sh
 new file mode 100644
-index 0000000..faab6d0
+index 0000000..61d35c5
 --- /dev/null
 +++ b/tools/taichung_gameplay/test-save.sh
-@@ -0,0 +1,8 @@
+@@ -0,0 +1,9 @@
 +#!/usr/bin/env bash
 +set -euo pipefail
 +GAME_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
@@ -414585,6 +415016,7 @@ index 0000000..faab6d0
 +  "$GAME_ROOT/src/taichung_save.c" "$GAME_ROOT/tests/taichung_save_test.c" \
 +  -o "$GAME_ROOT/build/taichung-tests/save"
 +"$GAME_ROOT/build/taichung-tests/save"
++python3 "$GAME_ROOT/tools/taichung_gameplay/test-save-facing.py"
 diff --git a/tools/taichung_gameplay/test-starter.sh b/tools/taichung_gameplay/test-starter.sh
 new file mode 100644
 index 0000000..c24add4

@@ -6,9 +6,9 @@ finished Codex code before all runtime checks finish. These are draft source
 claims, not a production acceptance receipt. The shipped three-gym release
 remains authoritative until the combined candidate passes its release gates.
 
-The initial combined native source is `9070c6f197965dd775e8b823f7db85995cfe456f`,
+The current combined native source is `b355ac99dc5abfbbbd4a2d25099cbe4c6964b305`,
 with ROM SHA-256
-`ee35dae9ff0e38a4e040dd4f62a137584316fd0cdc8751c54457804528fd93a9`.
+`7fa275ac4e051ec304bb820b539702c448c30628c715028e694b8be8779ab0b0`.
 Its gym code and party definitions are exact to the original `b7b027d` candidate;
 Claude's map/save-v8 work and 120×176 contract are retained.
 Main's source review matches the installed dialogue to the current Story handoffs;
