@@ -7,8 +7,8 @@ const landmarks = JSON.parse(readFileSync(new URL('../src/data/landmarks.json', 
 const assets = readFileSync(new URL('../src/landing-assets.ts', import.meta.url), 'utf8');
 const open = landmarks.filter(isGymOpen);
 
-test('only Station and Park gyms are open, and only they name a leader', () => {
-  assert.deepEqual(open.map((place) => place.id), ['old-taichung-station', 'taichung-park']);
+test('only Station, Park and Miyahara gyms are open, and only they name a leader', () => {
+  assert.deepEqual(open.map((place) => place.id), ['old-taichung-station', 'taichung-park', 'miyahara']);
   for (const place of landmarks) {
     for (const locale of ['en', 'zh-Hant']) {
       const { leader } = localizedPlace(place, locale);
@@ -18,6 +18,8 @@ test('only Station and Park gyms are open, and only they name a leader', () => {
   }
   assert.equal(localizedPlace(open[0], 'en').leader, 'Jun');
   assert.equal(localizedPlace(open[1], 'zh-Hant').leader, '莉安');
+  assert.equal(localizedPlace(open[2], 'en').leader, 'Peiqi');
+  assert.equal(localizedPlace(open[2], 'zh-Hant').leader, '沛琪');
 });
 
 test('a gym without playable status never gets a leader, even with one recorded', () => {
@@ -26,8 +28,11 @@ test('a gym without playable status never gets a leader, even with one recorded'
 });
 
 test('the gym status line follows the data in both languages', () => {
-  assert.equal(gymStatusSummary(landmarks, 'en'), 'Old Station and Taichung Park gyms are battle-ready; the other eight are in development.');
-  assert.match(gymStatusSummary(landmarks, 'zh-Hant'), /其餘八座仍在開發中/);
+  assert.equal(gymStatusSummary(landmarks, 'en'), 'Old Station, Taichung Park and Miyahara gyms are battle-ready; the other seven are in development.');
+  assert.equal(gymStatusSummary(landmarks, 'zh-Hant'), '舊車站、臺中公園與宮原眼科道館已開放挑戰；其餘七座仍在開發中。');
+  const two = landmarks.map((place, index) => ({ ...place, gymStatus: index < 2 ? 'playable' : 'planned' }));
+  assert.equal(gymStatusSummary(two, 'en'), 'Old Station and Taichung Park gyms are battle-ready; the other eight are in development.');
+  assert.equal(gymStatusSummary(two, 'zh-Hant'), '舊車站與臺中公園道館已開放挑戰；其餘八座仍在開發中。');
   const one = landmarks.map((place, index) => ({ ...place, gymStatus: index === 0 ? 'playable' : 'planned' }));
   assert.equal(gymStatusSummary(one, 'en'), 'Old Station gym is battle-ready; the other nine are in development.');
   const none = landmarks.map((place) => ({ ...place, gymStatus: 'planned' }));
@@ -66,5 +71,11 @@ test('map pins and gym cards use the short English names', () => {
 test('every landmark has facade art wired in', () => {
   for (const place of landmarks) {
     assert.match(assets, new RegExp(`'?${place.id}'?: \\{ facade: \\w+`), place.id);
+  }
+});
+
+test('every open gym has its leader portrait wired in', () => {
+  for (const place of open) {
+    assert.match(assets, new RegExp(`'?${place.id}'?: \\{[^}]*leader: \\w+`), place.id);
   }
 });

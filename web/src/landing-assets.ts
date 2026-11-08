@@ -13,6 +13,7 @@ import taichungPark from './assets/landmarks/taichung-park.png';
 import theater from './assets/landmarks/theater.png';
 import jun from './assets/leaders/jun.png';
 import lian from './assets/leaders/lian.png';
+import peiqi from './assets/leaders/peiqi.png';
 
 export interface LandmarkArt { facade?: string; tint: string; leader?: string }
 
@@ -24,7 +25,7 @@ const neutral = '#eee8dc';
 export const landmarkArt: Record<string, LandmarkArt> = {
   'old-taichung-station': { facade: oldStation, tint: brick, leader: jun },
   'taichung-park': { facade: taichungPark, tint: park, leader: lian },
-  miyahara: { facade: miyahara, tint: brick },
+  miyahara: { facade: miyahara, tint: brick, leader: peiqi },
   'natural-science-museum': { facade: scienceMuseum, tint: modern },
   'calligraphy-greenway': { facade: greenway, tint: park },
   'shen-ji-new-village': { facade: shenJi, tint: neutral },

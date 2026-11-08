@@ -677,7 +677,7 @@ function refreshRuntimeLabels() {
   landing.refresh();
   el('pause-button').innerHTML = `${icon(paused ? 'play' : 'pause')} <span>${t(paused ? 'Resume' : 'Pause')}</span>`;
   refreshSoundControls();
-  document.title = t('Taichung, shrunk to fit a Game Boy.');
+  document.title = t('Taichung Quest · A little adventure');
   refreshNavigation();
 }
 onLocaleChange(refreshRuntimeLabels);

@@ -48,7 +48,7 @@ html[lang="zh-Hant"] .lp-display { font-family: var(--lp-zh); font-weight: 500; 
 .lp-header-inner { max-width: 1240px; height: 72px; margin: 0 auto; padding: 0 var(--lp-gutter); display: flex; align-items: center; justify-content: space-between; gap: 24px; }
 .landing .lp-brand { display: flex; align-items: center; gap: 12px; color: var(--lp-pine); text-decoration: none; }
 .lp-brand-glyph { font-family: var(--lp-zh); font-size: 30px; line-height: 1; }
-.lp-brand-title { padding: 4px 8px; border: 1px dashed #9fb09a; font-weight: 700; font-size: 13px; letter-spacing: 1.6px; white-space: nowrap; }
+.lp-brand-title { font-weight: 700; font-size: 16px; white-space: nowrap; }
 .lp-nav { display: flex; align-items: center; gap: 28px; font-size: 14px; }
 .landing .lp-nav-link { color: var(--lp-body); text-decoration: none; white-space: nowrap; }
 .lp-lang { display: flex; flex: none; border: 1px solid #cad4bd; border-radius: 3px; overflow: hidden; font: 11px var(--lp-mono-face); }

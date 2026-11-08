@@ -112,8 +112,10 @@
       "x": 20,
       "y": 52
     },
+    "gymLeaderEn": "Peiqi",
+    "gymLeaderZh": "沛琪",
     "landmarkHallRef": "MAP_TAICHUNG_MIYAHARA_GYM",
-    "gymStatus": "planned"
+    "gymStatus": "playable"
   },
   {
     "id": "natural-science-museum",

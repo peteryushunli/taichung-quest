@@ -7,7 +7,7 @@ These PNGs are unchanged copies of the project's existing native pixel artwork f
 | `old-station.png` | `old-station/native.png` | 192×128 | Installed facade and hall; Jun battle playable. |
 | `taichung-park.png` | `taichung-park/candidate/candidate-native.png` | 192×128 | Installed facade and hall; Lian battle playable. |
 | `theater.png` | `theater/candidate/candidate-native.png` | 256×160 | Installed facade and enterable hall; gym battle in development. |
-| `miyahara.png` | `miyahara/candidate-v2/candidate-native.png` | 160×128 | Installed facade and hall; gym battle in development. |
+| `miyahara.png` | `miyahara/candidate-v2/candidate-native.png` | 160×128 | Installed facade and hall; Peiqi battle playable. |
 | `science-museum.png` | `science-museum/candidate-compact/candidate-native.png` | 160×96 | Facade seen in the game; gym battle in development. |
 | `shen-ji.png` | `shen-ji/candidate/candidate-native.png` | 160×96 | Facade seen in the game; gym battle in development. |
 | `fine-arts.png` | `fine-arts/candidate/facade/candidate-native.png` | 160×96 | Named as a facade in the root README; gym battle in development. |

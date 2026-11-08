@@ -46,9 +46,10 @@ export function gymStatusSummary(places: LandingLandmark[], locale: LandingLocal
   const remainingWord = countWords[locale][remaining] ?? String(remaining);
   if (!open.length) return chinese ? '所有道館仍在開發中。' : 'All gyms are still in development.';
   if (!remaining) return chinese ? '所有道館都已開放挑戰。' : 'All gyms are battle-ready.';
-  if (chinese) return `${open.map((place) => place.shortNameZh).join('與')}道館已開放挑戰；其餘${remainingWord}座仍在開發中。`;
-  const names = open.map((place) => place.shortNameEn);
-  const list = names.length > 1 ? `${names.slice(0, -1).join(', ')} and ${names.at(-1)}` : names[0];
+  const names = open.map((place) => chinese ? place.shortNameZh : place.shortNameEn);
+  const [separator, conjunction] = chinese ? ['、', '與'] : [', ', ' and '];
+  const list = names.length > 1 ? `${names.slice(0, -1).join(separator)}${conjunction}${names.at(-1)}` : names[0];
+  if (chinese) return `${list}道館已開放挑戰；其餘${remainingWord}座仍在開發中。`;
   return `${list} ${names.length > 1 ? 'gyms are' : 'gym is'} battle-ready; the other ${remainingWord} ${remaining > 1 ? 'are' : 'is'} in development.`;
 }
 

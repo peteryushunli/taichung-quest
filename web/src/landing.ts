@@ -52,7 +52,7 @@ function markup() {
   return `
   <div class="landing">
     <header class="lp-header"><div class="lp-header-inner">
-      <a class="lp-brand" href="#top"><span class="lp-brand-glyph" lang="zh-Hant">臺</span><span class="lp-brand-title">GAME TITLE</span></a>
+      <a class="lp-brand" href="#top"><span class="lp-brand-glyph" lang="zh-Hant">臺</span><span class="lp-brand-title" lang="en">Taichung Quest</span></a>
       <nav class="lp-nav" aria-label="Page sections">
         <a class="lp-nav-link" href="#map">${copy('Map')}</a>
         <a class="lp-nav-link" href="#gyms">${copy('Landmarks')}</a>
@@ -98,7 +98,7 @@ function markup() {
       </section>
 
       <section class="lp-how" id="how"><div class="lp-wrap">
-        ${sectionHead('03 — HOW IT PLAYS', "No tutorial. You're in the city in a minute.")}
+        ${sectionHead('03 — HOW IT PLAYS', 'A short guide, then the city is yours.')}
         <div class="lp-step-one">
           <div class="lp-step-one-copy">
             <span class="lp-step-label">${copy('STEP 1')}</span>
