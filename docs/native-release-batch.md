@@ -22,3 +22,7 @@ Frozen ROM SHA-256: `9a20d414b2ac9f824f49bb3c43983284af6b36ade16b3af832a694b59c8
 The reviewed Codex facade candidate `9a001118` and Claude `22059d6` differ only in a checker comment and the immutable source-commit pin; functional source/geometry is identical. Use the Claude committed slice as the feature input, retaining both evidence sets. The subsequent combined facade/save-v7 source is `a72bd0ea92d3ce41c0b67b1b470066a3b0cfe2d0`, frozen ROM SHA-256 `c9e3bf3819c2f38446f3501680669d8a2affe33e3ff1dd133cf0ddca9312014e`. All 13 host/static groups and its build pass; Maps owns the remaining combined client/runtime smoke. Existing independently verified facade doors/seams/collisions and both v6→v7 migration cases are reused for identical source, with their provenance limits retained. This candidate is not yet published. Deeper city work remains nonurgent.
 
 Before importing any contribution, re-read both repositories' worktree status and confirm path ownership. Preserve originals and unrelated dirty documents. Native commits integrate first; Main then exports the patch once into this root integration checkout. See [the current-state handoff](current-state-handoff.md) and [the Vercel release workflow](vercel-readiness.md).
+
+## Batch completed
+
+PR #2 merged as `4486220`; the final facade/save7 increment is published and fully public-hash verified. See [the exact receipt](facade-release.md). The earlier pending statements are historical. No shortened opening/tutorial revision is included; user screenshot approval is required for that isolated follow-up.
