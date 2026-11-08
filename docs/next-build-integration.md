@@ -2,7 +2,7 @@
 
 > Current hosting policy: [Vercel](https://taichung-quest.vercel.app) is the sole production frontend for future releases and client QA. Follow [the Vercel release workflow](vercel-readiness.md). Legacy GPT Site deployments and commands below are historical records; do not publish new versions there. The legacy host was last observed active, and shutdown has not yet been verified. Preserve its source archives and `.openai/hosting.json` identity.
 
-The CMP release is published on https://taichung-quest.vercel.app. It adds CMP Park Lane to the prior Greenway release, which added Science Museum, Shen Ji and Fine Arts. The legacy GPT Site remains on the earlier Greenway version. Station and Park remain the two playable battles. Earlier presentation and Theater/Park deployments remain available as fallbacks.
+The [opening, Chinese font and signs release](opening-font-signs-release.md) is now published on https://taichung-quest.vercel.app. The following CMP checkpoint is historical. It adds CMP Park Lane to the prior Greenway release, which added Science Museum, Shen Ji and Fine Arts. The legacy GPT Site remains on the earlier Greenway version. Station and Park remain the two playable battles. Earlier presentation and Theater/Park deployments remain available as fallbacks.
 
 ## Integrated source
 
@@ -105,3 +105,7 @@ Native runtime source `856cb930fdad99bde1d15316f28ac0ebc7817620` integrates the 
 Frontend `5649e5c` includes the reviewed onboarding, Traditional Chinese UI typography and compact phone spacing, plus the complete native-font notices. Protected Vercel preview `dpl_CBVVQR2rWaLavcVSCM2PnDXYAkB9` serves the matching cartridge, metadata, JS, CSS and notices with isolation headers. Actual EN/ZH New Game, guide completion, existing-save Continue and native text readability remain the publication gate. Production is still the sound-icon release until that gate passes.
 
 The user explicitly prioritized this increment ahead of Miyahara and the combined final Fengjia/Maple facade slice. Those remain separate later releases; do not hold this release for them or broader handoff cleanup.
+
+## Opening/font/signs published
+
+The bounded native/client gate passed and preview `dpl_2kEZxog9t6VKdonaHbCYheJL1gAa` was promoted to Ready production `dpl_5koQvQ1Ayk1E1C6kPM9zqofKsptp`. See [the exact release receipt and validation limits](opening-font-signs-release.md). The earlier pending-candidate notes above are historical. Miyahara and final facades remain separate later increments.
