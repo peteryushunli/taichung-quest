@@ -393,5 +393,63 @@
     "gymStatus": "playable",
     "gymLeaderEn": "Ling",
     "gymLeaderZh": "聆"
+  },
+  {
+    "id": "wanhe-temple",
+    "kind": "visit",
+    "nameEn": "Wanhe Temple",
+    "nameZh": "萬和宮",
+    "shortNameEn": "Wanhe Temple",
+    "shortNameZh": "萬和宮",
+    "minimapNameEn": "Wanhe Temple",
+    "minimapNameZh": "萬和宮",
+    "category": "Temple visit",
+    "categoryZh": "廟宇參訪",
+    "description": "Visit this temple in Nantun’s Wanhe precinct, step inside its hall and meet the host. This stop has no gym battle or badge.",
+    "descriptionZh": "走訪南屯萬和宮街廓的廟宇，進入大廳與接待員交談。這個參訪地點沒有道館對戰或徽章。",
+    "districtId": "nantun",
+    "districtEn": "Nantun",
+    "districtZh": "南屯區",
+    "phase": "city-v2",
+    "playable": true,
+    "gameAreaRef": "MAP_TAICHUNG_NANTUN_WANHE",
+    "landmarkHallRef": "MAP_TAICHUNG_WANHE_TEMPLE_HALL",
+    "cityAnchor": {
+      "x": 26,
+      "y": 33
+    },
+    "gymStatus": "not-a-gym",
+    "mapX": 22.083333333333332,
+    "mapY": 78.125,
+    "mapLabelSide": "right"
+  },
+  {
+    "id": "wenchang-temple",
+    "kind": "visit",
+    "nameEn": "Wenchang Temple",
+    "nameZh": "文昌公廟",
+    "shortNameEn": "Wenchang Temple",
+    "shortNameZh": "文昌公廟",
+    "minimapNameEn": "Wenchang Temple",
+    "minimapNameZh": "文昌公廟",
+    "category": "Temple visit",
+    "categoryZh": "廟宇參訪",
+    "description": "Visit this temple in Nantun’s Wanhe precinct, step inside its hall and meet the host. This stop has no gym battle or badge.",
+    "descriptionZh": "走訪南屯萬和宮街廓的廟宇，進入大廳與接待員交談。這個參訪地點沒有道館對戰或徽章。",
+    "districtId": "nantun",
+    "districtEn": "Nantun",
+    "districtZh": "南屯區",
+    "phase": "city-v2",
+    "playable": true,
+    "gameAreaRef": "MAP_TAICHUNG_NANTUN_WANHE",
+    "landmarkHallRef": "MAP_TAICHUNG_WENCHANG_TEMPLE_HALL",
+    "cityAnchor": {
+      "x": 16,
+      "y": 33
+    },
+    "gymStatus": "not-a-gym",
+    "mapX": 13.750000000000002,
+    "mapY": 78.125,
+    "mapLabelSide": "left"
   }
 ]

@@ -29,9 +29,10 @@ records their bilingual leader names from the source-reviewed Story handoffs:
 | maple-garden | Muqing | 沐晴 |
 | taichung-theater | Ling | 聆 |
 
-The existing landing summary, gym cards, map pins and passport stamps derive
-their status from this catalog. The visitor guide likewise selects its existing
-playable battle note from `gymStatus`. No page or layout changes are needed.
+The landing summary, gym cards and passport stamps derive their status from the
+ten-gym catalog. The PR8 followup adds two visit-only temple stops and makes the
+full City Map follow all five exterior shapes across four districts. Its twelve
+stops still produce only ten gym stamps; temples do not name leaders or teams.
 
 The original three leaders and their art remain unchanged. The follow-up asset
 bindings copy the seven accepted native portraits and 17 additional native party
@@ -63,5 +64,6 @@ original three leader/team bindings remain byte-for-byte unchanged.
 No browser testing or native runtime acceptance is established by this web patch.
 Gameplay retains its exclusive UI lease. Main owns proof acceptance and the
 matching native pair. Keep the combined PR in draft and complete its runtime
-gates before publishing the all-ten catalog. Review followups for Nantun and
-visit-only temple coverage are tracked separately from the ten stable gym IDs.
+gates before publishing the all-ten catalog. The source-level Nantun and
+visit-only temple guide fix is included; its responsive/native runtime checks
+remain separate from the ten stable gym IDs.

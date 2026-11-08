@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { readFileSync } from 'node:fs';
-import { districtCount, gymStatusSummary, isGymOpen, localizedPlace, markerPosition } from '../src/landing-model.ts';
+import { cityPlaceSummary, districtCount, gymStatusSummary, isGym, isGymOpen, localizedPlace, markerPosition, placeStatus } from '../src/landing-model.ts';
 
 const landmarks = JSON.parse(readFileSync(new URL('../src/data/landmarks.json', import.meta.url), 'utf8'));
 const city = JSON.parse(readFileSync(new URL('../src/data/minimap-contract.json', import.meta.url), 'utf8'));
@@ -35,9 +35,16 @@ test('the ten-gym release names every open leader in both languages', () => {
   assert.equal(localizedPlace(open[2], 'zh-Hant').leader, '沛琪');
 });
 
-test('a gym without playable status never gets a leader, even with one recorded', () => {
-  const planned = { ...open[0], gymStatus: 'pending-verification' };
-  assert.equal(localizedPlace(planned, 'en').leader, undefined);
+test('pending, unknown and visit statuses never reveal a recorded leader', () => {
+  for (const gymStatus of ['pending-verification', 'planned', 'unknown', undefined]) {
+    for (const locale of ['en', 'zh-Hant']) {
+      assert.equal(localizedPlace({ ...open[0], gymStatus }, locale).leader, undefined);
+    }
+  }
+  const visit = { ...open[0], kind: 'visit' };
+  assert.equal(isGymOpen(visit), false);
+  assert.equal(placeStatus(visit), 'Visit');
+  assert.equal(localizedPlace(visit, 'en').leader, undefined);
 });
 
 test('the gym status line follows the data in both languages', () => {
@@ -58,8 +65,11 @@ test('the gym status line follows the data in both languages', () => {
 });
 
 test('stats come from the landmark data', () => {
-  assert.equal(landmarks.length, 10);
-  assert.equal(districtCount(landmarks), 3);
+  assert.equal(landmarks.length, 12);
+  assert.equal(districtCount(landmarks), 4);
+  assert.equal(landmarks.filter(isGym).length, 10);
+  assert.equal(cityPlaceSummary(landmarks, 'en'), '4 districts. 12 real places.');
+  assert.equal(cityPlaceSummary(landmarks, 'zh-Hant'), '4 個街區，12 個真實地點。');
 });
 
 test('map pins sit on each entrance tile of the rendered city, labels facing the middle', () => {
@@ -77,21 +87,41 @@ test('localized places use their own language and secure links', () => {
     assert.equal(zh.name, place.nameZh);
     assert.equal(zh.otherName, place.nameEn);
     assert.ok(zh.mapLabel && localizedPlace(place, 'en').mapLabel);
-    assert.ok(zh.url.startsWith('https://'));
+    if (place.officialUrl) assert.ok(zh.url.startsWith('https://'));
+    else assert.equal(zh.url, undefined);
   }
   assert.throws(() => localizedPlace({ ...landmarks[0], officialUrl: 'http://example.com/' }, 'en'), /secure/);
 });
 
 test('map pins and gym cards use the short English names', () => {
-  assert.deepEqual(landmarks.map((place) => localizedPlace(place, 'en').mapLabel), ['Old Station', 'Taichung Park', 'Miyahara', 'Science Museum', 'Greenway', 'Shen Ji', 'Fine Arts Museum', 'Fengjia Night Market', 'Maple Garden', 'Taichung Theater']);
+  assert.deepEqual(landmarks.map((place) => localizedPlace(place, 'en').mapLabel), ['Old Station', 'Taichung Park', 'Miyahara', 'Science Museum', 'Greenway', 'Shen Ji', 'Fine Arts Museum', 'Fengjia Night Market', 'Maple Garden', 'Taichung Theater', 'Wanhe Temple', 'Wenchang Temple']);
   assert.equal(localizedPlace(landmarks[4], 'en').shortName, 'Greenway');
   assert.equal(localizedPlace(landmarks[4], 'zh-Hant').mapLabel, '草悟道');
 });
 
-test('every landmark has facade art wired in', () => {
-  for (const place of landmarks) {
+test('every gym landmark retains its existing facade art', () => {
+  for (const place of landmarks.filter(isGym)) {
     assert.match(assets, new RegExp(`'?${place.id}'?: \\{ facade: \\w+`), place.id);
   }
+});
+
+test('temple visits are source-anchored stops with no badge, leader or invented visitor link', () => {
+  const visits = landmarks.filter((place) => !isGym(place));
+  assert.deepEqual(visits.map((place) => place.id), ['wanhe-temple', 'wenchang-temple']);
+  for (const place of visits) {
+    assert.equal(place.gymStatus, 'not-a-gym');
+    assert.equal(placeStatus(place), 'Visit');
+    assert.equal(place.playable, true);
+    assert.equal(place.districtId, 'nantun');
+    assert.equal(place.gameAreaRef, city.mapsByNativeKey['43:15'].mapId);
+    assert.deepEqual([place.cityAnchor.x, place.cityAnchor.y], city.markersById[place.id].localEntrance);
+    assert.equal(city.markersById[place.id].kind, 'landmark');
+    for (const locale of ['en', 'zh-Hant']) {
+      assert.equal(localizedPlace(place, locale).leader, undefined);
+      assert.equal(localizedPlace(place, locale).url, undefined);
+    }
+  }
+  assert.equal(gymStatusSummary(landmarks, 'en'), gymStatusSummary(landmarks.filter(isGym), 'en'));
 });
 
 test('every open gym has its leader portrait and team wired in', () => {
