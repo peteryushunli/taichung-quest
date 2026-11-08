@@ -1422,7 +1422,7 @@
   "sourceSha256": {
     "docs/taichung-city-contract.json": "5d1058df6a876f3359c6fe97194bee5b490b91558ab05c230cd8274efc9221ea",
     "data/maps/map_groups.json": "6029f41e1c49e7db5830ce0e4620b64aac3e46a4d305445c0a6ad6070f670fd6",
-    "data/layouts/layouts.json": "54f9285b6b948b319e83239f5e5701d171124ca0879689e220365950f84ddc2d",
+    "data/layouts/layouts.json": "6cf1e6de5ad6f8bb2add81fa5b524902b905bcbed5934ae5909c8e5ef13219a9",
     "data/maps/TaichungOldCity/map.json": "bf8b598af845a4f456b903a86124b0e55e031670b27ef535b3bec8589e580e65",
     "data/maps/TaichungGreenway/map.json": "c5b57389e2b1918c754c1c860b6fa7eae939120b6edc9846b1eb3ad37cbfa4eb",
     "data/maps/TaichungXitun/map.json": "36da5c0ea403ae7480d3e28f9ddb38a23e209c1733ab096c0229843c826471bf",
