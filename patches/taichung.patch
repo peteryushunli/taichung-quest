@@ -280794,6 +280794,250 @@ index 0000000..7dce1d9
 +TaichungNpc_BoxunHistoryDone::
 +	release
 +	end
+diff --git a/data/tilesets/primary/general/anim/water_current_landwatersedge/0.png b/data/tilesets/primary/general/anim/water_current_landwatersedge/0.png
+index ce16ac050ca918038b54c6ca84a62593b84547a3..6695821585529badee7c62acbeb1a7a52e5f7444 100644
+GIT binary patch
+delta 450
+zcmV;z0X_cp1eXMmUw;9jNkl<Zc%1E&v1%JZ5Qe{5tw8~SZ!d+DG_f}iV6gQ7S2&N5
+zI*;MfA(fmeZCp8Jl2=fnCRHq=7m(yG5QtU|B4Chi!<>9~!okJ?7dCj{V}{w?ng4cg
+zSN2$%;Z6jFeLgNSkB;)6MQ||DtfdLRpMTgeyg|0cp=p~AvwzU#Z^LwRK;zsZI}w+@
+zmS-R1bY$|U_D2{QpPyph<>c;EHq3h@ffW14ouzp9N}7+4>Ay(6LZ{<!PnI&&WO$`i
+zizDEOGAT1_87H)9$!?i(yYx|p!_Za?GOOw|kXhr}ZHcV~k;O%(RSr!)txldbmVuN_
+zd1(P>U7G|%On)2MhQz9#0Fu=o2sUHh!>Csb#i(78q1Axw|IT#2^u3j#p1L_k8y1u%
+zckDkj4*~aS6C_rdeji0n{+%2Gid6@Mn^d-=GULH377vQ4=D5o;?3Z#?R$MA<^-7qk
+z#k5dEtRI=p3-})6T(Jun00ZeJ#IuAb{&F3@dEZs!*E^VWeN0;S>Oxl$uTNFLNh#H^
+szmFoF+c|<dID|u`?&ZKKmH6ATzw-Hg-VW){o&W#<07*qoM6N<$g4dVX3IG5A
+
+delta 545
+zcmV++0^a?X1oZ@vUw;AsNkl<ZIE}58J#W)c6oy}hps>{&qMQGMBQdg6Vr8+jcJb|!
+zHSyAc@h1HPxLsfij)Y(fy`9scN8%UQ4BaZ#9lC<dJ=ZtK5vdS^U+Iw_->-8lOBc!|
+zPN2MPB}L+`lXxp>vL~@fvM22vRNR`A*h$(N7j*_s@zFhAoPRGDPPA@isP*~h{3{R4
+zjn-=n^Za7XvTy@u->{gQOP#L{@XA~kdZ9nznSB&XD`!isjh?S@xSW45`eKdXd%iM-
+zIl%DH7`-y@`Q!k>OLQrHo|3vQE%&H>@EAo+6Gd+j`QRwaju^Y^VZ@-UZbe=*{}i|D
+zcC@qIiEBf|E`N4Xd8zA&rH1Y0ZCO?iwx7|=4m@%{%I=JIz7WrqI`+@j{GaS((8@6e
+z$)3a_$zKBhw^`y=25hdFwRgKsoJ_|v23eA345mtr86=ZU%0Lk*1{0zU1G+vX29#yQ
+z^ma}s+bLNr+vPwhAw{K)zRo$BDq`%^gc!S+t{M1&tbY@klEt#UuX9L^XAEeQW(-d4
+zD}&4rbs|%;xZB>-IgJk*qJ{za?1(YM!1(-^<UTNYZkQ+5NC|19@WEYCd||p<LZsSW
+zAabSrF3X<`el*Q52JOc*ge#&O2BA+UH(_|i;GU>rx)McQ7YxE62pI%E2<%<Q*gLOH
+jZz3m4EgGpVJ@=G9Si}@$rW@c100000NkvXXu0mjfg4zXL
+
+diff --git a/data/tilesets/primary/general/anim/water_current_landwatersedge/1.png b/data/tilesets/primary/general/anim/water_current_landwatersedge/1.png
+index 7e41494c53680323ad26350b919ed21a00a67570..6695821585529badee7c62acbeb1a7a52e5f7444 100644
+GIT binary patch
+delta 450
+zcmV;z0X_cu1eXMmUw;9jNkl<Zc%1E&v1%JZ5Qe{5tw8~SZ!d+DG_f}iV6gQ7S2&N5
+zI*;MfA(fmeZCp8Jl2=fnCRHq=7m(yG5QtU|B4Chi!<>9~!okJ?7dCj{V}{w?ng4cg
+zSN2$%;Z6jFeLgNSkB;)6MQ||DtfdLRpMTgeyg|0cp=p~AvwzU#Z^LwRK;zsZI}w+@
+zmS-R1bY$|U_D2{QpPyph<>c;EHq3h@ffW14ouzp9N}7+4>Ay(6LZ{<!PnI&&WO$`i
+zizDEOGAT1_87H)9$!?i(yYx|p!_Za?GOOw|kXhr}ZHcV~k;O%(RSr!)txldbmVuN_
+zd1(P>U7G|%On)2MhQz9#0Fu=o2sUHh!>Csb#i(78q1Axw|IT#2^u3j#p1L_k8y1u%
+zckDkj4*~aS6C_rdeji0n{+%2Gid6@Mn^d-=GULH377vQ4=D5o;?3Z#?R$MA<^-7qk
+z#k5dEtRI=p3-})6T(Jun00ZeJ#IuAb{&F3@dEZs!*E^VWeN0;S>Oxl$uTNFLNh#H^
+szmFoF+c|<dID|u`?&ZKKmH6ATzw-Hg-VW){o&W#<07*qoM6N<$g5Y7<4*&oF
+
+delta 550
+zcmV+>0@?kS1o{M!Uw;AxNkl<ZIE}58F>ljA7=~X(3W6=yDTsw$kr=wcfY|#3y4YE}
+z__}mWymVo^gdafNF0chxLMT({bxwzV62HJfU6C+<05JF2mph}tgkR~=J@MUl_c^wV
+zB(hOTL8->9*hH}t6>TKhh>Eu)LhKd=iM+&H5_xG1t_uZD{(rU}9-Pl-wP@YQeXY;m
+zXCKkidTO*@V3=hWORblf)fZmxVm38bI=d7Q<|@}S{SFW9kk73=nrm(JbZKRJX7t5l
+z?0(8Fv)l~O8=gtMzpzL2<N#uTkiz9}QkDgSQizg)kWw&^d(R|;gET#0Y}MTprX}m0
+zrwq#r<_~dG+kaKH)NO2ptD1hClwyx%ZTort#*TNkpO+IWJKT@5m9lk*=tt2ZkN5aN
+zvbjg<Bxz=B4*xAjLHZkUuL4@qcQdsewVN0#HDVB-tP%!_NHI7eS}~xTQ({1AN(_$2
+zqX~mFPEw|`eZ2T7zu1@i4gC@RP~S#Z`-~MGGj@tn#(yrp88dJf;vjy?FZShK?K2@Y
+zVvy1*VK6$iKP^byr67LFFZShK?Nhk~p{gPV<PyXX83xAXe?=N28Az8Pw^Cj+_)heT
+zLG#rpO5|mkGss==HP1gVC|$5_J~H3JXXj^8d|~jps(vuxPOph>8SERgU_u+hr6ogc
+o^GZOwbRQ;uXMfiA-_lWj1E$yY8Z7W5-2eap07*qoM6N<$g6YWwtN;K2
+
+diff --git a/data/tilesets/primary/general/anim/water_current_landwatersedge/2.png b/data/tilesets/primary/general/anim/water_current_landwatersedge/2.png
+index 5765ac4773d5c2a3fc354460c28ab7d2ba861e7a..6695821585529badee7c62acbeb1a7a52e5f7444 100644
+GIT binary patch
+delta 450
+zcmV;z0X_b;2A2eoUw;9jNkl<Zc%1E&v1%JZ5Qe{5tw8~SZ!d+DG_f}iV6gQ7S2&N5
+zI*;MfA(fmeZCp8Jl2=fnCRHq=7m(yG5QtU|B4Chi!<>9~!okJ?7dCj{V}{w?ng4cg
+zSN2$%;Z6jFeLgNSkB;)6MQ||DtfdLRpMTgeyg|0cp=p~AvwzU#Z^LwRK;zsZI}w+@
+zmS-R1bY$|U_D2{QpPyph<>c;EHq3h@ffW14ouzp9N}7+4>Ay(6LZ{<!PnI&&WO$`i
+zizDEOGAT1_87H)9$!?i(yYx|p!_Za?GOOw|kXhr}ZHcV~k;O%(RSr!)txldbmVuN_
+zd1(P>U7G|%On)2MhQz9#0Fu=o2sUHh!>Csb#i(78q1Axw|IT#2^u3j#p1L_k8y1u%
+zckDkj4*~aS6C_rdeji0n{+%2Gid6@Mn^d-=GULH377vQ4=D5o;?3Z#?R$MA<^-7qk
+z#k5dEtRI=p3-})6T(Jun00ZeJ#IuAb{&F3@dEZs!*E^VWeN0;S>Oxl$uTNFLNh#H^
+szmFoF+c|<dID|u`?&ZKKmH6ATzw-Hg-VW){o&W#<07*qoM6N<$f@+!A%m4rY
+
+delta 738
+zcmV<80v-LA1hoc`Uw;C?Nkl<ZIE}58v2N5r5Qc|>NObH8DTE5IB87&ESI7g<*lyE!
+z-MC0&Pje5jceF_0q=D`*5+YO~m-<{}C8X;edZhRXK*!AP*mngT8R<WNx8D8t_l{*q
+zW5X3g8pi?R(o+V8fQf*{6Na2;43K%Kh!O%b0{Te=d@oA~41ZPv2FomlgegY>lOdD=
+zV&G~%_{*cS#oU9n0bW>p_No2~53HRnt^Ed1>-zlC+6$Qbfj1G%XUi*Fe^#KDSB;(9
+zk8nVjW<l_5VeQh+E<r73?`wPhoP20zbMY7;Qj=HF1pZN-)E3rScb(QRX_3-esR=0h
+zp+B^#rprVt(0?>QLmG||k6F;I)nT`eo<J8ds6&FuKK(fonC$O@Itsw6BA!f3!>YA<
+z8}f{x)jJQgd4NbA5Ue!?s|hGiUDs9DMF*V65Y)Sm_|TXWf8}m7g}yWRz60!qzMllh
+zJot7Km=S#68GPSg1BAW<K<GQc9{2qe0-fxJ$elBW#DB0VNZ@elTsw6H=va`KX~hCe
+zGsJ{no7|)nGKD0svZPqiOY5e=r*J4fEg6XqP6r?KKIDNZ`qz(r5GwNUKIs5xWDBfh
+z(=moCB^cZLEs9pcn^s~Zg#;@NicgY{KImhx2bQA`K@kpt@@$VKFAa$R6MD9UR?$FP
+z8jyj4@_!7_%B`Z6$)?4y+&F<^^l7mgeCT|5IsITc`k)yma~_G2R?e^>N4Lt5ADNEX
+zq;v?YG7N2jhyAT=n4ID?EKe%|I$ZJb_t=MqD({oY`2-&veUO?WF*Z`Lac;u`C$$61
+zrDMT)U4Li6QtE$UbRPHmvDy4)K}fT4aP8a;3tP0*7H+h@X2G3vw=C$Tpy~UD1&tK^
+zYML*s?VJ&A`@ZY?{%-rR`qOnkS>QiaB>q_W0;`l|(dRYP{XuZv*=yW=eB^tozx+Vc
+UtDh0)DgXcg07*qoM6N<$g8dz4;Q#;t
+
+diff --git a/data/tilesets/primary/general/anim/water_current_landwatersedge/3.png b/data/tilesets/primary/general/anim/water_current_landwatersedge/3.png
+index dbc111a7f824b52cea4cafd863cede53469dc2ef..6695821585529badee7c62acbeb1a7a52e5f7444 100644
+GIT binary patch
+delta 450
+zcmV;z0X_c02A2eoUw;9jNkl<Zc%1E&v1%JZ5Qe{5tw8~SZ!d+DG_f}iV6gQ7S2&N5
+zI*;MfA(fmeZCp8Jl2=fnCRHq=7m(yG5QtU|B4Chi!<>9~!okJ?7dCj{V}{w?ng4cg
+zSN2$%;Z6jFeLgNSkB;)6MQ||DtfdLRpMTgeyg|0cp=p~AvwzU#Z^LwRK;zsZI}w+@
+zmS-R1bY$|U_D2{QpPyph<>c;EHq3h@ffW14ouzp9N}7+4>Ay(6LZ{<!PnI&&WO$`i
+zizDEOGAT1_87H)9$!?i(yYx|p!_Za?GOOw|kXhr}ZHcV~k;O%(RSr!)txldbmVuN_
+zd1(P>U7G|%On)2MhQz9#0Fu=o2sUHh!>Csb#i(78q1Axw|IT#2^u3j#p1L_k8y1u%
+zckDkj4*~aS6C_rdeji0n{+%2Gid6@Mn^d-=GULH377vQ4=D5o;?3Z#?R$MA<^-7qk
+z#k5dEtRI=p3-})6T(Jun00ZeJ#IuAb{&F3@dEZs!*E^VWeN0;S>Oxl$uTNFLNh#H^
+szmFoF+c|<dID|u`?&ZKKmH6ATzw-Hg-VW){o&W#<07*qoM6N<$f`N0`*#H0l
+
+delta 751
+zcmV<L0ucR|1i}W8Uw;D4Nkl<ZIE}58y>8S%5XT20BGF}?6fqKoO@XdNd4)){H1@S=
+zyxX{-vA1y(s!iyklP(Sobcd0U5Dki{?SgIY0h|XwieDkj?1vpG5e<wq>!0`IKY#B?
+z2Ej41Bn1ZvBqb3+F+pP1AXz3v9Jt^~YN6zb0bcUVg5*3kfPZTixGWP3To$PXE~JAj
+zkx+UY6wOETczU@xGoX}##|KJXey+d6E2U0brM|&IU4QtY)Ct&$_Yu5Xv{$PB!hp3`
+zjXG1GAjC(rA=oI@s#68g=JcXg7rXE%h#7l!vI`Kg;4li{ff!uCma$>jvgg3?5W@j*
+z3?du=$2dlYI)6M5qQ&_kg!Q7X&+8D5q&%X8f$gn^AYP%)i~WH`2vNM=vS5u6B7`r2
+z271BG!Fn4-1kq~C7Av5m0}J;Nf|c=udn}-f^)R5Z00q$@gD6<M#$^U*0U?T^u8&Hb
+z*&{!E*anApKXHfiWB26z4T9}Ef$2NI6WjM=*s*;lFn@hVuze>meJ3z|M@idv0I+>`
+zCB)miMSb*rr8Oq>QfiF}qF9!cAj?e3G?P#ie2Lzckcuu#^DYD4YtFUikoQ%WYu$nN
+zI{Lm&>UB^<7Nmn3sgS6njgAC7Y<0vPuqD#U6)j3<Ll#a@NLOMiI@!pzGsd-aI(c7M
+z9l8~xLx08!(jlu-PCDpkx)xDzjfwY@<{A@voS?+}F%t-dgI>BN?Kf+Gd<H4Kj;O3o
+znoFxghYHf666SNP4*K!O#j?~K6Z%Z*E~7o=vcjnf!A^lLJP5bc3AdU1;}dj~4);3v
+zTAAaWyC1V8WaT&Gf5RWYbuoj!z15VUUChvG-Dpxm>tcr5#RE(CVG_JweRMIy^*9d0
+zINr>^l)qS=9L6r-R~-MOgd44|DQD$o92-h#T)^+9`ARwOnRJ*7VE8-5e<uUw;$LAB
+hoJ)9^s!#Br;tx}q(@{q`v?>4q002ovPDHLkV1ixQW1av2
+
+diff --git a/data/tilesets/primary/general/anim/water_current_landwatersedge/4.png b/data/tilesets/primary/general/anim/water_current_landwatersedge/4.png
+index a8ee69c1e87afc12e695b18e21378b071d5e11e5..6695821585529badee7c62acbeb1a7a52e5f7444 100644
+GIT binary patch
+delta 450
+zcmV;z0X_cn2A2eoUw;9jNkl<Zc%1E&v1%JZ5Qe{5tw8~SZ!d+DG_f}iV6gQ7S2&N5
+zI*;MfA(fmeZCp8Jl2=fnCRHq=7m(yG5QtU|B4Chi!<>9~!okJ?7dCj{V}{w?ng4cg
+zSN2$%;Z6jFeLgNSkB;)6MQ||DtfdLRpMTgeyg|0cp=p~AvwzU#Z^LwRK;zsZI}w+@
+zmS-R1bY$|U_D2{QpPyph<>c;EHq3h@ffW14ouzp9N}7+4>Ay(6LZ{<!PnI&&WO$`i
+zizDEOGAT1_87H)9$!?i(yYx|p!_Za?GOOw|kXhr}ZHcV~k;O%(RSr!)txldbmVuN_
+zd1(P>U7G|%On)2MhQz9#0Fu=o2sUHh!>Csb#i(78q1Axw|IT#2^u3j#p1L_k8y1u%
+zckDkj4*~aS6C_rdeji0n{+%2Gid6@Mn^d-=GULH377vQ4=D5o;?3Z#?R$MA<^-7qk
+z#k5dEtRI=p3-})6T(Jun00ZeJ#IuAb{&F3@dEZs!*E^VWeN0;S>Oxl$uTNFLNh#H^
+szmFoF+c|<dID|u`?&ZKKmH6ATzw-Hg-VW){o&W#<07*qoM6N<$g4dPV3IG5A
+
+delta 801
+zcmV++1K#|X1oH-vUw;DrNkl<ZIE}58v2W8r6vkhNBC*wBDKN#E7`oI*D0`%=48&d;
+z;>(huL+o3;l<8W=R7$TbumvL_*ihXuiibW4HM`4>)cggY@ZR0U$<TqJPx|Vg-rc?T
+z^<HccqSH-!LVyrrAZ2Jk#4>fzlNLlTN}yLm&#W<+oTNRy(0@QmM9^o54Rq;mxCH__
+zZWHt=6^Got(@hO<<R8uB@x}DifKmo__LaK$tiOS$)JdV#ci7kZ!w;p7!6x1};oXbk
+zQt2-qc*SL|PSq!PN{@U>@O-LNp-vPurzhuHo$tX;!}q*r$9n)xuMspGa8FeJK~*jM
+z3Vg3|uxNTdw151T?;rYy5V(MG5NI6)Z5X%dp~r2|nsRNep(AC71&fwGt6Jliun2;)
+z1w*qHOcp`=6+wH#+5o3{8F(Wf06xkk;D+l^Kw}MlTTiNrjFE{+bwhqM!xQRGARSCn
+z1LQ?iErP9hG>}K;$#ZA2bGJa_2H3T51iN<b3})^}bbrXqoxzOsttn#w?6_eI%%-=t
+zS^Rq2#31Q(WfG+z!&pigOGt!>5}8I24(D+=lracIA+Stgh&UfIV3{E)1C$a;lIlb$
+zN!mJLJhF9!cmrKiXHLIEQwQmHm~kDP!>nuSAYg}xYEeNV17%i9NlT`w%;wGpy%*M4
+znYb2%x_{}GjoMgdt<E4b=5e;R(O(;j`MqGP5sbR)I`m#}Eq6Zxsl|}|43U~*naHdp
+z8%RlNVWE_ENtEozq%t}#kR&(YmS%1<`!NX|twE9>vs98Fn_@p1mjI+UHWOqF=WbpZ
+ziYViGNlqcn%L3hxSwgxWlOWOYC?#z{W|u~8Gk?#^?(VOF?k6)#5zT8|hwg_<z{&-z
+z5LYZf7h6yi$b!Pfe}Q%Zh1Lb@o;`Jo+D7gIe&_jD7A#$C;C8vJs^#(yDi`p#s(!KH
+z=W6wb1@@m=AzUF|v%q(;fotEtV!<8aEo;*vUoLYNeZD-O1)dB3ih3;ic-nX{s4LgK
+f>Kg8~=Ld>^_pisQR4jsv00000NkvXXu0mjfTULJW
+
+diff --git a/data/tilesets/primary/general/anim/water_current_landwatersedge/5.png b/data/tilesets/primary/general/anim/water_current_landwatersedge/5.png
+index 318c7b79650da6e7876b2d6264f50450a23cec25..6695821585529badee7c62acbeb1a7a52e5f7444 100644
+GIT binary patch
+delta 450
+zcmV;z0X_bX2bTnpUw;9jNkl<Zc%1E&v1%JZ5Qe{5tw8~SZ!d+DG_f}iV6gQ7S2&N5
+zI*;MfA(fmeZCp8Jl2=fnCRHq=7m(yG5QtU|B4Chi!<>9~!okJ?7dCj{V}{w?ng4cg
+zSN2$%;Z6jFeLgNSkB;)6MQ||DtfdLRpMTgeyg|0cp=p~AvwzU#Z^LwRK;zsZI}w+@
+zmS-R1bY$|U_D2{QpPyph<>c;EHq3h@ffW14ouzp9N}7+4>Ay(6LZ{<!PnI&&WO$`i
+zizDEOGAT1_87H)9$!?i(yYx|p!_Za?GOOw|kXhr}ZHcV~k;O%(RSr!)txldbmVuN_
+zd1(P>U7G|%On)2MhQz9#0Fu=o2sUHh!>Csb#i(78q1Axw|IT#2^u3j#p1L_k8y1u%
+zckDkj4*~aS6C_rdeji0n{+%2Gid6@Mn^d-=GULH377vQ4=D5o;?3Z#?R$MA<^-7qk
+z#k5dEtRI=p3-})6T(Jun00ZeJ#IuAb{&F3@dEZs!*E^VWeN0;S>Oxl$uTNFLNh#H^
+szmFoF+c|<dID|u`?&ZKKmH6ATzw-Hg-VW){o&W#<07*qoM6N<$f+x(_rT_o{
+
+delta 828
+zcmV-C1H=561da!gUw;D`Nkl<ZIE}4TF>ljA6n+d8v5`(iEYw|y7?4PoZVZubtyINX
+zD>c3>*=qZiENquBQYpAyU<*d7Xs4>~mdF`;62HJ<N2()bh92+TU6Uf%=#yUk>D{~U
+zeR-c<;G73OuQP}Z*l$2X@Sw?g9qJ7cG_eHjTAf8c=YY*2Ykyk6!>DONi#40jBq9R{
+zg$Ov_<?Wbyu(WSLfPk4>{tC1kF#(zx14a7LJRTp71_nrJ!3!ymJ||z{ft3AB$}`wV
+zlH+qJPhnsR?>1r3&n{&0r2>`gB9#OA37+C39U*u&k}{M1bEu5^9};=|9C@%aJ$(YO
+zSy``buERf~D1XcASy>iPYJD@;x&-Y47M`cI=e+{2_S*BdY91su-rs@*mnj;QFw<Ly
+zGhID|*`j(lCoo@Z59f>O(1GngK-B?kqzgb-?RET9V3?x<)q%#w0@Z=`5THcVlMH8i
+zVf2WZ_G$=*F)A>6xB+)!E%5i~`G|ZcWPL|qea8;#`+pt*^4$XTeFq*|-w{~fcVNx>
+zjzrdX<gvcfDDwS{8S0x+%ZQLKGVftG5B%<!-b2N?QszC(yGo5=f_i$>o&qIA$b?YP
+ziCS@p3BnJAV1ckajJLoio-hvpIXIv6I3P#f9rtoj$f3r}@F;b_EKetFI3B+)ZUF;9
+zN6{|n!GC5Uj2?v)WAj}gQ%)m7hGWdou!loQh9DVBVRi&cHA6!bZ)M=mvBFqxrH+~9
+z@!O5)b}jU~RLAW{3Adjq7N<s!kHuZ5NBGDyMLp99s2*a;To+7rEDr%X@<Tkr=7>*3
+z1eO@DTflsKG-j3u^(<uwh!t<eiuR-OKq%)|tAFSGqLTf;f#-nb5S4M$Z1zLf&3+7z
+zSrqY*U)aoBA^H_i=>Yw*faUh+fLR_f!TmTHV)a!nfzn!0f^x9}nNk@gWG?;}cv<FA
+zg6Codt~~FO66Q+XP(n$cEheO8nNmXP0)C|F2_=*+U}jp&Ybad6ucG))3E#B-NxAx^
+zmo-XVQNqhCJEL65sJOTTHYCQ|3P>0C2A0grS%0tPp5iyO_~4R<KSuKa0000<MNUMn
+GLSTaWu836t
+
+diff --git a/data/tilesets/primary/general/anim/water_current_landwatersedge/6.png b/data/tilesets/primary/general/anim/water_current_landwatersedge/6.png
+index c31713d3492be54e27ebbc8c1ccad0aaf6af548d..6695821585529badee7c62acbeb1a7a52e5f7444 100644
+GIT binary patch
+delta 450
+zcmV;z0X_cU2A2eoUw;9jNkl<Zc%1E&v1%JZ5Qe{5tw8~SZ!d+DG_f}iV6gQ7S2&N5
+zI*;MfA(fmeZCp8Jl2=fnCRHq=7m(yG5QtU|B4Chi!<>9~!okJ?7dCj{V}{w?ng4cg
+zSN2$%;Z6jFeLgNSkB;)6MQ||DtfdLRpMTgeyg|0cp=p~AvwzU#Z^LwRK;zsZI}w+@
+zmS-R1bY$|U_D2{QpPyph<>c;EHq3h@ffW14ouzp9N}7+4>Ay(6LZ{<!PnI&&WO$`i
+zizDEOGAT1_87H)9$!?i(yYx|p!_Za?GOOw|kXhr}ZHcV~k;O%(RSr!)txldbmVuN_
+zd1(P>U7G|%On)2MhQz9#0Fu=o2sUHh!>Csb#i(78q1Axw|IT#2^u3j#p1L_k8y1u%
+zckDkj4*~aS6C_rdeji0n{+%2Gid6@Mn^d-=GULH377vQ4=D5o;?3Z#?R$MA<^-7qk
+z#k5dEtRI=p3-})6T(Jun00ZeJ#IuAb{&F3@dEZs!*E^VWeN0;S>Oxl$uTNFLNh#H^
+szmFoF+c|<dID|u`?&ZKKmH6ATzw-Hg-VW){o&W#<07*qoM6N<$g0?T%_W%F@
+
+delta 782
+zcmV+p1M&Qq1mFgcUw;DYNkl<ZIE}58v2NQy42FpS4caZ*QgmsQDd^T`Q0yf`he%p8
+zSoGr2)-8U3v%4Bdlq~I*DnL<WN}`O0J%m7?K<-{3GLX5gO5UAiPhA=UKlI^v_me)t
+z2Z#|Owh$0QhCm?UrA`Z41~7o2l}L_L-F_Guz@)!|@X!K=$A6)NI1CLW;UEmboHZav
+zQrRO*9f4#8Xlf!z<e$vv)%oSvfYugXYJL7C`vzNDj|#1?VK>VzZnVCEv03=I2jfw3
+zr?V>$yy7m`WBnOk^C!P#cyp<Bp+`3iqq9O^yoJ5n>?+HP9oX7E^Yy!HF0tkBfVTtd
+zC|y8VRga6RDu1D>>p#o7uAp`SeqH+_c<=lBBFJ1opj04&a=AYdG5C{3?N4A)Kb?yH
+z4gN$9Y#wKjeikcO^2U<8<9-+xrk{h;a%uX>RJnZ0xS!LsTppNy(7;B#Ks=G}wv1cI
+z&Yi)|oildsC$MejZb0TPVCHUt=Wame{sF+woqg=wZGS23*kZ2eDv$_~ju3i8vmOOA
+zp!tw!-ampPrHJGXgTpxO4&oG4tdxop1p`FIiXrOFl9Xk9x-8?v;C$4OfUFOJcvv6y
+zP{-CM9(0^f)M+IadJHCoL2Nfioi?=Xaqg$>3~A25Wu&N*!lsQ>+7O>u8WSHSts0+{
+zi#BaEjenU|r`BiIn>rty^0gp!2T1J!r&PrE6Y*wVnD<+JKang-KL&cz4@z1#D_Jtf
+zQ<j0QfGl?<WqkM+fz;}F1Cp9rpQtx=J~-tz;*>B>xv@miEKxi!jEB6$^J=*zo|ggQ
+zlp;yXW+hp3T(O)FS)Z<?jE~Gqj?M;Z15E1J`hU!lzVqRlxc)QNM70RW#Re1wiQpp3
+zZbeYI_+Mz8n_A!N`j-f7H#NaM(Srzl7i)O%{d*BS5-mhfxq!T?auMV%;AftH6|MI)
+zAn%jBQ|njjcUk@rf#>_42s{^{Jx`1HdA0F;V4XK=HPxG+{7mr|&9VZ&eDUm+00000
+MNe4wvM6N<$f?tq+KmY&$
+
+diff --git a/data/tilesets/primary/general/anim/water_current_landwatersedge/7.png b/data/tilesets/primary/general/anim/water_current_landwatersedge/7.png
+index e01c91449033f32f05a5ece78e047b674a9aa7aa..6695821585529badee7c62acbeb1a7a52e5f7444 100644
+GIT binary patch
+delta 450
+zcmV;z0X_bv2A2eoUw;9jNkl<Zc%1E&v1%JZ5Qe{5tw8~SZ!d+DG_f}iV6gQ7S2&N5
+zI*;MfA(fmeZCp8Jl2=fnCRHq=7m(yG5QtU|B4Chi!<>9~!okJ?7dCj{V}{w?ng4cg
+zSN2$%;Z6jFeLgNSkB;)6MQ||DtfdLRpMTgeyg|0cp=p~AvwzU#Z^LwRK;zsZI}w+@
+zmS-R1bY$|U_D2{QpPyph<>c;EHq3h@ffW14ouzp9N}7+4>Ay(6LZ{<!PnI&&WO$`i
+zizDEOGAT1_87H)9$!?i(yYx|p!_Za?GOOw|kXhr}ZHcV~k;O%(RSr!)txldbmVuN_
+zd1(P>U7G|%On)2MhQz9#0Fu=o2sUHh!>Csb#i(78q1Axw|IT#2^u3j#p1L_k8y1u%
+zckDkj4*~aS6C_rdeji0n{+%2Gid6@Mn^d-=GULH377vQ4=D5o;?3Z#?R$MA<^-7qk
+z#k5dEtRI=p3-})6T(Jun00ZeJ#IuAb{&F3@dEZs!*E^VWeN0;S>Oxl$uTNFLNh#H^
+szmFoF+c|<dID|u`?&ZKKmH6ATzw-Hg-VW){o&W#<07*qoM6N<$f>1lyy#N3J
+
+delta 723
+zcmV;^0xbQP1f~X%Uw;CzNkl<ZIE}58v2NQi5QeWy>TdB?G+SOl0Wx;U19XwNc*sI}
+z@sLI0;-TGW=LPCyX*X8^igt6OuCj;TE7%WEAj;qeQ16ZuWgtbC_JFfK+>!tN5@mrl
+z6v`Md8Ns*%T@a+c2S!WDf)y|tjLI3fl@=YS4x|Leq-olLN`D1t5!HYfQZogSD@+Qh
+z2Ll}CC%L@3S<VHV^DuDk=F8$67iN`nD;O*mw=0IZ6t2I+d{*7N#oaNysqRZRcc0+}
+zUCJfF_0qY@%~o)-oPDg^?FxoJ7I#%y9mC+Hs@z@mo|T6%d<}hULmWWUY&oH6+lCX`
+z5U@{@woQ_^kbi`L3u`YpVY_S3I0^Ov9{1;*&w}jQpB-)|5E~JAF+<Zb?AT92(6m5a
+z>~{CqlArT}HtgAtAxIAH5RQzw3|FJC2>iJd_;Uw%>CgQVj{Lb3_;VLf9dL=jpF2tV
+zb0-~t?tVm?z6-;y4o%=@im0XtXf1NWI9J6uw*}ZtTYsA=3pAVN^Lsd1>x`1#!>KWd
+z1}0c%6T~&^)T|{sqfSRr1|98nEZ-q(q@qI_W-2<ko=izcKoLl5LoHsM=|Tq^O7((P
+ztg0MP1@pMcM`D9?YB9z-8Fo56G}?$dY*n+>_z>i=SiYTcZji=Oi*A$>HdNT;1%fZA
+z4#W?)On*&&3cr}PXDq>>Jy3bn>5y=@eR2TYs<{=1iVc#dCtn~ZthL4Un61)bpte&$
+zDbaa(U_acVhXz!YB7Z<evYmeFsFUfSLp`sv;q5(8x#pG#=b}S4ENzef!3fy4$O#yt
+zhYGRcgepW2ix7WlJ%uRvbb1q_hn@d!JoI0ZXH2X{ho>Rn*Xij`PIy4varVk()0CW0
+zhJfE?`IWO@6Lp3m=riXiJ`BNy_*aO6{fG|Y^a%ec{s8w=8PFHps$&2E002ovPDHLk
+FV1nipSCjw%
+
 diff --git a/data/tilesets/primary/taichung_greenway_private/metatile_attributes.bin b/data/tilesets/primary/taichung_greenway_private/metatile_attributes.bin
 new file mode 100644
 index 0000000000000000000000000000000000000000..ee3515bb5b331da8aed2383e8a891a652228eac8
@@ -280812,84 +281056,84 @@ HcmV?d00001
 
 diff --git a/data/tilesets/primary/taichung_greenway_private/metatiles.bin b/data/tilesets/primary/taichung_greenway_private/metatiles.bin
 new file mode 100644
-index 0000000000000000000000000000000000000000..8cd836cf7cd3a80d9c2101cd707dbf73dca0fbb3
+index 0000000000000000000000000000000000000000..a9b9f0ddbce0c62df31dcebce8e3abe2d71234f8
 GIT binary patch
 literal 10240
-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
-H@oM$opSmf}
+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
+L`QzuuYt?@PC<a4I
 
 literal 0
 HcmV?d00001
@@ -281464,84 +281708,84 @@ HcmV?d00001
 
 diff --git a/data/tilesets/primary/taichung_old_core/metatiles.bin b/data/tilesets/primary/taichung_old_core/metatiles.bin
 new file mode 100644
-index 0000000000000000000000000000000000000000..8cd836cf7cd3a80d9c2101cd707dbf73dca0fbb3
+index 0000000000000000000000000000000000000000..a9b9f0ddbce0c62df31dcebce8e3abe2d71234f8
 GIT binary patch
 literal 10240
-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
-H@oM$opSmf}
+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
+L`QzuuYt?@PC<a4I
 
 literal 0
 HcmV?d00001
@@ -282186,84 +282430,84 @@ HcmV?d00001
 
 diff --git a/data/tilesets/primary/taichung_xitun_private/metatiles.bin b/data/tilesets/primary/taichung_xitun_private/metatiles.bin
 new file mode 100644
-index 0000000000000000000000000000000000000000..8cd836cf7cd3a80d9c2101cd707dbf73dca0fbb3
+index 0000000000000000000000000000000000000000..a9b9f0ddbce0c62df31dcebce8e3abe2d71234f8
 GIT binary patch
 literal 10240
-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
-H@oM$opSmf}
+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
+L`QzuuYt?@PC<a4I
 
 literal 0
 HcmV?d00001
@@ -441389,10 +441633,10 @@ index 0000000..2a95041
 +}
 diff --git a/tests/taichung_gym_staff_geometry_test.py b/tests/taichung_gym_staff_geometry_test.py
 new file mode 100644
-index 0000000..17c9047
+index 0000000..f5c77d0
 --- /dev/null
 +++ b/tests/taichung_gym_staff_geometry_test.py
-@@ -0,0 +1,68 @@
+@@ -0,0 +1,79 @@
 +#!/usr/bin/env python3
 +"""Validate the five added staff against real native floor/actor/warp data."""
 +from collections import deque
@@ -441407,6 +441651,11 @@ index 0000000..17c9047
 +ROOT = Path(__file__).resolve().parents[1]
 +BASE = '2c48f28b998b67413baf058557752723ea121500'
 +MANIFEST = 'data/taichung/gym-staff/manifest.json'
++# Merged onto the live city rework, the shared layout and map-group tables carry the
++# city's new maps. Where the staff work left an input at BASE and the city changed
++# it, the tree must hold exactly the city's bytes.
++CITY = 'a2f2afaeaebd0fd5a30c4547bed8a0df5dac00fd'
++CITY_RECORD = 'data/taichung/city-rework/save-v10.json'
 +
 +
 +def digest(raw):
@@ -441420,10 +441669,16 @@ index 0000000..17c9047
 +    native = importlib.util.module_from_spec(spec)
 +    spec.loader.exec_module(native)
 +    layouts = {item['id']: item for item in json.loads((ROOT / 'data/layouts/layouts.json').read_text())['layouts'] if 'id' in item}
++    city = (ROOT / CITY_RECORD).exists()
 +    for path, expected in registration['unchangedInputsSha256'].items():
 +        raw = (ROOT / path).read_bytes()
++        before = subprocess.check_output(['git', 'show', BASE + ':' + path], cwd=ROOT)
++        assert digest(before) == expected, path
++        if city and raw != before:
++            assert raw == subprocess.check_output(['git', 'show', CITY + ':' + path], cwd=ROOT), path
++            continue
 +        assert digest(raw) == expected, path
-+        assert raw == subprocess.check_output(['git', 'show', BASE + ':' + path], cwd=ROOT), path
++        assert raw == before, path
 +    for path, expected in registration['sourceFilesSha256'].items():
 +        assert digest((ROOT / path).read_bytes()) == expected, path
 +    assert len(registration['staff']) == 5
@@ -448804,10 +449059,10 @@ index 0000000..fbc630e
 +    unittest.main()
 diff --git a/tests/test_gym_staff_guard.py b/tests/test_gym_staff_guard.py
 new file mode 100644
-index 0000000..d8deaf4
+index 0000000..b7edaf9
 --- /dev/null
 +++ b/tests/test_gym_staff_guard.py
-@@ -0,0 +1,317 @@
+@@ -0,0 +1,318 @@
 +#!/usr/bin/env python3
 +"""Exercise real non-no-op corruption at the registered staff/cache boundary."""
 +from copy import deepcopy
@@ -449077,7 +449332,8 @@ index 0000000..d8deaf4
 +
 +    def test_original_guard_profiles_and_probes_literal_preservation(self):
 +        # With the city, the guards' reference is the city's reviewed version (which re-pinned the v9
-+        # collision profile and added its layers), plus exactly this merge's reviewed additions.
++        # collision profile and added its layers), plus exactly this merge's reviewed additions: the
++        # polish and still-water layer helpers, which sit together before save_v10_underneath.
 +        reference = guard.CITY if self.city else BASE_GUARDS
 +        old_core = 'tools/taichung/landmarks/check_old_core.py'
 +        if self.city:
@@ -449113,7 +449369,7 @@ index 0000000..d8deaf4
 +                self.assertEqual(guard.digest((ROOT / path).read_bytes()), expected, path)
 +        if self.city:
 +            # check_cmp selects this profile and proves its save and geometry pins beneath the city.
-+            spec = importlib.util.spec_from_file_location('staff_profile_cmp', ROOT / path)
++            spec = importlib.util.spec_from_file_location('staff_profile_cmp', ROOT / 'tools/taichung/landmarks/check_cmp.py')
 +            cmp = importlib.util.module_from_spec(spec); spec.loader.exec_module(cmp)
 +            report = cmp.check(ROOT)
 +            self.assertTrue(report['passed'], report['errors'])
@@ -452784,10 +453040,10 @@ index 0000000..60903fe
 +    main()
 diff --git a/tools/taichung/kit/check_city_kit.py b/tools/taichung/kit/check_city_kit.py
 new file mode 100644
-index 0000000..95e0086
+index 0000000..bf2acc1
 --- /dev/null
 +++ b/tools/taichung/kit/check_city_kit.py
-@@ -0,0 +1,329 @@
+@@ -0,0 +1,341 @@
 +#!/usr/bin/env python3
 +"""Read-only proof for the city kit in the three private Taichung primaries.
 +
@@ -452869,6 +453125,10 @@ index 0000000..95e0086
 +    art = install.art
 +    now, base = support.Files(source), support.Files(source, install.BASE)
 +    now.cache.update(overrides or {})
++    # The registered still-water layer edits one definition (0x1A9) in each
++    # primary; its own guard proves that delta, so the kit is checked
++    # underneath it (the latest layer, stripped first).
++    now.cache.update(support.still_water_underneath(now))
 +    # The registered Old City rework grows Greenway and Old City and adds Old City North;
 +    # its own guard proves that delta, so the exteriors here are checked underneath it
 +    # (the latest layer, stripped first).
@@ -453012,21 +453272,29 @@ index 0000000..95e0086
 +
 +def underneath(files):
 +    """{path: BASE bytes} for the nine primary files when the tree holds exactly
-+    the registered kit: kit.json at its pinned hash and every primary file at
-+    its registered output hash. Otherwise {}, so a guard reads the real bytes.
++    the registered kit (under the registered still-water layer, which is
++    stripped first and whose other files are returned as they were before it):
++    kit.json at its pinned hash and every primary file at its registered output
++    hash. Otherwise {}, so a guard reads the real bytes.
 +    Guards that freeze a whole primary check this state underneath; this guard
 +    proves the kit delta itself."""
++    support = load("city_kit_underneath_support", Path(files.source) / "tools/taichung/landmarks/check_old_core.py")
++    peeled = support.still_water_underneath(files)
++    read = lambda path: peeled[path] if path in peeled else files.read(path)
 +    try:
-+        raw = files.read(KIT_CONTRACT)
++        raw = read(KIT_CONTRACT)
 +    except (OSError, subprocess.CalledProcessError):
 +        return {}
 +    if hashlib.sha256(raw).hexdigest() != CONTRACT_SHA256:
 +        return {}
 +    outputs = json.loads(raw)["outputs"]
-+    if any(hashlib.sha256(files.read(path)).hexdigest() != digest for path, digest in outputs.items()):
++    if any(hashlib.sha256(read(path)).hexdigest() != digest for path, digest in outputs.items()):
 +        return {}
-+    return {path: subprocess.run(["git", "show", f"{KIT_BASE}:{path}"], cwd=files.source, check=True,
++    base = {path: subprocess.run(["git", "show", f"{KIT_BASE}:{path}"], cwd=files.source, check=True,
 +                                 capture_output=True).stdout for path in outputs}
++    # Underneath the kit is also underneath the later still-water layer: its other
++    # files (General's water frames) read as they were before it.
++    return {**{path: data for path, data in peeled.items() if path not in base}, **base}
 +
 +
 +def _folder(files, label):
@@ -457827,10 +458095,10 @@ index 0000000..e723b48
 +    sys.exit(0 if result["passed"] else 1)
 diff --git a/tools/taichung/landmarks/check_old_core.py b/tools/taichung/landmarks/check_old_core.py
 new file mode 100644
-index 0000000..87529b3
+index 0000000..57e7296
 --- /dev/null
 +++ b/tools/taichung/landmarks/check_old_core.py
-@@ -0,0 +1,1249 @@
+@@ -0,0 +1,1266 @@
 +#!/usr/bin/env python3
 +"""Independent checks of the actual OldCity clone/bank/map, with no source writes.
 +
@@ -458203,6 +458471,23 @@ index 0000000..87529b3
 +    if under is None or POLISH_MARKER in under or _merge_file(under, before, after) != current:
 +        return {}
 +    return {POLISH_SCRIPTS: under}
++
++
++# The registered still-water layer (native, on 15338ea) makes General's eight water
++# frames one still frame and points the flat water metatile 0x1A9 at the calm field,
++# so every Taichung water cell is one unmoving colour. Its own guard proves that
++# delta; guards that freeze the primaries read the bytes underneath it.
++STILL_WATER_GUARD = "tools/taichung/still_water.py"
++
++
++def still_water_underneath(files):
++    path = Path(files.source)/STILL_WATER_GUARD
++    if not path.exists():
++        return {}
++    spec = importlib.util.spec_from_file_location("registered_still_water_guard", path)
++    guard = importlib.util.module_from_spec(spec)
++    spec.loader.exec_module(guard)
++    return guard.underneath(files)
 +
 +
 +def save_v10_underneath(files):
@@ -467632,10 +467917,10 @@ index 0000000..5ee043a
 +    main()
 diff --git a/tools/taichung/rework/check_oldcity_rework.py b/tools/taichung/rework/check_oldcity_rework.py
 new file mode 100644
-index 0000000..c7ff4e7
+index 0000000..19f393f
 --- /dev/null
 +++ b/tools/taichung/rework/check_oldcity_rework.py
-@@ -0,0 +1,302 @@
+@@ -0,0 +1,322 @@
 +#!/usr/bin/env python3
 +"""Read-only proof for Greenway, Old City and Old City North on the master plan (city-rework phase 2b).
 +
@@ -467675,6 +467960,7 @@ index 0000000..c7ff4e7
 +import importlib.util
 +import json
 +from pathlib import Path
++import struct
 +import subprocess
 +import sys
 +
@@ -467803,6 +468089,8 @@ index 0000000..c7ff4e7
 +    now.cache.update(overrides or {})
 +    # The playthrough polish's edit to the shared city script is a later layer; read beneath it.
 +    now.cache.update(support.polish_scripts_underneath(now))
++    # The registered still-water layer redraws the flat-water fills; the drafts are compared underneath it.
++    now.cache.update(support.still_water_underneath(now))
 +    tests = support.Checks()
 +    state = {}
 +
@@ -467826,9 +468114,26 @@ index 0000000..c7ff4e7
 +        state["builder"] = b
 +        return {"outputs": len(b.outputs), "seamHedges": b.report["seamHedges"]}
 +
++    def underneath_still_water(run):
++        """Run with the tree's still-water definitions read as they were before
++        that layer, so built cells are compared with the drafts underneath it."""
++        peeled = {(source / path).resolve(): data for path, data in support.still_water_underneath(support.Files(source)).items()}
++        if not peeled:
++            return run()
++        native, original = verify.native, verify.native.words
++
++        def words(path):
++            data = peeled.get(Path(path).resolve())
++            return original(path) if data is None else struct.unpack(f"<{len(data) // 2}H", data)
++        native.words = words
++        try:
++            return run()
++        finally:
++            native.words = original
++
 +    def cells():
 +        b = state["builder"]
-+        report = verify.verify(b)
++        report = underneath_still_water(lambda: verify.verify(b))
 +        tests.require(report["draftDigests"] == APPROVED_DRAFTS, "The builder's grids no longer paint the approved drafts")
 +        tests.require(not any(report["unexplained"].values()), f"Unexplained differences from the drafts: {report['unexplained']}")
 +        notes = {}
@@ -470637,6 +470942,240 @@ index 0000000..fc63843
 +
 +
 +if __name__=="__main__":
++    main()
+diff --git a/tools/taichung/still_water.py b/tools/taichung/still_water.py
+new file mode 100644
+index 0000000..fc0a8d3
+--- /dev/null
++++ b/tools/taichung/still_water.py
+@@ -0,0 +1,228 @@
++#!/usr/bin/env python3
++"""Still, flat water for every Taichung map.
++
++General's water animation cycles wave and current frames through tile slots
++0x1A0-0x1CF of the three private primaries, while the flat water metatile 0x1A9
++(tile 0x157, palette 3) never moves and is a lighter blue. Maps that use both
++show waves next to flat patches, and the cycling reads as jitter.
++
++This layer makes all of it one still colour:
++  * all eight frames of General's water animation become one frame: frame 0
++    with every water colour (palette 4 indices 5, 6, 7 and 12) of the plain
++    water tiles (0x1A0-0x1A3 calm, 0x1AE-0x1C1 current) set to index 4, and
++  * in the three private primaries, every definition quadrant that fills with
++    the flat water tile 0x157 (palette 3) draws the matching quadrant of the calm
++    water field instead (0x1A0-0x1A3, palette 4, as 0x0B7 does), so the flat
++    water metatile 0x1A9 and General's pond-rim pieces (0x1A0-0x1B4,
++    0x222-0x226) show that same colour.
++
++Animation code, tile sheets, palettes, attributes and every map stay as they
++are. This guard proves the tree holds exactly that delta over BASE; frozen
++guards read the bytes underneath it (`underneath`).
++
++  still_water.py             print the report
++  still_water.py --install   write the layer into the tree (from BASE)
++  still_water.py --self-test also prove each corruption probe is caught
++"""
++from __future__ import annotations
++
++import argparse
++import hashlib
++import io
++import json
++from pathlib import Path
++import struct
++import subprocess
++import sys
++
++from PIL import Image
++
++sys.dont_write_bytecode = True
++ROOT = Path(__file__).resolve().parents[2]
++BASE = "15338eaceaaf5566830e6472ad5bc1bea0b3ca58"
++FRAMES = tuple(f"data/tilesets/primary/general/anim/water_current_landwatersedge/{i}.png" for i in range(8))
++PRIMARIES = tuple(f"data/tilesets/primary/{name}/metatiles.bin"
++                  for name in ("taichung_old_core", "taichung_greenway_private", "taichung_xitun_private"))
++CALM = 0x0B7
++CALM_WORDS = (0x41A0, 0x41A1, 0x41A2, 0x41A3, 0, 0, 0, 0)
++FLAT_TILE, FLAT_ENTRY = 0x157, 0x3157  # tile 0x157, palette 3, no flips
++FLAT_USERS = (*range(0x1A0, 0x1B5), *range(0x222, 0x227))
++WATER_COLOURS, STILL_COLOUR = {5, 6, 7, 12}, 4
++# Frame-local tiles (frame tile n draws slot 0x1A0 + n): calm 0-3, current 14-33.
++WATER_TILES = tuple(range(0, 4)) + tuple(range(14, 34))
++
++
++def git_show(source, path, revision=BASE):
++    return subprocess.run(["git", "show", f"{revision}:{path}"], cwd=source, check=True, capture_output=True).stdout
++
++
++def pixels(data):
++    image = Image.open(io.BytesIO(data))
++    if image.mode != "P":
++        raise ValueError(f"frame is {image.mode}, not an indexed PNG")
++    return image.mode, image.size, image.getpalette(), list(image.tobytes())
++
++
++def still_pixels(frame0):
++    """Frame 0's pixel indices with the plain water tiles flattened."""
++    mode, (width, height), palette, values = pixels(frame0)
++    values = values[:]
++    for tile in WATER_TILES:
++        tx, ty = tile % (width // 8), tile // (width // 8)
++        for y in range(8):
++            for x in range(8):
++                i = (ty * 8 + y) * width + tx * 8 + x
++                if values[i] in WATER_COLOURS:
++                    values[i] = STILL_COLOUR
++    return mode, (width, height), palette, values
++
++
++def flat_metatiles(data):
++    """The primary's definitions with every 0x157 fill quadrant on the calm field;
++    None unless BASE draws 0x157 exactly as this layer expects (bottom-layer,
++    palette 3, unflipped, only in General's pond family) and 0x0B7 is the field."""
++    words = list(struct.unpack(f"<{len(data) // 2}H", data))
++    if tuple(words[CALM * 8:CALM * 8 + 8]) != CALM_WORDS:
++        return None
++    users = set()
++    for index, word in enumerate(words):
++        if word & 0x3FF != FLAT_TILE:
++            continue
++        metatile, quadrant = divmod(index, 8)
++        if word != FLAT_ENTRY or quadrant > 3:
++            return None
++        users.add(metatile)
++        words[index] = CALM_WORDS[quadrant]
++    if tuple(sorted(users)) != FLAT_USERS:
++        return None
++    return struct.pack(f"<{len(words)}H", *words)
++
++
++def install(source=ROOT):
++    source = Path(source).resolve()
++    frame0 = git_show(source, FRAMES[0])
++    mode, size, palette, values = still_pixels(frame0)
++    image = Image.new(mode, size)
++    image.putpalette(palette)
++    image.putdata(values)
++    for path in FRAMES:
++        image.save(source / path)
++    for path in PRIMARIES:
++        out = flat_metatiles(git_show(source, path))
++        if out is None:
++            raise SystemExit(f"{path}: 0x157 fills or 0x0B7 at BASE are not the expected words")
++        (source / path).write_bytes(out)
++
++
++def same(a, b, path):
++    """Byte equality; JASC palettes are checked out with CRLF, stored with LF."""
++    return a.replace(b"\r\n", b"\n") == b.replace(b"\r\n", b"\n") if path.endswith(".pal") else a == b
++
++
++def _reader(source, overrides):
++    overrides = overrides or {}
++    return lambda path: overrides[path] if path in overrides else (Path(source) / path).read_bytes()
++
++
++def check(source=ROOT, overrides=None, reader=None):
++    source = Path(source).resolve()
++    base_read = reader or _reader(source, None)
++    overrides = overrides or {}
++    read = lambda path: overrides[path] if path in overrides else base_read(path)
++    errors, results = [], {}
++
++    def require(ok, message):
++        if not ok:
++            errors.append(message)
++
++    frame0 = git_show(source, FRAMES[0])
++    want = still_pixels(frame0)
++    base_values = pixels(frame0)[3]
++    flattened = sum(1 for a, b in zip(base_values, want[3]) if a != b)
++    for path in FRAMES:
++        try:
++            got = pixels(read(path))
++        except Exception as error:  # unreadable or missing PNG
++            require(False, f"{path}: {error}")
++            continue
++        require(got[:3] == want[:3], f"{path}: frame mode, size or PNG palette changed")
++        require(got[3] == want[3], f"{path}: frame is not the still frame")
++    for path in PRIMARIES:
++        base = git_show(source, path)
++        require(flat_metatiles(base) is not None, f"{path}: BASE does not hold the expected 0x157 fills and 0x0B7")
++        require(read(path) == flat_metatiles(base), f"{path}: definitions are not BASE with the 0x157 fills on the calm field")
++    # Nothing else of this layer's shape may move: the animation writes and the
++    # remaining primary files stay BASE's bytes.
++    for path in ("src/tileset_anims.c", "src/data/tilesets/headers.h"):
++        require(read(path) == git_show(source, path), f"{path} changed")
++    for path in PRIMARIES:
++        folder = path.rsplit("/", 1)[0]
++        for name in ("tiles.png", "metatile_attributes.bin", *(f"palettes/{p:02}.pal" for p in range(16))):
++            path = f"{folder}/{name}"
++            require(same(read(path), git_show(source, path), path), f"{path} changed")
++    results["frames"] = {"count": len(FRAMES), "pixelsFlattened": flattened, "waterTiles": len(WATER_TILES),
++                         "stillColour": "palette 4 index 4 (#68A0E0)"}
++    results["flatFills"] = {"tile": "0x157 palette 3", "metatiles": len(FLAT_USERS), "draws": "0x1A0-0x1A3 palette 4 (as 0x0B7)",
++                            "primaries": len(PRIMARIES)}
++    return {"passed": not errors, "errors": errors, "base": BASE, "checks": results}
++
++
++def holds_layer(source, read):
++    """True when the layer's own files are exactly this layer's output from BASE.
++    Only those files are read, so a guard may call this after peeling other
++    layers' shared files (headers, scripts) to older revisions."""
++    want = still_pixels(git_show(source, FRAMES[0]))
++    for path in FRAMES:
++        if pixels(read(path)) != want:
++            return False
++    return all(read(path) == flat_metatiles(git_show(source, path)) for path in PRIMARIES)
++
++
++def underneath(files):
++    """{path: BASE bytes} for the layer's files when the tree holds exactly this
++    layer over BASE; otherwise {}, so a guard reads the real bytes."""
++    source = Path(files.source)
++    try:
++        if not holds_layer(source, files.read):
++            return {}
++    except (OSError, ValueError, subprocess.CalledProcessError):
++        return {}
++    return {path: git_show(source, path) for path in FRAMES + PRIMARIES}
++
++
++def self_test(source=ROOT):
++    source = Path(source).resolve()
++    good = check(source)
++    probes = {}
++    frame = Image.open(source / FRAMES[3]).copy()
++    frame.putpixel((0, 0), 5)
++    buf = io.BytesIO(); frame.save(buf, format="PNG")
++    probes["wave-pixel"] = {FRAMES[3]: buf.getvalue()}
++    first = git_show(source, FRAMES[1])
++    probes["animated-frame"] = {FRAMES[1]: first}
++    base = git_show(source, PRIMARIES[1])
++    probes["flat-left-alone"] = {PRIMARIES[1]: base}
++    edited = bytearray(flat_metatiles(base))
++    edited[0xB8 * 16] ^= 1
++    probes["other-definition"] = {PRIMARIES[1]: bytes(edited)}
++    partial = bytearray(flat_metatiles(base))
++    partial[0x1A1 * 16:0x1A1 * 16 + 16] = base[0x1A1 * 16:0x1A1 * 16 + 16]
++    probes["rim-left-light"] = {PRIMARIES[0]: bytes(partial)}
++    caught = {name: not check(source, overrides)["passed"] for name, overrides in probes.items()}
++    return {"passed": good["passed"] and all(caught.values()), "tree": good["passed"], "rejectedCorruptionProbes": caught}
++
++
++def main():
++    parser = argparse.ArgumentParser()
++    parser.add_argument("--install", action="store_true")
++    parser.add_argument("--self-test", action="store_true")
++    args = parser.parse_args()
++    if args.install:
++        install()
++    report = self_test() if args.self_test else check()
++    print(json.dumps(report, indent=2))
++    sys.exit(0 if report["passed"] else 1)
++
++
++if __name__ == "__main__":
 +    main()
 diff --git a/tools/taichung/streetscape/build_library.py b/tools/taichung/streetscape/build_library.py
 new file mode 100644
@@ -475638,10 +476177,10 @@ index 0000000..a3e50c4
 +print(f"PASS: all {len(battle_named)} battle and {len(field_named)} field player-name/outcome templates routed")
 diff --git a/tools/taichung_gameplay/audit-quest-log-player-text.py b/tools/taichung_gameplay/audit-quest-log-player-text.py
 new file mode 100644
-index 0000000..1de87c2
+index 0000000..3337f7a
 --- /dev/null
 +++ b/tools/taichung_gameplay/audit-quest-log-player-text.py
-@@ -0,0 +1,198 @@
+@@ -0,0 +1,211 @@
 +#!/usr/bin/env python3
 +"""Audit local-only quest-log wording, storage preservation and native bounds.
 +
@@ -475660,6 +476199,11 @@ index 0000000..1de87c2
 +sys.dont_write_bytecode = True
 +ROOT = Path(__file__).resolve().parents[2]
 +BASE = '970295050920093f99a4cc2c4a85d247e0f1afdc'
++# Merged onto the live city rework (save v10), the save pair carries the city's v10
++# changes. This feature never touched it; the registered staff guard proves the
++# tree's pair is exactly the city's pair with the reviewed staff cache wrapper.
++CITY_RECORD = 'data/taichung/city-rework/save-v10.json'
++CITY_SAVE_PAIR = ('src/taichung_save.c', 'include/taichung_save.h')
 +DEFINITION = re.compile(r'(?:static )?const u8 (\w+)\[\] = _\(("(?:[^"\\]|\\.)*")\);')
 +LOCAL_DYNAMIC = {
 +    'MultiBattleWithPeopleResultedInOutcome': 0,
@@ -475717,8 +476261,16 @@ index 0000000..1de87c2
 +                 'src/taichung_language.c', 'tools/taichung_gameplay/extend-chinese-glyphs.py',
 +                 'tools/taichung_gameplay/chinese_glyph_font.py', 'assets/fonts/taichung-native-font.json',
 +                 'assets/fonts/fusion-pixel-12/fusion-pixel-12px-monospaced-zh_tw.bdf.gz')
++    city = (ROOT / CITY_RECORD).exists()
 +    for path in protected:
++        if city and path in CITY_SAVE_PAIR:
++            continue
 +        assert (ROOT / path).read_bytes() == frozen(path), 'Protected identity/storage/engine/font source changed: ' + path
++    if city:
++        spec = importlib.util.spec_from_file_location('quest_log_staff_guard', ROOT / 'tools/taichung/check_gym_staff.py')
++        staff = importlib.util.module_from_spec(spec); spec.loader.exec_module(staff)
++        proof = staff.check(ROOT)
++        assert proof['passed'] and proof.get('cityRework'), 'Protected save pair is not the city pair with the staff cache wrapper'
 +
 +    token = re.compile(r'\{[^}]+\}')
 +    for name, texts in pairs.items():
