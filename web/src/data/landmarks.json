@@ -110,7 +110,7 @@
     "districtZh": "舊城區",
     "cityAnchor": {
       "x": 20,
-      "y": 52
+      "y": 51
     },
     "gymLeaderEn": "Peiqi",
     "gymLeaderZh": "沛琪",
@@ -149,7 +149,7 @@
     "districtZh": "草悟道文化區",
     "cityAnchor": {
       "x": 24,
-      "y": 20
+      "y": 57
     },
     "landmarkHallRef": "MAP_TAICHUNG_SCIENCE_MUSEUM_GYM",
     "gymStatus": "playable",
@@ -188,7 +188,7 @@
     "districtZh": "草悟道文化區",
     "cityAnchor": {
       "x": 22,
-      "y": 36
+      "y": 73
     },
     "landmarkHallRef": "MAP_TAICHUNG_GREENWAY_GYM",
     "landingNameEn": "Greenway",
@@ -228,8 +228,8 @@
     "districtEn": "Greenway & culture",
     "districtZh": "草悟道文化區",
     "cityAnchor": {
-      "x": 10,
-      "y": 44
+      "x": 11,
+      "y": 81
     },
     "landmarkHallRef": "MAP_TAICHUNG_SHEN_JI_GYM",
     "landingNameEn": "Shen Ji",
@@ -268,8 +268,8 @@
     "districtEn": "Greenway & culture",
     "districtZh": "草悟道文化區",
     "cityAnchor": {
-      "x": 10,
-      "y": 62
+      "x": 13,
+      "y": 99
     },
     "landmarkHallRef": "MAP_TAICHUNG_FINE_ARTS_GYM",
     "gymStatus": "playable",
@@ -307,8 +307,8 @@
     "districtEn": "Xitun",
     "districtZh": "西屯區",
     "cityAnchor": {
-      "x": 24,
-      "y": 12
+      "x": 29,
+      "y": 17
     },
     "landmarkHallRef": "MAP_TAICHUNG_FENGJIA_GYM",
     "gymStatus": "playable",
@@ -347,8 +347,8 @@
     "districtEn": "Xitun",
     "districtZh": "西屯區",
     "cityAnchor": {
-      "x": 12,
-      "y": 32
+      "x": 17,
+      "y": 37
     },
     "landmarkHallRef": "MAP_TAICHUNG_MAPLE_GARDEN_GYM",
     "gymStatus": "playable",
@@ -386,8 +386,8 @@
     "districtEn": "Xitun",
     "districtZh": "西屯區",
     "cityAnchor": {
-      "x": 12,
-      "y": 44
+      "x": 17,
+      "y": 49
     },
     "landmarkHallRef": "MAP_TAICHUNG_THEATER_GYM",
     "gymStatus": "playable",
@@ -415,7 +415,7 @@
     "gameAreaRef": "MAP_TAICHUNG_NANTUN_WANHE",
     "landmarkHallRef": "MAP_TAICHUNG_WANHE_TEMPLE_HALL",
     "cityAnchor": {
-      "x": 26,
+      "x": 31,
       "y": 33
     },
     "gymStatus": "not-a-gym",
@@ -444,7 +444,7 @@
     "gameAreaRef": "MAP_TAICHUNG_NANTUN_WANHE",
     "landmarkHallRef": "MAP_TAICHUNG_WENCHANG_TEMPLE_HALL",
     "cityAnchor": {
-      "x": 16,
+      "x": 21,
       "y": 33
     },
     "gymStatus": "not-a-gym",

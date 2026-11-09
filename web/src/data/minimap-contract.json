@@ -15,15 +15,19 @@
     "markerAnchor": "exterior entrance tile; display at tile center"
   },
   "world": {
-    "width": 120,
-    "height": 176,
+    "width": 129,
+    "height": 181,
     "bounds": [
       0,
       0,
-      120,
-      176
+      129,
+      181
     ],
-    "coordinateSpace": "compressed playable baseline, not geographic GPS"
+    "coordinateSpace": "compressed playable baseline, not geographic GPS",
+    "cityContractOffset": [
+      5,
+      5
+    ]
   },
   "policy": {
     "unknownNativeKey": "hide",
@@ -53,20 +57,20 @@
       "number": 0,
       "packedMapId": 11008,
       "layoutId": "LAYOUT_TAICHUNG_OLD_CITY",
-      "width": 40,
-      "height": 72,
+      "width": 44,
+      "height": 77,
       "registration": "registered-source",
       "kind": "exterior",
       "projection": "local-plus-world-origin",
       "worldOrigin": [
-        80,
-        48
+        85,
+        53
       ],
       "worldRect": [
-        80,
-        48,
-        120,
-        120
+        85,
+        53,
+        129,
+        130
       ],
       "markerIds": [
         "old-taichung-station",
@@ -83,19 +87,19 @@
       "packedMapId": 11009,
       "layoutId": "LAYOUT_TAICHUNG_GREENWAY",
       "width": 40,
-      "height": 72,
+      "height": 109,
       "registration": "registered-source",
       "kind": "exterior",
       "projection": "local-plus-world-origin",
       "worldOrigin": [
-        40,
-        32
+        45,
+        0
       ],
       "worldRect": [
-        40,
-        32,
-        80,
-        104
+        45,
+        0,
+        85,
+        109
       ],
       "markerIds": [
         "natural-science-museum",
@@ -112,8 +116,8 @@
       "number": 2,
       "packedMapId": 11010,
       "layoutId": "LAYOUT_TAICHUNG_XITUN",
-      "width": 40,
-      "height": 64,
+      "width": 45,
+      "height": 69,
       "registration": "registered-source",
       "kind": "exterior",
       "projection": "local-plus-world-origin",
@@ -124,8 +128,8 @@
       "worldRect": [
         0,
         0,
-        40,
-        64
+        45,
+        69
       ],
       "markerIds": [
         "fengjia-night-market",
@@ -141,20 +145,20 @@
       "number": 14,
       "packedMapId": 11022,
       "layoutId": "LAYOUT_TAICHUNG_NANTUN_NORTH",
-      "width": 40,
+      "width": 45,
       "height": 40,
       "registration": "registered-source",
       "kind": "exterior",
       "projection": "local-plus-world-origin",
       "worldOrigin": [
         0,
-        64
+        69
       ],
       "worldRect": [
         0,
-        64,
-        40,
-        104
+        69,
+        45,
+        109
       ],
       "markerIds": []
     },
@@ -166,25 +170,50 @@
       "number": 15,
       "packedMapId": 11023,
       "layoutId": "LAYOUT_TAICHUNG_NANTUN_WANHE",
-      "width": 64,
+      "width": 85,
       "height": 72,
       "registration": "registered-source",
       "kind": "exterior",
       "projection": "local-plus-world-origin",
       "worldOrigin": [
         0,
-        104
+        109
       ],
       "worldRect": [
         0,
-        104,
-        64,
-        176
+        109,
+        85,
+        181
       ],
       "markerIds": [
         "wanhe-temple",
         "wenchang-temple"
       ]
+    },
+    "43:18": {
+      "mapId": "MAP_TAICHUNG_OLD_CITY_NORTH",
+      "nativeMapName": "TaichungOldCityNorth",
+      "nativeKey": "43:18",
+      "group": 43,
+      "number": 18,
+      "packedMapId": 11026,
+      "layoutId": "LAYOUT_TAICHUNG_OLD_CITY_NORTH",
+      "width": 44,
+      "height": 53,
+      "registration": "registered-source",
+      "kind": "exterior",
+      "projection": "local-plus-world-origin",
+      "worldOrigin": [
+        85,
+        0
+      ],
+      "worldRect": [
+        85,
+        0,
+        129,
+        53
+      ],
+      "markerIds": []
     },
     "43:3": {
       "mapId": "MAP_TAICHUNG_OLD_STATION_GYM",
@@ -207,8 +236,8 @@
         64
       ],
       "parentEntranceWorld": [
-        112,
-        112
+        117,
+        117
       ],
       "ignoreIndoorLocalXYForWorld": true,
       "indoorLabel": {
@@ -237,8 +266,8 @@
         30
       ],
       "parentEntranceWorld": [
-        112,
-        78
+        117,
+        83
       ],
       "ignoreIndoorLocalXYForWorld": true,
       "indoorLabel": {
@@ -264,11 +293,11 @@
       "parentMarkerId": "miyahara",
       "parentEntranceLocal": [
         20,
-        52
+        51
       ],
       "parentEntranceWorld": [
-        100,
-        100
+        105,
+        104
       ],
       "ignoreIndoorLocalXYForWorld": true,
       "indoorLabel": {
@@ -294,11 +323,11 @@
       "parentMarkerId": "natural-science-museum",
       "parentEntranceLocal": [
         24,
-        20
+        57
       ],
       "parentEntranceWorld": [
-        64,
-        52
+        69,
+        57
       ],
       "ignoreIndoorLocalXYForWorld": true,
       "indoorLabel": {
@@ -324,11 +353,11 @@
       "parentMarkerId": "calligraphy-greenway",
       "parentEntranceLocal": [
         22,
-        36
+        73
       ],
       "parentEntranceWorld": [
-        62,
-        68
+        67,
+        73
       ],
       "ignoreIndoorLocalXYForWorld": true,
       "indoorLabel": {
@@ -353,12 +382,12 @@
       "parentNativeKey": "43:1",
       "parentMarkerId": "shen-ji-new-village",
       "parentEntranceLocal": [
-        10,
-        44
+        11,
+        81
       ],
       "parentEntranceWorld": [
-        50,
-        76
+        56,
+        81
       ],
       "ignoreIndoorLocalXYForWorld": true,
       "indoorLabel": {
@@ -383,12 +412,12 @@
       "parentNativeKey": "43:1",
       "parentMarkerId": "fine-arts-museum",
       "parentEntranceLocal": [
-        10,
-        62
+        13,
+        99
       ],
       "parentEntranceWorld": [
-        50,
-        94
+        58,
+        99
       ],
       "ignoreIndoorLocalXYForWorld": true,
       "indoorLabel": {
@@ -413,12 +442,12 @@
       "parentNativeKey": "43:2",
       "parentMarkerId": "fengjia-night-market",
       "parentEntranceLocal": [
-        24,
-        12
+        29,
+        17
       ],
       "parentEntranceWorld": [
-        24,
-        12
+        29,
+        17
       ],
       "ignoreIndoorLocalXYForWorld": true,
       "indoorLabel": {
@@ -443,12 +472,12 @@
       "parentNativeKey": "43:2",
       "parentMarkerId": "maple-garden",
       "parentEntranceLocal": [
-        12,
-        32
+        17,
+        37
       ],
       "parentEntranceWorld": [
-        12,
-        32
+        17,
+        37
       ],
       "ignoreIndoorLocalXYForWorld": true,
       "indoorLabel": {
@@ -473,12 +502,12 @@
       "parentNativeKey": "43:2",
       "parentMarkerId": "taichung-theater",
       "parentEntranceLocal": [
-        12,
-        44
+        17,
+        49
       ],
       "parentEntranceWorld": [
-        12,
-        44
+        17,
+        49
       ],
       "ignoreIndoorLocalXYForWorld": true,
       "indoorLabel": {
@@ -503,12 +532,12 @@
       "parentNativeKey": "43:15",
       "parentMarkerId": "wanhe-temple",
       "parentEntranceLocal": [
-        26,
+        31,
         33
       ],
       "parentEntranceWorld": [
-        26,
-        137
+        31,
+        142
       ],
       "ignoreIndoorLocalXYForWorld": true,
       "indoorLabel": {
@@ -533,12 +562,12 @@
       "parentNativeKey": "43:15",
       "parentMarkerId": "wenchang-temple",
       "parentEntranceLocal": [
-        16,
+        21,
         33
       ],
       "parentEntranceWorld": [
-        16,
-        137
+        21,
+        142
       ],
       "ignoreIndoorLocalXYForWorld": true,
       "indoorLabel": {
@@ -567,8 +596,8 @@
         64
       ],
       "parentEntranceWorld": [
-        112,
-        112
+        117,
+        117
       ],
       "ignoreIndoorLocalXYForWorld": true,
       "indoorLabel": {
@@ -583,8 +612,8 @@
           66
         ],
         "world": [
-          110,
-          114
+          115,
+          119
         ]
       }
     }
@@ -595,6 +624,7 @@
     "MAP_TAICHUNG_XITUN": "43:2",
     "MAP_TAICHUNG_NANTUN_NORTH": "43:14",
     "MAP_TAICHUNG_NANTUN_WANHE": "43:15",
+    "MAP_TAICHUNG_OLD_CITY_NORTH": "43:18",
     "MAP_TAICHUNG_OLD_STATION_GYM": "43:3",
     "MAP_TAICHUNG_PARK_GYM": "43:4",
     "MAP_TAICHUNG_MIYAHARA_GYM": "43:5",
@@ -625,8 +655,8 @@
         64
       ],
       "world": [
-        112,
-        112
+        117,
+        117
       ],
       "exteriorWarpId": 0,
       "gymMapId": "MAP_TAICHUNG_OLD_STATION_GYM",
@@ -648,8 +678,8 @@
         30
       ],
       "world": [
-        112,
-        78
+        117,
+        83
       ],
       "exteriorWarpId": 1,
       "gymMapId": "MAP_TAICHUNG_PARK_GYM",
@@ -668,11 +698,11 @@
       "exteriorNativeKey": "43:0",
       "localEntrance": [
         20,
-        52
+        51
       ],
       "world": [
-        100,
-        100
+        105,
+        104
       ],
       "exteriorWarpId": 2,
       "gymMapId": "MAP_TAICHUNG_MIYAHARA_GYM",
@@ -691,11 +721,11 @@
       "exteriorNativeKey": "43:1",
       "localEntrance": [
         24,
-        20
+        57
       ],
       "world": [
-        64,
-        52
+        69,
+        57
       ],
       "exteriorWarpId": 0,
       "gymMapId": "MAP_TAICHUNG_SCIENCE_MUSEUM_GYM",
@@ -714,11 +744,11 @@
       "exteriorNativeKey": "43:1",
       "localEntrance": [
         22,
-        36
+        73
       ],
       "world": [
-        62,
-        68
+        67,
+        73
       ],
       "exteriorWarpId": 1,
       "gymMapId": "MAP_TAICHUNG_GREENWAY_GYM",
@@ -736,12 +766,12 @@
       "exteriorMapId": "MAP_TAICHUNG_GREENWAY",
       "exteriorNativeKey": "43:1",
       "localEntrance": [
-        10,
-        44
+        11,
+        81
       ],
       "world": [
-        50,
-        76
+        56,
+        81
       ],
       "exteriorWarpId": 2,
       "gymMapId": "MAP_TAICHUNG_SHEN_JI_GYM",
@@ -759,12 +789,12 @@
       "exteriorMapId": "MAP_TAICHUNG_GREENWAY",
       "exteriorNativeKey": "43:1",
       "localEntrance": [
-        10,
-        62
+        13,
+        99
       ],
       "world": [
-        50,
-        94
+        58,
+        99
       ],
       "exteriorWarpId": 3,
       "gymMapId": "MAP_TAICHUNG_FINE_ARTS_GYM",
@@ -782,12 +812,12 @@
       "exteriorMapId": "MAP_TAICHUNG_XITUN",
       "exteriorNativeKey": "43:2",
       "localEntrance": [
-        24,
-        12
+        29,
+        17
       ],
       "world": [
-        24,
-        12
+        29,
+        17
       ],
       "exteriorWarpId": 0,
       "gymMapId": "MAP_TAICHUNG_FENGJIA_GYM",
@@ -805,12 +835,12 @@
       "exteriorMapId": "MAP_TAICHUNG_XITUN",
       "exteriorNativeKey": "43:2",
       "localEntrance": [
-        12,
-        32
+        17,
+        37
       ],
       "world": [
-        12,
-        32
+        17,
+        37
       ],
       "exteriorWarpId": 1,
       "gymMapId": "MAP_TAICHUNG_MAPLE_GARDEN_GYM",
@@ -828,12 +858,12 @@
       "exteriorMapId": "MAP_TAICHUNG_XITUN",
       "exteriorNativeKey": "43:2",
       "localEntrance": [
-        12,
-        44
+        17,
+        49
       ],
       "world": [
-        12,
-        44
+        17,
+        49
       ],
       "exteriorWarpId": 2,
       "gymMapId": "MAP_TAICHUNG_THEATER_GYM",
@@ -851,12 +881,12 @@
       "exteriorMapId": "MAP_TAICHUNG_NANTUN_WANHE",
       "exteriorNativeKey": "43:15",
       "localEntrance": [
-        26,
+        31,
         33
       ],
       "world": [
-        26,
-        137
+        31,
+        142
       ],
       "exteriorWarpId": 0,
       "gymMapId": "MAP_TAICHUNG_WANHE_TEMPLE_HALL",
@@ -874,12 +904,12 @@
       "exteriorMapId": "MAP_TAICHUNG_NANTUN_WANHE",
       "exteriorNativeKey": "43:15",
       "localEntrance": [
-        16,
+        21,
         33
       ],
       "world": [
-        16,
-        137
+        21,
+        142
       ],
       "exteriorWarpId": 1,
       "gymMapId": "MAP_TAICHUNG_WENCHANG_TEMPLE_HALL",
@@ -890,9 +920,53 @@
   "seams": [
     {
       "fromNativeKey": "43:0",
+      "toNativeKey": "43:18",
+      "direction": "up",
+      "nativeOffset": 0,
+      "coordinateRule": "target transverse local = source transverse local - nativeOffset",
+      "overlappingEdgeTiles": 44,
+      "first": {
+        "fromLocal": [
+          0,
+          0
+        ],
+        "toLocal": [
+          0,
+          52
+        ],
+        "fromWorld": [
+          85,
+          53
+        ],
+        "toWorld": [
+          85,
+          52
+        ]
+      },
+      "last": {
+        "fromLocal": [
+          43,
+          0
+        ],
+        "toLocal": [
+          43,
+          52
+        ],
+        "fromWorld": [
+          128,
+          53
+        ],
+        "toWorld": [
+          128,
+          52
+        ]
+      }
+    },
+    {
+      "fromNativeKey": "43:0",
       "toNativeKey": "43:1",
       "direction": "left",
-      "nativeOffset": -16,
+      "nativeOffset": -53,
       "coordinateRule": "target transverse local = source transverse local - nativeOffset",
       "overlappingEdgeTiles": 56,
       "first": {
@@ -902,15 +976,15 @@
         ],
         "toLocal": [
           39,
-          16
+          53
         ],
         "fromWorld": [
-          80,
-          48
+          85,
+          53
         ],
         "toWorld": [
-          79,
-          48
+          84,
+          53
         ]
       },
       "last": {
@@ -920,15 +994,103 @@
         ],
         "toLocal": [
           39,
-          71
+          108
         ],
         "fromWorld": [
-          80,
-          103
+          85,
+          108
         ],
         "toWorld": [
-          79,
-          103
+          84,
+          108
+        ]
+      }
+    },
+    {
+      "fromNativeKey": "43:0",
+      "toNativeKey": "43:15",
+      "direction": "left",
+      "nativeOffset": 56,
+      "coordinateRule": "target transverse local = source transverse local - nativeOffset",
+      "overlappingEdgeTiles": 21,
+      "first": {
+        "fromLocal": [
+          0,
+          56
+        ],
+        "toLocal": [
+          84,
+          0
+        ],
+        "fromWorld": [
+          85,
+          109
+        ],
+        "toWorld": [
+          84,
+          109
+        ]
+      },
+      "last": {
+        "fromLocal": [
+          0,
+          76
+        ],
+        "toLocal": [
+          84,
+          20
+        ],
+        "fromWorld": [
+          85,
+          129
+        ],
+        "toWorld": [
+          84,
+          129
+        ]
+      }
+    },
+    {
+      "fromNativeKey": "43:1",
+      "toNativeKey": "43:18",
+      "direction": "right",
+      "nativeOffset": 0,
+      "coordinateRule": "target transverse local = source transverse local - nativeOffset",
+      "overlappingEdgeTiles": 53,
+      "first": {
+        "fromLocal": [
+          39,
+          0
+        ],
+        "toLocal": [
+          0,
+          0
+        ],
+        "fromWorld": [
+          84,
+          0
+        ],
+        "toWorld": [
+          85,
+          0
+        ]
+      },
+      "last": {
+        "fromLocal": [
+          39,
+          52
+        ],
+        "toLocal": [
+          0,
+          52
+        ],
+        "fromWorld": [
+          84,
+          52
+        ],
+        "toWorld": [
+          85,
+          52
         ]
       }
     },
@@ -936,43 +1098,43 @@
       "fromNativeKey": "43:1",
       "toNativeKey": "43:0",
       "direction": "right",
-      "nativeOffset": 16,
+      "nativeOffset": 53,
       "coordinateRule": "target transverse local = source transverse local - nativeOffset",
       "overlappingEdgeTiles": 56,
       "first": {
         "fromLocal": [
           39,
-          16
+          53
         ],
         "toLocal": [
           0,
           0
         ],
         "fromWorld": [
-          79,
-          48
+          84,
+          53
         ],
         "toWorld": [
-          80,
-          48
+          85,
+          53
         ]
       },
       "last": {
         "fromLocal": [
           39,
-          71
+          108
         ],
         "toLocal": [
           0,
           55
         ],
         "fromWorld": [
-          79,
-          103
+          84,
+          108
         ],
         "toWorld": [
-          80,
-          103
+          85,
+          108
         ]
       }
     },
@@ -980,43 +1142,43 @@
       "fromNativeKey": "43:1",
       "toNativeKey": "43:2",
       "direction": "left",
-      "nativeOffset": -32,
+      "nativeOffset": 0,
       "coordinateRule": "target transverse local = source transverse local - nativeOffset",
-      "overlappingEdgeTiles": 32,
+      "overlappingEdgeTiles": 69,
       "first": {
         "fromLocal": [
           0,
           0
         ],
         "toLocal": [
-          39,
-          32
+          44,
+          0
         ],
         "fromWorld": [
-          40,
-          32
+          45,
+          0
         ],
         "toWorld": [
-          39,
-          32
+          44,
+          0
         ]
       },
       "last": {
         "fromLocal": [
           0,
-          31
+          68
         ],
         "toLocal": [
-          39,
-          63
+          44,
+          68
         ],
         "fromWorld": [
-          40,
-          63
+          45,
+          68
         ],
         "toWorld": [
-          39,
-          63
+          44,
+          68
         ]
       }
     },
@@ -1024,43 +1186,43 @@
       "fromNativeKey": "43:1",
       "toNativeKey": "43:14",
       "direction": "left",
-      "nativeOffset": 32,
+      "nativeOffset": 69,
       "coordinateRule": "target transverse local = source transverse local - nativeOffset",
       "overlappingEdgeTiles": 40,
       "first": {
         "fromLocal": [
           0,
-          32
+          69
         ],
         "toLocal": [
-          39,
+          44,
           0
         ],
         "fromWorld": [
-          40,
-          64
+          45,
+          69
         ],
         "toWorld": [
-          39,
-          64
+          44,
+          69
         ]
       },
       "last": {
         "fromLocal": [
           0,
-          71
+          108
         ],
         "toLocal": [
-          39,
+          44,
           39
         ],
         "fromWorld": [
-          40,
-          103
+          45,
+          108
         ],
         "toWorld": [
-          39,
-          103
+          44,
+          108
         ]
       }
     },
@@ -1068,43 +1230,43 @@
       "fromNativeKey": "43:1",
       "toNativeKey": "43:15",
       "direction": "down",
-      "nativeOffset": -40,
+      "nativeOffset": -45,
       "coordinateRule": "target transverse local = source transverse local - nativeOffset",
-      "overlappingEdgeTiles": 24,
+      "overlappingEdgeTiles": 40,
       "first": {
         "fromLocal": [
           0,
-          71
+          108
         ],
         "toLocal": [
-          40,
+          45,
           0
         ],
         "fromWorld": [
-          40,
-          103
+          45,
+          108
         ],
         "toWorld": [
-          40,
-          104
+          45,
+          109
         ]
       },
       "last": {
         "fromLocal": [
-          23,
-          71
+          39,
+          108
         ],
         "toLocal": [
-          63,
+          84,
           0
         ],
         "fromWorld": [
-          63,
-          103
+          84,
+          108
         ],
         "toWorld": [
-          63,
-          104
+          84,
+          109
         ]
       }
     },
@@ -1112,43 +1274,43 @@
       "fromNativeKey": "43:2",
       "toNativeKey": "43:1",
       "direction": "right",
-      "nativeOffset": 32,
+      "nativeOffset": 0,
       "coordinateRule": "target transverse local = source transverse local - nativeOffset",
-      "overlappingEdgeTiles": 32,
+      "overlappingEdgeTiles": 69,
       "first": {
         "fromLocal": [
-          39,
-          32
+          44,
+          0
         ],
         "toLocal": [
           0,
           0
         ],
         "fromWorld": [
-          39,
-          32
+          44,
+          0
         ],
         "toWorld": [
-          40,
-          32
+          45,
+          0
         ]
       },
       "last": {
         "fromLocal": [
-          39,
-          63
+          44,
+          68
         ],
         "toLocal": [
           0,
-          31
+          68
         ],
         "fromWorld": [
-          39,
-          63
+          44,
+          68
         ],
         "toWorld": [
-          40,
-          63
+          45,
+          68
         ]
       }
     },
@@ -1158,11 +1320,11 @@
       "direction": "down",
       "nativeOffset": 0,
       "coordinateRule": "target transverse local = source transverse local - nativeOffset",
-      "overlappingEdgeTiles": 40,
+      "overlappingEdgeTiles": 45,
       "first": {
         "fromLocal": [
           0,
-          63
+          68
         ],
         "toLocal": [
           0,
@@ -1170,29 +1332,29 @@
         ],
         "fromWorld": [
           0,
-          63
+          68
         ],
         "toWorld": [
           0,
-          64
+          69
         ]
       },
       "last": {
         "fromLocal": [
-          39,
-          63
+          44,
+          68
         ],
         "toLocal": [
-          39,
+          44,
           0
         ],
         "fromWorld": [
-          39,
-          63
+          44,
+          68
         ],
         "toWorld": [
-          39,
-          64
+          44,
+          69
         ]
       }
     },
@@ -1202,7 +1364,7 @@
       "direction": "up",
       "nativeOffset": 0,
       "coordinateRule": "target transverse local = source transverse local - nativeOffset",
-      "overlappingEdgeTiles": 40,
+      "overlappingEdgeTiles": 45,
       "first": {
         "fromLocal": [
           0,
@@ -1210,33 +1372,33 @@
         ],
         "toLocal": [
           0,
-          63
+          68
         ],
         "fromWorld": [
           0,
-          64
+          69
         ],
         "toWorld": [
           0,
-          63
+          68
         ]
       },
       "last": {
         "fromLocal": [
-          39,
+          44,
           0
         ],
         "toLocal": [
-          39,
-          63
+          44,
+          68
         ],
         "fromWorld": [
-          39,
-          64
+          44,
+          69
         ],
         "toWorld": [
-          39,
-          63
+          44,
+          68
         ]
       }
     },
@@ -1244,43 +1406,43 @@
       "fromNativeKey": "43:14",
       "toNativeKey": "43:1",
       "direction": "right",
-      "nativeOffset": -32,
+      "nativeOffset": -69,
       "coordinateRule": "target transverse local = source transverse local - nativeOffset",
       "overlappingEdgeTiles": 40,
       "first": {
         "fromLocal": [
-          39,
+          44,
           0
         ],
         "toLocal": [
           0,
-          32
+          69
         ],
         "fromWorld": [
-          39,
-          64
+          44,
+          69
         ],
         "toWorld": [
-          40,
-          64
+          45,
+          69
         ]
       },
       "last": {
         "fromLocal": [
-          39,
+          44,
           39
         ],
         "toLocal": [
           0,
-          71
+          108
         ],
         "fromWorld": [
-          39,
-          103
+          44,
+          108
         ],
         "toWorld": [
-          40,
-          103
+          45,
+          108
         ]
       }
     },
@@ -1290,7 +1452,7 @@
       "direction": "down",
       "nativeOffset": 0,
       "coordinateRule": "target transverse local = source transverse local - nativeOffset",
-      "overlappingEdgeTiles": 40,
+      "overlappingEdgeTiles": 45,
       "first": {
         "fromLocal": [
           0,
@@ -1302,29 +1464,29 @@
         ],
         "fromWorld": [
           0,
-          103
+          108
         ],
         "toWorld": [
           0,
-          104
+          109
         ]
       },
       "last": {
         "fromLocal": [
-          39,
+          44,
           39
         ],
         "toLocal": [
-          39,
+          44,
           0
         ],
         "fromWorld": [
-          39,
-          103
+          44,
+          108
         ],
         "toWorld": [
-          39,
-          104
+          44,
+          109
         ]
       }
     },
@@ -1334,7 +1496,7 @@
       "direction": "up",
       "nativeOffset": 0,
       "coordinateRule": "target transverse local = source transverse local - nativeOffset",
-      "overlappingEdgeTiles": 40,
+      "overlappingEdgeTiles": 45,
       "first": {
         "fromLocal": [
           0,
@@ -1346,29 +1508,29 @@
         ],
         "fromWorld": [
           0,
-          104
+          109
         ],
         "toWorld": [
           0,
-          103
+          108
         ]
       },
       "last": {
         "fromLocal": [
-          39,
+          44,
           0
         ],
         "toLocal": [
-          39,
+          44,
           39
         ],
         "fromWorld": [
-          39,
-          104
+          44,
+          109
         ],
         "toWorld": [
-          39,
-          103
+          44,
+          108
         ]
       }
     },
@@ -1376,58 +1538,191 @@
       "fromNativeKey": "43:15",
       "toNativeKey": "43:1",
       "direction": "up",
-      "nativeOffset": 40,
+      "nativeOffset": 45,
       "coordinateRule": "target transverse local = source transverse local - nativeOffset",
-      "overlappingEdgeTiles": 24,
+      "overlappingEdgeTiles": 40,
       "first": {
         "fromLocal": [
-          40,
+          45,
           0
         ],
         "toLocal": [
           0,
-          71
+          108
         ],
         "fromWorld": [
-          40,
-          104
+          45,
+          109
         ],
         "toWorld": [
-          40,
-          103
+          45,
+          108
         ]
       },
       "last": {
         "fromLocal": [
-          63,
+          84,
           0
         ],
         "toLocal": [
-          23,
-          71
+          39,
+          108
         ],
         "fromWorld": [
-          63,
-          104
+          84,
+          109
         ],
         "toWorld": [
-          63,
-          103
+          84,
+          108
+        ]
+      }
+    },
+    {
+      "fromNativeKey": "43:15",
+      "toNativeKey": "43:0",
+      "direction": "right",
+      "nativeOffset": -56,
+      "coordinateRule": "target transverse local = source transverse local - nativeOffset",
+      "overlappingEdgeTiles": 21,
+      "first": {
+        "fromLocal": [
+          84,
+          0
+        ],
+        "toLocal": [
+          0,
+          56
+        ],
+        "fromWorld": [
+          84,
+          109
+        ],
+        "toWorld": [
+          85,
+          109
+        ]
+      },
+      "last": {
+        "fromLocal": [
+          84,
+          20
+        ],
+        "toLocal": [
+          0,
+          76
+        ],
+        "fromWorld": [
+          84,
+          129
+        ],
+        "toWorld": [
+          85,
+          129
+        ]
+      }
+    },
+    {
+      "fromNativeKey": "43:18",
+      "toNativeKey": "43:1",
+      "direction": "left",
+      "nativeOffset": 0,
+      "coordinateRule": "target transverse local = source transverse local - nativeOffset",
+      "overlappingEdgeTiles": 53,
+      "first": {
+        "fromLocal": [
+          0,
+          0
+        ],
+        "toLocal": [
+          39,
+          0
+        ],
+        "fromWorld": [
+          85,
+          0
+        ],
+        "toWorld": [
+          84,
+          0
+        ]
+      },
+      "last": {
+        "fromLocal": [
+          0,
+          52
+        ],
+        "toLocal": [
+          39,
+          52
+        ],
+        "fromWorld": [
+          85,
+          52
+        ],
+        "toWorld": [
+          84,
+          52
+        ]
+      }
+    },
+    {
+      "fromNativeKey": "43:18",
+      "toNativeKey": "43:0",
+      "direction": "down",
+      "nativeOffset": 0,
+      "coordinateRule": "target transverse local = source transverse local - nativeOffset",
+      "overlappingEdgeTiles": 44,
+      "first": {
+        "fromLocal": [
+          0,
+          52
+        ],
+        "toLocal": [
+          0,
+          0
+        ],
+        "fromWorld": [
+          85,
+          52
+        ],
+        "toWorld": [
+          85,
+          53
+        ]
+      },
+      "last": {
+        "fromLocal": [
+          43,
+          52
+        ],
+        "toLocal": [
+          43,
+          0
+        ],
+        "fromWorld": [
+          128,
+          52
+        ],
+        "toWorld": [
+          128,
+          53
         ]
       }
     }
   ],
   "plannedMaps": [],
-  "geometryFingerprintSha256": "f52e2fee43b6fb0b928eeb9a5958bc9898fcb29577bbac3d7262a597ef8e09c0",
+  "geometryFingerprintSha256": "5ec62740019ae38fcd04d01db282dc9cbef5b9d98374c3f3d3c6a40dfbc6d561",
   "sourceSha256": {
-    "docs/taichung-city-contract.json": "5d1058df6a876f3359c6fe97194bee5b490b91558ab05c230cd8274efc9221ea",
-    "data/maps/map_groups.json": "6029f41e1c49e7db5830ce0e4620b64aac3e46a4d305445c0a6ad6070f670fd6",
-    "data/layouts/layouts.json": "6cf1e6de5ad6f8bb2add81fa5b524902b905bcbed5934ae5909c8e5ef13219a9",
-    "data/maps/TaichungOldCity/map.json": "bf8b598af845a4f456b903a86124b0e55e031670b27ef535b3bec8589e580e65",
-    "data/maps/TaichungGreenway/map.json": "c5b57389e2b1918c754c1c860b6fa7eae939120b6edc9846b1eb3ad37cbfa4eb",
-    "data/maps/TaichungXitun/map.json": "36da5c0ea403ae7480d3e28f9ddb38a23e209c1733ab096c0229843c826471bf",
-    "data/maps/TaichungNantunNorth/map.json": "2924ffd6a63d53c961f01beeb9ee6bffac679f9311f83c95f9972925d3782e7a",
-    "data/maps/TaichungNantunWanhe/map.json": "ce2b657bd95e3dc151bde02af05a44c7c4f8a580995ec62b812b1a871ac4c823",
+    "docs/taichung-city-contract.json": "f42787d938eea5e1bbf14fc0cbce82ec7339c729094c7af637d98125e4819f0c",
+    "data/maps/map_groups.json": "681275f8a9a900d87b1243f8fd8901a42ca9a231a9a3820dc36a8b0bf016ebd9",
+    "data/layouts/layouts.json": "b27a684a661ef3799d5f7c01d4f2f4ee671ca5db15db6d0271d9176cb31b9428",
+    "data/maps/TaichungOldCity/map.json": "a37b37976c8d70e765d0afca9aac3aaf57d499beee699fc0f67dfd7869db0abf",
+    "data/maps/TaichungGreenway/map.json": "1fd40ffb3e94f9c8fdd1c8d4620406d5287de1a2d1d1edcdabdfc09b37cb28c4",
+    "data/maps/TaichungXitun/map.json": "f861cf0f3b038f445362ff2b8c305231a6471dffe4a7a51dadef89eeb16d68ca",
+    "data/maps/TaichungNantunNorth/map.json": "256509025a86e6de17e961403bd6692175744ac39b235188acc7977540fe8957",
+    "data/maps/TaichungNantunWanhe/map.json": "6bb5052410d16bbfbc7d76aa085a9a7919c8b748423cf0b4fef2c797c5b19c01",
+    "data/maps/TaichungOldCityNorth/map.json": "b052d91271f35a0eeaefcfc29dbcf699a1499d714dce7b226346fd4125d7eb5b",
     "data/maps/TaichungOldStation_Gym/map.json": "099ea6857be7c566a73a06264cbdf9a2f1bfc67ad98eb71ed253ec7095c19673",
     "data/maps/TaichungPark_Gym/map.json": "5d6a7bba8fc8e2a3f3ca4017bfcb47fbc458e89ce37a73268ff0ea6e3cbb6662",
     "data/maps/TaichungMiyahara_Gym/map.json": "b6cc165d8422228ef5d10cbf5751304a0189687bf00718bfe3f3fcdd76055167",
@@ -1446,14 +1741,14 @@
   },
   "validation": {
     "result": "pass",
-    "registeredExteriors": 5,
+    "registeredExteriors": 6,
     "registeredGymInteriors": 12,
     "registeredOptionalInteriors": 1,
-    "nativeIdBijectionEntries": 18,
+    "nativeIdBijectionEntries": 19,
     "markerGymBijectionEntries": 12,
-    "exteriorTilesRoundtripped": 14528,
-    "directedSeamsValidated": 12,
-    "seamEdgePairsValidated": 464,
+    "exteriorTilesRoundtripped": 21105,
+    "directedSeamsValidated": 18,
+    "seamEdgePairsValidated": 826,
     "projectionExample": {
       "nativeKey": "43:0",
       "local": [
@@ -1461,16 +1756,16 @@
         66
       ],
       "world": [
-        110,
-        114
+        115,
+        119
       ],
       "normalizedCellCenter": [
-        0.9208333333333333,
-        0.6505681818181818
+        0.8953488372093024,
+        0.6602209944751382
       ],
       "pixelCenterOn160x160": [
-        147.33333333333331,
-        104.09090909090908
+        143.25581395348837,
+        105.6353591160221
       ]
     }
   }

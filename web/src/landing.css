@@ -93,9 +93,11 @@ html[lang="zh-Hant"] .lp-display { font-family: var(--lp-zh); font-weight: 500; 
 .lp-map::before { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, #c9d09a66 1px, transparent 1px) 0 0 / 6.6667% 6.6667%; }
 .lp-map-art { position: absolute; inset: 0; width: 100%; height: 100%; filter: drop-shadow(0 5px 0 #24392d40); }
 .lp-district-name { position: absolute; font: 12px/1 var(--lp-pixel); letter-spacing: 1px; color: var(--lp-pine); white-space: nowrap; }
-.lp-district-above { transform: translateY(-100%); }
+/* A green freeway sign centred on the raised freeway's lanes. */
+.lp-district-sign { padding: 2px 5px; border: 1px solid #f6f3e9; border-radius: 2px; background: #2f6b45; color: #f6f3e9; transform: translateY(-50%); }
 .lp-map-chip { position: absolute; right: 2%; top: 3%; padding: 4px 7px; border-radius: 2px; background: #f6f3e9cc; font: 10px var(--lp-mono-face); color: #6b7a5a; }
-.lp-map-legend { position: absolute; left: 3%; bottom: 3%; display: flex; gap: 14px; padding: 7px 10px; border-radius: 2px; background: #f6f3e9e8; font-size: 11px; color: var(--lp-pine); }
+/* The legend stacks in the open corner right of Wanhe, below the Old City. */
+.lp-map-legend { position: absolute; right: 3%; bottom: 3%; display: flex; flex-direction: column; gap: 6px; padding: 7px 10px; border-radius: 2px; background: #f6f3e9e8; font-size: 11px; color: var(--lp-pine); }
 .lp-map-legend span { display: flex; align-items: center; gap: 6px; }
 .lp-map-legend i { width: 10px; height: 10px; border-radius: 2px; }
 .lp-swatch-open { background: var(--lp-pine); }
@@ -235,8 +237,10 @@ html[lang="zh-Hant"] .lp-cta-zh { display: none; }
   /* Numbered squares and the detail panel carry the map on a phone. */
   .lp-pin:not(.is-selected) > .lp-pin-label { display: none; }
   .lp-district-name { font-size: 10px; }
+  /* The Greenway's sign must fit its 40 freeway columns on a phone. */
+  .lp-district-sign { padding: 1px 3px; font-size: 8px; letter-spacing: .5px; }
   .lp-map-chip { font-size: 8px; }
-  .lp-map-legend { gap: 10px; padding: 5px 7px; font-size: 10px; }
+  .lp-map-legend { gap: 4px; padding: 5px 7px; font-size: 10px; }
   .lp-status { padding-right: 76px; }
   .lp-partner { right: -8px; bottom: -28px; width: 96px; height: 96px; }
   .lp-starter-art img { width: 128px; height: 128px; }
