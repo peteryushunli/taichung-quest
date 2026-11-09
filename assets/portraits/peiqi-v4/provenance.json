@@ -1,0 +1,34 @@
+{
+  "status": "approved-for-integration; native runtime acceptance pending",
+  "approval": "Direct human reply: Use the closer portrait",
+  "approvedNativeSha256": "86abd69c08f800a82b9a4fe791e1a3dcc537c93e57dfd8144b27eb818d90be38",
+  "trainerId": 745,
+  "portraitId": 150,
+  "source": "Built-in image_gen; existing character references, waist-up framing",
+  "prompt": "Use case: style-transfer. Create a legible alternative battle PORTRAIT of the SAME Peiqi character from reference1. Reference2 shows the old illegible64px full-body reduction. Change the framing to WAIST-UP so her face remains clear at the game's actual64x64 pixel size. Preserve her warm confident face, plum bob haircut, cream chef toque with burgundy band, cream double-breasted jacket, burgundy apron and pale-blue neckerchief, one small ice-cream coupe and simple spoon. Square composition, head and shoulders prominent, torso ends cleanly at bottom; no legs or feet, no ground or background, genuine transparent outside silhouette. Work as a deliberately hand-authored64x64 logical-pixel GBA sprite, enlarged nearest-neighbor for delivery. IMPORTANT logical-pixel composition: entire bust about56 pixels wide and60 high; hat and hair/head occupy upper32 pixels, face roughly20x20 pixels with clean dark eyes and simple friendly mouth. Use a maximum15 opaque flat colors, strong dark-plum one-pixel outline, big unbroken color clusters. Make every eye/hand/neck-scarf edge a clear intentional step on the64pixel grid. Simplify bowl to a readable8px silhouette and jacket to plain cream with two buttons; omit the apron emblem, tiny seams and embroidery. No dithering, no smooth gradients, no antialiasing, no tiny noisy details, no random bright pixels. The desired result must remain clear when reduced to a true64x64 image. Do not make another tall full-body illustration. No lettering, labels, borders, swatches or multiple variants.",
+  "nativeFormat": "64x64 indexed4bpp, transparent index0,15 opaque RGB555 colors",
+  "files": {
+    "native.pal": "4fe90ac9bc14d0d74cdd77cbfb0e0e75d072a5c9f6fd862bad8f5674737eefcb",
+    "native.png": "86abd69c08f800a82b9a4fe791e1a3dcc537c93e57dfd8144b27eb818d90be38",
+    "native.4bpp": "ddc906a122f7f4dad21b80c25f5d3447620f0d4dff21cc4f8f4c966ee39685e4",
+    "native.gbapal": "a32cd22e6e45e52dd5a6b06042db45946ab2c3f62fb0cc10bc1fce5df2604de5",
+    "source.png": "11872c3f80f10fdf65f7b25efbd73881306a9526abed35084060e02099c35f3b",
+    "preview-6x.png": "fa0f4c654836311e348078ba761bc0b9cddbfb8b696a7f5df7d57ca101059a8c"
+  },
+  "nativeOldFiles": {
+    "graphics/taichung/peiqi/battle.png": "5f5daa8cceb52964b525430eee43e3dd7f148e2c9fb64574b3a7d78b94b4fd07",
+    "graphics/taichung/peiqi/battle.pal": "31e77bfa3d338e8f6ecd5ff73ae9ef72e8606d0e13dab41602013ee294557631"
+  },
+  "preservedNativeFiles": {
+    "graphics/taichung/peiqi/overworld.png": "040e7d50bb47fafd863928712c5c995d8e5df81686a43d6333d8920a64cba522",
+    "graphics/taichung/peiqi/overworld.pal": "07b2264c1f341a4290a06aee6a4cc94b1c6093844557216db955439a90588329",
+    "src/data/trainers.h": "4cb580ccaba1be948968e8a96e394c840569728e79077e07a967acb72cea1bd9",
+    "src/data/trainer_parties.h": "f273c0c274692f767b99c7a986b24c14f037f8088c0cef17a5d47725dff31b36",
+    "src/data/trainer_graphics/front_pic_tables.h": "d7c8e5d97683247b27c1cda0a7636ae23549cfea34dcd760949ca87bc929df92",
+    "include/constants/trainers.h": "7129142d17512986331e86b270122db88e740fffcddab35a88b925362f660015",
+    "include/constants/opponents.h": "90604c3fa340e8e26bc6e17c9fa6fcddb5b5e30a571cd1cca91e14b5b833a7b3"
+  },
+  "tileRoundtrip": "pass",
+  "paletteRoundtrip": "pass",
+  "composition": "Approved waist-up framing, existing y-offset1 retained pending actual battle"
+}
