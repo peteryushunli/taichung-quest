@@ -1,5 +1,5 @@
 {
-  "status": "approved-for-integration; native runtime acceptance pending",
+  "status": "superseded historical draft; not installed, built or published",
   "approval": "Direct human reply: Use the closer portrait",
   "approvedNativeSha256": "86abd69c08f800a82b9a4fe791e1a3dcc537c93e57dfd8144b27eb818d90be38",
   "trainerId": 745,
@@ -30,5 +30,8 @@
   },
   "tileRoundtrip": "pass",
   "paletteRoundtrip": "pass",
-  "composition": "Approved waist-up framing, existing y-offset1 retained pending actual battle"
+  "composition": "Approved waist-up framing, existing y-offset1 retained pending actual battle",
+  "supersedingUserSteering": "actually i think the full body still makes more sense based on how the battle stage looks",
+  "runtimeAcceptance": false,
+  "installedInFinalCandidate": false
 }
