@@ -1,0 +1,59 @@
+{
+  "status": "Full-body candidate selected after actual native battle-stage inspection; not published",
+  "userDirection": "Full body preferred for battle-stage consistency; v4 superseded",
+  "selection": "Main technical review of actual trainer745/portrait150 battle stage on source aeb20dc",
+  "nativeSourceCommit": "4086795",
+  "nativeSha256": "6cb73de2fdc6428f8730b08b3f0b38b32813812ff7b93ab7fede3bb3ae93a08b",
+  "nativeFormat": "64x64 indexed4bpp, transparent index0,15 opaque RGB555 colors",
+  "prompt": "Use case: style-transfer. Asset: Peiqi's FULL-BODY 64x64 GBA trainer battle sprite. Image1 supplies the SAME character identity (dessert chef, plum bob, cream chef cap and jacket, burgundy apron/trousers, pale-blue neck scarf, brown shoes, spoon and small dessert coupe). Image2 is a genuine native64x64 trainer sprite: use its restrained native pixel-cluster scale and clarity, not its character, dress, colors or background. Image3 is the old Peiqi reduction: improve its noisy face and clothing. Draw ONE full-body Peiqi with complete hat, hands and shoes visible, standing in a compact friendly battle-ready pose on actual TRANSPARENCY. Keep the feet on a shared ground baseline, no floor or shadow. Change her proportions to readable classic game-sprite proportions: head including compact cap about20 logical pixels high, clear face about12x12, jacket/apron about22high, compact legs/shoes about16high. Entire figure about58logical pixels high and at most54wide in a64x64 logical grid. Bend elbows and keep props close to torso to avoid a tall thin silhouette. Face has deliberately placed dark eye dots, one simple friendly mouth, no detailed eyelash rendering. Hair is two or three coherent plum shapes. Plain cream jacket with two burgundy buttons, plain burgundy apron, simple scarf, no apron embroidery or tiny decorative lines. Spoon and coupe should read as simple bold silhouettes. Work as actual hand-authored small pixel art:15opaque flat colors maximum plus transparency; strong one-logical-pixel outline, large unbroken flat clusters, simple two-tone shading, no dithering/noise/antialiasing/gradients. Deliver enlarged nearest-neighbor view of the64x64 grid on a square canvas. Do not render a high-detail illustration and imitate pixel edges; every shape must be designed for native64px clarity. Keep the original chef identity and full-body battle-stage footprint. No bust crop, no cropped limbs, no labels, text, swatches, panels or multiple characters.",
+  "generationMode": "Built-in image_gen; subsequent native-format conversion only",
+  "battleStageReview": {
+    "status": "actual native battle-stage review complete; isolated candidate, no publication",
+    "nativeSource": "aeb20dc6cf85bf9ec8d4787074b2c27bc2d7f9dc",
+    "romSha256": "c9c383b80faee53373515d898eebcd82af038c0ed9a0b63658048a17dae0168a",
+    "spriteSha256": "6cb73de2fdc6428f8730b08b3f0b38b32813812ff7b93ab7fede3bb3ae93a08b",
+    "fixtureSha256": "7a219d734c7f790daa5b4e4d96a1c3f5330cbe33bfbc74c54127423ee3ec9745",
+    "fixtureSynthetic": false,
+    "normalFlow": [
+      "Load cartridge",
+      "Native Continue",
+      "B skip recap",
+      "Native Miyahara43:5(6,6), North2",
+      "Native greeting",
+      "Yes to voluntary challenge",
+      "Native intro",
+      "Actual LEADER PEIQI battle-stage portrait"
+    ],
+    "portraitBinding": {
+      "trainerId": 745,
+      "portraitId": 150,
+      "yOffset": 1
+    },
+    "observed": [
+      "Full body present on native stage",
+      "Complete hat, hands and feet inside sprite bounds",
+      "No clipping at stage baseline",
+      "Original full-body retained in final Main while review prepared"
+    ],
+    "files": {
+      "actual-battle-stage-native.png": "c8bdadd36be2842138d304d97b31d9943a5657cba572816939fd6d2d51bceec6",
+      "actual-battle-stage.jpg": "724cc5e3e4afc19969471405473457f10f8c2d9a5c2b58d6bc6aae76ebfd05eb"
+    },
+    "ownedTabClosed": "2015919985",
+    "viewportOverrideUsed": false,
+    "saveOrRamEdited": false,
+    "limitations": [
+      "Only battle introduction visual inspection, no battle result or cash-payout runtime claim",
+      "Review ROM does not contain the new badge UI, pronoun changes, history or five new staff actors",
+      "V4 waist-up remains superseded; no production change"
+    ]
+  },
+  "files": {
+    "native.4bpp": "2e4f505053e5485e7a621ea7956a2cb3327c366c1cb0197738e4c0fe7dfae43a",
+    "native.gbapal": "a32cd22e6e45e52dd5a6b06042db45946ab2c3f62fb0cc10bc1fce5df2604de5",
+    "native.jasc.txt": "4fe90ac9bc14d0d74cdd77cbfb0e0e75d072a5c9f6fd862bad8f5674737eefcb",
+    "native.png": "6cb73de2fdc6428f8730b08b3f0b38b32813812ff7b93ab7fede3bb3ae93a08b",
+    "preview-6x.png": "08b44be06b243da24a6fe3e27f0f4c3f67bbbc7cba8d911bd829efda6a221d16",
+    "source.png": "0c796f8a22ec1070d5e74c853a144856e3fe0c1bbf3a868b452142554294ee16"
+  }
+}
