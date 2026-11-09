@@ -382,11 +382,11 @@
       "parentNativeKey": "43:1",
       "parentMarkerId": "shen-ji-new-village",
       "parentEntranceLocal": [
-        10,
+        11,
         81
       ],
       "parentEntranceWorld": [
-        55,
+        56,
         81
       ],
       "ignoreIndoorLocalXYForWorld": true,
@@ -412,11 +412,11 @@
       "parentNativeKey": "43:1",
       "parentMarkerId": "fine-arts-museum",
       "parentEntranceLocal": [
-        10,
+        13,
         99
       ],
       "parentEntranceWorld": [
-        55,
+        58,
         99
       ],
       "ignoreIndoorLocalXYForWorld": true,
@@ -766,11 +766,11 @@
       "exteriorMapId": "MAP_TAICHUNG_GREENWAY",
       "exteriorNativeKey": "43:1",
       "localEntrance": [
-        10,
+        11,
         81
       ],
       "world": [
-        55,
+        56,
         81
       ],
       "exteriorWarpId": 2,
@@ -789,11 +789,11 @@
       "exteriorMapId": "MAP_TAICHUNG_GREENWAY",
       "exteriorNativeKey": "43:1",
       "localEntrance": [
-        10,
+        13,
         99
       ],
       "world": [
-        55,
+        58,
         99
       ],
       "exteriorWarpId": 3,
@@ -1712,13 +1712,13 @@
     }
   ],
   "plannedMaps": [],
-  "geometryFingerprintSha256": "dee66ed70a07ab625ca3fd18c3bda382c89e19089694cbac8cb2916eaabff50c",
+  "geometryFingerprintSha256": "5ec62740019ae38fcd04d01db282dc9cbef5b9d98374c3f3d3c6a40dfbc6d561",
   "sourceSha256": {
-    "docs/taichung-city-contract.json": "ad93f9db88a85855a84abbb0f55740d5c9b10c6f7cf425066536a7ed57e3dde4",
+    "docs/taichung-city-contract.json": "f42787d938eea5e1bbf14fc0cbce82ec7339c729094c7af637d98125e4819f0c",
     "data/maps/map_groups.json": "681275f8a9a900d87b1243f8fd8901a42ca9a231a9a3820dc36a8b0bf016ebd9",
     "data/layouts/layouts.json": "b27a684a661ef3799d5f7c01d4f2f4ee671ca5db15db6d0271d9176cb31b9428",
     "data/maps/TaichungOldCity/map.json": "a37b37976c8d70e765d0afca9aac3aaf57d499beee699fc0f67dfd7869db0abf",
-    "data/maps/TaichungGreenway/map.json": "b559361ed6e6162d7463a730e59e34e6c294a14efbee422a12e4366781b5d666",
+    "data/maps/TaichungGreenway/map.json": "1fd40ffb3e94f9c8fdd1c8d4620406d5287de1a2d1d1edcdabdfc09b37cb28c4",
     "data/maps/TaichungXitun/map.json": "f861cf0f3b038f445362ff2b8c305231a6471dffe4a7a51dadef89eeb16d68ca",
     "data/maps/TaichungNantunNorth/map.json": "256509025a86e6de17e961403bd6692175744ac39b235188acc7977540fe8957",
     "data/maps/TaichungNantunWanhe/map.json": "6bb5052410d16bbfbc7d76aa085a9a7919c8b748423cf0b4fef2c797c5b19c01",
