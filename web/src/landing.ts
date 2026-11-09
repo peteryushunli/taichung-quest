@@ -20,14 +20,16 @@ interface LandingHost {
 const landmarks = landmarkCatalog as LandingLandmark[];
 const gyms = landmarks.filter(isGym);
 const city = cityGeometry as MinimapGeometry;
-// District names sit in the empty space beside each district, not over its tiles.
-// Each label sits on blank canvas beside its district: above it, or to its right where a neighbour fills the space above.
+// The raised freeway along the top carries the three northern district names like road signs
+// (the Old City's sign stands over its north blocks); Nantun's name sits on the open canvas beside Wanhe, below the Old City.
 const districtLabels = [
-  { key: '43:2', label: 'XITUN 西屯', side: 'right' },
-  { key: '43:1', label: 'GREENWAY 草悟道', side: 'above' },
-  { key: '43:0', label: 'OLD CITY 舊城', side: 'above' },
+  { key: '43:2', label: 'XITUN 西屯', side: 'sign' },
+  { key: '43:1', label: 'GREENWAY 草悟道', side: 'sign' },
+  { key: '43:18', label: 'OLD CITY 舊城', side: 'sign' },
   { key: '43:15', label: 'NANTUN 南屯', side: 'right', rows: 24 },
 ] as const;
+// Freeway lanes along the top of the world; its west leg is as wide, so the first sign starts past it.
+const FREEWAY_ROWS = 6;
 const DEFAULT_LANDMARK = 'old-taichung-station';
 const GITHUB_URL = 'https://github.com/peteryushunli/taichung-quest';
 const starters = [
@@ -50,9 +52,9 @@ function cityMap() {
   const labels = districtLabels.map((entry) => {
     const { key, label, side } = entry;
     const [left, top, right] = city.mapsByNativeKey[key].worldRect!;
-    // Nantun's label drops below OldCity, which fills the canvas right of Wanhe's top rows.
-    const [x, y] = side === 'right' ? [right + 1, top + 1.5 + ('rows' in entry ? entry.rows : 0)] : [left + 1, top - .5];
-    return `<span class="lp-district-name${side === 'above' ? ' lp-district-above' : ''}" style="left:${x / width * 100}%;top:${y / height * 100}%">${label}</span>`;
+    // Nantun's label drops below the Old City, which fills the canvas right of Wanhe's top rows.
+    const [x, y] = side === 'right' ? [right + 1, top + 1.5 + ('rows' in entry ? entry.rows : 0)] : [Math.max(left, FREEWAY_ROWS) + 1, FREEWAY_ROWS / 2];
+    return `<span class="lp-district-name${side === 'sign' ? ' lp-district-sign' : ''}" style="left:${x / width * 100}%;top:${y / height * 100}%">${label}</span>`;
   }).join('');
   return `<img class="lp-map-art" src="${escapeHtml(landingMedia.cityMap)}" width="${width * 16}" height="${height * 16}" alt="">${labels}<span class="lp-map-chip">${copy('IN-GAME MAP')}</span>`;
 }

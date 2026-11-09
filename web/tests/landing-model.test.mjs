@@ -74,9 +74,9 @@ test('stats come from the landmark data', () => {
 
 test('map pins sit on each entrance tile of the rendered city, labels facing the middle', () => {
   for (const place of landmarks) assert.ok(city.markersById[place.id], place.id);
-  // The station sits at world (112,112); the canvas grew to 120x176 when Nantun was added below Xitun and the Greenway.
-  assert.deepEqual(city.markersById['old-taichung-station'].world, [112, 112]);
-  assert.deepEqual(markerPosition([112, 112], city.world), { x: 93.75, y: 112.5 / 176 * 100, side: 'left' });
+  // The station sits at world (117,117); the city rework (save v10) grew the canvas to 129x181 behind a raised freeway.
+  assert.deepEqual(city.markersById['old-taichung-station'].world, [117, 117]);
+  assert.deepEqual(markerPosition([117, 117], city.world), { x: 117.5 / 129 * 100, y: 117.5 / 181 * 100, side: 'left' });
   assert.deepEqual(markerPosition([59, 0], { width: 120, height: 120 }).side, 'right');
   assert.deepEqual(markerPosition([60, 0], { width: 120, height: 120 }).side, 'left');
 });

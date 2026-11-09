@@ -7,10 +7,11 @@ interface GuideGeometry {
   }>;
 }
 
-/** Labels for the two exterior pieces of the same Nantun district. */
+/** Labels for the exterior pieces that share a district: Nantun's two halves and the Old City's north blocks. */
 const areaNames: Record<string, { en: string; zh: string }> = {
   MAP_TAICHUNG_NANTUN_NORTH: { en: 'Nantun · North', zh: '南屯北段' },
   MAP_TAICHUNG_NANTUN_WANHE: { en: 'Nantun · Wanhe', zh: '南屯・萬和宮街廓' },
+  MAP_TAICHUNG_OLD_CITY_NORTH: { en: 'Old City · North', zh: '舊城北段' },
 };
 
 export function cityMapAreas(geometry: GuideGeometry, places: LandingLandmark[]) {
@@ -31,6 +32,7 @@ export function cityMapAreas(geometry: GuideGeometry, places: LandingLandmark[])
 /** Each rectangle is an exact exterior worldRect, with no indoor rooms projected. */
 export function guideMapDrawing(geometry: GuideGeometry, places: LandingLandmark[]) {
   const { width, height } = geometry.world;
-  const fills = ['#eae5cf', '#dce7ce', '#e4ead5', '#e4ead5', '#eae5cf'];
+  // In contract order: Old City, Greenway, Xitun, Nantun North, Wanhe, Old City North (the Old City's colour).
+  const fills = ['#eae5cf', '#dce7ce', '#e4ead5', '#e4ead5', '#eae5cf', '#eae5cf'];
   return `<svg class="guide-map-drawing" viewBox="0 0 ${width} ${height}" aria-hidden="true"><rect width="${width}" height="${height}" fill="#eef1e5"/>${cityMapAreas(geometry, places).map((area, index) => `<rect data-native-key="${area.key}" x="${area.left}" y="${area.top}" width="${area.width}" height="${area.height}" fill="${fills[index % fills.length]}" stroke="#b6c8a3" stroke-width=".4"/>`).join('')}</svg>`;
 }

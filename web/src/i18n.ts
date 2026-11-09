@@ -200,6 +200,7 @@ const zh: Record<string, string> = {
   "Nantun": "南屯區",
   "Nantun · North": "南屯北段",
   "Nantun · Wanhe": "南屯・萬和宮街廓",
+  "Old City · North": "舊城北段",
   "Choose a landmark to explore its game-world stop and find visitor information where available.": "點選地標，探索遊戲中的地點；提供官方參觀資訊的地標也可直接查閱。",
   "This compact game-world sketch is not a street-navigation map. Temple visits do not award gym badges. Some landmark artwork remains provisional.": "這是縮小的遊戲世界示意圖，不能用於街道導航。廟宇參訪不會獲得道館徽章，部分地標美術仍為初版。",
   "Visit the hall and meet its host. This stop has no gym battle or badge.": "進入大廳與接待員交談。這個參訪地點沒有道館對戰或徽章。",
