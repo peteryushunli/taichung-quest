@@ -4,7 +4,7 @@ import { readFileSync } from 'node:fs';
 import { projectNavigation, secondaryAction, readMinimapPreference } from '../src/minimap-model.ts';
 
 const geometry = JSON.parse(readFileSync(new URL('../src/data/minimap-contract.json', import.meta.url), 'utf8'));
-const packet = { sequence: 2, frame: 1, flags: 79, x: 30, y: 66, mapGroup: 43, mapNumber: 0, facing: 2, mapType: 1, width: 40, height: 72, contextFlags: 0 };
+const packet = { sequence: 2, frame: 1, flags: 79, x: 30, y: 66, mapGroup: 43, mapNumber: 0, facing: 2, mapType: 1, width: 44, height: 77, contextFlags: 0 };
 
 test('all exterior tiles project into their authored district, or to the nearest landmark anywhere when the district has none', () => {
   let checked = 0;
@@ -21,9 +21,9 @@ test('all exterior tiles project into their authored district, or to the nearest
       checked++;
     }
   }
-  assert.equal(checked, 14528);
+  assert.equal(checked, 21105);
   const station = projectNavigation(packet, geometry);
-  assert.deepEqual([station.worldX, station.worldY], [110, 114]);
+  assert.deepEqual([station.worldX, station.worldY], [115, 119]);
   assert.equal(station.landmarkId, 'old-taichung-station');
 });
 
@@ -43,7 +43,7 @@ test('all gym rooms and Welcome ignore room coordinates and use their explicit e
 });
 
 test('invalid contexts, unknown maps, dimensions, scopes and bounds hide instead of inventing a position', () => {
-  for (const change of [{ flags: 0 }, { flags: 31 }, { flags: 0x100 | 15 }, { flags: 23 }, { mapType: 8 }, { contextFlags: 1 }, { contextFlags: 0x8000 }, { width: 41 }, { height: 0 }, { mapNumber: 99 }, { mapGroup: 0 }, { facing: 0 }, { facing: 5 }, { x: -1 }, { x: 40 }, { y: 72 }, { x: .5 }]) assert.equal(projectNavigation({ ...packet, ...change }, geometry), undefined, JSON.stringify(change));
+  for (const change of [{ flags: 0 }, { flags: 31 }, { flags: 0x100 | 15 }, { flags: 23 }, { mapType: 8 }, { contextFlags: 1 }, { contextFlags: 0x8000 }, { width: 45 }, { height: 0 }, { mapNumber: 99 }, { mapGroup: 0 }, { facing: 0 }, { facing: 5 }, { x: -1 }, { x: 44 }, { y: 77 }, { x: .5 }]) assert.equal(projectNavigation({ ...packet, ...change }, geometry), undefined, JSON.stringify(change));
 });
 
 test('secondary action needs positive native eligibility and a mapped field snapshot', () => {

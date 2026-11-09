@@ -45,7 +45,7 @@ export function projectNavigation(packet: NavigationSnapshot, geometry: MinimapG
     districtKey = key;
   }
   if (!world || world.length !== 2 || !world.every(Number.isInteger) || world[0] < 0 || world[1] < 0 || world[0] >= geometry.world.width || world[1] >= geometry.world.height) return;
-  // A district with no landmark of its own (Nantun North) names the nearest landmark anywhere in the city.
+  // A district with no landmark of its own (Nantun North, Old City North) names the nearest landmark anywhere in the city.
   const own = Object.values(geometry.markersById).filter((marker) => marker.exteriorNativeKey === districtKey);
   const candidates = own.length ? own : Object.values(geometry.markersById);
   const nearest = candidates.reduce<typeof candidates[number] | undefined>((best, marker) => {

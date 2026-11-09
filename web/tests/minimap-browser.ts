@@ -66,7 +66,7 @@ document.querySelector<HTMLButtonElement>('#run')!.addEventListener('click', () 
   });
   check('indoor coordinates use the Station entrance and an indoor label', () => {
     showField({ ...field, flags: 23, mapNumber: 3, x: 0, y: 0, width: 13, height: 16, mapType: 8 });
-    assert(player.getAttribute('transform') === 'translate(112.5 112.5)', 'Indoor dot used room coordinates');
+    assert(player.getAttribute('transform') === 'translate(117.5 117.5)', 'Indoor dot used room coordinates');
     assert(button.textContent!.includes('Indoors'), 'Missing indoor label');
   });
   check('native busy/unknown contexts hide and remove the cached current position', () => {
