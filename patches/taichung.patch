@@ -422740,6 +422740,22 @@ index ef086dd..5d89dc6 100644
  void PlayerRun(u8 direction)
  {
      PlayerSetAnimId(GetPlayerRunMovementAction(direction), 2);
+diff --git a/src/fieldmap.c b/src/fieldmap.c
+index 4156777..0cd8b49 100644
+--- a/src/fieldmap.c
++++ b/src/fieldmap.c
+@@ -728,7 +728,10 @@ static bool8 IsCoordInIncomingConnectingMap(s32 coord, s32 srcMax, s32 destMax,
+     if (destMax + offset < srcMax)
+         srcMax = destMax + offset;
+ 
+-    if (offset2 <= coord && coord <= srcMax)
++    // Taichung: srcMax is one past the connection's last row/column. The original `coord <= srcMax`
++    // also claimed the first row/column of the next connection on the same side, which the city
++    // rework's seams (two neighbours on one side, walkable at the boundary) reach.
++    if (offset2 <= coord && coord < srcMax)
+         return TRUE;
+ 
+     return FALSE;
 diff --git a/src/intro.c b/src/intro.c
 index bec0f31..02776f9 100644
 --- a/src/intro.c
@@ -439669,6 +439685,155 @@ index 0000000..998dd2e
 +
 +if __name__=='__main__':
 +    build()
+diff --git a/tools/taichung/check_connection_boundaries.py b/tools/taichung/check_connection_boundaries.py
+new file mode 100644
+index 0000000..ae1ecbc
+--- /dev/null
++++ b/tools/taichung/check_connection_boundaries.py
+@@ -0,0 +1,143 @@
++#!/usr/bin/env python3
++"""Check which neighbour the engine picks at every walkable outdoor edge cell.
++
++GetIncomingConnection (src/fieldmap.c) returns the first connection listed for the
++direction whose range holds the player's coordinate along that side, as decided by
++IsCoordInIncomingConnectingMap. This guard models that exactly, reading the bound from
++the engine source, and requires every walkable edge cell of every connected Taichung
++exterior to resolve to the neighbour that actually lies across the edge, at an in-bounds
++cell. It also lists the cells the original inclusive bound (`coord <= srcMax`) sends to
++the wrong map, which the city rework's two-neighbour sides reach.
++
++  python3 tools/taichung/check_connection_boundaries.py
++  python3 tools/taichung/check_connection_boundaries.py --self-test
++"""
++
++import argparse
++import importlib.util
++import json
++from pathlib import Path
++import re
++import sys
++
++ROOT = Path(__file__).resolve().parents[2]
++FIELDMAP = "src/fieldmap.c"
++BOUNDS = {"coord < srcMax": "exclusive", "coord <= srcMax": "inclusive"}
++# Along-side coordinate, side length and the neighbour cell, per direction the player leaves by.
++SIDES = {
++    "left": lambda m, x, y: x == 0,
++    "right": lambda m, x, y: x == m.width - 1,
++    "up": lambda m, x, y: y == 0,
++    "down": lambda m, x, y: y == m.height - 1,
++}
++
++
++def load_validator(source):
++    spec = importlib.util.spec_from_file_location("connection_boundaries_validate_city", source / "tools/taichung/validate_city.py")
++    module = importlib.util.module_from_spec(spec)
++    spec.loader.exec_module(module)
++    return module
++
++
++def engine_bound(text):
++    """The bound IsCoordInIncomingConnectingMap uses, read from the engine source."""
++    body = re.search(r"static bool8 IsCoordInIncomingConnectingMap\(s32 coord, s32 srcMax, s32 destMax, s32 offset\)\s*\{(.*?)\n\}", text, re.S)
++    if body is None:
++        raise SystemExit("IsCoordInIncomingConnectingMap not found in " + FIELDMAP)
++    found = [kind for snippet, kind in BOUNDS.items() if f"offset2 <= coord && {snippet})" in body.group(1)]
++    if len(found) != 1:
++        raise SystemExit("IsCoordInIncomingConnectingMap's bound is not one this guard models")
++    return found[0]
++
++
++def incoming(coord, src_max, dest_max, offset, bound):
++    """IsCoordInIncomingConnectingMap."""
++    if dest_max + offset < src_max:
++        src_max = dest_max + offset
++    low = max(offset, 0)
++    return low <= coord < src_max if bound == "exclusive" else low <= coord <= src_max
++
++
++def load_maps(source, overrides):
++    rules = load_validator(source)
++    read = lambda path: overrides.get(path)
++    layouts = {x["id"]: x for x in json.loads(overrides.get("data/layouts/layouts.json") or (source / "data/layouts/layouts.json").read_bytes())["layouts"] if "id" in x}
++    maps, cache = {}, {}
++    for folder in sorted((source / "data/maps").glob("Taichung*/map.json")):
++        rel = str(folder.relative_to(source))
++        data = json.loads(overrides.get(rel) or folder.read_bytes())
++        if data.get("connections"):
++            maps[data["id"]] = rules.Map(source, data, layouts[data["layout"]], cache, read)
++    return maps
++
++
++def resolve(maps, bound):
++    """Every walkable edge cell: the neighbour the engine picks against the one across the edge."""
++    checked, wrong = 0, []
++    for mid, view in maps.items():
++        for direction, on_side in SIDES.items():
++            listed = [c for c in view.data["connections"] if c["direction"] == direction]
++            if not listed:
++                continue
++            along_x = direction in ("up", "down")
++            for y in range(view.height):
++                for x in range(view.width):
++                    if not on_side(view, x, y) or not view.ground(x, y):
++                        continue
++                    coord, src = (x, view.width) if along_x else (y, view.height)
++                    def size(c):
++                        other = maps.get(c["map"])
++                        return None if other is None else (other.width if along_x else other.height)
++                    across = [c for c in listed if size(c) is not None and c["offset"] <= coord < c["offset"] + size(c)]
++                    picked = next((c for c in listed if size(c) is not None and incoming(coord, src, size(c), c["offset"], bound)), None)
++                    checked += 1
++                    expected = across[0]["map"] if len(across) == 1 else None
++                    got = picked["map"] if picked else None
++                    lands = picked is not None and 0 <= coord - picked["offset"] < size(picked)
++                    if got != expected or (picked is not None and not lands):
++                        wrong.append({"map": mid, "cell": [x, y], "leaving": direction,
++                                      "engineGoesTo": got, "acrossTheEdge": expected, "landsInBounds": lands})
++    return checked, wrong
++
++
++def check(source=ROOT, overrides=None):
++    source, overrides = Path(source).resolve(), overrides or {}
++    bound = engine_bound((overrides.get(FIELDMAP) or (source / FIELDMAP).read_bytes()).decode())
++    maps = load_maps(source, overrides)
++    checked, wrong = resolve(maps, bound)
++    _, inclusive = resolve(maps, "inclusive")
++    return {"passed": not wrong, "engineBound": bound, "connectedExteriors": len(maps), "walkableEdgeCells": checked,
++            "misrouted": wrong, "misroutedUnderInclusiveBound": inclusive}
++
++
++def self_test(source=ROOT):
++    source = Path(source).resolve()
++    text = (source / FIELDMAP).read_text()
++    inclusive = text.replace("offset2 <= coord && coord < srcMax)", "offset2 <= coord && coord <= srcMax)", 1)
++    probes = {"inclusiveBoundRejected": not check(source, {FIELDMAP: inclusive.encode()})["passed"]}
++    # The exclusive bound is order-independent: reversing every map's connection list still passes.
++    reversed_maps = {}
++    for folder in sorted((source / "data/maps").glob("Taichung*/map.json")):
++        data = json.loads(folder.read_text())
++        if data.get("connections"):
++            data["connections"] = data["connections"][::-1]
++            reversed_maps[str(folder.relative_to(source))] = json.dumps(data).encode()
++    probes["reversedConnectionOrderPasses"] = check(source, reversed_maps)["passed"]
++    return probes
++
++
++def main():
++    parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
++    parser.add_argument("--source", type=Path, default=ROOT)
++    parser.add_argument("--self-test", action="store_true")
++    args = parser.parse_args()
++    report = check(args.source)
++    if args.self_test:
++        report["probes"] = self_test(args.source)
++        report["passed"] = report["passed"] and all(report["probes"].values())
++    print(json.dumps(report, indent=2))
++    return 0 if report["passed"] else 1
++
++
++if __name__ == "__main__":
++    sys.exit(main())
 diff --git a/tools/taichung/check_landmark_collision.py b/tools/taichung/check_landmark_collision.py
 new file mode 100644
 index 0000000..fc3051e
@@ -439951,10 +440116,10 @@ index 0000000..fc3051e
 +    raise SystemExit(main())
 diff --git a/tools/taichung/city_rework/save_v10.py b/tools/taichung/city_rework/save_v10.py
 new file mode 100644
-index 0000000..ebee6ea
+index 0000000..d458412
 --- /dev/null
 +++ b/tools/taichung/city_rework/save_v10.py
-@@ -0,0 +1,206 @@
+@@ -0,0 +1,243 @@
 +#!/usr/bin/env python3
 +"""Generate the save-v10 position repairs for the city rework.
 +
@@ -440005,6 +440170,12 @@ index 0000000..ebee6ea
 +MOVED_WARPS = {"TaichungOldCity": {(20, 52): (20, 51)},
 +               "TaichungGreenway": {(10, 44): (11, 81), (10, 62): (13, 99)}}
 +TALL_GRASS = 0x02
++HEADER_H = "include/taichung_save.h"
++# The reviewed v10 save pair: the header, and the C source with its generated block emptied
++# (that block must equal c_tables() of the record in the tree). Re-review and re-pin when
++# either hand-written byte changes; regenerating the tables alone needs no new pin.
++REVIEWED_HAND_WRITTEN_SHA256 = "07193934c5b0da9922467d5134da425a31fd5b7aedcb9feaf6993b8026ef2ece"
++REVIEWED_HEADER_SHA256 = "42bc31038ed88d4faa90891838cf79a832aef61ba796dfe574b90acf5dbea55e"
 +
 +
 +def load_validator():
@@ -440131,6 +440302,35 @@ index 0000000..ebee6ea
 +    return "\n".join(lines) + "\n"
 +
 +
++def hand_written(text):
++    """The C source with its generated block emptied, as pinned by REVIEWED_HAND_WRITTEN_SHA256."""
++    return text[:text.index(BEGIN)] + BEGIN + "\n" + text[text.index(END):]
++
++
++def reviewed_pair(read):
++    """True when read(path) gives exactly the reviewed v10 save pair and its record's tables."""
++    try:
++        text, header = read(SAVE_C).decode("utf-8"), read(HEADER_H)
++        record = json.loads(read(RECORD))
++        block = text[text.index(BEGIN):text.index(END) + len(END) + 1]
++    except (ValueError, KeyError, subprocess.CalledProcessError, FileNotFoundError):
++        return False
++    return (hashlib.sha256(hand_written(text).encode()).hexdigest() == REVIEWED_HAND_WRITTEN_SHA256
++            and hashlib.sha256(header).hexdigest() == REVIEWED_HEADER_SHA256
++            and record.get("released") == RELEASED and block == c_tables(record["maps"]))
++
++
++def underneath(files):
++    """The live v9 save pair beneath the registered v10, for guards frozen at v9.
++
++    Returns overrides only when the tree holds exactly the reviewed v10 pair; this tool's
++    check (tables equal the maps) and the host suites prove v10 itself."""
++    if not reviewed_pair(files.read):
++        return {}
++    base = type(files)(files.source, RELEASED)
++    return {SAVE_C: base.read(SAVE_C), HEADER_H: base.read(HEADER_H)}
++
++
 +def main():
 +    parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
 +    parser.add_argument("--old", default=RELEASED, help="released native revision (default: live v9 source)")
@@ -440155,6 +440355,8 @@ index 0000000..ebee6ea
 +            (ROOT / RECORD).write_text(json.dumps({"released": RELEASED, "maps": record}, indent=1) + "\n")
 +    elif current != tables:
 +        errors.append(f"{SAVE_C} tables are stale; run with --write")
++    if not errors and not reviewed_pair(lambda path: (ROOT / path).read_bytes()):
++        errors.append("The save pair is not the reviewed v10 pair; review the hand-written change and re-pin")
 +    print(json.dumps({"ok": not errors, "errors": errors, "maps": summary}, indent=2))
 +    return 0 if not errors else 1
 +
@@ -445912,10 +446114,10 @@ index 0000000..a6ee075
 +                      "crossDedup": result["crossDedupMeasured"], "capacity": result["capacityArithmetic"]}, indent=2))
 diff --git a/tools/taichung/landmarks/check_cmp.py b/tools/taichung/landmarks/check_cmp.py
 new file mode 100644
-index 0000000..3c390ae
+index 0000000..f9f9756
 --- /dev/null
 +++ b/tools/taichung/landmarks/check_cmp.py
-@@ -0,0 +1,531 @@
+@@ -0,0 +1,537 @@
 +#!/usr/bin/env python3
 +"""Read-only independent checks for the approved CMP private-bank increment.
 +
@@ -446014,9 +446216,10 @@ index 0000000..3c390ae
 +# (9096739), where the collision, kit and rework guards compose.
 +# Re-pinned at the Nantun rework's integration (2441426), then at the Old City rework's:
 +# the three guards now also read underneath the Nantun and Old City reworks; save files
-+# and geometry are unchanged.
++# and geometry are unchanged. Re-pinned at save v10 (1afdb13, then cdaadbc): check_xitun_streets
++# reads the live v9 save pair underneath the registered, reviewed v10 pair, probes included.
 +REVIEWED_LANDMARK_COLLISION_V9_SAVE = {'name': 'landmark-collision-v9',
-+ 'sourceCommit': '7ffa06a9903830acb0d796b2caddc3a52a6a61f1',
++ 'sourceCommit': 'cdaadbc486ee9196cbb26b37e6b430f35c521b78',
 + 'sha256': {'src/taichung_save.c': 'bde3f3b575837a1aebd2b4cdcd3b552b125dd7d4749f083f81783e09439f4582',
 +            'include/taichung_save.h': '93237ad5056fd96b90406a7e998584884a32635397200a5a810fe68ff86c3bac',
 +            'src/overworld.c': '5e437a504b2cb4f7b9301096bd846588707d5280ac1ab424e71db471bbf81bca'},
@@ -446035,7 +446238,7 @@ index 0000000..3c390ae
 +                    'data/taichung/xitun-streets/ground.txt': '0610b864e3f393556c4b7d88c4d7f9e77085601e1f18b7bd990583bbb8715916',
 +                    'data/taichung/xitun-streets/objects.json': '9711d9331239e255860fc391606910954ac8e2870fbbadb43dd6e60639b73318',
 +                    'tools/taichung/landmarks/check_xitun_final.py': '2718202070ef0c4fe68f924e91bd3862020d3b3f05a60c52719d9684ae772fac',
-+                    'tools/taichung/streetscape/check_xitun_streets.py': '40c39c74f7adc45451a45df98716fa064c8b7c52ae9658dac60735f9a0d3677f',
++                    'tools/taichung/streetscape/check_xitun_streets.py': '218e27d3f1f85575a1b390a405afc827c0a8221ef723737b1f40ff48267f74d9',
 +                    'tools/taichung/streetscape/xitun_streets.py': '940f0bf22d0dac136b81c9233eff86c5a8e741fc2d1c86f2065b5354c3f701f6',
 +                    'tools/taichung/nantun/edge_art.py': 'f776afdb9a69c907f1ca06648c4fd354c10632150acdfa3fb2b53332bd77eefc',
 +                    'tools/taichung/streetscape/xitun_streets_layout.py': '04f48d8d15b9bba120d22bd5995cb155c1c39dff452d3ec027b292cc64b57963',
@@ -446063,6 +446266,10 @@ index 0000000..3c390ae
 +    xitun_delta = support.xitun_rework_underneath(layers)
 +    for files in (now, tree):
 +        files.cache.update(oldcity_delta); files.cache.update(xitun_delta); files.cache.update(overrides or {})
++    # The registered save v10 (proved by save_v10.py and the host suites) leaves the live
++    # v9 save pair underneath it, only when the tree holds exactly the reviewed pair.
++    save_v10 = support.save_v10_underneath(tree)
++    now.cache.update(save_v10); tree.cache.update(save_v10)
 +    # The registered city kit's own guard proves its primary delta; check underneath it.
 +    kit_delta = support.city_kit_underneath(tree)
 +    now.cache.update(kit_delta); tree.cache.update(kit_delta)
@@ -446327,6 +446534,7 @@ index 0000000..3c390ae
 +            accepted.cache.update(support.oldcity_rework_underneath(accepted))
 +            accepted.cache.update(support.xitun_rework_underneath(accepted))
 +            accepted.cache.update(support.nantun_rework_underneath(accepted))
++            accepted.cache.update(support.save_v10_underneath(accepted))
 +            tests.require({path:support.digest(accepted.read(path)) for path in profile['sha256']} == profile['sha256'],
 +                          'Reviewed save attestation differs from its immutable Git source')
 +            tests.require({path:support.digest(accepted.read(path)) for path in geometry} == profile['geometrySha256'],
@@ -446940,10 +447148,10 @@ index 0000000..e723b48
 +    sys.exit(0 if result["passed"] else 1)
 diff --git a/tools/taichung/landmarks/check_old_core.py b/tools/taichung/landmarks/check_old_core.py
 new file mode 100644
-index 0000000..3833c3f
+index 0000000..d1430c6
 --- /dev/null
 +++ b/tools/taichung/landmarks/check_old_core.py
-@@ -0,0 +1,1181 @@
+@@ -0,0 +1,1198 @@
 +#!/usr/bin/env python3
 +"""Independent checks of the actual OldCity clone/bank/map, with no source writes.
 +
@@ -447258,6 +447466,23 @@ index 0000000..3833c3f
 +    guard = importlib.util.module_from_spec(spec)
 +    spec.loader.exec_module(guard)
 +    return guard.rework_underneath(files)
++
++
++# The registered city-rework save v10 moves saved positions by each district's shift and
++# repairs closed cells. Its own proofs are tools/taichung/city_rework/save_v10.py (the
++# tables equal the maps) and the host save suites; frozen guards read the live v9 save
++# pair underneath it, and only when the tree holds exactly the reviewed v10 pair.
++SAVE_V10_GUARD = "tools/taichung/city_rework/save_v10.py"
++
++
++def save_v10_underneath(files):
++    path = Path(files.source)/SAVE_V10_GUARD
++    if not path.exists():
++        return {}
++    spec = importlib.util.spec_from_file_location("registered_save_v10", path)
++    guard = importlib.util.module_from_spec(spec)
++    spec.loader.exec_module(guard)
++    return guard.underneath(files)
 +
 +
 +def oldcity_buildings_underneath(files):
@@ -451891,10 +452116,10 @@ index 0000000..46bd6fe
 +if __name__=='__main__':print(json.dumps(install(),indent=2))
 diff --git a/tools/taichung/nantun/build_rework.py b/tools/taichung/nantun/build_rework.py
 new file mode 100644
-index 0000000..4be0bb7
+index 0000000..98b3ff5
 --- /dev/null
 +++ b/tools/taichung/nantun/build_rework.py
-@@ -0,0 +1,904 @@
+@@ -0,0 +1,913 @@
 +#!/usr/bin/env python3
 +"""Build Nantun North (45x40) and Wanhe (85x72) on the city-rework master plan.
 +
@@ -452599,9 +452824,18 @@ index 0000000..4be0bb7
 +    return "\n".join(lines)
 +
 +
++def own_block(text):
++    """Nantun's sign block: from its mark to the next "@ " section (a later layer's) or the end."""
++    at = text.index(SCRIPT_MARK)
++    end = text.find("\n@ ", at)
++    return text[at:end] if end >= 0 else text[at:]
++
++
 +def with_scripts(text):
-+    head = text.split("\n" + SCRIPT_MARK)[0].rstrip("\n") + "\n"
-+    return head + "\n" + script_block()
++    """The shared script file with Nantun's block rewritten; later layers' sections after it are kept."""
++    head, mark, rest = text.partition("\n" + SCRIPT_MARK)
++    later = rest[rest.find("\n@ "):] if mark and "\n@ " in rest else ""
++    return head.rstrip("\n") + "\n" + "\n" + script_block() + later
 +
 +
 +def rework_entries(layouts, contract, encounters, scripts):
@@ -452611,7 +452845,7 @@ index 0000000..4be0bb7
 +            "districts": [d for d in contract["districts"] if d["map"] in ids],
 +            "landmarks": [l for l in contract["landmarks"] if l["exteriorMap"] in ids],
 +            "encounters": [e for g in encounters["wild_encounter_groups"] for e in g["encounters"] if e.get("map") in ids],
-+            "scriptsSha256": hashlib.sha256(scripts[scripts.index(SCRIPT_MARK):].encode()).hexdigest()}
++            "scriptsSha256": hashlib.sha256(own_block(scripts).encode()).hexdigest()}
 +
 +
 +def encounter_entry(name):
@@ -459891,10 +460125,10 @@ index 0000000..eb41981
 +if __name__=='__main__':unittest.main(verbosity=2)
 diff --git a/tools/taichung/streetscape/check_xitun_streets.py b/tools/taichung/streetscape/check_xitun_streets.py
 new file mode 100644
-index 0000000..abeedec
+index 0000000..53012b4
 --- /dev/null
 +++ b/tools/taichung/streetscape/check_xitun_streets.py
-@@ -0,0 +1,692 @@
+@@ -0,0 +1,700 @@
 +#!/usr/bin/env python3
 +"""Read-only proof for the Xitun street layout and its proposed save v8 repairs.
 +
@@ -460129,6 +460363,11 @@ index 0000000..abeedec
 +    rework.update(support.nantun_rework_underneath(beneath))
 +    for files in (now, actual):
 +        files.cache.update(rework); files.cache.update(overrides or {})
++    # The registered save v10 (proved by save_v10.py and the host suites) leaves the
++    # live v9 save pair underneath it, only when the tree holds exactly the reviewed pair.
++    save_v10 = support.save_v10_underneath(actual)
++    for files in (now, actual):
++        files.cache.update(save_v10)
 +    collision = registered_collision(source, {**rework, **(overrides or {})})
 +    # Only this proven map layer is removed. Native source and test bytes stay current.
 +    now.cache.update(collision["underlay"])
@@ -460448,11 +460687,13 @@ index 0000000..abeedec
 +    source = Path(source).resolve()
 +    tool = load("xitun_streets_tool", source / "tools/taichung/streetscape/xitun_streets.py")
 +    # Probes edit the state underneath the registered reworks (Old City's stripped first,
-+    # then Xitun's), which check() reads.
++    # then Xitun's) and underneath the registered save v10, which check() reads. A probe's
++    # edited v9 save pair is no longer the reviewed v10, so check() reads it as given.
 +    probe_support = load("xitun_streets_probe_support", source / "tools/taichung/landmarks/check_old_core.py")
 +    beneath = probe_support.Files(source)
 +    beneath.cache.update(probe_support.oldcity_rework_underneath(beneath))
 +    beneath.cache.update(probe_support.xitun_rework_underneath(beneath))
++    beneath.cache.update(probe_support.save_v10_underneath(beneath))
 +    read = beneath.read
 +    save, header, host = read(SAVE), read(HEADER), read(TEST)
 +    rows = table(save.decode(), "sXitunV8Relocations")
@@ -460522,7 +460763,8 @@ index 0000000..abeedec
 +        # Same historical counterexamples, with mutators aimed at actual v9 code.
 +        faults["xitunNotReloaded"] = ("versionGates", {SAVE: save.replace(b"return sourceVersion < 9 && IsXitun(warp);", b"return sourceVersion < 9 && IsGreenway(warp);",1)})
 +        faults["v7NotMigrated"] = ("versionGates", {SAVE: save.replace(b"|| version == 6 || version == 7 || version == 8)",b"|| version == 6 || version == 8)",1)})
-+        faults["versionNotEight"] = ("versionGates", {HEADER: header.replace(b"TAICHUNG_SAVE_VERSION 9",b"TAICHUNG_SAVE_VERSION 10",1)})
++        # A bump with no reviewed code behind it (10 is now the registered save v10's own header).
++        faults["versionNotEight"] = ("versionGates", {HEADER: header.replace(b"TAICHUNG_SAVE_VERSION 9",b"TAICHUNG_SAVE_VERSION 11",1)})
 +        support = load("collision_fault_support",source/"tools/taichung/landmarks/check_old_core.py")
 +        current = support.Files(source)
 +        new_rows = table(save.decode(),"sXitunV9Relocations"); first = new_rows[0]
