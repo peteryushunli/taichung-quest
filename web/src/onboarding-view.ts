@@ -11,7 +11,6 @@ const topics: Record<TutorialTopic, { title: string; body: string }> = {
   team: { title: 'Team', body: 'Menu → Team: add or swap. All 150 choices are free and join at Lv50.' },
   landmarks: { title: 'Nearby landmarks', body: 'South to the road, then west. Find nearby gyms on City Map.' },
 };
-const topicOrder: TutorialTopic[] = ['bike', 'map', 'team', 'landmarks'];
 
 /** Readable presentation only. Native state owns language application, stages and party. */
 export function createOnboardingView(options: {
@@ -75,21 +74,20 @@ export function createOnboardingView(options: {
     const target = (event.target as Element).closest<HTMLButtonElement>('button');
     if (!target || pending || !card) return;
     if (target.hasAttribute('data-next-tip')) continueCard();
-    if (target.hasAttribute('data-continue-later')) { options.releaseInputs(); options.onContinueLater(); }
   });
 
   function renderCard() {
     if (!card) return;
     const content = topics[card.topic];
     coach.lang = getLocale();
-    const step = topicOrder.indexOf(card.topic) + 1;
     const restoreFocus = coach.contains(document.activeElement) && !pending;
+    // ScriptWaitCard keeps the final native message page on the canvas. Preserve
+    // its actual pixels rather than painting a second web dialogue over it.
     coach.innerHTML = `<h2 id="outdoor-coach-title" class="coach-sr-only">${t(content.title)}</h2>
-      <button type="button" data-next-tip aria-describedby="outdoor-coach-copy" ${pending ? 'disabled' : ''}>
-        <span id="outdoor-coach-copy" class="coach-copy">${t(content.body)}</span>
-        <span class="coach-footer"><span>${step} / 4</span><span class="coach-cue">${pending ? t('Returning to your guide…') : t('A / Interact')} <span aria-hidden="true">▾</span></span></span>
-      </button>
-      <button type="button" data-continue-later aria-label="${t('Continue later')}" title="${t('Continue later')}" ${pending ? 'disabled' : ''}><span aria-hidden="true">Ⅱ</span></button>`;
+      <button type="button" data-next-tip aria-describedby="outdoor-coach-copy" aria-label="${pending ? t('Returning to your guide…') : t('A / Interact')}" ${pending ? 'disabled' : ''}>
+        <span id="outdoor-coach-copy" class="coach-copy coach-sr-only">${t(content.body)}</span>
+        <span class="native-advance-arrow" aria-hidden="true" ${pending ? 'hidden' : ''}></span>
+      </button>`;
     coach.setAttribute('aria-busy', String(pending));
     if (restoreFocus) coach.querySelector<HTMLButtonElement>('[data-next-tip]')!.focus({ preventScroll: true });
   }
