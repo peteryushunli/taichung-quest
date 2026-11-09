@@ -1,23 +1,14 @@
 # Landing page leader portraits
 
-Direct copies of native `graphics/taichung/<leader>/battle.png`. Nine portraits
-retain source `b7b027d443f213def7d31aa76d2d0aa3cd478b76`. Peiqi now uses the exact
-closer portrait approved by the user on 2026-11-09, also installed in native
-source commit `6e9f8d2`. Its source image, prompt and native export provenance are
-preserved in `assets/portraits/peiqi-v4/`. Every web portrait remains a 64×64
-indexed PNG with its native transparency; web copies are never resized or
-recoloured during asset preparation.
+Unchanged copies of accepted native `graphics/taichung/<leader>/battle.png` at source `b7b027d443f213def7d31aa76d2d0aa3cd478b76`. Each portrait is a 64×64 indexed PNG with its existing transparency. The first three web files are preserved byte-for-byte; the seven added portraits use the same direct-copy pattern. No art generation, resizing, recolouring or conversion was used.
 
-The native trainer entries in `src/data/trainers.h` bind these portraits to the
-leaders. PR9 already verified all ten gyms. The new Peiqi framing still receives
-its own actual battle check in this batch; artwork availability alone is not
-runtime acceptance.
+The native trainer entries in `src/data/trainers.h` bind these portraits to the leaders. The seven new gym claims remain pending Main’s native runtime acceptance; asset availability does not establish playability.
 
 | Web asset | Native source | SHA-256 |
 | --- | --- | --- |
 | `jun.png` | `graphics/taichung/jun/battle.png` | `74bcac265bf049d1e3bed8dbf8e66639dae4fc696e5cc13dfadbc377aa90686f` |
 | `lian.png` | `graphics/taichung/lian/battle.png` | `b51ae62c1c09263800397502734a03bdfa66495e3d383262cfcca01b84f8787e` |
-| `peiqi.png` | `graphics/taichung/peiqi/battle.png` | `86abd69c08f800a82b9a4fe791e1a3dcc537c93e57dfd8144b27eb818d90be38` |
+| `peiqi.png` | `graphics/taichung/peiqi/battle.png` | `5f5daa8cceb52964b525430eee43e3dd7f148e2c9fb64574b3a7d78b94b4fd07` |
 | `yicheng.png` | `graphics/taichung/yicheng/battle.png` | `0b0275858c8a0d1c13d4b7dd132b10b122914be37eb8da9d72fb84e2f3ce99fe` |
 | `xingan.png` | `graphics/taichung/xingan/battle.png` | `973b7652f919d7266fe5a3ebb746bbd2333de5199998a482b69736c48eb39c7c` |
 | `axiu.png` | `graphics/taichung/axiu/battle.png` | `cd5ea6e4f979aabbcde1c5d6d122d7efd2eeb38aecb62bfde812658711f5a648` |
