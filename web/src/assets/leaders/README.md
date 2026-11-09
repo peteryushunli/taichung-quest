@@ -2,7 +2,7 @@
 
 Copies of accepted native `graphics/taichung/<leader>/battle.png` at source `b7b027d443f213def7d31aa76d2d0aa3cd478b76`. Each portrait is a 64×64 indexed PNG with its existing transparency. Peiqi now matches the revised full-body native candidate4086795 after actual battle-stage inspection; all other files retain their prior direct-copy source. Web assets are unchanged native PNG copies; Peiqi generation provenance is recorded in assets/portraits/peiqi-v5/provenance.json.
 
-The native trainer entries in `src/data/trainers.h` bind these portraits to the leaders. The seven new gym claims remain pending Main’s native runtime acceptance; asset availability does not establish playability.
+The native trainer entries in `src/data/trainers.h` bind these portraits to the ten released leaders. This release changes Peiqi’s portrait; its separate actual battle-stage review is recorded in the provenance above. The final combined cartridge at native0a24efb also passes an actual Miyahara battle-stage check.
 
 | Web asset | Native source | SHA-256 |
 | --- | --- | --- |
