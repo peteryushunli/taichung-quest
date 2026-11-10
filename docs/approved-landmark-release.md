@@ -58,4 +58,29 @@ history. Live geometry checks always read the actual new maps.
 - Frontend:51 tests and TypeScript checks; renderer’s lossless PNG and private
   flower-only animation tests.
 
-Runtime acceptance and final build identifiers are recorded when publishing.
+## Published receipt
+
+Live: https://taichung-quest.vercel.app. [Machine-readable receipt](releases/2026-11-10-approved-landmarks.json).
+PR: https://github.com/peteryushunli/taichung-quest/pull/12.
+
+Native source `09534a8786360f3bf1f9013e11ea41d13e8646d8`; frontend artifact
+`7623ee172bb318a1f627616d24ddf046ec278243`. Production deployment
+`dpl_9TsnUKUqKahUj12L52WLdZqtZbFH` is READY. The cartridge downloaded from
+both preview and the public URL matches SHA-256
+`400e3237b5640a72d211687c06ec4cb0ca4e4b82af57a232577c0918ff1fee21`.
+
+All ten scenes pass native emulator sign, walking and bike-collision checks;
+both temple door round trips pass. A blocked v10 position repairs from17,45
+to17,46, then saves as v11 and resets/Continues correctly. All six party slots,
+badges/preferences, decoded money/inventory and heal checkpoint remain intact.
+These use explicitly synthetic location fixtures derived from genuine SRAM,
+normal native buttons and read-only navigation; they are bounded runtime checks,
+not a complete city playthrough. Final local evidence is in
+`artifacts/downloads/approved-art-runtime/final-acceptance.json`.
+
+The portable patch recreates11,216 source files from pinned upstream, with only
+palette line-ending normalization. Strict portable checks and live city geometry
+also pass from that replay without private Git history. Eight archived suites
+pass with92 reported corruption probes plus OldCity self-tests. Production
+mobile/desktop guide smoke passes, with twenty places, no horizontal overflow,
+no broken images and no page errors. Preview isolation headers and Wasm MIME pass.

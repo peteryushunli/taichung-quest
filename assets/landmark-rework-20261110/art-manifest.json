@@ -1,5 +1,5 @@
 {
-  "status": "INTEGRATED_NATIVE_CANDIDATE",
+  "status": "PUBLISHED_NATIVE_AND_WEB",
   "sourceNativeHead": "2362263510dfa38987c36b6cc40dca8d9372fc3c",
   "sourcePointer": "native-source-pointer.json",
   "validation": "10 indexed native PNGs; <=15 opaque colors; RGB555 aligned;16px grid aligned. Latest market and brewery intentionally have new footprints and require placement/collision changes.",
@@ -205,5 +205,6 @@
       ]
     }
   ],
-  "integration": "See docs/approved-landmark-release.md. Original review sources are preserved; prepare-native.py produces the ten installed, plot-fitted PNGs. Claude native baseline2362263 and frontend757e90c are retained."
+  "integration": "See docs/approved-landmark-release.md. Original review sources are preserved; prepare-native.py produces the ten installed, plot-fitted PNGs. Claude native baseline2362263 and frontend757e90c are retained.",
+  "releaseReceipt": "../../docs/releases/2026-11-10-approved-landmarks.json"
 }

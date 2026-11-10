@@ -3,10 +3,10 @@
 Canonical frontend: https://taichung-quest.vercel.app. The current approved-art
 release is documented in [approved-landmark-release.md](approved-landmark-release.md).
 It retains Claude’s twenty-place city (native2362263, frontend757e90c), installs
-the ten approved scenes, and moves save compatibility to version11. Candidate
+the ten approved scenes, and moves save compatibility to version11. Published
 native source is `09534a8786360f3bf1f9013e11ea41d13e8646d8`; cartridge SHA-256
 `400e3237b5640a72d211687c06ec4cb0ca4e4b82af57a232577c0918ff1fee21`.
-Use the release receipt to distinguish a prepared candidate from a published build.
+The release receipt confirms the Vercel production deployment and exact served ROM.
 Earlier checkpoints and ownership notes below are historical context.
 
 ## Source and release inputs

@@ -1,0 +1,59 @@
+{
+  "publishedAtUtc": "2026-11-10T08:40:31.962757+00:00",
+  "url": "https://taichung-quest.vercel.app",
+  "pullRequest": "https://github.com/peteryushunli/taichung-quest/pull/12",
+  "deploymentId": "dpl_9TsnUKUqKahUj12L52WLdZqtZbFH",
+  "deploymentUrl": "https://taichung-quest-7x8pc9c1s-peteryushunli-6635s-projects.vercel.app",
+  "deploymentStatus": "READY",
+  "frontendArtifactCommit": "7623ee172bb318a1f627616d24ddf046ec278243",
+  "nativeSourceCommit": "09534a8786360f3bf1f9013e11ea41d13e8646d8",
+  "romBytes": 16777216,
+  "romSha256": "400e3237b5640a72d211687c06ec4cb0ca4e4b82af57a232577c0918ff1fee21",
+  "portablePatchSha256": "0377fee5d4171a194317334fe9a9383701433215990c3e8abb11cca6627d6f8b",
+  "cityGeometryFingerprintSha256": "5ec62740019ae38fcd04d01db282dc9cbef5b9d98374c3f3d3c6a40dfbc6d561",
+  "preservedClaudeNativeBaseline": "2362263510dfa38987c36b6cc40dca8d9372fc3c",
+  "preservedClaudeFrontendBaseline": "757e90c55551ddbf74e260f181e5a085a9b97920",
+  "approvedLandmarkCount": 10,
+  "nativeRuntime": {
+    "passed": true,
+    "cases": 11,
+    "landmarkSignsWalkingAndBikeCollision": 10,
+    "templeDoorRoundTrips": 2,
+    "fixtureScope": "Ten explicitly synthetic v10 location fixtures plus one blocked-position case, derived from genuine SRAM; normal input only, native Save/reset/Continue; no RAM position writes or emulator snapshots.",
+    "savePreservationChecks": {
+      "positionRepaired": true,
+      "version11": true,
+      "onlyVersionVariableChanged": true,
+      "sixPartySlotsUnchanged": true,
+      "moneyItemsAndBagUnchanged": true,
+      "checkpointUnchanged": true,
+      "nativeSaveCounterAdvanced": true
+    }
+  },
+  "webSmoke": [
+    {
+      "mobile": false,
+      "title": "Taichung Quest \u00b7 A little adventure",
+      "horizontalOverflow": false,
+      "brokenImages": [],
+      "errors": [],
+      "landmarkNamesPresent": true
+    },
+    {
+      "mobile": true,
+      "title": "Taichung Quest \u00b7 A little adventure",
+      "horizontalOverflow": false,
+      "brokenImages": [],
+      "errors": [],
+      "landmarkNamesPresent": true
+    }
+  ],
+  "sourceReplay": {
+    "upstream": "ce6406d8c2eaf46d543c8a2606de0c3cb1951982",
+    "comparedFiles": 11216,
+    "paletteLineEndingNormalizations": 432,
+    "portableStrictGuardPassed": true,
+    "liveCityGeometryPassed": true
+  },
+  "localEvidence": "artifacts/downloads/approved-art-runtime/"
+}
