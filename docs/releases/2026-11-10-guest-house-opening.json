@@ -1,0 +1,49 @@
+{
+  "publishedAtUtc": "2026-11-10T13:59:54+00:00",
+  "url": "https://taichung-quest.vercel.app",
+  "pullRequest": "https://github.com/peteryushunli/taichung-quest/pull/13",
+  "deploymentId": "dpl_HRPP72Ejd3C4HRCpyKj6Gw6DafN5",
+  "deploymentUrl": "https://taichung-quest-1lrptdhin-peteryushunli-6635s-projects.vercel.app",
+  "deploymentStatus": "READY",
+  "promotedFromPreview": "dpl_EQ4prjRmL6wvBxTb1QwQ83e4F6y6",
+  "frontendArtifactCommit": "2e15f3045ff59b7e30b091eccdaeee608ffbe1d4",
+  "trackedSourceDirty": false,
+  "nativeSourceCommit": "9cb6855eb178cffbcae8b533ff90e90e607c29e1",
+  "nativeSourceNote": "Local native commit; patches/taichung.patch at the frontend commit reproduces its tree exactly from upstream ce6406d.",
+  "romBytes": 16777216,
+  "romSha256": "a42272cc747216954578a3ccaa4ff212e6bcf88658293211d4816880d7d0a007",
+  "romSha1": "807e9dbd0a64d80ab463204e0b4e5d1b446bed50",
+  "portablePatchSha256": "596ac13b9c2e5f43df60439d8064bfbceee677c42fccb622cc303570384e8f04",
+  "cityGeometryFingerprintSha256": "5ec62740019ae38fcd04d01db282dc9cbef5b9d98374c3f3d3c6a40dfbc6d561",
+  "changes": [
+    "New games wake in a FireRed-style guest house next to Old Station; Xiaoyu waits at its door",
+    "Live minimap is a round GTA 3 style radar that hides indoors and during dialogue",
+    "Green River, Han Creek and Fazi River signs removed"
+  ],
+  "verification": {
+    "preview": {
+      "isolationHeaders": true,
+      "romBytesMatch": true,
+      "buildMetadataMatch": true,
+      "wasmContentType": "application/wasm"
+    },
+    "production": {
+      "isolationHeaders": true,
+      "romBytesMatch": true,
+      "buildMetadataMatch": true,
+      "romMetadataCacheControl": "no-store",
+      "wasmContentType": "application/wasm",
+      "jsBundleMatchesLocalBuild": "index-BJaoc-iW.js",
+      "newGameWakesInGuestHouseBedroom": true,
+      "minimapHiddenIndoors": true,
+      "pageErrors": 0
+    },
+    "beforeDeploy": "Same cartridge played headlessly in English and Chinese through the full opening; radar checked in the local web player; guard, native host and web test results are in docs/guest-house-opening.md."
+  },
+  "notVerified": [
+    "In-game Save and Continue from inside the guest house",
+    "A real pre-change save still in the retired welcome room",
+    "Physical phone"
+  ],
+  "previousProduction": "dpl_9TsnUKUqKahUj12L52WLdZqtZbFH"
+}

@@ -75,3 +75,7 @@ The game was played headlessly on cartridge `a42272cc…`.
 - **Web player.** In the local web player, the radar stayed hidden in the house and during the tips. It appeared outdoors with the home blip just north of the player at the door.
 
 Not checked: an in-game save and Continue from inside the house, and a real pre-change save that was still in the welcome room.
+
+## Published
+
+Live on 2026-11-10 at https://taichung-quest.vercel.app. Production deployment `dpl_HRPP72Ejd3C4HRCpyKj6Gw6DafN5` was promoted from the protected preview `dpl_EQ4prjRmL6wvBxTb1QwQ83e4F6y6`, packaged from clean `main` 2e15f30 with native 9cb6855. Both serve cartridge `a42272cc…` byte for byte, with COOP/COEP headers and Wasm as `application/wasm`. On the live site a new game wakes in the guest house bedroom with the minimap hidden and no page errors. The [release receipt](releases/2026-11-10-guest-house-opening.json) has the full identities. The previous production deployment was `dpl_9TsnUKUqKahUj12L52WLdZqtZbFH`.
