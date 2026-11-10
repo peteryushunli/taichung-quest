@@ -1,0 +1,59 @@
+{
+  "id": "cultural-heritage-park",
+  "name": {
+    "en": "Cultural Heritage Park, Ministry of Culture — Former Taichung Brewery",
+    "zh-TW": "文化部文化資產園區—臺中舊酒廠"
+  },
+  "verifiedOn": "2026-11-10",
+  "owner": "Interface civic3",
+  "identity": "The former brewery complex at362FuxingRoadSection3 inSouthDistrict, not the NationalTaiwanMuseumofFineArts or a temple precinct.",
+  "officialPages": [
+    {
+      "url": "https://travel.taichung.gov.tw/en/Attractions/Intro/1053",
+      "publisher": "Taichung Tourism and Travel Bureau",
+      "evidence": "Official identity:formerbrewery reusedasCulturalHeritagePark;useforplaceidentityonly,notdatedoperations ortheEnglishpageareaunit."
+    },
+    {
+      "url": "https://travel.taichung.gov.tw/ja/experience/culture",
+      "publisher": "Taichung Tourism and Travel Bureau",
+      "evidence": "Official culture overview and historicindustrial-complexphoto; corroborates venue identity."
+    }
+  ],
+  "officialPhotos": [
+    {
+      "url": "https://taichung.travel/content/images/attractions/3718/1024x768_Filedata635186402486052109.jpg",
+      "publisher": "Taichung Tourism and Travel Bureau",
+      "visualInspection": "Direct official photo inspected in own Chrome tab. A tall slender silver banded chimney rises between low grayplaster andredbrickfactoryhalls;pitchedgables,palegreenmultipanewindows,lowflatawning andopenbrickpaving dominate."
+    },
+    {
+      "url": "https://taichung.travel/content/images/attractions/50403/1024x768_image637714406033891192.jpg",
+      "publisher": "Taichung Tourism and Travel Bureau",
+      "visualInspection": "Additional indexed official plaza photograph:historicindustrialfacades/pipes and opencourtyard. Indexedvisualdescriptiononly,notdirectlyviewed."
+    }
+  ],
+  "distinguishingMotifs": [
+    "Several low connected industrial buildings of unequal heights, with triangular pitched gables and utilitarian flat connecting roofs.",
+    "One tall narrow cylindrical metal chimney, with horizontal rings and a slim ladder/frame, rises well above the roofline.",
+    "Alternating warm red-brick and weathered gray-plaster factory walls, rather than a uniformly ornate facade.",
+    "Repeated large rectangular multi-pane windows and muted green/seafoam frames; some gables have a round or arched upper opening.",
+    "A broad plain paved courtyard and occasional exterior industrial pipework give space around the old factory blocks."
+  ],
+  "materialColors": [
+    "Weathered warmgray plaster",
+    "Russet/red brick",
+    "Dull silver chimney with gray bands",
+    "Muted sage/seafoam windowframes and dark glass"
+  ],
+  "pixelPriorities": [
+    "Use chimney + staggeredgablefactoryblocks as the dominant silhouette.",
+    "Keep brick/window repetition tidy;originalpixelart shouldfeel industrial, not a decorative fantasy museum."
+  ],
+  "avoid": [
+    "Temple, castle or palaceculturalcenter",
+    "Brewing smoke/flames to imply an operatingfactory",
+    "Onegiant modern glassmuseum replacingthebrickcomplex",
+    "Treating temporary contemporaryart or banners as permanenthistoricalarchitecture"
+  ],
+  "rights": "Reference links only. Source photographs are not copied into shipped game art. Draw original pixel interpretations.",
+  "scope": "No map/native/PR/main/Claudecheckout edits or deployment."
+}

@@ -1,0 +1,14 @@
+{
+  "reference": "National Taichung Theater source-map crop, not emulator evidence",
+  "source": "/Users/peter/devday_hackathon/.claude/worktrees/native-gym-text-fixes-a79571/.worktrees/game-gym-text",
+  "nativeHeadAtRead": "2362263510dfa38987c36b6cc40dca8d9372fc3c",
+  "cropMetatiles": [
+    10,
+    41,
+    25,
+    52
+  ],
+  "scale": 4,
+  "sha256": "a537bfe2147e317c385a05cb07915b05f77ce3839b717c4200b378e46268ff1e",
+  "cameraRule": "Level frontal wall; roof back edge narrows symmetrically toward the same center; no diagonal yaw."
+}

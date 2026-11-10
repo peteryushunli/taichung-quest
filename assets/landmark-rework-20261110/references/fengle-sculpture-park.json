@@ -1,0 +1,72 @@
+{
+  "id": "fengle-sculpture-park",
+  "name": {
+    "en": "Fengle Sculpture Park",
+    "zh-TW": "豐樂雕塑公園"
+  },
+  "verifiedOn": "2026-11-10",
+  "owner": "Root park/street4",
+  "identity": "The Nantun sculpture-and-lake park at Wenxin South5thRoad, not Maple Garden and not a temple.",
+  "officialPages": [
+    {
+      "url": "https://travel.taichung.gov.tw/en/attractions/intro/889",
+      "publisher": "Taichung Tourism and Travel Bureau",
+      "evidence": "Official park identity/address and photograph gallery."
+    },
+    {
+      "url": "https://taichung.travel/zh-tw/attractions/intro/136",
+      "publisher": "Taichung Tourism and Travel Bureau",
+      "evidence": "Official Chinese park gallery; indexed photo provides close bridge/lake reference."
+    },
+    {
+      "url": "https://filmtaichung.org.tw/scenesContent/242",
+      "publisher": "Taichung Film Development Foundation — official filming-location database",
+      "evidence": "Primary location photography of Fengle park; footer identifies the Foundation."
+    }
+  ],
+  "officialPhotos": [
+    {
+      "url": "https://filmtaichung.org.tw/storage/photos/cmsystem/scenes/%E5%85%AC%E5%9C%92%E7%B6%A0%E5%9C%B0/%E8%B1%90%E6%A8%82%E5%85%AC%E5%9C%92/IMG_5874.jpg",
+      "publisher": "Taichung Film Development Foundation",
+      "page": "https://filmtaichung.org.tw/scenesContent/242",
+      "visualInspection": "Direct image inspected in own Chrome tab2026-11-10. A rhythmic row of large orange-red tilted square/cube forms, each held on a short dark square column; varying heights, on a low reddish-brown rectangular base beside a broad pale grid-paved plaza."
+    },
+    {
+      "url": "https://travel.taichung.gov.tw/image/58962/1024x768",
+      "publisher": "Taichung Tourism and Travel Bureau",
+      "visualInspection": "Direct photograph inspected in own Chrome tab. Cream-gray concrete bridge/arcade with repeated round openings and a distinctly wavy top parapet; muted green lake, rounded boulder banks and low metal railing. Clear open water dominates the scene."
+    },
+    {
+      "url": "https://www.taichung.gov.tw/media/306806/s__33554446.jpg",
+      "publisher": "Taichung City Government",
+      "visualInspection": "Additional official indexed photograph from park-water article:bridge, pond, stone edge and tree line. Indexed visual description only."
+    }
+  ],
+  "distinguishingMotifs": [
+    "Broad quiet lake with muted green water, edged by rounded pale stones.",
+    "Long pale concrete bridge/arcade with a row of large semicircular openings.",
+    "The bridge has an undulating wave-like solid top edge, a stronger identifier than an ordinary humpback railing.",
+    "Low shore railings, open grass and rounded tree groups frame the water; modern city blocks stay background context.",
+    "A distinctive row of tilted orange-red square/cube forms on short charcoal columns, mounted on a low reddish-brown base beside the plaza. This is the strongest verified sculpture reference; no artwork title or sculptor attribution is assumed."
+  ],
+  "materialColors": [
+    "Warm pale gray concrete",
+    "Olive/jade lake water",
+    "Light gray shore stones",
+    "Deep green trees and fresh grass",
+    "Orange-red sculpture planes with dark red side faces",
+    "Charcoal square support columns and reddish-brown base"
+  ],
+  "pixelPriorities": [
+    "Use the red tilted-square sculpture row as a clear foreground art anchor, with the lake and wavy arcade bridge behind.",
+    "Reduce the sculpture to a readable rhythmic sequence of red diamond-like cube faces on dark stems; do not invent a human statue or fountain hero."
+  ],
+  "avoid": [
+    "Temple roofs or a palace facade",
+    "Generic central fountain as the only landmark identifier",
+    "Confusing this park with Maple Garden",
+    "Giant fantasy sculpture dominating the lake"
+  ],
+  "rights": "Reference links only. Do not copy source photographs into shipped game art. Draw original pixel interpretations.",
+  "scope": "No map/native/PR/main/Claudecheckout changes or deployment."
+}

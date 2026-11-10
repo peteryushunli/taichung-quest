@@ -1,0 +1,37 @@
+{
+  "id": "second-market",
+  "status": "art-review; not installed",
+  "worldRectExclusive": null,
+  "nativeSize": [
+    160,
+    144
+  ],
+  "paletteColorsIncludingTransparent": 16,
+  "opaqueColorsUsed": 14,
+  "rawTileCount": 360,
+  "unique8x8Tiles": 192,
+  "unique8x8TilesWithFlips": 188,
+  "packedTileCountIncludingEmpty": 188,
+  "packedTileRoundTripVerified": true,
+  "sha256": "07bf897ce6c7670e2810c419ccd40276fc4c98d32670b946323d54ea98701e99",
+  "references": [
+    "https://travel.taichung.gov.tw/en/attractions/intro/1366"
+  ],
+  "integration": "ART REVIEW ONLY. Supersedes earlier art for this landmark. Claude must allocate native tile/palette banks, set placement/collision and update frontend crop. No map/source/website changes included.",
+  "revision": 4,
+  "title": "Second Market",
+  "number": 17,
+  "priorNativeSize": [
+    112,
+    144
+  ],
+  "requiresPlacementUpdate": true,
+  "requiresCollisionUpdate": true,
+  "dimensionsMatchAuditedMap": false,
+  "projection": "Centered frontal game camera: no sideways depth offset; roofs taper evenly inward and recede upward around each volume centerline.",
+  "cameraReference": "references/theater-native-4x.png",
+  "notes": [
+    "Level front facade; raised hall centered over the frontage.",
+    "Roof depth goes straight up, with equal left/right inset and no exposed right wall."
+  ]
+}

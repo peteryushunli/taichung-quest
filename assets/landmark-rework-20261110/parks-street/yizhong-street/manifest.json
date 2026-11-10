@@ -1,0 +1,26 @@
+{
+  "id": "yizhong-street",
+  "status": "art-review; not installed",
+  "worldRectExclusive": [
+    110,
+    34,
+    120,
+    42
+  ],
+  "nativeSize": [
+    160,
+    128
+  ],
+  "paletteColorsIncludingTransparent": 16,
+  "opaqueColorsUsed": 15,
+  "rawTileCount": 320,
+  "unique8x8Tiles": 207,
+  "unique8x8TilesWithFlips": 206,
+  "packedTileCountIncludingEmpty": 206,
+  "packedTileRoundTripVerified": true,
+  "sha256": "f725d03d33d4f299d5401e70f9914fff4922dcb2055187653868cb2df99ad786",
+  "references": [
+    "https://travel.taichung.gov.tw/en/attractions/intro/1551"
+  ],
+  "integration": "Exact audited native dimensions. Art review pack, not a ROM patch. Requires tile-bank allocation/repacking and collision refresh for new object shapes, preserving real sign/warp/road approaches. Existing empty-ground cells are not automatically hard keep-clear reservations. No game or website sources changed."
+}

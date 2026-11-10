@@ -1,0 +1,42 @@
+{
+  "id": "cultural-heritage-park",
+  "status": "art-review; not installed",
+  "worldRectExclusive": null,
+  "nativeSize": [
+    256,
+    208
+  ],
+  "paletteColorsIncludingTransparent": 16,
+  "opaqueColorsUsed": 15,
+  "rawTileCount": 832,
+  "unique8x8Tiles": 431,
+  "unique8x8TilesWithFlips": 425,
+  "packedTileCountIncludingEmpty": 425,
+  "packedTileRoundTripVerified": true,
+  "sha256": "97770c9152104579245d2ebd8e2e8a9d424222803e7a3adfcae08ce5865c22b8",
+  "references": [
+    "https://travel.taichung.gov.tw/en/Attractions/Intro/1053"
+  ],
+  "integration": "ART REVIEW ONLY. Replaces v2 artwork for this landmark. Requires current-branch placement, collision, crop and tile-bank allocation. No native or website sources changed.",
+  "revision": 3,
+  "title": "Cultural Heritage Park",
+  "number": 18,
+  "priorNativeSize": [
+    176,
+    288
+  ],
+  "previousReviewSize": [
+    224,
+    192
+  ],
+  "requiresPlacementUpdate": true,
+  "requiresCollisionUpdate": true,
+  "dimensionsMatchAuditedMap": false,
+  "projection": "Parallel3/4 view: depth recedes to upper-right; all volumes share that direction.",
+  "notes": [
+    "Both gabled halls are extruded volumes with two roof slopes, front/back ridges and side windows.",
+    "Connected gallery shows its flat roof deck, thick parapet and shaded right elevation.",
+    "Upper-left lighting, structural overlap and common depth direction give the whole brewery one coherent3/4 perspective.",
+    "Silver stack has an oval mouth and curved bands; courtyard stays calm."
+  ]
+}

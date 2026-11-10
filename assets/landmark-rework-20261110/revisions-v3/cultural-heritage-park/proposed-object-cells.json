@@ -1,0 +1,19 @@
+{
+  "cellSize": 16,
+  "rows": [
+    "0000000011000000",
+    "0000000011000000",
+    "0001111111011110",
+    "0011111111111111",
+    "0111111111111111",
+    "1111111111111111",
+    "1111111111111111",
+    "1111111111111111",
+    "1111111111111111",
+    "1111111111111111",
+    "1111111111111111",
+    "1111111111111110",
+    "0110110000000110"
+  ],
+  "note": "Conservative architecture/prop outline, not installed game collision. Excludes courtyard and cast shadows. Reconcile real placement and event/sign approaches before use."
+}

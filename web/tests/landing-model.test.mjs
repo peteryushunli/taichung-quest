@@ -1,9 +1,11 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { readFileSync } from 'node:fs';
-import { cityPlaceSummary, districtCount, gymStatusSummary, isGym, isGymOpen, localizedPlace, markerPosition, placeStatus } from '../src/landing-model.ts';
+import { existsSync } from 'node:fs';
+import { cityPlaceSummary, districtCount, districtLabelSpots, gymStatusSummary, isGym, isGymOpen, localizedPlace, markerPosition, orderPlaces, placeStatus, placeWorld } from '../src/landing-model.ts';
 
 const landmarks = JSON.parse(readFileSync(new URL('../src/data/landmarks.json', import.meta.url), 'utf8'));
+const sights = JSON.parse(readFileSync(new URL('../src/data/sights.json', import.meta.url), 'utf8'));
 const city = JSON.parse(readFileSync(new URL('../src/data/minimap-contract.json', import.meta.url), 'utf8'));
 const assets = readFileSync(new URL('../src/landing-assets.ts', import.meta.url), 'utf8');
 const open = landmarks.filter(isGymOpen);
@@ -43,7 +45,7 @@ test('pending, unknown and visit statuses never reveal a recorded leader', () =>
   }
   const visit = { ...open[0], kind: 'visit' };
   assert.equal(isGymOpen(visit), false);
-  assert.equal(placeStatus(visit), 'Visit');
+  assert.equal(placeStatus(visit), 'Landmark');
   assert.equal(localizedPlace(visit, 'en').leader, undefined);
 });
 
@@ -105,20 +107,21 @@ test('every gym landmark retains its existing facade art', () => {
   }
 });
 
-test('temple visits are source-anchored stops with no badge, leader or invented visitor link', () => {
+test('temple visits are source-anchored stops with no badge or leader, linking only to the temple’s own site', () => {
   const visits = landmarks.filter((place) => !isGym(place));
   assert.deepEqual(visits.map((place) => place.id), ['wanhe-temple', 'wenchang-temple']);
   for (const place of visits) {
     assert.equal(place.gymStatus, 'not-a-gym');
-    assert.equal(placeStatus(place), 'Visit');
+    assert.equal(placeStatus(place), 'Landmark');
     assert.equal(place.playable, true);
     assert.equal(place.districtId, 'nantun');
     assert.equal(place.gameAreaRef, city.mapsByNativeKey['43:15'].mapId);
     assert.deepEqual([place.cityAnchor.x, place.cityAnchor.y], city.markersById[place.id].localEntrance);
     assert.equal(city.markersById[place.id].kind, 'landmark');
+    assert.match(place.officialSourceTitle, /official site/);
     for (const locale of ['en', 'zh-Hant']) {
       assert.equal(localizedPlace(place, locale).leader, undefined);
-      assert.equal(localizedPlace(place, locale).url, undefined);
+      assert.match(localizedPlace(place, locale).url, /^https:\/\/www\.(wanhegong\.org\.tw|wcgt\.org)\//);
     }
   }
   assert.equal(gymStatusSummary(landmarks, 'en'), gymStatusSummary(landmarks.filter(isGym), 'en'));
@@ -145,4 +148,58 @@ test('the remaining seven team orders match native source b7b027d', () => {
     assert.ok(entry, id);
     assert.deepEqual([...entry.matchAll(/mon\('([^']+)', \w+\)/g)].map((match) => match[1]), names, id);
   }
+});
+
+test('the ten set-piece landmarks join the map as non-gym places, after the ten gyms', () => {
+  const places = orderPlaces([...landmarks, ...sights]);
+  assert.equal(places.length, 20);
+  assert.equal(new Set(places.map((place) => place.id)).size, 20);
+  assert.deepEqual(places.slice(0, 10).map(isGym), Array(10).fill(true));
+  assert.deepEqual(places.slice(10).map(isGym), Array(10).fill(false));
+  assert.equal(cityPlaceSummary(places, 'en'), '4 districts. 20 real places.');
+  assert.equal(sights.length, 8);
+  for (const place of sights) {
+    assert.equal(place.kind, 'sight', place.id);
+    assert.equal(place.gymStatus, 'not-a-gym', place.id);
+    assert.equal(placeStatus(place), 'Landmark');
+    assert.equal(city.markersById[place.id], undefined, `${place.id} must not touch the fingerprinted contract`);
+    for (const locale of ['en', 'zh-Hant']) {
+      const info = localizedPlace(place, locale);
+      assert.equal(info.leader, undefined, place.id);
+      assert.ok(info.url?.startsWith('https://'), place.id);
+    }
+    assert.ok(place.description.length > 200 && place.descriptionZh.length > 60, place.id);
+  }
+});
+
+test('every place has a map position inside the 129x181 world, and every non-gym a map-view crop around it', () => {
+  for (const place of [...landmarks, ...sights]) {
+    const [x, y] = placeWorld(place, city.markersById);
+    const pin = markerPosition([x, y], city.world);
+    assert.ok(pin.x > 0 && pin.x < 100 && pin.y > 0 && pin.y < 100, place.id);
+    if (isGym(place)) continue;
+    const [left, top, right, bottom] = place.artRect;
+    assert.ok(left <= x && x <= right && top <= y && y <= bottom, `${place.id} crop misses its pin`);
+    assert.ok(right <= city.world.width && bottom <= city.world.height, place.id);
+    assert.ok(existsSync(new URL(`../src/assets/landmarks/map/${place.id}.png`, import.meta.url)), `${place.id} map-view crop`);
+  }
+  assert.deepEqual(placeWorld(landmarks[0], city.markersById), city.markersById[landmarks[0].id].world);
+  assert.throws(() => placeWorld({ id: 'nowhere' }, city.markersById), /No map position/);
+});
+
+test('district names sit on the freeway for the north and beside Wanhe for Nantun', () => {
+  const spots = districtLabelSpots(city);
+  assert.deepEqual(spots.map((spot) => [spot.label, spot.sign]), [['XITUN 西屯', true], ['GREENWAY 草悟道', true], ['OLD CITY 舊城', true], ['NANTUN 南屯', false]]);
+  for (const spot of spots) assert.ok(spot.x > 0 && spot.x < 100 && spot.y > 0 && spot.y < 100, spot.label);
+  assert.equal(spots[0].y, 3 / 181 * 100);
+});
+
+test('every gym stamps the City Pass with its own game badge and bilingual badge name', () => {
+  const gyms = landmarks.filter(isGym);
+  assert.deepEqual(gyms.map((place) => place.badgeNameEn), ['Departure Badge', 'Pavilion Badge', 'Chill Badge', 'Discovery Badge', 'Brush Badge', 'Craft Badge', 'Palette Badge', 'Feast Badge', 'Habitat Badge', 'Encore Badge']);
+  for (const place of gyms) {
+    assert.match(place.badgeNameZh, /徽章$/, place.id);
+    assert.ok(existsSync(new URL(`../src/assets/badges/${place.id}.png`, import.meta.url)), `${place.id} badge art`);
+  }
+  for (const place of [...landmarks, ...sights].filter((entry) => !isGym(entry))) assert.equal(place.badgeNameEn, undefined, place.id);
 });

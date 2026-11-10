@@ -11,6 +11,7 @@ html { scroll-padding-top: 72px; }
   --lp-card: #eee8dc; --lp-card-line: #d4dacb; --lp-coral: #d46d4d; --lp-coral-dark: #f0a385; --lp-link-hover: #b4563a;
   --lp-meadow: #dce1b2; --lp-pale: #e8eddb; --lp-bezel: #304d40; --lp-map-text: #d3dfcf; --lp-map-eyebrow: #a7c2a4; --lp-dash: #a6b09b;
   --lp-serif: 'Newsreader', Georgia, serif; --lp-zh: 'Noto Serif TC', 'Songti TC', serif; --lp-mono-face: 'IBM Plex Mono', monospace; --lp-pixel: 'Silkscreen', monospace;
+  --lp-gold: #f2cf73; --lp-gold-ink: #5a3f12; --lp-gold-line: #8a6420;
   --lp-gutter: 32px; --lp-section: 96px;
   min-height: 100vh; overflow-x: clip; background: var(--lp-cream); color: var(--lp-ink); font-family: 'DM Sans', sans-serif; -webkit-font-smoothing: antialiased;
 }
@@ -111,20 +112,28 @@ html[lang="zh-Hant"] .lp-display { font-family: var(--lp-zh); font-weight: 500; 
 .lp-pin-label { position: absolute; top: -10px; padding: 2px 7px; border-radius: 2px; background: #f6f3e9e8; color: var(--lp-pine); font-size: 12px; font-weight: 600; white-space: nowrap; cursor: pointer; }
 .lp-side-left > .lp-pin-label { right: 20px; }
 .lp-side-right > .lp-pin-label { left: 20px; }
-.lp-detail { flex: 1 1 300px; min-width: 0; display: flex; flex-direction: column; overflow: hidden; border-radius: 6px; background: var(--lp-cream); color: var(--lp-ink); }
+.lp-side-above > .lp-pin-label { left: 0; top: -42px; transform: translateX(-50%); }
+/* Below, hanging left from the pin, for east-edge places whose side label would sit under a neighbour's pin. */
+.lp-side-below > .lp-pin-label { right: -13px; top: 20px; }
+.lp-detail { flex: 1 1 300px; min-width: 0; display: flex; flex-direction: column; align-self: flex-start; position: sticky; top: 88px; overflow: hidden; border-radius: 6px; background: var(--lp-cream); color: var(--lp-ink); }
 .lp-detail-art { display: flex; align-items: flex-end; justify-content: center; flex: none; height: 190px; padding: 18px 18px 0; background: var(--lp-pale); border-bottom: 1px solid #d2ddc3; }
 .lp-facade { width: 100%; height: 100%; background: center bottom / contain no-repeat; image-rendering: pixelated; }
+/* Map-view art is a square-cornered piece of the city map, framed rather than standing on the ground line. */
+.lp-detail-art:has(.lp-map-view) { padding: 16px; }
+.lp-facade.lp-map-view, .lp-map-view .lp-card-facade { background-position: center; filter: drop-shadow(0 3px 0 #24392d30); }
 .lp-facade-pending { display: flex; align-items: center; justify-content: center; width: 100%; height: 150px; padding: 12px; border: 1px dashed var(--lp-dash); border-bottom: 0; background: repeating-linear-gradient(135deg, #dfe5d0 0 8px, #e8eddb 8px 16px); font: 11px var(--lp-mono-face); color: var(--lp-muted); text-align: center; }
 .lp-detail-body { flex: 1; display: flex; flex-direction: column; gap: 14px; padding: 24px; }
 .lp-detail-meta { display: flex; justify-content: space-between; align-items: center; gap: 10px; font: 11px var(--lp-mono-face); letter-spacing: 1px; color: var(--lp-muted); }
 .lp-chip { flex: none; padding: 3px 8px; border-radius: 2px; background: #eadfc9; color: #6e5238; }
 .lp-chip.is-open { background: var(--lp-pine); color: var(--lp-cream-dark); }
+.lp-chip.is-landmark { background: var(--lp-gold); color: var(--lp-gold-ink); }
 .lp-detail-names { display: flex; flex-direction: column; gap: 4px; }
 .lp-detail-names h3 { font-size: 30px; line-height: 1.1; letter-spacing: -.6px; color: var(--lp-pine); }
 .lp-detail-names span { font-family: var(--lp-zh); font-size: 16px; letter-spacing: 2px; color: var(--lp-muted); }
 html[lang="zh-Hant"] .lp-detail-names span { font-family: inherit; font-size: 14px; letter-spacing: 0; }
 .lp-detail-text { font-size: 14px; line-height: 1.65; color: var(--lp-body); text-wrap: pretty; }
-.lp-detail-foot { display: flex; flex-direction: column; gap: 10px; margin-top: auto; padding-top: 14px; border-top: 1px solid var(--lp-line); font-size: 13px; }
+.lp-detail-foot { display: flex; flex-direction: column; gap: 10px; padding-top: 14px; border-top: 1px solid var(--lp-line); font-size: 13px; }
+.lp-landmark-note { line-height: 1.55; color: var(--lp-body); }
 .lp-leader { display: flex; align-items: center; gap: 12px; }
 .lp-portrait { display: flex; align-items: center; justify-content: center; flex: none; width: 56px; height: 56px; border: 1.5px dashed var(--lp-dash); border-radius: 4px; background: var(--lp-pale); font: 14px var(--lp-mono-face); color: var(--lp-muted); }
 .lp-portrait-art { border: 1px solid #c8d2bb; background-position: center -6px; background-repeat: no-repeat; background-size: 128px 128px; image-rendering: pixelated; }
@@ -139,9 +148,18 @@ html[lang="zh-Hant"] .lp-detail-names span { font-family: inherit; font-size: 14
 .lp-real-life a { font-weight: 600; }
 
 /* Landmarks */
-.lp-gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 16px; }
+.lp-gallery { display: flex; flex-direction: column; gap: 48px; }
+.lp-gallery-group { display: flex; flex-direction: column; gap: 18px; }
+.lp-gallery-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px 24px; padding-bottom: 12px; border-bottom: 1px solid var(--lp-line); }
+.lp-gallery-head h3 { font: 400 28px/1.1 var(--lp-serif); letter-spacing: -.4px; color: var(--lp-pine); }
+html[lang="zh-Hant"] .lp-gallery-head h3 { font-family: var(--lp-zh); font-weight: 500; letter-spacing: 0; }
+.lp-gallery-head h3 span { margin-left: 6px; font: 13px var(--lp-mono-face); color: var(--lp-eyebrow); }
+.lp-gallery-head p { font-size: 14px; color: var(--lp-muted); }
+.lp-gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 16px; }
 .lp-card { display: flex; flex-direction: column; min-width: 0; padding: 0; overflow: hidden; border: 1px solid var(--lp-card-line); border-radius: 6px; background: var(--lp-card); color: inherit; font: inherit; text-align: left; }
 .lp-card:hover { border-color: var(--lp-pine); }
+.lp-card.is-landmark:hover { border-color: var(--lp-gold-line); }
+.lp-card-art.lp-map-view { padding: 12px; }
 .lp-card-art { display: flex; align-items: flex-end; justify-content: center; height: 140px; padding: 14px 14px 0; border-bottom: 1px solid #a6b09b70; }
 .lp-card-facade { display: block; width: 100%; height: 100%; background: center bottom / contain no-repeat; image-rendering: pixelated; }
 .lp-card-pending { display: flex; align-items: center; justify-content: center; width: 100%; height: 110px; border: 1px dashed var(--lp-dash); border-bottom: 0; background: repeating-linear-gradient(135deg, #00000008 0 8px, transparent 8px 16px); font: 10px var(--lp-mono-face); color: var(--lp-eyebrow); }
@@ -149,6 +167,7 @@ html[lang="zh-Hant"] .lp-detail-names span { font-family: inherit; font-size: 14
 .lp-card-meta { display: flex; justify-content: space-between; align-items: center; gap: 8px; font: 10px var(--lp-mono-face); color: var(--lp-eyebrow); }
 .lp-card-meta .is-open { color: #2f6a4a; }
 .lp-card-meta .is-planned { color: #8a6a4e; }
+.lp-card-meta .is-landmark { color: var(--lp-gold-line); }
 .lp-card-name { font-size: 15px; font-weight: 600; line-height: 1.3; color: var(--lp-ink); }
 .lp-card-other { font-family: var(--lp-zh); font-size: 13px; letter-spacing: 1px; color: var(--lp-muted); }
 html[lang="zh-Hant"] .lp-card-other { font-family: inherit; font-size: 12px; letter-spacing: 0; }
@@ -188,6 +207,10 @@ html[lang="zh-Hant"] .lp-card-other { font-family: inherit; font-size: 12px; let
 .lp-pass { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; align-content: center; aspect-ratio: 3/2; padding: 18px; border: 1px solid var(--lp-card-line); border-radius: 4px; background: var(--lp-card); }
 .lp-stamp { display: flex; align-items: center; justify-content: center; aspect-ratio: 1; border: 1.5px dashed #b6bda8; border-radius: 50%; color: #9aa48f; font: 11px var(--lp-pixel); transform: rotate(-12deg); }
 .lp-stamp.is-earned { border: 2px solid var(--lp-coral); background: #d46d4d18; color: var(--lp-link-hover); }
+/* The badge stays upright and crisp inside the tilted stamp ring; its number tucks under it. */
+.lp-stamp { position: relative; }
+.lp-stamp img { width: 58%; height: auto; transform: rotate(12deg); image-rendering: pixelated; }
+.lp-stamp > span { position: absolute; bottom: -2px; left: 50%; padding: 0 3px; background: var(--lp-card); font-size: 8px; line-height: 1.2; transform: translateX(-50%) rotate(12deg); }
 
 /* Play */
 .lp-cta { border-top: 1px solid #c9d09a; background: var(--lp-meadow); }
@@ -257,6 +280,8 @@ html[lang="zh-Hant"] .lp-cta-zh { display: none; }
   .lp-team-sprites i { width: 32px; height: 32px; }
 }
 
-/* Visit stops are distinct from open or planned gyms. */
-.is-visit > .lp-marker { background: var(--lp-cream); border-style: double; }
-.lp-swatch-visit { background: var(--lp-cream); border: 1px solid var(--lp-pine); }
+/* Landmarks without a gym are round gold pins, distinct from the square gym pins. */
+.is-landmark > .lp-marker { border-color: var(--lp-gold-line); border-radius: 50%; background: var(--lp-gold); box-shadow: 0 3px 0 #6b4c17; color: var(--lp-gold-ink); }
+.is-landmark.is-selected > .lp-marker { background: var(--lp-coral); border-color: var(--lp-pine); color: var(--lp-cream-dark); }
+.is-landmark > .lp-pin-label { background: #fbf1d6ee; color: var(--lp-gold-ink); }
+.lp-swatch-landmark { border: 1.5px solid var(--lp-gold-line); border-radius: 50% !important; background: var(--lp-gold); }

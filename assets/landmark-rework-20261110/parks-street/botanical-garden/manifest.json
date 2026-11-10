@@ -1,0 +1,27 @@
+{
+  "id": "botanical-garden",
+  "status": "art-review; not installed",
+  "worldRectExclusive": [
+    49,
+    21,
+    62,
+    28
+  ],
+  "nativeSize": [
+    208,
+    112
+  ],
+  "paletteColorsIncludingTransparent": 16,
+  "opaqueColorsUsed": 14,
+  "rawTileCount": 364,
+  "unique8x8Tiles": 189,
+  "unique8x8TilesWithFlips": 186,
+  "packedTileCountIncludingEmpty": 186,
+  "packedTileRoundTripVerified": true,
+  "sha256": "228f1ad563c9355fabb2daf3ed40802a73210bbc3db6c842f2c780be0fe6f5fe",
+  "references": [
+    "https://www.nmns.edu.tw/en/exhibitions/galleries/botanical-garden/tropical-rain-forest-greenhouse/",
+    "https://travel.taichung.gov.tw/zh-tw/Attractions/Intro/158/"
+  ],
+  "integration": "Exact audited native dimensions. Art review pack, not a ROM patch. Requires tile-bank allocation/repacking and collision refresh for new object shapes, preserving real sign/warp/road approaches. Existing empty-ground cells are not automatically hard keep-clear reservations. No game or website sources changed."
+}

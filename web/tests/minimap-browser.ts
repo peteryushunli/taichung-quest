@@ -16,7 +16,7 @@ let opened = 0;
 const hud = createMinimap({ screen, toggle, hint, geometry, storage, openGuide: () => { opened++; } });
 const button = screen.querySelector<HTMLButtonElement>('#live-minimap')!;
 const player = button.querySelector<SVGGElement>('.minimap-player')!;
-const field: NavigationSnapshot = { frame: 2, sequence: 4, flags: 79, x: 30, y: 66, width: 40, height: 72, mapGroup: 43, mapNumber: 0, facing: 2, mapType: 1, contextFlags: 0 };
+const field: NavigationSnapshot = { frame: 2, sequence: 4, flags: 79, x: 30, y: 66, width: 44, height: 77, mapGroup: 43, mapNumber: 0, facing: 2, mapType: 1, contextFlags: 0 };
 function showField(packet = field) { hud.update({ phase: 'live', snapshot: packet }); }
 function preference(value: string) { toggle.value = value; toggle.dispatchEvent(new Event('change', { bubbles: true })); }
 function assert(condition: unknown, message: string) { if (!condition) throw new Error(message); }
@@ -38,16 +38,17 @@ document.querySelector<HTMLButtonElement>('#run')!.addEventListener('click', () 
     document.querySelector('#results')!.textContent = lines.join('\n');
   }
   setLocale('en');
-  check('default On renders the actual mapped exterior tile and ten landmark anchors', () => {
+  check('default On centres a street view on the mapped tile with every gym and landmark marked', () => {
     showField();
     assert(toggle.value === 'on' && !button.hidden, 'Expected default On');
-    assert(player.getAttribute('transform') === 'translate(110.5 114.5)', 'Incorrect mapped tile center');
-    assert(button.querySelectorAll('[data-landmark]').length === 10, 'Expected ten authored anchors');
-    assert(button.querySelectorAll('[data-district].current').length === 1, 'Expected one current district');
+    assert(player.getAttribute('transform') === 'translate(115.5 119.5)', 'Incorrect mapped tile center');
+    assert(button.querySelector('svg')!.getAttribute('viewBox') === '93 106 36 27', 'Expected a 36×27 view centred on the player, clamped to the east edge');
+    assert(button.querySelectorAll('.minimap-gym').length === 10 && button.querySelectorAll('.minimap-sight').length === 10, 'Expected ten gyms and ten landmarks');
+    assert(button.querySelector('image')?.getAttribute('href'), 'Expected the city render under the markers');
   });
   check('shared button icon styles do not shrink the map drawing', () => {
     const drawing = button.querySelector('svg')!.getBoundingClientRect();
-    assert(drawing.width >= 56 && Math.abs(drawing.width - drawing.height) < 1, 'Expected a square map at the HUD content width');
+    assert(drawing.width >= 56 && Math.abs(drawing.width / drawing.height - 4 / 3) < .02, 'Expected a 4:3 view at the HUD content width');
   });
   check('menu Off hides immediately and persists for a reconstructed HUD', () => {
     preference('off');
@@ -86,7 +87,7 @@ document.querySelector<HTMLButtonElement>('#run')!.addEventListener('click', () 
     showField({ ...field, mapNumber: 99 });
     assert(button.hidden, 'Unknown native map was rendered');
   });
-  check('all ten compact names fit the minimum HUD width in both languages', () => {
+  check('every compact landmark name fits the minimum HUD width in both languages', () => {
     const previousWidth = screen.style.width;
     screen.style.width = '240px';
     try {
@@ -104,7 +105,7 @@ document.querySelector<HTMLButtonElement>('#run')!.addEventListener('click', () 
           assert(button.title.includes(fullName) && button.getAttribute('aria-label')!.includes(fullName), 'Full landmark identity was lost');
           shown.add(label.textContent!);
         }
-        assert(shown.size === 10, 'Compact names must distinguish all ten landmarks');
+        assert(shown.size === Object.keys(geometry.markersById).length, 'Compact names must distinguish every mapped landmark');
       }
     } finally { screen.style.width = previousWidth; setLocale('en'); showField(); }
   });

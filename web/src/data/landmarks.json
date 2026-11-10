@@ -9,8 +9,8 @@
     "minimapNameZh": "舊車站",
     "category": "Railway heritage",
     "categoryZh": "鐵道文化",
-    "description": "The historic station is known for its red-brick facade and central clock tower. Now part of the railway cultural park, it is a place to explore Taichung’s railway heritage beside the modern station.",
-    "descriptionZh": "以紅磚立面與中央鐘塔為特色的歷史車站，如今是鐵道文化園區的一部分。可以在新舊車站並存的景色中，認識臺中的鐵道記憶。",
+    "description": "Completed in 1917 under Japanese rule, this red-brick station was designed by the colonial government's railway department in a Renaissance-revival style and crowned with a central clock tower. Protected as a historic site since 1995, it served passengers for almost a century, until the elevated station next door opened in October 2016. Today it anchors the Taichung Station Railway Cultural Park, where you can stroll the old platforms, see retired trains on display, and browse shops, exhibitions and weekend markets.",
+    "descriptionZh": "舊臺中車站於1917年日治時期完工，由臺灣總督府的鐵道單位設計，紅磚牆面搭配中央鐘塔，屬於後期文藝復興風格。1995年列為古蹟，服務旅客將近百年，直到2016年10月旁邊的高架新站啟用才退役。如今是臺中車站鐵道文化園區的核心，可以走上舊月台、看看靜態展示的退役列車，再逛逛園區的商店、展覽與週末市集。",
     "officialUrl": "https://travel.taichung.gov.tw/en/attractions/intro/1942",
     "officialSourceTitle": "Taichung Tourism and Travel Bureau — Taichung Station Railway Cultural Park",
     "location": {
@@ -36,7 +36,16 @@
     "landmarkHallRef": "MAP_TAICHUNG_OLD_STATION_GYM",
     "gymStatus": "playable",
     "gymLeaderEn": "Jun",
-    "gymLeaderZh": "俊"
+    "gymLeaderZh": "俊",
+    "descriptionSources": [
+      "https://en.wikipedia.org/wiki/Taichung_railway_station",
+      "https://zh.wikipedia.org/wiki/臺中車站",
+      "https://zh.wikipedia.org/wiki/臺中驛",
+      "https://zh.wikipedia.org/wiki/臺中車站鐵道文化園區",
+      "https://travel.taichung.gov.tw/en/attractions/intro/1942"
+    ],
+    "badgeNameEn": "Departure Badge",
+    "badgeNameZh": "啟程徽章"
   },
   {
     "id": "taichung-park",
@@ -48,8 +57,8 @@
     "minimapNameZh": "臺中公園",
     "category": "Historic park",
     "categoryZh": "歷史公園",
-    "description": "A historic city park with a lake, arched bridges and the distinctive Mid-Lake Pavilion. Walk its shaded paths and see a landmark that has long represented Taichung.",
-    "descriptionZh": "擁有湖泊、拱橋與代表性湖心亭的歷史公園。沿著綠蔭步道散步，看看長久以來象徵臺中的城市地標。",
+    "description": "Opened in 1903, Taichung Park is the city's oldest park, laid out around a lake with arched bridges and shady paths. Its famous Mid-Lake Pavilion, with two roofs side by side, was built in 1908 as a rest house for the ceremony celebrating the completion of Taiwan's north–south railway; it became such a symbol of Taichung that it inspired the city government's logo, and it has been a protected historic site since 1999. Walk the lakeside loop, then look for the Moon-Watching Pavilion, a gate tower from the Qing-era provincial city moved here when the park opened.",
+    "descriptionZh": "臺中公園1903年落成，是臺中歷史最悠久的公園，園內有日月湖、拱橋與林蔭步道。湖上雙亭並立的湖心亭建於1908年，原是縱貫鐵路全通式典禮的貴賓休憩所，後來成為臺中的代表象徵，1999年列為市定古蹟。沿著湖畔散步欣賞湖心亭，也別錯過由清代臺灣省城大北門城樓移建而來的望月亭。",
     "officialUrl": "https://travel.taichung.gov.tw/en/attractions/intro/882",
     "officialSourceTitle": "Taichung Tourism and Travel Bureau — Taichung Park",
     "location": {
@@ -75,7 +84,14 @@
     "landmarkHallRef": "MAP_TAICHUNG_PARK_GYM",
     "gymStatus": "playable",
     "gymLeaderEn": "Lian",
-    "gymLeaderZh": "莉安"
+    "gymLeaderZh": "莉安",
+    "descriptionSources": [
+      "https://en.wikipedia.org/wiki/Taichung_Park",
+      "https://zh.wikipedia.org/wiki/臺中公園",
+      "https://travel.taichung.gov.tw/en/attractions/intro/882"
+    ],
+    "badgeNameEn": "Pavilion Badge",
+    "badgeNameZh": "湖亭徽章"
   },
   {
     "id": "miyahara",
@@ -87,8 +103,8 @@
     "minimapNameZh": "宮原眼科",
     "category": "Heritage & desserts",
     "categoryZh": "歷史建築與甜點",
-    "description": "A former eye clinic near the station, restored as a red-brick destination for pastries and ice cream. Look for the preserved facade and archway, then explore its tall, bookcase-lined interior.",
-    "descriptionZh": "鄰近車站的舊眼科診所，修復後成為以糕點與冰淇淋聞名的紅磚建築。可以欣賞保留下來的立面與牌樓，再走進挑高、排列木書架的室內空間。",
+    "description": "This red-brick building opened in 1927 as the eye clinic of Japanese ophthalmologist Miyahara Takekuma, then the largest in Taichung. After 1945 it housed the city's health office, then slowly fell into ruin, with further damage from the 1999 earthquake and a 2008 typhoon. Dawn Cake bought the shell in 2010 and reopened it in 2012, keeping the old brick facade and arcade while filling the soaring interior with library-style bookcases. Come for a scoop of ice cream, then browse the beautifully boxed pastries and pineapple cakes.",
+    "descriptionZh": "這棟紅磚建築建於1927年，原是日本醫師宮原武熊開設的眼科醫院，當時為臺中最大的眼科。戰後曾作為衛生院，之後逐漸荒廢，又在九二一地震與2008年颱風中受損。日出於2010年買下整修，2012年重新開幕，保留紅磚立面與騎樓，室內打造成挑高、排滿書櫃的空間。來這裡吃支冰淇淋，再挑些包裝精美的糕點與鳳梨酥。",
     "officialUrl": "https://travel.taichung.gov.tw/en/Attractions/Intro/1239",
     "officialUrlZh": "https://travel.taichung.gov.tw/zh-tw/Attractions/Intro/793",
     "officialSourceTitle": "Taichung Tourism and Travel Bureau — Miyahara",
@@ -115,14 +131,22 @@
     "gymLeaderEn": "Peiqi",
     "gymLeaderZh": "沛琪",
     "landmarkHallRef": "MAP_TAICHUNG_MIYAHARA_GYM",
-    "gymStatus": "playable"
+    "gymStatus": "playable",
+    "descriptionSources": [
+      "https://zh.wikipedia.org/wiki/宮原眼科",
+      "https://en.wikipedia.org/wiki/Miyahara_Ice_Cream",
+      "https://zh.wikipedia.org/wiki/宮原武熊",
+      "https://travel.taichung.gov.tw/en/Attractions/Intro/1239"
+    ],
+    "badgeNameEn": "Chill Badge",
+    "badgeNameZh": "沁涼徽章"
   },
   {
     "id": "natural-science-museum",
     "nameEn": "National Museum of Natural Science",
     "nameZh": "國立自然科學博物館",
     "category": "Science museum",
-    "description": "A science museum with galleries about life, human cultures and the environment, plus a botanical garden. Discover dinosaur exhibits and Taiwan's native plants at a major destination for learning about the natural world.",
+    "description": "The National Museum of Natural Science opened its first phase on New Year's Day 1986 and kept growing until 1999, becoming a six-venue complex with halls for science, life, human cultures and the global environment, plus a dome-shaped Space Theater and a botanical garden. Favorites include the dinosaur hall's moving Tyrannosaurus and a full-size replica of Su Song's 11th-century astronomical clock tower. Next door, the 4.5-hectare garden and its towering rainforest greenhouse show off Taiwan's native plants. Nearly three million people visit each year.",
     "officialUrl": "https://www.nmns.edu.tw/en/",
     "officialSourceTitle": "National Museum of Natural Science — Galleries",
     "playable": true,
@@ -138,7 +162,7 @@
     "minimapNameEn": "Science",
     "minimapNameZh": "科博館",
     "categoryZh": "科學博物館",
-    "descriptionZh": "結合生命、人類文化、環境等主題展區與植物園的科學博物館。從恐龍展示到臺灣原生植物，是認識自然世界的重要去處。",
+    "descriptionZh": "國立自然科學博物館第一期於1986年元旦開放，之後陸續增建，1999年植物園開放後，成為包含科學中心、太空劇場、生命科學廳、人類文化廳、地球環境廳與植物園的六大場館。機械暴龍與按原尺寸復原的蘇頌水運儀象臺都很受歡迎；4.5公頃的植物園與熱帶雨林溫室，能近距離認識臺灣原生植物。每年參觀人次近三百萬。",
     "districtId": "greenway",
     "phase": "city-v1",
     "gameLayoutRef": "LAYOUT_TAICHUNG_GREENWAY",
@@ -154,7 +178,14 @@
     "landmarkHallRef": "MAP_TAICHUNG_SCIENCE_MUSEUM_GYM",
     "gymStatus": "playable",
     "gymLeaderEn": "Yicheng",
-    "gymLeaderZh": "以澄"
+    "gymLeaderZh": "以澄",
+    "descriptionSources": [
+      "https://en.wikipedia.org/wiki/National_Museum_of_Natural_Science",
+      "https://zh.wikipedia.org/wiki/國立自然科學博物館",
+      "https://www.nmns.edu.tw/en/"
+    ],
+    "badgeNameEn": "Discovery Badge",
+    "badgeNameZh": "發現徽章"
   },
   {
     "id": "calligraphy-greenway",
@@ -176,8 +207,8 @@
     "minimapNameEn": "Greenway",
     "minimapNameZh": "草悟道",
     "categoryZh": "綠廊與公共廣場",
-    "description": "A green cultural corridor linking the science museum, Civic Square and the fine-arts district. Walk the promenade, spend time in the square, and explore nearby shops around Park Lane by CMP.",
-    "descriptionZh": "串連科學博物館、市民廣場與美術街區的綠色文化廊道。可以漫步草悟道、在廣場停留，也能走訪勤美誠品綠園道周邊的小店。",
+    "description": "Calligraphy Greenway is a 3.6-kilometer ribbon of park that runs from the National Museum of Natural Science past the National Taiwan Museum of Fine Arts. Its Chinese name, Caowudao, borrows from cursive calligraphy, a nod to the way the path flows through the city; it took its current form when the older Jingguo Greenway was redesigned in the early 2010s. Along the way are Civic Square, the sunken Caowu Square and the shops of Park Lane by CMP. Street performers gather here, and Civic Square hosts the Taichung Jazz Festival each October.",
+    "descriptionZh": "草悟道是全長約3.6公里的帶狀綠園道，從國立自然科學博物館一路延伸，經過國立臺灣美術館。名稱取自書法的草書，象徵步道在城市中自在流動；2010年代初由原本的經國綠園道改造成現在的樣貌。沿途有市民廣場、下沉式的草悟廣場與勤美誠品綠園道，常有街頭藝人表演，每年10月的臺中爵士音樂節也在市民廣場登場。",
     "districtId": "greenway",
     "phase": "city-v1",
     "gameLayoutRef": "LAYOUT_TAICHUNG_GREENWAY",
@@ -194,7 +225,14 @@
     "landingNameEn": "Greenway",
     "gymStatus": "playable",
     "gymLeaderEn": "Xingan",
-    "gymLeaderZh": "行安"
+    "gymLeaderZh": "行安",
+    "descriptionSources": [
+      "https://en.wikipedia.org/wiki/Calligraphy_Greenway",
+      "https://zh.wikipedia.org/wiki/草悟道",
+      "https://travel.taichung.gov.tw/en/Attractions/Intro/1050"
+    ],
+    "badgeNameEn": "Brush Badge",
+    "badgeNameZh": "筆意徽章"
   },
   {
     "id": "shen-ji-new-village",
@@ -206,8 +244,8 @@
     "minimapNameZh": "審計新村",
     "category": "Creative neighborhood",
     "categoryZh": "文創街區",
-    "description": "Former auditing-office dormitories now house independent shops and creative studios. Wander the compact lanes to see how old housing has become a home for young entrepreneurs and local design.",
-    "descriptionZh": "原本的審計處員工宿舍，如今聚集獨立小店與創意工作室。走進小巧的巷弄，看看老宿舍如何成為青年創業與在地設計的空間。",
+    "description": "Shen Ji New Village was built by the Taiwan Provincial Government as housing for its audit office staff: a small cluster of two-story, pale-yellow homes off Minsheng Road. After the provincial government was scaled back in 1998, the houses stood empty for years, until professors and students from National Chung Hsing University began holding markets here and the city turned the site into a base for young entrepreneurs in the mid-2010s. Today its lanes are filled with small shops, cafés and design studios, with creative markets on some weekends.",
+    "descriptionZh": "審計新村原是臺灣省政府時期興建的審計處員工宿舍，一棟棟淡黃色的兩層樓房藏在民生路巷內。1998年精省後，宿舍閒置多年，直到中興大學師生來此舉辦市集，市府也在2015年前後將這裡規劃為青年創業基地，才重新熱鬧起來。如今巷弄間聚集小店、咖啡館與設計工作室，週末不時還有文創市集。",
     "officialUrl": "https://travel.taichung.gov.tw/en/Attractions/Intro/1222",
     "officialUrlZh": "https://travel.taichung.gov.tw/zh-tw/attractions/intro/1139",
     "officialSourceTitle": "Taichung Tourism and Travel Bureau — Shen Ji New Village",
@@ -235,14 +273,21 @@
     "landingNameEn": "Shen Ji",
     "gymStatus": "playable",
     "gymLeaderEn": "Axiu",
-    "gymLeaderZh": "阿修"
+    "gymLeaderZh": "阿修",
+    "descriptionSources": [
+      "https://zh.wikipedia.org/wiki/審計新村",
+      "https://travel.taichung.gov.tw/en/Attractions/Intro/1222",
+      "https://news.pts.org.tw/article/370975"
+    ],
+    "badgeNameEn": "Craft Badge",
+    "badgeNameZh": "巧作徽章"
   },
   {
     "id": "fine-arts-museum",
     "nameEn": "National Taiwan Museum of Fine Arts",
     "nameZh": "國立臺灣美術館",
     "category": "Art museum",
-    "description": "A national art museum focused on modern and contemporary Taiwanese art. Explore its exhibitions and outdoor sculpture park for a closer look at Taiwan's artists and visual culture.",
+    "description": "The National Taiwan Museum of Fine Arts opened in June 1988 as the Taiwan Provincial Museum of Art and took its national name in 1999. The 921 earthquake that same year closed the building until July 2004. Set in about 10 hectares of grounds with an outdoor sculpture park, it collects and shows modern and contemporary Taiwanese art, including works by early masters such as Chen Cheng-po and Huang Tu-shui, and has staged the Taiwan Biennial since 2008. Families can also explore its children's art spaces and picture-book area.",
     "officialUrl": "https://www.ntmofa.gov.tw/en/cp.aspx?n=1579",
     "officialSourceTitle": "National Taiwan Museum of Fine Arts — Overview",
     "playable": true,
@@ -258,7 +303,7 @@
     "minimapNameEn": "Fine Arts",
     "minimapNameZh": "國美館",
     "categoryZh": "美術館",
-    "descriptionZh": "以臺灣現代與當代藝術為重點的國立美術館。可以參觀展覽、漫步戶外雕塑園區，認識臺灣藝術家與視覺文化。",
+    "descriptionZh": "國立臺灣美術館1988年6月開館，原名臺灣省立美術館，1999年精省後改為現名。同年九二一地震使建築受損封館，2004年7月才重新開放。館區連同戶外雕塑公園約10公頃，以臺灣近現代與當代藝術為主軸，典藏陳澄波、黃土水等前輩作品，2008年起舉辦臺灣美術雙年展。也有兒童藝術空間與繪本區，適合親子同遊。",
     "districtId": "greenway",
     "phase": "city-v1",
     "gameLayoutRef": "LAYOUT_TAICHUNG_GREENWAY",
@@ -274,7 +319,14 @@
     "landmarkHallRef": "MAP_TAICHUNG_FINE_ARTS_GYM",
     "gymStatus": "playable",
     "gymLeaderEn": "Caining",
-    "gymLeaderZh": "采寧"
+    "gymLeaderZh": "采寧",
+    "descriptionSources": [
+      "https://en.wikipedia.org/wiki/National_Taiwan_Museum_of_Fine_Arts",
+      "https://zh.wikipedia.org/wiki/國立臺灣美術館",
+      "https://www.ntmofa.gov.tw/en/cp.aspx?n=1579"
+    ],
+    "badgeNameEn": "Palette Badge",
+    "badgeNameZh": "調色徽章"
   },
   {
     "id": "fengjia-night-market",
@@ -286,8 +338,8 @@
     "minimapNameZh": "逢甲夜市",
     "category": "Night market",
     "categoryZh": "夜市",
-    "description": "A lively shopping and food district around Feng Chia University, with snack stalls, clothing shops and busy lanes. Come for Taichung’s street-food culture and evening market atmosphere.",
-    "descriptionZh": "圍繞逢甲大學發展的熱鬧商圈，巷弄中聚集小吃攤、服飾店與逛街人潮。適合認識臺中的街頭飲食文化與夜市氣氛。",
+    "description": "Fengjia Night Market grew up beside Feng Chia University after the school moved to Xitun in 1963, beginning with food stalls along Wenhua Road. It has since spread across Fuxing Road, Fengjia Road, Xitun Road and the lanes in between, and it is often described as Taiwan's largest night market. Readers of Global Views magazine voted it the country's favorite night market in 2013, and by the mid-2010s it was drawing more than 11 million visitors a year. Come hungry in the evening, graze on street snacks, then browse the clothing and accessory shops.",
+    "descriptionZh": "逢甲夜市隨著逢甲大學前身逢甲工商學院在1963年遷到西屯而興起，最早從文華路的小吃攤開始，後來擴展到福星路、逢甲路、西屯路等周邊街巷，常被稱為全臺規模最大的夜市。2013年《遠見雜誌》讀者票選中獲選最受歡迎夜市，2010年代中期每年吸引超過千萬人次。傍晚空著肚子來邊走邊吃，再逛逛服飾與配件小店。",
     "officialUrl": "https://travel.taichung.gov.tw/en/Attractions/Intro/850",
     "officialSourceTitle": "Taichung Tourism and Travel Bureau — Fengchia Night Market",
     "location": {
@@ -313,7 +365,14 @@
     "landmarkHallRef": "MAP_TAICHUNG_FENGJIA_GYM",
     "gymStatus": "playable",
     "gymLeaderEn": "Jiahe",
-    "gymLeaderZh": "嘉禾"
+    "gymLeaderZh": "嘉禾",
+    "descriptionSources": [
+      "https://en.wikipedia.org/wiki/Fengjia_Night_Market",
+      "https://zh.wikipedia.org/wiki/逢甲夜市",
+      "https://travel.taichung.gov.tw/en/Attractions/Intro/850"
+    ],
+    "badgeNameEn": "Feast Badge",
+    "badgeNameZh": "豐味徽章"
   },
   {
     "id": "maple-garden",
@@ -325,8 +384,8 @@
     "minimapNameZh": "秋紅谷",
     "category": "Urban park",
     "categoryZh": "城市公園",
-    "description": "A sunken urban green space beside Taiwan Boulevard, with a lake, planted slopes and an observation bridge. Its paths offer a quieter walk among the surrounding city buildings.",
-    "descriptionZh": "位於臺灣大道旁的下凹式城市綠地，設有湖泊、植栽坡地與觀景橋。沿著步道走走，在都市建築之間感受較安靜的綠意。",
+    "description": "Maple Garden began as a stalled building project: the site beside Taiwan Boulevard was meant for a convention center, but after only the foundation pit was dug, the city ended the contract in 2008 and turned the hole into a park. Opened in 2012, this sunken valley of about three hectares holds a lake, lawns, colorful trees and an observation bridge, and doubles as a stormwater detention basin. Its Chinese name means \"Autumn Red Valley,\" and the design won a FIABCI Prix d'Excellence gold award in 2014. It makes a calm stroll among the city towers, especially after dark.",
+    "descriptionZh": "秋紅谷原本規劃興建會議中心，但開發商只挖了地基，市府於2008年終止合約，之後把這個大坑改造成公園，2012年開放。占地約3公頃的下凹式綠地，有生態湖、草坡、觀景橋與繽紛樹木，同時兼具滯洪池功能，2014年獲得FIABCI全球卓越建設獎金獎。白天散步，晚上看周邊大樓燈光，都很適合。",
     "officialUrl": "https://travel.taichung.gov.tw/en/attractions/intro/851",
     "officialUrlZh": "https://travel.taichung.gov.tw/zh-tw/attractions/intro/818",
     "officialSourceTitle": "Taichung Tourism and Travel Bureau — Maple Garden",
@@ -353,14 +412,21 @@
     "landmarkHallRef": "MAP_TAICHUNG_MAPLE_GARDEN_GYM",
     "gymStatus": "playable",
     "gymLeaderEn": "Muqing",
-    "gymLeaderZh": "沐晴"
+    "gymLeaderZh": "沐晴",
+    "descriptionSources": [
+      "https://zh.wikipedia.org/wiki/秋紅谷廣場",
+      "https://travel.taichung.gov.tw/en/attractions/intro/851",
+      "https://english.taichung.gov.tw/10273/10554/10719/730143"
+    ],
+    "badgeNameEn": "Habitat Badge",
+    "badgeNameZh": "棲地徽章"
   },
   {
     "id": "taichung-theater",
     "nameEn": "National Taichung Theater",
     "nameZh": "臺中國家歌劇院",
     "category": "Performing arts",
-    "description": "A performing arts venue designed by architect Toyo Ito, known for flowing curved walls and connected sound-cave spaces. Visit for its architecture, public spaces and performances.",
+    "description": "Designed by Japanese architect Toyo Ito, who won its international competition in 2005, the National Taichung Theater officially opened on September 30, 2016. Its concept is the \"Sound Cave\": rather than a frame of columns and beams, the main structure is carried by sweeping curved walls that flow into one another, forming linked, cave-like spaces. Inside are a grand theater for opera and large productions, a mid-sized playhouse and a black-box theater. Besides catching a show, you can explore the public lobbies and shops and ride up to the sixth-floor sky garden.",
     "officialUrl": "https://www.npac-ntt.org/en/about/architecture/design",
     "officialSourceTitle": "National Taichung Theater — Architecture: Design",
     "playable": true,
@@ -376,7 +442,7 @@
     "minimapNameEn": "Theater",
     "minimapNameZh": "國家歌劇院",
     "categoryZh": "表演藝術",
-    "descriptionZh": "由建築師伊東豊雄設計的表演藝術場館，以流動曲牆與相互串連的「美聲涵洞」空間聞名。可以欣賞建築、逛逛公共空間，或安排一場演出。",
+    "descriptionZh": "臺中國家歌劇院由日本建築師伊東豊雄設計，他在2005年的國際競圖中勝出，劇院於2016年9月30日正式開幕。設計概念是「美聲涵洞」，以彼此相連的曲牆作為主要結構，形成如洞穴般流動的空間。館內有大劇院、中劇院與小劇場，除了欣賞演出，也可以逛逛公共空間與商店，再登上6樓的空中花園。",
     "districtId": "xitun",
     "phase": "city-v1",
     "gameLayoutRef": "LAYOUT_TAICHUNG_XITUN",
@@ -392,7 +458,14 @@
     "landmarkHallRef": "MAP_TAICHUNG_THEATER_GYM",
     "gymStatus": "playable",
     "gymLeaderEn": "Ling",
-    "gymLeaderZh": "聆"
+    "gymLeaderZh": "聆",
+    "descriptionSources": [
+      "https://en.wikipedia.org/wiki/National_Taichung_Theater",
+      "https://zh.wikipedia.org/wiki/臺中國家歌劇院",
+      "https://www.npac-ntt.org/en/about/architecture/design"
+    ],
+    "badgeNameEn": "Encore Badge",
+    "badgeNameZh": "謝幕徽章"
   },
   {
     "id": "wanhe-temple",
@@ -405,8 +478,8 @@
     "minimapNameZh": "萬和宮",
     "category": "Temple visit",
     "categoryZh": "廟宇參訪",
-    "description": "Visit this temple in Nantun’s Wanhe precinct, step inside its hall and meet the host. This stop has no gym battle or badge.",
-    "descriptionZh": "走訪南屯萬和宮街廓的廟宇，進入大廳與接待員交談。這個參訪地點沒有道館對戰或徽章。",
+    "description": "Wanhe Temple is the Mazu temple at the heart of old Nantun, the settlement once called Litoudian. Residents from twelve surname groups pooled funds to build it in 1726, choosing a name that voices the hope that people of different origins would live in harmony. Its timber halls, protected as a historic monument since 1985, were restored after the 1999 earthquake. The temple is best known for its Surname Opera, a spring season of performances sponsored by one clan after another, and for the procession that carries its Lao Er Ma statue to Xitun every three years.",
+    "descriptionZh": "萬和宮是南屯舊稱「犁頭店」一帶的媽祖廟，清雍正四年（1726年）由當地十二姓居民集資興建，廟名寄寓不同籍貫的居民和睦共處。傳統木構的廟宇1985年列為古蹟，九二一地震後也經過整修。這裡最有名的是每年春天由各姓氏輪流酬神演出的「字姓戲」，以及每三年一次、迎老二媽回西屯省親的遶境。",
     "districtId": "nantun",
     "districtEn": "Nantun",
     "districtZh": "南屯區",
@@ -421,7 +494,20 @@
     "gymStatus": "not-a-gym",
     "mapX": 22.083333333333332,
     "mapY": 78.125,
-    "mapLabelSide": "right"
+    "mapLabelSide": "right",
+    "artRect": [
+      26,
+      135,
+      37,
+      144
+    ],
+    "descriptionSources": [
+      "https://en.wikipedia.org/wiki/Wanhe_Temple",
+      "https://zh.wikipedia.org/wiki/南屯萬和宮",
+      "https://www.wanhegong.org.tw/html/about/index.aspx"
+    ],
+    "officialUrl": "https://www.wanhegong.org.tw/html/about/index.aspx",
+    "officialSourceTitle": "Wanhe Temple — official site"
   },
   {
     "id": "wenchang-temple",
@@ -434,8 +520,8 @@
     "minimapNameZh": "文昌公廟",
     "category": "Temple visit",
     "categoryZh": "廟宇參訪",
-    "description": "Visit this temple in Nantun’s Wanhe precinct, step inside its hall and meet the host. This stop has no gym battle or badge.",
-    "descriptionZh": "走訪南屯萬和宮街廓的廟宇，進入大廳與接待員交談。這個參訪地點沒有道館對戰或徽章。",
+    "description": "Nantun's Wenchang Temple stands right beside Wanhe Temple and honors Wenchang Dijun, the patron god of literature and examinations. It began in 1797 as the Litoudian Wenchang Shrine, founded by local scholar Zeng Yuyin on land donated by the Jian family, and it doubled as a village school; from 1898 to 1905 it also housed the Japanese-era Litoudian Public School. The present two-story temple, modeled on Confucian temple design, was completed in 1973 and registered as a historic building in 2010. It still holds blessing ceremonies for students facing exams.",
+    "descriptionZh": "南屯文昌公廟就在萬和宮旁，主祀掌管文運與考試的文昌帝君。前身是清嘉慶二年（1797年）由歲貢生曾玉音倡建的「犁頭店文昌祠」，簡姓族人捐地，祠內設有社學；1898至1905年間也曾借作犁頭店公學校校舍。現在的兩層樓廟宇仿孔廟形式，1973年遷建完成，2010年登錄為歷史建築，至今仍為考生舉辦祈福法會。",
     "districtId": "nantun",
     "districtEn": "Nantun",
     "districtZh": "南屯區",
@@ -450,6 +536,20 @@
     "gymStatus": "not-a-gym",
     "mapX": 13.750000000000002,
     "mapY": 78.125,
-    "mapLabelSide": "left"
+    "mapLabelSide": "left",
+    "artRect": [
+      17,
+      136,
+      26,
+      144
+    ],
+    "descriptionSources": [
+      "https://zh.wikipedia.org/wiki/南屯文昌公廟",
+      "https://www.wcgt.org/web/pages/page.php?lang=zh_tw&sid=1",
+      "https://taiwangods.moi.gov.tw/html/cultural/3_0011.aspx?i=227"
+    ],
+    "officialUrl": "https://www.wcgt.org/web/pages/page.php?lang=zh_tw&sid=1",
+    "officialSourceTitle": "Taichung Wenchang Temple — official site",
+    "landingLabelSide": "above"
   }
 ]

@@ -13,12 +13,14 @@
 @media(max-width:450px){html[lang="zh-Hant"] .guide-header h2{max-width:none;font-size:22px;letter-spacing:.5px}.guide-header>div{min-width:0;flex:1}}
 
 /* All guide anchors use the shared world contract, including non-gym visits. */
-.map-district { position: absolute; pointer-events: none; display: flex; flex-direction: column; gap: 4px; color: #8d9e7c; font: 8px/1.35 var(--mono); letter-spacing: 1px; max-width: 145px; }
-.map-district small { font: 8px sans-serif; letter-spacing: 2px; color: #a5b293; }
+.map-district { position: absolute; pointer-events: none; color: #2f5a3d; font: 500 9px/1 var(--mono); letter-spacing: 1px; white-space: nowrap; text-shadow: 0 0 2px #f4f1e3, 0 0 2px #f4f1e3; }
+.map-district.is-sign { padding: 2px 5px; border: 1px solid #f6f3e9; border-radius: 2px; background: #2f6b45; color: #f6f3e9; text-shadow: none; transform: translateY(-50%); }
 .landmark-marker.label-left, .landmark-marker.label-right { width: 26px; height: 26px; padding: 0; }
 .marker-number { width: 26px; height: 26px; flex-shrink: 0; }
 .marker-label { pointer-events: none; }
 .legend-selected { background: #d48158; }
+.legend-gym { background: #426b4e; border-radius: 2px !important; }
+.legend-landmark { background: #f2cf73; border: 1px solid #8a6420; }
 .map-legend { font-size: 9px; flex-wrap: wrap; gap: 6px 20px; }
 .map-caveat { font-size: 10px; }
 .landmark-tabs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 7px; }
@@ -33,7 +35,6 @@
 .visitor-address { border-top: 1px solid #e1e5d6; padding-top: 11px; margin: 0 0 17px; }
 .visitor-address>span { font-size: 8px; color: #a0a58e; }
 .visitor-address address { margin-top: 5px; color: #7d8a70; font: normal 10px/1.8 Arial, sans-serif; }
-html[lang="zh-Hant"] .map-district>small { display: none; }
 html[lang="zh-Hant"] .landmark-tab-names { flex-direction: column-reverse; }
 html[lang="zh-Hant"] .landmark-tabs .landmark-tab-names>span { font-size: 11px; color: inherit; }
 html[lang="zh-Hant"] .landmark-tab-names b { font-size: 9px; color: #99a28b; }
@@ -42,13 +43,10 @@ html[lang="zh-Hant"] .landmark-tab-names b { font-size: 9px; color: #99a28b; }
   .marker-label>span { font-size: 6px; }
   .landmark-tabs button { gap: 6px; padding: 8px; }
   .landmark-tab-names b { font-size: 9px; }
-  .map-district { font-size: 7px; letter-spacing: .5px; max-width: 90px; }
 }
 @media(max-width:670px) {
   .landmark-marker .marker-label { display: none; }
   .landmark-marker.label-left, .landmark-marker.label-right, .marker-number { height: 26px; width: 26px; }
-  .map-district { font-size: 8px; line-height: 1.6; max-width: 100px; }
-  .map-district small { font-size: 8px; }
   .map-caveat { font-size: 10px; }
   .map-legend { font-size: 9px; }
   .landmark-tabs { gap: 7px; margin-top: 14px; }
@@ -56,7 +54,6 @@ html[lang="zh-Hant"] .landmark-tab-names b { font-size: 9px; color: #99a28b; }
   .landmark-detail { scroll-margin: 18px; }
 }
 @media(max-width:450px) {
-  .map-district { font-size: 7px; max-width: 83px; letter-spacing: .3px; }
   .landmark-tab-names b { font-size: 10px; }
   .landmark-tabs .landmark-tab-names>span { font-size: 9px; }
   .visitor-address address { font-size: 11px; }
@@ -68,3 +65,24 @@ html[lang="zh-Hant"] .landmark-tab-names b { font-size: 9px; color: #99a28b; }
 .city-guide .guide-close, .city-guide .guide-return { touch-action: manipulation; }
 
 .landmark-detail.is-visit { display: block; }
+
+/* The City Map is the game's own render: gyms are green squares, landmarks gold rounds, as on the website map. */
+.guide-map-drawing { object-fit: fill; image-rendering: pixelated; }
+.landmark-marker.is-gym .marker-number { border-radius: 4px; background: #426b4e; border: 1px solid #f6f3e9; color: #f3efd7; box-shadow: 0 1px 0 #1d3a28; }
+.landmark-marker.is-landmark .marker-number { background: #f2cf73; border: 1px solid #8a6420; color: #5a3f12; box-shadow: 0 1px 0 #5a3f1255; }
+.landmark-marker.is-landmark .marker-label { background: #fbf1d4f0; color: #5a3f12; }
+.landmark-marker:hover .marker-number, .landmark-marker.is-selected .marker-number { background: #d48158; border-color: #b56c48; color: #fff3da; }
+.landmark-marker.label-above { width: 26px; height: 26px; padding: 0; }
+.landmark-marker.label-above .marker-label { position: absolute; bottom: calc(100% + 4px); left: 50%; transform: translateX(-50%); }
+.landmark-marker.is-selected { z-index: 2; }
+.landmark-tabs button.is-landmark .landmark-tab-number { color: #8a6420; }
+.landmark-tabs button.is-landmark:hover, .landmark-tabs button.is-landmark.is-selected { color: #5a3f12; background: #f7ecc9; border-color: #d8b866; }
+.landmark-art.is-map-view { padding: 14px; background: #dce1b2; }
+.landmark-art.is-map-view img { display: block; width: 100%; height: auto; image-rendering: pixelated; border: 1px solid #c4c9a0; }
+.landmark-art.is-map-view>span { left: 20px; top: 19px; padding: 2px 4px; background: #f8f6edd9; color: #6d7a5d; }
+@media(max-width:670px) {
+  .landmark-marker.label-above { width: 26px; height: 26px; }
+  .landmark-art.is-map-view { grid-row: 1/3; padding: 10px; }
+  .landmark-art.is-map-view img { width: 100%; }
+}
+@media(max-width:450px) { .map-district { font-size: 7px; letter-spacing: .5px; } .map-district.is-sign { padding: 1px 3px; } }

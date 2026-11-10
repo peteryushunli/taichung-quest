@@ -1,0 +1,30 @@
+{
+  "passed": true,
+  "nativeBinding": "2362263510dfa38987c36b6cc40dca8d9372fc3c",
+  "checks": [
+    "native dimensions",
+    "4bpp indexed <=15 opaque + transparent0",
+    "zero opaque pixels in conservatively retained existing clear native cells",
+    "raw tiles/tilemap pixel-exact decode",
+    "existing sign crops unchanged"
+  ],
+  "files": {
+    "HANDOFF.md": "396aac20f50ab9d920ff159e655121e3178fce0d822e7bcaa5921dffdb636ae6",
+    "README.md": "72c1e4f3b46f8d21da2cf72dd66a349bb6a0f0a5db8c6617d9ee65bd0787b1d4",
+    "comparison.png": "56e9dcba8b1ca8febd589e2006219c5c1ddb99cfe8c688c2411b1ad1cecb2afe",
+    "constraints.json": "e57ef7a230681e85562a4c705bd594d38056eb59ebb3e8150962170a7ccb5930",
+    "context-native.png": "6c510593b809b1b850ba8ac7b0596d1aa61a99812f5917bc2e50a788e73b1d21",
+    "context-preview-4x.png": "6197f267d21e0945cf17c9a541484ae74cf980f1690a72092565d9d558647c6a",
+    "current-native-reference.png": "46ce7ad2141542fd21349589653c6cfa62197a075b63000d2de1a337d94db3eb",
+    "finish.py": "1c16b55d12b8ff0e415153a7de908d58c3df00c363c20169da08ffc3ab5c77a0",
+    "generate.py": "1f46da69c1e76a7506183bc17a59255aaea108930b5f31e92699f1795bc6a503",
+    "metrics.json": "4c0df9fa03cc190e29a7169ac32efb98b85263627dc1faee069b9c62d4c71c53",
+    "native.png": "287377222c053f91e9a2bcdbba0e5ca95fa11d7a5ec15b07684bcb7e2f2d5059",
+    "occupancy-mask.png": "ed1afa02dbb28ed88ad5120e96a114bdb00dc08f50432a443d48d0f683dc9694",
+    "palette-rgb555.bin": "242ed9738f23bb2278a78c76c07deb079630676083a6f962c8c05e07991415be",
+    "preview-4x.png": "9e7b20f8580aa9e3ca4f6e423d6f509a7893b151eed5ecb24f78cc92364362e1",
+    "tilemap-u16.bin": "1eb178e52a053a76210aa632c84557f19685b231cb11b821508a7ce3f151eed7",
+    "tiles.4bpp": "ed9e8908331487c7c738cea9fc700060fda382562a59e6afd46eae18fc522869",
+    "tiles.png": "ca4eeabb24afc09fd2b430dfc83be74fad83d97411d569ec8f21210bed230b10"
+  }
+}

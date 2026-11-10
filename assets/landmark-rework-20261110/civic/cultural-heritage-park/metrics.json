@@ -1,0 +1,250 @@
+{
+  "id": "cultural-heritage-park",
+  "status": "native-art-review-draft; exact2362263-footprint-clear-mask-bound",
+  "nativePixels": [
+    176,
+    288
+  ],
+  "metatileFootprint": [
+    11,
+    18
+  ],
+  "worldRectHalfOpen": [
+    60,
+    121,
+    71,
+    139
+  ],
+  "paletteOpaqueCount": 15,
+  "paletteIndex0": "transparent",
+  "rgb555Exact": true,
+  "occupiedPixels": 19976,
+  "pixelOccupancyRatio": 0.3940972222222222,
+  "native8x8": {
+    "totalCells": 792,
+    "occupiedCells": 347,
+    "uniqueExactIncludingTransparent": 203,
+    "uniqueWithHVFlipsIncludingTransparent": 193,
+    "uniqueTileBytes4bpp": 6496
+  },
+  "opaqueBounds": [
+    16,
+    16,
+    160,
+    256
+  ],
+  "doorVisualAnchorPx": [
+    88,
+    72
+  ],
+  "preservedApproach": "All architecture remains in original four warehouse envelopes and four barrel cells. East spine x96..111px and cross-aisles y80..95,160..175,256..271px remain transparent. Existing doors retained; no collision/warp edits.",
+  "sourceNativeReadOnly": "2362263510dfa38987c36b6cc40dca8d9372fc3c; read-only audit source",
+  "sources": [
+    {
+      "page": "https://travel.taichung.gov.tw/en/Attractions/Intro/1053",
+      "photo": "https://taichung.travel/content/images/attractions/3718/1024x768_Filedata635186402486052109.jpg",
+      "observed": "factory gables, red brick base, green window ribbons and tall metal chimney"
+    },
+    {
+      "page": "https://travel.taichung.gov.tw/en/Attractions/Intro/1053",
+      "photo": "https://taichung.travel/content/images/attractions/50403/1024x768_image637714406033891192.jpg",
+      "observed": "industrial yard context; historic brewery complex"
+    }
+  ],
+  "nativeBinding": {
+    "nativeSource": "/Users/peter/devday_hackathon/.claude/worktrees/native-gym-text-fixes-a79571/.worktrees/game-gym-text",
+    "nativeHead": "2362263510dfa38987c36b6cc40dca8d9372fc3c",
+    "auditSource": "assets/landmark-rework-20261110/temples/native-footprint-audit.json",
+    "constraints": {
+      "n": 18,
+      "id": "cultural-heritage-park",
+      "mapId": "MAP_TAICHUNG_NANTUN_WANHE",
+      "origin": [
+        65,
+        17
+      ],
+      "size": [
+        11,
+        18
+      ],
+      "worldRectExclusive": [
+        60,
+        121,
+        71,
+        139
+      ],
+      "door": null,
+      "approach": null,
+      "arrival": null,
+      "footprintSource": "data/taichung/city-rework/masterplan.json; actual map cells checked",
+      "nativeWarp": false,
+      "nativeMap": [
+        43,
+        15
+      ],
+      "primaryTileset": "gTileset_TaichungGreenwayPrivate",
+      "secondaryTileset": "gTileset_TaichungNantun",
+      "currentCollisionRows": [
+        "00000000000",
+        "01111111110",
+        "01111111110",
+        "01111111110",
+        "01111111110",
+        "00000000000",
+        "01111101110",
+        "01111101110",
+        "01111101110",
+        "01111101110",
+        "00000000000",
+        "00000000000",
+        "01111100100",
+        "01111100010",
+        "01111100100",
+        "01111100010",
+        "00000000000",
+        "00000100000"
+      ],
+      "behaviorIds": [
+        0,
+        132
+      ],
+      "layerTypeIds": [
+        0,
+        1
+      ],
+      "noRuntimeEvidenceClaim": true,
+      "currentMapSha256": "b325c857db699047132d568a131521e4f8fe6f105c6dc8a8359b45d308de9ff3",
+      "hardReservations": {
+        "nativeDoor": null,
+        "nativeApproach": null,
+        "nativeArrival": null,
+        "nearbyEventAnchors": [
+          {
+            "kind": "sign",
+            "x": 70,
+            "y": 34,
+            "script": "TaichungCity_Sign_CulturalHeritagePark",
+            "insideArtwork": true
+          }
+        ],
+        "notes": [
+          "Door/approach/arrival and event anchor words/visibility remain integration constraints.",
+          "For a sign retain at least one reachable interaction neighbour; not every nearby empty cell must stay clear.",
+          "Existing clear ground inside an artwork scene is reference geometry, not an automatic hard reservation; companion collision review may change occupied cells.",
+          "No edits outside the registered footprint are authorized by this art handoff."
+        ]
+      },
+      "existingClearReferenceRows": [
+        "11111111111",
+        "10000000001",
+        "10000000001",
+        "10000000001",
+        "10000000001",
+        "11111111111",
+        "10000010001",
+        "10000010001",
+        "10000010001",
+        "10000010001",
+        "11111111111",
+        "11111111111",
+        "10000011011",
+        "10000011101",
+        "10000011011",
+        "10000011101",
+        "11111111111",
+        "11111011111"
+      ],
+      "websitePresentationCrop": {
+        "worldRectExclusive": [
+          61,
+          125,
+          77,
+          144
+        ],
+        "nativeOrigin": [
+          61,
+          16
+        ],
+        "nativeCells": [
+          16,
+          19
+        ],
+        "pixels": [
+          256,
+          304
+        ],
+        "collisionReferenceRows": [
+          "0000000000000000",
+          "0000000000000000",
+          "0000011111111100",
+          "0000011111111100",
+          "0000011111111100",
+          "0000011111111100",
+          "0000000000000000",
+          "0000011111011100",
+          "0000011111011100",
+          "0000011111011100",
+          "0000011111011100",
+          "0000000000000000",
+          "0000000000000000",
+          "0000011111001000",
+          "0000011111000100",
+          "0110011111001000",
+          "0110011111000100",
+          "0000000000000000",
+          "0000000001000000"
+        ],
+        "notAnArtworkAllocation": true
+      }
+    },
+    "bank": {
+      "primary": "gTileset_TaichungGreenwayPrivate",
+      "primaryGraphicSlots": 640,
+      "secondaryGraphicSlots": 384,
+      "secondaryDefinitionCount": 216,
+      "localMapReferencedSecondaryDefinitions": 136,
+      "localMapReferencedStaticSecondaryGraphics": 229,
+      "secondaryStaticCapacity": 376,
+      "secondaryDefinitionCapacity": 384,
+      "doorAnimationScratch": [
+        1016,
+        1023
+      ],
+      "freeSlotsNotAnAllocationClaim": true,
+      "paletteSlots": [
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "sharedBankMustAuditAllConsumersAndDonatedStrips": true,
+      "staticGraphicsUnreferencedByAnyRetainedDefinition": 132,
+      "appendOnlyDefinitionSlots": 168,
+      "allocationCaveat": "Conservative all-definition reference count; remaining slots are not a full seam/dynamic-root/palette/save migration proof."
+    },
+    "conservativeClearRows": [
+      "11111111111",
+      "10000000001",
+      "10000000001",
+      "10000000001",
+      "10000000001",
+      "11111111111",
+      "10000010001",
+      "10000010001",
+      "10000010001",
+      "10000010001",
+      "11111111111",
+      "11111111111",
+      "10000011011",
+      "10000011101",
+      "10000011011",
+      "10000011101",
+      "11111111111",
+      "11111011111"
+    ],
+    "conservativeChoiceNote": "This art preserves every currently clear cell. Audit treats existing clear geometry as reference, not all as hard reservations. No collision changes proposed here."
+  },
+  "conservativeClearOpaquePixels": 0
+}

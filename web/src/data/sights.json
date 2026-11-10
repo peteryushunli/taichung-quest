@@ -1,0 +1,346 @@
+[
+  {
+    "id": "botanical-garden",
+    "kind": "sight",
+    "nameEn": "National Museum of Natural Science Botanical Garden",
+    "nameZh": "國立自然科學博物館植物園",
+    "shortNameEn": "Botanical Garden",
+    "shortNameZh": "植物園",
+    "minimapNameEn": "Botanical Garden",
+    "minimapNameZh": "植物園",
+    "category": "Garden & greenhouse",
+    "categoryZh": "植物園溫室",
+    "description": "Opened in July 1999 as part of the National Museum of Natural Science, this 4.5-hectare garden brings Taiwan's native plant life into the middle of the city. Its outdoor zones recreate habitats such as lowland forest, monsoon rainforest, coastal forest and coral atoll. The star is the glass Tropical Rainforest Greenhouse, which shelters about 300 rainforest species, including rubber, coffee and cocoa trees, above a basement aquarium of giant Amazon fish. Visitors wander the garden paths, then step into the warm, humid glasshouse.",
+    "descriptionZh": "科博館植物園於1999年7月開放，占地約4.5公頃，讓市民在市中心就能親近臺灣原生植物。戶外分區重現低海拔森林、季風雨林、海岸林與珊瑚礁等生態。焦點是玻璃打造的熱帶雨林溫室，栽種約300種雨林植物，包括橡膠樹、咖啡與可可，地下層還有亞馬遜巨型魚類水族箱。遊客可先漫步園區步道，再走進溫暖潮濕的溫室。",
+    "districtId": "greenway",
+    "districtEn": "Greenway & culture",
+    "districtZh": "草悟道文化區",
+    "gymStatus": "not-a-gym",
+    "world": [
+      60,
+      33
+    ],
+    "artRect": [
+      53,
+      24,
+      68,
+      35
+    ],
+    "officialUrl": "https://www.nmns.edu.tw/en/exhibitions/galleries/botanical-garden/",
+    "officialSourceTitle": "Botanical Garden – National Museum of Natural Science (official site)",
+    "location": {
+      "address": "No. 1, Guanqian Rd., North District, Taichung City",
+      "addressZh": "臺中市北區館前路1號"
+    },
+    "descriptionSources": [
+      "https://en.wikipedia.org/wiki/Taichung_Botanical_Garden",
+      "https://zh.wikipedia.org/zh-tw/國立自然科學博物館植物園",
+      "https://www.nmns.edu.tw/en/exhibitions/galleries/botanical-garden/",
+      "https://www.nmns.edu.tw/en/exhibitions/galleries/botanical-garden/tropical-rain-forest-greenhouse/",
+      "https://travel.taichung.gov.tw/en/attractions/intro/902",
+      "https://travel.taichung.gov.tw/zh-tw/attractions/intro/158"
+    ],
+    "playable": true
+  },
+  {
+    "id": "confucius-temple",
+    "kind": "sight",
+    "nameEn": "Taichung Confucius Temple",
+    "nameZh": "臺中市孔廟",
+    "shortNameEn": "Confucius Temple",
+    "shortNameZh": "孔廟",
+    "minimapNameEn": "Confucius Temple",
+    "minimapNameZh": "孔廟",
+    "category": "Temple",
+    "categoryZh": "廟宇",
+    "description": "Completed in 1976, Taichung's Confucius Temple is one of the few in Taiwan built in Song dynasty palace style, a choice made partly to set it apart from the Qing-style Martyrs' Shrine next door. Its layout is a scaled-down version of the great Confucius Temple in Qufu, China. Visitors can stroll the calm courtyards around Dacheng Hall, and during exam season the temple holds blessing ceremonies for students. Every Teachers' Day, September 28, it stages a formal rite honouring Confucius with ritual music and the eight-row yi dance.",
+    "descriptionZh": "臺中市孔廟於1976年落成，採用臺灣少見的宋代宮殿式建築，部分原因是要與隔壁清代風格的忠烈祠有所區別；整體配置則仿照山東曲阜孔廟並依比例縮小。遊客可在大成殿周邊的庭院靜靜漫步，考季時廟方也會舉辦考生祈福活動。每年9月28日教師節，這裡會舉行祭孔釋奠典禮，以古樂與八佾舞向孔子致敬。",
+    "districtId": "old-city",
+    "districtEn": "Old city",
+    "districtZh": "舊城區",
+    "gymStatus": "not-a-gym",
+    "world": [
+      119,
+      33
+    ],
+    "artRect": [
+      114,
+      24,
+      126,
+      35
+    ],
+    "officialUrl": "https://travel.taichung.gov.tw/en/attractions/intro/1371",
+    "officialSourceTitle": "Taichung City Confucius Temple – Taichung Tourism (Taichung City Government Tourism and Travel Bureau)",
+    "location": {
+      "address": "No. 30, Sec. 2, Shuangshi Rd., North District, Taichung City",
+      "addressZh": "臺中市北區雙十路二段30號"
+    },
+    "descriptionSources": [
+      "https://en.wikipedia.org/wiki/Taichung_Confucian_Temple",
+      "https://zh.wikipedia.org/zh-tw/臺中市孔廟",
+      "https://travel.taichung.gov.tw/en/attractions/intro/1371",
+      "https://travel.taichung.gov.tw/zh-tw/attractions/intro/41"
+    ],
+    "playable": true,
+    "landingLabelSide": "below",
+    "guideLabelSide": "above"
+  },
+  {
+    "id": "yizhong-street",
+    "kind": "sight",
+    "nameEn": "Yizhong Shopping District",
+    "nameZh": "一中商圈",
+    "shortNameEn": "Yizhong Street",
+    "shortNameZh": "一中街",
+    "minimapNameEn": "Yizhong Street",
+    "minimapNameZh": "一中街",
+    "category": "Shopping street",
+    "categoryZh": "購物商圈",
+    "description": "Named after Taichung First Senior High School beside it, the Yizhong shopping district spreads from Yizhong Street into the lanes around Yucai Street and Sanmin Road, packed with snack stalls, drink stands and bargain fashion shops. Several universities and high schools sit nearby, so it fills with students after class and with day-trippers at weekends. Favourite bites include giant fried chicken cutlets, braised snacks and shaved ice, and some shops, such as Yizhong Fengren Ice, have been trading for over 20 years. National tourism counts rank it among Taiwan's most-visited attractions.",
+    "descriptionZh": "一中商圈以緊鄰的臺中一中為名，從一中街延伸到育才街、三民路一帶的巷弄，小吃攤、手搖飲與平價服飾店林立。周邊有多所大學與高中，平日放學後擠滿學生，週末則湧入外地遊客。超大雞排、滷味和豐仁冰都是人氣美食，像一中豐仁冰等老店已經營超過20年。在交通部觀光署的統計中，這裡名列全臺最熱門的景點之一。",
+    "districtId": "old-city",
+    "districtEn": "Old city",
+    "districtZh": "舊城區",
+    "gymStatus": "not-a-gym",
+    "world": [
+      119,
+      45
+    ],
+    "artRect": [
+      114,
+      38,
+      126,
+      48
+    ],
+    "officialUrl": "https://travel.taichung.gov.tw/en/attractions/intro/1551",
+    "officialSourceTitle": "Yizhong Shopping District – Taichung Tourism (Taichung City Government Tourism and Travel Bureau)",
+    "location": {
+      "address": "Yizhong St., North District, Taichung City",
+      "addressZh": "臺中市北區一中街"
+    },
+    "descriptionSources": [
+      "https://en.wikipedia.org/wiki/Yizhong_Street",
+      "https://zh.wikipedia.org/zh-tw/一中街",
+      "https://travel.taichung.gov.tw/en/attractions/intro/1551",
+      "https://travel.taichung.gov.tw/zh-tw/attractions/intro/400",
+      "https://news.pts.org.tw/article/725379"
+    ],
+    "playable": true
+  },
+  {
+    "id": "prefectural-hall",
+    "kind": "sight",
+    "nameEn": "Taichung Prefectural Hall",
+    "nameZh": "臺中州廳",
+    "shortNameEn": "Prefectural Hall",
+    "shortNameZh": "臺中州廳",
+    "minimapNameEn": "Prefectural Hall",
+    "minimapNameZh": "臺中州廳",
+    "category": "Historic hall",
+    "categoryZh": "國定古蹟",
+    "description": "Designed by Japanese architect Moriyama Matsunosuke, Taichung Prefectural Hall was built in stages from the 1910s to the 1930s as the seat of Taichū Prefecture, and after the war it served as Taichung's city hall. Its main entrance sits on a street corner beneath a central tower, with wings stretching out on both sides under mansard roofs. Declared a national monument in 2019, it reopened in October 2026 after about six years of restoration. Today it houses the city's Cultural Affairs Bureau alongside exhibition spaces open to visitors.",
+    "descriptionZh": "臺中州廳由日本建築師森山松之助設計，自1910年代起分期興建，到1930年代擴建完成，日治時為臺中州官廳，戰後成為臺中市政府所在地。街角主入口上方立著中央塔樓，兩翼向左右伸展，覆以馬薩式屋頂。2019年升格為國定古蹟，歷經約六年修復後於2026年10月重新開放，如今是文化局辦公處，也設有對外開放的展覽空間。",
+    "districtId": "old-city",
+    "districtEn": "Old city",
+    "districtZh": "舊城區",
+    "gymStatus": "not-a-gym",
+    "world": [
+      102,
+      98
+    ],
+    "artRect": [
+      97,
+      88,
+      109,
+      100
+    ],
+    "officialUrl": "https://travel.taichung.gov.tw/en/attractions/intro/1367",
+    "officialSourceTitle": "Taichung Prefectural Hall – Taichung Tourism (Taichung City Government Tourism and Travel Bureau)",
+    "location": {
+      "address": "No. 99, Minquan Rd., West District, Taichung City",
+      "addressZh": "臺中市西區民權路99號"
+    },
+    "descriptionSources": [
+      "https://en.wikipedia.org/wiki/Taichung_Prefectural_Hall",
+      "https://zh.wikipedia.org/zh-tw/臺中州廳",
+      "https://travel.taichung.gov.tw/en/attractions/intro/1367",
+      "https://travel.taichung.gov.tw/zh-tw/attractions/intro/56",
+      "https://taichung.travel/zh-tw/event/newsdetail/8374",
+      "https://news.ltn.com.tw/news/life/breakingnews/5592647",
+      "https://news.ltn.com.tw/news/life/breakingnews/5594658",
+      "https://www.worldjournal.com/wj/story/121221/9819090"
+    ],
+    "playable": true
+  },
+  {
+    "id": "second-market",
+    "kind": "sight",
+    "nameEn": "Taichung Second Market",
+    "nameZh": "臺中第二市場",
+    "shortNameEn": "Second Market",
+    "shortNameZh": "第二市場",
+    "minimapNameEn": "Second Market",
+    "minimapNameZh": "第二市場",
+    "category": "Historic market",
+    "categoryZh": "傳統市場",
+    "description": "Built in 1917 by the Japanese colonial government, the Second Market was first called Shintomichō Market and earned the nickname \"the Japanese market\" for its high-quality goods. Its aisles radiate out from a two-storey hexagonal tower at the centre, which is why locals call it \"Six Lanes\". More than 300 stalls still trade here, selling everyday groceries alongside old-time Taichung food. Visitors come hungry for long-running favourites such as braised pork rice, traditional black tea and meatballs.",
+    "descriptionZh": "第二市場建於1917年日治時期，原名「新富町市場」，因販售高品質商品而有「日本人市場」之稱。市場通道以中央兩層樓高的六角樓為中心向外放射，所以在地人暱稱這裡為「六條通」。如今仍有三百多個攤位營業，除了日常生活物資，也保留許多臺中古早味。遊客多半是為了滷肉飯、老字號紅茶與肉丸等老店專程而來。",
+    "districtId": "old-city",
+    "districtEn": "Old city",
+    "districtZh": "舊城區",
+    "gymStatus": "not-a-gym",
+    "world": [
+      103,
+      34
+    ],
+    "artRect": [
+      102,
+      24,
+      111,
+      35
+    ],
+    "landingLabelSide": "above",
+    "officialUrl": "https://travel.taichung.gov.tw/en/attractions/intro/1366",
+    "officialSourceTitle": "Second Market – Taichung Tourism (Taichung City Government Tourism and Travel Bureau)",
+    "location": {
+      "address": "No. 87, Sec. 2, Sanmin Rd., Central District, Taichung City",
+      "addressZh": "臺中市中區三民路二段87號"
+    },
+    "descriptionSources": [
+      "https://en.wikipedia.org/wiki/Taichung_City_Second_Market",
+      "https://travel.taichung.gov.tw/en/attractions/intro/1366",
+      "https://travel.taichung.gov.tw/zh-tw/attractions/intro/70",
+      "https://filmtaichung.org.tw/index.php/scenesContent/112"
+    ],
+    "playable": true,
+    "guideLabelSide": "left"
+  },
+  {
+    "id": "cultural-heritage-park",
+    "kind": "sight",
+    "nameEn": "Cultural Heritage Park, Ministry of Culture",
+    "nameZh": "文化部文化資產園區",
+    "shortNameEn": "Heritage Park",
+    "shortNameZh": "文資園區",
+    "minimapNameEn": "Heritage Park",
+    "minimapNameZh": "文資園區",
+    "category": "Heritage park",
+    "categoryZh": "文化園區",
+    "description": "This 5.6-hectare park occupies the old Taichung Winery, which began as a private brewing company in 1916, passed to the colonial liquor monopoly in 1922 and was Taiwan's largest brewery by 1928. Production carried on under the Taiwan Tobacco and Wine Monopoly Bureau until it moved out in 1998. The site opened to the public as a cultural park in 2009, took its present name in 2018 and is run by the Ministry of Culture's Bureau of Cultural Heritage. Today its old factory buildings host exhibitions, performances and creative workshops.",
+    "descriptionZh": "文化部文化資產園區占地5.6公頃，前身是1916年創立的民營「大正製酒株式會社」，1922年收歸酒類專賣，1928年已是全臺最大的釀酒工場。戰後由菸酒公賣局經營至1998年遷廠。2009年以文創園區之名對外開放，2018年改為現名，由文化部文化資產局營運，舊廠房如今用於展覽、演出與創意工坊。",
+    "districtId": "nantun",
+    "districtEn": "Nantun",
+    "districtZh": "南屯區",
+    "gymStatus": "not-a-gym",
+    "world": [
+      73,
+      139
+    ],
+    "artRect": [
+      61,
+      125,
+      77,
+      140
+    ],
+    "landingLabelSide": "right",
+    "officialUrl": "https://travel.taichung.gov.tw/en/attractions/intro/1053",
+    "officialSourceTitle": "Cultural Heritage Park, Ministry of Culture – Taichung Tourism (Taichung City Government Tourism and Travel Bureau)",
+    "location": {
+      "address": "No. 362, Sec. 3, Fuxing Rd., South District, Taichung City",
+      "addressZh": "臺中市南區復興路三段362號"
+    },
+    "descriptionSources": [
+      "https://en.wikipedia.org/wiki/Cultural_Heritage_Park",
+      "https://zh.wikipedia.org/zh-tw/文化部文化資產園區",
+      "https://travel.taichung.gov.tw/en/attractions/intro/1053",
+      "https://travel.taichung.gov.tw/zh-tw/attractions/intro/798"
+    ],
+    "playable": true
+  },
+  {
+    "id": "fengle-sculpture-park",
+    "kind": "sight",
+    "nameEn": "Fengle Sculpture Park",
+    "nameZh": "豐樂雕塑公園",
+    "shortNameEn": "Fengle Park",
+    "shortNameZh": "豐樂公園",
+    "minimapNameEn": "Fengle Park",
+    "minimapNameZh": "豐樂公園",
+    "category": "Park & sculpture",
+    "categoryZh": "雕塑公園",
+    "description": "Opened in 1994 in Nantun, Fengle Sculpture Park is known as Taiwan's first public open-air sculpture park. About six hectares of lawns and woodland paths hold 52 outdoor sculptures, most of them works from Taichung's past sculpture exhibitions. An arched bridge crosses the artificial lake, and a red-roofed activity centre hosts exhibitions and concerts. A 2018 makeover added new play areas and what the city calls Taiwan's first outdoor parkour training ground, so the park draws students after school and neighbours on evening strolls.",
+    "descriptionZh": "豐樂雕塑公園位於南屯，1994年啟用，是全臺第一座公立露天雕塑公園。約6公頃的園區有草地與森林步道，散置52件戶外雕塑，多為臺中歷屆雕塑大展的作品。人工湖上橫跨拱橋，紅屋頂的活動中心常舉辦展覽與音樂表演。2018年整修後新增遊戲場與全臺首座戶外跑酷練習場，放學的學生和晚間散步的居民都愛來這裡。",
+    "districtId": "nantun",
+    "districtEn": "Nantun",
+    "districtZh": "南屯區",
+    "gymStatus": "not-a-gym",
+    "world": [
+      70,
+      172
+    ],
+    "artRect": [
+      64,
+      163,
+      77,
+      174
+    ],
+    "officialUrl": "https://travel.taichung.gov.tw/en/attractions/intro/889",
+    "officialSourceTitle": "Fengle Sculpture Park – Taichung Tourism (Taichung City Government Tourism and Travel Bureau)",
+    "location": {
+      "address": "No. 331, Sec. 1, Wenxin S. 5th Rd., Nantun District, Taichung City",
+      "addressZh": "臺中市南屯區文心南五路一段331號"
+    },
+    "descriptionSources": [
+      "https://en.wikipedia.org/wiki/Fengle_Sculpture_Park",
+      "https://zh.wikipedia.org/zh-tw/豐樂雕塑公園",
+      "https://travel.taichung.gov.tw/en/attractions/intro/889",
+      "https://travel.taichung.gov.tw/zh-tw/attractions/intro/136",
+      "https://english.taichung.gov.tw/1047737/post",
+      "https://filmtaichung.org.tw/index.php/scenesContent/242"
+    ],
+    "playable": true
+  },
+  {
+    "id": "wenxin-forest-park",
+    "kind": "sight",
+    "nameEn": "Wenxin Forest Park",
+    "nameZh": "文心森林公園",
+    "shortNameEn": "Wenxin Park",
+    "shortNameZh": "文心森林",
+    "minimapNameEn": "Wenxin Park",
+    "minimapNameZh": "文心森林",
+    "category": "Park & amphitheatre",
+    "categoryZh": "公園劇場",
+    "description": "Completed in August 2006 in Nantun's Seventh Redevelopment Zone, Wenxin Forest Park spreads nearly nine hectares of lawns, trees and trails designed around plants, timber and natural stone. At its heart is the Fulfillment Amphitheatre by Japanese architect Makoto Sei Watanabe, crowned with a white, ribbon-like roof. It seats about 6,000 people, or up to 15,000 including the grassy slopes, and hosts concerts and festivals such as Rock in Taichung. Each March and April, a path lined with more than 70 chinaberry trees near Xiangshang Road blooms pale purple.",
+    "descriptionZh": "文心森林公園位於南屯七期重劃區，2006年8月完工，占地近9公頃，以植栽、木材與天然石材為設計元素。園區中央的圓滿戶外劇場由日本建築師渡邊誠設計，屋頂如白色緞帶，約有6000個座位，連同草坡最多可容納1萬5千人，搖滾台中等音樂節常在此登場。每年三、四月，向上路旁七十餘株苦楝開出淡紫色花海。",
+    "districtId": "nantun",
+    "districtEn": "Nantun",
+    "districtZh": "南屯區",
+    "gymStatus": "not-a-gym",
+    "world": [
+      26,
+      100
+    ],
+    "artRect": [
+      19,
+      92,
+      33,
+      101
+    ],
+    "officialUrl": "https://fa.culture.taichung.gov.tw/english/content/index.asp?Parser=1,10,20",
+    "officialSourceTitle": "Fulfillment Amphitheatre – About the Amphitheatre (Taichung City Government Cultural Affairs Bureau)",
+    "location": {
+      "address": "No. 289, Sec. 1, Wenxin Rd., Nantun District, Taichung City",
+      "addressZh": "臺中市南屯區文心路一段289號"
+    },
+    "descriptionSources": [
+      "https://zh.wikipedia.org/zh-tw/文心森林公園",
+      "https://en.wikipedia.org/wiki/Fulfillment_Amphitheater",
+      "https://fa.culture.taichung.gov.tw/english/content/index.asp?Parser=1,10,20",
+      "https://fa.culture.taichung.gov.tw/content/index.asp?Parser=1,3,10",
+      "https://travel.taichung.gov.tw/zh-tw/attractions/intro/2026",
+      "https://filmtaichung.org.tw/en/scenesContent/240"
+    ],
+    "playable": true
+  }
+]

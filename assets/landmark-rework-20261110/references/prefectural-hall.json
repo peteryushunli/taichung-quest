@@ -1,0 +1,54 @@
+{
+  "id": "prefectural-hall",
+  "name": {
+    "en": "Taichung Prefectural Hall / Old Taichung City Hall",
+    "zh-TW": "臺中州廳"
+  },
+  "verifiedOn": "2026-11-10",
+  "owner": "Interface civic3",
+  "identity": "The historic street-corner government hall at99MinquanRoad, not the modern Xitun CityHall and not neighboring TaichungShiyakusho.",
+  "officialPages": [
+    {
+      "url": "https://travel.taichung.gov.tw/en/attractions/intro/1367",
+      "publisher": "Taichung Tourism and Travel Bureau",
+      "evidence": "Official architecture:two-storyL-plan,corner tower/entry,FrenchMansardroof,columnedportico and recessed balcony."
+    },
+    {
+      "url": "https://www.tchac.taichung.gov.tw/eng/information?pid=7881&uid=15",
+      "publisher": "Taichung City Cultural Heritage Department",
+      "evidence": "Official conservation description confirms corner entry and two wings,classicalorders,dormers and roundedpediments."
+    }
+  ],
+  "officialPhotos": [
+    {
+      "url": "https://www.taichung.gov.tw/media/468752/%E5%8F%B0%E4%B8%AD%E5%B7%9E%E5%BB%B3.jpg",
+      "publisher": "Taichung City Government",
+      "visualInspection": "Direct official front photo inspected in own Chrome tab. Cream-white classical frontage with red-brick panels,slateMansardroof/rounded dormers,two-storycolumns abovegroundarcades,centralprojectingpedimentedentry,twoangledwings and framingpalms. This older image includes a forecourt fountain; it is secondary context, not the required current centerpiece."
+    }
+  ],
+  "distinguishingMotifs": [
+    "A street-corner central entrance mass with two long two-story wings extending away to left and right.",
+    "Dark slate-gray Mansard roof with a broken/steep slope and small rounded dormer/oculus windows.",
+    "Cream-white classical columns and cornices set against warm red-brick wall panels.",
+    "Projecting central portico/pediment above a deep arched doorway; repeated ground-floor arcade openings and upper columned balcony.",
+    "Low formal forecourt and tall slender palms support the civic scale; fountain/flag details are optional context rather than the identity."
+  ],
+  "materialColors": [
+    "Warm cream/ivory plaster",
+    "Russet/red brick panels",
+    "Slate gray-blue roof",
+    "Deep dark entry/arcade shadows and green planting"
+  ],
+  "pixelPriorities": [
+    "Keep the corner-entry mass,slateMansardroof and white-column/red-brick contrast first.",
+    "Represent classical details with clean ordered clusters; never turn the facade into a fantasy palace."
+  ],
+  "avoid": [
+    "ModernCityHall orShiyakusho substituted forPrefecturalHall",
+    "Giant genericdome/castlekeep",
+    "Fountain dominatingthebuilding",
+    "Copyingoldoperationalbannersorclaimingtheoldphotoistheexactcurrentforecourt"
+  ],
+  "rights": "Reference links only. Source photographs are not copied into shipped game art. Draw original pixel interpretations.",
+  "scope": "No map/native/PR/main/Claudecheckout edits or deployment."
+}

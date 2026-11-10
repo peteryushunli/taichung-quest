@@ -64,7 +64,8 @@ import squirtleIcon from './assets/pokemon/icon/squirtle.png';
 
 /** A two-frame party-menu icon: 32×64, frames stacked top to bottom. */
 export interface PokemonIcon { name: string; icon: string }
-export interface LandmarkArt { facade?: string; tint: string; leader?: string; team?: PokemonIcon[] }
+/** `mapView` art is a cut of the rendered city map (scripts/crop-landmark-art.py), not a drawn facade. */
+export interface LandmarkArt { facade?: string; mapView?: boolean; tint: string; leader?: string; team?: PokemonIcon[] }
 
 const mon = (name: string, icon: string): PokemonIcon => ({ name, icon });
 const brick = '#ede2d9';
@@ -85,6 +86,18 @@ export const landmarkArt: Record<string, LandmarkArt> = {
   'maple-garden': { facade: mapleGarden, tint: park, leader: muqing, team: [mon('Poliwhirl', poliwhirlIcon), mon('Butterfree', butterfreeIcon), mon('Vaporeon', vaporeonIcon)] },
   'taichung-theater': { facade: theater, tint: modern, leader: ling, team: [mon('Jigglypuff', jigglypuffIcon), mon('Jynx', jynxIcon), mon('Mr. Mime', mrMimeIcon)] },
 };
+
+// Each gym's City Pass badge, the game's own 32×32 award icon (graphics/taichung/badges), keyed by landmark id.
+export const badgeArt: Record<string, string> = Object.fromEntries(Object.entries(
+  import.meta.glob<string>('./assets/badges/*.png', { eager: true, import: 'default' }),
+).map(([path, url]) => [path.slice(path.lastIndexOf('/') + 1, -'.png'.length), url]));
+
+// Landmarks without a gym show the way they appear on the in-game city map.
+const mapViews = import.meta.glob<string>('./assets/landmarks/map/*.png', { eager: true, import: 'default' });
+for (const [path, url] of Object.entries(mapViews)) {
+  const id = path.slice(path.lastIndexOf('/') + 1, -'.png'.length);
+  landmarkArt[id] ??= { facade: url, mapView: true, tint: park };
+}
 
 /** Page media. An empty slot renders a labelled placeholder. */
 export const landingMedia: {

@@ -1,0 +1,100 @@
+{
+  "checkedAt": "2026-11-10T06:40:42.771763+00:00",
+  "readOnly": true,
+  "baselineNative": "2362263510dfa38987c36b6cc40dca8d9372fc3c",
+  "baselineWorktree": {
+    "path": "/Users/peter/devday_hackathon/.claude/worktrees/native-gym-text-fixes-a79571/.worktrees/game-gym-text",
+    "head": "2362263510dfa38987c36b6cc40dca8d9372fc3c",
+    "branch": "refs/heads/claude/gym-text-fixes",
+    "mapChanges": [],
+    "headAlreadyContainedIn236": true,
+    "statusError": null
+  },
+  "totalNativeWorktreesChecked": 65,
+  "claudeWorktreesWithMapChangesOrDivergentHead": [
+    {
+      "path": "/Users/peter/devday_hackathon/.claude/worktrees/elastic-driscoll-6b4676/.worktrees/game-xitun-rework",
+      "head": "72dfd13e250ecf0673b13efec0c255f510863f58",
+      "branch": "refs/heads/claude/xitun-rework",
+      "mapChanges": [],
+      "headAlreadyContainedIn236": false,
+      "statusError": null
+    },
+    {
+      "path": "/Users/peter/devday_hackathon/.claude/worktrees/elastic-jackson-e60670/.worktrees/game-deterministic-build",
+      "head": "422c2c219b142fcff808cd5a3e7553df50381a3d",
+      "branch": "refs/heads/claude/deterministic-link-order",
+      "mapChanges": [],
+      "headAlreadyContainedIn236": false,
+      "statusError": null
+    },
+    {
+      "path": "/Users/peter/devday_hackathon/.claude/worktrees/fervent-lehmann-04507c/.worktrees/game-partner-switch",
+      "head": "186a2665031fc3ee1f9d3a8d87f54ede600658d6",
+      "branch": "refs/heads/claude/partner-switch-repaint",
+      "mapChanges": [],
+      "headAlreadyContainedIn236": false,
+      "statusError": null
+    },
+    {
+      "path": "/Users/peter/devday_hackathon/.claude/worktrees/fervent-lehmann-04507c/.worktrees/game-zh-marks",
+      "head": "f4818574e4d51211b9304ea18a5dbe9dd39dca0b",
+      "branch": "refs/heads/claude/zh-fullwidth-marks",
+      "mapChanges": [],
+      "headAlreadyContainedIn236": false,
+      "statusError": null
+    },
+    {
+      "path": "/Users/peter/devday_hackathon/.claude/worktrees/game-save-persistence-be3dd7/.worktrees/game-autosave",
+      "head": "618b4e368fd202cecb8eac640bd55b1034d484d1",
+      "branch": "refs/heads/claude/native-autosave",
+      "mapChanges": [],
+      "headAlreadyContainedIn236": false,
+      "statusError": null
+    },
+    {
+      "path": "/Users/peter/devday_hackathon/.claude/worktrees/game-save-persistence-be3dd7/.worktrees/game-autosave-combined",
+      "head": "77c77b1063b5f26386df22c89ae2e66da175fc8f",
+      "branch": "refs/heads/claude/native-autosave-combined",
+      "mapChanges": [],
+      "headAlreadyContainedIn236": false,
+      "statusError": null
+    },
+    {
+      "path": "/Users/peter/devday_hackathon/.claude/worktrees/game-save-persistence-be3dd7/.worktrees/game-autosave-pr11",
+      "head": "3ada40e13d7aaa5e7d9621b512768cd8cadb7661",
+      "branch": "refs/heads/claude/native-autosave-pr11",
+      "mapChanges": [],
+      "headAlreadyContainedIn236": false,
+      "statusError": null
+    },
+    {
+      "path": "/Users/peter/devday_hackathon/.claude/worktrees/maps-landmark-dev-feda2d/.worktrees/game-xitun-v7",
+      "head": "22059d6da862003bb1121fae67e1df6772dabf7e",
+      "branch": "refs/heads/claude/xitun-facades-v7",
+      "mapChanges": [],
+      "headAlreadyContainedIn236": false,
+      "statusError": null
+    },
+    {
+      "path": "/Users/peter/devday_hackathon/.claude/worktrees/serene-kowalevski-7cebb8/.worktrees/game-nantun-xitun-qa",
+      "head": "e41a2a6f902b7aee518611e3502037a8cbaf3fe8",
+      "branch": "refs/heads/claude/nantun-xitun-seam-qa",
+      "mapChanges": [],
+      "headAlreadyContainedIn236": false,
+      "statusError": null
+    },
+    {
+      "path": "/Users/peter/devday_hackathon/.claude/worktrees/taichung-quest-landing-8c9d2e/.worktrees/game-partner-palette",
+      "head": "186a2665031fc3ee1f9d3a8d87f54ede600658d6",
+      "branch": "refs/heads/claude/partner-palette-flash",
+      "mapChanges": [],
+      "headAlreadyContainedIn236": false,
+      "statusError": null
+    }
+  ],
+  "scope": "Tracked and untracked map/layout/tileset/plan/builder paths only. Divergent older branches are not automatically newer candidates. No native/Git/PR/build mutations.",
+  "claudeMapWorktreesWithUncommittedChanges": 0,
+  "finding": "No uncommitted map/layout/tileset/plan/builder changes found in registered Claude native worktrees. Verified236 source remains clean for audited paths.",
+  "integrationOwner": "Decisions/Main art integration chat; this source-pointer chat performs no competing integration."
+}

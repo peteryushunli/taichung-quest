@@ -1,0 +1,37 @@
+{
+  "id": "botanical-garden",
+  "status": "art-review; not installed",
+  "worldRectExclusive": null,
+  "nativeSize": [
+    208,
+    144
+  ],
+  "paletteColorsIncludingTransparent": 16,
+  "opaqueColorsUsed": 14,
+  "rawTileCount": 468,
+  "unique8x8Tiles": 273,
+  "unique8x8TilesWithFlips": 270,
+  "packedTileCountIncludingEmpty": 270,
+  "packedTileRoundTripVerified": true,
+  "sha256": "57eb9eb28a818e4d41a36c28142ebfe2810770ea5c2363384b937ad90e894deb",
+  "references": [
+    "https://www.nmns.edu.tw/en/exhibitions/galleries/botanical-garden/tropical-rain-forest-greenhouse/"
+  ],
+  "integration": "ART REVIEW ONLY. Supersedes earlier art for this landmark. Claude must allocate native tile/palette banks, set placement/collision and update frontend crop. No map/source/website changes included.",
+  "revision": 4,
+  "title": "Botanical Garden",
+  "number": 13,
+  "priorNativeSize": [
+    208,
+    112
+  ],
+  "requiresPlacementUpdate": true,
+  "requiresCollisionUpdate": true,
+  "dimensionsMatchAuditedMap": false,
+  "projection": "Centered frontal game camera: no sideways depth offset; roofs taper evenly inward and recede upward around each volume centerline.",
+  "cameraReference": "references/theater-native-4x.png",
+  "notes": [
+    "Curved glazed roof hood recedes upward about x112, with evenly paired masts and mullions.",
+    "Glass roof, face, base and steps share a centered frontal game camera. Butterfly and water garden remain foreground details."
+  ]
+}

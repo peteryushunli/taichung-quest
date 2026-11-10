@@ -1,0 +1,54 @@
+{
+  "id": "wenxin-forest-park",
+  "name": {
+    "en": "Wenxin Forest Park / Fulfillment Amphitheatre",
+    "zh-TW": "文心森林公園／圓滿戶外劇場"
+  },
+  "verifiedOn": "2026-11-10",
+  "owner": "Root park/street4",
+  "identity": "The white modern outdoor stage and fan-shaped audience bowl inside Wenxin Forest Park, not National Taichung Theater.",
+  "officialPages": [
+    {
+      "url": "https://fa.culture.taichung.gov.tw/english/content/index.asp?Parser=1,10,20",
+      "publisher": "Fulfillment Amphitheatre, Taichung Cultural Affairs Bureau",
+      "evidence": "Official site describes the stage/roof and park relationship; page links the aerial photo."
+    },
+    {
+      "url": "https://www.taichung.gov.tw/media/562351/2020%E4%BE%86%E5%8E%BB%E6%8B%8D%E5%8F%B0%E4%B8%AD-%E7%AC%AC%E5%85%AD%E5%96%AE%E5%85%83%E8%87%B3%E7%AC%AC%E5%8D%81%E5%96%AE%E5%85%83-%E5%96%AE%E9%A0%81.pdf",
+      "publisher": "Taichung City Government filming-location guide",
+      "evidence": "Page56, Fulfillment Amphitheater:official indexed visual/text evidence calls out the white ribbon-like roof and grassy tiered seating; PDF retrieval timed out, so this is corroboration only."
+    }
+  ],
+  "officialPhotos": [
+    {
+      "url": "https://fa.culture.taichung.gov.tw/df_ufiles/df_pics/df_image/en001.jpg",
+      "publisher": "Fulfillment Amphitheatre, Taichung Cultural Affairs Bureau",
+      "visualInspection": "Direct official aerial photo inspected in own Chrome tab. Layered white curved canopy strips with dark elongated gaps cover an open black stage; concentric fan-shaped brown seating terraces and green lawns wrap around it."
+    }
+  ],
+  "distinguishingMotifs": [
+    "Low, broad white canopy made of layered curling shell/ribbon surfaces, with elongated dark slots between them.",
+    "A dark open stage mouth underneath the projecting white roof; no enclosed front facade.",
+    "Semicircular/fan-shaped tiered audience seating wraps around the stage in nested curved bands.",
+    "Warm brown seating/steps alternate with green lawn and pale curved paths.",
+    "The amphitheater sits in a broad planted urban park; trees and a few slim light poles support the composition."
+  ],
+  "materialColors": [
+    "Bright ivory/white canopy with cool gray shadows",
+    "Very dark stage opening",
+    "Brown/tan seating bands",
+    "Green lawn and pale gray paths"
+  ],
+  "pixelPriorities": [
+    "Keep the white folded canopy and curved seating as the two strongest readable shapes.",
+    "Let the terraces establish the overhead park footprint without drawing every bench."
+  ],
+  "avoid": [
+    "Temple-shaped park, pagoda, castle or fountain hero",
+    "Closed civic building with rows of windows",
+    "Simple spherical dome instead of the layered open canopy",
+    "Confusing this venue with ToyoIto National Taichung Theater"
+  ],
+  "rights": "Reference links only. Do not copy source photographs into shipped game art. Draw original pixel interpretations.",
+  "scope": "No map/native/PR/main/Claudecheckout changes or deployment."
+}

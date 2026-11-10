@@ -1,0 +1,30 @@
+{
+  "status": "REVIEW_REVISIONS_NOT_INSTALLED",
+  "revision": 3,
+  "landmarks": [
+    {
+      "id": "second-market",
+      "title": "Second Market",
+      "number": 17,
+      "revision": 3,
+      "nativeFile": "revisions-v3/second-market/native.png",
+      "nativeSize": [
+        160,
+        144
+      ],
+      "requiresPlacementUpdate": true
+    },
+    {
+      "id": "cultural-heritage-park",
+      "title": "Cultural Heritage Park",
+      "number": 18,
+      "revision": 3,
+      "nativeFile": "revisions-v3/cultural-heritage-park/native.png",
+      "nativeSize": [
+        256,
+        208
+      ],
+      "requiresPlacementUpdate": true
+    }
+  ]
+}

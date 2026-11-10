@@ -1,15 +1,13 @@
-.live-minimap { position: absolute; z-index: 3; top: 6px; left: 6px; width: clamp(64px, 22%, 108px); padding: 3px; border: 1px solid #abc1a6; border-radius: 5px; background: #f2f1ddef; color: #254a39; box-shadow: 0 2px 5px #18372555; cursor: pointer; }
+.live-minimap { position: absolute; z-index: 3; top: 6px; left: 6px; width: clamp(84px, 26%, 156px); padding: 3px; border: 1px solid #abc1a6; border-radius: 5px; background: #f2f1ddef; color: #254a39; box-shadow: 0 2px 5px #18372555; cursor: pointer; }
 .live-minimap[hidden] { display: none; }
-.live-minimap svg { display: block; width: 100%; height: auto; overflow: visible; }
-.live-minimap .minimap-ground { fill: #e4e8d0; }
-.live-minimap [data-district] { fill: #b6c9a6; stroke: #e4e8d0; stroke-width: 2; }
-.live-minimap [data-district].current { fill: #82ad89; stroke: #4b805d; stroke-width: 1.5; }
-.live-minimap [data-landmark] { fill: #f7f0d9; stroke: #365d47; stroke-width: 1; }
-.live-minimap [data-landmark].nearest { fill: #efd58e; stroke: #8c5d30; stroke-width: 1.6; }
-.minimap-player circle { fill: #fff9e9; stroke: #213e32; stroke-width: 1; }
-.minimap-player path { fill: #b54832; stroke: #fff5de; stroke-width: .6; }
-.minimap-player.indoors circle { stroke-dasharray: 2 1; }
-.live-minimap text { fill: #3b5c42; font: 9px Arial, sans-serif; }
+.live-minimap svg { display: block; width: 100%; height: auto; overflow: hidden; border-radius: 3px; background: #dfe6cf; }
+.live-minimap image { image-rendering: pixelated; }
+.live-minimap .minimap-gym { fill: #244d3c; stroke: #f6f3e9; stroke-width: .45; }
+.live-minimap .minimap-sight { fill: #f2cf73; stroke: #6b4c17; stroke-width: .4; }
+.live-minimap [data-landmark].nearest { stroke: #d46d4d; stroke-width: .7; }
+.minimap-player circle { fill: #fff9e9cc; stroke: #213e32; stroke-width: .3; }
+.minimap-player path { fill: #b54832; stroke: #fff5de; stroke-width: .18; }
+.minimap-player.indoors circle { stroke-dasharray: .6 .3; }
 .minimap-context { display: block; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; margin: 3px 0 1px; font: 8px/1.3 Arial, sans-serif; }
 .minimap-indoor { position: absolute; top: 4px; right: 4px; padding: 1px 3px; border-radius: 2px; background: #f2f1dd; color: #365840; font: 8px/1.3 Arial, sans-serif; }
 .live-minimap:focus-visible { outline: 2px solid #b54832; outline-offset: 2px; }

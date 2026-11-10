@@ -1,6 +1,13 @@
 # Taichung Quest — current state and concurrent work
 
-Production: https://taichung-quest.vercel.app. [Fengjia/Maple and save7 are published](facade-release.md), retaining three battles, the bilingual opening, Chinese font, signs and sound toggle. PR #2 is merged. Published native source is `a72bd0e`, frontend `057656d`; use the exact frozen ROM/metadata pair. The shortened opening/compact tutorial is an isolated review candidate and must not be integrated or published without explicit user approval.
+Canonical frontend: https://taichung-quest.vercel.app. The current approved-art
+release is documented in [approved-landmark-release.md](approved-landmark-release.md).
+It retains Claude’s twenty-place city (native2362263, frontend757e90c), installs
+the ten approved scenes, and moves save compatibility to version11. Published
+native source is `09534a8786360f3bf1f9013e11ea41d13e8646d8`; cartridge SHA-256
+`400e3237b5640a72d211687c06ec4cb0ca4e4b82af57a232577c0918ff1fee21`.
+The release receipt confirms the Vercel production deployment and exact served ROM.
+Earlier checkpoints and ownership notes below are historical context.
 
 ## Source and release inputs
 

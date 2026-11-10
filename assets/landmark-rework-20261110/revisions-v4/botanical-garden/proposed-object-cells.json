@@ -1,0 +1,15 @@
+{
+  "cellSize": 16,
+  "rows": [
+    "0000101110100",
+    "0001111111100",
+    "0001111111100",
+    "0111111111100",
+    "0111111111100",
+    "0111111111100",
+    "0111111111110",
+    "0111111111100",
+    "0111100000000"
+  ],
+  "note": "Conservative object shape, not installed navigation collision. Paving and contact shadows are not solid; refresh real sign/warp/road approaches during integration."
+}

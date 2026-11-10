@@ -1,0 +1,222 @@
+{
+  "id": "prefectural-hall",
+  "status": "native-art-review-draft; exact2362263-footprint-clear-mask-bound",
+  "nativePixels": [
+    160,
+    160
+  ],
+  "metatileFootprint": [
+    10,
+    10
+  ],
+  "worldRectHalfOpen": [
+    93,
+    84,
+    103,
+    94
+  ],
+  "paletteOpaqueCount": 13,
+  "paletteIndex0": "transparent",
+  "rgb555Exact": true,
+  "occupiedPixels": 10116,
+  "pixelOccupancyRatio": 0.39515625,
+  "native8x8": {
+    "totalCells": 400,
+    "occupiedCells": 168,
+    "uniqueExactIncludingTransparent": 81,
+    "uniqueWithHVFlipsIncludingTransparent": 81,
+    "uniqueTileBytes4bpp": 2592
+  },
+  "opaqueBounds": [
+    0,
+    1,
+    159,
+    80
+  ],
+  "doorVisualAnchorPx": [
+    24,
+    72
+  ],
+  "preservedApproach": "Art stays within top5 metatile rows; lower half and original forecourt/approach remain transparent. No collision or warp edits.",
+  "sourceNativeReadOnly": "2362263510dfa38987c36b6cc40dca8d9372fc3c; read-only audit source",
+  "sources": [
+    {
+      "page": "https://travel.taichung.gov.tw/en/attractions/intro/1367",
+      "photo": "https://www.taichung.gov.tw/media/468752/台中州廳.jpg",
+      "observed": "pale corner portico; slate mansard; columned loggia; red brick wings"
+    },
+    {
+      "page": "https://english.taichung.gov.tw/3390771/post",
+      "photo": "https://english.taichung.gov.tw/media/1477198/由南翼俯視臺中州廳建築_0.jpg",
+      "observed": "repeated arched wing windows; horizontal pale bands; round-headed dormers"
+    }
+  ],
+  "nativeBinding": {
+    "nativeSource": "/Users/peter/devday_hackathon/.claude/worktrees/native-gym-text-fixes-a79571/.worktrees/game-gym-text",
+    "nativeHead": "2362263510dfa38987c36b6cc40dca8d9372fc3c",
+    "auditSource": "assets/landmark-rework-20261110/temples/native-footprint-audit.json",
+    "constraints": {
+      "n": 16,
+      "id": "prefectural-hall",
+      "mapId": "MAP_TAICHUNG_OLD_CITY",
+      "origin": [
+        13,
+        36
+      ],
+      "size": [
+        10,
+        10
+      ],
+      "worldRectExclusive": [
+        93,
+        84,
+        103,
+        94
+      ],
+      "door": null,
+      "approach": null,
+      "arrival": null,
+      "footprintSource": "data/taichung/city-rework/masterplan.json; actual map cells checked",
+      "nativeWarp": false,
+      "nativeMap": [
+        43,
+        0
+      ],
+      "primaryTileset": "gTileset_TaichungOldCorePrimary",
+      "secondaryTileset": "gTileset_TaichungOldCore",
+      "currentCollisionRows": [
+        "1110000000",
+        "1111111111",
+        "1111111111",
+        "1111111111",
+        "1111111111",
+        "0000000000",
+        "0000000001",
+        "0000000000",
+        "0000000000",
+        "0000000000"
+      ],
+      "behaviorIds": [
+        0,
+        132
+      ],
+      "layerTypeIds": [
+        0,
+        1
+      ],
+      "noRuntimeEvidenceClaim": true,
+      "currentMapSha256": "db927471580e13be8d3a990cb61556af5e8c5500c5d4cc6b2c7645d98314234f",
+      "hardReservations": {
+        "nativeDoor": null,
+        "nativeApproach": null,
+        "nativeArrival": null,
+        "nearbyEventAnchors": [
+          {
+            "kind": "sign",
+            "x": 17,
+            "y": 40,
+            "script": "TaichungCity_Sign_PrefecturalHall",
+            "insideArtwork": true
+          },
+          {
+            "kind": "sign",
+            "x": 22,
+            "y": 42,
+            "script": "TaichungCity_Sign_GreenRiver",
+            "insideArtwork": true
+          }
+        ],
+        "notes": [
+          "Door/approach/arrival and event anchor words/visibility remain integration constraints.",
+          "For a sign retain at least one reachable interaction neighbour; not every nearby empty cell must stay clear.",
+          "Existing clear ground inside an artwork scene is reference geometry, not an automatic hard reservation; companion collision review may change occupied cells.",
+          "No edits outside the registered footprint are authorized by this art handoff."
+        ]
+      },
+      "existingClearReferenceRows": [
+        "0001111111",
+        "0000000000",
+        "0000000000",
+        "0000000000",
+        "0000000000",
+        "1111111111",
+        "1111111110",
+        "1111111111",
+        "1111111111",
+        "1111111111"
+      ],
+      "websitePresentationCrop": {
+        "worldRectExclusive": [
+          97,
+          88,
+          109,
+          96
+        ],
+        "nativeOrigin": [
+          12,
+          35
+        ],
+        "nativeCells": [
+          12,
+          8
+        ],
+        "pixels": [
+          192,
+          128
+        ],
+        "collisionReferenceRows": [
+          "000000000000",
+          "011100000000",
+          "011111111110",
+          "011111111110",
+          "011111111110",
+          "011111111110",
+          "000000000000",
+          "000000000010"
+        ],
+        "notAnArtworkAllocation": true
+      }
+    },
+    "bank": {
+      "primary": "gTileset_TaichungOldCorePrimary",
+      "primaryGraphicSlots": 640,
+      "secondaryGraphicSlots": 384,
+      "secondaryDefinitionCount": 371,
+      "localMapReferencedSecondaryDefinitions": 251,
+      "localMapReferencedStaticSecondaryGraphics": 359,
+      "secondaryStaticCapacity": 376,
+      "secondaryDefinitionCapacity": 384,
+      "doorAnimationScratch": [
+        1016,
+        1023
+      ],
+      "freeSlotsNotAnAllocationClaim": true,
+      "paletteSlots": [
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "sharedBankMustAuditAllConsumersAndDonatedStrips": true,
+      "staticGraphicsUnreferencedByAnyRetainedDefinition": 0,
+      "appendOnlyDefinitionSlots": 13,
+      "allocationCaveat": "Conservative all-definition reference count; remaining slots are not a full seam/dynamic-root/palette/save migration proof."
+    },
+    "conservativeClearRows": [
+      "0001111111",
+      "0000000000",
+      "0000000000",
+      "0000000000",
+      "0000000000",
+      "1111111111",
+      "1111111110",
+      "1111111111",
+      "1111111111",
+      "1111111111"
+    ],
+    "conservativeChoiceNote": "This art preserves every currently clear cell. Audit treats existing clear geometry as reference, not all as hard reservations. No collision changes proposed here."
+  },
+  "conservativeClearOpaquePixels": 0
+}

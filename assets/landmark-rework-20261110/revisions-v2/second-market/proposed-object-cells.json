@@ -1,0 +1,14 @@
+{
+  "note": "Conservative art object cells only; not installed. Courtyard/steps are not solid. Claude must reconcile grid collision, signs, approach and placement.",
+  "cellSize": 16,
+  "rows": [
+    "00000000",
+    "00111110",
+    "00111110",
+    "00111110",
+    "11111111",
+    "11111111",
+    "11111111",
+    "10000001"
+  ]
+}

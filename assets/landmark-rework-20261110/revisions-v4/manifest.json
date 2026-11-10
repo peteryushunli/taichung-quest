@@ -1,0 +1,54 @@
+{
+  "status": "REVIEW_REVISIONS_NOT_INSTALLED",
+  "revision": 4,
+  "landmarks": [
+    {
+      "id": "botanical-garden",
+      "title": "Botanical Garden",
+      "number": 13,
+      "revision": 4,
+      "nativeFile": "revisions-v4/botanical-garden/native.png",
+      "nativeSize": [
+        208,
+        144
+      ],
+      "requiresPlacementUpdate": true
+    },
+    {
+      "id": "prefectural-hall",
+      "title": "Prefectural Hall",
+      "number": 16,
+      "revision": 4,
+      "nativeFile": "revisions-v4/prefectural-hall/native.png",
+      "nativeSize": [
+        192,
+        160
+      ],
+      "requiresPlacementUpdate": true
+    },
+    {
+      "id": "second-market",
+      "title": "Second Market",
+      "number": 17,
+      "revision": 4,
+      "nativeFile": "revisions-v4/second-market/native.png",
+      "nativeSize": [
+        160,
+        144
+      ],
+      "requiresPlacementUpdate": true
+    },
+    {
+      "id": "cultural-heritage-park",
+      "title": "Cultural Heritage Park",
+      "number": 18,
+      "revision": 4,
+      "nativeFile": "revisions-v4/cultural-heritage-park/native.png",
+      "nativeSize": [
+        256,
+        208
+      ],
+      "requiresPlacementUpdate": true
+    }
+  ]
+}

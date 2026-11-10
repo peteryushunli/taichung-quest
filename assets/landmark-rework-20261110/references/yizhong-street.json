@@ -1,0 +1,59 @@
+{
+  "id": "yizhong-street",
+  "name": {
+    "en": "Yizhong Street / Yizhong Shopping District",
+    "zh-TW": "一中街／一中商圈"
+  },
+  "verifiedOn": "2026-11-10",
+  "owner": "Root park/street4",
+  "identity": "A student shopping street and market district near Taichung First Senior High School, not a single civic building.",
+  "officialPages": [
+    {
+      "url": "https://travel.taichung.gov.tw/en/attractions/intro/1551",
+      "publisher": "Taichung Tourism and Travel Bureau",
+      "evidence": "Official identity, street vendors, shopping lanes and student district."
+    },
+    {
+      "url": "https://www.taichung.gov.tw/8868/8872/9962/2360443",
+      "publisher": "Taichung City Government",
+      "evidence": "Official city article with Yizhong street photograph."
+    }
+  ],
+  "officialPhotos": [
+    {
+      "url": "https://www.taichung.gov.tw/media/935627/%E4%B8%80%E4%B8%AD%E5%95%86%E5%9C%88-2.jpg",
+      "publisher": "Taichung City Government",
+      "visualInspection": "Direct photograph inspected in own Chrome tab. A narrow street between mixed-height shopfronts; layered projecting signs, red/yellow food counters, left-side clothing racks, gray apartment walls/ACunits above, pedestrians occupy the open center."
+    },
+    {
+      "url": "https://taichung.travel/content/images/attractions/31556/1024x768_image637090744398569167.jpg",
+      "publisher": "Taichung Tourism and Travel Bureau",
+      "visualInspection": "Additional official indexed photo:market-lane string lights and small tables. Indexed visual description only, not directly viewed."
+    }
+  ],
+  "distinguishingMotifs": [
+    "An open pedestrian street gap framed by two dense rows of low shopfronts, with ordinary taller city buildings behind.",
+    "Projecting horizontal signboards mixed with narrow vertical sign stacks; uneven heights rather than identical repeated kiosks.",
+    "Warm red/yellow food-stall fronts beside cool white/blue illuminated retail signs.",
+    "Shallow awnings, street counters and clothing racks create the close-grained student shopping character.",
+    "Keep the center lane visibly walkable; use a few pedestrians and hanging lights as supporting rhythm."
+  ],
+  "materialColors": [
+    "Weathered gray concrete above shops",
+    "Warm scarlet, yellow and cream stall faces",
+    "Dark awnings and charcoal street",
+    "Small cyan/white light accents"
+  ],
+  "pixelPriorities": [
+    "Make a compact street vignette, not a giant roofed hall.",
+    "Group signs into clean large pixel blocks; original generic lettering can suggest shops without copying brands."
+  ],
+  "avoid": [
+    "Temple, castle, civic palace or one monumental shopping gate",
+    "Every shop the same height/color",
+    "Illegible text noise filling every pixel",
+    "Using a food-court photo as if it represented the entire district"
+  ],
+  "rights": "Reference links only. Do not copy source photographs into shipped game art. Draw original pixel interpretations.",
+  "scope": "No map/native/PR/main/Claudecheckout changes or deployment."
+}

@@ -1,0 +1,39 @@
+{
+  "status": "REVIEW_REVISIONS_NOT_INSTALLED",
+  "revision": 2,
+  "landmarks": [
+    {
+      "id": "confucius-temple",
+      "title": "Confucius Temple",
+      "number": 14,
+      "nativeFile": "revisions-v2/confucius-temple/native.png",
+      "nativeSize": [
+        160,
+        144
+      ],
+      "requiresPlacementUpdate": false
+    },
+    {
+      "id": "second-market",
+      "title": "Second Market",
+      "number": 17,
+      "nativeFile": "revisions-v2/second-market/native.png",
+      "nativeSize": [
+        128,
+        128
+      ],
+      "requiresPlacementUpdate": true
+    },
+    {
+      "id": "cultural-heritage-park",
+      "title": "Cultural Heritage Park",
+      "number": 18,
+      "nativeFile": "revisions-v2/cultural-heritage-park/native.png",
+      "nativeSize": [
+        224,
+        192
+      ],
+      "requiresPlacementUpdate": true
+    }
+  ]
+}
