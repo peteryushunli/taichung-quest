@@ -5,7 +5,7 @@ import './landing.css';
 import { escapeHtml } from './city-guide';
 import { getLocale, onLocaleChange, setLocale, t } from './i18n';
 import type { Locale } from './i18n';
-import { landingMedia, landmarkArt } from './landing-assets';
+import { badgeArt, landingMedia, landmarkArt } from './landing-assets';
 import type { PokemonIcon } from './landing-assets';
 import { pixelFlag } from './landing-flag';
 import { cityPlaceSummary, districtCount, districtLabelSpots, gymStatusSummary, isGym, isGymOpen, localizedPlace, markerPosition, orderPlaces, placeStatus, placeWorld } from './landing-model';
@@ -45,6 +45,17 @@ function cityMap() {
   const labels = districtLabelSpots(city).map(({ label, sign, x, y }) =>
     `<span class="lp-district-name${sign ? ' lp-district-sign' : ''}" style="left:${x}%;top:${y}%">${label}</span>`).join('');
   return `<img class="lp-map-art" src="${escapeHtml(landingMedia.cityMap)}" width="${width * 16}" height="${height * 16}" alt="">${labels}<span class="lp-map-chip">${copy('IN-GAME MAP')}</span>`;
+}
+
+// Step 3's City Pass, stamped with every gym's badge as the game draws it.
+function renderPass() {
+  const chinese = getLocale() === 'zh-Hant';
+  return gyms.map((place, index) => {
+    const badge = (chinese ? place.badgeNameZh : place.badgeNameEn) ?? '';
+    const label = `${number(index)} · ${badge} · ${chinese ? place.shortNameZh : place.shortNameEn}`;
+    const art = badgeArt[place.id] ? `<img class="lp-px" src="${escapeHtml(badgeArt[place.id])}" alt="" width="32" height="32">` : '';
+    return `<div class="lp-stamp ${isGymOpen(place) ? 'is-earned' : ''}" role="img" aria-label="${escapeHtml(label)}" title="${escapeHtml(label)}">${art}<span>${number(index)}</span></div>`;
+  }).join('');
 }
 
 function sectionHead(eyebrow: string, title: string, side?: string, titleId?: string) {
@@ -131,7 +142,7 @@ function markup() {
             <p>${copy('The bike is yours from the start — tap B. Turn wild encounters and trainer challenges to Off, Low or Normal.')}</p>
           </div>
           <div class="lp-step">
-            <div class="lp-pass">${gyms.map((place, index) => `<div class="lp-stamp ${isGymOpen(place) ? 'is-earned' : ''}">${number(index)}</div>`).join('')}</div>
+            <div class="lp-pass" id="lp-pass">${renderPass()}</div>
             <span class="lp-step-label">${copy('STEP 3')}</span>
             <h3>${copy('Fill your City Pass')}</h3>
             <p>${copy("Beat a landmark's leader to earn its stamp. Lose, and you're healed back at the plaza for another try.")}</p>
@@ -236,6 +247,7 @@ export function createLanding(root: HTMLElement, host: LandingHost) {
     markers.innerHTML = renderMarkers(selected);
     detail.innerHTML = renderDetail(selected);
     gallery.innerHTML = renderGallery();
+    root.querySelector('#lp-pass')!.innerHTML = renderPass();
     root.querySelector('#lp-map-heading')!.textContent = cityPlaceSummary(landmarks, getLocale());
     root.querySelector('#lp-gym-status')!.textContent = gymStatusSummary(landmarks, getLocale());
     root.querySelectorAll<HTMLImageElement>('[data-i18n-alt]').forEach((image) => { image.alt = t(image.dataset.i18nAlt!); });

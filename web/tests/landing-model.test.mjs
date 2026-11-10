@@ -193,3 +193,13 @@ test('district names sit on the freeway for the north and beside Wanhe for Nantu
   for (const spot of spots) assert.ok(spot.x > 0 && spot.x < 100 && spot.y > 0 && spot.y < 100, spot.label);
   assert.equal(spots[0].y, 3 / 181 * 100);
 });
+
+test('every gym stamps the City Pass with its own game badge and bilingual badge name', () => {
+  const gyms = landmarks.filter(isGym);
+  assert.deepEqual(gyms.map((place) => place.badgeNameEn), ['Departure Badge', 'Pavilion Badge', 'Chill Badge', 'Discovery Badge', 'Brush Badge', 'Craft Badge', 'Palette Badge', 'Feast Badge', 'Habitat Badge', 'Encore Badge']);
+  for (const place of gyms) {
+    assert.match(place.badgeNameZh, /徽章$/, place.id);
+    assert.ok(existsSync(new URL(`../src/assets/badges/${place.id}.png`, import.meta.url)), `${place.id} badge art`);
+  }
+  for (const place of [...landmarks, ...sights].filter((entry) => !isGym(entry))) assert.equal(place.badgeNameEn, undefined, place.id);
+});

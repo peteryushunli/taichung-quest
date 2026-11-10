@@ -43,7 +43,9 @@
       "https://zh.wikipedia.org/wiki/臺中驛",
       "https://zh.wikipedia.org/wiki/臺中車站鐵道文化園區",
       "https://travel.taichung.gov.tw/en/attractions/intro/1942"
-    ]
+    ],
+    "badgeNameEn": "Departure Badge",
+    "badgeNameZh": "啟程徽章"
   },
   {
     "id": "taichung-park",
@@ -87,7 +89,9 @@
       "https://en.wikipedia.org/wiki/Taichung_Park",
       "https://zh.wikipedia.org/wiki/臺中公園",
       "https://travel.taichung.gov.tw/en/attractions/intro/882"
-    ]
+    ],
+    "badgeNameEn": "Pavilion Badge",
+    "badgeNameZh": "湖亭徽章"
   },
   {
     "id": "miyahara",
@@ -133,7 +137,9 @@
       "https://en.wikipedia.org/wiki/Miyahara_Ice_Cream",
       "https://zh.wikipedia.org/wiki/宮原武熊",
       "https://travel.taichung.gov.tw/en/Attractions/Intro/1239"
-    ]
+    ],
+    "badgeNameEn": "Chill Badge",
+    "badgeNameZh": "沁涼徽章"
   },
   {
     "id": "natural-science-museum",
@@ -177,7 +183,9 @@
       "https://en.wikipedia.org/wiki/National_Museum_of_Natural_Science",
       "https://zh.wikipedia.org/wiki/國立自然科學博物館",
       "https://www.nmns.edu.tw/en/"
-    ]
+    ],
+    "badgeNameEn": "Discovery Badge",
+    "badgeNameZh": "發現徽章"
   },
   {
     "id": "calligraphy-greenway",
@@ -222,7 +230,9 @@
       "https://en.wikipedia.org/wiki/Calligraphy_Greenway",
       "https://zh.wikipedia.org/wiki/草悟道",
       "https://travel.taichung.gov.tw/en/Attractions/Intro/1050"
-    ]
+    ],
+    "badgeNameEn": "Brush Badge",
+    "badgeNameZh": "筆意徽章"
   },
   {
     "id": "shen-ji-new-village",
@@ -268,7 +278,9 @@
       "https://zh.wikipedia.org/wiki/審計新村",
       "https://travel.taichung.gov.tw/en/Attractions/Intro/1222",
       "https://news.pts.org.tw/article/370975"
-    ]
+    ],
+    "badgeNameEn": "Craft Badge",
+    "badgeNameZh": "巧作徽章"
   },
   {
     "id": "fine-arts-museum",
@@ -312,7 +324,9 @@
       "https://en.wikipedia.org/wiki/National_Taiwan_Museum_of_Fine_Arts",
       "https://zh.wikipedia.org/wiki/國立臺灣美術館",
       "https://www.ntmofa.gov.tw/en/cp.aspx?n=1579"
-    ]
+    ],
+    "badgeNameEn": "Palette Badge",
+    "badgeNameZh": "調色徽章"
   },
   {
     "id": "fengjia-night-market",
@@ -356,7 +370,9 @@
       "https://en.wikipedia.org/wiki/Fengjia_Night_Market",
       "https://zh.wikipedia.org/wiki/逢甲夜市",
       "https://travel.taichung.gov.tw/en/Attractions/Intro/850"
-    ]
+    ],
+    "badgeNameEn": "Feast Badge",
+    "badgeNameZh": "豐味徽章"
   },
   {
     "id": "maple-garden",
@@ -401,7 +417,9 @@
       "https://zh.wikipedia.org/wiki/秋紅谷廣場",
       "https://travel.taichung.gov.tw/en/attractions/intro/851",
       "https://english.taichung.gov.tw/10273/10554/10719/730143"
-    ]
+    ],
+    "badgeNameEn": "Habitat Badge",
+    "badgeNameZh": "棲地徽章"
   },
   {
     "id": "taichung-theater",
@@ -445,7 +463,9 @@
       "https://en.wikipedia.org/wiki/National_Taichung_Theater",
       "https://zh.wikipedia.org/wiki/臺中國家歌劇院",
       "https://www.npac-ntt.org/en/about/architecture/design"
-    ]
+    ],
+    "badgeNameEn": "Encore Badge",
+    "badgeNameZh": "謝幕徽章"
   },
   {
     "id": "wanhe-temple",

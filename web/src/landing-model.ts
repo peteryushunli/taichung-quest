@@ -27,6 +27,8 @@ export interface LandingLandmark {
   artRect?: number[];
   /** Where the landing map's pin label sits when the default (facing the middle) would cover a neighbour. */
   landingLabelSide?: 'left' | 'right' | 'above' | 'below';
+  badgeNameEn?: string;
+  badgeNameZh?: string;
   gameAreaRef?: string;
   gymStatus: 'planned' | 'pending-verification' | 'playable' | 'not-a-gym';
   gymLeaderEn?: string;

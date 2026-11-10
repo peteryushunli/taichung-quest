@@ -87,6 +87,11 @@ export const landmarkArt: Record<string, LandmarkArt> = {
   'taichung-theater': { facade: theater, tint: modern, leader: ling, team: [mon('Jigglypuff', jigglypuffIcon), mon('Jynx', jynxIcon), mon('Mr. Mime', mrMimeIcon)] },
 };
 
+// Each gym's City Pass badge, the game's own 32×32 award icon (graphics/taichung/badges), keyed by landmark id.
+export const badgeArt: Record<string, string> = Object.fromEntries(Object.entries(
+  import.meta.glob<string>('./assets/badges/*.png', { eager: true, import: 'default' }),
+).map(([path, url]) => [path.slice(path.lastIndexOf('/') + 1, -'.png'.length), url]));
+
 // Landmarks without a gym show the way they appear on the in-game city map.
 const mapViews = import.meta.glob<string>('./assets/landmarks/map/*.png', { eager: true, import: 'default' });
 for (const [path, url] of Object.entries(mapViews)) {

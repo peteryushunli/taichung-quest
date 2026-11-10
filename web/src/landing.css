@@ -207,6 +207,10 @@ html[lang="zh-Hant"] .lp-card-other { font-family: inherit; font-size: 12px; let
 .lp-pass { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; align-content: center; aspect-ratio: 3/2; padding: 18px; border: 1px solid var(--lp-card-line); border-radius: 4px; background: var(--lp-card); }
 .lp-stamp { display: flex; align-items: center; justify-content: center; aspect-ratio: 1; border: 1.5px dashed #b6bda8; border-radius: 50%; color: #9aa48f; font: 11px var(--lp-pixel); transform: rotate(-12deg); }
 .lp-stamp.is-earned { border: 2px solid var(--lp-coral); background: #d46d4d18; color: var(--lp-link-hover); }
+/* The badge stays upright and crisp inside the tilted stamp ring; its number tucks under it. */
+.lp-stamp { position: relative; }
+.lp-stamp img { width: 58%; height: auto; transform: rotate(12deg); image-rendering: pixelated; }
+.lp-stamp > span { position: absolute; bottom: -2px; left: 50%; padding: 0 3px; background: var(--lp-card); font-size: 8px; line-height: 1.2; transform: translateX(-50%) rotate(12deg); }
 
 /* Play */
 .lp-cta { border-top: 1px solid #c9d09a; background: var(--lp-meadow); }
