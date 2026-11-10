@@ -6,9 +6,12 @@ Play: <https://taichung-quest.vercel.app> — the canonical production frontend.
 
 A Pokémon FireRed modification set in a compressed, fictionalized Taichung. A real Game Boy Advance ROM runs in the browser through mGBA WebAssembly.
 
-Explore Old City, Greenway and Xitun in a native Pokémon game, with ten enterable landmark halls. Begin inside Old Taichung Station, choose one of four partners from their animated icons and large portraits, then step into the plaza. Ride through recognizable Station, Miyahara, Taichung Park, National Taichung Theater, Science Museum, Shen Ji, Fine Arts and CMP Park Lane facades. All ten landmark hosts have custom field art; optional local characters add short bilingual greetings. Station leader Jun and Park leader Lian have playable battles with bilingual dialogue; the other eight challenges remain in development.
-
-The ten-landmark roster is approved. The remaining eight gym battles and further landmark facades are later integrations. [docs/game-design.md](docs/game-design.md) records decisions and open design work.
+Explore Claude’s expanded Taichung across six connected districts, with ten gym
+challenges, two temple halls and twenty featured places. Start at Old Taichung
+Station, choose a partner, then explore on foot or by bike. The ten newly approved
+landmark scenes (places11–20) are installed in the cartridge and reflected in the
+city map, minimap and guide cards. See [the art release](docs/approved-landmark-release.md)
+for source provenance, save compatibility and verification.
 
 ## Project layout
 
@@ -41,9 +44,9 @@ For production, use the frozen ROM and matching metadata in a clean release chec
 
 ## First playable scope
 
-Choose English or Traditional Chinese, independent Off / Low / Normal encounter settings, and Charmander, Bulbasaur, Squirtle or Pikachu. The native TEAM menu freely adds or replaces up to six Pokémon from species 001–150, including evolved forms, with level-50 stats and useful moves. Accepted Station and Park challenges heal the team; city battles avoid EXP and evolution gates. Genuine victories record the corresponding Station or Park stamp in the ten-landmark City Pass; defeat heals and returns to the nearby plaza for a retry. A fresh B press toggles the bike in eligible outdoor exploration; city cycling takes three native frames per tile, twice the original bike speed. The native menu remains available, and doors automatically dismount the player.
+Choose English or Traditional Chinese, independent Off / Low / Normal encounter settings, and Charmander, Bulbasaur, Squirtle or Pikachu. The native TEAM menu freely adds or replaces up to six Pokémon from species 001–150, including evolved forms, with level-50 stats and useful moves. Accepted gym challenges heal the team; city battles avoid EXP and evolution gates. Genuine victories record the corresponding badge in the ten-gym City Pass; defeat heals and returns to the nearby plaza for a retry. A fresh B press toggles the bike in eligible outdoor exploration; city cycling takes three native frames per tile, twice the original bike speed. The native menu remains available, and doors automatically dismount the player.
 
-The bilingual City Map describes all ten real places with original illustrations and official visitor links. A separate live minimap reads a coherent native position packet, shows mapped interiors at their landmark entrance, and hides during menus, battles, transitions or stale data. Its remembered On/Off option defaults to On. The browser never writes navigation memory or invents earned stamps.
+The bilingual City Map describes twenty real places with original illustrations and official visitor links. A separate live minimap reads a coherent native position packet, shows mapped interiors at their landmark entrance, and hides during menus, battles, transitions or stale data. Its remembered On/Off option defaults to On. The browser never writes navigation memory or invents earned stamps.
 
 Native Traditional Chinese covers custom city text, district names, starters, City Pass, exploration settings, menu actions and common save/battle labels. Original FireRed story, Pokémon/move names and many detail screens remain English. The browser and native language controls synchronize through a versioned packet validated against the exact ROM. Changes wait while the game is busy or paused. See [docs/native-localization.md](docs/native-localization.md) for coverage.
 

@@ -1,0 +1,42 @@
+{
+  "id": "confucius-temple",
+  "status": "art-review; not installed",
+  "worldRectExclusive": null,
+  "nativeSize": [
+    160,
+    144
+  ],
+  "paletteColorsIncludingTransparent": 16,
+  "opaqueColorsUsed": 12,
+  "rawTileCount": 360,
+  "unique8x8Tiles": 117,
+  "unique8x8TilesWithFlips": 108,
+  "packedTileCountIncludingEmpty": 108,
+  "packedTileRoundTripVerified": true,
+  "sha256": "f4fc719f0d266db83c63be544c6df9850831939f8e07548043cb92cf38edf792",
+  "references": [
+    "https://www.confucius.taichung.gov.tw/834557/834568/834569/834571/834573/837663"
+  ],
+  "integration": "ART REVIEW ONLY. This revision supersedes the v1 design. New shapes require fresh collision and tile-bank allocation. Market and brewery have intentionally new canvas dimensions and need a new map anchor/crop; no native map changes are included.",
+  "revision": 2,
+  "number": 14,
+  "title": "Confucius Temple",
+  "priorNativeSize": [
+    160,
+    144
+  ],
+  "priorWorldRectExclusive": [
+    110,
+    20,
+    120,
+    29
+  ],
+  "geometryChanged": false,
+  "requiresPlacementUpdate": false,
+  "dimensionsMatchAuditedMap": true,
+  "notes": [
+    "Main hall retained. Removed precinct walls, secondary gate, pool, bridge and railings.",
+    "One low terrace and sparse forecourt replace the ornamental lower half.",
+    "Existing native sign cell local(4,8) remains transparent."
+  ]
+}

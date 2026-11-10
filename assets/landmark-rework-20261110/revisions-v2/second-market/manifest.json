@@ -1,0 +1,42 @@
+{
+  "id": "second-market",
+  "status": "art-review; not installed",
+  "worldRectExclusive": null,
+  "nativeSize": [
+    128,
+    128
+  ],
+  "paletteColorsIncludingTransparent": 16,
+  "opaqueColorsUsed": 14,
+  "rawTileCount": 256,
+  "unique8x8Tiles": 135,
+  "unique8x8TilesWithFlips": 128,
+  "packedTileCountIncludingEmpty": 128,
+  "packedTileRoundTripVerified": true,
+  "sha256": "4a8a5069773576117024981d823b337f037a4f6835b7e261ff57b723a96a925b",
+  "references": [
+    "https://travel.taichung.gov.tw/en/attractions/intro/1366"
+  ],
+  "integration": "ART REVIEW ONLY. This revision supersedes the v1 design. New shapes require fresh collision and tile-bank allocation. Market and brewery have intentionally new canvas dimensions and need a new map anchor/crop; no native map changes are included.",
+  "revision": 2,
+  "number": 17,
+  "title": "Second Market",
+  "priorNativeSize": [
+    112,
+    144
+  ],
+  "priorWorldRectExclusive": [
+    98,
+    20,
+    105,
+    29
+  ],
+  "geometryChanged": true,
+  "requiresPlacementUpdate": true,
+  "dimensionsMatchAuditedMap": false,
+  "notes": [
+    "Completely new compact128x128frontage; no diagonal arms or long north roof.",
+    "Brick raised core, shaped plaster parapet, three market openings and short jade awning.",
+    "Do not clip to the old footprint or old conservative-clear stencil."
+  ]
+}

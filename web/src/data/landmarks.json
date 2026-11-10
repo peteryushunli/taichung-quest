@@ -497,8 +497,8 @@
     "mapLabelSide": "right",
     "artRect": [
       26,
-      134,
-      36,
+      135,
+      37,
       144
     ],
     "descriptionSources": [
@@ -539,7 +539,7 @@
     "mapLabelSide": "left",
     "artRect": [
       17,
-      135,
+      136,
       26,
       144
     ],

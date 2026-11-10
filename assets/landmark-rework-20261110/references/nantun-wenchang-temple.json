@@ -1,0 +1,54 @@
+{
+  "id": "nantun-wenchang-temple",
+  "name": {
+    "en": "Nantun Wenchang Temple",
+    "zh-TW": "南屯文昌公廟"
+  },
+  "verifiedOn": "2026-11-10",
+  "owner": "Maps temple3",
+  "identity": "The Nantun Wenchang temple at100WenchangStreet nearWanheTemple; NOT Beitun/Sizhangli WenchangTemple.",
+  "officialPages": [
+    {
+      "url": "https://www.tchac.taichung.gov.tw/historybuilding?pid=4&uid=34",
+      "publisher": "Taichung City Cultural Heritage Department",
+      "evidence": "Official exact Nantun identity and present raised, gallery-style building; original shrine history does not imply current facade is Qing-era."
+    }
+  ],
+  "officialPhotos": [
+    {
+      "url": "https://www.tchac.taichung.gov.tw/uploads/tchac/images/large/9b0d9634-d766-4c40-82e5-2ffe04de6560.jpg",
+      "visualInspection": "Direct official oblique facade photo inspected. Low ochre tile roof, cream/gray round columns, dark carved door panels, red lanterns and a black/gold文昌公廟plaque.",
+      "publisher": "Taichung government venue/heritage/tourism office"
+    },
+    {
+      "url": "https://www.tchac.taichung.gov.tw/uploads/tchac/images/large/a94d21df-5379-4700-a54a-2be2fc9c800f.jpg",
+      "visualInspection": "Direct official full-front photo inspected. Raised terrace, broad central access steps, white/gray stone balustrades and low carved relief panels. A rainbow fabric canopy and event banner obscure the center; treat those as temporary, not architecture.",
+      "publisher": "Taichung government venue/heritage/tourism office"
+    }
+  ],
+  "distinguishingMotifs": [
+    "Low, broad ochre/orange tiled roof with restrained upturned corners; less exuberant than Wanhe roof ornament.",
+    "A raised terrace with prominent pale stone railings and steps at the front.",
+    "Gray/cream columns frame several dark wooden door bays with carved panels.",
+    "A horizontal black-and-gold文昌公廟plaque and red round lanterns sit under the eave.",
+    "Lower facade/terrace wall includes pale relief panels and a solid reddish stone base."
+  ],
+  "materialColors": [
+    "Ochre/gold-brown roof tiles",
+    "Cream and cool gray stone rails/columns",
+    "Dark brown wood with gold panels",
+    "Red lantern accents"
+  ],
+  "pixelPriorities": [
+    "Use the raised terrace plus simple roofline to separate it from Wanhe.",
+    "Keep dark door panels as readable blocks; omit temporary event clutter."
+  ],
+  "avoid": [
+    "Confusing Nantun with Beitun WenchangTemple",
+    "Drawing the rainbow tarp/eventbanner as permanent roof architecture",
+    "Inventing a pagoda or oversizedMazu dragons",
+    "Using the current elevated facade as a literal depiction of the original1797shrine"
+  ],
+  "rights": "Reference links only; draw original pixel art. No photos copied into shipped assets.",
+  "scope": "No native,map,PR,main orClaudecheckout edits."
+}

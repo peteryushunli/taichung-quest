@@ -1,0 +1,409 @@
+{
+  "status": "READ_ONLY_SOURCE_POINTER_VERIFIED",
+  "checkedAt": "2026-11-10T03:53:00.609369+00:00",
+  "scope": "Pointer only for assets-only art audit; no source/map/PR/patch/deployment change.",
+  "nativeWorktree": "/Users/peter/devday_hackathon/.claude/worktrees/native-gym-text-fixes-a79571/.worktrees/game-gym-text",
+  "nativeHead": "2362263510dfa38987c36b6cc40dca8d9372fc3c",
+  "nativeClean": true,
+  "matchingWebsiteWorktree": "/Users/peter/devday_hackathon/.claude/worktrees/gym-gameboy-website-updates-9d8798",
+  "matchingWebsiteHead": "757e90c55551ddbf74e260f181e5a085a9b97920",
+  "buildMetadata": "/Users/peter/devday_hackathon/.claude/worktrees/gym-gameboy-website-updates-9d8798/web/public/roms/build.json",
+  "romSha256": "5c3e041d7ee8dacc126eb600098c8e63f7498dd73bd712aa4bb504c04c0ee1bb",
+  "romHashVerified": true,
+  "nativeLandmarkCount": 20,
+  "websiteCatalogCount": 12,
+  "coordinateNote": "Today's world tile coordinates (live 120x176 canvas). New columns/rows are negative or beyond 120/176.",
+  "landmarks": [
+    {
+      "n": 1,
+      "name": "Old Taichung Station",
+      "x": 112,
+      "y": 112
+    },
+    {
+      "n": 2,
+      "name": "Taichung Park",
+      "x": 112,
+      "y": 78
+    },
+    {
+      "n": 3,
+      "name": "Miyahara",
+      "x": 100,
+      "y": 99
+    },
+    {
+      "n": 4,
+      "name": "Science Museum",
+      "x": 64,
+      "y": 52
+    },
+    {
+      "n": 5,
+      "name": "Calligraphy Greenway",
+      "x": 62,
+      "y": 68
+    },
+    {
+      "n": 6,
+      "name": "Shen Ji New Village",
+      "x": 51,
+      "y": 76
+    },
+    {
+      "n": 7,
+      "name": "Fine Arts Museum",
+      "x": 53,
+      "y": 94
+    },
+    {
+      "n": 8,
+      "name": "Fengjia Night Market",
+      "x": 24,
+      "y": 12
+    },
+    {
+      "n": 9,
+      "name": "Maple Garden",
+      "x": 12,
+      "y": 32
+    },
+    {
+      "n": 10,
+      "name": "Taichung Theater",
+      "x": 12,
+      "y": 44
+    },
+    {
+      "n": 11,
+      "name": "Wanhe Temple",
+      "x": 26,
+      "y": 137
+    },
+    {
+      "n": 12,
+      "name": "Wenchang Temple",
+      "x": 16,
+      "y": 137
+    },
+    {
+      "n": 13,
+      "name": "Botanical Garden",
+      "x": 55.5,
+      "y": 24.5
+    },
+    {
+      "n": 14,
+      "name": "Taichung Confucius Temple",
+      "x": 115.0,
+      "y": 24.5
+    },
+    {
+      "n": 15,
+      "name": "Yizhong Street",
+      "x": 115.0,
+      "y": 38.0
+    },
+    {
+      "n": 16,
+      "name": "Taichung Prefectural Hall",
+      "x": 98.0,
+      "y": 89.0
+    },
+    {
+      "n": 17,
+      "name": "Second Market",
+      "x": 101.5,
+      "y": 24.5
+    },
+    {
+      "n": 18,
+      "name": "Cultural Heritage Park",
+      "x": 65.5,
+      "y": 130.0
+    },
+    {
+      "n": 19,
+      "name": "Fengle Sculpture Park",
+      "x": 65.5,
+      "y": 163.5
+    },
+    {
+      "n": 20,
+      "name": "Wenxin Forest Park amphitheatre",
+      "x": 21.0,
+      "y": 91.5
+    }
+  ],
+  "eightExpandedVisitRectangles": [
+    {
+      "n": 13,
+      "name": "Botanical Garden",
+      "zh": "科博館植物園",
+      "rect": [
+        49,
+        21,
+        62,
+        28
+      ],
+      "note": "Rainforest greenhouse: a round, tapering glass tower in a steel frame, masts on top",
+      "owner": "Old City",
+      "status": "approved; sources check, tile budget and tile art to do"
+    },
+    {
+      "n": 14,
+      "name": "Taichung Confucius Temple",
+      "zh": "臺中市孔廟",
+      "rect": [
+        110,
+        20,
+        120,
+        29
+      ],
+      "note": "Song style: open Lingxing gate, half-moon pond, Dacheng gate, yellow-roofed hall",
+      "owner": "Old City",
+      "status": "approved; sources check, tile budget and tile art to do"
+    },
+    {
+      "n": 15,
+      "name": "Yizhong Street",
+      "zh": "一中商圈",
+      "rect": [
+        110,
+        34,
+        120,
+        42
+      ],
+      "note": "Student food and shopping street by Taichung First Senior High; no arch",
+      "owner": "Old City",
+      "status": "approved; sources check, tile budget and tile art to do"
+    },
+    {
+      "n": 16,
+      "name": "Taichung Prefectural Hall",
+      "zh": "臺中州廳",
+      "rect": [
+        93,
+        84,
+        103,
+        94
+      ],
+      "note": "Red brick with grey-white bands, mansard roof, white domed corner entrance; reopened Oct 2026",
+      "owner": "Old City",
+      "status": "approved; sources check, tile budget and tile art to do"
+    },
+    {
+      "n": 17,
+      "name": "Second Market",
+      "zh": "第二市場",
+      "rect": [
+        98,
+        20,
+        105,
+        29
+      ],
+      "note": "Six-sided two-storey hall where three market wings meet (market 1917, hall 1936)",
+      "owner": "Old City",
+      "status": "approved; sources check, tile budget and tile art to do"
+    },
+    {
+      "n": 18,
+      "name": "Cultural Heritage Park",
+      "zh": "文化資產園區",
+      "rect": [
+        60,
+        121,
+        71,
+        139
+      ],
+      "note": "Old Taichung Winery (1916): brick warehouses and painted wine barrels",
+      "owner": "Nantun",
+      "status": "approved; sources check, tile budget and tile art to do"
+    },
+    {
+      "n": 19,
+      "name": "Fengle Sculpture Park",
+      "zh": "豐樂雕塑公園",
+      "rect": [
+        60,
+        159,
+        71,
+        168
+      ],
+      "note": "Taiwan's first public sculpture park: a lake with a castle, sculptures on the lawn",
+      "owner": "Nantun",
+      "status": "approved; sources check, tile budget and tile art to do"
+    },
+    {
+      "n": 20,
+      "name": "Wenxin Forest Park amphitheatre",
+      "zh": "文心森林公園",
+      "rect": [
+        15,
+        88,
+        27,
+        95
+      ],
+      "note": "Ribbon-roof stage; sources checked by Nantun",
+      "owner": "Nantun",
+      "status": "approved; sources check, tile budget and tile art to do"
+    }
+  ],
+  "sourceFiles": {
+    "data/taichung/city-rework/masterplan.json": {
+      "path": "/Users/peter/devday_hackathon/.claude/worktrees/native-gym-text-fixes-a79571/.worktrees/game-gym-text/data/taichung/city-rework/masterplan.json",
+      "sha256": "e7e3792835d18e53fd5a7a26c4fcff08db310a4e2380513aab8943734a859f67"
+    },
+    "data/taichung/minimap-contract.json": {
+      "path": "/Users/peter/devday_hackathon/.claude/worktrees/native-gym-text-fixes-a79571/.worktrees/game-gym-text/data/taichung/minimap-contract.json",
+      "sha256": "8701b3cb4ed5478fb6221fca93b197400f0211f5e6ebe6fc5203da22e9b05a57"
+    },
+    "tools/taichung/rework/landmark_redraw.py": {
+      "path": "/Users/peter/devday_hackathon/.claude/worktrees/native-gym-text-fixes-a79571/.worktrees/game-gym-text/tools/taichung/rework/landmark_redraw.py",
+      "sha256": "316849505066899b9b55fa4e2f44af8a4ed14dc7d8e4f20da65ec2863ec8fcbf"
+    },
+    "tools/taichung/rework/build_rework.py": {
+      "path": "/Users/peter/devday_hackathon/.claude/worktrees/native-gym-text-fixes-a79571/.worktrees/game-gym-text/tools/taichung/rework/build_rework.py",
+      "sha256": "fd51dbec29b2b850b6d32fd43573c013d5b4add471377eaf4ab2e8e5faafae4a"
+    },
+    "tools/taichung/nantun/landmark_art.py": {
+      "path": "/Users/peter/devday_hackathon/.claude/worktrees/native-gym-text-fixes-a79571/.worktrees/game-gym-text/tools/taichung/nantun/landmark_art.py",
+      "sha256": "e34a7aef796385da974ccd750f07f365c159a9463f603e1590fef402dfc602c0"
+    },
+    "tools/taichung/nantun/rework_layout.py": {
+      "path": "/Users/peter/devday_hackathon/.claude/worktrees/native-gym-text-fixes-a79571/.worktrees/game-gym-text/tools/taichung/nantun/rework_layout.py",
+      "sha256": "1ba3077b41f16eb883c191215d914bf65d6ce8e6e4fc4b5840d0a8946c2db004"
+    },
+    "data/taichung/nantun/skeleton-plan.json": {
+      "path": "/Users/peter/devday_hackathon/.claude/worktrees/native-gym-text-fixes-a79571/.worktrees/game-gym-text/data/taichung/nantun/skeleton-plan.json",
+      "sha256": "ce81c6745d516e820881b75aae0672edefeaf1dd60877fbc8f1a99eed95358a0"
+    }
+  },
+  "notes": [
+    "The native20-entry registry is masterplan.json landmarks, not the web12-entry landmarks.json or the old12-entry city contract.",
+    "Ten art targets are visit11/12 temples plus eight expanded set pieces13–20.",
+    "Masterplan rectangles use its declared coordinate frame. Derive local current map coordinates/clear masks from installed layouts and renderer; do not copy raw rectangles into a normalized minimap without translating.",
+    "Some masterplan art-status prose is historical. Actual installed banks/layouts plus current builder code are the art audit source.",
+    "The maps-landmark-dev-feda2d website currently binds older native d47712a, despite native game-miyahara-v8 having moved; use the verified236 source/build pair above.",
+    "All sources are read-only; art output remains separate until reviewed handoff to Claude."
+  ],
+  "additionalVerifiedSameNativeSourceWebsite": {
+    "worktree": "/Users/peter/devday_hackathon/.claude/worktrees/native-gym-text-fixes-a79571",
+    "head": "19a64b7b3523577e3b13ea90c642453f42e4c40f"
+  },
+  "liveDeploymentVerified": false,
+  "measuredFootprintAudit": {
+    "json": "/Users/peter/devday_hackathon/assets/landmark-rework-20261110/temples/native-footprint-audit.json",
+    "markdown": "/Users/peter/devday_hackathon/assets/landmark-rework-20261110/temples/native-footprint-audit.md",
+    "author": "Maps",
+    "scope": "Actual installed footprints, masks, layers, behavior, bank capacities; read-only checkout audit."
+  },
+  "catalogExplanation": "10 gyms + 2 temples in the paired-place contract/catalog; 8 additional outdoor sights in the native masterplan and installed maps.",
+  "photoIssueForStory": {
+    "reportedBy": "Maps",
+    "status": "RESOLVED_WITH_OFFICIAL_TCHAC_PHOTOS",
+    "wanheAndWenchang": "Official TCHAC facade photos successfully downloaded and inspected by Maps; supersedes the earlier empty MOI endpoint report.",
+    "confucius": "Official photo downloaded and inspected by Maps.",
+    "independentNetworkRecheckByMain": false
+  },
+  "presentationCropCaution": {
+    "reportedBy": "Maps",
+    "rule": "Website sights.json artRect is a presentation crop, not allocated replacement geometry. Preserve registered object footprints and keep crop context/clear masks separate.",
+    "coordinateFrames": "Frontend normalized world is native masterplan +5,+5; local native coordinates below are already translated.",
+    "registeredVsPresentation": [
+      {
+        "id": "botanical-garden",
+        "nativeMap": [
+          43,
+          1
+        ],
+        "registeredOrigin": [
+          9,
+          26
+        ],
+        "registeredSize": [
+          13,
+          7
+        ],
+        "presentationCropOrigin": [
+          9,
+          24
+        ],
+        "presentationCropSize": [
+          13,
+          10
+        ]
+      },
+      {
+        "id": "confucius-temple",
+        "nativeMap": [
+          43,
+          18
+        ],
+        "registeredOrigin": [
+          30,
+          25
+        ],
+        "registeredSize": [
+          10,
+          9
+        ],
+        "presentationCropOrigin": [
+          29,
+          24
+        ],
+        "presentationCropSize": [
+          11,
+          11
+        ]
+      },
+      {
+        "id": "wenxin-forest-park",
+        "nativeMap": [
+          43,
+          14
+        ],
+        "registeredOrigin": [
+          20,
+          24
+        ],
+        "registeredSize": [
+          12,
+          7
+        ],
+        "presentationCropOrigin": [
+          17,
+          21
+        ],
+        "presentationCropSize": [
+          16,
+          11
+        ]
+      },
+      {
+        "id": "fengle-sculpture-park",
+        "nativeMap": [
+          43,
+          15
+        ],
+        "registeredOrigin": [
+          65,
+          55
+        ],
+        "registeredSize": [
+          11,
+          9
+        ],
+        "presentationCropOrigin": [
+          60,
+          53
+        ],
+        "presentationCropSize": [
+          17,
+          10
+        ]
+      }
+    ],
+    "maskAuthority": "Maps is adding exact crop masks to temples/native-footprint-audit.json; use those masks before encoding or integrating."
+  }
+}

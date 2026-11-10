@@ -1,0 +1,49 @@
+{
+  "id": "second-market",
+  "name": {
+    "en": "Taichung Second Market — Hexagonal Building",
+    "zh-TW": "臺中第二市場—六角樓"
+  },
+  "verifiedOn": "2026-11-10",
+  "owner": "Interface civic3",
+  "identity": "The historic radial market at87SanminRoadSection2 nearTaiwanBoulevard; not Yizhong Street, FifthMarket or a temple.",
+  "officialPages": [
+    {
+      "url": "https://travel.taichung.gov.tw/en/attractions/intro/1366",
+      "publisher": "Taichung Tourism and Travel Bureau",
+      "evidence": "Official page identifies a hexagonal central building with market aisles radiating outward. Current browser gallery exposes the exact photoURL below."
+    }
+  ],
+  "officialPhotos": [
+    {
+      "url": "https://travel.taichung.gov.tw/content/images/attractions/25619/1024x768_image_cover636603456844051532.jpg",
+      "publisher": "Taichung Tourism and Travel Bureau",
+      "visualInspection": "Direct official photo inspected in own Chrome tab. Low red-brick market entrances with pale gray curved lintels/parapets and a raised brick core behind;slim external steelstairs/rail;dark open marketaisles,pale green glassawning and pottedplants atentry. The highercore has a shaped pale parapet,not a pointedpagodaroof."
+    }
+  ],
+  "distinguishingMotifs": [
+    "Compact raised hexagonal/radial core with several low market wings/aisles, rather than a single giant shop.",
+    "Warm exposed red-brick piers and walls are broken by pale gray concrete/stone lintels and trim.",
+    "A higher rear/core volume has a shaped pale parapet and small upper windows; the hexagonal identity is primarily the plan, not permission to invent a pointed roof.",
+    "Broad dark open entry bays connect to market aisles; subtle pale blue-green awning glass can mark the entrance.",
+    "Low tiled forecourt,pottedgreenery and a few stall-edge details give a lived-in local market scale."
+  ],
+  "materialColors": [
+    "Warm red/orange brick",
+    "Weathered pale gray concrete trim",
+    "Dark brown entryshadows",
+    "Small muted jade/cyanawning accents"
+  ],
+  "pixelPriorities": [
+    "Lead with redbrick + raisedcentralcore + radiatinglowwings.",
+    "Keep entrances readable and market-sized; use a few food-stall cues instead of branding every surface."
+  ],
+  "avoid": [
+    "Hexagonalpagoda, temple roof or fancymarketdome",
+    "Genericmodern supermarket",
+    "Yizhong-style wall of neon as the wholeidentity",
+    "Treating the historichexagonalplan as a literal6-pointstar facade"
+  ],
+  "rights": "Reference links only. Source photographs are not copied into shipped game art. Draw original pixel interpretations.",
+  "scope": "No map/native/PR/main/Claudecheckout edits or deployment."
+}

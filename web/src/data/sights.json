@@ -18,13 +18,13 @@
     "gymStatus": "not-a-gym",
     "world": [
       60,
-      32
+      33
     ],
     "artRect": [
-      54,
+      53,
       24,
-      67,
-      34
+      68,
+      35
     ],
     "officialUrl": "https://www.nmns.edu.tw/en/exhibitions/galleries/botanical-garden/",
     "officialSourceTitle": "Botanical Garden – National Museum of Natural Science (official site)",
@@ -66,7 +66,7 @@
     "artRect": [
       114,
       24,
-      125,
+      126,
       35
     ],
     "officialUrl": "https://travel.taichung.gov.tw/en/attractions/intro/1371",
@@ -103,14 +103,14 @@
     "districtZh": "舊城區",
     "gymStatus": "not-a-gym",
     "world": [
-      118,
-      44
+      119,
+      45
     ],
     "artRect": [
       114,
       38,
-      124,
-      46
+      126,
+      48
     ],
     "officialUrl": "https://travel.taichung.gov.tw/en/attractions/intro/1551",
     "officialSourceTitle": "Yizhong Shopping District – Taichung Tourism (Taichung City Government Tourism and Travel Bureau)",
@@ -146,13 +146,13 @@
     "gymStatus": "not-a-gym",
     "world": [
       102,
-      93
+      98
     ],
     "artRect": [
       97,
       88,
       109,
-      96
+      100
     ],
     "officialUrl": "https://travel.taichung.gov.tw/en/attractions/intro/1367",
     "officialSourceTitle": "Taichung Prefectural Hall – Taichung Tourism (Taichung City Government Tourism and Travel Bureau)",
@@ -190,14 +190,14 @@
     "districtZh": "舊城區",
     "gymStatus": "not-a-gym",
     "world": [
-      106,
-      31
+      103,
+      34
     ],
     "artRect": [
       102,
       24,
       111,
-      34
+      35
     ],
     "landingLabelSide": "above",
     "officialUrl": "https://travel.taichung.gov.tw/en/attractions/intro/1366",
@@ -233,14 +233,14 @@
     "districtZh": "南屯區",
     "gymStatus": "not-a-gym",
     "world": [
-      70,
-      143
+      73,
+      139
     ],
     "artRect": [
       61,
       125,
       77,
-      144
+      140
     ],
     "landingLabelSide": "right",
     "officialUrl": "https://travel.taichung.gov.tw/en/attractions/intro/1053",
@@ -275,14 +275,14 @@
     "districtZh": "南屯區",
     "gymStatus": "not-a-gym",
     "world": [
-      66,
-      164
+      70,
+      172
     ],
     "artRect": [
-      60,
-      162,
+      64,
+      163,
       77,
-      172
+      174
     ],
     "officialUrl": "https://travel.taichung.gov.tw/en/attractions/intro/889",
     "officialSourceTitle": "Fengle Sculpture Park – Taichung Tourism (Taichung City Government Tourism and Travel Bureau)",
@@ -318,12 +318,12 @@
     "districtZh": "南屯區",
     "gymStatus": "not-a-gym",
     "world": [
-      20,
-      96
+      26,
+      100
     ],
     "artRect": [
-      17,
-      90,
+      19,
+      92,
       33,
       101
     ],

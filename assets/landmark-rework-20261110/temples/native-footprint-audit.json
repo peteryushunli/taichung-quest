@@ -1,0 +1,1454 @@
+{
+  "schemaVersion": 1,
+  "readOnly": true,
+  "nativeSource": "/Users/peter/devday_hackathon/.claude/worktrees/native-gym-text-fixes-a79571/.worktrees/game-gym-text",
+  "nativeHead": "2362263510dfa38987c36b6cc40dca8d9372fc3c",
+  "nativeStatus": "",
+  "websiteSource": "/Users/peter/devday_hackathon/.claude/worktrees/gym-gameboy-website-updates-9d8798",
+  "websiteHead": "757e90c55551ddbf74e260f181e5a085a9b97920",
+  "websiteRomMetadata": {
+    "file": "taichung-firered.gba",
+    "bytes": 16777216,
+    "sha1": "8ced80d48d107813404598d22e33b0f8afca97ee",
+    "sha256": "5c3e041d7ee8dacc126eb600098c8e63f7498dd73bd712aa4bb504c04c0ee1bb",
+    "upstreamCommit": "ce6406d8c2eaf46d543c8a2606de0c3cb1951982",
+    "sourceCommit": "2362263510dfa38987c36b6cc40dca8d9372fc3c",
+    "modified": true,
+    "languageBridge": {
+      "version": 1,
+      "size": 32,
+      "address": 33813660,
+      "magicA": 1095517012,
+      "magicB": 825247566
+    },
+    "navigationBridge": {
+      "version": 1,
+      "size": 48,
+      "address": 33813696,
+      "magicA": 1095648084,
+      "magicB": 825241686
+    },
+    "minimap": {
+      "schemaVersion": 1,
+      "geometryFingerprintSha256": "5ec62740019ae38fcd04d01db282dc9cbef5b9d98374c3f3d3c6a40dfbc6d561"
+    },
+    "onboardingBridge": {
+      "version": 1,
+      "size": 48,
+      "address": 33813744,
+      "magicA": 1313424212,
+      "magicB": 827282004
+    }
+  },
+  "catalogCounts": {
+    "nativePairedLandmarks": 12,
+    "websitePairedLandmarks": 12,
+    "websiteOutdoorSights": 8
+  },
+  "notes": [
+    "Native paired-landmark contract holds10gyms+2temples. Eight outdoor scenes are registered in actual map words via newLandmarks plan, not extra gym/door entries.",
+    "Rect ends of plan newLandmarks are exclusive. The stored native collision/clear masks are actual per-cell state, not a proposed new collision mask.",
+    "Native contract world origin is used for masterplan transforms; frontend minimap shifts all world origins +5,+5. Do not mix them.",
+    "This audit binds the website checkout shown above; no deployment/live truth claimed. No native source files changed."
+  ],
+  "landmarks": [
+    {
+      "n": 11,
+      "id": "wanhe-temple",
+      "mapId": "MAP_TAICHUNG_NANTUN_WANHE",
+      "origin": [
+        27,
+        27
+      ],
+      "size": [
+        9,
+        7
+      ],
+      "door": {
+        "x": 31,
+        "y": 33,
+        "warpId": 0,
+        "elevation": 0
+      },
+      "approach": {
+        "x": 31,
+        "y": 34,
+        "elevation": 3
+      },
+      "arrival": {
+        "x": 31,
+        "y": 36,
+        "elevation": 3,
+        "facing": "south"
+      },
+      "footprintSource": "docs/taichung-city-contract.json",
+      "nativeMap": [
+        43,
+        15
+      ],
+      "primaryTileset": "gTileset_TaichungGreenwayPrivate",
+      "secondaryTileset": "gTileset_TaichungNantun",
+      "currentCollisionRows": [
+        "011111110",
+        "111111111",
+        "111111111",
+        "111111111",
+        "111111111",
+        "111111111",
+        "111111111"
+      ],
+      "behaviorIds": [
+        0,
+        105
+      ],
+      "layerTypeIds": [
+        0,
+        1
+      ],
+      "noRuntimeEvidenceClaim": true,
+      "currentMapSha256": "b325c857db699047132d568a131521e4f8fe6f105c6dc8a8359b45d308de9ff3",
+      "hardReservations": {
+        "nativeDoor": {
+          "x": 31,
+          "y": 33,
+          "warpId": 0,
+          "elevation": 0
+        },
+        "nativeApproach": {
+          "x": 31,
+          "y": 34,
+          "elevation": 3
+        },
+        "nativeArrival": {
+          "x": 31,
+          "y": 36,
+          "elevation": 3,
+          "facing": "south"
+        },
+        "nearbyEventAnchors": [
+          {
+            "kind": "warp",
+            "x": 31,
+            "y": 33,
+            "script": null,
+            "insideArtwork": true
+          },
+          {
+            "kind": "sign",
+            "x": 34,
+            "y": 34,
+            "script": "TaichungCity_Sign_WanheTemple",
+            "insideArtwork": false
+          }
+        ],
+        "notes": [
+          "Door/approach/arrival and event anchor words/visibility remain integration constraints.",
+          "For a sign retain at least one reachable interaction neighbour; not every nearby empty cell must stay clear.",
+          "Existing clear ground inside an artwork scene is reference geometry, not an automatic hard reservation; companion collision review may change occupied cells.",
+          "No edits outside the registered footprint are authorized by this art handoff."
+        ]
+      },
+      "existingClearReferenceRows": [
+        "100000001",
+        "000000000",
+        "000000000",
+        "000000000",
+        "000000000",
+        "000000000",
+        "000000000"
+      ],
+      "websitePresentationCrop": {
+        "worldRectExclusive": [
+          26,
+          134,
+          36,
+          144
+        ],
+        "nativeOrigin": [
+          26,
+          25
+        ],
+        "nativeCells": [
+          10,
+          10
+        ],
+        "pixels": [
+          160,
+          160
+        ],
+        "collisionReferenceRows": [
+          "0000000000",
+          "0000000000",
+          "0011111110",
+          "0111111111",
+          "0111111111",
+          "0111111111",
+          "0111111111",
+          "0111111111",
+          "0111111111",
+          "0000000010"
+        ],
+        "notAnArtworkAllocation": true
+      },
+      "proposalPaintOnExistingClearReferenceCells": []
+    },
+    {
+      "n": 12,
+      "id": "wenchang-temple",
+      "mapId": "MAP_TAICHUNG_NANTUN_WANHE",
+      "origin": [
+        18,
+        28
+      ],
+      "size": [
+        7,
+        6
+      ],
+      "door": {
+        "x": 21,
+        "y": 33,
+        "warpId": 1,
+        "elevation": 0
+      },
+      "approach": {
+        "x": 21,
+        "y": 34,
+        "elevation": 3
+      },
+      "arrival": {
+        "x": 21,
+        "y": 36,
+        "elevation": 3,
+        "facing": "south"
+      },
+      "footprintSource": "docs/taichung-city-contract.json",
+      "nativeMap": [
+        43,
+        15
+      ],
+      "primaryTileset": "gTileset_TaichungGreenwayPrivate",
+      "secondaryTileset": "gTileset_TaichungNantun",
+      "currentCollisionRows": [
+        "1111111",
+        "1111111",
+        "1111111",
+        "1111111",
+        "1111111",
+        "1111111"
+      ],
+      "behaviorIds": [
+        0,
+        105
+      ],
+      "layerTypeIds": [
+        0,
+        1
+      ],
+      "noRuntimeEvidenceClaim": true,
+      "currentMapSha256": "b325c857db699047132d568a131521e4f8fe6f105c6dc8a8359b45d308de9ff3",
+      "hardReservations": {
+        "nativeDoor": {
+          "x": 21,
+          "y": 33,
+          "warpId": 1,
+          "elevation": 0
+        },
+        "nativeApproach": {
+          "x": 21,
+          "y": 34,
+          "elevation": 3
+        },
+        "nativeArrival": {
+          "x": 21,
+          "y": 36,
+          "elevation": 3,
+          "facing": "south"
+        },
+        "nearbyEventAnchors": [
+          {
+            "kind": "warp",
+            "x": 21,
+            "y": 33,
+            "script": null,
+            "insideArtwork": true
+          },
+          {
+            "kind": "sign",
+            "x": 19,
+            "y": 34,
+            "script": "TaichungCity_Sign_WenchangTemple",
+            "insideArtwork": false
+          }
+        ],
+        "notes": [
+          "Door/approach/arrival and event anchor words/visibility remain integration constraints.",
+          "For a sign retain at least one reachable interaction neighbour; not every nearby empty cell must stay clear.",
+          "Existing clear ground inside an artwork scene is reference geometry, not an automatic hard reservation; companion collision review may change occupied cells.",
+          "No edits outside the registered footprint are authorized by this art handoff."
+        ]
+      },
+      "existingClearReferenceRows": [
+        "0000000",
+        "0000000",
+        "0000000",
+        "0000000",
+        "0000000",
+        "0000000"
+      ],
+      "websitePresentationCrop": {
+        "worldRectExclusive": [
+          17,
+          135,
+          26,
+          144
+        ],
+        "nativeOrigin": [
+          17,
+          26
+        ],
+        "nativeCells": [
+          9,
+          9
+        ],
+        "pixels": [
+          144,
+          144
+        ],
+        "collisionReferenceRows": [
+          "000000000",
+          "000000000",
+          "011111110",
+          "011111110",
+          "011111110",
+          "011111110",
+          "011111110",
+          "011111110",
+          "001000000"
+        ],
+        "notAnArtworkAllocation": true
+      },
+      "proposalPaintOnExistingClearReferenceCells": []
+    },
+    {
+      "n": 13,
+      "id": "botanical-garden",
+      "mapId": "MAP_TAICHUNG_GREENWAY",
+      "origin": [
+        9,
+        26
+      ],
+      "size": [
+        13,
+        7
+      ],
+      "worldRectExclusive": [
+        49,
+        21,
+        62,
+        28
+      ],
+      "door": null,
+      "approach": null,
+      "arrival": null,
+      "footprintSource": "data/taichung/city-rework/masterplan.json; actual map cells checked",
+      "nativeWarp": false,
+      "nativeMap": [
+        43,
+        1
+      ],
+      "primaryTileset": "gTileset_TaichungGreenwayPrivate",
+      "secondaryTileset": "gTileset_TaichungGreenwayCmp",
+      "currentCollisionRows": [
+        "0000011100000",
+        "0000011100000",
+        "0000011100000",
+        "0000111110000",
+        "0000111110000",
+        "0001111111000",
+        "0001111111000"
+      ],
+      "behaviorIds": [
+        0
+      ],
+      "layerTypeIds": [
+        0,
+        1
+      ],
+      "noRuntimeEvidenceClaim": true,
+      "currentMapSha256": "48ad3d3e618f5069334389553f1dd34f32838c5d3eda15d5ca451a4f038c60f6",
+      "hardReservations": {
+        "nativeDoor": null,
+        "nativeApproach": null,
+        "nativeArrival": null,
+        "nearbyEventAnchors": [
+          {
+            "kind": "sign",
+            "x": 15,
+            "y": 32,
+            "script": "TaichungCity_Sign_BotanicalGarden",
+            "insideArtwork": true
+          }
+        ],
+        "notes": [
+          "Door/approach/arrival and event anchor words/visibility remain integration constraints.",
+          "For a sign retain at least one reachable interaction neighbour; not every nearby empty cell must stay clear.",
+          "Existing clear ground inside an artwork scene is reference geometry, not an automatic hard reservation; companion collision review may change occupied cells.",
+          "No edits outside the registered footprint are authorized by this art handoff."
+        ]
+      },
+      "existingClearReferenceRows": [
+        "1111100011111",
+        "1111100011111",
+        "1111100011111",
+        "1111000001111",
+        "1111000001111",
+        "1110000000111",
+        "1110000000111"
+      ],
+      "websitePresentationCrop": {
+        "worldRectExclusive": [
+          54,
+          24,
+          67,
+          34
+        ],
+        "nativeOrigin": [
+          9,
+          24
+        ],
+        "nativeCells": [
+          13,
+          10
+        ],
+        "pixels": [
+          208,
+          160
+        ],
+        "collisionReferenceRows": [
+          "0000000000000",
+          "0000000000000",
+          "0000011100000",
+          "0000011100000",
+          "0000011100000",
+          "0000111110000",
+          "0000111110000",
+          "0001111111000",
+          "0001111111000",
+          "0000000000000"
+        ],
+        "notAnArtworkAllocation": true
+      }
+    },
+    {
+      "n": 14,
+      "id": "confucius-temple",
+      "mapId": "MAP_TAICHUNG_OLD_CITY_NORTH",
+      "origin": [
+        30,
+        25
+      ],
+      "size": [
+        10,
+        9
+      ],
+      "worldRectExclusive": [
+        110,
+        20,
+        120,
+        29
+      ],
+      "door": null,
+      "approach": null,
+      "arrival": null,
+      "footprintSource": "data/taichung/city-rework/masterplan.json; actual map cells checked",
+      "nativeWarp": false,
+      "nativeMap": [
+        43,
+        18
+      ],
+      "primaryTileset": "gTileset_TaichungOldCorePrimary",
+      "secondaryTileset": "gTileset_TaichungOldCityNorth",
+      "currentCollisionRows": [
+        "1111111111",
+        "1111111111",
+        "1111111111",
+        "1111111111",
+        "1001111001",
+        "1001111001",
+        "1011111101",
+        "1011111101",
+        "1111111111"
+      ],
+      "behaviorIds": [
+        0
+      ],
+      "layerTypeIds": [
+        0,
+        1
+      ],
+      "noRuntimeEvidenceClaim": true,
+      "currentMapSha256": "c2b7067b33ab051f951ca471fe5fb495633ff63201c28fd8613147e32e598b12",
+      "hardReservations": {
+        "nativeDoor": null,
+        "nativeApproach": null,
+        "nativeArrival": null,
+        "nearbyEventAnchors": [
+          {
+            "kind": "sign",
+            "x": 34,
+            "y": 33,
+            "script": "TaichungCity_Sign_ConfuciusTemple",
+            "insideArtwork": true
+          }
+        ],
+        "notes": [
+          "Door/approach/arrival and event anchor words/visibility remain integration constraints.",
+          "For a sign retain at least one reachable interaction neighbour; not every nearby empty cell must stay clear.",
+          "Existing clear ground inside an artwork scene is reference geometry, not an automatic hard reservation; companion collision review may change occupied cells.",
+          "No edits outside the registered footprint are authorized by this art handoff."
+        ]
+      },
+      "existingClearReferenceRows": [
+        "0000000000",
+        "0000000000",
+        "0000000000",
+        "0000000000",
+        "0110000110",
+        "0110000110",
+        "0100000010",
+        "0100000010",
+        "0000000000"
+      ],
+      "websitePresentationCrop": {
+        "worldRectExclusive": [
+          114,
+          24,
+          125,
+          35
+        ],
+        "nativeOrigin": [
+          29,
+          24
+        ],
+        "nativeCells": [
+          11,
+          11
+        ],
+        "pixels": [
+          176,
+          176
+        ],
+        "collisionReferenceRows": [
+          "00000000000",
+          "01111111111",
+          "01111111111",
+          "01111111111",
+          "01111111111",
+          "01001111001",
+          "01001111001",
+          "01011111101",
+          "01011111101",
+          "01111111111",
+          "00000000000"
+        ],
+        "notAnArtworkAllocation": true
+      },
+      "proposalPaintOnExistingClearReferenceCells": [
+        {
+          "x": 1,
+          "y": 7,
+          "native": [
+            31,
+            32
+          ]
+        },
+        {
+          "x": 8,
+          "y": 7,
+          "native": [
+            38,
+            32
+          ]
+        }
+      ]
+    },
+    {
+      "n": 15,
+      "id": "yizhong-street",
+      "mapId": "MAP_TAICHUNG_OLD_CITY_NORTH",
+      "origin": [
+        30,
+        39
+      ],
+      "size": [
+        10,
+        8
+      ],
+      "worldRectExclusive": [
+        110,
+        34,
+        120,
+        42
+      ],
+      "door": null,
+      "approach": null,
+      "arrival": null,
+      "footprintSource": "data/taichung/city-rework/masterplan.json; actual map cells checked",
+      "nativeWarp": false,
+      "nativeMap": [
+        43,
+        18
+      ],
+      "primaryTileset": "gTileset_TaichungOldCorePrimary",
+      "secondaryTileset": "gTileset_TaichungOldCityNorth",
+      "currentCollisionRows": [
+        "1111001111",
+        "1111001111",
+        "1111001111",
+        "1111001111",
+        "1111001111",
+        "1111001111",
+        "0000000000",
+        "0000000000"
+      ],
+      "behaviorIds": [
+        0
+      ],
+      "layerTypeIds": [
+        0,
+        1
+      ],
+      "noRuntimeEvidenceClaim": true,
+      "currentMapSha256": "c2b7067b33ab051f951ca471fe5fb495633ff63201c28fd8613147e32e598b12",
+      "hardReservations": {
+        "nativeDoor": null,
+        "nativeApproach": null,
+        "nativeArrival": null,
+        "nearbyEventAnchors": [
+          {
+            "kind": "sign",
+            "x": 33,
+            "y": 44,
+            "script": "TaichungCity_Sign_YizhongStreet",
+            "insideArtwork": true
+          }
+        ],
+        "notes": [
+          "Door/approach/arrival and event anchor words/visibility remain integration constraints.",
+          "For a sign retain at least one reachable interaction neighbour; not every nearby empty cell must stay clear.",
+          "Existing clear ground inside an artwork scene is reference geometry, not an automatic hard reservation; companion collision review may change occupied cells.",
+          "No edits outside the registered footprint are authorized by this art handoff."
+        ]
+      },
+      "existingClearReferenceRows": [
+        "0000110000",
+        "0000110000",
+        "0000110000",
+        "0000110000",
+        "0000110000",
+        "0000110000",
+        "1111111111",
+        "1111111111"
+      ],
+      "websitePresentationCrop": {
+        "worldRectExclusive": [
+          114,
+          38,
+          124,
+          46
+        ],
+        "nativeOrigin": [
+          29,
+          38
+        ],
+        "nativeCells": [
+          10,
+          8
+        ],
+        "pixels": [
+          160,
+          128
+        ],
+        "collisionReferenceRows": [
+          "0000000000",
+          "0111100111",
+          "0111100111",
+          "0111100111",
+          "0111100111",
+          "0111100111",
+          "0111100111",
+          "0000000000"
+        ],
+        "notAnArtworkAllocation": true
+      }
+    },
+    {
+      "n": 16,
+      "id": "prefectural-hall",
+      "mapId": "MAP_TAICHUNG_OLD_CITY",
+      "origin": [
+        13,
+        36
+      ],
+      "size": [
+        10,
+        10
+      ],
+      "worldRectExclusive": [
+        93,
+        84,
+        103,
+        94
+      ],
+      "door": null,
+      "approach": null,
+      "arrival": null,
+      "footprintSource": "data/taichung/city-rework/masterplan.json; actual map cells checked",
+      "nativeWarp": false,
+      "nativeMap": [
+        43,
+        0
+      ],
+      "primaryTileset": "gTileset_TaichungOldCorePrimary",
+      "secondaryTileset": "gTileset_TaichungOldCore",
+      "currentCollisionRows": [
+        "1110000000",
+        "1111111111",
+        "1111111111",
+        "1111111111",
+        "1111111111",
+        "0000000000",
+        "0000000001",
+        "0000000000",
+        "0000000000",
+        "0000000000"
+      ],
+      "behaviorIds": [
+        0,
+        132
+      ],
+      "layerTypeIds": [
+        0,
+        1
+      ],
+      "noRuntimeEvidenceClaim": true,
+      "currentMapSha256": "db927471580e13be8d3a990cb61556af5e8c5500c5d4cc6b2c7645d98314234f",
+      "hardReservations": {
+        "nativeDoor": null,
+        "nativeApproach": null,
+        "nativeArrival": null,
+        "nearbyEventAnchors": [
+          {
+            "kind": "sign",
+            "x": 17,
+            "y": 40,
+            "script": "TaichungCity_Sign_PrefecturalHall",
+            "insideArtwork": true
+          },
+          {
+            "kind": "sign",
+            "x": 22,
+            "y": 42,
+            "script": "TaichungCity_Sign_GreenRiver",
+            "insideArtwork": true
+          }
+        ],
+        "notes": [
+          "Door/approach/arrival and event anchor words/visibility remain integration constraints.",
+          "For a sign retain at least one reachable interaction neighbour; not every nearby empty cell must stay clear.",
+          "Existing clear ground inside an artwork scene is reference geometry, not an automatic hard reservation; companion collision review may change occupied cells.",
+          "No edits outside the registered footprint are authorized by this art handoff."
+        ]
+      },
+      "existingClearReferenceRows": [
+        "0001111111",
+        "0000000000",
+        "0000000000",
+        "0000000000",
+        "0000000000",
+        "1111111111",
+        "1111111110",
+        "1111111111",
+        "1111111111",
+        "1111111111"
+      ],
+      "websitePresentationCrop": {
+        "worldRectExclusive": [
+          97,
+          88,
+          109,
+          96
+        ],
+        "nativeOrigin": [
+          12,
+          35
+        ],
+        "nativeCells": [
+          12,
+          8
+        ],
+        "pixels": [
+          192,
+          128
+        ],
+        "collisionReferenceRows": [
+          "000000000000",
+          "011100000000",
+          "011111111110",
+          "011111111110",
+          "011111111110",
+          "011111111110",
+          "000000000000",
+          "000000000010"
+        ],
+        "notAnArtworkAllocation": true
+      }
+    },
+    {
+      "n": 17,
+      "id": "second-market",
+      "mapId": "MAP_TAICHUNG_OLD_CITY_NORTH",
+      "origin": [
+        18,
+        25
+      ],
+      "size": [
+        7,
+        9
+      ],
+      "worldRectExclusive": [
+        98,
+        20,
+        105,
+        29
+      ],
+      "door": null,
+      "approach": null,
+      "arrival": null,
+      "footprintSource": "data/taichung/city-rework/masterplan.json; actual map cells checked",
+      "nativeWarp": false,
+      "nativeMap": [
+        43,
+        18
+      ],
+      "primaryTileset": "gTileset_TaichungOldCorePrimary",
+      "secondaryTileset": "gTileset_TaichungOldCityNorth",
+      "currentCollisionRows": [
+        "0111110",
+        "0111110",
+        "0111110",
+        "0011100",
+        "0111110",
+        "0111110",
+        "1111111",
+        "1100011",
+        "1000001"
+      ],
+      "behaviorIds": [
+        0
+      ],
+      "layerTypeIds": [
+        1
+      ],
+      "noRuntimeEvidenceClaim": true,
+      "currentMapSha256": "c2b7067b33ab051f951ca471fe5fb495633ff63201c28fd8613147e32e598b12",
+      "hardReservations": {
+        "nativeDoor": null,
+        "nativeApproach": null,
+        "nativeArrival": null,
+        "nearbyEventAnchors": [
+          {
+            "kind": "sign",
+            "x": 21,
+            "y": 31,
+            "script": "TaichungCity_Sign_SecondMarket",
+            "insideArtwork": true
+          }
+        ],
+        "notes": [
+          "Door/approach/arrival and event anchor words/visibility remain integration constraints.",
+          "For a sign retain at least one reachable interaction neighbour; not every nearby empty cell must stay clear.",
+          "Existing clear ground inside an artwork scene is reference geometry, not an automatic hard reservation; companion collision review may change occupied cells.",
+          "No edits outside the registered footprint are authorized by this art handoff."
+        ]
+      },
+      "existingClearReferenceRows": [
+        "1000001",
+        "1000001",
+        "1000001",
+        "1100011",
+        "1000001",
+        "1000001",
+        "0000000",
+        "0011100",
+        "0111110"
+      ],
+      "websitePresentationCrop": {
+        "worldRectExclusive": [
+          102,
+          24,
+          111,
+          34
+        ],
+        "nativeOrigin": [
+          17,
+          24
+        ],
+        "nativeCells": [
+          9,
+          10
+        ],
+        "pixels": [
+          144,
+          160
+        ],
+        "collisionReferenceRows": [
+          "000000000",
+          "101111100",
+          "101111100",
+          "101111100",
+          "100111000",
+          "101111100",
+          "101111100",
+          "111111110",
+          "111000110",
+          "110000010"
+        ],
+        "notAnArtworkAllocation": true
+      }
+    },
+    {
+      "n": 18,
+      "id": "cultural-heritage-park",
+      "mapId": "MAP_TAICHUNG_NANTUN_WANHE",
+      "origin": [
+        65,
+        17
+      ],
+      "size": [
+        11,
+        18
+      ],
+      "worldRectExclusive": [
+        60,
+        121,
+        71,
+        139
+      ],
+      "door": null,
+      "approach": null,
+      "arrival": null,
+      "footprintSource": "data/taichung/city-rework/masterplan.json; actual map cells checked",
+      "nativeWarp": false,
+      "nativeMap": [
+        43,
+        15
+      ],
+      "primaryTileset": "gTileset_TaichungGreenwayPrivate",
+      "secondaryTileset": "gTileset_TaichungNantun",
+      "currentCollisionRows": [
+        "00000000000",
+        "01111111110",
+        "01111111110",
+        "01111111110",
+        "01111111110",
+        "00000000000",
+        "01111101110",
+        "01111101110",
+        "01111101110",
+        "01111101110",
+        "00000000000",
+        "00000000000",
+        "01111100100",
+        "01111100010",
+        "01111100100",
+        "01111100010",
+        "00000000000",
+        "00000100000"
+      ],
+      "behaviorIds": [
+        0,
+        132
+      ],
+      "layerTypeIds": [
+        0,
+        1
+      ],
+      "noRuntimeEvidenceClaim": true,
+      "currentMapSha256": "b325c857db699047132d568a131521e4f8fe6f105c6dc8a8359b45d308de9ff3",
+      "hardReservations": {
+        "nativeDoor": null,
+        "nativeApproach": null,
+        "nativeArrival": null,
+        "nearbyEventAnchors": [
+          {
+            "kind": "sign",
+            "x": 70,
+            "y": 34,
+            "script": "TaichungCity_Sign_CulturalHeritagePark",
+            "insideArtwork": true
+          }
+        ],
+        "notes": [
+          "Door/approach/arrival and event anchor words/visibility remain integration constraints.",
+          "For a sign retain at least one reachable interaction neighbour; not every nearby empty cell must stay clear.",
+          "Existing clear ground inside an artwork scene is reference geometry, not an automatic hard reservation; companion collision review may change occupied cells.",
+          "No edits outside the registered footprint are authorized by this art handoff."
+        ]
+      },
+      "existingClearReferenceRows": [
+        "11111111111",
+        "10000000001",
+        "10000000001",
+        "10000000001",
+        "10000000001",
+        "11111111111",
+        "10000010001",
+        "10000010001",
+        "10000010001",
+        "10000010001",
+        "11111111111",
+        "11111111111",
+        "10000011011",
+        "10000011101",
+        "10000011011",
+        "10000011101",
+        "11111111111",
+        "11111011111"
+      ],
+      "websitePresentationCrop": {
+        "worldRectExclusive": [
+          61,
+          125,
+          77,
+          144
+        ],
+        "nativeOrigin": [
+          61,
+          16
+        ],
+        "nativeCells": [
+          16,
+          19
+        ],
+        "pixels": [
+          256,
+          304
+        ],
+        "collisionReferenceRows": [
+          "0000000000000000",
+          "0000000000000000",
+          "0000011111111100",
+          "0000011111111100",
+          "0000011111111100",
+          "0000011111111100",
+          "0000000000000000",
+          "0000011111011100",
+          "0000011111011100",
+          "0000011111011100",
+          "0000011111011100",
+          "0000000000000000",
+          "0000000000000000",
+          "0000011111001000",
+          "0000011111000100",
+          "0110011111001000",
+          "0110011111000100",
+          "0000000000000000",
+          "0000000001000000"
+        ],
+        "notAnArtworkAllocation": true
+      }
+    },
+    {
+      "n": 19,
+      "id": "fengle-sculpture-park",
+      "mapId": "MAP_TAICHUNG_NANTUN_WANHE",
+      "origin": [
+        65,
+        55
+      ],
+      "size": [
+        11,
+        9
+      ],
+      "worldRectExclusive": [
+        60,
+        159,
+        71,
+        168
+      ],
+      "door": null,
+      "approach": null,
+      "arrival": null,
+      "footprintSource": "data/taichung/city-rework/masterplan.json; actual map cells checked",
+      "nativeWarp": false,
+      "nativeMap": [
+        43,
+        15
+      ],
+      "primaryTileset": "gTileset_TaichungGreenwayPrivate",
+      "secondaryTileset": "gTileset_TaichungNantun",
+      "currentCollisionRows": [
+        "01001111111",
+        "10011111111",
+        "00001111111",
+        "00101111111",
+        "00001111111",
+        "00000010000",
+        "00000000000",
+        "01000100010",
+        "00000000000"
+      ],
+      "behaviorIds": [
+        0,
+        132
+      ],
+      "layerTypeIds": [
+        0,
+        1
+      ],
+      "noRuntimeEvidenceClaim": true,
+      "currentMapSha256": "b325c857db699047132d568a131521e4f8fe6f105c6dc8a8359b45d308de9ff3",
+      "hardReservations": {
+        "nativeDoor": null,
+        "nativeApproach": null,
+        "nativeArrival": null,
+        "nearbyEventAnchors": [
+          {
+            "kind": "sign",
+            "x": 66,
+            "y": 55,
+            "script": "TaichungCity_Sign_FengleSculpturePark",
+            "insideArtwork": true
+          }
+        ],
+        "notes": [
+          "Door/approach/arrival and event anchor words/visibility remain integration constraints.",
+          "For a sign retain at least one reachable interaction neighbour; not every nearby empty cell must stay clear.",
+          "Existing clear ground inside an artwork scene is reference geometry, not an automatic hard reservation; companion collision review may change occupied cells.",
+          "No edits outside the registered footprint are authorized by this art handoff."
+        ]
+      },
+      "existingClearReferenceRows": [
+        "10110000000",
+        "01100000000",
+        "11110000000",
+        "11010000000",
+        "11110000000",
+        "11111101111",
+        "11111111111",
+        "10111011101",
+        "11111111111"
+      ],
+      "websitePresentationCrop": {
+        "worldRectExclusive": [
+          60,
+          162,
+          77,
+          172
+        ],
+        "nativeOrigin": [
+          60,
+          53
+        ],
+        "nativeCells": [
+          17,
+          10
+        ],
+        "pixels": [
+          272,
+          160
+        ],
+        "collisionReferenceRows": [
+          "00000000000000000",
+          "00000000000000000",
+          "00110010011111110",
+          "00110100111111110",
+          "00000000011111110",
+          "00110001011111110",
+          "00110000011111110",
+          "10110000000100000",
+          "10110000000000000",
+          "00000010001000100"
+        ],
+        "notAnArtworkAllocation": true
+      }
+    },
+    {
+      "n": 20,
+      "id": "wenxin-forest-park",
+      "mapId": "MAP_TAICHUNG_NANTUN_NORTH",
+      "origin": [
+        20,
+        24
+      ],
+      "size": [
+        12,
+        7
+      ],
+      "worldRectExclusive": [
+        15,
+        88,
+        27,
+        95
+      ],
+      "door": null,
+      "approach": null,
+      "arrival": null,
+      "footprintSource": "data/taichung/city-rework/masterplan.json; actual map cells checked",
+      "nativeWarp": false,
+      "nativeMap": [
+        43,
+        14
+      ],
+      "primaryTileset": "gTileset_TaichungGreenwayPrivate",
+      "secondaryTileset": "gTileset_TaichungNantunNorth",
+      "currentCollisionRows": [
+        "111111111111",
+        "011111111110",
+        "001111111100",
+        "100111111000",
+        "000000000000",
+        "000000000000",
+        "000000000000"
+      ],
+      "behaviorIds": [
+        0,
+        132
+      ],
+      "layerTypeIds": [
+        0,
+        1
+      ],
+      "noRuntimeEvidenceClaim": true,
+      "currentMapSha256": "ea4b97b761189e94d88612d1da46de00e8bc0cc2985811e8ff6a4a4c84e30aa0",
+      "hardReservations": {
+        "nativeDoor": null,
+        "nativeApproach": null,
+        "nativeArrival": null,
+        "nearbyEventAnchors": [
+          {
+            "kind": "sign",
+            "x": 20,
+            "y": 27,
+            "script": "TaichungCity_Sign_WenxinForestPark",
+            "insideArtwork": true
+          }
+        ],
+        "notes": [
+          "Door/approach/arrival and event anchor words/visibility remain integration constraints.",
+          "For a sign retain at least one reachable interaction neighbour; not every nearby empty cell must stay clear.",
+          "Existing clear ground inside an artwork scene is reference geometry, not an automatic hard reservation; companion collision review may change occupied cells.",
+          "No edits outside the registered footprint are authorized by this art handoff."
+        ]
+      },
+      "existingClearReferenceRows": [
+        "000000000000",
+        "100000000001",
+        "110000000011",
+        "011000000111",
+        "111111111111",
+        "111111111111",
+        "111111111111"
+      ],
+      "websitePresentationCrop": {
+        "worldRectExclusive": [
+          17,
+          90,
+          33,
+          101
+        ],
+        "nativeOrigin": [
+          17,
+          21
+        ],
+        "nativeCells": [
+          16,
+          11
+        ],
+        "pixels": [
+          256,
+          176
+        ],
+        "collisionReferenceRows": [
+          "0000000000000000",
+          "0000000000000000",
+          "1100000000000000",
+          "1101111111111110",
+          "0000111111111100",
+          "1100011111111000",
+          "1101001111110000",
+          "0000000000000000",
+          "0000000000000000",
+          "0000000000000000",
+          "0000000000000000"
+        ],
+        "notAnArtworkAllocation": true
+      }
+    }
+  ],
+  "banks": {
+    "gTileset_TaichungOldCore": {
+      "primary": "gTileset_TaichungOldCorePrimary",
+      "primaryGraphicSlots": 640,
+      "secondaryGraphicSlots": 384,
+      "secondaryDefinitionCount": 371,
+      "localMapReferencedSecondaryDefinitions": 251,
+      "localMapReferencedStaticSecondaryGraphics": 359,
+      "secondaryStaticCapacity": 376,
+      "secondaryDefinitionCapacity": 384,
+      "doorAnimationScratch": [
+        1016,
+        1023
+      ],
+      "freeSlotsNotAnAllocationClaim": true,
+      "paletteSlots": [
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "sharedBankMustAuditAllConsumersAndDonatedStrips": true,
+      "staticGraphicsUnreferencedByAnyRetainedDefinition": 0,
+      "appendOnlyDefinitionSlots": 13,
+      "allocationCaveat": "Conservative all-definition reference count; remaining slots are not a full seam/dynamic-root/palette/save migration proof."
+    },
+    "gTileset_TaichungGreenwayCmp": {
+      "primary": "gTileset_TaichungGreenwayPrivate",
+      "primaryGraphicSlots": 640,
+      "secondaryGraphicSlots": 304,
+      "secondaryDefinitionCount": 319,
+      "localMapReferencedSecondaryDefinitions": 207,
+      "localMapReferencedStaticSecondaryGraphics": 281,
+      "secondaryStaticCapacity": 376,
+      "secondaryDefinitionCapacity": 384,
+      "doorAnimationScratch": [
+        1016,
+        1023
+      ],
+      "freeSlotsNotAnAllocationClaim": true,
+      "paletteSlots": [
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "sharedBankMustAuditAllConsumersAndDonatedStrips": true,
+      "staticGraphicsUnreferencedByAnyRetainedDefinition": 91,
+      "appendOnlyDefinitionSlots": 65,
+      "allocationCaveat": "Conservative all-definition reference count; remaining slots are not a full seam/dynamic-root/palette/save migration proof."
+    },
+    "gTileset_TaichungXitunFinal": {
+      "primary": "gTileset_TaichungXitunPrivatePrimary",
+      "primaryGraphicSlots": 640,
+      "secondaryGraphicSlots": 384,
+      "secondaryDefinitionCount": 359,
+      "localMapReferencedSecondaryDefinitions": 233,
+      "localMapReferencedStaticSecondaryGraphics": 321,
+      "secondaryStaticCapacity": 376,
+      "secondaryDefinitionCapacity": 384,
+      "doorAnimationScratch": [
+        1016,
+        1023
+      ],
+      "freeSlotsNotAnAllocationClaim": true,
+      "paletteSlots": [
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "sharedBankMustAuditAllConsumersAndDonatedStrips": true,
+      "staticGraphicsUnreferencedByAnyRetainedDefinition": 10,
+      "appendOnlyDefinitionSlots": 25,
+      "allocationCaveat": "Conservative all-definition reference count; remaining slots are not a full seam/dynamic-root/palette/save migration proof."
+    },
+    "gTileset_TaichungNantunNorth": {
+      "primary": "gTileset_TaichungGreenwayPrivate",
+      "primaryGraphicSlots": 640,
+      "secondaryGraphicSlots": 384,
+      "secondaryDefinitionCount": 216,
+      "localMapReferencedSecondaryDefinitions": 12,
+      "localMapReferencedStaticSecondaryGraphics": 15,
+      "secondaryStaticCapacity": 376,
+      "secondaryDefinitionCapacity": 384,
+      "doorAnimationScratch": [
+        1016,
+        1023
+      ],
+      "freeSlotsNotAnAllocationClaim": true,
+      "paletteSlots": [
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "sharedBankMustAuditAllConsumersAndDonatedStrips": true,
+      "staticGraphicsUnreferencedByAnyRetainedDefinition": 132,
+      "appendOnlyDefinitionSlots": 168,
+      "allocationCaveat": "Conservative all-definition reference count; remaining slots are not a full seam/dynamic-root/palette/save migration proof."
+    },
+    "gTileset_TaichungNantun": {
+      "primary": "gTileset_TaichungGreenwayPrivate",
+      "primaryGraphicSlots": 640,
+      "secondaryGraphicSlots": 384,
+      "secondaryDefinitionCount": 216,
+      "localMapReferencedSecondaryDefinitions": 136,
+      "localMapReferencedStaticSecondaryGraphics": 229,
+      "secondaryStaticCapacity": 376,
+      "secondaryDefinitionCapacity": 384,
+      "doorAnimationScratch": [
+        1016,
+        1023
+      ],
+      "freeSlotsNotAnAllocationClaim": true,
+      "paletteSlots": [
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "sharedBankMustAuditAllConsumersAndDonatedStrips": true,
+      "staticGraphicsUnreferencedByAnyRetainedDefinition": 132,
+      "appendOnlyDefinitionSlots": 168,
+      "allocationCaveat": "Conservative all-definition reference count; remaining slots are not a full seam/dynamic-root/palette/save migration proof."
+    },
+    "gTileset_TaichungOldCityNorth": {
+      "primary": "gTileset_TaichungOldCorePrimary",
+      "primaryGraphicSlots": 640,
+      "secondaryGraphicSlots": 384,
+      "secondaryDefinitionCount": 371,
+      "localMapReferencedSecondaryDefinitions": 172,
+      "localMapReferencedStaticSecondaryGraphics": 173,
+      "secondaryStaticCapacity": 376,
+      "secondaryDefinitionCapacity": 384,
+      "doorAnimationScratch": [
+        1016,
+        1023
+      ],
+      "freeSlotsNotAnAllocationClaim": true,
+      "paletteSlots": [
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "sharedBankMustAuditAllConsumersAndDonatedStrips": true,
+      "staticGraphicsUnreferencedByAnyRetainedDefinition": 163,
+      "appendOnlyDefinitionSlots": 13,
+      "allocationCaveat": "Conservative all-definition reference count; remaining slots are not a full seam/dynamic-root/palette/save migration proof."
+    }
+  }
+}

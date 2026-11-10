@@ -1,0 +1,56 @@
+{
+  "id": "botanical-garden",
+  "name": {
+    "en": "NMNS Botanical Garden — Tropical Rainforest Greenhouse",
+    "zh-TW": "國立自然科學博物館植物園—熱帶雨林溫室"
+  },
+  "verifiedOn": "2026-11-10",
+  "owner": "Root park/street4",
+  "identity": "The tall tropical greenhouse behind the National Museum of Natural Science, NOT the museum Space Theater dome.",
+  "officialPages": [
+    {
+      "url": "https://www.nmns.edu.tw/en/exhibitions/galleries/botanical-garden/tropical-rain-forest-greenhouse/",
+      "publisher": "National Museum of Natural Science",
+      "evidence": "Official structural description:giantglassgreenhouse with repeatedcolumns/circularbeams."
+    }
+  ],
+  "officialPhotos": [
+    {
+      "url": "https://travel.taichung.gov.tw/content/images/attractions/12503/1024x768_Filedata635548405143826627.jpg",
+      "publisher": "Taichung Tourism and Travel Bureau",
+      "page": "https://travel.taichung.gov.tw/zh-tw/Attractions/Intro/158/",
+      "visualInspection": "Direct photo viewed in own Chrome reference tab2026-11-10. Daylight front-threequarter:widebase,taperedupperglassface,whitelattice,black/yellowbutterflyleft,pondleft,straightpaving/stepsright."
+    },
+    {
+      "url": "https://www.nmns.edu.tw/export/sites/nmns/en/exhibitions/galleries/.galleries/images/botacinca-1.jpg",
+      "publisher": "National Museum of Natural Science",
+      "page": "https://www.nmns.edu.tw/en/exhibitions/galleries/botanical-garden/tropical-rain-forest-greenhouse/",
+      "visualInspection": "OfficialpageDOMimage inspected directly:night oblique viewconfirms tallflaring structural ribs andglass grid; warm lightingisnighttime,not materialcolor."
+    }
+  ],
+  "distinguishingMotifs": [
+    "Tall broad greenhouse silhouette, base wider than top; curved glass face with sloping side supports, not a round dome.",
+    "Pale steel lattice:diagonalbraces plus repeatedhorizontal/circularbands behind bluegray transparentpanes.",
+    "Large openwork black-and-yellow butterfly sculpture on slim poles at the front-left.",
+    "Straight gray paving and broad steps lead toward small low entry doors under the huge glass volume.",
+    "Low water garden/lilypond beside the approach, with lush green shrubs and trees."
+  ],
+  "materialColors": [
+    "Pale gray/white structural steel",
+    "Cool pale cyan/gray glass",
+    "Charcoal/yellow butterfly wings",
+    "Gray stone paving, muted green water and darker green planting"
+  ],
+  "pixelPriorities": [
+    "Keep the talltaperedglass silhouette plusbutterflyfirst; simplifybracegrid into cleanrepeatingbands.",
+    "Use a few broadglass valuegroups; no noisyfakewindowcheckerboard."
+  ],
+  "avoid": [
+    "Castle, stonecrenellations or palacearch",
+    "Geodesic/sphericaldome confusedwithSpaceTheater",
+    "Genericfountain ashero",
+    "Using warm nightphoto lightingasdaylightbuildingmaterial"
+  ],
+  "rights": "Reference links only; no sourcephoto copied into shipped art. Draw original pixel interpretation.",
+  "scope": "No map/native/PR/Claudecheckout changes."
+}

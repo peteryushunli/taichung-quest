@@ -1,0 +1,27 @@
+{
+  "id": "fengle-sculpture-park",
+  "status": "art-review; not installed",
+  "worldRectExclusive": [
+    60,
+    159,
+    71,
+    168
+  ],
+  "nativeSize": [
+    176,
+    144
+  ],
+  "paletteColorsIncludingTransparent": 16,
+  "opaqueColorsUsed": 14,
+  "rawTileCount": 396,
+  "unique8x8Tiles": 267,
+  "unique8x8TilesWithFlips": 264,
+  "packedTileCountIncludingEmpty": 264,
+  "packedTileRoundTripVerified": true,
+  "sha256": "ebb073132159b0e27bd0fc3e29db1e672771e7d770bd6a03eaa87423cefbe42c",
+  "references": [
+    "https://travel.taichung.gov.tw/en/attractions/intro/889",
+    "https://filmtaichung.org.tw/scenesContent/242"
+  ],
+  "integration": "Exact audited native dimensions. Art review pack, not a ROM patch. Requires tile-bank allocation/repacking and collision refresh for new object shapes, preserving real sign/warp/road approaches. Existing empty-ground cells are not automatically hard keep-clear reservations. No game or website sources changed."
+}

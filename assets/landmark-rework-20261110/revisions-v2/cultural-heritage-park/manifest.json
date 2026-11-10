@@ -1,0 +1,43 @@
+{
+  "id": "cultural-heritage-park",
+  "status": "art-review; not installed",
+  "worldRectExclusive": null,
+  "nativeSize": [
+    224,
+    192
+  ],
+  "paletteColorsIncludingTransparent": 16,
+  "opaqueColorsUsed": 15,
+  "rawTileCount": 672,
+  "unique8x8Tiles": 313,
+  "unique8x8TilesWithFlips": 289,
+  "packedTileCountIncludingEmpty": 289,
+  "packedTileRoundTripVerified": true,
+  "sha256": "d4922e8eab562b91ea143192fb1de13e1ae402618d1ea23095162acc490b9a51",
+  "references": [
+    "https://travel.taichung.gov.tw/en/Attractions/Intro/1053"
+  ],
+  "integration": "ART REVIEW ONLY. This revision supersedes the v1 design. New shapes require fresh collision and tile-bank allocation. Market and brewery have intentionally new canvas dimensions and need a new map anchor/crop; no native map changes are included.",
+  "revision": 2,
+  "number": 18,
+  "title": "Cultural Heritage Park",
+  "priorNativeSize": [
+    176,
+    288
+  ],
+  "priorWorldRectExclusive": [
+    60,
+    121,
+    71,
+    139
+  ],
+  "geometryChanged": true,
+  "requiresPlacementUpdate": true,
+  "dimensionsMatchAuditedMap": false,
+  "notes": [
+    "Redesigned from scratch as one connected224x192industrial composition.",
+    "Plaster and brick gables, silver chimney and a long factory-window gallery.",
+    "Quiet shallow courtyard replaces separated warehouse rows and floating barrel props.",
+    "Do not clip or squash this into the old11x18vertical footprint."
+  ]
+}

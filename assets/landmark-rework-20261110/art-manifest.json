@@ -1,0 +1,209 @@
+{
+  "status": "INTEGRATED_NATIVE_CANDIDATE",
+  "sourceNativeHead": "2362263510dfa38987c36b6cc40dca8d9372fc3c",
+  "sourcePointer": "native-source-pointer.json",
+  "validation": "10 indexed native PNGs; <=15 opaque colors; RGB555 aligned;16px grid aligned. Latest market and brewery intentionally have new footprints and require placement/collision changes.",
+  "landmarks": [
+    {
+      "id": "wanhe-temple",
+      "title": "Wanhe Temple",
+      "nativeFile": "temples/wanhe-temple/native-overlay-indexed.png",
+      "nativePixels": [
+        144,
+        112
+      ],
+      "opaqueColorCount": 15,
+      "rgb555Exact": true,
+      "dimensionsMatchAuditedMap": true,
+      "revision": 1,
+      "placementUpdateRequired": false,
+      "sha256": "5ef3d017ceb7a7e0645275daa20f1a2d988b21b81179e038c42b27ce5a6ff6ff",
+      "nativeMap": "MAP_TAICHUNG_NANTUN_WANHE",
+      "priorLocalOrigin": [
+        27,
+        27
+      ]
+    },
+    {
+      "id": "wenchang-temple",
+      "title": "Wenchang Temple",
+      "nativeFile": "temples/wenchang-temple/native-overlay-indexed.png",
+      "nativePixels": [
+        112,
+        96
+      ],
+      "opaqueColorCount": 13,
+      "rgb555Exact": true,
+      "dimensionsMatchAuditedMap": true,
+      "revision": 1,
+      "placementUpdateRequired": false,
+      "sha256": "34d9d6fc074df69039f73fa1952c9cf4696abfe7475936694d59fa8d3a8c5ba4",
+      "nativeMap": "MAP_TAICHUNG_NANTUN_WANHE",
+      "priorLocalOrigin": [
+        18,
+        28
+      ]
+    },
+    {
+      "id": "botanical-garden",
+      "title": "Botanical Garden",
+      "nativeFile": "revisions-v4/botanical-garden/native.png",
+      "nativePixels": [
+        208,
+        144
+      ],
+      "opaqueColorCount": 14,
+      "rgb555Exact": true,
+      "dimensionsMatchAuditedMap": false,
+      "revision": 4,
+      "placementUpdateRequired": true,
+      "sha256": "57eb9eb28a818e4d41a36c28142ebfe2810770ea5c2363384b937ad90e894deb",
+      "nativeMap": "MAP_TAICHUNG_GREENWAY",
+      "priorLocalOrigin": [
+        9,
+        26
+      ]
+    },
+    {
+      "id": "confucius-temple",
+      "title": "Confucius Temple",
+      "nativeFile": "revisions-v2/confucius-temple/native.png",
+      "nativePixels": [
+        160,
+        144
+      ],
+      "opaqueColorCount": 12,
+      "rgb555Exact": true,
+      "dimensionsMatchAuditedMap": true,
+      "revision": 2,
+      "placementUpdateRequired": false,
+      "sha256": "f4fc719f0d266db83c63be544c6df9850831939f8e07548043cb92cf38edf792",
+      "nativeMap": "MAP_TAICHUNG_OLD_CITY_NORTH",
+      "priorLocalOrigin": [
+        30,
+        25
+      ]
+    },
+    {
+      "id": "yizhong-street",
+      "title": "Yizhong Street",
+      "nativeFile": "parks-street/yizhong-street/native.png",
+      "nativePixels": [
+        160,
+        128
+      ],
+      "opaqueColorCount": 15,
+      "rgb555Exact": true,
+      "dimensionsMatchAuditedMap": true,
+      "revision": 1,
+      "placementUpdateRequired": false,
+      "sha256": "f725d03d33d4f299d5401e70f9914fff4922dcb2055187653868cb2df99ad786",
+      "nativeMap": "MAP_TAICHUNG_OLD_CITY_NORTH",
+      "priorLocalOrigin": [
+        30,
+        39
+      ]
+    },
+    {
+      "id": "prefectural-hall",
+      "title": "Prefectural Hall",
+      "nativeFile": "revisions-v4/prefectural-hall/native.png",
+      "nativePixels": [
+        192,
+        160
+      ],
+      "opaqueColorCount": 13,
+      "rgb555Exact": true,
+      "dimensionsMatchAuditedMap": false,
+      "revision": 4,
+      "placementUpdateRequired": true,
+      "sha256": "be9d9e573f949b6c068982ac87079c9eb38fa98e5760037392f52b2d8bf3edbd",
+      "nativeMap": "MAP_TAICHUNG_OLD_CITY",
+      "priorLocalOrigin": [
+        13,
+        36
+      ]
+    },
+    {
+      "id": "second-market",
+      "title": "Second Market",
+      "nativeFile": "revisions-v4/second-market/native.png",
+      "nativePixels": [
+        160,
+        144
+      ],
+      "opaqueColorCount": 14,
+      "rgb555Exact": true,
+      "dimensionsMatchAuditedMap": false,
+      "revision": 4,
+      "placementUpdateRequired": true,
+      "sha256": "07bf897ce6c7670e2810c419ccd40276fc4c98d32670b946323d54ea98701e99",
+      "nativeMap": "MAP_TAICHUNG_OLD_CITY_NORTH",
+      "priorLocalOrigin": [
+        18,
+        25
+      ]
+    },
+    {
+      "id": "cultural-heritage-park",
+      "title": "Cultural Heritage Park",
+      "nativeFile": "revisions-v4/cultural-heritage-park/native.png",
+      "nativePixels": [
+        256,
+        208
+      ],
+      "opaqueColorCount": 15,
+      "rgb555Exact": true,
+      "dimensionsMatchAuditedMap": false,
+      "revision": 4,
+      "placementUpdateRequired": true,
+      "sha256": "bd363a8ef5c9aafb9b08de33eca3d32dd29756a92307cc30ec3f9cc2e1404864",
+      "nativeMap": "MAP_TAICHUNG_NANTUN_WANHE",
+      "priorLocalOrigin": [
+        65,
+        17
+      ]
+    },
+    {
+      "id": "fengle-sculpture-park",
+      "title": "Fengle Sculpture Park",
+      "nativeFile": "parks-street/fengle-sculpture-park/native.png",
+      "nativePixels": [
+        176,
+        144
+      ],
+      "opaqueColorCount": 14,
+      "rgb555Exact": true,
+      "dimensionsMatchAuditedMap": true,
+      "revision": 1,
+      "placementUpdateRequired": false,
+      "sha256": "ebb073132159b0e27bd0fc3e29db1e672771e7d770bd6a03eaa87423cefbe42c",
+      "nativeMap": "MAP_TAICHUNG_NANTUN_WANHE",
+      "priorLocalOrigin": [
+        65,
+        55
+      ]
+    },
+    {
+      "id": "wenxin-forest-park",
+      "title": "Wenxin Forest Park",
+      "nativeFile": "parks-street/wenxin-forest-park/native.png",
+      "nativePixels": [
+        192,
+        112
+      ],
+      "opaqueColorCount": 11,
+      "rgb555Exact": true,
+      "dimensionsMatchAuditedMap": true,
+      "revision": 1,
+      "placementUpdateRequired": false,
+      "sha256": "5f0ea1ad13f607e5996f053639a31ef63dc46ef8fb3d30007527728ca7b49415",
+      "nativeMap": "MAP_TAICHUNG_NANTUN_NORTH",
+      "priorLocalOrigin": [
+        20,
+        24
+      ]
+    }
+  ],
+  "integration": "See docs/approved-landmark-release.md. Original review sources are preserved; prepare-native.py produces the ten installed, plot-fitted PNGs. Claude native baseline2362263 and frontend757e90c are retained."
+}

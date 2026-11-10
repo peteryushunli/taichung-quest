@@ -1,0 +1,54 @@
+{
+  "id": "taichung-confucius-temple",
+  "name": {
+    "en": "Taichung Confucius Temple — Dacheng Hall",
+    "zh-TW": "臺中孔廟—大成殿"
+  },
+  "verifiedOn": "2026-11-10",
+  "owner": "Maps temple3",
+  "identity": "The NorthDistrict ConfuciusTemple complex, especially its broad double-eaved DachengHall; not the adjacent MartyrsShrine or the former examinationhall.",
+  "officialPages": [
+    {
+      "url": "https://www.confucius.taichung.gov.tw/834557/834568/834569/834571/834572/837602",
+      "publisher": "Taichung Confucius Temple and Martyrs Shrine Joint Management Office",
+      "evidence": "Official overview specifies Song-style palace forms and axial courtyards, distinct from the neighboring Qing-style MartyrsShrine."
+    },
+    {
+      "url": "https://www.confucius.taichung.gov.tw/834557/834568/834569/834571/834573/837667",
+      "publisher": "Taichung Confucius Temple and Martyrs Shrine Joint Management Office",
+      "evidence": "Official architecture notes:double-eaved main hall,yellowglazedtiles,redpaint,blue/greenbracketpainting and absenceofordinaryMinnanroofridgebeasts."
+    }
+  ],
+  "officialPhotos": [
+    {
+      "url": "https://travel.taichung.gov.tw/image/12510/1024x768",
+      "visualInspection": "Direct official Tourism Bureau front photo inspected. Broad horizontal two-tier gold roof, green bracket bands, shaded red columns, white-railed high platform, axial broad steps with central carved ramp, low yellow-roof side galleries and open gray courtyard.",
+      "publisher": "Taichung government venue/heritage/tourism office"
+    }
+  ],
+  "distinguishingMotifs": [
+    "Very broad, symmetrical double-eaved main-hall silhouette with gold/yellow glazed roof planes.",
+    "Deep green/blue bracket bands beneath both roof tiers and muted vermilion structural wood.",
+    "High pale stone platform with white balustrades.",
+    "Broad axial stairs split by a central carved stone relief ramp.",
+    "Low matching side galleries frame an open paved courtyard; leave generous empty forecourt space."
+  ],
+  "materialColors": [
+    "Ochre/yellow glazed roof",
+    "Vermilion/deep red wood",
+    "Muted blue-green bracket bands",
+    "Pale stone rails and gray paving"
+  ],
+  "pixelPriorities": [
+    "Lead with two strong roof tiers plus wide raised stairs.",
+    "Reduce brackets into orderly dark green rhythm, not an invented dragon carnival."
+  ],
+  "avoid": [
+    "Wanhe-style sculpted dragon ridge crowded with figures",
+    "Beitun/NantunWenchangtemple confusion",
+    "Temple-shaped park elements or pagodas",
+    "Mistaking nearbyMartyrsShrineorimperialExaminationHallforDachengHall"
+  ],
+  "rights": "Reference links only; draw original pixel art. No photos copied into shipped assets.",
+  "scope": "No native,map,PR,main orClaudecheckout edits."
+}

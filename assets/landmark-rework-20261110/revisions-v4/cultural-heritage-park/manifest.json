@@ -1,0 +1,37 @@
+{
+  "id": "cultural-heritage-park",
+  "status": "art-review; not installed",
+  "worldRectExclusive": null,
+  "nativeSize": [
+    256,
+    208
+  ],
+  "paletteColorsIncludingTransparent": 16,
+  "opaqueColorsUsed": 15,
+  "rawTileCount": 832,
+  "unique8x8Tiles": 354,
+  "unique8x8TilesWithFlips": 345,
+  "packedTileCountIncludingEmpty": 345,
+  "packedTileRoundTripVerified": true,
+  "sha256": "bd363a8ef5c9aafb9b08de33eca3d32dd29756a92307cc30ec3f9cc2e1404864",
+  "references": [
+    "https://travel.taichung.gov.tw/en/Attractions/Intro/1053"
+  ],
+  "integration": "ART REVIEW ONLY. Supersedes earlier art for this landmark. Claude must allocate native tile/palette banks, set placement/collision and update frontend crop. No map/source/website changes included.",
+  "revision": 4,
+  "title": "Cultural Heritage Park",
+  "number": 18,
+  "priorNativeSize": [
+    176,
+    288
+  ],
+  "requiresPlacementUpdate": true,
+  "requiresCollisionUpdate": true,
+  "dimensionsMatchAuditedMap": false,
+  "projection": "Centered frontal game camera: no sideways depth offset; roofs taper evenly inward and recede upward around each volume centerline.",
+  "cameraReference": "references/theater-native-4x.png",
+  "notes": [
+    "Both hall ridges stay on their own centerline; roof slopes recede upward evenly.",
+    "Connecting flat roof tapers symmetrically like the existing theater roof; all facades stay frontal."
+  ]
+}

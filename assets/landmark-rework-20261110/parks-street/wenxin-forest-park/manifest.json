@@ -1,0 +1,26 @@
+{
+  "id": "wenxin-forest-park",
+  "status": "art-review; not installed",
+  "worldRectExclusive": [
+    15,
+    88,
+    27,
+    95
+  ],
+  "nativeSize": [
+    192,
+    112
+  ],
+  "paletteColorsIncludingTransparent": 16,
+  "opaqueColorsUsed": 11,
+  "rawTileCount": 336,
+  "unique8x8Tiles": 272,
+  "unique8x8TilesWithFlips": 269,
+  "packedTileCountIncludingEmpty": 269,
+  "packedTileRoundTripVerified": true,
+  "sha256": "5f0ea1ad13f607e5996f053639a31ef63dc46ef8fb3d30007527728ca7b49415",
+  "references": [
+    "https://fa.culture.taichung.gov.tw/english/content/index.asp?Parser=1,10,20"
+  ],
+  "integration": "Exact audited native dimensions. Art review pack, not a ROM patch. Requires tile-bank allocation/repacking and collision refresh for new object shapes, preserving real sign/warp/road approaches. Existing empty-ground cells are not automatically hard keep-clear reservations. No game or website sources changed."
+}

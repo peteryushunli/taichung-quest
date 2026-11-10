@@ -1,0 +1,39 @@
+{
+  "status": "LOCAL_HANDOFF_NOT_A_MAIN_COMMIT",
+  "checkedAt": "2026-11-10T04:09:45.194645+00:00",
+  "userSteeringVia": "Maps chat",
+  "cityShapePreference": {
+    "preferred": "F",
+    "distantSecond": "C",
+    "geometryDecisionNotImplemented": true
+  },
+  "styleSteering": "Preserve the improved Xitun/building styles the user praised.",
+  "remoteMain": "80c714f5a5a4db209a6641840ec6674181d735ee",
+  "localRootMain": "f2fdc51af40eb70569cb94be52eaef6cdaf7ced3",
+  "artPackageFilesOnRemoteMain": 0,
+  "artPackageCommittedToRemoteMain": false,
+  "rootTrackedDirtyDocs": 5,
+  "rootHasOtherUntrackedWork": true,
+  "ownership": {
+    "claude": "Current native maps, source, shared tile-bank allocation, portable native patch, PR/main reconciliation and integration.",
+    "codex": "Separate reviewed art assets/generators/reference/decision handoff; no concurrent native map editing."
+  },
+  "nativeRepositorySeparateAndIgnored": true,
+  "artPackageNativeChanges": false,
+  "portablePatchExportNeededForArtPackage": false,
+  "nextStepsForClaude": [
+    "Use the current main-based Claude checkout, not stale root main or the older Codex integration branch.",
+    "Preserve/review the local art package and generators; it is not installed and not present on current remote main.",
+    "Commit the reviewed assets/design decisions in an isolated appropriate branch without sweeping in unrelated root changes.",
+    "Claude may integrate selected art on its current native branch, then export its actual native source changes to the root portable patch through its release workflow.",
+    "Keep city-shape F>C as the next design decision; no map expansion is implemented by this handoff."
+  ],
+  "publicationAuthorizedByThisStatusRequest": false,
+  "subsequentArtIntegrationAuthorization": {
+    "reportedBy": "Decisions chat",
+    "scope": "User approved the selected landmark art and requested installation preserving latest Claude maps. Decisions/Main handles new isolated codex worktrees from current native236; prior assets-only limit superseded only for this art integration.",
+    "sourcePointerChatRole": "Read-only source audit; no competing integration.",
+    "preserveBoundary": "No reconciliation of old PR11/Codex map branches; preserve current Claude geometry.",
+    "selectedVersions": "13/16/17/18 v4;14 v2; remaining5 v1, as selected by current art-manifest.json."
+  }
+}

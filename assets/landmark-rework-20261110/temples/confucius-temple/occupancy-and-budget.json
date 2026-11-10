@@ -1,0 +1,790 @@
+{
+  "id": "confucius-temple",
+  "status": "original code-pixel facade study; not installed",
+  "nativePixels": [
+    160,
+    144
+  ],
+  "nativeCells": [
+    10,
+    9
+  ],
+  "paletteColorsIncludingTransparent": 16,
+  "paletteRgb": [
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      24,
+      40,
+      48
+    ],
+    [
+      48,
+      64,
+      72
+    ],
+    [
+      104,
+      128,
+      128
+    ],
+    [
+      176,
+      192,
+      184
+    ],
+    [
+      232,
+      224,
+      192
+    ],
+    [
+      96,
+      40,
+      40
+    ],
+    [
+      168,
+      56,
+      48
+    ],
+    [
+      224,
+      104,
+      64
+    ],
+    [
+      128,
+      80,
+      56
+    ],
+    [
+      184,
+      128,
+      80
+    ],
+    [
+      240,
+      192,
+      104
+    ],
+    [
+      32,
+      72,
+      72
+    ],
+    [
+      48,
+      120,
+      104
+    ],
+    [
+      112,
+      176,
+      144
+    ],
+    [
+      40,
+      64,
+      104
+    ]
+  ],
+  "transparentIndex": 0,
+  "raw8x8Tiles": 360,
+  "unique8x8PatternsWithoutFlips": 188,
+  "unique8x8PatternsWithFlips": 180,
+  "opaque16x16Cells": 80,
+  "cells": [
+    [
+      {
+        "x": 0,
+        "y": 0,
+        "opaquePixels": 120,
+        "painted": true,
+        "nativeDoorOverride": false
+      },
+      {
+        "x": 1,
+        "y": 0,
+        "opaquePixels": 80,
+        "painted": true,
+        "nativeDoorOverride": false
+      },
+      {
+        "x": 2,
+        "y": 0,
+        "opaquePixels": 107,
+        "painted": true,
+        "nativeDoorOverride": false
+      },
+      {
+        "x": 3,
+        "y": 0,
+        "opaquePixels": 208,
+        "painted": true,
+        "nativeDoorOverride": false
+      },
+      {
+        "x": 4,
+        "y": 0,
+        "opaquePixels": 208,
+        "painted": true,
+        "nativeDoorOverride": false
+      },
+      {
+        "x": 5,
+        "y": 0,
+        "opaquePixels": 208,
+        "painted": true,
+        "nativeDoorOverride": false
+      },
+      {
+        "x": 6,
+        "y": 0,
+        "opaquePixels": 208,
+        "painted": true,
+        "nativeDoorOverride": false
+      },
+      {
+        "x": 7,
+        "y": 0,
+        "opaquePixels": 104,
+        "painted": true,
+        "nativeDoorOverride": false
+      },
+      {
+        "x": 8,
+        "y": 0,
+        "opaquePixels": 80,
+        "painted": true,
+        "nativeDoorOverride": false
+      },
+      {
+        "x": 9,
+        "y": 0,
+        "opaquePixels": 120,
+        "painted": true,
+        "nativeDoorOverride": false
+      }
+    ],
+    [
+      {
+        "x": 0,
+        "y": 1,
+        "opaquePixels": 80,
+        "painted": true,
+        "nativeDoorOverride": false
+      },
+      {
+        "x": 1,
+        "y": 1,
+        "opaquePixels": 14,
+        "painted": true,
+        "nativeDoorOverride": false
+      },
+      {
+        "x": 2,
+        "y": 1,
+        "opaquePixels": 194,
+        "painted": true,
+        "nativeDoorOverride": false
+      },
+      {
+        "x": 3,
+        "y": 1,
+        "opaquePixels": 248,
+        "painted": true,
+        "nativeDoorOverride": false
+      },
+      {
+        "x": 4,
+        "y": 1,
+        "opaquePixels": 256,
+        "painted": true,
+        "nativeDoorOverride": false
+      },
+      {
+        "x": 5,
+        "y": 1,
+        "opaquePixels": 256,
+        "painted": true,
+        "nativeDoorOverride": false
+      },
+      {
+        "x": 6,
+        "y": 1,
+        "opaquePixels": 247,
+        "painted": true,
+        "nativeDoorOverride": false
+      },
+      {
+        "x": 7,
+        "y": 1,
+        "opaquePixels": 193,
+        "painted": true,
+        "nativeDoorOverride": false
+      },
+      {
+        "x": 8,
+        "y": 1,
+        "opaquePixels": 20,
+        "painted": true,
+        "nativeDoorOverride": false
+      },
+      {
+        "x": 9,
+        "y": 1,
+        "opaquePixels": 80,
+        "painted": true,
+        "nativeDoorOverride": false
+      }
+    ],
+    [
+      {
+        "x": 0,
+        "y": 2,
+        "opaquePixels": 132,
+        "painted": true,
+        "nativeDoorOverride": false
+      },
+      {
+        "x": 1,
+        "y": 2,
+        "opaquePixels": 214,
+        "painted": true,
+        "nativeDoorOverride": false
+      },
+      {
+        "x": 2,
+        "y": 2,
+        "opaquePixels": 256,
+        "painted": true,
+        "nativeDoorOverride": false
+      },
+      {
+        "x": 3,
+        "y": 2,
+        "opaquePixels": 256,
+        "painted": true,
+        "nativeDoorOverride": false
+      },
+      {
+        "x": 4,
+        "y": 2,
+        "opaquePixels": 256,
+        "painted": true,
+        "nativeDoorOverride": false
+      },
+      {
+        "x": 5,
+        "y": 2,
+        "opaquePixels": 256,
+        "painted": true,
+        "nativeDoorOverride": false
+      },
+      {
+        "x": 6,
+        "y": 2,
+        "opaquePixels": 256,
+        "painted": true,
+        "nativeDoorOverride": false
+      },
+      {
+        "x": 7,
+        "y": 2,
+        "opaquePixels": 256,
+        "painted": true,
+        "nativeDoorOverride": false
+      },
+      {
+        "x": 8,
+        "y": 2,
+        "opaquePixels": 216,
+        "painted": true,
+        "nativeDoorOverride": false
+      },
+      {
+        "x": 9,
+        "y": 2,
+        "opaquePixels": 132,
+        "painted": true,
+        "nativeDoorOverride": false
+      }
+    ],
+    [
+      {
+        "x": 0,
+        "y": 3,
+        "opaquePixels": 110,
+        "painted": true,
+        "nativeDoorOverride": false
+      },
+      {
+        "x": 1,
+        "y": 3,
+        "opaquePixels": 256,
+        "painted": true,
+        "nativeDoorOverride": false
+      },
+      {
+        "x": 2,
+        "y": 3,
+        "opaquePixels": 256,
+        "painted": true,
+        "nativeDoorOverride": false
+      },
+      {
+        "x": 3,
+        "y": 3,
+        "opaquePixels": 256,
+        "painted": true,
+        "nativeDoorOverride": false
+      },
+      {
+        "x": 4,
+        "y": 3,
+        "opaquePixels": 256,
+        "painted": true,
+        "nativeDoorOverride": false
+      },
+      {
+        "x": 5,
+        "y": 3,
+        "opaquePixels": 256,
+        "painted": true,
+        "nativeDoorOverride": false
+      },
+      {
+        "x": 6,
+        "y": 3,
+        "opaquePixels": 256,
+        "painted": true,
+        "nativeDoorOverride": false
+      },
+      {
+        "x": 7,
+        "y": 3,
+        "opaquePixels": 256,
+        "painted": true,
+        "nativeDoorOverride": false
+      },
+      {
+        "x": 8,
+        "y": 3,
+        "opaquePixels": 256,
+        "painted": true,
+        "nativeDoorOverride": false
+      },
+      {
+        "x": 9,
+        "y": 3,
+        "opaquePixels": 110,
+        "painted": true,
+        "nativeDoorOverride": false
+      }
+    ],
+    [
+      {
+        "x": 0,
+        "y": 4,
+        "opaquePixels": 80,
+        "painted": true,
+        "nativeDoorOverride": false
+      },
+      {
+        "x": 1,
+        "y": 4,
+        "opaquePixels": 0,
+        "painted": false,
+        "nativeDoorOverride": false
+      },
+      {
+        "x": 2,
+        "y": 4,
+        "opaquePixels": 0,
+        "painted": false,
+        "nativeDoorOverride": false
+      },
+      {
+        "x": 3,
+        "y": 4,
+        "opaquePixels": 63,
+        "painted": true,
+        "nativeDoorOverride": false
+      },
+      {
+        "x": 4,
+        "y": 4,
+        "opaquePixels": 171,
+        "painted": true,
+        "nativeDoorOverride": false
+      },
+      {
+        "x": 5,
+        "y": 4,
+        "opaquePixels": 169,
+        "painted": true,
+        "nativeDoorOverride": false
+      },
+      {
+        "x": 6,
+        "y": 4,
+        "opaquePixels": 63,
+        "painted": true,
+        "nativeDoorOverride": false
+      },
+      {
+        "x": 7,
+        "y": 4,
+        "opaquePixels": 0,
+        "painted": false,
+        "nativeDoorOverride": false
+      },
+      {
+        "x": 8,
+        "y": 4,
+        "opaquePixels": 0,
+        "painted": false,
+        "nativeDoorOverride": false
+      },
+      {
+        "x": 9,
+        "y": 4,
+        "opaquePixels": 80,
+        "painted": true,
+        "nativeDoorOverride": false
+      }
+    ],
+    [
+      {
+        "x": 0,
+        "y": 5,
+        "opaquePixels": 80,
+        "painted": true,
+        "nativeDoorOverride": false
+      },
+      {
+        "x": 1,
+        "y": 5,
+        "opaquePixels": 0,
+        "painted": false,
+        "nativeDoorOverride": false
+      },
+      {
+        "x": 2,
+        "y": 5,
+        "opaquePixels": 0,
+        "painted": false,
+        "nativeDoorOverride": false
+      },
+      {
+        "x": 3,
+        "y": 5,
+        "opaquePixels": 81,
+        "painted": true,
+        "nativeDoorOverride": false
+      },
+      {
+        "x": 4,
+        "y": 5,
+        "opaquePixels": 256,
+        "painted": true,
+        "nativeDoorOverride": false
+      },
+      {
+        "x": 5,
+        "y": 5,
+        "opaquePixels": 256,
+        "painted": true,
+        "nativeDoorOverride": false
+      },
+      {
+        "x": 6,
+        "y": 5,
+        "opaquePixels": 81,
+        "painted": true,
+        "nativeDoorOverride": false
+      },
+      {
+        "x": 7,
+        "y": 5,
+        "opaquePixels": 0,
+        "painted": false,
+        "nativeDoorOverride": false
+      },
+      {
+        "x": 8,
+        "y": 5,
+        "opaquePixels": 0,
+        "painted": false,
+        "nativeDoorOverride": false
+      },
+      {
+        "x": 9,
+        "y": 5,
+        "opaquePixels": 80,
+        "painted": true,
+        "nativeDoorOverride": false
+      }
+    ],
+    [
+      {
+        "x": 0,
+        "y": 6,
+        "opaquePixels": 80,
+        "painted": true,
+        "nativeDoorOverride": false
+      },
+      {
+        "x": 1,
+        "y": 6,
+        "opaquePixels": 0,
+        "painted": false,
+        "nativeDoorOverride": false
+      },
+      {
+        "x": 2,
+        "y": 6,
+        "opaquePixels": 180,
+        "painted": true,
+        "nativeDoorOverride": false
+      },
+      {
+        "x": 3,
+        "y": 6,
+        "opaquePixels": 192,
+        "painted": true,
+        "nativeDoorOverride": false
+      },
+      {
+        "x": 4,
+        "y": 6,
+        "opaquePixels": 199,
+        "painted": true,
+        "nativeDoorOverride": false
+      },
+      {
+        "x": 5,
+        "y": 6,
+        "opaquePixels": 199,
+        "painted": true,
+        "nativeDoorOverride": false
+      },
+      {
+        "x": 6,
+        "y": 6,
+        "opaquePixels": 192,
+        "painted": true,
+        "nativeDoorOverride": false
+      },
+      {
+        "x": 7,
+        "y": 6,
+        "opaquePixels": 180,
+        "painted": true,
+        "nativeDoorOverride": false
+      },
+      {
+        "x": 8,
+        "y": 6,
+        "opaquePixels": 0,
+        "painted": false,
+        "nativeDoorOverride": false
+      },
+      {
+        "x": 9,
+        "y": 6,
+        "opaquePixels": 80,
+        "painted": true,
+        "nativeDoorOverride": false
+      }
+    ],
+    [
+      {
+        "x": 0,
+        "y": 7,
+        "opaquePixels": 80,
+        "painted": true,
+        "nativeDoorOverride": false
+      },
+      {
+        "x": 1,
+        "y": 7,
+        "opaquePixels": 1,
+        "painted": true,
+        "nativeDoorOverride": false
+      },
+      {
+        "x": 2,
+        "y": 7,
+        "opaquePixels": 135,
+        "painted": true,
+        "nativeDoorOverride": false
+      },
+      {
+        "x": 3,
+        "y": 7,
+        "opaquePixels": 228,
+        "painted": true,
+        "nativeDoorOverride": false
+      },
+      {
+        "x": 4,
+        "y": 7,
+        "opaquePixels": 235,
+        "painted": true,
+        "nativeDoorOverride": false
+      },
+      {
+        "x": 5,
+        "y": 7,
+        "opaquePixels": 234,
+        "painted": true,
+        "nativeDoorOverride": false
+      },
+      {
+        "x": 6,
+        "y": 7,
+        "opaquePixels": 226,
+        "painted": true,
+        "nativeDoorOverride": false
+      },
+      {
+        "x": 7,
+        "y": 7,
+        "opaquePixels": 135,
+        "painted": true,
+        "nativeDoorOverride": false
+      },
+      {
+        "x": 8,
+        "y": 7,
+        "opaquePixels": 4,
+        "painted": true,
+        "nativeDoorOverride": false
+      },
+      {
+        "x": 9,
+        "y": 7,
+        "opaquePixels": 80,
+        "painted": true,
+        "nativeDoorOverride": false
+      }
+    ],
+    [
+      {
+        "x": 0,
+        "y": 8,
+        "opaquePixels": 80,
+        "painted": true,
+        "nativeDoorOverride": false
+      },
+      {
+        "x": 1,
+        "y": 8,
+        "opaquePixels": 19,
+        "painted": true,
+        "nativeDoorOverride": false
+      },
+      {
+        "x": 2,
+        "y": 8,
+        "opaquePixels": 96,
+        "painted": true,
+        "nativeDoorOverride": false
+      },
+      {
+        "x": 3,
+        "y": 8,
+        "opaquePixels": 101,
+        "painted": true,
+        "nativeDoorOverride": false
+      },
+      {
+        "x": 4,
+        "y": 8,
+        "opaquePixels": 70,
+        "painted": true,
+        "nativeDoorOverride": false
+      },
+      {
+        "x": 5,
+        "y": 8,
+        "opaquePixels": 35,
+        "painted": true,
+        "nativeDoorOverride": false
+      },
+      {
+        "x": 6,
+        "y": 8,
+        "opaquePixels": 96,
+        "painted": true,
+        "nativeDoorOverride": false
+      },
+      {
+        "x": 7,
+        "y": 8,
+        "opaquePixels": 90,
+        "painted": true,
+        "nativeDoorOverride": false
+      },
+      {
+        "x": 8,
+        "y": 8,
+        "opaquePixels": 67,
+        "painted": true,
+        "nativeDoorOverride": false
+      },
+      {
+        "x": 9,
+        "y": 8,
+        "opaquePixels": 80,
+        "painted": true,
+        "nativeDoorOverride": false
+      }
+    ]
+  ],
+  "portalCell": null,
+  "clearPortalOverlayAvailable": false,
+  "features": [
+    "Golden double-eaved hip-roof hall identifies Confucius Temple, distinct from both Nantun temples.",
+    "Dacheng Hall, smaller gate, half-moon pool, central bridge and Lingxing screen retain the compressed precinct concept.",
+    "No native door exists here; no false enterable portal or new warp proposed.",
+    "Fits the registered160\u00d7144 scene; side courtyard gaps remain transparent."
+  ],
+  "references": [
+    {
+      "page": "https://www.confucius.taichung.gov.tw/834557/834568/834569/834571/834573/837663",
+      "photo": "references/official-dacheng.jpg",
+      "authority": "Taichung Confucius Temple and Martyrs Shrine Administration",
+      "observed": "Dacheng Hall yellow glazed double hip roofs, seven vermilion-column bays, blue-green bracket painting, pale stone terrace and balustrade; no Minnan dragon finials."
+    },
+    {
+      "page": "https://www.confucius.taichung.gov.tw/834557/834568/834569/834571/834572/837602",
+      "authority": "Taichung Confucius Temple and Martyrs Shrine Administration",
+      "use": "Precinct sequence and Song-style distinction."
+    }
+  ],
+  "source": "generate.py + ../pixel.py",
+  "noReferencePixelsCopied": true,
+  "noExistingHouseTilesUsed": true,
+  "noNativeSourceOrMapEdits": true,
+  "bankAllocationVerified": false,
+  "collisionMaskChanged": false,
+  "limits": [
+    "Original15-color palette needs explicit role assignment/repacking in the target bank.",
+    "Unique pattern count is art cost, not proof of available bank capacity.",
+    "Retain audited current collision, transparent sky, doors, approach and public-route masks."
+  ],
+  "filesSha256": {
+    "palette.pal": "54082a02234b5ca03d55fa628c39d32e8d0b830174ce310a40a3d35f032ca428",
+    "preview-4x.png": "78fc9b8505ec8d7a67036c78fcb1146e6c656928adc764dd29754a916af243e2",
+    "native-overlay-indexed.png": "cdc7bc0a7362342586c65a47103156bbfadcdb46c032b0896e7798da34d1dc60",
+    "palette.gbapal": "f2a061c918beb3c6322c67d540bc87e6836e7f982bae3102d269947a72342a88",
+    "unique-patterns.4bpp": "4c929d38775e3fb8243de7b0bcd89d280f80b5e4640bb05e592012ce23033d6b",
+    "facade-indexed.png": "cdc7bc0a7362342586c65a47103156bbfadcdb46c032b0896e7798da34d1dc60"
+  }
+}

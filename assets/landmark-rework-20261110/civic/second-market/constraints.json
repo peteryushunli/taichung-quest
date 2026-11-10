@@ -1,0 +1,157 @@
+{
+  "nativeSource": "/Users/peter/devday_hackathon/.claude/worktrees/native-gym-text-fixes-a79571/.worktrees/game-gym-text",
+  "nativeHead": "2362263510dfa38987c36b6cc40dca8d9372fc3c",
+  "auditSource": "assets/landmark-rework-20261110/temples/native-footprint-audit.json",
+  "constraints": {
+    "n": 17,
+    "id": "second-market",
+    "mapId": "MAP_TAICHUNG_OLD_CITY_NORTH",
+    "origin": [
+      18,
+      25
+    ],
+    "size": [
+      7,
+      9
+    ],
+    "worldRectExclusive": [
+      98,
+      20,
+      105,
+      29
+    ],
+    "door": null,
+    "approach": null,
+    "arrival": null,
+    "footprintSource": "data/taichung/city-rework/masterplan.json; actual map cells checked",
+    "nativeWarp": false,
+    "nativeMap": [
+      43,
+      18
+    ],
+    "primaryTileset": "gTileset_TaichungOldCorePrimary",
+    "secondaryTileset": "gTileset_TaichungOldCityNorth",
+    "currentCollisionRows": [
+      "0111110",
+      "0111110",
+      "0111110",
+      "0011100",
+      "0111110",
+      "0111110",
+      "1111111",
+      "1100011",
+      "1000001"
+    ],
+    "behaviorIds": [
+      0
+    ],
+    "layerTypeIds": [
+      1
+    ],
+    "noRuntimeEvidenceClaim": true,
+    "currentMapSha256": "c2b7067b33ab051f951ca471fe5fb495633ff63201c28fd8613147e32e598b12",
+    "hardReservations": {
+      "nativeDoor": null,
+      "nativeApproach": null,
+      "nativeArrival": null,
+      "nearbyEventAnchors": [
+        {
+          "kind": "sign",
+          "x": 21,
+          "y": 31,
+          "script": "TaichungCity_Sign_SecondMarket",
+          "insideArtwork": true
+        }
+      ],
+      "notes": [
+        "Door/approach/arrival and event anchor words/visibility remain integration constraints.",
+        "For a sign retain at least one reachable interaction neighbour; not every nearby empty cell must stay clear.",
+        "Existing clear ground inside an artwork scene is reference geometry, not an automatic hard reservation; companion collision review may change occupied cells.",
+        "No edits outside the registered footprint are authorized by this art handoff."
+      ]
+    },
+    "existingClearReferenceRows": [
+      "1000001",
+      "1000001",
+      "1000001",
+      "1100011",
+      "1000001",
+      "1000001",
+      "0000000",
+      "0011100",
+      "0111110"
+    ],
+    "websitePresentationCrop": {
+      "worldRectExclusive": [
+        102,
+        24,
+        111,
+        34
+      ],
+      "nativeOrigin": [
+        17,
+        24
+      ],
+      "nativeCells": [
+        9,
+        10
+      ],
+      "pixels": [
+        144,
+        160
+      ],
+      "collisionReferenceRows": [
+        "000000000",
+        "101111100",
+        "101111100",
+        "101111100",
+        "100111000",
+        "101111100",
+        "101111100",
+        "111111110",
+        "111000110",
+        "110000010"
+      ],
+      "notAnArtworkAllocation": true
+    }
+  },
+  "bank": {
+    "primary": "gTileset_TaichungOldCorePrimary",
+    "primaryGraphicSlots": 640,
+    "secondaryGraphicSlots": 384,
+    "secondaryDefinitionCount": 371,
+    "localMapReferencedSecondaryDefinitions": 172,
+    "localMapReferencedStaticSecondaryGraphics": 173,
+    "secondaryStaticCapacity": 376,
+    "secondaryDefinitionCapacity": 384,
+    "doorAnimationScratch": [
+      1016,
+      1023
+    ],
+    "freeSlotsNotAnAllocationClaim": true,
+    "paletteSlots": [
+      7,
+      8,
+      9,
+      10,
+      11,
+      12
+    ],
+    "sharedBankMustAuditAllConsumersAndDonatedStrips": true,
+    "staticGraphicsUnreferencedByAnyRetainedDefinition": 163,
+    "appendOnlyDefinitionSlots": 13,
+    "allocationCaveat": "Conservative all-definition reference count; remaining slots are not a full seam/dynamic-root/palette/save migration proof."
+  },
+  "conservativeClearRows": [
+    "1000001",
+    "1000001",
+    "1000001",
+    "1100011",
+    "1000001",
+    "1000001",
+    "0000000",
+    "0011100",
+    "0111110"
+  ],
+  "conservativeChoiceNote": "This art preserves every currently clear cell. Audit treats existing clear geometry as reference, not all as hard reservations. No collision changes proposed here."
+}

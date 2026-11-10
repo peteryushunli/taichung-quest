@@ -1,0 +1,151 @@
+{
+  "status": "ALL10READY — official primary photo links and directly observed silhouettes/materials",
+  "verifiedOn": "2026-11-10",
+  "use": "Reference-only identity and silhouette pack for original badge-quality pixel landmark redraws. PhotoURLs are research evidence, never shipped raster assets.",
+  "entries": [
+    {
+      "id": "botanical-garden",
+      "name": {
+        "en": "NMNS Botanical Garden — Tropical Rainforest Greenhouse",
+        "zh-TW": "國立自然科學博物館植物園—熱帶雨林溫室"
+      },
+      "owner": "Root park/street4",
+      "file": "/Users/peter/devday_hackathon/assets/landmark-rework-20261110/references/botanical-garden.json",
+      "primaryPhoto": "https://travel.taichung.gov.tw/content/images/attractions/12503/1024x768_Filedata635548405143826627.jpg",
+      "firstRead": "Tall broad greenhouse silhouette, base wider than top; curved glass face with sloping side supports, not a round dome.",
+      "motifCount": 5
+    },
+    {
+      "id": "yizhong-street",
+      "name": {
+        "en": "Yizhong Street / Yizhong Shopping District",
+        "zh-TW": "一中街／一中商圈"
+      },
+      "owner": "Root park/street4",
+      "file": "/Users/peter/devday_hackathon/assets/landmark-rework-20261110/references/yizhong-street.json",
+      "primaryPhoto": "https://www.taichung.gov.tw/media/935627/%E4%B8%80%E4%B8%AD%E5%95%86%E5%9C%88-2.jpg",
+      "firstRead": "An open pedestrian street gap framed by two dense rows of low shopfronts, with ordinary taller city buildings behind.",
+      "motifCount": 5
+    },
+    {
+      "id": "fengle-sculpture-park",
+      "name": {
+        "en": "Fengle Sculpture Park",
+        "zh-TW": "豐樂雕塑公園"
+      },
+      "owner": "Root park/street4",
+      "file": "/Users/peter/devday_hackathon/assets/landmark-rework-20261110/references/fengle-sculpture-park.json",
+      "primaryPhoto": "https://filmtaichung.org.tw/storage/photos/cmsystem/scenes/%E5%85%AC%E5%9C%92%E7%B6%A0%E5%9C%B0/%E8%B1%90%E6%A8%82%E5%85%AC%E5%9C%92/IMG_5874.jpg",
+      "firstRead": "Broad quiet lake with muted green water, edged by rounded pale stones.",
+      "motifCount": 5
+    },
+    {
+      "id": "wenxin-forest-park",
+      "name": {
+        "en": "Wenxin Forest Park / Fulfillment Amphitheatre",
+        "zh-TW": "文心森林公園／圓滿戶外劇場"
+      },
+      "owner": "Root park/street4",
+      "file": "/Users/peter/devday_hackathon/assets/landmark-rework-20261110/references/wenxin-forest-park.json",
+      "primaryPhoto": "https://fa.culture.taichung.gov.tw/df_ufiles/df_pics/df_image/en001.jpg",
+      "firstRead": "Low, broad white canopy made of layered curling shell/ribbon surfaces, with elongated dark slots between them.",
+      "motifCount": 5
+    },
+    {
+      "id": "wanhe-temple",
+      "name": {
+        "en": "Wanhe Temple",
+        "zh-TW": "萬和宮"
+      },
+      "owner": "Maps temple3",
+      "file": "/Users/peter/devday_hackathon/assets/landmark-rework-20261110/references/wanhe-temple.json",
+      "primaryPhoto": "https://www.tchac.taichung.gov.tw/uploads/tchac/information/large/s_%E8%90%AC%E5%92%8C%E5%AE%AE_%E8%AA%BF%E6%95%B4%E5%A4%A7%E5%B0%8F.jpg",
+      "firstRead": "Compact three-bay frontage with a taller central roof section and lower roof sections to both sides.",
+      "motifCount": 5
+    },
+    {
+      "id": "nantun-wenchang-temple",
+      "name": {
+        "en": "Nantun Wenchang Temple",
+        "zh-TW": "南屯文昌公廟"
+      },
+      "owner": "Maps temple3",
+      "file": "/Users/peter/devday_hackathon/assets/landmark-rework-20261110/references/nantun-wenchang-temple.json",
+      "primaryPhoto": "https://www.tchac.taichung.gov.tw/uploads/tchac/images/large/9b0d9634-d766-4c40-82e5-2ffe04de6560.jpg",
+      "firstRead": "Low, broad ochre/orange tiled roof with restrained upturned corners; less exuberant than Wanhe roof ornament.",
+      "motifCount": 5
+    },
+    {
+      "id": "taichung-confucius-temple",
+      "name": {
+        "en": "Taichung Confucius Temple — Dacheng Hall",
+        "zh-TW": "臺中孔廟—大成殿"
+      },
+      "owner": "Maps temple3",
+      "file": "/Users/peter/devday_hackathon/assets/landmark-rework-20261110/references/taichung-confucius-temple.json",
+      "primaryPhoto": "https://travel.taichung.gov.tw/image/12510/1024x768",
+      "firstRead": "Very broad, symmetrical double-eaved main-hall silhouette with gold/yellow glazed roof planes.",
+      "motifCount": 5
+    },
+    {
+      "id": "prefectural-hall",
+      "name": {
+        "en": "Taichung Prefectural Hall / Old Taichung City Hall",
+        "zh-TW": "臺中州廳"
+      },
+      "owner": "Interface civic3",
+      "file": "/Users/peter/devday_hackathon/assets/landmark-rework-20261110/references/prefectural-hall.json",
+      "primaryPhoto": "https://www.taichung.gov.tw/media/468752/%E5%8F%B0%E4%B8%AD%E5%B7%9E%E5%BB%B3.jpg",
+      "firstRead": "A street-corner central entrance mass with two long two-story wings extending away to left and right.",
+      "motifCount": 5
+    },
+    {
+      "id": "second-market",
+      "name": {
+        "en": "Taichung Second Market — Hexagonal Building",
+        "zh-TW": "臺中第二市場—六角樓"
+      },
+      "owner": "Interface civic3",
+      "file": "/Users/peter/devday_hackathon/assets/landmark-rework-20261110/references/second-market.json",
+      "primaryPhoto": "https://travel.taichung.gov.tw/content/images/attractions/25619/1024x768_image_cover636603456844051532.jpg",
+      "firstRead": "Compact raised hexagonal/radial core with several low market wings/aisles, rather than a single giant shop.",
+      "motifCount": 5
+    },
+    {
+      "id": "cultural-heritage-park",
+      "name": {
+        "en": "Cultural Heritage Park, Ministry of Culture — Former Taichung Brewery",
+        "zh-TW": "文化部文化資產園區—臺中舊酒廠"
+      },
+      "owner": "Interface civic3",
+      "file": "/Users/peter/devday_hackathon/assets/landmark-rework-20261110/references/cultural-heritage-park.json",
+      "primaryPhoto": "https://taichung.travel/content/images/attractions/3718/1024x768_Filedata635186402486052109.jpg",
+      "firstRead": "Several low connected industrial buildings of unequal heights, with triangular pitched gables and utilitarian flat connecting roofs.",
+      "motifCount": 5
+    }
+  ],
+  "ownerSplit": {
+    "Root": [
+      "botanical-garden",
+      "yizhong-street",
+      "fengle-sculpture-park",
+      "wenxin-forest-park"
+    ],
+    "Maps": [
+      "wanhe-temple",
+      "nantun-wenchang-temple",
+      "taichung-confucius-temple"
+    ],
+    "Interface": [
+      "prefectural-hall",
+      "second-market",
+      "cultural-heritage-park"
+    ]
+  },
+  "verification": "Each entry has at least one official/venue primary photo directly inspected in an owned Chrome reference tab. Indexed-only supplementaryphotos/PDFs are marked individually. Materials/colors are observed approximate daylight descriptions, not sampled or historically exact paint specifications.",
+  "boundaries": [
+    "No expanded history copy,new locations,portraits or mapcode.",
+    "No sharedPR/main/Claudecheckout/nativechanges,rebases,merges,patchreplacement or deployments.",
+    "No sourcephotos downloaded as shipped art; allreferencefiles contain links andoriginaldescriptive notes only."
+  ]
+}

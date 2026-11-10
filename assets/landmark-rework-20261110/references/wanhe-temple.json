@@ -1,0 +1,49 @@
+{
+  "id": "wanhe-temple",
+  "name": {
+    "en": "Wanhe Temple",
+    "zh-TW": "萬和宮"
+  },
+  "verifiedOn": "2026-11-10",
+  "owner": "Maps temple3",
+  "identity": "Nantun/Litoudian Mazu temple at51WanheRoadSection1; not a generic Buddhist pagoda.",
+  "officialPages": [
+    {
+      "url": "https://www.tchac.taichung.gov.tw/building?pid=3&uid=33",
+      "publisher": "Taichung City Cultural Heritage Department",
+      "evidence": "Official site identity and structural description:three-bay front, multiple halls, detailed carved columns."
+    }
+  ],
+  "officialPhotos": [
+    {
+      "url": "https://www.tchac.taichung.gov.tw/uploads/tchac/information/large/s_%E8%90%AC%E5%92%8C%E5%AE%AE_%E8%AA%BF%E6%95%B4%E5%A4%A7%E5%B0%8F.jpg",
+      "visualInspection": "Direct Cultural Heritage Department photo inspected in own Chrome tab. Center roof rises above side bays; pinkish terracotta tile slopes, dramatic upturned tips and dense blue/green/gold sculpted ridges. Three dark entrance bays, red woodwork/lanterns and gray stone base.",
+      "publisher": "Taichung government venue/heritage/tourism office"
+    }
+  ],
+  "distinguishingMotifs": [
+    "Compact three-bay frontage with a taller central roof section and lower roof sections to both sides.",
+    "Deeply curved swallowtail-style eaves and prominent dragon/figure ridge ornament silhouettes.",
+    "Warm muted terracotta roof tile fields contrast with blue/green/gold decorative ridge bands.",
+    "Red/gold doorway framing and round hanging lanterns under a dark shaded eave.",
+    "Gray carved stone columns, stone steps and low base anchor the colorful facade."
+  ],
+  "materialColors": [
+    "Dusty terracotta tiles",
+    "Dark red wood and warm gold accents",
+    "Jade/turquoise/blue ornament",
+    "Warm gray stone and charcoal door shadows"
+  ],
+  "pixelPriorities": [
+    "Preserve the stepped roof silhouette and three entry bays before reducing ornament.",
+    "Make dragons/roof figures small decisive pixel clusters, not all-over colored noise."
+  ],
+  "avoid": [
+    "Yellow Song-style double roof borrowed from Confucius Temple",
+    "Tall pagoda or castle tower",
+    "Replacing every stone column with bright red poles",
+    "Inventing ritual banners or copying temporary notices"
+  ],
+  "rights": "Reference links only; draw original pixel art. No photos copied into shipped assets.",
+  "scope": "No native,map,PR,main orClaudecheckout edits."
+}

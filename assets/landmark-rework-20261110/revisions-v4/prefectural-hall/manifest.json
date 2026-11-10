@@ -1,0 +1,38 @@
+{
+  "id": "prefectural-hall",
+  "status": "art-review; not installed",
+  "worldRectExclusive": null,
+  "nativeSize": [
+    192,
+    160
+  ],
+  "paletteColorsIncludingTransparent": 16,
+  "opaqueColorsUsed": 13,
+  "rawTileCount": 480,
+  "unique8x8Tiles": 238,
+  "unique8x8TilesWithFlips": 237,
+  "packedTileCountIncludingEmpty": 237,
+  "packedTileRoundTripVerified": true,
+  "sha256": "be9d9e573f949b6c068982ac87079c9eb38fa98e5760037392f52b2d8bf3edbd",
+  "references": [
+    "https://travel.taichung.gov.tw/en/attractions/intro/1367"
+  ],
+  "integration": "ART REVIEW ONLY. Supersedes earlier art for this landmark. Claude must allocate native tile/palette banks, set placement/collision and update frontend crop. No map/source/website changes included.",
+  "revision": 4,
+  "title": "Prefectural Hall",
+  "number": 16,
+  "priorNativeSize": [
+    160,
+    160
+  ],
+  "requiresPlacementUpdate": true,
+  "requiresCollisionUpdate": true,
+  "dimensionsMatchAuditedMap": false,
+  "projection": "Centered frontal game camera: no sideways depth offset; roofs taper evenly inward and recede upward around each volume centerline.",
+  "cameraReference": "references/theater-native-4x.png",
+  "notes": [
+    "Level corner pavilion and brick wing; no rotated vertical side face.",
+    "Both mansard crowns show top planes, equal end hips and broad front slopes, aligned to their own centerline.",
+    "Native sign/forecourt placement must be refreshed for the taller facade; do not punch an old sign hole in the building."
+  ]
+}

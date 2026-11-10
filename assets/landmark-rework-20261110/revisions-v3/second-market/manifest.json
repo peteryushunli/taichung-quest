@@ -1,0 +1,41 @@
+{
+  "id": "second-market",
+  "status": "art-review; not installed",
+  "worldRectExclusive": null,
+  "nativeSize": [
+    160,
+    144
+  ],
+  "paletteColorsIncludingTransparent": 16,
+  "opaqueColorsUsed": 14,
+  "rawTileCount": 360,
+  "unique8x8Tiles": 203,
+  "unique8x8TilesWithFlips": 200,
+  "packedTileCountIncludingEmpty": 200,
+  "packedTileRoundTripVerified": true,
+  "sha256": "a631dc0de2e91fe2d89c2a99b94e26cc36dec056e59301409bb546a82992d6b1",
+  "references": [
+    "https://travel.taichung.gov.tw/en/attractions/intro/1366"
+  ],
+  "integration": "ART REVIEW ONLY. Replaces v2 artwork for this landmark. Requires current-branch placement, collision, crop and tile-bank allocation. No native or website sources changed.",
+  "revision": 3,
+  "title": "Second Market",
+  "number": 17,
+  "priorNativeSize": [
+    112,
+    144
+  ],
+  "previousReviewSize": [
+    128,
+    128
+  ],
+  "requiresPlacementUpdate": true,
+  "requiresCollisionUpdate": true,
+  "dimensionsMatchAuditedMap": false,
+  "projection": "Parallel3/4 view: depth recedes to upper-right; all volumes share that direction.",
+  "notes": [
+    "Raised hall shows its actual roof deck and right wall.",
+    "Broad receding market roof has directional seams, thickness and a deep eave shadow.",
+    "Front and rear roof parts correctly occlude the raised hall. No diagonal ground arms."
+  ]
+}
