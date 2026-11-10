@@ -3,6 +3,12 @@ import './confirm.css';
 import './controls.css';
 import './immersive.css';
 import './minimap.css';
+import './title-screen.css';
+import titleStation from './assets/landmarks/old-station.png';
+import titleBulbasaur from './assets/pokemon/front/bulbasaur.png';
+import titleCharmander from './assets/pokemon/front/charmander.png';
+import titlePikachu from './assets/pokemon/front/pikachu.png';
+import titleSquirtle from './assets/pokemon/front/squirtle.png';
 import type { mGBAEmulator } from '@thenick775/mgba-wasm';
 import { createCityGuide } from './city-guide';
 import { initializeLocalization, languageControl, onLocaleChange, setLocale, t } from './i18n';
@@ -51,6 +57,8 @@ const icons = {
   map: '<path d="m3 5 6-2 6 2 6-2v16l-6 2-6-2-6 2zM9 3v16m6-14v16"/>',
 };
 const icon = (name: keyof typeof icons) => `<svg viewBox="0 0 24 24" aria-hidden="true">${icons[name]}</svg>`;
+// The loading screen is a title card: the old station with the four starters waiting on its plaza.
+const titleArt = { station: titleStation, starters: [titleBulbasaur, titleCharmander, titleSquirtle, titlePikachu] };
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
   <div id="landing"></div>
@@ -58,15 +66,25 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
     <div class="adventure-layout">
       <section class="game-column" aria-label="Playable game">
         <div class="console" id="console">
-          <div class="immersive-bar"><button id="exit-fullscreen-button" class="fullscreen-exit" data-i18n="Back to introduction">Back to introduction</button><span>POKÉMON × TAICHUNG</span><div class="immersive-actions"><button id="game-sound-button" disabled aria-label="Sound off" title="Sound off" aria-pressed="true">${icon('mute')}</button><button id="game-options-button" aria-haspopup="dialog" aria-controls="game-options" data-i18n="Game options">Game options</button></div></div>
+          <div class="immersive-bar"><button id="exit-fullscreen-button" class="fullscreen-exit"><span aria-hidden="true">←</span> <span data-i18n="Back to site">Back to site</span></button><span>POKÉMON × TAICHUNG</span><div class="immersive-actions"><button id="game-sound-button" disabled aria-label="Sound off" title="Sound off" aria-pressed="true">${icon('mute')}</button><button id="game-options-button" aria-haspopup="dialog" aria-controls="game-options" data-i18n="Game options">Game options</button></div></div>
           <dialog id="game-options" class="player-options" aria-labelledby="game-options-title"><div class="options-heading"><h2 id="game-options-title" data-i18n="Game options">Game options</h2><button data-close-options data-i18n="Close">Close</button></div>${languageControl('player-language')}<div id="options-toolbar-slot"></div><div id="options-save-slot"></div><p id="options-feedback" role="status"></p><p class="options-key-help" data-i18n="Arrow keys move. F interacts or confirms. D goes back. M opens the game menu.">Arrow keys move. F interacts or confirms. D goes back. M opens the game menu.</p></dialog>
           <div class="console-top"><span><i class="power-light"></i> TAICHUNG QUEST</span><span>TAICHUNG CITY · 臺中城區</span></div>
           <div class="screen-bezel">
             <div class="screen" id="screen">
               <canvas id="game-canvas" width="240" height="160" tabindex="0" aria-label="Taichung Quest game screen. Arrow keys move. F interacts or confirms. D goes back. M or Enter opens the menu."></canvas>
               <div class="start-screen" id="start-screen">
-                <div class="pixel-postcard" aria-hidden="true"><div class="pixel-cloud cloud-one"></div><div class="pixel-cloud cloud-two"></div><div class="pixel-sun"></div><div class="postcard-hill"></div><div class="pixel-path"></div><div class="pixel-tree tree-one"></div><div class="pixel-tree tree-two"></div><div class="pixel-tree tree-three"></div><div class="pixel-shop"><span></span></div><div class="pixel-person"></div></div>
-                <div class="start-content"><p class="screen-eyebrow" data-i18n="YOUR NEXT LITTLE ADVENTURE">YOUR NEXT LITTLE ADVENTURE</p><h2 data-i18n="Pokémon ×&#10;Taichung.">Pokémon ×<br>Taichung.</h2><button class="start-button" id="play-button">${icon('play')} <span>Start exploring</span></button><p id="play-feedback" class="play-feedback" role="status" aria-live="polite" hidden></p><p class="start-hint" data-i18n="Choose your Pokémon. Explore Taichung.">Choose your Pokémon. Explore Taichung.</p></div>
+                <div class="title-scene" aria-hidden="true">
+                  <i class="title-sun"></i><i class="title-cloud cloud-a"></i><i class="title-cloud cloud-b"></i><i class="title-cloud cloud-c"></i>
+                  <i class="title-skyline far"></i><i class="title-skyline near"></i>
+                  <img class="title-station" src="${titleArt.station}" alt="">
+                  <i class="title-plaza"></i>
+                  ${titleArt.starters.map((src, index) => `<img class="title-mon mon-${index}" src="${src}" alt="">`).join('')}
+                </div>
+                <div class="title-ui">
+                  <h2 class="title-logo" aria-label="Pokémon × Taichung"><span class="title-logo-top">POKÉMON ×</span><span class="title-logo-main">TAICHUNG</span><span class="title-logo-ribbon" lang="zh-Hant">臺中小冒險</span></h2>
+                  <button class="title-start" id="play-button"><i aria-hidden="true">▶</i> <span>Start exploring</span></button>
+                  <p id="play-feedback" class="title-text-box" role="status" aria-live="polite" hidden></p>
+                </div>
               </div>
               <div class="pause-screen" id="pause-screen" hidden><p class="screen-eyebrow" data-i18n="TAKE YOUR TIME">TAKE YOUR TIME</p><h2 data-i18n="A little breather.">A little breather.</h2><button class="start-button" id="resume-button">${icon('play')} <span data-i18n="Keep exploring">Keep exploring</span></button></div>
             </div>

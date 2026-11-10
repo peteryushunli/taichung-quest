@@ -3,6 +3,19 @@ import { MINIMAP_PREFERENCE, projectNavigation, readMinimapPreference } from './
 import type { MinimapGeometry } from './minimap-model';
 import type { NavigationState } from './navigation-bridge';
 import landmarkCatalog from './data/landmarks.json';
+import sightCatalog from './data/sights.json';
+import cityArt from './assets/minimap/city.png';
+import { isGym, placeWorld } from './landing-model';
+import type { LandingLandmark } from './landing-model';
+
+/** The minimap shows this many world tiles around the player (4:3), drawn from the real city render. */
+export const MINIMAP_VIEW = { width: 36, height: 27 } as const;
+
+/** Top-left of the view centred on a tile, kept inside the world so the frame never shows past the map edge. */
+export function minimapViewOrigin(tile: { x: number; y: number }, world: { width: number; height: number }, view = MINIMAP_VIEW) {
+  const clamp = (value: number, max: number) => Math.min(Math.max(value, 0), Math.max(max, 0));
+  return { x: clamp(tile.x + .5 - view.width / 2, world.width - view.width), y: clamp(tile.y + .5 - view.height / 2, world.height - view.height) };
+}
 
 /** Presentation only: no input emulation, save access or GBA memory writes. */
 export function createMinimap(options: {
@@ -22,8 +35,17 @@ export function createMinimap(options: {
   button.hidden = true;
   button.setAttribute('aria-haspopup', 'dialog');
   button.setAttribute('aria-controls', 'city-guide');
-  const regions = Object.entries(geometry.mapsByNativeKey).filter(([, map]) => map.kind === 'exterior');
-  button.innerHTML = `<svg viewBox="0 0 ${geometry.world.width} ${geometry.world.height}" style="aspect-ratio: ${geometry.world.width} / ${geometry.world.height}" aria-hidden="true"><rect width="${geometry.world.width}" height="${geometry.world.height}" class="minimap-ground"/>${regions.map(([key, map]) => `<rect data-district="${key}" x="${map.worldRect![0]}" y="${map.worldRect![1]}" width="${map.width}" height="${map.height}" rx="3"/>`).join('')}${Object.values(geometry.markersById).map((marker) => `<circle data-landmark="${marker.id}" cx="${marker.world[0] + .5}" cy="${marker.world[1] + .5}" r="2.6"/>`).join('')}<g class="minimap-player"><circle r="6"/><path d="M0,-6 L4,4 L0,2 L-4,4 Z"/></g><text x="7" y="13">N↑</text></svg><span class="minimap-context"></span><span class="minimap-indoor" aria-hidden="true" hidden></span>`;
+  const { width, height } = geometry.world;
+  // Gyms are green squares and the other landmarks gold dots, as on the website's city map.
+  const places = [...landmarkCatalog, ...sightCatalog] as LandingLandmark[];
+  const markers = places.map((place) => {
+    const [x, y] = placeWorld(place, geometry.markersById);
+    return isGym(place)
+      ? `<rect data-landmark="${place.id}" class="minimap-gym" x="${x - .9}" y="${y - .9}" width="2.8" height="2.8" rx=".4"/>`
+      : `<circle data-landmark="${place.id}" class="minimap-sight" cx="${x + .5}" cy="${y + .5}" r="1.4"/>`;
+  }).join('');
+  button.innerHTML = `<svg viewBox="0 0 ${MINIMAP_VIEW.width} ${MINIMAP_VIEW.height}" style="aspect-ratio: ${MINIMAP_VIEW.width} / ${MINIMAP_VIEW.height}" aria-hidden="true"><image href="${cityArt}" width="${width}" height="${height}" preserveAspectRatio="none"/>${markers}<g class="minimap-player"><circle r="1.7"/><path d="M0,-1.6 L1.1,1.1 L0,.55 L-1.1,1.1 Z"/></g></svg><span class="minimap-context"></span><span class="minimap-indoor" aria-hidden="true" hidden></span>`;
+  const drawing = button.querySelector('svg')!;
   options.screen.append(button);
   const player = button.querySelector<SVGGElement>('.minimap-player')!;
   const arrow = player.querySelector('path')!;
@@ -63,10 +85,11 @@ export function createMinimap(options: {
     indoorBadge.textContent = position.indoor ? t('Indoors') : '';
     button.title = label;
     button.setAttribute('aria-label', `${t('City Map')}. ${label}`);
+    const origin = minimapViewOrigin({ x: position.worldX, y: position.worldY }, geometry.world);
+    drawing.setAttribute('viewBox', `${origin.x} ${origin.y} ${MINIMAP_VIEW.width} ${MINIMAP_VIEW.height}`);
     player.setAttribute('transform', `translate(${position.worldX + .5} ${position.worldY + .5})`);
     arrow.setAttribute('transform', `rotate(${({ 1: 180, 2: 0, 3: 270, 4: 90 } as Record<number, number>)[position.facing]})`);
     player.classList.toggle('indoors', position.indoor);
-    button.querySelectorAll<SVGElement>('[data-district]').forEach((region) => region.classList.toggle('current', region.dataset.district === position.districtKey));
     button.querySelectorAll<SVGElement>('[data-landmark]').forEach((marker) => marker.classList.toggle('nearest', marker.dataset.landmark === position.landmarkId));
   }
   render();
