@@ -1,0 +1,159 @@
+{
+  "status": "review-only",
+  "base": "9c32da1",
+  "palette": {
+    "transparentIndex": 0,
+    "opaqueColors": [
+      "#283848",
+      "#587088",
+      "#f8f0d0",
+      "#f8c858",
+      "#c88838",
+      "#e87858",
+      "#a84850",
+      "#40a8a0",
+      "#90d8b0",
+      "#68a8d8",
+      "#406898",
+      "#609858",
+      "#e8d8a8",
+      "#8870b0",
+      "#d8a0b0"
+    ],
+    "maxBpp": 4,
+    "rgb555Aligned": true
+  },
+  "badges": [
+    {
+      "gymIndex": 0,
+      "completionBit": 0,
+      "landmarkId": "old-taichung-station",
+      "badgeId": "badge.old-taichung-station",
+      "proposedName": {
+        "en": "Departure Badge",
+        "zh-TW": "啟程徽章"
+      },
+      "collectionPng": "00-old-taichung-station-16.png",
+      "awardPng": "00-old-taichung-station-32.png",
+      "status": "artwork-for-user-review"
+    },
+    {
+      "gymIndex": 1,
+      "completionBit": 1,
+      "landmarkId": "taichung-park",
+      "badgeId": "badge.taichung-park",
+      "proposedName": {
+        "en": "Pavilion Badge",
+        "zh-TW": "湖亭徽章"
+      },
+      "collectionPng": "01-taichung-park-16.png",
+      "awardPng": "01-taichung-park-32.png",
+      "status": "artwork-for-user-review"
+    },
+    {
+      "gymIndex": 2,
+      "completionBit": 2,
+      "landmarkId": "miyahara",
+      "badgeId": "badge.miyahara",
+      "proposedName": {
+        "en": "Chill Badge",
+        "zh-TW": "沁涼徽章"
+      },
+      "collectionPng": "02-miyahara-16.png",
+      "awardPng": "02-miyahara-32.png",
+      "status": "artwork-for-user-review"
+    },
+    {
+      "gymIndex": 3,
+      "completionBit": 3,
+      "landmarkId": "natural-science-museum",
+      "badgeId": "badge.natural-science-museum",
+      "proposedName": {
+        "en": "Discovery Badge",
+        "zh-TW": "發現徽章"
+      },
+      "collectionPng": "03-natural-science-museum-16.png",
+      "awardPng": "03-natural-science-museum-32.png",
+      "status": "artwork-for-user-review"
+    },
+    {
+      "gymIndex": 4,
+      "completionBit": 4,
+      "landmarkId": "calligraphy-greenway",
+      "badgeId": "badge.calligraphy-greenway",
+      "proposedName": {
+        "en": "Brush Badge",
+        "zh-TW": "筆意徽章"
+      },
+      "collectionPng": "04-calligraphy-greenway-16.png",
+      "awardPng": "04-calligraphy-greenway-32.png",
+      "status": "artwork-for-user-review"
+    },
+    {
+      "gymIndex": 5,
+      "completionBit": 5,
+      "landmarkId": "shen-ji-new-village",
+      "badgeId": "badge.shen-ji-new-village",
+      "proposedName": {
+        "en": "Craft Badge",
+        "zh-TW": "巧作徽章"
+      },
+      "collectionPng": "05-shen-ji-new-village-16.png",
+      "awardPng": "05-shen-ji-new-village-32.png",
+      "status": "artwork-for-user-review"
+    },
+    {
+      "gymIndex": 6,
+      "completionBit": 6,
+      "landmarkId": "fine-arts-museum",
+      "badgeId": "badge.fine-arts-museum",
+      "proposedName": {
+        "en": "Palette Badge",
+        "zh-TW": "調色徽章"
+      },
+      "collectionPng": "06-fine-arts-museum-16.png",
+      "awardPng": "06-fine-arts-museum-32.png",
+      "status": "artwork-for-user-review"
+    },
+    {
+      "gymIndex": 7,
+      "completionBit": 7,
+      "landmarkId": "fengjia-night-market",
+      "badgeId": "badge.fengjia-night-market",
+      "proposedName": {
+        "en": "Feast Badge",
+        "zh-TW": "豐味徽章"
+      },
+      "collectionPng": "07-fengjia-night-market-16.png",
+      "awardPng": "07-fengjia-night-market-32.png",
+      "status": "artwork-for-user-review"
+    },
+    {
+      "gymIndex": 8,
+      "completionBit": 8,
+      "landmarkId": "maple-garden",
+      "badgeId": "badge.maple-garden",
+      "proposedName": {
+        "en": "Habitat Badge",
+        "zh-TW": "棲地徽章"
+      },
+      "collectionPng": "08-maple-garden-16.png",
+      "awardPng": "08-maple-garden-32.png",
+      "status": "artwork-for-user-review"
+    },
+    {
+      "gymIndex": 9,
+      "completionBit": 9,
+      "landmarkId": "taichung-theater",
+      "badgeId": "badge.taichung-theater",
+      "proposedName": {
+        "en": "Encore Badge",
+        "zh-TW": "謝幕徽章"
+      },
+      "collectionPng": "09-taichung-theater-16.png",
+      "awardPng": "09-taichung-theater-32.png",
+      "status": "artwork-for-user-review"
+    }
+  ],
+  "previewProgress": "illustrative only; does not read or write game memory or saves"
+}

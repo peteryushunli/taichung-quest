@@ -15,7 +15,6 @@ import { protectGameDisplay } from './game-display';
 import { NativeNavigationBridge, parseNavigationMetadata } from './navigation-bridge';
 import type { NavigationState } from './navigation-bridge';
 import { createMinimap } from './minimap';
-import { createWideView } from './wide-view';
 import { projectNavigation, secondaryAction } from './minimap-model';
 import minimapGeometry from './data/minimap-contract.json';
 import { createOnboarding } from './onboarding';
@@ -183,7 +182,6 @@ function renderNavigation() {
   el<HTMLButtonElement>('touch-city-map-button').disabled = restarting || !!onboarding?.blocksCityMap;
   const state: NavigationState = canPlayGame() ? navigationState : { phase: navigationState.phase === 'unavailable' ? 'unavailable' : 'hidden' };
   minimap.update(state);
-  wideView.update(state);
   const packet = state.phase === 'live' ? state.snapshot : undefined;
   const position = packet ? projectNavigation(packet, minimapGeometry) : undefined;
   const action = secondaryAction(packet, position);
@@ -430,8 +428,6 @@ async function startGame() {
     gameInput?.refresh();
     el('start-screen').hidden = true;
     canvas.classList.add('playing');
-    wideView.setCartridge(rom);
-    wideView.setRunning(true);
     document.querySelectorAll<HTMLButtonElement>('#pause-button, #sound-button, #game-sound-button, #save-button, #restart-button, #export-button, #import-button').forEach((button) => button.disabled = false);
     setStatus('OUT EXPLORING');
     message(freshCartridgeBoot && cartridgeBootIntent ? cartridgeBootIntent === 'import' ? 'Save imported. Choose Continue from the game’s title screen.' : 'Cartridge restarted. Continue your in-game save or begin a new adventure.' : !freshCartridgeBoot && emulator.getAutoSaveState() ? 'Welcome back. Your last saved spot is waiting for you.' : 'New adventures begin at the old station. Use City Map to discover Taichung’s landmarks.');
@@ -502,13 +498,6 @@ el('options-toolbar-slot').before(minimapSetting);
 const minimap = createMinimap({
   screen: el('screen'), toggle: el<HTMLSelectElement>('minimap-visibility'), hint: el('minimap-hint'), geometry: minimapGeometry,
   openGuide: () => { if (!onboarding?.blocksCityMap) cityGuide.open(el('live-minimap')); },
-});
-const viewSetting = document.createElement('label');
-viewSetting.className = 'minimap-setting view-setting';
-viewSetting.innerHTML = '<span id="view-label" data-i18n="View">View</span><select id="view-mode" aria-labelledby="view-label" aria-describedby="view-hint"><option value="classic" data-i18n="Classic">Classic</option><option value="a" data-i18n="A · Fill the space">A · Fill the space</option><option value="b" data-i18n="B · Step back">B · Step back</option><option value="c" data-i18n="C · Bird’s-eye">C · Bird’s-eye</option></select><small id="view-hint"></small>';
-el('options-toolbar-slot').before(viewSetting);
-const wideView = createWideView({
-  console: el('console'), screen: el('screen'), canvas, select: el<HTMLSelectElement>('view-mode'), hint: el('view-hint'), isActive: canPlayGame,
 });
 onboarding = createOnboarding({
   host: el('console'),
@@ -692,7 +681,6 @@ function refreshRuntimeLabels() {
   el('pause-button').innerHTML = `${icon(paused ? 'play' : 'pause')} <span>${t(paused ? 'Resume' : 'Pause')}</span>`;
   refreshSoundControls();
   document.title = t('Taichung Quest · A little adventure');
-  wideView.refresh();
   refreshNavigation();
 }
 onLocaleChange(refreshRuntimeLabels);
