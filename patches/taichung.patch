@@ -13443,24 +13443,24 @@ HcmV?d00001
 
 diff --git a/data/layouts/TaichungNantunNorth/map.bin b/data/layouts/TaichungNantunNorth/map.bin
 new file mode 100644
-index 0000000000000000000000000000000000000000..354aafabab2fd9f43f5e0cae58e8c838e92fab65
+index 0000000000000000000000000000000000000000..a6073d38e3a9d57d62a6be3645e3840b26ea2d15
 GIT binary patch
 literal 3600
-zcmb7H$#T;`5G_~Qz6oyd3oMrz<G_W2D!8x|6_${EK!9-4O*aY>);Pe81IG~ZZIJv$
-z)M`I>&t_ZImC?wWd3ybN(PW2S(QA4`yR=XDhWCdL=pj9#$244GwXc2SkK7-3<QgBZ
-z=BGPz<hLF2Q+h_v=>_q=<@VRH#mJ1y$kUGV9trX$y`(MLCg#I-(v32YM?5PbLk&Te
-z_lc*1eC$f5$j}hGE$7`CXRPVRSv6E_(fLCg!BFSML&HUCV+}M^+%$q%qj859wbz*-
-z=o*WNd7K;gU3aOcI*XAt>uP_6uF^HSPC)*h(OGg8Ueq453v{u~N}JEt8%LhTbc22s
-z@>w~<3%y>V%Mr5mW<u+9lWujK54#$S^BK|U8^POjr?tB?H8eNCj5$j_$MvE2n$Or}
-zuZwgR<Wij+&+9X+L7)RU&1c~TUdmKwc-AEO$ms8)2qOOdD#b?7a(-_jh~G6gG^2DT
-zt8@+cU^ic5HLzQEDIcB1$QBXvgP9sXlD>hiu6%U13UbUDyZh;!%Xx4{=Z7zS@)<dz
-zS;MoKGx~`lFVE+b?6-lDZFQrcD00Ze-hnHw_F2jq{bV(rbNV)Z+dpY7Rs;P+vyOY_
-z+GODJ#@GYLYh>ivhCijVwj)hRD&=Q)DzFih{>(jd;PyrzGxmKX$g+k<{@d{X=>NR)
-zqi>{@!hEatOp#&>ZsV)=IgCAvk>!kpIt$fc<i>v<eK9ue`10>S<*TS+Ipb@km4X^%
-z|0=gOVT`Y%Z!<fX<2IhrfL>N3)tUVh&ims}#tz5)E;f0$VCU43ua&J7i6D?eTz&_z
-z!8cW-R4IbYtSXn{Dt2CtxbthJKxg<|zAjTkawDyjG9sRo)sT~UdKR@hOFrdBi(9#J
-zZj>S@dvarlT+R*K>x8q7Pl%Gciz`J>GHC>Dd~#UfZ=o9Y+nq*G@;TgJzALMd)*$<5
-c`{d$ztOozrCb@x=uy!Q&Z`gImRYq0g9LDl|U;qFB
+zcmb7H$#N4h5G@yN-v(~*3oIAO1h`O81s9g0!k!NZ5KeQ`je>+VPT<CYV+i>+mcL+n
+z+RxqEY)^GrqZvtWo?b5_Z_^8UNv~*!_UP95_V^CnrF(Rr#w)D#tq=al{d7kz_;fap
+zZZD8u_s9?F5k00S#OqeuFUOW5GcF^~dd|Bf$WQ4RJ*O>VK5Qp_EB&;^SPdC!2(r9S
+zb}Gonu4al14YAsC-kEd8oMD_*L&X-I-*q00bq*dHE>jzGprPXC9>g5=J9g1}?FoX;
+zv54rWv4Q8hN_VQg6j`IL_2=mVU8G9{<R1l{C04PE)}wct&U8^}<Js=Uk*6tLrtg(_
+zR?gUkUeD6G1ljIpgRan3y4G_(=yNcQXLx6*2d~qO&Th`t(AWSo<}C4?=7-*EJY$u;
+zF4I|%Yk6|K$j>+jfez$6o`oBDDO2rXEM)P>=x-7a!vDiE#d^?kerr64=NcOtQQDJP
+zItP5Pny;xESgos+kM>ezi-`XIT#c_;-9S}WKH6IcIpvJi!*njiJUFBBV=qJE88M<!
+z!@ZO<>WLz+j^~r&w}FvucB7ssa?Hfufh(?dEa!}RvYyT*eS_cf4?0WLKt0i@<C-~g
+zHDm0NlR4b-Z`1#!e_chIkz~rZ{#0N+DD|0Z=E&_%-WTj}BFHj_TmEhO-}Glu`B69W
+zOkuW7cc#d(1vmJn8;9}i6j{zl$g@}tMh^bt<dd;k&zGMAm9L_P<&3YDW(snU_t&^n
+z8;tRJ@?~!O3*6ut4d`_>a-E?@@O#q_#tx?ZE;f0$V3*X8ua(Ud@gR_6Tz&_z!8cc<
+zmMMbFtQwc&Dt1|owDN1FKxgc^eqE)8#73SebwrHR)sT~UeipSlOFWfYi`%$*Y}7m`
+zYf5d5T#pS~>x8rQPmEH!OEX1JGPwt>e@a;KvsexL?an<Y@f@$O-__N~bCCCE>*Vr&
+Yss{gSli0vXSSu3mZ`@bMby`*9KZPoMQ~&?~
 
 literal 0
 HcmV?d00001
@@ -13477,52 +13477,52 @@ HcmV?d00001
 
 diff --git a/data/layouts/TaichungNantunWanhe/map.bin b/data/layouts/TaichungNantunWanhe/map.bin
 new file mode 100644
-index 0000000000000000000000000000000000000000..e37f565120eaf85a7d0ac6395d2b2d982464d333
+index 0000000000000000000000000000000000000000..c4980f3fbcf4056de9a4c101b9b496e3c3fdb3ab
 GIT binary patch
 literal 12240
-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
-WA0$)Bq|a%;9TGk#({@PF=kY&y7Scxm
+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
+SNuSkzCnS7Urk#*t%;SHj$I?Ln
 
 literal 0
 HcmV?d00001
@@ -13586,30 +13586,30 @@ HcmV?d00001
 
 diff --git a/data/layouts/TaichungOldCityNorth/map.bin b/data/layouts/TaichungOldCityNorth/map.bin
 new file mode 100644
-index 0000000000000000000000000000000000000000..afa8d2f160a2dca4d567a3c71549ba8edad13a57
+index 0000000000000000000000000000000000000000..6ccba4347ceb49f52c072e96142a5e38c088e7c7
 GIT binary patch
 literal 4664
-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
+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
 
 literal 0
 HcmV?d00001
@@ -15300,10 +15300,10 @@ index 0000000..b611ea7
 +	.byte 0
 diff --git a/data/maps/TaichungNantunNorth/map.json b/data/maps/TaichungNantunNorth/map.json
 new file mode 100644
-index 0000000..a92edfd
+index 0000000..05521d5
 --- /dev/null
 +++ b/data/maps/TaichungNantunNorth/map.json
-@@ -0,0 +1,62 @@
+@@ -0,0 +1,46 @@
 +{
 +  "id": "MAP_TAICHUNG_NANTUN_NORTH",
 +  "name": "TaichungNantunNorth",
@@ -15347,22 +15347,6 @@ index 0000000..a92edfd
 +      "elevation": 0,
 +      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
 +      "script": "TaichungCity_Sign_WenxinForestPark"
-+    },
-+    {
-+      "type": "sign",
-+      "x": 19,
-+      "y": 23,
-+      "elevation": 0,
-+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-+      "script": "TaichungCity_Sign_GongyiRd"
-+    },
-+    {
-+      "type": "sign",
-+      "x": 17,
-+      "y": 25,
-+      "elevation": 0,
-+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-+      "script": "TaichungCity_Sign_LimingRd"
 +    }
 +  ]
 +}
@@ -15378,10 +15362,10 @@ index 0000000..9e2b53e
 +	.byte 0
 diff --git a/data/maps/TaichungNantunWanhe/map.json b/data/maps/TaichungNantunWanhe/map.json
 new file mode 100644
-index 0000000..3c67104
+index 0000000..5c2693d
 --- /dev/null
 +++ b/data/maps/TaichungNantunWanhe/map.json
-@@ -0,0 +1,101 @@
+@@ -0,0 +1,93 @@
 +{
 +  "id": "MAP_TAICHUNG_NANTUN_WANHE",
 +  "name": "TaichungNantunWanhe",
@@ -15464,14 +15448,6 @@ index 0000000..3c67104
 +      "elevation": 0,
 +      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
 +      "script": "TaichungCity_Sign_FengleSculpturePark"
-+    },
-+    {
-+      "type": "sign",
-+      "x": 62,
-+      "y": 19,
-+      "elevation": 0,
-+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-+      "script": "TaichungCity_Sign_HuiwenSSt"
 +    },
 +    {
 +      "type": "sign",
@@ -15658,10 +15634,10 @@ index 0000000..5ccb90d
 +	end
 diff --git a/data/maps/TaichungOldCityNorth/map.json b/data/maps/TaichungOldCityNorth/map.json
 new file mode 100644
-index 0000000..73b2b4c
+index 0000000..0373f86
 --- /dev/null
 +++ b/data/maps/TaichungOldCityNorth/map.json
-@@ -0,0 +1,65 @@
+@@ -0,0 +1,57 @@
 +{
 +  "id": "MAP_TAICHUNG_OLD_CITY_NORTH",
 +  "name": "TaichungOldCityNorth",
@@ -15716,14 +15692,6 @@ index 0000000..73b2b4c
 +      "elevation": 0,
 +      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
 +      "script": "TaichungCity_Sign_SecondMarket"
-+    },
-+    {
-+      "type": "sign",
-+      "x": 14,
-+      "y": 10,
-+      "elevation": 0,
-+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-+      "script": "TaichungCity_Sign_Hwy74"
 +    }
 +  ]
 +}
@@ -17102,10 +17070,10 @@ index 0000000..bc56d9a
 +	taichung_landmark_gym Greenway, TAICHUNG_GYM_GREENWAY, TRAINER_TAICHUNG_GREENWAY_XINGAN
 diff --git a/data/scripts/taichung_gyms.inc b/data/scripts/taichung_gyms.inc
 new file mode 100644
-index 0000000..4cee618
+index 0000000..a90bc18
 --- /dev/null
 +++ b/data/scripts/taichung_gyms.inc
-@@ -0,0 +1,81 @@
+@@ -0,0 +1,83 @@
 +@ Optional reusable adapter. The map owner may point the Station host here.
 +@ Other gyms need their own approved trainer/adapter; listed names do not grant badges.
 +TaichungGym_EventScript_StationChallenge::
@@ -17115,10 +17083,12 @@ index 0000000..4cee618
 +	setvar VAR_0x8004, TAICHUNG_GYM_OLD_STATION
 +	callnative TaichungGym_ScriptIsComplete
 +	goto_if_eq VAR_RESULT, TRUE, TaichungGym_StationAlreadyComplete
++	call TaichungHistory_Tell
 +	setvar VAR_0x8005, TAICHUNG_GYM_MESSAGE_OFFER
 +	callnative TaichungGym_ScriptGetStationMessage
-+	msgbox gStringVar4
-+	call TaichungHistory_Menu
++	message gStringVar4
++	waitmessage
++	call TaichungHistory_ChallengeMenu
 +	goto_if_ne VAR_RESULT, 0, TaichungGym_StationDeclined
 +	setvar VAR_0x8004, TAICHUNG_GYM_OLD_STATION
 +	setvar VAR_0x8005, TRAINER_TAICHUNG_STATION_JUN
@@ -17149,10 +17119,10 @@ index 0000000..4cee618
 +	goto TaichungGym_StationMessage
 +
 +TaichungGym_StationAlreadyComplete::
++	call TaichungHistory_Tell
 +	setvar VAR_0x8005, TAICHUNG_GYM_MESSAGE_ALREADY_COMPLETE
 +	callnative TaichungGym_ScriptGetStationMessage
 +	msgbox gStringVar4
-+	call TaichungHistory_Menu
 +	release
 +	end
 +
@@ -17189,10 +17159,10 @@ index 0000000..4cee618
 +	return
 diff --git a/data/scripts/taichung_landmark_gym.inc b/data/scripts/taichung_landmark_gym.inc
 new file mode 100644
-index 0000000..3427a7d
+index 0000000..03f7509
 --- /dev/null
 +++ b/data/scripts/taichung_landmark_gym.inc
-@@ -0,0 +1,91 @@
+@@ -0,0 +1,96 @@
 +@ Shared shipped Miyahara flow: voluntary offer, native preparation, actual
 +@ matching win + saved-bit guard, one-shot loss notice, and no rematches.
 +	.macro taichung_landmark_gym name, gym, trainer
@@ -17215,7 +17185,12 @@ index 0000000..3427a7d
 +	setvar VAR_0x8005, TAICHUNG_GYM_MESSAGE_GREETING
 +	callnative TaichungGym_ScriptGet\name\()Message
 +	msgbox gStringVar4
-+	call TaichungHistory_Menu
++	call TaichungHistory_Tell
++	setvar VAR_0x8005, TAICHUNG_GYM_MESSAGE_OFFER
++	callnative TaichungGym_ScriptGet\name\()Message
++	message gStringVar4
++	waitmessage
++	call TaichungHistory_ChallengeMenu
 +	goto_if_ne VAR_RESULT, 0, TaichungGym_\name\()Declined
 +	setvar VAR_0x8004, \gym
 +	setvar VAR_0x8005, \trainer
@@ -17256,10 +17231,10 @@ index 0000000..3427a7d
 +
 +	.global TaichungGym_\name\()AlreadyComplete
 +TaichungGym_\name\()AlreadyComplete:
++	call TaichungHistory_Tell
 +	setvar VAR_0x8005, TAICHUNG_GYM_MESSAGE_ALREADY_COMPLETE
 +	callnative TaichungGym_ScriptGet\name\()Message
 +	msgbox gStringVar4
-+	call TaichungHistory_Menu
 +	release
 +	end
 +
@@ -17286,47 +17261,31 @@ index 0000000..3427a7d
 +	.endm
 diff --git a/data/scripts/taichung_landmark_history.inc b/data/scripts/taichung_landmark_history.inc
 new file mode 100644
-index 0000000..a988789
+index 0000000..e670bb0
 --- /dev/null
 +++ b/data/scripts/taichung_landmark_history.inc
-@@ -0,0 +1,97 @@
+@@ -0,0 +1,81 @@
 +@ Called with VAR_0x8004 = landmark gym ID and the leader interaction locked.
-+@ Return0 selects Challenge. Return2 or B leaves. Reading has no award writes.
-+TaichungHistory_Menu::
++@ The leader tells the landmark's history as the lead-in to the gym's
++@ challenge question, and still tells it after a win. No award writes.
++TaichungHistory_Tell::
 +	callnative TaichungHistory_ScriptHasFacts
-+	goto_if_eq VAR_RESULT, FALSE, TaichungHistory_NoFacts
-+	callnative TaichungGym_ScriptIsComplete
-+	goto_if_eq VAR_RESULT, TRUE, TaichungHistory_CompletedMenu
++	goto_if_eq VAR_RESULT, FALSE, TaichungHistory_TellDone
++	callnative TaichungHistory_ScriptBufferTour
++	msgbox gStringVar4
++TaichungHistory_TellDone::
++	return
++
++@ Shown under the gym's challenge question. Return0 selects Challenge;
++@ Return1 (Leave) or B leaves.
++TaichungHistory_ChallengeMenu::
 +	multichoice 0, 0, MULTICHOICE_TAICHUNG_HISTORY, FALSE
-+	goto_if_eq VAR_RESULT, 1, TaichungHistory_Read
 +	return
 +
-+TaichungHistory_CompletedMenu::
-+	multichoice 0, 0, MULTICHOICE_TAICHUNG_HISTORY_COMPLETE, FALSE
-+	goto_if_eq VAR_RESULT, 0, TaichungHistory_Read
-+	setvar VAR_RESULT, 2
-+	return
-+
-+TaichungHistory_Read::
-+	callnative TaichungHistory_ScriptBufferTour
-+	msgbox gStringVar4
-+	goto TaichungHistory_Menu
-+
-+TaichungHistory_NoFacts::
-+	setvar VAR_RESULT, 2
-+	return
-+
-+@ Existing non-gym temples have About/Leave only. Never query a gym bit or
-+@ prepare/cancel a battle for these informational visits.
++@ Existing non-gym temples tell their history after the sign line, with no
++@ menu. Never query a gym bit or prepare/cancel a battle for these visits.
 +TaichungHistory_VisitMenu::
-+	multichoice 0, 0, MULTICHOICE_TAICHUNG_HISTORY_COMPLETE, FALSE
-+	goto_if_ne VAR_RESULT, 0, TaichungHistory_VisitDone
-+	callnative TaichungHistory_ScriptBufferTour
-+	msgbox gStringVar4
-+	goto TaichungHistory_VisitMenu
-+
-+TaichungHistory_VisitDone::
-+	return
++	goto TaichungHistory_Tell
 +
 +@ Optional staff: explicit interaction only, no battle/progress/service writes.
 +TaichungHistory_StaffMiyahara::
@@ -17396,10 +17355,10 @@ index 0000000..3a7ed69
 +	taichung_landmark_gym MapleGarden, TAICHUNG_GYM_MAPLE_GARDEN, TRAINER_TAICHUNG_MAPLE_GARDEN_MUQING
 diff --git a/data/scripts/taichung_miyahara_gym.inc b/data/scripts/taichung_miyahara_gym.inc
 new file mode 100644
-index 0000000..24fbdf4
+index 0000000..cd3a2c2
 --- /dev/null
 +++ b/data/scripts/taichung_miyahara_gym.inc
-@@ -0,0 +1,77 @@
+@@ -0,0 +1,82 @@
 +@ Miyahara-only voluntary challenge. Never write progress or trainer-fought flags.
 +TaichungGym_EventScript_MiyaharaChallenge::
 +	lock
@@ -17418,7 +17377,12 @@ index 0000000..24fbdf4
 +	setvar VAR_0x8005, TAICHUNG_GYM_MESSAGE_GREETING
 +	callnative TaichungGym_ScriptGetMiyaharaMessage
 +	msgbox gStringVar4
-+	call TaichungHistory_Menu
++	call TaichungHistory_Tell
++	setvar VAR_0x8005, TAICHUNG_GYM_MESSAGE_OFFER
++	callnative TaichungGym_ScriptGetMiyaharaMessage
++	message gStringVar4
++	waitmessage
++	call TaichungHistory_ChallengeMenu
 +	goto_if_ne VAR_RESULT, 0, TaichungGym_MiyaharaDeclined
 +	setvar VAR_0x8004, TAICHUNG_GYM_MIYAHARA
 +	setvar VAR_0x8005, TRAINER_TAICHUNG_MIYAHARA_PEIQI
@@ -17454,10 +17418,10 @@ index 0000000..24fbdf4
 +	goto TaichungGym_MiyaharaMessage
 +
 +TaichungGym_MiyaharaAlreadyComplete::
++	call TaichungHistory_Tell
 +	setvar VAR_0x8005, TAICHUNG_GYM_MESSAGE_ALREADY_COMPLETE
 +	callnative TaichungGym_ScriptGetMiyaharaMessage
 +	msgbox gStringVar4
-+	call TaichungHistory_Menu
 +	release
 +	end
 +
@@ -17479,10 +17443,10 @@ index 0000000..24fbdf4
 +	end
 diff --git a/data/scripts/taichung_park_gym.inc b/data/scripts/taichung_park_gym.inc
 new file mode 100644
-index 0000000..4f3a1ed
+index 0000000..3562aca
 --- /dev/null
 +++ b/data/scripts/taichung_park_gym.inc
-@@ -0,0 +1,77 @@
+@@ -0,0 +1,82 @@
 +@ Park-only voluntary challenge. Never write progress or trainer-fought flags.
 +TaichungGym_EventScript_ParkChallenge::
 +	lock
@@ -17501,7 +17465,12 @@ index 0000000..4f3a1ed
 +	setvar VAR_0x8005, TAICHUNG_GYM_MESSAGE_GREETING
 +	callnative TaichungGym_ScriptGetParkMessage
 +	msgbox gStringVar4
-+	call TaichungHistory_Menu
++	call TaichungHistory_Tell
++	setvar VAR_0x8005, TAICHUNG_GYM_MESSAGE_OFFER
++	callnative TaichungGym_ScriptGetParkMessage
++	message gStringVar4
++	waitmessage
++	call TaichungHistory_ChallengeMenu
 +	goto_if_ne VAR_RESULT, 0, TaichungGym_ParkDeclined
 +	setvar VAR_0x8004, TAICHUNG_GYM_PARK
 +	setvar VAR_0x8005, TRAINER_TAICHUNG_PARK_LIAN
@@ -17537,10 +17506,10 @@ index 0000000..4f3a1ed
 +	goto TaichungGym_ParkMessage
 +
 +TaichungGym_ParkAlreadyComplete::
++	call TaichungHistory_Tell
 +	setvar VAR_0x8005, TAICHUNG_GYM_MESSAGE_ALREADY_COMPLETE
 +	callnative TaichungGym_ScriptGetParkMessage
 +	msgbox gStringVar4
-+	call TaichungHistory_Menu
 +	release
 +	end
 +
@@ -46936,7 +46905,7 @@ index 0000000..faedbfb
 +}
 diff --git a/data/taichung/landmark-history/README.md b/data/taichung/landmark-history/README.md
 new file mode 100644
-index 0000000..5eb376c
+index 0000000..fe99f01
 --- /dev/null
 +++ b/data/taichung/landmark-history/README.md
 @@ -0,0 +1,15 @@
@@ -46948,7 +46917,7 @@ index 0000000..5eb376c
 +
 +The renderer validates all displayed sign/fact/NPC source IDs, shared action labels and fallback strings, exact payload hashes, page structure, all three native Latin width tables and CJK spacing. Maximum actual line is198px against198px safe width; maximum conservative encoded message is230bytes within the1000-byte bound. It reports98 missing glyphs against the released611. Main alone appends the final combined glyph union with pinned Fusion; no charmap/font/language file was edited here.
 +
-+Ten existing gym leaders keep direct Challenge plus optional About/Leave. Reading returns to the menu; B leaves normally. Completed gyms retain About/Leave without Challenge. Existing Wenchang/Wanhe temples offer informational About/Leave only, outside the ten-bit gym mask. Inherited greetings, AlreadyComplete and after-battle tails were retained; Main resolves overlap with its separately advanced gameplay/badge scripts.
++Ten gym leaders tell their landmark history as the lead-in to the challenge: greeting (where the gym has one), the history pages, then the gym's own challenge question with a Challenge/Leave menu; B leaves. Completed gyms tell the history, then their badge-recorded line, with no menu. Existing Wenchang/Wanhe temples tell their sign line and history with no menu, outside the ten-bit gym mask. The handoff records' `landmark.action.about` label and their About-menu flow notes are kept as frozen source data but no longer rendered (2026-11-10, user request). Inherited greetings, AlreadyComplete and after-battle tails were retained; Main resolves overlap with its separately advanced gameplay/badge scripts.
 +
 +All ten helper messages use the exact latest `npcFacts`. Existing Aming/Ayan/Qiaoqiao/Mei/Boxun C handlers call a read-only fixed-ID staff getter and retain their normal lock/face/wait/release lifecycle. Quest-log replay skips their message and waits safely. New Main-owned actor labels are exactly `TaichungHistory_StaffMiyahara`, `StaffPark`, `StaffShenJi`, `StaffFineArts`, and `StaffMapleGarden` under the same prefix; each locks, faces, guards replay, buffers the selected staff text, displays it and releases. Their map placements belong to separate aade361 and are not changed here. Helpers remain available before and after victory; none starts a battle, awards progress, heals or writes saved settings.
 +
@@ -211818,7 +211787,7 @@ index 0000000..c1b9121
 +                      "preview": result["preview"], "deterministic": result["proof"].get("deterministicRebuildPass")}, indent=2))
 diff --git a/data/taichung/minimap-contract.json b/data/taichung/minimap-contract.json
 new file mode 100644
-index 0000000..e71f362
+index 0000000..5699509
 --- /dev/null
 +++ b/data/taichung/minimap-contract.json
 @@ -0,0 +1,1772 @@
@@ -213544,9 +213513,9 @@ index 0000000..e71f362
 +    "data/maps/TaichungOldCity/map.json": "a37b37976c8d70e765d0afca9aac3aaf57d499beee699fc0f67dfd7869db0abf",
 +    "data/maps/TaichungGreenway/map.json": "1fd40ffb3e94f9c8fdd1c8d4620406d5287de1a2d1d1edcdabdfc09b37cb28c4",
 +    "data/maps/TaichungXitun/map.json": "f861cf0f3b038f445362ff2b8c305231a6471dffe4a7a51dadef89eeb16d68ca",
-+    "data/maps/TaichungNantunNorth/map.json": "256509025a86e6de17e961403bd6692175744ac39b235188acc7977540fe8957",
-+    "data/maps/TaichungNantunWanhe/map.json": "6bb5052410d16bbfbc7d76aa085a9a7919c8b748423cf0b4fef2c797c5b19c01",
-+    "data/maps/TaichungOldCityNorth/map.json": "b052d91271f35a0eeaefcfc29dbcf699a1499d714dce7b226346fd4125d7eb5b",
++    "data/maps/TaichungNantunNorth/map.json": "a0276d43d027aaf094e55d02ebaac45060ae81d8dcbe270d5b2ccaf9b3381168",
++    "data/maps/TaichungNantunWanhe/map.json": "16cf05f453ccd9513526555b7bcdbdf1bb9aee5c9be9a94b5fc5701092a19fdf",
++    "data/maps/TaichungOldCityNorth/map.json": "1c5417db1dff8453b9497b0fc8f18dddcae77b5b5f04074d1f5798152f02206b",
 +    "data/maps/TaichungOldStation_Gym/map.json": "099ea6857be7c566a73a06264cbdf9a2f1bfc67ad98eb71ed253ec7095c19673",
 +    "data/maps/TaichungPark_Gym/map.json": "5d6a7bba8fc8e2a3f3ca4017bfcb47fbc458e89ce37a73268ff0ea6e3cbb6662",
 +    "data/maps/TaichungMiyahara_Gym/map.json": "b6cc165d8422228ef5d10cbf5751304a0189687bf00718bfe3f3fcdd76055167",
@@ -425671,17 +425640,16 @@ index 9d8c514..e3a8bf5 100644
  #define OBJ_EVENT_ID_CAMERA LOCALID_CAMERA
  #define OBJ_EVENT_ID_PLAYER LOCALID_PLAYER
 diff --git a/include/constants/menu.h b/include/constants/menu.h
-index 7c36f36..7fa4fe0 100644
+index 7c36f36..5bd2efb 100644
 --- a/include/constants/menu.h
 +++ b/include/constants/menu.h
-@@ -70,6 +70,11 @@
+@@ -70,6 +70,10 @@
  #define MULTICHOICE_JOIN_OR_LEAD                               63
  #define MULTICHOICE_TRAINER_TOWER_MODE                         64
  
 +#define MULTICHOICE_TAICHUNG_STARTERS                          65
 +#define MULTICHOICE_TAICHUNG_LANGUAGE                          66
-+#define MULTICHOICE_TAICHUNG_HISTORY                           67
-+#define MULTICHOICE_TAICHUNG_HISTORY_COMPLETE                  68
++#define MULTICHOICE_TAICHUNG_HISTORY                           67 // Challenge/Leave under a gym's question
 +
  #define MULTICHOICE_NONE                                      255
  
@@ -426057,10 +426025,10 @@ index 0000000..31296d0
 +#endif
 diff --git a/include/taichung_landmark_history.h b/include/taichung_landmark_history.h
 new file mode 100644
-index 0000000..28a596f
+index 0000000..1a2e485
 --- /dev/null
 +++ b/include/taichung_landmark_history.h
-@@ -0,0 +1,32 @@
+@@ -0,0 +1,30 @@
 +#ifndef GUARD_TAICHUNG_LANDMARK_HISTORY_H
 +#define GUARD_TAICHUNG_LANDMARK_HISTORY_H
 +
@@ -426079,8 +426047,6 @@ index 0000000..28a596f
 +
 +extern const u8 gTaichungHistoryChallengeEn[];
 +extern const u8 gTaichungHistoryChallengeZh[];
-+extern const u8 gTaichungHistoryAboutEn[];
-+extern const u8 gTaichungHistoryAboutZh[];
 +extern const u8 gTaichungHistoryLeaveEn[];
 +extern const u8 gTaichungHistoryLeaveZh[];
 +
@@ -430307,6 +430273,22 @@ index ef086dd..5d89dc6 100644
  void PlayerRun(u8 direction)
  {
      PlayerSetAnimId(GetPlayerRunMovementAction(direction), 2);
+diff --git a/src/field_specials.c b/src/field_specials.c
+index 08b7ced..a16a9ce 100644
+--- a/src/field_specials.c
++++ b/src/field_specials.c
+@@ -1561,6 +1561,11 @@ u8 ContextNpcGetTextColor(void)
+     else
+     {
+         // An object is selected and no color has been specified.
++        // Taichung's own characters fall outside the sprite table and speak in
++        // the neutral color; its stock-sprite staff and hosts match them rather
++        // than taking FireRed's gendered red or blue.
++        if (gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_TAICHUNG_OLD_CITY))
++            return NPC_TEXT_COLOR_NEUTRAL;
+         // Use the text color normally associated with this object's sprite.
+         gfxId = gObjectEvents[gSelectedObjectEvent].graphicsId;
+         if (gfxId >= OBJ_EVENT_GFX_VAR_0)
 diff --git a/src/fieldmap.c b/src/fieldmap.c
 index 4156777..0cd8b49 100644
 --- a/src/fieldmap.c
@@ -430974,7 +430956,7 @@ index 97b695e..61f00d0 100644
  }
  
 diff --git a/src/script_menu.c b/src/script_menu.c
-index 41eebd8..250c62b 100644
+index 41eebd8..77c6629 100644
 --- a/src/script_menu.c
 +++ b/src/script_menu.c
 @@ -1,4 +1,6 @@
@@ -430984,7 +430966,7 @@ index 41eebd8..250c62b 100644
  #include "gflib.h"
  #include "menu.h"
  #include "task.h"
-@@ -502,7 +504,51 @@ static const struct MenuAction sMultichoiceList_Exit[] = {
+@@ -502,7 +504,44 @@ static const struct MenuAction sMultichoiceList_Exit[] = {
      { gOtherText_Exit }
  };
  
@@ -431016,27 +430998,20 @@ index 41eebd8..250c62b 100644
 +};
 +
 +static const struct MenuAction sMultichoiceList_TaichungHistory[] = {
-+    { gTaichungHistoryChallengeEn }, { gTaichungHistoryAboutEn }, { gTaichungHistoryLeaveEn }
++    { gTaichungHistoryChallengeEn }, { gTaichungHistoryLeaveEn }
 +};
 +static const struct MenuAction sMultichoiceList_TaichungHistoryZh[] = {
-+    { gTaichungHistoryChallengeZh }, { gTaichungHistoryAboutZh }, { gTaichungHistoryLeaveZh }
-+};
-+static const struct MenuAction sMultichoiceList_TaichungHistoryComplete[] = {
-+    { gTaichungHistoryAboutEn }, { gTaichungHistoryLeaveEn }
-+};
-+static const struct MenuAction sMultichoiceList_TaichungHistoryCompleteZh[] = {
-+    { gTaichungHistoryAboutZh }, { gTaichungHistoryLeaveZh }
++    { gTaichungHistoryChallengeZh }, { gTaichungHistoryLeaveZh }
 +};
 +
  static const struct MultichoiceListStruct sMultichoiceLists[] = {
 +    [MULTICHOICE_TAICHUNG_HISTORY] = MULTICHOICE(sMultichoiceList_TaichungHistory),
-+    [MULTICHOICE_TAICHUNG_HISTORY_COMPLETE] = MULTICHOICE(sMultichoiceList_TaichungHistoryComplete),
 +    [MULTICHOICE_TAICHUNG_STARTERS] = MULTICHOICE(sMultichoiceList_TaichungStarters),
 +    [MULTICHOICE_TAICHUNG_LANGUAGE] = MULTICHOICE(sMultichoiceList_TaichungLanguage),
      [MULTICHOICE_YES_NO]                                     = MULTICHOICE(sMultichoiceList_YesNo),
      [MULTICHOICE_EEVEELUTIONS]                               = MULTICHOICE(sMultichoiceList_Eeveelutions),
      [MULTICHOICE_TRAINER_CARD_ICON_TINT]                     = MULTICHOICE(sMultichoiceList_TrainerCardIconTint),
-@@ -726,6 +772,12 @@ static void DrawVerticalMultichoiceMenu(u8 left, u8 top, u8 mcId, u8 ignoreBpres
+@@ -726,6 +765,10 @@ static void DrawVerticalMultichoiceMenu(u8 left, u8 top, u8 mcId, u8 ignoreBpres
          ignoreBpress &= 1;
          count = sMultichoiceLists[mcId].count;
          list = sMultichoiceLists[mcId].list;
@@ -431044,8 +431019,6 @@ index 41eebd8..250c62b 100644
 +            list = sMultichoiceList_TaichungStartersZh;
 +        if (mcId == MULTICHOICE_TAICHUNG_HISTORY && TaichungIsChinese())
 +            list = sMultichoiceList_TaichungHistoryZh;
-+        if (mcId == MULTICHOICE_TAICHUNG_HISTORY_COMPLETE && TaichungIsChinese())
-+            list = sMultichoiceList_TaichungHistoryCompleteZh;
          strWidth = 0;
          for (i = 0; i < count; i++)
          {
@@ -431788,10 +431761,10 @@ index 0000000..de422b2
 +}
 diff --git a/src/taichung_city_pass.c b/src/taichung_city_pass.c
 new file mode 100644
-index 0000000..099f35a
+index 0000000..13027ac
 --- /dev/null
 +++ b/src/taichung_city_pass.c
-@@ -0,0 +1,307 @@
+@@ -0,0 +1,309 @@
 +#include "global.h"
 +#include "gflib.h"
 +#include "main.h"
@@ -431904,7 +431877,7 @@ index 0000000..099f35a
 +    for (gym = 0; gym < TAICHUNG_GYM_COUNT; gym++)
 +    {
 +        x = 8 + (gym % 5) * 46;
-+        y = 29 + (gym / 5) * 43;
++        y = 27 + (gym / 5) * 43;
 +        DrawFrame(x, y, 40, 37, gym == sSelected ? 6 : 7, 1);
 +        ConvertIntToDecimalStringN(number, gym + 1, STR_CONV_MODE_LEFT_ALIGN, 2);
 +        Print(x + 17, y + 22, sTextColors, number);
@@ -431913,11 +431886,13 @@ index 0000000..099f35a
 +        if (sBadgeSprites[gym] == MAX_SPRITES)
 +            Print(x + 18, y + 4, sMutedColors, sMissingIcon);
 +    }
-+    DrawFrame(5, 114, 230, 43, 7, 1);
-+    Print(12, 115, sTextColors, TaichungBadgeGetName(sSelected));
-+    Print(176, 115, sMutedColors, complete ? TaichungText(sEarnedEn, sEarnedZh) : TaichungText(sLockedEn, sLockedZh));
-+    Print(12, 129, sMutedColors, TaichungBadgeGetLandmark(sSelected));
-+    Print(12, 143, sTextColors, TaichungText(sFooterEn, sFooterZh));
++    // Each small-font line paints a 13px (Latin) or 14px (Chinese) cell, so the
++    // three 14px rows need 42px inside the 2px border: rows 113-154 of 112-155.
++    DrawFrame(5, 110, 230, 48, 7, 1);
++    Print(12, 113, sTextColors, TaichungBadgeGetName(sSelected));
++    Print(176, 113, sMutedColors, complete ? TaichungText(sEarnedEn, sEarnedZh) : TaichungText(sLockedEn, sLockedZh));
++    Print(12, 127, sMutedColors, TaichungBadgeGetLandmark(sSelected));
++    Print(12, 141, sTextColors, TaichungText(sFooterEn, sFooterZh));
 +    PutWindowTilemap(0);
 +    CopyWindowToVram(0, COPYWIN_FULL);
 +}
@@ -432006,7 +431981,7 @@ index 0000000..099f35a
 +            sBadgeSprites[0] = TaichungBadgeCreateSprite(sSelected, TRUE, TRUE, 120, 60);
 +        else
 +            for (gym = 0; gym < TAICHUNG_GYM_COUNT; gym++)
-+                sBadgeSprites[gym] = TaichungBadgeCreateSprite(gym, FALSE, TaichungGymIsComplete(gym), 28 + (gym % 5) * 46, 42 + (gym / 5) * 43);
++                sBadgeSprites[gym] = TaichungBadgeCreateSprite(gym, FALSE, TaichungGymIsComplete(gym), 28 + (gym % 5) * 46, 40 + (gym / 5) * 43);
 +    }
 +    if (sAward)
 +        DrawBadgeAward();
@@ -432896,10 +432871,10 @@ index 0000000..738e189
 +}
 diff --git a/src/taichung_landmark_history.c b/src/taichung_landmark_history.c
 new file mode 100644
-index 0000000..dc9f2e7
+index 0000000..d441425
 --- /dev/null
 +++ b/src/taichung_landmark_history.c
-@@ -0,0 +1,67 @@
+@@ -0,0 +1,65 @@
 +#include "global.h"
 +#include "event_data.h"
 +#include "string_util.h"
@@ -432909,8 +432884,6 @@ index 0000000..dc9f2e7
 +
 +const u8 gTaichungHistoryChallengeEn[] = _("Challenge");
 +const u8 gTaichungHistoryChallengeZh[] = _("挑戰");
-+const u8 gTaichungHistoryAboutEn[] = _("About this place");
-+const u8 gTaichungHistoryAboutZh[] = _("地標故事");
 +const u8 gTaichungHistoryLeaveEn[] = _("Leave");
 +const u8 gTaichungHistoryLeaveZh[] = _("離開");
 +
@@ -449309,7 +449282,7 @@ index 0000000..fbc630e
 +    unittest.main()
 diff --git a/tests/test_gym_staff_guard.py b/tests/test_gym_staff_guard.py
 new file mode 100644
-index 0000000..2047e15
+index 0000000..3f74f73
 --- /dev/null
 +++ b/tests/test_gym_staff_guard.py
 @@ -0,0 +1,322 @@
@@ -449585,7 +449558,7 @@ index 0000000..2047e15
 +    def test_original_guard_profiles_and_probes_literal_preservation(self):
 +        # With the city, the guards' reference is the city's reviewed version (which re-pinned the v9
 +        # collision profile and added its layers), plus exactly this merge's reviewed additions: the
-+        # polish and still-water layer helpers, which sit together before save_v10_underneath.
++        # polish, still-water and street-sign layer helpers, which sit together before save_v10_underneath.
 +        reference = guard.CITY if self.city else BASE_GUARDS
 +        old_core = 'tools/taichung/landmarks/check_old_core.py'
 +        if self.city:
@@ -450527,10 +450500,10 @@ index 0000000..ae1ecbc
 +    sys.exit(main())
 diff --git a/tools/taichung/check_gym_staff.py b/tools/taichung/check_gym_staff.py
 new file mode 100644
-index 0000000..2b808a9
+index 0000000..3511f30
 --- /dev/null
 +++ b/tools/taichung/check_gym_staff.py
-@@ -0,0 +1,425 @@
+@@ -0,0 +1,441 @@
 +#!/usr/bin/env python3
 +"""Read-only proof for the five reviewed optional gym staff and cache handoff.
 +
@@ -450627,6 +450600,19 @@ index 0000000..2b808a9
 +
 +    def json(self, path):
 +        return json.loads(self.read(path))
++
++
++STREET_SIGNS_GUARD = 'tools/taichung/street_signs.py'
++
++
++def street_signs_underneath(files):
++    path = Path(files.source) / STREET_SIGNS_GUARD
++    if not path.exists():
++        return {}
++    spec = importlib.util.spec_from_file_location('registered_street_signs_guard', path)
++    guard = importlib.util.module_from_spec(spec)
++    spec.loader.exec_module(guard)
++    return guard.underneath(files)
 +
 +
 +def actor(local, graphics, script):
@@ -450788,9 +450774,12 @@ index 0000000..2b808a9
 +    city = Files(source, CITY) if now.has(CITY_RECORD) else None
 +    comparison = city or before
 +    result['cityRework'] = CITY if city else None
++    # The registered street-sign layer edits three outdoor maps after the city; its own
++    # guard proves that delta, so the other maps are compared underneath it.
++    signs = street_signs_underneath(now)
 +
 +    def reviewed(path):
-+        return now.read(path) == comparison.read(path)
++        return signs.get(path, now.read(path)) == comparison.read(path)
 +
 +    def require(condition, message):
 +        if not condition:
@@ -451238,10 +451227,10 @@ index 0000000..fc3051e
 +    raise SystemExit(main())
 diff --git a/tools/taichung/city_rework/save_v10.py b/tools/taichung/city_rework/save_v10.py
 new file mode 100644
-index 0000000..105804f
+index 0000000..873b180
 --- /dev/null
 +++ b/tools/taichung/city_rework/save_v10.py
-@@ -0,0 +1,255 @@
+@@ -0,0 +1,278 @@
 +#!/usr/bin/env python3
 +"""Generate the save-v10 position repairs for the city rework.
 +
@@ -451324,16 +451313,39 @@ index 0000000..105804f
 +    return into
 +
 +
-+def load_maps(rules, source, names):
-+    layouts = {x["id"]: x for x in json.loads((source / "data/layouts/layouts.json").read_text())["layouts"] if "id" in x}
++def load_maps(rules, source, names, overrides=None):
++    overrides = overrides or {}
++    read = lambda path: overrides[path] if path in overrides else (source / path).read_bytes()
++    layouts = {x["id"]: x for x in json.loads(read("data/layouts/layouts.json"))["layouts"] if "id" in x}
 +    cache, maps = {}, {}
 +    for name in names:
-+        data = json.loads((source / f"data/maps/{name}/map.json").read_text())
-+        view = rules.Map(source, data, layouts[data["layout"]], cache)
++        data = json.loads(read(f"data/maps/{name}/map.json"))
++        view = rules.Map(source, data, layouts[data["layout"]], cache, overrides.get)
 +        view.warps = {(w["x"], w["y"]) for w in data.get("warp_events", [])}
-+        view.sha = hashlib.sha256((source / layouts[data["layout"]]["blockdata_filepath"]).read_bytes()).hexdigest()
++        view.sha = hashlib.sha256(read(layouts[data["layout"]]["blockdata_filepath"])).hexdigest()
 +        maps[name] = view
 +    return maps
++
++
++def street_signs_underneath(tree):
++    """The maps beneath the registered street-sign layer, when `tree` holds it.
++
++    That layer only opens four signpost cells, where no saved position can stand, so
++    the v10 tables stay those of the maps beneath it (its own guard proves the layer)."""
++    path = tree / "tools/taichung/street_signs.py"
++    if not path.exists():
++        return {}
++    spec = importlib.util.spec_from_file_location("save_v10_street_signs", path)
++    guard = importlib.util.module_from_spec(spec)
++    spec.loader.exec_module(guard)
++
++    class Tree:
++        source = tree
++
++        @staticmethod
++        def read(rel):
++            return (tree / rel).read_bytes()
++    return guard.underneath(Tree)
 +
 +
 +def reachable(maps, origins):
@@ -451374,7 +451386,7 @@ index 0000000..105804f
 +    rules = load_validator()
 +    names = [m[0] for m in MAPS]
 +    old = load_maps(rules, old_tree, names)
-+    new = load_maps(rules, new_tree, names + [m[0] for m in NEW_ONLY])
++    new = load_maps(rules, new_tree, names + [m[0] for m in NEW_ONLY], street_signs_underneath(new_tree))
 +    origins = {name: after for name, _, _, after in MAPS}
 +    origins.update({name: at for name, _, at in NEW_ONLY})
 +    valid = reachable(new, origins)
@@ -457260,10 +457272,10 @@ index 0000000..a6ee075
 +                      "crossDedup": result["crossDedupMeasured"], "capacity": result["capacityArithmetic"]}, indent=2))
 diff --git a/tools/taichung/landmarks/check_cmp.py b/tools/taichung/landmarks/check_cmp.py
 new file mode 100644
-index 0000000..cc0fff0
+index 0000000..97c247a
 --- /dev/null
 +++ b/tools/taichung/landmarks/check_cmp.py
-@@ -0,0 +1,592 @@
+@@ -0,0 +1,593 @@
 +#!/usr/bin/env python3
 +"""Read-only independent checks for the approved CMP private-bank increment.
 +
@@ -457397,9 +457409,10 @@ index 0000000..cc0fff0
 +# is recorded separately. Historical v6/v7/v8/v9 records above are unchanged.
 +# Re-pinned for the city rework (as the city re-pinned the collision v9 profile): the four
 +# guard sources are their composed versions at sourceCommit; every other pin is as reviewed
-+# at 4b548a7 and is read beneath the city's registered layers.
++# at 4b548a7 and is read beneath the city's registered layers. Re-pinned again for the
++# street-sign layer (77fef88), whose maps the staff guard compares beneath it.
 +REVIEWED_GYM_STAFF_CACHE_V9_SAVE = {'name': 'five-gym-staff-cache-v9',
-+ 'sourceCommit': '5b1bba3d38e6165dab279a02eb9dab6267bfbb4d',
++ 'sourceCommit': '77fef88c946a817d39cc507dff9553372cc56423',
 + 'sha256': {'src/taichung_save.c': '627473562e3be5616adf8d4bdddb989705e83c169bf438e6ed9e49435ac52083',
 +            'include/taichung_save.h': '58a0fdf661685a3238beaa60155f16571408d3f5545c0c5471875d192f1ed5fc',
 +            'src/overworld.c': '5e437a504b2cb4f7b9301096bd846588707d5280ac1ab424e71db471bbf81bca',
@@ -457427,7 +457440,7 @@ index 0000000..cc0fff0
 +                    'data/taichung/landmark-collision/spec.json': '8293bffc490638ff4f0cc2b55b4d50b24fdf1144249ef04ad03ddef3a6a2b7d7',
 +                    'data/taichung/landmark-collision/delta.json': 'c3b574a0af0cb192d83fcfb0aa5ad80f6d3b383eb71ed606d86e70cc1747c452',
 +                    'tools/taichung/check_landmark_collision.py': '77ddf754e06aaf74aa69f1746d9338554979b62a9e09b3b983d3162710b32d90',
-+                    'tools/taichung/check_gym_staff.py': 'e0da604f526b3045a41ec7895ef6cbe8506ec97a2bd05d5bd6a7fff8ebb8c61c',
++                    'tools/taichung/check_gym_staff.py': 'ffb7e931a9fe8439f0147547becd642c807e8a668903efd41f9b2d99d32914c7',
 +                    'data/taichung/gym-staff/manifest.json': '6239ee27e7a517407df04124fc578ded3116a2f9b73b1a4d1defecfa08ae7827',
 +                    'data/maps/TaichungMiyahara_Gym/map.json': 'b6cc165d8422228ef5d10cbf5751304a0189687bf00718bfe3f3fcdd76055167',
 +                    'data/maps/TaichungPark_Gym/map.json': '5d6a7bba8fc8e2a3f3ca4017bfcb47fbc458e89ce37a73268ff0ea6e3cbb6662',
@@ -458349,10 +458362,10 @@ index 0000000..e723b48
 +    sys.exit(0 if result["passed"] else 1)
 diff --git a/tools/taichung/landmarks/check_old_core.py b/tools/taichung/landmarks/check_old_core.py
 new file mode 100644
-index 0000000..11d97e1
+index 0000000..77d9488
 --- /dev/null
 +++ b/tools/taichung/landmarks/check_old_core.py
-@@ -0,0 +1,1283 @@
+@@ -0,0 +1,1324 @@
 +#!/usr/bin/env python3
 +"""Independent checks of the actual OldCity clone/bank/map, with no source writes.
 +
@@ -458742,6 +458755,47 @@ index 0000000..11d97e1
 +    guard = importlib.util.module_from_spec(spec)
 +    spec.loader.exec_module(guard)
 +    return guard.underneath(files)
++
++
++# The registered street-sign removal (native, on d47712a) drops the four street-name
++# signposts from Nantun North, Wanhe and Old City North and opens their cells. Its own
++# guard proves that delta. It sits over the Old City and Nantun reworks, so their peels
++# below read the maps underneath it first and hand those bytes on with their own.
++STREET_SIGNS_GUARD = "tools/taichung/street_signs.py"
++
++
++def street_signs_underneath(files):
++    path = Path(files.source)/STREET_SIGNS_GUARD
++    if not path.exists():
++        return {}
++    spec = importlib.util.spec_from_file_location("registered_street_signs_guard", path)
++    guard = importlib.util.module_from_spec(spec)
++    spec.loader.exec_module(guard)
++    return guard.underneath(files)
++
++
++def beneath_street_signs(files, peel):
++    """peel(files) on a view with the street-sign layer removed, plus that layer's bytes;
++    exactly peel(files) when the tree does not hold the layer (or it is already peeled)."""
++    signs = street_signs_underneath(files)
++    if not signs:
++        return peel(files)
++    view = object.__new__(type(files))
++    view.__dict__.update(files.__dict__)
++    view.cache = {**files.cache, **signs}
++    out = peel(view)
++    return {**signs, **out} if out else {}
++
++
++_oldcity_rework_over_signs, _nantun_rework_over_signs = oldcity_rework_underneath, nantun_rework_underneath
++
++
++def oldcity_rework_underneath(files):
++    return beneath_street_signs(files, _oldcity_rework_over_signs)
++
++
++def nantun_rework_underneath(files):
++    return beneath_street_signs(files, _nantun_rework_over_signs)
 +
 +
 +def save_v10_underneath(files):
@@ -464334,10 +464388,10 @@ index 0000000..98b3ff5
 +    main()
 diff --git a/tools/taichung/nantun/check_nantun.py b/tools/taichung/nantun/check_nantun.py
 new file mode 100644
-index 0000000..7188cd1
+index 0000000..d3021f0
 --- /dev/null
 +++ b/tools/taichung/nantun/check_nantun.py
-@@ -0,0 +1,643 @@
+@@ -0,0 +1,646 @@
 +#!/usr/bin/env python3
 +"""Independent read-only checks for the registered Nantun increment.
 +
@@ -464578,6 +464632,9 @@ index 0000000..7188cd1
 +    strips = load("nantun_independent_strips", source/"tools/taichung/landmarks/analyze_theater_cohort.py")
 +    now, base = support.Files(source), support.Files(source, BASE)
 +    now.cache.update(overrides or {})
++    # The registered street-sign layer opens three Nantun signposts; its own guard proves it.
++    if hasattr(support, "street_signs_underneath"):
++        now.cache.update(support.street_signs_underneath(now))
 +    # The reworked Xitun and Old City stay in view: their seams with Nantun are checked live
 +    # once both sides are on the master plan. Only the frozen registry and contract
 +    # comparisons read underneath them (the Old City rework, the latest layer, first).
@@ -468188,10 +468245,10 @@ index 0000000..5ee043a
 +    main()
 diff --git a/tools/taichung/rework/check_oldcity_rework.py b/tools/taichung/rework/check_oldcity_rework.py
 new file mode 100644
-index 0000000..19f393f
+index 0000000..e1496d2
 --- /dev/null
 +++ b/tools/taichung/rework/check_oldcity_rework.py
-@@ -0,0 +1,322 @@
+@@ -0,0 +1,326 @@
 +#!/usr/bin/env python3
 +"""Read-only proof for Greenway, Old City and Old City North on the master plan (city-rework phase 2b).
 +
@@ -468362,6 +468419,8 @@ index 0000000..19f393f
 +    now.cache.update(support.polish_scripts_underneath(now))
 +    # The registered still-water layer redraws the flat-water fills; the drafts are compared underneath it.
 +    now.cache.update(support.still_water_underneath(now))
++    # The registered street-sign layer opens Old City North's Hwy 74 signpost; its own guard proves it.
++    now.cache.update(support.street_signs_underneath(now))
 +    tests = support.Checks()
 +    state = {}
 +
@@ -468386,9 +468445,11 @@ index 0000000..19f393f
 +        return {"outputs": len(b.outputs), "seamHedges": b.report["seamHedges"]}
 +
 +    def underneath_still_water(run):
-+        """Run with the tree's still-water definitions read as they were before
-+        that layer, so built cells are compared with the drafts underneath it."""
-+        peeled = {(source / path).resolve(): data for path, data in support.still_water_underneath(support.Files(source)).items()}
++        """Run with the tree's still-water definitions (and street-sign maps) read as
++        they were before those layers, so built cells are compared with the drafts
++        underneath them."""
++        layers = {**support.still_water_underneath(support.Files(source)), **support.street_signs_underneath(support.Files(source))}
++        peeled = {(source / path).resolve(): data for path, data in layers.items()}
 +        if not peeled:
 +            return run()
 +        native, original = verify.native, verify.native.words
@@ -471436,6 +471497,205 @@ index 0000000..fc0a8d3
 +
 +def main():
 +    parser = argparse.ArgumentParser()
++    parser.add_argument("--install", action="store_true")
++    parser.add_argument("--self-test", action="store_true")
++    args = parser.parse_args()
++    if args.install:
++        install()
++    report = self_test() if args.self_test else check()
++    print(json.dumps(report, indent=2))
++    sys.exit(0 if report["passed"] else 1)
++
++
++if __name__ == "__main__":
++    main()
+diff --git a/tools/taichung/street_signs.py b/tools/taichung/street_signs.py
+new file mode 100644
+index 0000000..4ed86ea
+--- /dev/null
++++ b/tools/taichung/street_signs.py
+@@ -0,0 +1,193 @@
++#!/usr/bin/env python3
++"""No street-name signposts on the outdoor city maps.
++
++The city rework put name-only signposts beside four roads: GONGYI RD. and
++LIMING RD. (Nantun North), HUIWEN S. ST. (Wanhe) and Hwy 74 (Old City North).
++The user asked for the street-name signs to go (2026-11-10). This layer
++removes those four sign events and redraws each signpost cell with the ground
++its map's builder draws there when the sign is left out (derived by running
++tools/taichung/nantun/build_rework.py and tools/taichung/rework/build_rework.py
++with the four entries dropped): grass for the three Nantun verges, the
++sidewalk for Hwy 74's. Each cell becomes walkable; nothing else moves.
++
++Landmark, gym, temple and waterway signs stay. The four sign scripts stay in
++the builders' registered script blocks (unreferenced), so those blocks still
++peel exactly. Opening a closed cell needs no save repair: no saved position
++can stand on a signpost.
++
++This guard proves the tree holds exactly that delta over BASE; frozen guards
++read the bytes underneath it (`underneath`).
++
++  street_signs.py             print the report
++  street_signs.py --install   write the layer into the tree (from BASE)
++  street_signs.py --self-test also prove each corruption probe is caught
++"""
++from __future__ import annotations
++
++import argparse
++import json
++from pathlib import Path
++import struct
++import subprocess
++import sys
++
++sys.dont_write_bytecode = True
++ROOT = Path(__file__).resolve().parents[2]
++BASE = "d47712aeb9e4baed224abbcbd5dde3931a8949ec"
++SIGN_WORD = 0x3403  # the kit signpost 0x003, solid, elevation 3
++# (map, layout width, x, y, sign script, ground word the builder draws without the sign)
++REMOVED = (
++    ("TaichungNantunNorth", 45, 19, 23, "TaichungCity_Sign_GongyiRd", 0x3001),
++    ("TaichungNantunNorth", 45, 17, 25, "TaichungCity_Sign_LimingRd", 0x3001),
++    ("TaichungNantunWanhe", 85, 62, 19, "TaichungCity_Sign_HuiwenSSt", 0x3001),
++    ("TaichungOldCityNorth", 44, 14, 10, "TaichungCity_Sign_Hwy74", 0x31C1),
++)
++MAPS = tuple(dict.fromkeys(name for name, *_ in REMOVED))
++MAP_JSON = {name: f"data/maps/{name}/map.json" for name in MAPS}
++MAP_BIN = {name: f"data/layouts/{name}/map.bin" for name in MAPS}
++FILES = tuple(MAP_JSON.values()) + tuple(MAP_BIN.values())
++
++
++def git_show(source, path, revision=BASE):
++    return subprocess.run(["git", "show", f"{revision}:{path}"], cwd=source, check=True, capture_output=True).stdout
++
++
++def dump_json(value):
++    return (json.dumps(value, indent=2, ensure_ascii=False) + "\n").encode()
++
++
++def words(raw):
++    return list(struct.unpack(f"<{len(raw) // 2}H", raw))
++
++
++def layer(base_read):
++    """{path: bytes} of this layer's files applied to the files base_read gives;
++    raises ValueError unless those hold each removed sign exactly once."""
++    out = {}
++    for name in MAPS:
++        raw = base_read(MAP_JSON[name])
++        data = json.loads(raw)
++        if dump_json(data) != raw:
++            raise ValueError(f"{MAP_JSON[name]} is not in the builders' JSON format")
++        grid = words(base_read(MAP_BIN[name]))
++        for map_name, width, x, y, script, ground in REMOVED:
++            if map_name != name:
++                continue
++            hits = [e for e in data["bg_events"] if e.get("script") == script]
++            if len(hits) != 1 or (hits[0]["type"], hits[0]["x"], hits[0]["y"]) != ("sign", x, y):
++                raise ValueError(f"{name}: {script} is not one sign at ({x},{y})")
++            if grid[y * width + x] != SIGN_WORD:
++                raise ValueError(f"{name}: ({x},{y}) is {grid[y * width + x]:#06x}, not the signpost")
++            data["bg_events"].remove(hits[0])
++            grid[y * width + x] = ground
++        out[MAP_JSON[name]] = dump_json(data)
++        out[MAP_BIN[name]] = struct.pack(f"<{len(grid)}H", *grid)
++    return out
++
++
++def install(source=ROOT):
++    source = Path(source).resolve()
++    for path, raw in layer(lambda path: git_show(source, path)).items():
++        (source / path).write_bytes(raw)
++
++
++def _reader(source, overrides):
++    overrides = overrides or {}
++    return lambda path: overrides[path] if path in overrides else (Path(source) / path).read_bytes()
++
++
++def check(source=ROOT, overrides=None):
++    source = Path(source).resolve()
++    read = _reader(source, overrides)
++    errors, results = [], {}
++
++    def require(ok, message):
++        if not ok:
++            errors.append(message)
++
++    base = lambda path: git_show(source, path)
++    try:
++        want = layer(base)
++    except ValueError as error:
++        return {"passed": False, "errors": [f"BASE: {error}"], "base": BASE, "checks": {}}
++    for path, raw in want.items():
++        try:
++            require(read(path) == raw, f"{path} is not BASE with exactly the street-name signs removed")
++        except OSError as error:
++            require(False, f"{path}: {error}")
++    # Each new cell is open ground that one of its own neighbours already draws, and
++    # no sign event anywhere still runs a removed script.
++    cells = []
++    for name, width, x, y, script, ground in REMOVED:
++        grid = words(want[MAP_BIN[name]])
++        near = [grid[(y + dy) * width + x + dx] for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1))]
++        require(ground & 0xC00 == 0, f"{name} ({x},{y}): {ground:#06x} is not walkable")
++        require(ground in near, f"{name} ({x},{y}): {ground:#06x} matches none of its neighbours {[hex(w) for w in near]}")
++        cells.append({"map": name, "cell": [x, y], "sign": script.removeprefix("TaichungCity_Sign_"),
++                      "was": f"{SIGN_WORD:#06x}", "now": f"{ground:#06x}"})
++    removed = {script for *_, script, _ in REMOVED}
++    kept = 0
++    for path in sorted((source / "data/maps").glob("Taichung*/map.json")):
++        rel = str(path.relative_to(source))
++        data = json.loads(read(rel))
++        signs = [e for e in data.get("bg_events", []) if e.get("type") == "sign"]
++        require(not removed & {e["script"] for e in signs}, f"{rel} still runs a removed street sign")
++        kept += len(signs)
++        before = [e for e in json.loads(base(rel)).get("bg_events", []) if e.get("type") == "sign"]
++        require([e for e in before if e["script"] not in removed] == signs, f"{rel}: other signs changed")
++    results["removed"] = cells
++    results["signsKept"] = kept
++    return {"passed": not errors, "errors": errors, "base": BASE, "checks": results}
++
++
++def underneath(files):
++    """{path: BASE bytes} for the layer's files when the tree holds exactly this
++    layer over BASE; otherwise {}, so a guard reads the real bytes."""
++    source = Path(files.source)
++    try:
++        want = layer(lambda path: git_show(source, path))
++        if any(files.read(path) != raw for path, raw in want.items()):
++            return {}
++    except (OSError, ValueError, subprocess.CalledProcessError):
++        return {}
++    return {path: git_show(source, path) for path in FILES}
++
++
++def self_test(source=ROOT):
++    source = Path(source).resolve()
++    good = check(source)
++    base = lambda path: git_show(source, path)
++    want = layer(base)
++    probes = {}
++    probes["sign-left-in-place"] = {MAP_BIN["TaichungNantunNorth"]: base(MAP_BIN["TaichungNantunNorth"])}
++    data = json.loads(want[MAP_JSON["TaichungOldCityNorth"]])
++    data["bg_events"].append({"type": "sign", "x": 14, "y": 10, "elevation": 0,
++                              "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY", "script": "TaichungCity_Sign_Hwy74"})
++    probes["event-left-in-place"] = {MAP_JSON["TaichungOldCityNorth"]: dump_json(data)}
++    grid = words(want[MAP_BIN["TaichungNantunWanhe"]])
++    grid[19 * 85 + 62] = 0x3175
++    probes["wrong-ground"] = {MAP_BIN["TaichungNantunWanhe"]: struct.pack(f"<{len(grid)}H", *grid)}
++    data = json.loads(want[MAP_JSON["TaichungNantunWanhe"]])
++    data["bg_events"] = [e for e in data["bg_events"] if e["script"] != "TaichungCity_Sign_WanheTemple"]
++    probes["landmark-sign-removed"] = {MAP_JSON["TaichungNantunWanhe"]: dump_json(data)}
++    grid = words(want[MAP_BIN["TaichungOldCityNorth"]])
++    grid[0] ^= 1
++    probes["other-cell"] = {MAP_BIN["TaichungOldCityNorth"]: struct.pack(f"<{len(grid)}H", *grid)}
++    caught = {name: not check(source, overrides)["passed"] for name, overrides in probes.items()}
++    return {"passed": good["passed"] and all(caught.values()), "tree": good["passed"], "rejectedCorruptionProbes": caught}
++
++
++def main():
++    parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
 +    parser.add_argument("--install", action="store_true")
 +    parser.add_argument("--self-test", action="store_true")
 +    args = parser.parse_args()
@@ -477995,10 +478255,10 @@ index 0000000..227fe1e
 +        raise SystemExit(str(error))
 diff --git a/tools/taichung_gameplay/render-landmark-history.py b/tools/taichung_gameplay/render-landmark-history.py
 new file mode 100644
-index 0000000..d78cf61
+index 0000000..3ecdbcf
 --- /dev/null
 +++ b/tools/taichung_gameplay/render-landmark-history.py
-@@ -0,0 +1,171 @@
+@@ -0,0 +1,174 @@
 +#!/usr/bin/env python3
 +"""Render source-backed bilingual history records; check native page bounds.
 +
@@ -478123,7 +478383,10 @@ index 0000000..d78cf61
 +    # not source-backed historical claims.
 +    core = (game / 'src/taichung_landmark_history.c').read_text()
 +    assert set(action_records) == {'landmark.action.challenge','landmark.action.about','landmark.action.leave'}
-+    for stem in ('Challenge','About','Leave'):
++    # Leaders now tell the history before their challenge question, so the
++    # handoff's About label stays in the frozen records but is never rendered.
++    assert 'gTaichungHistoryAbout' not in core
++    for stem in ('Challenge','Leave'):
 +        entry = action_records['landmark.action.'+stem.lower()]
 +        for locale, suffix in [('en','En'),('zh-TW','Zh')]:
 +            literal = text(entry[locale],entry['id'],locale)
@@ -478513,10 +478776,10 @@ index 0000000..94ccb4b
 +"$GAME_ROOT/build/taichung-tests/landmark-gyms"
 diff --git a/tools/taichung_gameplay/test-landmark-history.py b/tools/taichung_gameplay/test-landmark-history.py
 new file mode 100644
-index 0000000..1a51b41
+index 0000000..153e4a3
 --- /dev/null
 +++ b/tools/taichung_gameplay/test-landmark-history.py
-@@ -0,0 +1,226 @@
+@@ -0,0 +1,233 @@
 +#!/usr/bin/env python3
 +"""Exercise optional history routes in the installed scripts, including B/replay.
 +
@@ -478604,8 +478867,15 @@ index 0000000..1a51b41
 +            assert locked and not waiting_message; locked = False
 +        elif operation in ('faceplayer','msgbox'):
 +            assert locked, instruction
++        elif operation == 'message':
++            assert locked and arguments == 'gStringVar4', instruction
++            waiting_message = True
++            if variables.get('VAR_0x8005') == 'TAICHUNG_GYM_MESSAGE_OFFER':
++                events.append('offer')
 +        elif operation == 'waitmessage':
 +            assert locked and waiting_message, instruction
++            if events and events[-1] == 'offer':
++                waiting_message = False
 +        elif operation == 'waitbuttonpress':
 +            assert locked and waiting_message, instruction
 +            waiting_message = False
@@ -478630,10 +478900,13 @@ index 0000000..1a51b41
 +            assert all(variables[key] == value for key,value in protected.items())
 +            return events
 +        elif operation == 'multichoice':
-+            expected = 'MULTICHOICE_TAICHUNG_HISTORY_COMPLETE' if complete or temple else 'MULTICHOICE_TAICHUNG_HISTORY'
-+            assert parts[2] == expected and parts[3] == 'FALSE', instruction
++            # Only a gym's own challenge question opens the Challenge/Leave menu;
++            # completed gyms and temples never show a menu.
++            assert not complete and not temple, instruction
++            assert parts[2] == 'MULTICHOICE_TAICHUNG_HISTORY' and parts[3] == 'FALSE', instruction
++            assert events and events[-1] == 'offer', ('menu without the challenge question', events)
 +            choice = next(choices)
-+            assert choice in ((0, 1, 127) if complete or temple else (0, 1, 2, 127))
++            assert choice in (0, 1, 127)
 +            variables['VAR_RESULT'] = choice
 +        elif operation == 'callnative':
 +            if arguments == 'TaichungGym_ScriptIsComplete':
@@ -478643,6 +478916,7 @@ index 0000000..1a51b41
 +            elif re.fullmatch(r'TaichungGym_ScriptConsume\w+LossNotice', arguments):
 +                variables['VAR_RESULT'] = 0
 +            elif arguments == 'TaichungHistory_ScriptBufferTour':
++                assert 'offer' not in events, ('history after the challenge question', events)
 +                events.append('history')
 +            elif arguments == 'TaichungHistory_ScriptBufferSign':
 +                events.append('sign')
@@ -478661,6 +478935,7 @@ index 0000000..1a51b41
 +                waiting_message = True
 +                events.append('staff')
 +            elif arguments == 'TaichungGym_ScriptPrepareChallenge':
++                assert events[-1] == 'offer' and 'history' in events or not available, events
 +                events.append('prepare')
 +                variables['VAR_RESULT'] = 1
 +            elif arguments == 'TaichungGym_ScriptCancelChallenge':
@@ -478678,19 +478953,15 @@ index 0000000..1a51b41
 +
 +
 +CASES = [
-+    ([0], False, False, True, ['prepare', 'battle']),
-+    ([1, 0], False, False, True, ['history', 'prepare', 'battle']),
-+    ([1, 1, 2], False, False, True, ['history', 'history']),
-+    ([2], False, False, True, []),
-+    ([127], False, False, True, []),
-+    ([1, 127], False, False, True, ['history']),
-+    ([1], True, False, True, []),
-+    ([127], True, False, True, []),
-+    ([0, 1], True, False, True, ['history']),
-+    ([0, 0, 127], True, False, True, ['history', 'history']),
++    ([0], False, False, True, ['history', 'offer', 'prepare', 'battle']),
++    ([1], False, False, True, ['history', 'offer']),
++    ([127], False, False, True, ['history', 'offer']),
++    ([], True, False, True, ['history']),
 +    ([], False, True, True, ['cancel']),
 +    ([], True, True, True, ['cancel']),
-+    ([], False, False, False, []),
++    ([0], False, False, False, ['offer', 'prepare', 'battle']),
++    ([1], False, False, False, ['offer']),
++    ([], True, False, False, []),
 +]
 +count = 0
 +for name in ('Station', 'Park', 'Miyahara', *MACRO_NAMES):
@@ -478700,7 +478971,7 @@ index 0000000..1a51b41
 +            count += 1
 +for name in ('WenchangTemple', 'WanheTemple'):
 +    for locale in (1, 2):
-+        for choices, replay, expected in [([1], False, ['sign']), ([127], False, ['sign']), ([0, 1], False, ['sign', 'history']), ([0, 0, 127], False, ['sign', 'history', 'history']), ([], True, [])]:
++        for choices, replay, expected in [([], False, ['sign', 'history']), ([], True, [])]:
 +            assert run(choices, replay=replay, name=name, temple=True, locale=locale) == expected, (name, choices)
 +            count += 1
 +
@@ -478715,7 +478986,7 @@ index 0000000..1a51b41
 +    block = re.search(r'^' + re.escape(sign) + r'::\s*\n(.*?)(?=^\w+::|\Z)', city, re.S | re.M)[1]
 +    assert 'callnative TaichungHistory_ScriptBufferSign' in block and 'msgbox gStringVar4, MSGBOX_SIGN' in block
 +    assert not any(word in block for word in ('setflag', 'trainerbattle', 'VarSet', 'PrepareChallenge'))
-+print(f'PASS:{count} installed bilingual history routes across10 gyms/2 temples;12 sign bindings; direct challenge; optional repeat reading; B/Leave; post-win access; replay isolation.')
++print(f'PASS:{count} installed bilingual history routes across10 gyms/2 temples;12 sign bindings; history as the lead-in to each challenge question; Challenge/Leave/B; post-win telling; replay isolation.')
 +
 +# Every existing or new helper remains voluntary, read-only and reachable after
 +# victory. Replay must skip both the buffer and the existing wait sequence.
@@ -478731,18 +479002,17 @@ index 0000000..1a51b41
 +                helper_count += 1
 +print(f'PASS:{helper_count} installed bilingual helper routes across10 NPCs; exact replay skip, retained lock/wait/release and pre/post-win access; no battle/progress/settings writes.')
 +
-+# The installed native menu sources must select the matching language and keep
-+# Challenge out of the completed/temple menu, not just the script interpreter.
++# The installed native menu sources must select the matching language and offer
++# only Challenge/Leave under a gym's question; About and the completed menu are gone.
 +menu = (ROOT / 'src/script_menu.c').read_text()
 +for suffix in ('','Zh'):
-+    for complete, expected in ((False,['Challenge','About','Leave']),(True,['About','Leave'])):
-+        symbol = 'sMultichoiceList_TaichungHistory'+('Complete' if complete else '')+suffix
-+        block = re.search(r'static const struct MenuAction '+symbol+r'\[\] = \{(.*?)\};',menu,re.S)[1]
-+        names = re.findall(r'gTaichungHistory(Challenge|About|Leave)(En|Zh)',block)
-+        assert names == [(name,'Zh' if suffix else 'En') for name in expected]
-+for key,symbol in [('MULTICHOICE_TAICHUNG_HISTORY','sMultichoiceList_TaichungHistoryZh'),('MULTICHOICE_TAICHUNG_HISTORY_COMPLETE','sMultichoiceList_TaichungHistoryCompleteZh')]:
-+    assert re.search(r'if \(mcId == '+key+r' && TaichungIsChinese\(\)\)\s*list = '+symbol+r';',menu)
-+print('PASS: installed EN/ZH menu bindings; completed/temple actions are About/Leave only.')
++    block = re.search(r'static const struct MenuAction sMultichoiceList_TaichungHistory'+suffix+r'\[\] = \{(.*?)\};',menu,re.S)[1]
++    names = re.findall(r'gTaichungHistory(\w+?)(En|Zh)\b',block)
++    assert names == [(name,'Zh' if suffix else 'En') for name in ('Challenge','Leave')], names
++assert re.search(r'if \(mcId == MULTICHOICE_TAICHUNG_HISTORY && TaichungIsChinese\(\)\)\s*list = sMultichoiceList_TaichungHistoryZh;',menu)
++assert 'HistoryComplete' not in menu and 'gTaichungHistoryAbout' not in menu
++assert 'MULTICHOICE_TAICHUNG_HISTORY_COMPLETE' not in (ROOT / 'include/constants/menu.h').read_text()
++print('PASS: installed EN/ZH menu bindings; the gym question offers Challenge/Leave only; no About menu remains.')
 diff --git a/tools/taichung_gameplay/test-landmark-history.sh b/tools/taichung_gameplay/test-landmark-history.sh
 new file mode 100644
 index 0000000..d5bd5df
