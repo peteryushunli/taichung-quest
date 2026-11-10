@@ -1,6 +1,6 @@
 # Website landmarks, title card and street minimap
 
-Web-only changes on `claude/gym-gameboy-website-updates-9d8798`, based on main 80c714f. No ROM change.
+Web changes on `claude/gym-gameboy-website-updates-9d8798`, based on main 80c714f. The branch also merges the in-game fixes (native 2362263, cartridge `5c3e041d…`, see `docs/gym-text-fixes.md`).
 
 ## Title card
 
@@ -28,10 +28,13 @@ The exit button now reads "Back to site" / 返回網站.
 
 - **Live minimap.** The minimap is a 36×27-tile window on the real city render. It follows the player and is clamped to the world edges. It marks all ten gyms (squares) and ten landmarks (rounds).
 - **City Map dialog.** Tapping the minimap opens the City Map, which now uses the same render at full size, with all twenty places, district signs and tabs. The schematic district boxes (`city-guide-model.ts`) are gone.
-- **Derived art.** `web/scripts/derive-city-art.py` writes the minimap image (`src/assets/minimap/city.png`, 4 px per tile) and the ten landmark crops (`src/assets/landmarks/map/`). Both come from `src/assets/landing/city-map.png`. Re-run the script whenever the city render changes, for example after the street signs come out of the ROM.
+- **Derived art.** `web/scripts/derive-city-art.py` writes the minimap image (`src/assets/minimap/city.png`, 4 px per tile) and the ten landmark crops (`src/assets/landmarks/map/`). Both come from `src/assets/landing/city-map.png`. Re-run the script whenever the city render changes.
+- **City render.** `city-map.png` is now rendered from native 2362263, so the four removed street signs are gone. `render-landing-map.py` now draws animated tile slots with their first frame, as the cartridge shows them. Before this, the map showed the tileset's raw wave texture, while the game draws its water one still, flat colour. Water, sand edges and flowers now match the game.
+- **Contract.** `minimap-contract.json` takes native's three refreshed source hashes (Nantun North, Wanhe, Old City North). The geometry fingerprint is unchanged, and `verify-cartridge.mjs` passes with cartridge `5c3e041d…`.
 
 ## Checks
 
 - `npm run check` and `npm test`: 50/50 tests pass.
 - Browser fixtures: minimap 12/12, controls 20/20, onboarding 5/5.
 - Headless screenshots: landing, title card and City Map, at 1440, 820 and 390 px wide, in English and Traditional Chinese.
+- Live game: the cartridge was booted in the web player with the Wanhe test save. The minimap followed the player from world tile (10, 125) to (17, 125), naming Wenchang Temple as the nearest landmark, and tapping it opened the City Map.

@@ -2,8 +2,10 @@
 """Render the landing page's city map from the native map source.
 
 Pastes the three exterior districts at their City Map world origins, using the
-game's own metatiles via tools/taichung/render_maps.py. Outside the districts
-stays transparent. Sprites and object events are not drawn. Requires Pillow.
+game's own metatiles via tools/taichung/render_maps.py. Tile slots the game
+animates are drawn with their first animation frame, as the cartridge shows them
+(the still, flat water, for one). Outside the districts stays transparent.
+Sprites and object events are not drawn. Requires Pillow.
 
   python3 web/scripts/render-landing-map.py --source vendor/pokefirered
 """
@@ -11,13 +13,52 @@ stays transparent. Sprites and object events are not drawn. Requires Pillow.
 import argparse
 import hashlib
 import json
+import re
 import subprocess
 import sys
+import tempfile
 from pathlib import Path
 
 from PIL import Image
 
 WEB = Path(__file__).resolve().parents[1]
+# InitTilesetAnim_General copies these frames over the primary's tiles at run time (src/tileset_anims.c):
+# folder under data/tilesets/primary/general/anim, first 4bpp tile slot, tile count.
+GENERAL_ANIMS = (("water_current_landwatersedge", 416, 48), ("sandwatersedge", 464, 18), ("flower", 508, 4))
+
+
+def animated_tile_paths(native, source, scratch):
+    """Wrap render_maps.tileset_paths so primaries animated by InitTilesetAnim_General show frame 0 in their slots."""
+    headers = (source / "src/data/tilesets/headers.h").read_text()
+    original = native.tileset_paths
+    patched = {}
+
+    def tileset_paths(src, label):
+        paths = original(src, label)
+        name = label if label.startswith("gTileset_") else f"gTileset_{label}"
+        header = re.search(rf"\b{re.escape(name)}\s*=\s*\{{(.*?)\}};", headers, re.S).group(1)
+        callback = re.search(r"\.callback\s*=\s*(\w+)", header)
+        callback = callback.group(1) if callback else "NULL"
+        if callback == "NULL":
+            return paths
+        if callback != "InitTilesetAnim_General":
+            raise ValueError(f"{name} animates with {callback}; teach this script its frames before rendering")
+        if name not in patched:
+            # A copy keeps the tileset's own palette, so saving it cannot remap the 4bpp indices.
+            sheet = Image.open(paths["tiles"]).copy()
+            if sheet.height < 512 // 16 * 8:
+                raise ValueError(f"{paths['tiles']} has no room for the animated slots")
+            for folder, first, count in GENERAL_ANIMS:
+                frame = Image.open(source / "data/tilesets/primary/general/anim" / folder / "0.png")
+                for k in range(count):
+                    tile = frame.crop((k % 2 * 8, k // 2 * 8, k % 2 * 8 + 8, k // 2 * 8 + 8))
+                    n = first + k
+                    sheet.paste(tile, (n % 16 * 8, n // 16 * 8))
+            patched[name] = scratch / f"{name}.png"
+            sheet.save(patched[name])
+        return {**paths, "tiles": patched[name]}
+
+    native.tileset_paths = tileset_paths
 
 
 def main():
@@ -29,6 +70,8 @@ def main():
     source = args.source.resolve()
     sys.path.insert(0, str(source / "tools/taichung"))
     import render_maps as native
+    scratch = Path(tempfile.mkdtemp(prefix="city-map-"))
+    animated_tile_paths(native, source, scratch)
 
     contract = json.loads(args.contract.read_text())
     layouts = {layout["id"]: layout for layout in json.loads((source / "data/layouts/layouts.json").read_text())["layouts"] if "id" in layout}
