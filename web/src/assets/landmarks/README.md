@@ -13,7 +13,8 @@ These PNGs are unchanged copies of the project's existing native pixel artwork f
 | `fine-arts.png` | `fine-arts/candidate/facade/candidate-native.png` | 160×96 | Named as a facade in the root README; gym battle in development. |
 | `greenway.png` | `calligraphy-greenway/candidate/candidate-native.png` | 144×160 | Candidate art; installation not confirmed. Gym battle in development. |
 | `fengjia.png` | `fengjia/candidate-192/candidate-native.png` | 192×128 | Candidate art; installation not confirmed. Gym battle in development. |
-| `maple-garden.png` | `maple-garden/candidate/candidate-native.png` | 192×128 | Candidate art; installation not confirmed. Gym battle in development. |
+| `maple-garden.png` | `maple-garden/candidate/candidate-native.png` | 192×128 | Candidate art; installation not confirmed. A visit stop since 11 November 2026, when Muqing's gym moved to Wanhe Temple. |
+| `wanhe-temple.png` | not a landmark file: cut from the Nantun Wanhe map (tiles x27–35, y26–33) with the paving cleared to transparent | 142×111 | Installed temple; Muqing's gym hall since 11 November 2026. |
 
 Copies made 7 November 2026. Total image payload: 40,126 bytes.
 
@@ -30,4 +31,5 @@ shen-ji.png        996ed97b9d362d30d842a5f41d8ded9828d3c24209ae9c023e8b812bf630c
 fine-arts.png      fadcb09dd211b12e83890c56ad537e9856e8ee43d75622183073d894bb0ed8c7
 fengjia.png        082c28ae4d79b41ef6e27f7b9690fb8dabdb2865673ee09e6d5692ebaeedac5b
 maple-garden.png   927e3733abefb29ec6451d239bcd1dad0f55630394b1f219e8816c70cb349a6d
+wanhe-temple.png   fba4108018ae2dfdd2b90e8c852aba83fe568efc2649b3d4451188fd0319de3b
 ```

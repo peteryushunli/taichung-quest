@@ -86,7 +86,7 @@ function markup() {
         <div class="lp-hero-copy">
           <p class="lp-eyebrow lp-eyebrow-dot">${copy('A POKÉMON FIRERED ADVENTURE · 臺中')}</p>
           <h1 class="lp-h1 lp-display">${copy('Taichung, shrunk to fit a Game Boy.')}</h1>
-          <p class="lp-lede">${copy('Explore Taichung in the world of Pokémon. Challenge leaders at ten real landmark gyms, collect badges, and find ten more landmarks around town, from Taichung Prefectural Hall to Wanhe Temple. Pick a partner, hop on a bike, and play free in your browser.')}</p>
+          <p class="lp-lede">${copy('Explore Taichung in the world of Pokémon. Challenge leaders at ten real landmark gyms, collect badges, and find ten more landmarks around town, from Taichung Prefectural Hall to Maple Garden. Pick a partner, hop on a bike, and play free in your browser.')}</p>
           <div class="lp-actions"><a class="lp-btn" id="hero-play" href="#play" data-play-link><span aria-hidden="true">▶</span> <span data-play-label="Play in your browser">${escapeHtml(t('Play in your browser'))}</span></a><a class="lp-text-link" href="#map">${copy('Explore the map ↓')}</a></div>
           <div class="lp-facts"><span>${gyms.length} ${copy('gyms')}</span><span>${landmarks.length} ${copy('landmarks')}</span><span>${districtCount(landmarks)} ${copy('districts')}</span><span>English · 繁體中文</span>${copy('No install')}</div>
         </div>

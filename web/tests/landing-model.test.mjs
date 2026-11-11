@@ -21,7 +21,7 @@ test('the ten-gym release names every open leader in both languages', () => {
     ['shen-ji-new-village', 'Axiu', '阿修'],
     ['fine-arts-museum', 'Caining', '采寧'],
     ['fengjia-night-market', 'Jiahe', '嘉禾'],
-    ['maple-garden', 'Muqing', '沐晴'],
+    ['wanhe-temple', 'Muqing', '沐晴'],
     ['taichung-theater', 'Ling', '聆'],
   ]);
   for (const place of landmarks) {
@@ -96,7 +96,7 @@ test('localized places use their own language and secure links', () => {
 });
 
 test('map pins and gym cards use the short English names', () => {
-  assert.deepEqual(landmarks.map((place) => localizedPlace(place, 'en').mapLabel), ['Old Station', 'Taichung Park', 'Miyahara', 'Science Museum', 'Greenway', 'Shen Ji', 'Fine Arts Museum', 'Fengjia Night Market', 'Maple Garden', 'Taichung Theater', 'Wanhe Temple', 'Wenchang Temple']);
+  assert.deepEqual(landmarks.map((place) => localizedPlace(place, 'en').mapLabel), ['Old Station', 'Taichung Park', 'Miyahara', 'Science Museum', 'Greenway', 'Shen Ji', 'Fine Arts Museum', 'Fengjia Night Market', 'Wanhe Temple', 'Taichung Theater', 'Maple Garden', 'Wenchang Temple']);
   assert.equal(localizedPlace(landmarks[4], 'en').shortName, 'Greenway');
   assert.equal(localizedPlace(landmarks[4], 'zh-Hant').mapLabel, '草悟道');
 });
@@ -107,24 +107,35 @@ test('every gym landmark retains its existing facade art', () => {
   }
 });
 
-test('temple visits are source-anchored stops with no badge or leader, linking only to the temple’s own site', () => {
+test('visit stops are source-anchored places with no badge or leader, linking only to their own official page', () => {
   const visits = landmarks.filter((place) => !isGym(place));
-  assert.deepEqual(visits.map((place) => place.id), ['wanhe-temple', 'wenchang-temple']);
+  assert.deepEqual(visits.map((place) => place.id), ['maple-garden', 'wenchang-temple']);
+  const official = { 'maple-garden': /^https:\/\/travel\.taichung\.gov\.tw\//, 'wenchang-temple': /^https:\/\/www\.wcgt\.org\// };
   for (const place of visits) {
+    const marker = city.markersById[place.id];
+    assert.equal(place.kind, 'visit', place.id);
     assert.equal(place.gymStatus, 'not-a-gym');
     assert.equal(placeStatus(place), 'Landmark');
     assert.equal(place.playable, true);
-    assert.equal(place.districtId, 'nantun');
-    assert.equal(place.gameAreaRef, city.mapsByNativeKey['43:15'].mapId);
-    assert.deepEqual([place.cityAnchor.x, place.cityAnchor.y], city.markersById[place.id].localEntrance);
-    assert.equal(city.markersById[place.id].kind, 'landmark');
-    assert.match(place.officialSourceTitle, /official site/);
+    assert.equal(place.gameAreaRef, city.mapsByNativeKey[marker.exteriorNativeKey].mapId, place.id);
+    assert.equal(place.landmarkHallRef, marker.gymMapId, place.id);
+    assert.deepEqual([place.cityAnchor.x, place.cityAnchor.y], marker.localEntrance);
+    assert.equal(marker.kind, 'landmark');
     for (const locale of ['en', 'zh-Hant']) {
       assert.equal(localizedPlace(place, locale).leader, undefined);
-      assert.match(localizedPlace(place, locale).url, /^https:\/\/www\.(wanhegong\.org\.tw|wcgt\.org)\//);
+      assert.match(localizedPlace(place, locale).url, official[place.id], place.id);
     }
   }
   assert.equal(gymStatusSummary(landmarks, 'en'), gymStatusSummary(landmarks.filter(isGym), 'en'));
+});
+
+test('Muqing’s gym is the Wanhe Temple hall, and Maple Garden keeps its hall as a visit', () => {
+  const wanhe = landmarks.find((place) => place.id === 'wanhe-temple');
+  assert.ok(isGymOpen(wanhe));
+  assert.equal(city.markersById['wanhe-temple'].kind, 'landmark-gym');
+  assert.equal(wanhe.landmarkHallRef, city.markersById['wanhe-temple'].gymMapId);
+  assert.equal(wanhe.gameAreaRef, city.mapsByNativeKey['43:15'].mapId);
+  assert.equal(city.markersById['maple-garden'].gymMapId, 'MAP_TAICHUNG_MAPLE_GARDEN_GYM');
 });
 
 test('every open gym has its leader portrait and team wired in', () => {
@@ -140,7 +151,7 @@ test('the remaining seven team orders match native source b7b027d', () => {
     'shen-ji-new-village': ['Meowth', 'Machoke', 'Ditto'],
     'fine-arts-museum': ['Butterfree', 'Ditto', 'Porygon'],
     'fengjia-night-market': ['Farfetch’d', 'Magmar', 'Snorlax'],
-    'maple-garden': ['Poliwhirl', 'Butterfree', 'Vaporeon'],
+    'wanhe-temple': ['Poliwhirl', 'Butterfree', 'Vaporeon'],
     'taichung-theater': ['Jigglypuff', 'Jynx', 'Mr. Mime'],
   };
   for (const [id, names] of Object.entries(expected)) {
@@ -196,7 +207,7 @@ test('district names sit on the freeway for the north and beside Wanhe for Nantu
 
 test('every gym stamps the City Pass with its own game badge and bilingual badge name', () => {
   const gyms = landmarks.filter(isGym);
-  assert.deepEqual(gyms.map((place) => place.badgeNameEn), ['Departure Badge', 'Pavilion Badge', 'Chill Badge', 'Discovery Badge', 'Brush Badge', 'Craft Badge', 'Palette Badge', 'Feast Badge', 'Habitat Badge', 'Encore Badge']);
+  assert.deepEqual(gyms.map((place) => place.badgeNameEn), ['Departure Badge', 'Pavilion Badge', 'Chill Badge', 'Discovery Badge', 'Brush Badge', 'Craft Badge', 'Palette Badge', 'Feast Badge', 'Tide Badge', 'Encore Badge']);
   for (const place of gyms) {
     assert.match(place.badgeNameZh, /徽章$/, place.id);
     assert.ok(existsSync(new URL(`../src/assets/badges/${place.id}.png`, import.meta.url)), `${place.id} badge art`);
