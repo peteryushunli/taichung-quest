@@ -12,6 +12,7 @@ import scienceMuseum from './assets/landmarks/science-museum.png';
 import shenJi from './assets/landmarks/shen-ji.png';
 import taichungPark from './assets/landmarks/taichung-park.png';
 import theater from './assets/landmarks/theater.png';
+import wanheTemple from './assets/landmarks/wanhe-temple.png';
 import jun from './assets/leaders/jun.png';
 import lian from './assets/leaders/lian.png';
 import yicheng from './assets/leaders/yicheng.png';
@@ -83,8 +84,11 @@ export const landmarkArt: Record<string, LandmarkArt> = {
   'shen-ji-new-village': { facade: shenJi, tint: neutral, leader: axiu, team: [mon('Meowth', meowthIcon), mon('Machoke', machokeIcon), mon('Ditto', dittoIcon)] },
   'fine-arts-museum': { facade: fineArts, tint: neutral, leader: caining, team: [mon('Butterfree', butterfreeIcon), mon('Ditto', dittoIcon), mon('Porygon', porygonIcon)] },
   'fengjia-night-market': { facade: fengjia, tint: brick, leader: jiahe, team: [mon('Farfetch’d', farfetchdIcon), mon('Magmar', magmarIcon), mon('Snorlax', snorlaxIcon)] },
-  'maple-garden': { facade: mapleGarden, tint: park, leader: muqing, team: [mon('Poliwhirl', poliwhirlIcon), mon('Butterfree', butterfreeIcon), mon('Vaporeon', vaporeonIcon)] },
   'taichung-theater': { facade: theater, tint: modern, leader: ling, team: [mon('Jigglypuff', jigglypuffIcon), mon('Jynx', jynxIcon), mon('Mr. Mime', mrMimeIcon)] },
+  // Muqing's gym moved into Wanhe Temple (save bit 8 keeps its maple-garden ID in the game).
+  'wanhe-temple': { facade: wanheTemple, tint: brick, leader: muqing, team: [mon('Poliwhirl', poliwhirlIcon), mon('Butterfree', butterfreeIcon), mon('Vaporeon', vaporeonIcon)] },
+  // Maple Garden is now a visit-only hall: its facade, no leader or team.
+  'maple-garden': { facade: mapleGarden, tint: park },
 };
 
 // Each gym's City Pass badge, the game's own 32×32 award icon (graphics/taichung/badges), keyed by landmark id.

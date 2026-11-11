@@ -375,51 +375,49 @@
     "badgeNameZh": "豐味徽章"
   },
   {
-    "id": "maple-garden",
-    "nameEn": "Maple Garden",
-    "nameZh": "秋紅谷",
-    "shortNameEn": "Maple Garden",
-    "shortNameZh": "秋紅谷",
-    "minimapNameEn": "Maple Garden",
-    "minimapNameZh": "秋紅谷",
-    "category": "Urban park",
-    "categoryZh": "城市公園",
-    "description": "Maple Garden began as a stalled building project: the site beside Taiwan Boulevard was meant for a convention center, but after only the foundation pit was dug, the city ended the contract in 2008 and turned the hole into a park. Opened in 2012, this sunken valley of about three hectares holds a lake, lawns, colorful trees and an observation bridge, and doubles as a stormwater detention basin. Its Chinese name means \"Autumn Red Valley,\" and the design won a FIABCI Prix d'Excellence gold award in 2014. It makes a calm stroll among the city towers, especially after dark.",
-    "descriptionZh": "秋紅谷原本規劃興建會議中心，但開發商只挖了地基，市府於2008年終止合約，之後把這個大坑改造成公園，2012年開放。占地約3公頃的下凹式綠地，有生態湖、草坡、觀景橋與繽紛樹木，同時兼具滯洪池功能，2014年獲得FIABCI全球卓越建設獎金獎。白天散步，晚上看周邊大樓燈光，都很適合。",
-    "officialUrl": "https://travel.taichung.gov.tw/en/attractions/intro/851",
-    "officialUrlZh": "https://travel.taichung.gov.tw/zh-tw/attractions/intro/818",
-    "officialSourceTitle": "Taichung Tourism and Travel Bureau — Maple Garden",
-    "location": {
-      "address": "Intersection of Shizheng N. 7th Rd. and Sec. 3, Henan Rd., Xitun Dist., Taichung City, Taiwan",
-      "addressZh": "臺中市西屯區市政北七路與河南路三段路口",
-      "latitude": 24.16801,
-      "longitude": 120.63935
-    },
-    "districtId": "xitun",
-    "phase": "city-v1",
-    "gameAreaRef": "MAP_TAICHUNG_XITUN",
-    "gameLayoutRef": "LAYOUT_TAICHUNG_XITUN",
-    "mapX": 16.4,
-    "mapY": 30.4,
-    "mapLabelSide": "right",
+    "id": "wanhe-temple",
+    "nameEn": "Wanhe Temple",
+    "nameZh": "萬和宮",
+    "shortNameEn": "Wanhe Temple",
+    "shortNameZh": "萬和宮",
+    "minimapNameEn": "Wanhe Temple",
+    "minimapNameZh": "萬和宮",
+    "category": "Mazu temple",
+    "categoryZh": "媽祖廟",
+    "description": "Wanhe Temple is the Mazu temple at the heart of old Nantun, the settlement once called Litoudian. Residents from twelve surname groups pooled funds to build it in 1726, choosing a name that voices the hope that people of different origins would live in harmony. Its timber halls, protected as a historic monument since 1985, were restored after the 1999 earthquake. The temple is best known for its Surname Opera, a spring season of performances sponsored by one clan after another, and for the procession that carries its Lao Er Ma statue to Xitun every three years.",
+    "descriptionZh": "萬和宮是南屯舊稱「犁頭店」一帶的媽祖廟，清雍正四年（1726年）由當地十二姓居民集資興建，廟名寄寓不同籍貫的居民和睦共處。傳統木構的廟宇1985年列為古蹟，九二一地震後也經過整修。這裡最有名的是每年春天由各姓氏輪流酬神演出的「字姓戲」，以及每三年一次、迎老二媽回西屯省親的遶境。",
+    "districtId": "nantun",
+    "districtEn": "Nantun",
+    "districtZh": "南屯區",
+    "phase": "city-v2",
     "playable": true,
-    "districtEn": "Xitun",
-    "districtZh": "西屯區",
+    "gameAreaRef": "MAP_TAICHUNG_NANTUN_WANHE",
+    "landmarkHallRef": "MAP_TAICHUNG_WANHE_TEMPLE_HALL",
     "cityAnchor": {
-      "x": 17,
-      "y": 37
+      "x": 31,
+      "y": 33
     },
-    "landmarkHallRef": "MAP_TAICHUNG_MAPLE_GARDEN_GYM",
     "gymStatus": "playable",
+    "mapX": 22.083333333333332,
+    "mapY": 78.125,
+    "mapLabelSide": "right",
+    "artRect": [
+      26,
+      135,
+      37,
+      144
+    ],
+    "descriptionSources": [
+      "https://en.wikipedia.org/wiki/Wanhe_Temple",
+      "https://zh.wikipedia.org/wiki/南屯萬和宮",
+      "https://www.wanhegong.org.tw/html/about/index.aspx"
+    ],
+    "officialUrl": "https://www.wanhegong.org.tw/html/about/index.aspx",
+    "officialSourceTitle": "Wanhe Temple — official site",
     "gymLeaderEn": "Muqing",
     "gymLeaderZh": "沐晴",
-    "descriptionSources": [
-      "https://zh.wikipedia.org/wiki/秋紅谷廣場",
-      "https://travel.taichung.gov.tw/en/attractions/intro/851",
-      "https://english.taichung.gov.tw/10273/10554/10719/730143"
-    ],
-    "badgeNameEn": "Habitat Badge",
-    "badgeNameZh": "棲地徽章"
+    "badgeNameEn": "Tide Badge",
+    "badgeNameZh": "潮汐徽章"
   },
   {
     "id": "taichung-theater",
@@ -468,46 +466,54 @@
     "badgeNameZh": "謝幕徽章"
   },
   {
-    "id": "wanhe-temple",
+    "id": "maple-garden",
     "kind": "visit",
-    "nameEn": "Wanhe Temple",
-    "nameZh": "萬和宮",
-    "shortNameEn": "Wanhe Temple",
-    "shortNameZh": "萬和宮",
-    "minimapNameEn": "Wanhe Temple",
-    "minimapNameZh": "萬和宮",
-    "category": "Temple visit",
-    "categoryZh": "廟宇參訪",
-    "description": "Wanhe Temple is the Mazu temple at the heart of old Nantun, the settlement once called Litoudian. Residents from twelve surname groups pooled funds to build it in 1726, choosing a name that voices the hope that people of different origins would live in harmony. Its timber halls, protected as a historic monument since 1985, were restored after the 1999 earthquake. The temple is best known for its Surname Opera, a spring season of performances sponsored by one clan after another, and for the procession that carries its Lao Er Ma statue to Xitun every three years.",
-    "descriptionZh": "萬和宮是南屯舊稱「犁頭店」一帶的媽祖廟，清雍正四年（1726年）由當地十二姓居民集資興建，廟名寄寓不同籍貫的居民和睦共處。傳統木構的廟宇1985年列為古蹟，九二一地震後也經過整修。這裡最有名的是每年春天由各姓氏輪流酬神演出的「字姓戲」，以及每三年一次、迎老二媽回西屯省親的遶境。",
-    "districtId": "nantun",
-    "districtEn": "Nantun",
-    "districtZh": "南屯區",
-    "phase": "city-v2",
-    "playable": true,
-    "gameAreaRef": "MAP_TAICHUNG_NANTUN_WANHE",
-    "landmarkHallRef": "MAP_TAICHUNG_WANHE_TEMPLE_HALL",
-    "cityAnchor": {
-      "x": 31,
-      "y": 33
+    "nameEn": "Maple Garden",
+    "nameZh": "秋紅谷",
+    "shortNameEn": "Maple Garden",
+    "shortNameZh": "秋紅谷",
+    "minimapNameEn": "Maple Garden",
+    "minimapNameZh": "秋紅谷",
+    "category": "Urban park",
+    "categoryZh": "城市公園",
+    "description": "Maple Garden began as a stalled building project: the site beside Taiwan Boulevard was meant for a convention center, but after only the foundation pit was dug, the city ended the contract in 2008 and turned the hole into a park. Opened in 2012, this sunken valley of about three hectares holds a lake, lawns, colorful trees and an observation bridge, and doubles as a stormwater detention basin. Its Chinese name means \"Autumn Red Valley,\" and the design won a FIABCI Prix d'Excellence gold award in 2014. It makes a calm stroll among the city towers, especially after dark.",
+    "descriptionZh": "秋紅谷原本規劃興建會議中心，但開發商只挖了地基，市府於2008年終止合約，之後把這個大坑改造成公園，2012年開放。占地約3公頃的下凹式綠地，有生態湖、草坡、觀景橋與繽紛樹木，同時兼具滯洪池功能，2014年獲得FIABCI全球卓越建設獎金獎。白天散步，晚上看周邊大樓燈光，都很適合。",
+    "officialUrl": "https://travel.taichung.gov.tw/en/attractions/intro/851",
+    "officialUrlZh": "https://travel.taichung.gov.tw/zh-tw/attractions/intro/818",
+    "officialSourceTitle": "Taichung Tourism and Travel Bureau — Maple Garden",
+    "location": {
+      "address": "Intersection of Shizheng N. 7th Rd. and Sec. 3, Henan Rd., Xitun Dist., Taichung City, Taiwan",
+      "addressZh": "臺中市西屯區市政北七路與河南路三段路口",
+      "latitude": 24.16801,
+      "longitude": 120.63935
     },
-    "gymStatus": "not-a-gym",
-    "mapX": 22.083333333333332,
-    "mapY": 78.125,
+    "districtId": "xitun",
+    "phase": "city-v1",
+    "gameAreaRef": "MAP_TAICHUNG_XITUN",
+    "gameLayoutRef": "LAYOUT_TAICHUNG_XITUN",
+    "mapX": 16.4,
+    "mapY": 30.4,
     "mapLabelSide": "right",
-    "artRect": [
-      26,
-      135,
-      37,
-      144
-    ],
+    "playable": true,
+    "districtEn": "Xitun",
+    "districtZh": "西屯區",
+    "cityAnchor": {
+      "x": 17,
+      "y": 37
+    },
+    "landmarkHallRef": "MAP_TAICHUNG_MAPLE_GARDEN_GYM",
+    "gymStatus": "not-a-gym",
     "descriptionSources": [
-      "https://en.wikipedia.org/wiki/Wanhe_Temple",
-      "https://zh.wikipedia.org/wiki/南屯萬和宮",
-      "https://www.wanhegong.org.tw/html/about/index.aspx"
+      "https://zh.wikipedia.org/wiki/秋紅谷廣場",
+      "https://travel.taichung.gov.tw/en/attractions/intro/851",
+      "https://english.taichung.gov.tw/10273/10554/10719/730143"
     ],
-    "officialUrl": "https://www.wanhegong.org.tw/html/about/index.aspx",
-    "officialSourceTitle": "Wanhe Temple — official site"
+    "artRect": [
+      14,
+      31,
+      26,
+      40
+    ]
   },
   {
     "id": "wenchang-temple",
