@@ -12526,10 +12526,10 @@ index 0000000..be81428
 +  "encodingPolicy": "Preserve every existing FC19 character index; only regenerate bitmap rows and append missing characters."
 +}
 diff --git a/charmap.txt b/charmap.txt
-index b9d0ed9..f858d67 100644
+index b9d0ed9..26c420c 100644
 --- a/charmap.txt
 +++ b/charmap.txt
-@@ -910,3 +910,775 @@ EMOJI_BIGANGER = F9 FE
+@@ -910,3 +910,776 @@ EMOJI_BIGANGER = F9 FE
  '\l' = FA @ scroll up window text
  '\p' = FB @ new paragraph
  '\n' = FE @ new line
@@ -13305,6 +13305,7 @@ index b9d0ed9..f858d67 100644
 +'鋼' = FC 19 30 04
 +'雙' = FC 19 31 04
 +'飛' = FC 19 32 04
++'黑' = FC 19 33 04
 diff --git a/data/event_scripts.s b/data/event_scripts.s
 index 88d7594..65bf894 100644
 --- a/data/event_scripts.s
@@ -15372,12 +15373,12 @@ index 0000000..68ffd0c
 +}
 diff --git a/data/maps/TaichungGuestHouse_2F/scripts.inc b/data/maps/TaichungGuestHouse_2F/scripts.inc
 new file mode 100644
-index 0000000..f49b118
+index 0000000..df3e7f4
 --- /dev/null
 +++ b/data/maps/TaichungGuestHouse_2F/scripts.inc
-@@ -0,0 +1,35 @@
-+@ A new game wakes here, in the FireRed player's-house bedroom: language and
-+@ encounter settings first, then Xiaoyu calls from downstairs.
+@@ -0,0 +1,46 @@
++@ A new game wakes here, in the FireRed player's-house bedroom: the settings
++@ screen (language, then encounters) first, then Xiaoyu calls from downstairs.
 +TaichungGuestHouse_2F_MapScripts::
 +	map_script MAP_SCRIPT_ON_TRANSITION, TaichungCity_OnTransition
 +	map_script MAP_SCRIPT_ON_RESUME, TaichungCity_OnTransition
@@ -15391,7 +15392,18 @@ index 0000000..f49b118
 +TaichungGuestHouse_2F_WakeUp::
 +	lockall
 +	turnobject LOCALID_PLAYER, DIR_NORTH
-+	call Taichung_InitLanguageCore
++	@ The web player answers first with the visitor's browser language. The
++	@ settings screen then shows it on its LANGUAGE row, above the two
++	@ encounter rows, so there is no separate language prompt.
++	callnative TaichungOnboarding_ScriptStartupEligible
++	goto_if_eq VAR_RESULT, FALSE, TaichungGuestHouse_2F_Settings
++	callnative TaichungOnboarding_ScriptBeginStartup
++	waitstate
++	closemessage
++TaichungGuestHouse_2F_Settings::
++	callnative TaichungExploration_ScriptOpenStartup
++	waitstate
++	callnative TaichungOnboarding_ScriptLanguageReady
 +	callnative TaichungGuestHouse_BufferCallDownstairs
 +	msgbox gStringVar4
 +	releaseall
@@ -71684,10 +71696,10 @@ index 0000000..fe99f01
 +`render-landmark-history.py --write` alone replaces the generated C module; default mode checks exact bytes and writes a review report to the specified artifact directory. `docs/landmark-history-render-report.json` records the final line/source/glyph/buffer evidence. Main must merge the new actors, final dialogue union and guard bindings before ROM/native UI acceptance. No maps, Save/version/layout, taichung_language.c, glyph/font, ROM, UI or publication change was made here.
 diff --git a/data/taichung/landmark-history/calligraphy-greenway.json b/data/taichung/landmark-history/calligraphy-greenway.json
 new file mode 100644
-index 0000000..a0e21da
+index 0000000..6f199e0
 --- /dev/null
 +++ b/data/taichung/landmark-history/calligraphy-greenway.json
-@@ -0,0 +1,279 @@
+@@ -0,0 +1,277 @@
 +{
 +  "schemaVersion": 1,
 +  "status": "source-backed distributed-history draft; no native source writes",
@@ -71704,7 +71716,7 @@ index 0000000..a0e21da
 +    "zh-TW": [
 +      [
 +        "草悟道／市民廣場",
-+        "名字取自草書流動的意象。"
++        "名字取自草書。"
 +      ]
 +    ],
 +    "claimId": "calligraphy-greenway.name",
@@ -71724,8 +71736,7 @@ index 0000000..a0e21da
 +      ],
 +      "zh-TW": [
 +        [
-+          "真實的草悟道，",
-+          "全長約3.6公里。"
++          "真實草悟道長約3.6公里。"
 +        ]
 +      ],
 +      "sources": [
@@ -71743,8 +71754,7 @@ index 0000000..a0e21da
 +      ],
 +      "zh-TW": [
 +        [
-+          "名字把城市活動的流動感，",
-+          "比作自由揮灑的草書。"
++          "名字把城市生活比作草書。"
 +        ]
 +      ],
 +      "sources": [
@@ -71924,8 +71934,8 @@ index 0000000..a0e21da
 +      ],
 +      "zh-TW": [
 +        [
-+          "科博館到美術館，一路綠意。",
-+          "我最愛這段，車鈴先休息！"
++          "科博館到美術館，",
++          "一路綠意，我最愛！"
 +        ]
 +      ],
 +      "sources": [
@@ -71969,10 +71979,10 @@ index 0000000..a0e21da
 +}
 diff --git a/data/taichung/landmark-history/fengjia-night-market.json b/data/taichung/landmark-history/fengjia-night-market.json
 new file mode 100644
-index 0000000..144acc6
+index 0000000..09afbf6
 --- /dev/null
 +++ b/data/taichung/landmark-history/fengjia-night-market.json
-@@ -0,0 +1,294 @@
+@@ -0,0 +1,293 @@
 +{
 +  "schemaVersion": 1,
 +  "status": "source-backed distributed-history draft; no native source writes",
@@ -71989,7 +71999,7 @@ index 0000000..144acc6
 +    "zh-TW": [
 +      [
 +        "逢甲夜市",
-+        "夜市源起於1963年。"
++        "始於1963年。"
 +      ]
 +    ],
 +    "claimId": "fengjia-night-market.origin-1963",
@@ -72009,8 +72019,8 @@ index 0000000..144acc6
 +      ],
 +      "zh-TW": [
 +        [
-+          "1963年逢甲大學遷到此地，",
-+          "帶動了夜市的發展。"
++          "1963年逢甲大學遷來，",
++          "帶動夜市發展。"
 +        ]
 +      ],
 +      "sources": [
@@ -72028,8 +72038,7 @@ index 0000000..144acc6
 +      ],
 +      "zh-TW": [
 +        [
-+          "這裡原本叫做",
-+          "文華夜市。"
++          "原名文華夜市。"
 +        ]
 +      ],
 +      "sources": [
@@ -72224,8 +72233,8 @@ index 0000000..144acc6
 +      ],
 +      "zh-TW": [
 +        [
-+          "小吃、衣服，各式小店，",
-+          "我最喜歡這些熱鬧的鄰居！"
++          "小吃、衣服、小店，",
++          "我最愛熱鬧的鄰居！"
 +        ]
 +      ],
 +      "sources": [
@@ -72269,10 +72278,10 @@ index 0000000..144acc6
 +}
 diff --git a/data/taichung/landmark-history/fine-arts-museum.json b/data/taichung/landmark-history/fine-arts-museum.json
 new file mode 100644
-index 0000000..820a356
+index 0000000..4254397
 --- /dev/null
 +++ b/data/taichung/landmark-history/fine-arts-museum.json
-@@ -0,0 +1,267 @@
+@@ -0,0 +1,265 @@
 +{
 +  "schemaVersion": 1,
 +  "status": "source-backed distributed-history draft; no native source writes",
@@ -72289,7 +72298,7 @@ index 0000000..820a356
 +    "zh-TW": [
 +      [
 +        "國立臺灣美術館",
-+        "美術館於1988年開館。"
++        "1988年開館。"
 +      ]
 +    ],
 +    "claimId": "fine-arts-museum.opening-1988",
@@ -72309,8 +72318,7 @@ index 0000000..820a356
 +      ],
 +      "zh-TW": [
 +        [
-+          "美術館於1988年，",
-+          "正式開館。"
++          "美術館1988年開館。"
 +        ]
 +      ],
 +      "sources": [
@@ -72328,8 +72336,7 @@ index 0000000..820a356
 +      ],
 +      "zh-TW": [
 +        [
-+          "館方以臺灣的",
-+          "近現代藝術為重點。"
++          "以臺灣近現代藝術為主。"
 +        ]
 +      ],
 +      "sources": [
@@ -72504,8 +72511,8 @@ index 0000000..820a356
 +      ],
 +      "zh-TW": [
 +        [
-+          "我最愛館外的雕塑園區。",
-+          "看作品，不一定要待在室內！"
++          "我最愛館外雕塑園區，",
++          "藝術不只在室內！"
 +        ]
 +      ],
 +      "sources": [
@@ -72542,10 +72549,10 @@ index 0000000..820a356
 +}
 diff --git a/data/taichung/landmark-history/maple-garden.json b/data/taichung/landmark-history/maple-garden.json
 new file mode 100644
-index 0000000..ecedc67
+index 0000000..ee0a46b
 --- /dev/null
 +++ b/data/taichung/landmark-history/maple-garden.json
-@@ -0,0 +1,287 @@
+@@ -0,0 +1,286 @@
 +{
 +  "schemaVersion": 1,
 +  "status": "source-backed distributed-history draft; no native source writes",
@@ -72562,7 +72569,7 @@ index 0000000..ecedc67
 +    "zh-TW": [
 +      [
 +        "秋紅谷",
-+        "公園於2012年啟用。"
++        "2012年啟用。"
 +      ]
 +    ],
 +    "claimId": "maple-garden.opening-2012",
@@ -72581,7 +72588,7 @@ index 0000000..ecedc67
 +      ],
 +      "zh-TW": [
 +        [
-+          "公園於2012年啟用。"
++          "公園2012年啟用。"
 +        ]
 +      ],
 +      "sources": [
@@ -72599,8 +72606,7 @@ index 0000000..ecedc67
 +      ],
 +      "zh-TW": [
 +        [
-+          "下凹的公園裡，",
-+          "設有湖泊與景觀橋。"
++          "地勢下凹，有湖和景觀橋。"
 +        ]
 +      ],
 +      "sources": [
@@ -72797,8 +72803,8 @@ index 0000000..ecedc67
 +      ],
 +      "zh-TW": [
 +        [
-+          "我最得意的不只是風景，",
-+          "這裡還能滯洪、儲存雨水！"
++          "最得意的是，",
++          "這裡能滯洪、儲水！"
 +        ]
 +      ],
 +      "sources": [
@@ -72835,10 +72841,10 @@ index 0000000..ecedc67
 +}
 diff --git a/data/taichung/landmark-history/miyahara.json b/data/taichung/landmark-history/miyahara.json
 new file mode 100644
-index 0000000..fffea07
+index 0000000..499c802
 --- /dev/null
 +++ b/data/taichung/landmark-history/miyahara.json
-@@ -0,0 +1,281 @@
+@@ -0,0 +1,280 @@
 +{
 +  "schemaVersion": 1,
 +  "status": "source-backed distributed-history draft; no native source writes",
@@ -72855,7 +72861,7 @@ index 0000000..fffea07
 +    "zh-TW": [
 +      [
 +        "宮原眼科",
-+        "1927年創建的眼科診所。"
++        "1927年建的眼科診所。"
 +      ]
 +    ],
 +    "claimId": "miyahara.clinic-1927",
@@ -72874,7 +72880,7 @@ index 0000000..fffea07
 +      ],
 +      "zh-TW": [
 +        [
-+          "這裡曾是眼科診所，",
++          "這曾是眼科診所，",
 +          "建於1927年。"
 +        ]
 +      ],
@@ -72893,8 +72899,7 @@ index 0000000..fffea07
 +      ],
 +      "zh-TW": [
 +        [
-+          "後來，這裡曾作為",
-+          "臺中衛生院。"
++          "後來改作臺中衛生院。"
 +        ]
 +      ],
 +      "claimId": "miyahara.health-office",
@@ -73084,8 +73089,8 @@ index 0000000..fffea07
 +      ],
 +      "zh-TW": [
 +        [
-+          "我最喜歡那道老牌樓。",
-+          "紅磚也留下來了，真好！"
++          "我最愛那道老牌樓，",
++          "紅磚還在，真好！"
 +        ]
 +      ],
 +      "sources": [
@@ -73122,10 +73127,10 @@ index 0000000..fffea07
 +}
 diff --git a/data/taichung/landmark-history/natural-science-museum.json b/data/taichung/landmark-history/natural-science-museum.json
 new file mode 100644
-index 0000000..5a8e0ab
+index 0000000..61e4c9f
 --- /dev/null
 +++ b/data/taichung/landmark-history/natural-science-museum.json
-@@ -0,0 +1,275 @@
+@@ -0,0 +1,274 @@
 +{
 +  "schemaVersion": 1,
 +  "status": "source-backed distributed-history draft; no native source writes",
@@ -73142,7 +73147,7 @@ index 0000000..5a8e0ab
 +    "zh-TW": [
 +      [
 +        "國立自然科學博物館",
-+        "最早展館於1986年開放。"
++        "最早展館1986年開放。"
 +      ]
 +    ],
 +    "claimId": "natural-science-museum.phase1-1986",
@@ -73162,8 +73167,8 @@ index 0000000..5a8e0ab
 +      ],
 +      "zh-TW": [
 +        [
-+          "最早一批展館，",
-+          "於1986年1月1日開放。"
++          "1986年1月1日，",
++          "第一批展館開放。"
 +        ]
 +      ],
 +      "sources": [
@@ -73181,8 +73186,7 @@ index 0000000..5a8e0ab
 +      ],
 +      "zh-TW": [
 +        [
-+          "生命科學廳接著",
-+          "於1988年開放。"
++          "1988年，生命科學廳開放。"
 +        ]
 +      ],
 +      "sources": [
@@ -73358,8 +73362,8 @@ index 0000000..5a8e0ab
 +      ],
 +      "zh-TW": [
 +        [
-+          "我的筆記不只畫化石，",
-+          "植物園也要留一整頁！"
++          "筆記不只畫化石，",
++          "植物園也要一整頁！"
 +        ]
 +      ],
 +      "sources": [
@@ -73403,10 +73407,10 @@ index 0000000..5a8e0ab
 +}
 diff --git a/data/taichung/landmark-history/old-taichung-station.json b/data/taichung/landmark-history/old-taichung-station.json
 new file mode 100644
-index 0000000..c5df781
+index 0000000..d74b5ca
 --- /dev/null
 +++ b/data/taichung/landmark-history/old-taichung-station.json
-@@ -0,0 +1,292 @@
+@@ -0,0 +1,290 @@
 +{
 +  "schemaVersion": 1,
 +  "status": "source-backed distributed-history draft; no native source writes",
@@ -73423,7 +73427,7 @@ index 0000000..c5df781
 +    "zh-TW": [
 +      [
 +        "舊臺中車站",
-+        "現存站房建於1917年。"
++        "站房建於1917年。"
 +      ]
 +    ],
 +    "claimId": "old-taichung-station.building-1917",
@@ -73443,8 +73447,7 @@ index 0000000..c5df781
 +      ],
 +      "zh-TW": [
 +        [
-+          "這座舊車站的站房，",
-+          "建於1917年。"
++          "老站房建於1917年。"
 +        ]
 +      ],
 +      "sources": [
@@ -73462,8 +73465,7 @@ index 0000000..c5df781
 +      ],
 +      "zh-TW": [
 +        [
-+          "舊站卸下運輸任務後，",
-+          "轉為鐵道文化園區的一部分。"
++          "現屬鐵道文化園區。"
 +        ]
 +      ],
 +      "sources": [
@@ -73656,8 +73658,8 @@ index 0000000..c5df781
 +      ],
 +      "zh-TW": [
 +        [
-+          "我的明信片一定畫鐘樓！",
-+          "紅磚配鐘樓，多好認啊。"
++          "明信片我都畫鐘樓！",
++          "紅磚配鐘樓，多好認！"
 +        ]
 +      ],
 +      "sources": [
@@ -73701,7 +73703,7 @@ index 0000000..c5df781
 +}
 diff --git a/data/taichung/landmark-history/shen-ji-new-village.json b/data/taichung/landmark-history/shen-ji-new-village.json
 new file mode 100644
-index 0000000..6d1a433
+index 0000000..e680b41
 --- /dev/null
 +++ b/data/taichung/landmark-history/shen-ji-new-village.json
 @@ -0,0 +1,243 @@
@@ -73721,7 +73723,7 @@ index 0000000..6d1a433
 +    "zh-TW": [
 +      [
 +        "審計新村",
-+        "1969年的審計處宿舍。"
++        "1969年審計處宿舍。"
 +      ]
 +    ],
 +    "claimId": "shen-ji-new-village.housing-1969",
@@ -73741,8 +73743,8 @@ index 0000000..6d1a433
 +      ],
 +      "zh-TW": [
 +        [
-+          "這些房舍建於1969年，",
-+          "曾是審計處員工宿舍。"
++          "這裡原是審計處宿舍，",
++          "建於1969年。"
 +        ]
 +      ],
 +      "sources": [
@@ -73912,8 +73914,8 @@ index 0000000..6d1a433
 +      ],
 +      "zh-TW": [
 +        [
-+          "我喜歡這些老宿舍，",
-+          "變成小店和工作室，多有趣！"
++          "老宿舍成了小店、工作室，",
++          "我好喜歡！"
 +        ]
 +      ],
 +      "sources": [
@@ -73950,7 +73952,7 @@ index 0000000..6d1a433
 +}
 diff --git a/data/taichung/landmark-history/taichung-park.json b/data/taichung/landmark-history/taichung-park.json
 new file mode 100644
-index 0000000..50e8a00
+index 0000000..7c0cd44
 --- /dev/null
 +++ b/data/taichung/landmark-history/taichung-park.json
 @@ -0,0 +1,281 @@
@@ -73989,7 +73991,7 @@ index 0000000..50e8a00
 +      ],
 +      "zh-TW": [
 +        [
-+          "臺中公園於1903年開園。"
++          "公園1903年開園。"
 +        ]
 +      ],
 +      "sources": [
@@ -74007,8 +74009,8 @@ index 0000000..50e8a00
 +      ],
 +      "zh-TW": [
 +        [
-+          "1908年，為慶祝",
-+          "縱貫鐵路通車而建湖心亭。"
++          "湖心亭建於1908年，",
++          "為慶祝縱貫鐵路通車。"
 +        ]
 +      ],
 +      "sources": [
@@ -74199,8 +74201,8 @@ index 0000000..50e8a00
 +      ],
 +      "zh-TW": [
 +        [
-+          "我最喜歡介紹湖心亭，",
-+          "你看，兩座亭子連在一起！"
++          "我最愛湖心亭，",
++          "你看，雙亭連在一起！"
 +        ]
 +      ],
 +      "sources": [
@@ -74237,10 +74239,10 @@ index 0000000..50e8a00
 +}
 diff --git a/data/taichung/landmark-history/taichung-theater.json b/data/taichung/landmark-history/taichung-theater.json
 new file mode 100644
-index 0000000..3fcdfc1
+index 0000000..5560e37
 --- /dev/null
 +++ b/data/taichung/landmark-history/taichung-theater.json
-@@ -0,0 +1,304 @@
+@@ -0,0 +1,303 @@
 +{
 +  "schemaVersion": 1,
 +  "status": "source-backed distributed-history draft; no native source writes",
@@ -74257,7 +74259,7 @@ index 0000000..3fcdfc1
 +    "zh-TW": [
 +      [
 +        "臺中國家歌劇院",
-+        "歌劇院於2016年開幕。"
++        "2016年開幕。"
 +      ]
 +    ],
 +    "claimId": "taichung-theater.opening-2016",
@@ -74277,8 +74279,7 @@ index 0000000..3fcdfc1
 +      ],
 +      "zh-TW": [
 +        [
-+          "歌劇院於2016年9月，",
-+          "正式開幕。"
++          "歌劇院2016年9月開幕。"
 +        ]
 +      ],
 +      "sources": [
@@ -74297,7 +74298,7 @@ index 0000000..3fcdfc1
 +      "zh-TW": [
 +        [
 +          "建築師伊東豊雄，",
-+          "設計了流動的曲牆空間。"
++          "設計了流動曲牆。"
 +        ]
 +      ],
 +      "sources": [
@@ -74498,12 +74499,12 @@ index 0000000..3fcdfc1
 +      ],
 +      "zh-TW": [
 +        [
-+          "我平常只顧著整理道具，",
-+          "但這些曲牆，真的很搶戲！"
++          "我只顧著道具，",
++          "但曲牆真搶戲！"
 +        ],
 +        [
-+          "建築裡有29個聲音涵洞，",
-+          "這是我最想讓朋友注意的。"
++          "共有29個聲音涵洞，",
++          "我都帶朋友來看！"
 +        ]
 +      ],
 +      "sources": [
@@ -74547,10 +74548,10 @@ index 0000000..3fcdfc1
 +}
 diff --git a/data/taichung/landmark-history/wanhe-temple.json b/data/taichung/landmark-history/wanhe-temple.json
 new file mode 100644
-index 0000000..b2db4d4
+index 0000000..1f9bd17
 --- /dev/null
 +++ b/data/taichung/landmark-history/wanhe-temple.json
-@@ -0,0 +1,184 @@
+@@ -0,0 +1,182 @@
 +{
 +  "schemaVersion": 1,
 +  "status": "source-backed authored integration draft; no native source writes",
@@ -74567,7 +74568,7 @@ index 0000000..b2db4d4
 +    "zh-TW": [
 +      [
 +        "萬和宮",
-+        "1726年建成的媽祖廟。"
++        "1726年建的媽祖廟。"
 +      ]
 +    ],
 +    "claimId": "wanhe-temple.construction-1726",
@@ -74587,8 +74588,7 @@ index 0000000..b2db4d4
 +      ],
 +      "zh-TW": [
 +        [
-+          "萬和宮於1726年建成，",
-+          "主祀媽祖。"
++          "1726年建成，主祀媽祖。"
 +        ]
 +      ],
 +      "sources": [
@@ -74606,8 +74606,7 @@ index 0000000..b2db4d4
 +      ],
 +      "zh-TW": [
 +        [
-+          "當地不同姓氏的居民，",
-+          "共同捐資興建宮廟。"
++          "各姓居民共同捐建。"
 +        ]
 +      ],
 +      "sources": [
@@ -74625,7 +74624,7 @@ index 0000000..b2db4d4
 +      ],
 +      "zh-TW": [
 +        [
-+          "字姓戲由不同姓氏輪流，",
++          "字姓戲由各姓輪流，",
 +          "出資演戲酬神。"
 +        ]
 +      ],
@@ -74737,10 +74736,10 @@ index 0000000..b2db4d4
 +}
 diff --git a/data/taichung/landmark-history/wenchang-temple.json b/data/taichung/landmark-history/wenchang-temple.json
 new file mode 100644
-index 0000000..3d451af
+index 0000000..6155380
 --- /dev/null
 +++ b/data/taichung/landmark-history/wenchang-temple.json
-@@ -0,0 +1,176 @@
+@@ -0,0 +1,175 @@
 +{
 +  "schemaVersion": 1,
 +  "status": "source-backed authored integration draft; no native source writes",
@@ -74757,7 +74756,7 @@ index 0000000..3d451af
 +    "zh-TW": [
 +      [
 +        "南屯文昌公廟",
-+        "祠廟源起於1797年。"
++        "始於1797年。"
 +      ]
 +    ],
 +    "claimId": "wenchang-temple.proposal-1797",
@@ -74777,8 +74776,8 @@ index 0000000..3d451af
 +      ],
 +      "zh-TW": [
 +        [
-+          "1797年，地方人士倡議，",
-+          "興建犁頭店文昌祠。"
++          "1797年，地方人士倡建",
++          "犁頭店文昌祠。"
 +        ]
 +      ],
 +      "sources": [
@@ -74796,8 +74795,8 @@ index 0000000..3d451af
 +      ],
 +      "zh-TW": [
 +        [
-+          "1898年，公學校成立時，",
-+          "曾借用廟宇作臨時校舍。"
++          "1898年公學校成立，",
++          "曾借廟作臨時校舍。"
 +        ]
 +      ],
 +      "sources": [
@@ -74815,8 +74814,7 @@ index 0000000..3d451af
 +      ],
 +      "zh-TW": [
 +        [
-+          "現在的廟宇建築，",
-+          "於1973年在此興建。"
++          "現今廟宇建於1973年。"
 +        ]
 +      ],
 +      "sources": [
@@ -446315,7 +446313,7 @@ index 0000000..5ba03a0
 +}
 diff --git a/docs/landmark-history-source-snapshot.json b/docs/landmark-history-source-snapshot.json
 new file mode 100644
-index 0000000..faeb440
+index 0000000..226694b
 --- /dev/null
 +++ b/docs/landmark-history-source-snapshot.json
 @@ -0,0 +1,102 @@
@@ -446327,84 +446325,84 @@ index 0000000..faeb440
 +    {
 +      "landmarkId": "calligraphy-greenway",
 +      "path": "data/taichung/landmark-history/calligraphy-greenway.json",
-+      "sha256": "58ef8c9d1c22e95d25da4df67fc2d1f98ff63f8265635d1a2fda7ee40480bba0",
++      "sha256": "723f1c5a0681522a08934173ddbe99c231f27dee09016e4da50e9d7a6adbb438",
 +      "leaderPages": 2,
 +      "staffPages": 1
 +    },
 +    {
 +      "landmarkId": "fengjia-night-market",
 +      "path": "data/taichung/landmark-history/fengjia-night-market.json",
-+      "sha256": "4e5983a243e3519b7f2f0128f861ec7472a547f93781ee0f38d074e1dd00bb9e",
++      "sha256": "e560cfb42529a9acacaa742b74c61f3c0295a5f0d9d0909cbb9cc9ff6733a764",
 +      "leaderPages": 2,
 +      "staffPages": 1
 +    },
 +    {
 +      "landmarkId": "fine-arts-museum",
 +      "path": "data/taichung/landmark-history/fine-arts-museum.json",
-+      "sha256": "d73ff3591dbe4759ef7ee6fb60bb8dfdfec9395d614f1632a33390f431f86e15",
++      "sha256": "d9349d00eaf89ee98f392b7a4fffbdbb6bbc93afcec54819f10fe6bfd692546b",
 +      "leaderPages": 2,
 +      "staffPages": 1
 +    },
 +    {
 +      "landmarkId": "maple-garden",
 +      "path": "data/taichung/landmark-history/maple-garden.json",
-+      "sha256": "81a19d067a11277c3d55216f015c70398c8930083da1dc3cb16155a955da0967",
++      "sha256": "ed45f84519cc1d5fb3e967e04d64fd1f06c735675f6f0d56e42e14a09212ef80",
 +      "leaderPages": 2,
 +      "staffPages": 1
 +    },
 +    {
 +      "landmarkId": "miyahara",
 +      "path": "data/taichung/landmark-history/miyahara.json",
-+      "sha256": "4c4d80b197856e8d046b7ffccbd14ad50763fb8d8d294f6ab64b8c6cbba751cb",
++      "sha256": "c55b2ad5518c7fc41b352fb0dfa36df77629157251bbe691f651ad16795d7ae2",
 +      "leaderPages": 2,
 +      "staffPages": 1
 +    },
 +    {
 +      "landmarkId": "natural-science-museum",
 +      "path": "data/taichung/landmark-history/natural-science-museum.json",
-+      "sha256": "b82c8a3ce02710161832c6a88865f38cc9d84b83ac269ffc8a596944419c805b",
++      "sha256": "c40677100bcff4a6bfa2448826b85a8ccfc320441a6ccfc49721f651855bf463",
 +      "leaderPages": 2,
 +      "staffPages": 1
 +    },
 +    {
 +      "landmarkId": "old-taichung-station",
 +      "path": "data/taichung/landmark-history/old-taichung-station.json",
-+      "sha256": "1754c293f6b53d865fec6446a0982ab48c82a805d6b0d4bd1f51a4df0ff7fcbf",
++      "sha256": "1a68cccf7e9b7b71f6baeb2d5661f2a997bfb4ce87658a0b008e86198dbf558b",
 +      "leaderPages": 2,
 +      "staffPages": 1
 +    },
 +    {
 +      "landmarkId": "shen-ji-new-village",
 +      "path": "data/taichung/landmark-history/shen-ji-new-village.json",
-+      "sha256": "8253a8115a64a98ac21a27d8de22500d65578e784977cd1f0642875ec52b578e",
++      "sha256": "4892730a5ec1d81832a6790b0aff651436912fc9b12603c44e9e868c2495033e",
 +      "leaderPages": 1,
 +      "staffPages": 1
 +    },
 +    {
 +      "landmarkId": "taichung-park",
 +      "path": "data/taichung/landmark-history/taichung-park.json",
-+      "sha256": "6d62cdcf53df52403c68d957e2e668cc02213667d6411c1327f463cc2851829b",
++      "sha256": "811c4b2a47eb4a236a7f2ecabe43df9d3e472e0770db2b6323260a7394f5cba8",
 +      "leaderPages": 2,
 +      "staffPages": 1
 +    },
 +    {
 +      "landmarkId": "taichung-theater",
 +      "path": "data/taichung/landmark-history/taichung-theater.json",
-+      "sha256": "f60236bc1240fee52d57e471ed339abaf234ccc0e2cd841bae52e188fc678aa8",
++      "sha256": "5f3af3d4017c507759e7b6db2e4593ca96357e12da2aad051aafdff21b60c64f",
 +      "leaderPages": 2,
 +      "staffPages": 2
 +    },
 +    {
 +      "landmarkId": "wanhe-temple",
 +      "path": "data/taichung/landmark-history/wanhe-temple.json",
-+      "sha256": "c7a723f250b15adb5bb64a0867f5cb20577c7cecbeaf8ac22e501a232a14a125",
++      "sha256": "ff60e222325ccf51e11e4cc9b4251b0ecd01c2f59f5eedc4afa609d6c523ab06",
 +      "leaderPages": 3,
 +      "staffPages": 0
 +    },
 +    {
 +      "landmarkId": "wenchang-temple",
 +      "path": "data/taichung/landmark-history/wenchang-temple.json",
-+      "sha256": "b01d4ccaa4c2eb9edd2d1a959ca4d947ebfed50990b0e7054d4329eef264cad3",
++      "sha256": "4731821115c54e89ea92399e8c026255565c0bfcd8bde3d4421829cc014f4154",
 +      "leaderPages": 3,
 +      "staffPages": 0
 +    }
@@ -452113,7 +452111,7 @@ index 0000000..3f58518
 +`python3 tools/taichung_gameplay/inspect-save.py SAVE --expect-wild off --expect-sight low --expect-gyms 0` reads the current variables from a native SRAM export. It verifies the relevant matching sector checksums/counter, accepts mGBA's optional 16-byte RTC trailer, and never writes the save. It checks only sectors 1/2; the actual native Continue above is the full save/load acceptance.
 diff --git a/docs/taichung-gym-progress.md b/docs/taichung-gym-progress.md
 new file mode 100644
-index 0000000..f292d1e
+index 0000000..400b4ce
 --- /dev/null
 +++ b/docs/taichung-gym-progress.md
 @@ -0,0 +1,58 @@
@@ -452152,7 +452150,7 @@ index 0000000..f292d1e
 +
 +## Native City Pass
 +
-+The existing Player row becomes **PASS / 城市護照**. It opens a two-column native GBA screen with all ten names, each `OK` or `--`, and the count out of ten. It adds no tenth Start menu row. **A** opens the original Trainer Card; returning from that card reopens the pass. **B** or **Start** returns to the field menu. The pass only reads saved completion; opening or closing it cannot award progress. The native Save summary and Continue preview also show `GYMS / 道館` and the same `0/10`–`10/10` count. The generic badge-count utilities, badge flags, HM checks, and original Trainer Card still use their native eight-badge state.
++The existing Player row becomes **PASS / 護照**. It opens a two-column native GBA screen with all ten names, each `OK` or `--`, and the count out of ten. It adds no tenth Start menu row. **A** opens the original Trainer Card; returning from that card reopens the pass. **B** or **Start** returns to the field menu. The pass only reads saved completion; opening or closing it cannot award progress. The native Save summary and Continue preview also show `GYMS / 道館` and the same `0/10`–`10/10` count. The generic badge-count utilities, badge flags, HM checks, and original Trainer Card still use their native eight-badge state.
 +
 +English and Traditional Chinese use the existing native language preference and font renderer. The subtitle makes the entries gym stamps rather than a claim that the vanilla eight-badge Trainer Card now represents ten gyms.
 +
@@ -459109,10 +459107,10 @@ index 0000000..078837e
 +};
 diff --git a/src/data/taichung_glyphs.h b/src/data/taichung_glyphs.h
 new file mode 100644
-index 0000000..fc52a92
+index 0000000..0c54faf
 --- /dev/null
 +++ b/src/data/taichung_glyphs.h
-@@ -0,0 +1,774 @@
+@@ -0,0 +1,775 @@
 +// Generated by tools/taichung_gameplay/refresh-chinese-glyphs.py.
 +// Taichung Native Bitmap12; source/licenses: assets/fonts/taichung-native-font.json
 +static const u16 sTaichungChineseGlyphs[][14] = {
@@ -459886,6 +459884,7 @@ index 0000000..fc52a92
 +    {0x000, 0x000, 0x7f4, 0x41a, 0x631, 0x55e, 0x7f4, 0x49f, 0x6b4, 0x6bd, 0x7f6, 0x41c, 0x613, 0x000}, // 767: 鋼
 +    {0x000, 0x000, 0x28a, 0x79e, 0x2cb, 0x79e, 0x28a, 0x79e, 0x000, 0x3fe, 0x104, 0x0f8, 0x707, 0x000}, // 768: 雙
 +    {0x000, 0x000, 0x2ff, 0x180, 0x294, 0x493, 0x712, 0x012, 0x2ff, 0x192, 0x292, 0x492, 0x711, 0x000}, // 769: 飛
++    {0x000, 0x000, 0x3fe, 0x222, 0x2aa, 0x222, 0x3fe, 0x020, 0x3fe, 0x020, 0x7ff, 0x24a, 0x491, 0x000}, // 770: 黑
 +};
 diff --git a/src/data/taichung_team_presets.h b/src/data/taichung_team_presets.h
 new file mode 100644
@@ -462662,7 +462661,7 @@ index 41eebd8..77c6629 100644
          for (i = 0; i < count; i++)
          {
 diff --git a/src/start_menu.c b/src/start_menu.c
-index 88cc377..7301aec 100644
+index 88cc377..e875649 100644
 --- a/src/start_menu.c
 +++ b/src/start_menu.c
 @@ -5,6 +5,13 @@
@@ -462712,11 +462711,11 @@ index 88cc377..7301aec 100644
 +static const u8 sText_StartPass[] = _("PASS");
 +static const u8 sText_StartTeam[] = _("TEAM");
 +static const u8 sText_StartTeamZh[] = _("隊伍");
-+static const u8 sText_StartPassZh[] = _("城市護照");
++static const u8 sText_StartPassZh[] = _("護照");
 +static const u8 sText_StartPokedexZh[] = _("圖鑑");
 +static const u8 sText_StartPokemonZh[] = _("寶可夢");
 +static const u8 sText_StartBagZh[] = _("背包");
-+static const u8 sText_StartBikeZh[] = _("騎腳踏車");
++static const u8 sText_StartBikeZh[] = _("騎車");
 +static const u8 sText_StartGetOffBikeZh[] = _("下車");
 +static const u8 sText_StartPlayerZh[] = _("訓練家");
 +static const u8 sText_StartSaveZh[] = _("儲存");
@@ -463400,7 +463399,7 @@ index 0000000..de422b2
 +}
 diff --git a/src/taichung_city_pass.c b/src/taichung_city_pass.c
 new file mode 100644
-index 0000000..13027ac
+index 0000000..bdeddb3
 --- /dev/null
 +++ b/src/taichung_city_pass.c
 @@ -0,0 +1,309 @@
@@ -463438,7 +463437,7 @@ index 0000000..13027ac
 +static const u8 sLockedEn[] = _("NOT YET");
 +static const u8 sLockedZh[] = _("未獲得");
 +static const u8 sAwardTextEn[] = _("You earned the");
-+static const u8 sAwardTextZh[] = _("你獲得了");
++static const u8 sAwardTextZh[] = _("獲得了");
 +static const u8 sFooterEn[] = _("D-pad: badges  A: card  B: back");
 +static const u8 sFooterZh[] = _("方向鍵選擇  A卡片  B返回");
 +static const u8 sAdvance[] = _("A");
@@ -463787,10 +463786,10 @@ index 0000000..e396c0f
 +}
 diff --git a/src/taichung_exploration_menu.c b/src/taichung_exploration_menu.c
 new file mode 100644
-index 0000000..f65329e
+index 0000000..eb6392b
 --- /dev/null
 +++ b/src/taichung_exploration_menu.c
-@@ -0,0 +1,222 @@
+@@ -0,0 +1,271 @@
 +#include "global.h"
 +#include "gflib.h"
 +#include "main.h"
@@ -463803,11 +463802,12 @@ index 0000000..f65329e
 +#include "taichung_exploration.h"
 +#include "taichung_exploration_menu.h"
 +#include "taichung_language.h"
++#include "event_data.h"
 +#include "constants/songs.h"
 +
 +static EWRAM_DATA MainCallback sReturnCallback = NULL;
 +static EWRAM_DATA u8 sModes[TAICHUNG_EXPLORATION_SETTING_COUNT] = {};
-+static EWRAM_DATA u8 sCursor = 2;
++static EWRAM_DATA u8 sCursor = 0;
 +static EWRAM_DATA bool8 sStartup = FALSE;
 +
 +static void CB2_InitExplorationMenu(void);
@@ -463815,14 +463815,30 @@ index 0000000..f65329e
 +static void CB2_ReopenExplorationMenu(void);
 +static void Task_ExplorationMenuInput(u8 taskId);
 +
-+static const u8 sTitleEn[] = _("EXPLORATION");
-+static const u8 sTitleZh[] = _("探索設定");
-+static const u8 sSubtitleEn[] = _("CHOOSE YOUR PACE");
-+static const u8 sSubtitleZh[] = _("選擇你的探索步調");
-+static const u8 sWildEn[] = _("WILD");
-+static const u8 sWildZh[] = _("野生遭遇");
-+static const u8 sSightEn[] = _("TRAINER SIGHT");
-+static const u8 sSightZh[] = _("視線挑戰");
++// Rows, top to bottom: the game's language first, then the two encounter
++// settings, then CONTINUE and (outside the opening) the native options.
++enum
++{
++    ROW_LANGUAGE,
++    ROW_WILD,
++    ROW_SIGHT,
++    ROW_CONTINUE,
++    ROW_OPTIONS,
++};
++#define ROW_FIRST_SETTING ROW_WILD
++
++static const u8 sTitleEn[] = _("SETTINGS");
++static const u8 sTitleZh[] = _("設定");
++static const u8 sSubtitleEn[] = _("LANGUAGE AND ENCOUNTERS");
++static const u8 sSubtitleZh[] = _("語言與遭遇");
++static const u8 sLanguageEn[] = _("LANGUAGE");
++static const u8 sLanguageZh[] = _("語言");
++static const u8 sEnglish[] = _("English");
++static const u8 sChinese[] = _("繁體中文");
++static const u8 sWildEn[] = _("WILD POKéMON ENCOUNTERS");
++static const u8 sWildZh[] = _("野生寶可夢遭遇");
++static const u8 sSightEn[] = _("TRAINER ENCOUNTERS");
++static const u8 sSightZh[] = _("訓練家遭遇");
 +static const u8 sOffEn[] = _("Off");
 +static const u8 sOffZh[] = _("關閉");
 +static const u8 sLowEn[] = _("Low");
@@ -463830,29 +463846,38 @@ index 0000000..f65329e
 +static const u8 sNormalEn[] = _("Normal");
 +static const u8 sNormalZh[] = _("正常");
 +static const u8 sContinueEn[] = _("CONTINUE (A)");
-+static const u8 sContinueZh[] = _("繼續探索 (A)");
++static const u8 sContinueZh[] = _("繼續 (A)");
 +static const u8 sOptionsEn[] = _("GAME OPTIONS");
 +static const u8 sOptionsZh[] = _("遊戲設定");
 +static const u8 sCursorText[] = _(">");
 +static const u8 sFooterEn[] = _("Up/Down: row   Left/Right: change   B: back");
-+static const u8 sFooterZh[] = _("上下選列 左右調整 A確認 B返回");
-+static const u8 sWildHelpEn[] = _("Random wild battles only.\nExplicit encounters still work.");
-+static const u8 sWildHelpZh[] = _("僅調整隨機野生對戰。\n主動互動仍可開始對戰。");
-+static const u8 sSightHelpEn[] = _("Automatic sight challenges only.\nTalk to trainers to battle any time.");
-+static const u8 sSightHelpZh[] = _("調整訓練家主動挑戰距離。\n主動交談仍可開始對戰。");
++static const u8 sFooterZh[] = _("上下選列 左右調整 B返回");
++static const u8 sLanguageHelpEn[] = _("The language for all game text.\nChange it any time in OPTION.");
++static const u8 sLanguageHelpZh[] = _("遊戲文字的語言，\n隨時可在設定更改。");
++static const u8 sWildHelpEn[] = _("Wild POKéMON that jump out of grass\nand water. Low: rarer. Off: never.");
++static const u8 sWildHelpZh[] = _("草叢與水面的野生寶可夢。\n減少：少見。關閉：不出現。");
++static const u8 sSightHelpEn[] = _("Trainers who battle you on sight.\nLow: only up close. Off: never.");
++static const u8 sSightHelpZh[] = _("看到你就挑戰的訓練家。\n減少：要靠近。關閉：不挑戰。");
 +static const u8 sContinueHelpEn[] = _("Preferences are saved with your game.\nYou can change them again in OPTION.");
-+static const u8 sContinueHelpZh[] = _("偏好會存入遊戲存檔。\n可從設定選單再次調整。");
++static const u8 sContinueHelpZh[] = _("偏好隨存檔保存，\n可在設定選單再改。");
 +static const u8 sOptionsHelpEn[] = _("Text speed, battle style, sound,\nand other native game options.");
-+static const u8 sOptionsHelpZh[] = _("文字速度、對戰方式、\n音效及其他遊戲設定。");
++static const u8 sOptionsHelpZh[] = _("文字速度、對戰方式、\n音效等設定。");
 +
 +static const u8 *const sModeNames[][2] = {
 +    {sOffEn, sOffZh}, {sLowEn, sLowZh}, {sNormalEn, sNormalZh}
 +};
++static const u8 *const sSettingNames[][2] = {
++    {sWildEn, sWildZh}, {sSightEn, sSightZh}
++};
 +static const u8 *const sHelp[][2] = {
++    {sLanguageHelpEn, sLanguageHelpZh},
 +    {sWildHelpEn, sWildHelpZh}, {sSightHelpEn, sSightHelpZh},
 +    {sContinueHelpEn, sContinueHelpZh}, {sOptionsHelpEn, sOptionsHelpZh}
 +};
-+static const u8 sRowY[] = {40, 58, 78, 94};
++static const u8 sRowY[] = {38, 54, 70, 88, 102};
++// Choice columns: Off/Low/Normal, and English/Chinese on the language row.
++static const u8 sModeX[] = {130, 162, 196};
++static const u8 sLanguageX[] = {130, 176};
 +static const u16 sPalette[] = {
 +    RGB(31, 30, 27), RGB(31, 30, 27), RGB(3, 10, 8), RGB(19, 22, 18),
 +    RGB(5, 19, 10), RGB(31, 30, 27), RGB(31, 30, 27), RGB(31, 30, 27),
@@ -463870,24 +463895,32 @@ index 0000000..f65329e
 +    DUMMY_WIN_TEMPLATE
 +};
 +
++static u8 CurrentLanguage(void)
++{
++    return TaichungIsChinese() ? TAICHUNG_LANGUAGE_ZH : TAICHUNG_LANGUAGE_EN;
++}
++
 +static void DrawExplorationMenu(void)
 +{
 +    u8 row, mode;
 +    FillWindowPixelBuffer(0, PIXEL_FILL(1));
 +    AddTextPrinterParameterized3(0, FONT_NORMAL, 8, 4, sTextColors, -1, TaichungText(sTitleEn, sTitleZh));
 +    AddTextPrinterParameterized3(0, FONT_SMALL, 8, 22, sMutedColors, -1, TaichungText(sSubtitleEn, sSubtitleZh));
-+    AddTextPrinterParameterized3(0, FONT_SMALL, 18, sRowY[0], sTextColors, -1, TaichungText(sWildEn, sWildZh));
-+    AddTextPrinterParameterized3(0, FONT_SMALL, 18, sRowY[1], sTextColors, -1, TaichungText(sSightEn, sSightZh));
++    // Each language is named in its own script, whichever one is active.
++    AddTextPrinterParameterized3(0, FONT_SMALL, 12, sRowY[ROW_LANGUAGE], sTextColors, -1, TaichungText(sLanguageEn, sLanguageZh));
++    AddTextPrinterParameterized3(0, FONT_SMALL, sLanguageX[0], sRowY[ROW_LANGUAGE], CurrentLanguage() == TAICHUNG_LANGUAGE_EN ? sSelectedColors : sMutedColors, -1, sEnglish);
++    AddTextPrinterParameterized3(0, FONT_SMALL, sLanguageX[1], sRowY[ROW_LANGUAGE], CurrentLanguage() == TAICHUNG_LANGUAGE_ZH ? sSelectedColors : sMutedColors, -1, sChinese);
 +    for (row = 0; row < TAICHUNG_EXPLORATION_SETTING_COUNT; row++)
 +    {
++        AddTextPrinterParameterized3(0, FONT_SMALL, 12, sRowY[ROW_FIRST_SETTING + row], sTextColors, -1, TaichungText(sSettingNames[row][0], sSettingNames[row][1]));
 +        for (mode = TAICHUNG_EXPLORATION_OFF; mode <= TAICHUNG_EXPLORATION_NORMAL; mode++)
-+            AddTextPrinterParameterized3(0, FONT_SMALL, 124 + (mode - 1) * 36, sRowY[row], sModes[row] == mode ? sSelectedColors : sMutedColors, -1, TaichungText(sModeNames[mode - 1][0], sModeNames[mode - 1][1]));
++            AddTextPrinterParameterized3(0, FONT_SMALL, sModeX[mode - 1], sRowY[ROW_FIRST_SETTING + row], sModes[row] == mode ? sSelectedColors : sMutedColors, -1, TaichungText(sModeNames[mode - 1][0], sModeNames[mode - 1][1]));
 +    }
-+    AddTextPrinterParameterized3(0, FONT_SMALL, 18, sRowY[2], sTextColors, -1, TaichungText(sContinueEn, sContinueZh));
++    AddTextPrinterParameterized3(0, FONT_SMALL, 12, sRowY[ROW_CONTINUE], sTextColors, -1, TaichungText(sContinueEn, sContinueZh));
 +    if (!sStartup)
-+        AddTextPrinterParameterized3(0, FONT_SMALL, 18, sRowY[3], sTextColors, -1, TaichungText(sOptionsEn, sOptionsZh));
-+    AddTextPrinterParameterized3(0, FONT_SMALL, 6, sRowY[sCursor], sSelectedColors, -1, sCursorText);
-+    AddTextPrinterParameterized3(0, FONT_SMALL, 8, 112, sTextColors, -1, TaichungText(sHelp[sCursor][0], sHelp[sCursor][1]));
++        AddTextPrinterParameterized3(0, FONT_SMALL, 12, sRowY[ROW_OPTIONS], sTextColors, -1, TaichungText(sOptionsEn, sOptionsZh));
++    AddTextPrinterParameterized3(0, FONT_SMALL, 4, sRowY[sCursor], sSelectedColors, -1, sCursorText);
++    AddTextPrinterParameterized3(0, FONT_SMALL, 8, 116, sTextColors, -1, TaichungText(sHelp[sCursor][0], sHelp[sCursor][1]));
 +    AddTextPrinterParameterized3(0, FONT_SMALL, 8, 145, sMutedColors, -1, TaichungText(sFooterEn, sFooterZh));
 +    PutWindowTilemap(0);
 +    CopyWindowToVram(0, COPYWIN_FULL);
@@ -463896,9 +463929,15 @@ index 0000000..f65329e
 +void ShowTaichungExplorationMenu(MainCallback returnCallback, bool8 startup)
 +{
 +    u8 setting;
++    u16 language;
 +    sReturnCallback = returnCallback;
 +    sStartup = startup;
-+    sCursor = 2; // A single A accepts the current/default pair.
++    sCursor = ROW_CONTINUE; // A single A accepts the shown language and pair.
++    // A new game reaches this screen before any language is stored: start
++    // from English so the opening never waits on a separate language prompt.
++    language = gSaveBlock1Ptr->vars[TAICHUNG_LANGUAGE_VAR - VARS_START];
++    if (language != TAICHUNG_LANGUAGE_EN && language != TAICHUNG_LANGUAGE_ZH)
++        VarSet(TAICHUNG_LANGUAGE_VAR, TAICHUNG_LANGUAGE_EN);
 +    for (setting = 0; setting < TAICHUNG_EXPLORATION_SETTING_COUNT; setting++)
 +        sModes[setting] = TaichungExplorationGetMode(setting);
 +    SetMainCallback2(CB2_InitExplorationMenu);
@@ -463967,7 +464006,7 @@ index 0000000..f65329e
 +
 +static void Task_ExplorationMenuInput(u8 taskId)
 +{
-+    u8 rows = sStartup ? 3 : 4;
++    u8 rows = sStartup ? ROW_OPTIONS : ROW_OPTIONS + 1;
 +    u8 setting;
 +    u8 choice;
 +    if (gPaletteFade.active)
@@ -463987,23 +464026,32 @@ index 0000000..f65329e
 +            SetMainCallback2(sReturnCallback);
 +        return;
 +    }
-+    if (JOY_NEW(B_BUTTON) || (JOY_NEW(A_BUTTON) && sCursor >= 2))
++    if (JOY_NEW(B_BUTTON) || (JOY_NEW(A_BUTTON) && sCursor >= ROW_CONTINUE))
 +    {
 +        for (setting = 0; setting < TAICHUNG_EXPLORATION_SETTING_COUNT; setting++)
 +            TaichungExplorationSetMode(setting, sModes[setting]);
-+        gTasks[taskId].data[0] = JOY_NEW(A_BUTTON) && sCursor == 3 ? 2 : 1;
++        gTasks[taskId].data[0] = JOY_NEW(A_BUTTON) && sCursor == ROW_OPTIONS ? 2 : 1;
 +        BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
 +    }
 +    else if (JOY_NEW(DPAD_UP))
 +        sCursor = (sCursor + rows - 1) % rows;
 +    else if (JOY_NEW(DPAD_DOWN))
 +        sCursor = (sCursor + 1) % rows;
-+    else if (sCursor < TAICHUNG_EXPLORATION_SETTING_COUNT)
++    else if (sCursor == ROW_LANGUAGE)
 +    {
++        // Two choices, so any change flips it. The screen redraws in the new
++        // language at once, and the web player follows the saved value.
++        if (!JOY_NEW(DPAD_LEFT | DPAD_RIGHT | A_BUTTON))
++            return;
++        VarSet(TAICHUNG_LANGUAGE_VAR, CurrentLanguage() == TAICHUNG_LANGUAGE_ZH ? TAICHUNG_LANGUAGE_EN : TAICHUNG_LANGUAGE_ZH);
++    }
++    else if (sCursor < ROW_CONTINUE)
++    {
++        setting = sCursor - ROW_FIRST_SETTING;
 +        if (JOY_NEW(DPAD_LEFT))
-+            sModes[sCursor] = sModes[sCursor] == TAICHUNG_EXPLORATION_OFF ? TAICHUNG_EXPLORATION_NORMAL : sModes[sCursor] - 1;
++            sModes[setting] = sModes[setting] == TAICHUNG_EXPLORATION_OFF ? TAICHUNG_EXPLORATION_NORMAL : sModes[setting] - 1;
 +        else if (JOY_NEW(DPAD_RIGHT | A_BUTTON))
-+            sModes[sCursor] = sModes[sCursor] == TAICHUNG_EXPLORATION_NORMAL ? TAICHUNG_EXPLORATION_OFF : sModes[sCursor] + 1;
++            sModes[setting] = sModes[setting] == TAICHUNG_EXPLORATION_NORMAL ? TAICHUNG_EXPLORATION_OFF : sModes[setting] + 1;
 +        else
 +            return;
 +    }
@@ -464015,7 +464063,7 @@ index 0000000..f65329e
 +}
 diff --git a/src/taichung_fengjia_gym.c b/src/taichung_fengjia_gym.c
 new file mode 100644
-index 0000000..b0c87d2
+index 0000000..da8e224
 --- /dev/null
 +++ b/src/taichung_fengjia_gym.c
 @@ -0,0 +1,40 @@
@@ -464024,25 +464072,25 @@ index 0000000..b0c87d2
 +
 +// Story paired draft; roster/moves and exact prose remain revisable defaults.
 +const u8 TaichungGym_Text_FengjiaGreetingEn[] = _("I'm Jiahe. Chef on duty!\nGood food takes teamwork.");
-+const u8 TaichungGym_Text_FengjiaGreetingZh[] = _("我是嘉禾，今晚主廚是我！\n好料理，也要靠好默契。");
++const u8 TaichungGym_Text_FengjiaGreetingZh[] = _("我是嘉禾，今晚掌廚！\n好料理靠默契。");
 +const u8 TaichungGym_Text_FengjiaOfferEn[] = _("Want a Fengjia gym challenge?\nA win earns this gym's badge.");
-+const u8 TaichungGym_Text_FengjiaOfferZh[] = _("想挑戰逢甲道館嗎？\n獲勝就能得到這裡的徽章。");
++const u8 TaichungGym_Text_FengjiaOfferZh[] = _("想挑戰逢甲道館嗎？\n獲勝可得徽章。");
 +const u8 TaichungGym_Text_FengjiaIntroEn[] = _("Good timing brings it all.\nLet's see your combination!");
-+const u8 TaichungGym_Text_FengjiaIntroZh[] = _("搭配得好，也要抓對時機。\n讓我看看你的組合吧！");
++const u8 TaichungGym_Text_FengjiaIntroZh[] = _("搭配要抓對時機。\n看看你的組合吧！");
 +const u8 TaichungGym_Text_FengjiaDefeatEn[] = _("Now that hit the spot!");
-+const u8 TaichungGym_Text_FengjiaDefeatZh[] = _("這個組合，正對味！");
++const u8 TaichungGym_Text_FengjiaDefeatZh[] = _("這組合正對味！");
 +const u8 TaichungGym_Text_FengjiaDeclinedEn[] = _("Sure! Go enjoy your evening.\nOr afternoon. I lose track.");
-+const u8 TaichungGym_Text_FengjiaDeclinedZh[] = _("好啊，慢慢享受今晚！\n還是下午？我聊到忘了。");
++const u8 TaichungGym_Text_FengjiaDeclinedZh[] = _("好啊，享受今晚吧！\n還是下午？我忘了。");
 +const u8 TaichungGym_Text_FengjiaAlreadyEn[] = _("Your Fengjia badge is safe.\nNow, have I had dinner yet?");
-+const u8 TaichungGym_Text_FengjiaAlreadyZh[] = _("逢甲徽章已經記好了。\n所以，我晚餐吃了沒啊？");
++const u8 TaichungGym_Text_FengjiaAlreadyZh[] = _("逢甲徽章記好了。\n所以，我晚餐吃了沒？");
 +const u8 TaichungGym_Text_FengjiaLossEn[] = _("That batch came out uneven.\nRest up. Try a new mix.");
-+const u8 TaichungGym_Text_FengjiaLossZh[] = _("這一回，火候沒抓得太準。\n休息一下，下次換個搭配。");
++const u8 TaichungGym_Text_FengjiaLossZh[] = _("這回火候沒抓準。\n先休息，換個搭配！");
 +const u8 TaichungGym_Text_FengjiaNotRecordedEn[] = _("No new badge was recorded.\nYou're welcome to try again.");
-+const u8 TaichungGym_Text_FengjiaNotRecordedZh[] = _("這次沒有新增徽章。\n歡迎再次挑戰。");
++const u8 TaichungGym_Text_FengjiaNotRecordedZh[] = _("沒有新增徽章。\n歡迎再挑戰！");
 +const u8 TaichungGym_Text_FengjiaUnavailableEn[] = _("Bring a POKéMON partner\nwhen you're ready to battle.");
-+const u8 TaichungGym_Text_FengjiaUnavailableZh[] = _("準備對戰時，\n請帶著你的寶可夢夥伴。");
++const u8 TaichungGym_Text_FengjiaUnavailableZh[] = _("帶寶可夢夥伴\n來對戰吧！");
 +const u8 TaichungGym_Text_FengjiaCompleteEn[] = _("Good timing. Great teamwork.\nWish I'd thought of that mix.\pFengjia badge recorded!\nKeep exploring at your pace.");
-+const u8 TaichungGym_Text_FengjiaCompleteZh[] = _("時機漂亮，默契也好。\n這個搭配，我怎麼沒想到。\p逢甲徽章已記在城市護照。\n照你的步調，繼續探索吧。");
++const u8 TaichungGym_Text_FengjiaCompleteZh[] = _("時機好，默契更好！\n這搭配我怎麼沒想到？\p逢甲徽章記入城市護照！\n慢慢探索吧。");
 +
 +static const u8 *const sMessages[][2] = {
 +    [TAICHUNG_GYM_MESSAGE_OFFER] = {TaichungGym_Text_FengjiaOfferEn, TaichungGym_Text_FengjiaOfferZh},
@@ -464061,7 +464109,7 @@ index 0000000..b0c87d2
 +}
 diff --git a/src/taichung_fine_arts_gym.c b/src/taichung_fine_arts_gym.c
 new file mode 100644
-index 0000000..3fccd9b
+index 0000000..ff0d732
 --- /dev/null
 +++ b/src/taichung_fine_arts_gym.c
 @@ -0,0 +1,40 @@
@@ -464070,25 +464118,25 @@ index 0000000..3fccd9b
 +
 +// Story paired draft; roster/moves and exact prose remain revisable defaults.
 +const u8 TaichungGym_Text_FineArtsGreetingEn[] = _("I'm Caining. Clay and color!\nMind the wet canvas.");
-+const u8 TaichungGym_Text_FineArtsGreetingZh[] = _("我是采寧，畫畫也做雕塑！\n小心，畫布上的顏料還沒乾。");
++const u8 TaichungGym_Text_FineArtsGreetingZh[] = _("我是采寧，畫畫也雕塑！\n小心，畫布還沒乾。");
 +const u8 TaichungGym_Text_FineArtsOfferEn[] = _("Try a Fine Arts challenge?\nA win earns this gym's badge.");
-+const u8 TaichungGym_Text_FineArtsOfferZh[] = _("想挑戰美術館道館嗎？\n獲勝就能得到這裡的徽章。");
++const u8 TaichungGym_Text_FineArtsOfferZh[] = _("想挑戰美術館道館嗎？\n獲勝可得徽章。");
 +const u8 TaichungGym_Text_FineArtsIntroEn[] = _("Canvas clear. Colors ready!\nLet's make a bold composition.");
-+const u8 TaichungGym_Text_FineArtsIntroZh[] = _("畫布就位，顏色準備好了！\n來一個大膽的構圖吧。");
++const u8 TaichungGym_Text_FineArtsIntroZh[] = _("畫布、顏料就位！\n來個大膽構圖吧！");
 +const u8 TaichungGym_Text_FineArtsDefeatEn[] = _("Now that is a work of art!");
-+const u8 TaichungGym_Text_FineArtsDefeatZh[] = _("這一場，根本就是作品！");
++const u8 TaichungGym_Text_FineArtsDefeatZh[] = _("真是件藝術品！");
 +const u8 TaichungGym_Text_FineArtsDeclinedEn[] = _("Good. Leave a little space.\nSomething might turn up in it.");
-+const u8 TaichungGym_Text_FineArtsDeclinedZh[] = _("好啊，先留一點空白。\n說不定會長出新的點子。");
++const u8 TaichungGym_Text_FineArtsDeclinedZh[] = _("好啊，先留白。\n說不定會長出點子。");
 +const u8 TaichungGym_Text_FineArtsAlreadyEn[] = _("Your Fine Arts badge is safe.\nMy sleeves have fresh paint.");
-+const u8 TaichungGym_Text_FineArtsAlreadyZh[] = _("美術館徽章已經記好了。\n我的袖口倒是又沾了新顏料。");
++const u8 TaichungGym_Text_FineArtsAlreadyZh[] = _("美術館徽章記好了。\n袖口又沾了新顏料。");
 +const u8 TaichungGym_Text_FineArtsLossEn[] = _("A rough study, not a failure.\nLet the paint dry. Try again.");
-+const u8 TaichungGym_Text_FineArtsLossZh[] = _("這是草稿，不是失敗。\n等顏料乾一點，再來試。");
++const u8 TaichungGym_Text_FineArtsLossZh[] = _("這是草稿，不是失敗。\n等顏料乾了再試。");
 +const u8 TaichungGym_Text_FineArtsNotRecordedEn[] = _("No new badge was recorded.\nYou're welcome to try again.");
-+const u8 TaichungGym_Text_FineArtsNotRecordedZh[] = _("這次沒有新增徽章。\n歡迎再次挑戰。");
++const u8 TaichungGym_Text_FineArtsNotRecordedZh[] = _("沒有新增徽章。\n歡迎再挑戰！");
 +const u8 TaichungGym_Text_FineArtsUnavailableEn[] = _("Bring a POKéMON partner\nwhen you're ready to battle.");
-+const u8 TaichungGym_Text_FineArtsUnavailableZh[] = _("準備對戰時，\n請帶著你的寶可夢夥伴。");
++const u8 TaichungGym_Text_FineArtsUnavailableZh[] = _("帶寶可夢夥伴\n來對戰吧！");
 +const u8 TaichungGym_Text_FineArtsCompleteEn[] = _("What contrast! What a finish!\nI'll remember those colors.\pFine Arts badge recorded!\nKeep exploring at your pace.");
-+const u8 TaichungGym_Text_FineArtsCompleteZh[] = _("這個對比！這個收尾！\n這組配色，我要記下來。\p美術館徽章已記在城市護照。\n照你的步調，繼續探索吧。");
++const u8 TaichungGym_Text_FineArtsCompleteZh[] = _("好對比！好收尾！\n這配色我要記下來。\p美術館徽章記入城市護照！\n慢慢探索吧。");
 +
 +static const u8 *const sMessages[][2] = {
 +    [TAICHUNG_GYM_MESSAGE_OFFER] = {TaichungGym_Text_FineArtsOfferEn, TaichungGym_Text_FineArtsOfferZh},
@@ -464107,7 +464155,7 @@ index 0000000..3fccd9b
 +}
 diff --git a/src/taichung_greenway_gym.c b/src/taichung_greenway_gym.c
 new file mode 100644
-index 0000000..1b4e48f
+index 0000000..36192c5
 --- /dev/null
 +++ b/src/taichung_greenway_gym.c
 @@ -0,0 +1,40 @@
@@ -464116,25 +464164,25 @@ index 0000000..1b4e48f
 +
 +// Story paired draft; roster/moves and exact prose remain revisable defaults.
 +const u8 TaichungGym_Text_GreenwayGreetingEn[] = _("I'm Xingan. Ink and gardens.\nA good path, a good stroke.");
-+const u8 TaichungGym_Text_GreenwayGreetingZh[] = _("我是行安，寫字也造花園。\n好的步道，也有好的筆勢。");
++const u8 TaichungGym_Text_GreenwayGreetingZh[] = _("我是行安，寫字也造園。\n好步道，好筆勢。");
 +const u8 TaichungGym_Text_GreenwayOfferEn[] = _("Want a Greenway challenge?\nA win earns this gym's badge.");
-+const u8 TaichungGym_Text_GreenwayOfferZh[] = _("想挑戰草悟道道館嗎？\n獲勝就能得到這裡的徽章。");
++const u8 TaichungGym_Text_GreenwayOfferZh[] = _("想挑戰草悟道道館嗎？\n獲勝可得徽章。");
 +const u8 TaichungGym_Text_GreenwayIntroEn[] = _("Brush up. Let the green flow!\nShow me your boldest stroke.");
-+const u8 TaichungGym_Text_GreenwayIntroZh[] = _("提筆，讓綠意流動！\n讓我看看你最大膽的一筆。");
++const u8 TaichungGym_Text_GreenwayIntroZh[] = _("提筆，讓綠意流動！\n看你最大膽的一筆！");
 +const u8 TaichungGym_Text_GreenwayDefeatEn[] = _("What a lively brushstroke!");
-+const u8 TaichungGym_Text_GreenwayDefeatZh[] = _("這一筆，真有生命力！");
++const u8 TaichungGym_Text_GreenwayDefeatZh[] = _("這筆真有生命力！");
 +const u8 TaichungGym_Text_GreenwayDeclinedEn[] = _("Sure. Leave some blank space.\nA new stroke can wait.");
-+const u8 TaichungGym_Text_GreenwayDeclinedZh[] = _("好啊，先留一點空白。\n下一筆，可以晚點再下。");
++const u8 TaichungGym_Text_GreenwayDeclinedZh[] = _("好啊，先留白。\n下一筆晚點再下。");
 +const u8 TaichungGym_Text_GreenwayAlreadyEn[] = _("Your Greenway badge is safe.\nMy garden sketch grows on.");
-+const u8 TaichungGym_Text_GreenwayAlreadyZh[] = _("草悟道徽章已經記好了。\n我的植栽草圖倒是越畫越大。");
++const u8 TaichungGym_Text_GreenwayAlreadyZh[] = _("草悟道徽章記好了。\n植栽草圖越畫越大。");
 +const u8 TaichungGym_Text_GreenwayLossEn[] = _("The strokes tangled a little.\nRest. Try a fresh page later.");
-+const u8 TaichungGym_Text_GreenwayLossZh[] = _("筆畫剛才有點纏在一起。\n歇一下，下次換張新紙。");
++const u8 TaichungGym_Text_GreenwayLossZh[] = _("筆畫纏在一起了。\n歇一下，換張新紙。");
 +const u8 TaichungGym_Text_GreenwayNotRecordedEn[] = _("No new badge was recorded.\nYou're welcome to try again.");
-+const u8 TaichungGym_Text_GreenwayNotRecordedZh[] = _("這次沒有新增徽章。\n歡迎再次挑戰。");
++const u8 TaichungGym_Text_GreenwayNotRecordedZh[] = _("沒有新增徽章。\n歡迎再挑戰！");
 +const u8 TaichungGym_Text_GreenwayUnavailableEn[] = _("Bring a POKéMON partner\nwhen you're ready to battle.");
-+const u8 TaichungGym_Text_GreenwayUnavailableZh[] = _("準備對戰時，\n請帶著你的寶可夢夥伴。");
++const u8 TaichungGym_Text_GreenwayUnavailableZh[] = _("帶寶可夢夥伴\n來對戰吧！");
 +const u8 TaichungGym_Text_GreenwayCompleteEn[] = _("Bold strokes. Space to grow.\nThat's a garden I would visit.\pGreenway badge recorded!\nKeep exploring at your pace.");
-+const u8 TaichungGym_Text_GreenwayCompleteZh[] = _("筆勢大膽，也留得住空間。\n這樣的花園，我會想去逛。\p草悟道徽章已記在城市護照。\n照你的步調，繼續探索吧。");
++const u8 TaichungGym_Text_GreenwayCompleteZh[] = _("筆勢大膽，又會留白。\n這花園我想去逛！\p草悟道徽章記入城市護照！\n慢慢探索吧。");
 +
 +static const u8 *const sMessages[][2] = {
 +    [TAICHUNG_GYM_MESSAGE_OFFER] = {TaichungGym_Text_GreenwayOfferEn, TaichungGym_Text_GreenwayOfferZh},
@@ -464153,7 +464201,7 @@ index 0000000..1b4e48f
 +}
 diff --git a/src/taichung_guest_house.c b/src/taichung_guest_house.c
 new file mode 100644
-index 0000000..7f8bd85
+index 0000000..f74ba41
 --- /dev/null
 +++ b/src/taichung_guest_house.c
 @@ -0,0 +1,57 @@
@@ -464167,13 +464215,13 @@ index 0000000..7f8bd85
 +// table (taichung_language.c) stays as it is.
 +
 +static const u8 sCallDownstairsEn[] = _("XIAOYU: Good morning!\nCome down when you're ready!");
-+static const u8 sCallDownstairsZh[] = _("小雨：早安！\n準備好就下樓來吧！");
++static const u8 sCallDownstairsZh[] = _("小雨：早安！\n準備好就下樓吧！");
 +static const u8 sConsoleEn[] = _("It's a game console.\nNot now. Taichung is waiting!");
-+static const u8 sConsoleZh[] = _("是遊戲機。\n現在先不玩，臺中在等你！");
++static const u8 sConsoleZh[] = _("是遊戲機。\n先不玩，臺中在等你！");
 +static const u8 sLaptopEn[] = _("Your laptop. Today's plan:\nExplore Taichung, win badges!");
-+static const u8 sLaptopZh[] = _("你的筆電。今天的計畫：\n探索臺中，贏取徽章！");
++static const u8 sLaptopZh[] = _("你的筆電。今天計畫：\n探索臺中，贏徽章！");
 +static const u8 sPosterEn[] = _("A map of Taichung.\nOld Station is next door!");
-+static const u8 sPosterZh[] = _("是一張臺中地圖。\n舊車站就在旁邊！");
++static const u8 sPosterZh[] = _("是臺中地圖。\n舊車站就在旁邊！");
 +static const u8 sWelcomeEn[] = _(
 +    "Morning! Did you sleep well?\nI'm Xiaoyu, your city guide.\p"
 +    "Welcome to my guest house!\nOld Station is next door.\p"
@@ -464182,24 +464230,24 @@ index 0000000..7f8bd85
 +    "And ice cream at Miyahara!\nI never skip a sweet detour.\p"
 +    "Meet our City League leaders.\nWin badges at open gyms.");
 +static const u8 sWelcomeZh[] = _(
-+    "早安！休息得好嗎？\n我是小雨，你的城市嚮導。\p"
++    "早安！休息得好嗎？\n我是小雨，你的嚮導。\p"
 +    "歡迎來到我的民宿！\n舊車站就在旁邊。\p"
-+    "紅磚、鐘樓，還有老故事。\n這座舊站，記著城市的腳步。\p"
-+    "老街、綠廊，還有博物館，\n轉個彎，就有新的發現。\p"
-+    "還有宮原的冰淇淋！\n我每次經過，都想繞一下。\p"
-+    "這裡也有城市聯盟。\n挑戰開放的道館，贏取徽章。");
++    "紅磚、鐘樓，\n藏著城市的老故事。\p"
++    "老街、綠廊、博物館，\n轉個彎就有新發現。\p"
++    "還有宮原冰淇淋，\n我每次都繞去吃！\p"
++    "這裡也有城市聯盟，\n去開放道館贏徽章！");
 +static const u8 sSeeYouOutsideEn[] = _("I'll wait for you outside.\nCome out when you're ready!");
-+static const u8 sSeeYouOutsideZh[] = _("我先到外面等你，\n準備好就出來吧！");
++static const u8 sSeeYouOutsideZh[] = _("我在外面等你，\n準備好就出來吧！");
 +static const u8 sTvEn[] = _("The weather report is on.\nSunny skies over Taichung!");
-+static const u8 sTvZh[] = _("電視正在說天氣。\n臺中今天是大晴天！");
++static const u8 sTvZh[] = _("電視在說天氣：\n臺中今天大晴天！");
 +static const u8 sGuideEn[] = _(
 +    "Welcome back!\p"
 +    "Your POKéMON are rested and ready.\nOutside, B hops on your bike.\p"
 +    "OLD STATION is just east.\nMIYAHARA is up this street.");
 +static const u8 sGuideZh[] = _(
 +    "歡迎回來！\p"
-+    "你的寶可夢已恢復精神。\n在戶外按B就能騎腳踏車。\p"
-+    "舊車站就在東邊。\n宮原沿著這條街往北走。");
++    "寶可夢已恢復精神。\n在戶外按B就能騎車。\p"
++    "舊車站就在東邊，\n宮原沿這條街往北走。");
 +
 +static void Buffer(const u8 *english, const u8 *chinese)
 +{
@@ -464216,7 +464264,7 @@ index 0000000..7f8bd85
 +void TaichungGuestHouse_BufferGuide(void) { Buffer(sGuideEn, sGuideZh); }
 diff --git a/src/taichung_gym_adapter.c b/src/taichung_gym_adapter.c
 new file mode 100644
-index 0000000..6311b45
+index 0000000..286afb1
 --- /dev/null
 +++ b/src/taichung_gym_adapter.c
 @@ -0,0 +1,67 @@
@@ -464230,21 +464278,21 @@ index 0000000..6311b45
 +#include "constants/opponents.h"
 +
 +const u8 TaichungGym_Text_StationIntroEn[] = _("Signal clear. Partners ready.\nLet's get this train moving!");
-+const u8 TaichungGym_Text_StationIntroZh[] = _("出發時間到，夥伴準備好！\n一起出發吧！");
++const u8 TaichungGym_Text_StationIntroZh[] = _("出發時間到，夥伴就位！\n發車吧！");
 +const u8 TaichungGym_Text_StationDefeatEn[] = _("You found a route I missed!");
-+const u8 TaichungGym_Text_StationDefeatZh[] = _("你找到新的方向了！");
++const u8 TaichungGym_Text_StationDefeatZh[] = _("你找到新路線了！");
 +static const u8 sOfferEn[] = _("JUN: My model train is ready.\nCare for a Station challenge?\pA win earns your Departure Badge.\nReady when you are!");
-+static const u8 sOfferZh[] = _("俊：我的火車模型準備好了。\n想來一場車站挑戰嗎？\p獲勝可得到啟程徽章。\n準備好了，就出發吧！");
++static const u8 sOfferZh[] = _("俊：火車模型準備好了。\n想來場車站挑戰嗎？\p獲勝可得啟程徽章。\n準備好就出發吧！");
 +static const u8 sCompleteEn[] = _("Your Departure Badge is now\nin your City Pass. Keep exploring!");
-+static const u8 sCompleteZh[] = _("你的啟程徽章\n已收入城市護照！");
++static const u8 sCompleteZh[] = _("啟程徽章\n已收入城市護照！");
 +static const u8 sAlreadyEn[] = _("Your Departure Badge is already\nin your City Pass. Keep exploring!");
-+static const u8 sAlreadyZh[] = _("城市護照已有啟程徽章。\n繼續探索臺中吧！");
++static const u8 sAlreadyZh[] = _("城市護照已有啟程徽章。\n繼續探索吧！");
 +static const u8 sDeclinedEn[] = _("No rush. Come back when\nyou and your partner are ready.");
-+static const u8 sDeclinedZh[] = _("不急，等你和夥伴\n準備好再回來吧。");
++static const u8 sDeclinedZh[] = _("不急，你和夥伴\n準備好再來吧。");
 +static const u8 sNotRecordedEn[] = _("No new badge was recorded.\nYou're welcome to try again.");
-+static const u8 sNotRecordedZh[] = _("這次沒有新增徽章。\n歡迎再次挑戰。");
++static const u8 sNotRecordedZh[] = _("沒有新增徽章。\n歡迎再挑戰！");
 +static const u8 sUnavailableEn[] = _("Bring a POKéMON partner\nwhen you're ready to battle.");
-+static const u8 sUnavailableZh[] = _("準備對戰時，\n請帶著你的寶可夢夥伴。");
++static const u8 sUnavailableZh[] = _("帶寶可夢夥伴\n來對戰吧！");
 +static const u8 *const sStationMessages[][2] = {
 +    {sOfferEn, sOfferZh}, {sCompleteEn, sCompleteZh}, {sAlreadyEn, sAlreadyZh},
 +    {sDeclinedEn, sDeclinedZh}, {sNotRecordedEn, sNotRecordedZh}, {sUnavailableEn, sUnavailableZh}
@@ -464573,7 +464621,7 @@ index 0000000..738e189
 +}
 diff --git a/src/taichung_landmark_history.c b/src/taichung_landmark_history.c
 new file mode 100644
-index 0000000..d441425
+index 0000000..58905ab
 --- /dev/null
 +++ b/src/taichung_landmark_history.c
 @@ -0,0 +1,65 @@
@@ -464590,7 +464638,7 @@ index 0000000..d441425
 +const u8 gTaichungHistoryLeaveZh[] = _("離開");
 +
 +static const u8 sUnavailableEn[] = _("No history is available here.");
-+static const u8 sUnavailableZh[] = _("這裡沒有地標故事。");
++static const u8 sUnavailableZh[] = _("沒有地標故事。");
 +
 +static bool8 HasFacts(u16 gymId)
 +{
@@ -464644,7 +464692,7 @@ index 0000000..d441425
 +}
 diff --git a/src/taichung_landmark_history_data.c b/src/taichung_landmark_history_data.c
 new file mode 100644
-index 0000000..0640804
+index 0000000..95cee8d
 --- /dev/null
 +++ b/src/taichung_landmark_history_data.c
 @@ -0,0 +1,88 @@
@@ -464654,73 +464702,73 @@ index 0000000..0640804
 +#include "taichung_landmark_history.h"
 +
 +static const u8 sHistory4SignEn[] = _("Calligraphy Greenway\nName from cursive script.");
-+static const u8 sHistory4SignZh[] = _("草悟道／市民廣場\n名字取自草書流動的意象。");
++static const u8 sHistory4SignZh[] = _("草悟道／市民廣場\n名字取自草書。");
 +static const u8 sHistory4TourEn[] = _("The real greenway runs\nfor about 3.6 kilometers.\pIts name likens city life\nto cursive calligraphy.");
-+static const u8 sHistory4TourZh[] = _("真實的草悟道，\n全長約3.6公里。\p名字把城市活動的流動感，\n比作自由揮灑的草書。");
++static const u8 sHistory4TourZh[] = _("真實草悟道長約3.6公里。\p名字把城市生活比作草書。");
 +static const u8 sHistory4StaffEn[] = _("Science and art museums,\non one green route. Love it!");
-+static const u8 sHistory4StaffZh[] = _("科博館到美術館，一路綠意。\n我最愛這段，車鈴先休息！");
++static const u8 sHistory4StaffZh[] = _("科博館到美術館，\n一路綠意，我最愛！");
 +static const u8 sHistory7SignEn[] = _("Fengjia Night Market\nMarket roots: 1963.");
-+static const u8 sHistory7SignZh[] = _("逢甲夜市\n夜市源起於1963年。");
++static const u8 sHistory7SignZh[] = _("逢甲夜市\n始於1963年。");
 +static const u8 sHistory7TourEn[] = _("Feng Chia moved here in 1963.\nThe night market grew nearby.\pIt was once called\nWenhua Night Market.");
-+static const u8 sHistory7TourZh[] = _("1963年逢甲大學遷到此地，\n帶動了夜市的發展。\p這裡原本叫做\n文華夜市。");
++static const u8 sHistory7TourZh[] = _("1963年逢甲大學遷來，\n帶動夜市發展。\p原名文華夜市。");
 +static const u8 sHistory7StaffEn[] = _("Snacks, clothes, little shops.\nI love our mix of neighbors!");
-+static const u8 sHistory7StaffZh[] = _("小吃、衣服，各式小店，\n我最喜歡這些熱鬧的鄰居！");
++static const u8 sHistory7StaffZh[] = _("小吃、衣服、小店，\n我最愛熱鬧的鄰居！");
 +static const u8 sHistory6SignEn[] = _("Taiwan Fine Arts Museum\nMuseum opened in 1988.");
-+static const u8 sHistory6SignZh[] = _("國立臺灣美術館\n美術館於1988年開館。");
++static const u8 sHistory6SignZh[] = _("國立臺灣美術館\n1988年開館。");
 +static const u8 sHistory6TourEn[] = _("This museum first opened\nin 1988.\pIts focus is Taiwan's\nmodern and contemporary art.");
-+static const u8 sHistory6TourZh[] = _("美術館於1988年，\n正式開館。\p館方以臺灣的\n近現代藝術為重點。");
++static const u8 sHistory6TourZh[] = _("美術館1988年開館。\p以臺灣近現代藝術為主。");
 +static const u8 sHistory6StaffEn[] = _("I love the sculptures outside.\nArt doesn't stop at the door!");
-+static const u8 sHistory6StaffZh[] = _("我最愛館外的雕塑園區。\n看作品，不一定要待在室內！");
++static const u8 sHistory6StaffZh[] = _("我最愛館外雕塑園區，\n藝術不只在室內！");
 +static const u8 sHistory8SignEn[] = _("Maple Garden\nPark opened in 2012.");
-+static const u8 sHistory8SignZh[] = _("秋紅谷\n公園於2012年啟用。");
++static const u8 sHistory8SignZh[] = _("秋紅谷\n2012年啟用。");
 +static const u8 sHistory8TourEn[] = _("The park opened in 2012.\pIts sunken grounds include\na lake and a viewing bridge.");
-+static const u8 sHistory8TourZh[] = _("公園於2012年啟用。\p下凹的公園裡，\n設有湖泊與景觀橋。");
++static const u8 sHistory8TourZh[] = _("公園2012年啟用。\p地勢下凹，有湖和景觀橋。");
 +static const u8 sHistory8StaffEn[] = _("I'm proud of the park's job:\nit holds extra stormwater.");
-+static const u8 sHistory8StaffZh[] = _("我最得意的不只是風景，\n這裡還能滯洪、儲存雨水！");
++static const u8 sHistory8StaffZh[] = _("最得意的是，\n這裡能滯洪、儲水！");
 +static const u8 sHistory2SignEn[] = _("Miyahara\nEye clinic, built in 1927.");
-+static const u8 sHistory2SignZh[] = _("宮原眼科\n1927年創建的眼科診所。");
++static const u8 sHistory2SignZh[] = _("宮原眼科\n1927年建的眼科診所。");
 +static const u8 sHistory2TourEn[] = _("This was an eye clinic,\nbuilt in 1927.\pIt later housed the city's\nhealth office.");
-+static const u8 sHistory2TourZh[] = _("這裡曾是眼科診所，\n建於1927年。\p後來，這裡曾作為\n臺中衛生院。");
++static const u8 sHistory2TourZh[] = _("這曾是眼科診所，\n建於1927年。\p後來改作臺中衛生院。");
 +static const u8 sHistory2StaffEn[] = _("I'm glad the bricks stayed.\nThat old arch is my favorite.");
-+static const u8 sHistory2StaffZh[] = _("我最喜歡那道老牌樓。\n紅磚也留下來了，真好！");
++static const u8 sHistory2StaffZh[] = _("我最愛那道老牌樓，\n紅磚還在，真好！");
 +static const u8 sHistory3SignEn[] = _("Natural Science Museum\nFirst halls opened in 1986.");
-+static const u8 sHistory3SignZh[] = _("國立自然科學博物館\n最早展館於1986年開放。");
++static const u8 sHistory3SignZh[] = _("國立自然科學博物館\n最早展館1986年開放。");
 +static const u8 sHistory3TourEn[] = _("The first galleries opened\non January 1, 1986.\pThe Life Science Hall\nfollowed in 1988.");
-+static const u8 sHistory3TourZh[] = _("最早一批展館，\n於1986年1月1日開放。\p生命科學廳接著\n於1988年開放。");
++static const u8 sHistory3TourZh[] = _("1986年1月1日，\n第一批展館開放。\p1988年，生命科學廳開放。");
 +static const u8 sHistory3StaffEn[] = _("My notes aren't just fossils.\nThe garden gets a page, too!");
-+static const u8 sHistory3StaffZh[] = _("我的筆記不只畫化石，\n植物園也要留一整頁！");
++static const u8 sHistory3StaffZh[] = _("筆記不只畫化石，\n植物園也要一整頁！");
 +static const u8 sHistory0SignEn[] = _("Old Taichung Station\nStation built in 1917.");
-+static const u8 sHistory0SignZh[] = _("舊臺中車站\n現存站房建於1917年。");
++static const u8 sHistory0SignZh[] = _("舊臺中車站\n站房建於1917年。");
 +static const u8 sHistory0TourEn[] = _("The old station building\ndates from 1917.\pThe old station is part of\na railway culture park.");
-+static const u8 sHistory0TourZh[] = _("這座舊車站的站房，\n建於1917年。\p舊站卸下運輸任務後，\n轉為鐵道文化園區的一部分。");
++static const u8 sHistory0TourZh[] = _("老站房建於1917年。\p現屬鐵道文化園區。");
 +static const u8 sHistory0StaffEn[] = _("I draw the clock tower\non my postcards. I love it!");
-+static const u8 sHistory0StaffZh[] = _("我的明信片一定畫鐘樓！\n紅磚配鐘樓，多好認啊。");
++static const u8 sHistory0StaffZh[] = _("明信片我都畫鐘樓！\n紅磚配鐘樓，多好認！");
 +static const u8 sHistory5SignEn[] = _("Shen Ji New Village\nStaff housing from 1969.");
-+static const u8 sHistory5SignZh[] = _("審計新村\n1969年的審計處宿舍。");
++static const u8 sHistory5SignZh[] = _("審計新村\n1969年審計處宿舍。");
 +static const u8 sHistory5TourEn[] = _("Built in 1969 as homes\nfor auditing-office staff.");
-+static const u8 sHistory5TourZh[] = _("這些房舍建於1969年，\n曾是審計處員工宿舍。");
++static const u8 sHistory5TourZh[] = _("這裡原是審計處宿舍，\n建於1969年。");
 +static const u8 sHistory5StaffEn[] = _("I love these reused homes.\nLittle shops and studios now!");
-+static const u8 sHistory5StaffZh[] = _("我喜歡這些老宿舍，\n變成小店和工作室，多有趣！");
++static const u8 sHistory5StaffZh[] = _("老宿舍成了小店、工作室，\n我好喜歡！");
 +static const u8 sHistory1SignEn[] = _("Taichung Park\nLake pavilion built in 1908.");
 +static const u8 sHistory1SignZh[] = _("臺中公園\n湖心亭建於1908年。");
 +static const u8 sHistory1TourEn[] = _("The park opened in 1903.\pThe pavilion was built in 1908\nfor a railway-opening event.");
-+static const u8 sHistory1TourZh[] = _("臺中公園於1903年開園。\p1908年，為慶祝\n縱貫鐵路通車而建湖心亭。");
++static const u8 sHistory1TourZh[] = _("公園1903年開園。\p湖心亭建於1908年，\n為慶祝縱貫鐵路通車。");
 +static const u8 sHistory1StaffEn[] = _("I love the lake pavilion.\nSee its two joined roofs?");
-+static const u8 sHistory1StaffZh[] = _("我最喜歡介紹湖心亭，\n你看，兩座亭子連在一起！");
++static const u8 sHistory1StaffZh[] = _("我最愛湖心亭，\n你看，雙亭連在一起！");
 +static const u8 sHistory9SignEn[] = _("National Taichung Theater\nTheater opened in 2016.");
-+static const u8 sHistory9SignZh[] = _("臺中國家歌劇院\n歌劇院於2016年開幕。");
++static const u8 sHistory9SignZh[] = _("臺中國家歌劇院\n2016年開幕。");
 +static const u8 sHistory9TourEn[] = _("The theater opened\nin September 2016.\pArchitect Toyo Ito designed\nits flowing, curved spaces.");
-+static const u8 sHistory9TourZh[] = _("歌劇院於2016年9月，\n正式開幕。\p建築師伊東豊雄，\n設計了流動的曲牆空間。");
++static const u8 sHistory9TourZh[] = _("歌劇院2016年9月開幕。\p建築師伊東豊雄，\n設計了流動曲牆。");
 +static const u8 sHistory9StaffEn[] = _("I fuss over props, but look\nat those curved spaces!\pIt has 29 sound caves.\nThat's what I show friends.");
-+static const u8 sHistory9StaffZh[] = _("我平常只顧著整理道具，\n但這些曲牆，真的很搶戲！\p建築裡有29個聲音涵洞，\n這是我最想讓朋友注意的。");
++static const u8 sHistory9StaffZh[] = _("我只顧著道具，\n但曲牆真搶戲！\p共有29個聲音涵洞，\n我都帶朋友來看！");
 +static const u8 sHistory11SignEn[] = _("Wanhe Temple\nMazu temple built in 1726.");
-+static const u8 sHistory11SignZh[] = _("萬和宮\n1726年建成的媽祖廟。");
++static const u8 sHistory11SignZh[] = _("萬和宮\n1726年建的媽祖廟。");
 +static const u8 sHistory11TourEn[] = _("This Mazu temple was built\nin 1726.\pSeveral local families helped\nfund the temple's building.\pIts surname-group operas\nare offerings of thanks.");
-+static const u8 sHistory11TourZh[] = _("萬和宮於1726年建成，\n主祀媽祖。\p當地不同姓氏的居民，\n共同捐資興建宮廟。\p字姓戲由不同姓氏輪流，\n出資演戲酬神。");
++static const u8 sHistory11TourZh[] = _("1726年建成，主祀媽祖。\p各姓居民共同捐建。\p字姓戲由各姓輪流，\n出資演戲酬神。");
 +static const u8 sHistory10SignEn[] = _("Wenchang Temple\nShrine roots: 1797.");
-+static const u8 sHistory10SignZh[] = _("南屯文昌公廟\n祠廟源起於1797年。");
++static const u8 sHistory10SignZh[] = _("南屯文昌公廟\n始於1797年。");
 +static const u8 sHistory10TourEn[] = _("In 1797, local scholars\nproposed a Wenchang shrine.\pIn 1898, the temple served\nas a temporary school.\pThe present building dates\nfrom 1973.");
-+static const u8 sHistory10TourZh[] = _("1797年，地方人士倡議，\n興建犁頭店文昌祠。\p1898年，公學校成立時，\n曾借用廟宇作臨時校舍。\p現在的廟宇建築，\n於1973年在此興建。");
++static const u8 sHistory10TourZh[] = _("1797年，地方人士倡建\n犁頭店文昌祠。\p1898年公學校成立，\n曾借廟作臨時校舍。\p現今廟宇建於1973年。");
 +
 +const struct TaichungLandmarkHistory gTaichungLandmarkHistory[TAICHUNG_LANDMARK_HISTORY_COUNT] = {
 +    [0] = {{sHistory0SignEn, sHistory0SignZh}, {sHistory0TourEn, sHistory0TourZh}, {sHistory0StaffEn, sHistory0StaffZh}},
@@ -464738,7 +464786,7 @@ index 0000000..0640804
 +};
 diff --git a/src/taichung_language.c b/src/taichung_language.c
 new file mode 100644
-index 0000000..6d97881
+index 0000000..6bd38d5
 --- /dev/null
 +++ b/src/taichung_language.c
 @@ -0,0 +1,238 @@
@@ -464747,41 +464795,41 @@ index 0000000..6d97881
 +#include "taichung_language.h"
 +
 +extern const u8 Taichung_Text_Welcome[];
-+static const u8 sZh_Taichung_Text_Welcome[] = _("你來啦！我是小雨，\n你的臺中城市嚮導。\p歡迎來到舊臺中車站。\n你的臺中故事，就從這裡開始。\p紅磚、鐘樓，還有老故事。\n這座舊站，記著城市的腳步。\p老街、綠廊，還有博物館，\n轉個彎，就有新的發現。\p還有宮原的冰淇淋！\n我每次經過，都想繞一下。\p這裡也有城市聯盟。\n挑戰開放的道館，贏取徽章。");
++static const u8 sZh_Taichung_Text_Welcome[] = _("你來啦！我是小雨，\n你的臺中嚮導。\p歡迎來到舊臺中車站！\n故事從這裡開始。\p紅磚、鐘樓，\n藏著城市的老故事。\p老街、綠廊、博物館，\n轉個彎就有新發現。\p還有宮原冰淇淋，\n我每次都繞去吃！\p這裡也有城市聯盟，\n去開放道館贏徽章！");
 +extern const u8 Taichung_Text_ChooseStarter[];
-+static const u8 sZh_Taichung_Text_ChooseStarter[] = _("不過，好玩的旅程，\n總要有個夥伴一起出發。\p有四隻寶可夢，\n正等著認識你這位旅伴。\p準備好認識牠們了嗎？\n來，靠近一點看看吧。");
++static const u8 sZh_Taichung_Text_ChooseStarter[] = _("不過，旅程總要有伴。\n四隻寶可夢在等你，\p選一隻當新朋友吧！\n準備好了嗎？靠近看看！");
 +extern const u8 Taichung_Text_StarterChosen[];
-+static const u8 sZh_Taichung_Text_StarterChosen[] = _("和{STR_VAR_1}一起出發吧！\n走，我們到外面認識臺中。");
++static const u8 sZh_Taichung_Text_StarterChosen[] = _("和{STR_VAR_1}一起出發吧！\n走，臺中在等我們！");
 +extern const u8 Taichung_Text_TeaRequest[];
-+static const u8 sZh_Taichung_Text_TeaRequest[] = _("晴天最適合喝冰茶！\p能幫我把這份茶點\n送給草悟道導覽員嗎？\p她在西南邊的花園裡。");
++static const u8 sZh_Taichung_Text_TeaRequest[] = _("晴天最適合喝冰茶！\p草悟道導覽員在西南花園，\n能幫我送茶點給她嗎？");
 +extern const u8 Taichung_Text_TeaAccepted[];
-+static const u8 sZh_Taichung_Text_TeaAccepted[] = _("你收好了茶點。\p沿著步道往南走，\n找花園旁的導覽員。\p慢慢來，享受臺中！");
++static const u8 sZh_Taichung_Text_TeaAccepted[] = _("你收好茶點。\p往南到花園找導覽員，\n慢慢來，享受臺中！");
 +extern const u8 Taichung_Text_TeaDeclined[];
-+static const u8 sZh_Taichung_Text_TeaDeclined[] = _("不急！先四處逛逛，\n想幫忙時再來找我。");
++static const u8 sZh_Taichung_Text_TeaDeclined[] = _("不急！逛完草悟道\n再來找我吧。");
 +extern const u8 Taichung_Text_TeaReminder[];
-+static const u8 sZh_Taichung_Text_TeaReminder[] = _("導覽員在西南邊的花園。\n別忘了帶給她茶點！");
++static const u8 sZh_Taichung_Text_TeaReminder[] = _("導覽員在西南邊花園，\n記得把茶點給她！");
 +extern const u8 Taichung_Text_TeaThanks[];
-+static const u8 sZh_Taichung_Text_TeaThanks[] = _("導覽員很喜歡這份茶！\p好茶、綠意和寶可夢，\n真是美好的臺中日常。");
++static const u8 sZh_Taichung_Text_TeaThanks[] = _("導覽員很愛這份茶！\p好茶、綠意、寶可夢，\n美好的臺中日常。");
 +extern const u8 Taichung_Text_GuideWaiting[];
-+static const u8 sZh_Taichung_Text_GuideWaiting[] = _("歡迎來到草悟道！\p我正在等下午茶。\n茶屋就在東北邊。\p有空請幫我向老闆問好！");
++static const u8 sZh_Taichung_Text_GuideWaiting[] = _("歡迎來到草悟道！\p我在等下午茶，\n茶屋在東北邊。\p幫我向老闆問好！");
 +extern const u8 Taichung_Text_GuideThanks[];
-+static const u8 sZh_Taichung_Text_GuideThanks[] = _("我的茶！謝謝你\n把這份心意送過來。\p這瓶傷藥送給你的夥伴。");
++static const u8 sZh_Taichung_Text_GuideThanks[] = _("我的茶！謝謝你\n送來這份心意。\p傷藥送給你的夥伴。");
 +extern const u8 Taichung_Text_QuestComplete[];
-+static const u8 sZh_Taichung_Text_QuestComplete[] = _("草悟道送茶完成！\n你獲得了一瓶傷藥。\p想遇見野生寶可夢嗎？\n往北走進高草叢吧！");
++static const u8 sZh_Taichung_Text_QuestComplete[] = _("草悟道送茶完成！\n獲得了傷藥。\p想遇見野生寶可夢？\n往北走進高草叢！");
 +extern const u8 Taichung_Text_BagFull[];
-+static const u8 sZh_Taichung_Text_BagFull[] = _("背包滿了。請先整理，\n再回來領取傷藥。");
++static const u8 sZh_Taichung_Text_BagFull[] = _("背包滿了！整理後\n再來領傷藥吧。");
 +extern const u8 Taichung_Text_GuideDone[];
-+static const u8 sZh_Taichung_Text_GuideDone[] = _("北邊高草叢裡\n住著野生寶可夢。\p先削弱牠，再從背包\n選擇精靈球來捕捉。\p按開始鍵可以儲存冒險。");
++static const u8 sZh_Taichung_Text_GuideDone[] = _("北邊高草叢裡\n有野生寶可夢。\p先削弱牠，再從背包\n選精靈球捕捉。\p按開始鍵能存檔。");
 +extern const u8 Taichung_Text_FieldStation[];
-+static const u8 sZh_Taichung_Text_FieldStation[] = _("草悟道研究站\n大木博士的寶可夢研究室");
++static const u8 sZh_Taichung_Text_FieldStation[] = _("草悟道研究站\n大木博士的研究室");
 +extern const u8 Taichung_Text_GuestHouse[];
-+static const u8 sZh_Taichung_Text_GuestHouse[] = _("草悟道旅人之家\n讓每位旅人安心休息");
++static const u8 sZh_Taichung_Text_GuestHouse[] = _("草悟道旅人之家\n讓旅人好好休息");
 +extern const u8 Taichung_Text_TeaHouse[];
-+static const u8 sZh_Taichung_Text_TeaHouse[] = _("臺中茶屋\n放慢腳步，喝杯好茶");
++static const u8 sZh_Taichung_Text_TeaHouse[] = _("臺中茶屋\n慢下來，喝杯茶");
 +extern const u8 Taichung_Text_TownSign[];
-+static const u8 sZh_Taichung_Text_TownSign[] = _("臺中・西區\n跟著綠意，找到你的故事");
++static const u8 sZh_Taichung_Text_TownSign[] = _("臺中・西區\n跟著綠意找故事");
 +extern const u8 Taichung_Text_GreenwaySign[];
-+static const u8 sZh_Taichung_Text_GreenwaySign[] = _("草悟道\p悠閒漫步，和大家打招呼。\p茶屋：東北邊\n導覽員：西南邊");
++static const u8 sZh_Taichung_Text_GreenwaySign[] = _("草悟道\n悠閒漫步，打個招呼。\p茶屋：東北\n導覽員：西南");
 +extern const u8 gText_Yes[];
 +static const u8 sZh_gText_Yes[] = _("是");
 +extern const u8 gText_No[];
@@ -464789,15 +464837,15 @@ index 0000000..6d97881
 +extern const u8 gText_YesNo[];
 +static const u8 sZh_gText_YesNo[] = _("是\n否");
 +extern const u8 gText_WouldYouLikeToSaveTheGame[];
-+static const u8 sZh_gText_WouldYouLikeToSaveTheGame[] = _("要儲存目前的冒險嗎？");
++static const u8 sZh_gText_WouldYouLikeToSaveTheGame[] = _("要存檔嗎？");
 +extern const u8 gText_AlreadySaveFile_WouldLikeToOverwrite[];
-+static const u8 sZh_gText_AlreadySaveFile_WouldLikeToOverwrite[] = _("已有儲存資料，\n要覆寫這份存檔嗎？");
++static const u8 sZh_gText_AlreadySaveFile_WouldLikeToOverwrite[] = _("已有存檔，\n要覆寫嗎？");
 +extern const u8 gText_DifferentGameFile[];
-+static const u8 sZh_gText_DifferentGameFile[] = _("有另一份遊戲存檔。\n確定要取代嗎？");
++static const u8 sZh_gText_DifferentGameFile[] = _("有另一份存檔，\n確定要取代嗎？");
 +extern const u8 gText_SavingDontTurnOffThePower[];
-+static const u8 sZh_gText_SavingDontTurnOffThePower[] = _("正在儲存冒險。\n請稍候，不要關閉遊戲。");
++static const u8 sZh_gText_SavingDontTurnOffThePower[] = _("儲存中，請別關閉遊戲。");
 +extern const u8 gText_PlayerSavedTheGame[];
-+static const u8 sZh_gText_PlayerSavedTheGame[] = _("遊戲已儲存！");
++static const u8 sZh_gText_PlayerSavedTheGame[] = _("存檔完成！");
 +extern const u8 gSaveStatName_Player[];
 +static const u8 sZh_gSaveStatName_Player[] = _("訓練家");
 +extern const u8 gSaveStatName_Badges[];
@@ -464809,51 +464857,51 @@ index 0000000..6d97881
 +extern const u8 gText_BattleMenu[];
 +static const u8 sZh_gText_BattleMenu[] = _("{PALETTE 5}{COLOR_HIGHLIGHT_SHADOW 13 14 15}戰鬥{CLEAR_TO 56}背包\n寶可夢{CLEAR_TO 56}逃跑");
 +extern const u8 Taichung_Text_LanguageChanged[];
-+static const u8 sZh_Taichung_Text_LanguageChanged[] = _("已切換為繁體中文。\n可從開始選單再次切換。");
++static const u8 sZh_Taichung_Text_LanguageChanged[] = _("語言：繁體中文。\n可在開始選單更改。");
 +extern const u8 TaichungCity_Text_StationGuide[];
-+static const u8 sZh_TaichungCity_Text_StationGuide[] = _("歡迎來到舊臺中車站！\p你的寶可夢已恢復精神。\n開啟選單就能騎腳踏車。\p宮原眼科就在西北方。\n往西走可前往草悟道。");
++static const u8 sZh_TaichungCity_Text_StationGuide[] = _("歡迎來到舊臺中車站！\p寶可夢已恢復精神。\n打開選單就能騎車。\p宮原眼科在西北方，\n往西走到草悟道。");
 +extern const u8 TaichungCity_Text_GreenwayGuide[];
-+static const u8 sZh_TaichungCity_Text_GreenwayGuide[] = _("這條綠廊串起藝術、\n科學與街區生活。\p西邊：秋紅谷、歌劇院。\n東邊：舊車站、臺中公園。");
++static const u8 sZh_TaichungCity_Text_GreenwayGuide[] = _("綠廊串起藝術、\n科學與街區生活。\p西：秋紅谷、歌劇院。\n東：舊車站、臺中公園。");
 +extern const u8 TaichungCity_Text_OldStation[];
-+static const u8 sZh_TaichungCity_Text_OldStation[] = _("舊臺中車站\n紅磚與鐘樓，故事的起點。");
++static const u8 sZh_TaichungCity_Text_OldStation[] = _("舊臺中車站\n紅磚鐘樓，故事起點。");
 +extern const u8 TaichungCity_Text_Host_OldStation[];
-+static const u8 sZh_TaichungCity_Text_Host_OldStation[] = _("歡迎來到這座地標會館！\p城市聯盟正為這裡\n準備未來的挑戰。");
++static const u8 sZh_TaichungCity_Text_Host_OldStation[] = _("歡迎來到地標會館！\n城市聯盟挑戰準備中。");
 +extern const u8 TaichungCity_Text_Park[];
-+static const u8 sZh_TaichungCity_Text_Park[] = _("臺中公園\n湖光、亭影，一起歇歇腳。");
++static const u8 sZh_TaichungCity_Text_Park[] = _("臺中公園\n湖光亭影，歇歇腳。");
 +extern const u8 TaichungCity_Text_Host_Park[];
-+static const u8 sZh_TaichungCity_Text_Host_Park[] = _("歡迎來到臺中公園！\p城市聯盟正為這裡\n準備未來的挑戰。");
++static const u8 sZh_TaichungCity_Text_Host_Park[] = _("歡迎來到臺中公園！\n城市聯盟挑戰準備中。");
 +extern const u8 TaichungCity_Text_Miyahara[];
-+static const u8 sZh_TaichungCity_Text_Miyahara[] = _("宮原眼科\n老屋裡，藏著甜點驚喜。");
++static const u8 sZh_TaichungCity_Text_Miyahara[] = _("宮原眼科\n老屋藏著甜點驚喜。");
 +extern const u8 TaichungCity_Text_Host_Miyahara[];
-+static const u8 sZh_TaichungCity_Text_Host_Miyahara[] = _("歡迎來到宮原眼科！\p城市聯盟正為這裡\n準備未來的挑戰。");
++static const u8 sZh_TaichungCity_Text_Host_Miyahara[] = _("歡迎來到宮原眼科！\n城市聯盟挑戰準備中。");
 +extern const u8 TaichungCity_Text_ScienceMuseum[];
-+static const u8 sZh_TaichungCity_Text_ScienceMuseum[] = _("國立自然科學博物館\n從恐龍，看到生命的驚奇。");
++static const u8 sZh_TaichungCity_Text_ScienceMuseum[] = _("國立自然科學博物館\n恐龍與生命奇觀。");
 +extern const u8 TaichungCity_Text_Host_ScienceMuseum[];
-+static const u8 sZh_TaichungCity_Text_Host_ScienceMuseum[] = _("歡迎來到國立自然科學博物館！\p城市聯盟正為這裡\n準備未來的挑戰。");
++static const u8 sZh_TaichungCity_Text_Host_ScienceMuseum[] = _("歡迎來到\n國立自然科學博物館！\p城市聯盟挑戰準備中。");
 +extern const u8 TaichungCity_Text_Greenway[];
-+static const u8 sZh_TaichungCity_Text_Greenway[] = _("草悟道／市民廣場\n沿著綠意，走進藝文日常。");
++static const u8 sZh_TaichungCity_Text_Greenway[] = _("草悟道／市民廣場\n綠意串起藝文。");
 +extern const u8 TaichungCity_Text_Host_Greenway[];
-+static const u8 sZh_TaichungCity_Text_Host_Greenway[] = _("歡迎來到這座地標會館！\p城市聯盟正為這裡\n準備未來的挑戰。");
++static const u8 sZh_TaichungCity_Text_Host_Greenway[] = _("歡迎來到地標會館！\n城市聯盟挑戰準備中。");
 +extern const u8 TaichungCity_Text_ShenJi[];
 +static const u8 sZh_TaichungCity_Text_ShenJi[] = _("審計新村\n老宿舍，新點子。");
 +extern const u8 TaichungCity_Text_Host_ShenJi[];
-+static const u8 sZh_TaichungCity_Text_Host_ShenJi[] = _("歡迎來到這座地標會館！\p城市聯盟正為這裡\n準備未來的挑戰。");
++static const u8 sZh_TaichungCity_Text_Host_ShenJi[] = _("歡迎來到地標會館！\n城市聯盟挑戰準備中。");
 +extern const u8 TaichungCity_Text_FineArts[];
-+static const u8 sZh_TaichungCity_Text_FineArts[] = _("國立臺灣美術館\n看畫、看雕塑，也換個眼光。");
++static const u8 sZh_TaichungCity_Text_FineArts[] = _("國立臺灣美術館\n色彩、雕塑、新眼光。");
 +extern const u8 TaichungCity_Text_Host_FineArts[];
-+static const u8 sZh_TaichungCity_Text_Host_FineArts[] = _("歡迎來到國立臺灣美術館！\p城市聯盟正為這裡\n準備未來的挑戰。");
++static const u8 sZh_TaichungCity_Text_Host_FineArts[] = _("歡迎來到國立臺灣美術館！\n城市聯盟挑戰準備中。");
 +extern const u8 TaichungCity_Text_Fengjia[];
-+static const u8 sZh_TaichungCity_Text_Fengjia[] = _("逢甲夜市\n聞著香氣，找一口好滋味。");
++static const u8 sZh_TaichungCity_Text_Fengjia[] = _("逢甲夜市\n跟著香味找小吃。");
 +extern const u8 TaichungCity_Text_Host_Fengjia[];
-+static const u8 sZh_TaichungCity_Text_Host_Fengjia[] = _("歡迎來到這座地標會館！\p城市聯盟正為這裡\n準備未來的挑戰。");
++static const u8 sZh_TaichungCity_Text_Host_Fengjia[] = _("歡迎來到地標會館！\n城市聯盟挑戰準備中。");
 +extern const u8 TaichungCity_Text_MapleGarden[];
-+static const u8 sZh_TaichungCity_Text_MapleGarden[] = _("秋紅谷\n湖水、景觀橋，慢一點走。");
++static const u8 sZh_TaichungCity_Text_MapleGarden[] = _("秋紅谷\n湖與橋，慢慢走。");
 +extern const u8 TaichungCity_Text_Host_MapleGarden[];
-+static const u8 sZh_TaichungCity_Text_Host_MapleGarden[] = _("歡迎來到秋紅谷！\p城市聯盟正為這裡\n準備未來的挑戰。");
++static const u8 sZh_TaichungCity_Text_Host_MapleGarden[] = _("歡迎來到秋紅谷！\n城市聯盟挑戰準備中。");
 +extern const u8 TaichungCity_Text_Theater[];
-+static const u8 sZh_TaichungCity_Text_Theater[] = _("臺中國家歌劇院\n曲牆之間，聽見新的聲音。");
++static const u8 sZh_TaichungCity_Text_Theater[] = _("臺中國家歌劇院\n曲牆間，聽見新聲音。");
 +extern const u8 TaichungCity_Text_Host_Theater[];
-+static const u8 sZh_TaichungCity_Text_Host_Theater[] = _("歡迎來到這座地標會館！\p城市聯盟正為這裡\n準備未來的挑戰。");
++static const u8 sZh_TaichungCity_Text_Host_Theater[] = _("歡迎來到地標會館！\n城市聯盟挑戰準備中。");
 +
 +bool8 TaichungIsChinese(void)
 +{
@@ -465260,7 +465308,7 @@ index 0000000..093dd02
 +}
 diff --git a/src/taichung_maple_garden_gym.c b/src/taichung_maple_garden_gym.c
 new file mode 100644
-index 0000000..d025e09
+index 0000000..f38583e
 --- /dev/null
 +++ b/src/taichung_maple_garden_gym.c
 @@ -0,0 +1,40 @@
@@ -465269,25 +465317,25 @@ index 0000000..d025e09
 +
 +// Story paired draft; roster/moves and exact prose remain revisable defaults.
 +const u8 TaichungGym_Text_MapleGardenGreetingEn[] = _("I'm Muqing. I design habitats.\nWater, shade, little lives.");
-+const u8 TaichungGym_Text_MapleGardenGreetingZh[] = _("我是沐晴，規劃池塘棲地。\n水、樹蔭、小生命，都要顧到。");
++const u8 TaichungGym_Text_MapleGardenGreetingZh[] = _("我是沐晴，規劃棲地。\n水、樹蔭、小生命都要顧。");
 +const u8 TaichungGym_Text_MapleGardenOfferEn[] = _("Try a Maple Garden challenge?\nA win earns this gym's badge.");
-+const u8 TaichungGym_Text_MapleGardenOfferZh[] = _("想挑戰秋紅谷道館嗎？\n獲勝就能得到這裡的徽章。");
++const u8 TaichungGym_Text_MapleGardenOfferZh[] = _("想挑戰秋紅谷道館嗎？\n獲勝可得徽章。");
 +const u8 TaichungGym_Text_MapleGardenIntroEn[] = _("Water team. Wings ready.\nLet's connect pond and sky!");
-+const u8 TaichungGym_Text_MapleGardenIntroZh[] = _("水邊小隊，翅膀就位。\n把池塘與天空連起來吧！");
++const u8 TaichungGym_Text_MapleGardenIntroZh[] = _("水邊小隊，翅膀就位！\n連起池塘與天空！");
 +const u8 TaichungGym_Text_MapleGardenDefeatEn[] = _("You saw the whole habitat!");
-+const u8 TaichungGym_Text_MapleGardenDefeatZh[] = _("整片棲地，都被你看見了！");
++const u8 TaichungGym_Text_MapleGardenDefeatZh[] = _("你看見整片棲地了！");
 +const u8 TaichungGym_Text_MapleGardenDeclinedEn[] = _("Of course. Take your time.\nI'll check the water's edge.");
-+const u8 TaichungGym_Text_MapleGardenDeclinedZh[] = _("當然，照自己的步調逛吧。\n我再去看看池邊。");
++const u8 TaichungGym_Text_MapleGardenDeclinedZh[] = _("當然，慢慢逛吧。\n我去看看池邊。");
 +const u8 TaichungGym_Text_MapleGardenAlreadyEn[] = _("Your Maple badge is safe.\nI'm still counting insects.");
-+const u8 TaichungGym_Text_MapleGardenAlreadyZh[] = _("秋紅谷徽章已經記好了。\n我的昆蟲倒是還沒數完。");
++const u8 TaichungGym_Text_MapleGardenAlreadyZh[] = _("秋紅谷徽章記好了。\n昆蟲我還沒數完。");
 +const u8 TaichungGym_Text_MapleGardenLossEn[] = _("One small link got missed.\nRest. We can look again later.");
-+const u8 TaichungGym_Text_MapleGardenLossZh[] = _("剛才，漏看了一個小連結。\n先歇歇，下次再一起觀察。");
++const u8 TaichungGym_Text_MapleGardenLossZh[] = _("漏了一個小連結。\n先歇歇，再一起觀察。");
 +const u8 TaichungGym_Text_MapleGardenNotRecordedEn[] = _("No new badge was recorded.\nYou're welcome to try again.");
-+const u8 TaichungGym_Text_MapleGardenNotRecordedZh[] = _("這次沒有新增徽章。\n歡迎再次挑戰。");
++const u8 TaichungGym_Text_MapleGardenNotRecordedZh[] = _("沒有新增徽章。\n歡迎再挑戰！");
 +const u8 TaichungGym_Text_MapleGardenUnavailableEn[] = _("Bring a POKéMON partner\nwhen you're ready to battle.");
-+const u8 TaichungGym_Text_MapleGardenUnavailableZh[] = _("準備對戰時，\n請帶著你的寶可夢夥伴。");
++const u8 TaichungGym_Text_MapleGardenUnavailableZh[] = _("帶寶可夢夥伴\n來對戰吧！");
 +const u8 TaichungGym_Text_MapleGardenCompleteEn[] = _("You watched water and wings.\nYou saw how it all connects.\pMaple Garden badge recorded!\nKeep exploring at your pace.");
-+const u8 TaichungGym_Text_MapleGardenCompleteZh[] = _("你顧到水面，也顧到翅膀。\n這就是完整的生態眼光。\p秋紅谷徽章已記在城市護照。\n照你的步調，繼續探索吧。");
++const u8 TaichungGym_Text_MapleGardenCompleteZh[] = _("水面、翅膀你都顧到了。\n這就是生態眼光！\p秋紅谷徽章記入城市護照！\n慢慢探索吧。");
 +
 +static const u8 *const sMessages[][2] = {
 +    [TAICHUNG_GYM_MESSAGE_OFFER] = {TaichungGym_Text_MapleGardenOfferEn, TaichungGym_Text_MapleGardenOfferZh},
@@ -465306,7 +465354,7 @@ index 0000000..d025e09
 +}
 diff --git a/src/taichung_miyahara_gym.c b/src/taichung_miyahara_gym.c
 new file mode 100644
-index 0000000..9036376
+index 0000000..3f62908
 --- /dev/null
 +++ b/src/taichung_miyahara_gym.c
 @@ -0,0 +1,59 @@
@@ -465319,25 +465367,25 @@ index 0000000..9036376
 +// Story-authored draft. Exact roster, moves, prose and badge title remain
 +// revisable; only a matching native win may award Miyahara bit 2.
 +const u8 TaichungGym_Text_MiyaharaIntroEn[] = _("Keep it cool. Build the layers.\nTime for our finishing touch!");
-+const u8 TaichungGym_Text_MiyaharaIntroZh[] = _("保持低溫，堆出層次。\n讓夥伴來完成最後的收尾！");
++const u8 TaichungGym_Text_MiyaharaIntroZh[] = _("保持低溫，堆出層次。\n來完美收尾吧！");
 +const u8 TaichungGym_Text_MiyaharaDefeatEn[] = _("A finish worth savoring!");
-+const u8 TaichungGym_Text_MiyaharaDefeatZh[] = _("這個收尾，值得細細回味！");
++const u8 TaichungGym_Text_MiyaharaDefeatZh[] = _("這收尾，值得回味！");
 +static const u8 sGreetingEn[] = _("I'm Peiqi. Pastry chef.\nChill first. Then the flourish.");
-+static const u8 sGreetingZh[] = _("我是沛琪，專做甜點。\n先掌握溫度，再講究擺盤。");
++static const u8 sGreetingZh[] = _("我是沛琪，專做甜點。\n先抓溫度，再擺盤。");
 +static const u8 sOfferEn[] = _("Try a Miyahara gym challenge?\nA win earns this gym's badge.");
-+static const u8 sOfferZh[] = _("想挑戰宮原道館嗎？\n獲勝就能得到這裡的徽章。");
++static const u8 sOfferZh[] = _("想挑戰宮原道館嗎？\n獲勝可得徽章。");
 +static const u8 sCompleteEn[] = _("Cool nerves. Lovely balance.\nA beautifully finished round.\pMiyahara badge recorded!\nKeep exploring at your pace.");
-+static const u8 sCompleteZh[] = _("夠沉著，搭配也平衡。\n這一場，收尾真漂亮。\p宮原徽章已記在城市護照。\n照你的步調，繼續探索吧。");
++static const u8 sCompleteZh[] = _("夠沉著，也夠平衡。\n這場收尾真漂亮！\p宮原徽章記入城市護照！\n慢慢探索吧。");
 +static const u8 sAlreadyEn[] = _("Your Miyahara badge is recorded.\nI'm still fixing the garnish.");
-+static const u8 sAlreadyZh[] = _("宮原徽章已經記好了。\n我還在調整最後的裝飾呢。");
++static const u8 sAlreadyZh[] = _("宮原徽章記好了。\n我還在調整裝飾呢。");
 +static const u8 sDeclinedEn[] = _("Of course. A little time helps.\nI'm perfecting the garnish.");
-+static const u8 sDeclinedZh[] = _("當然，多留一點時間也好。\n我再調整一下裝飾。");
++static const u8 sDeclinedZh[] = _("當然，多點時間也好。\n我再修修裝飾。");
 +static const u8 sLossEn[] = _("Not every batch sets first try.\nRest. We can adjust the mix.");
-+static const u8 sLossZh[] = _("不是每次試作都一次成功。\n歇一下，下次再調整配方。");
++static const u8 sLossZh[] = _("試作難免要重來。\n歇一下，再調配方。");
 +static const u8 sNotRecordedEn[] = _("No new badge was recorded.\nYou're welcome to try again.");
-+static const u8 sNotRecordedZh[] = _("這次沒有新增徽章。\n歡迎再次挑戰。");
++static const u8 sNotRecordedZh[] = _("沒有新增徽章。\n歡迎再挑戰！");
 +static const u8 sUnavailableEn[] = _("Bring a POKéMON partner\nwhen you're ready to battle.");
-+static const u8 sUnavailableZh[] = _("準備對戰時，\n請帶著你的寶可夢夥伴。");
++static const u8 sUnavailableZh[] = _("帶寶可夢夥伴\n來對戰吧！");
 +
 +static const u8 *const sMessages[][2] = {
 +    [TAICHUNG_GYM_MESSAGE_OFFER] = {sOfferEn, sOfferZh},
@@ -465990,7 +466038,7 @@ index 0000000..527764b
 +}
 diff --git a/src/taichung_onboarding_text.c b/src/taichung_onboarding_text.c
 new file mode 100644
-index 0000000..e2dbb53
+index 0000000..ad713ff
 --- /dev/null
 +++ b/src/taichung_onboarding_text.c
 @@ -0,0 +1,27 @@
@@ -466000,17 +466048,17 @@ index 0000000..e2dbb53
 +// Xiaoyu's plaza tour. Each topic is ordinary native dialogue (A/B to advance).
 +const u8 gTaichungOnboardingLanguageHint[] = _("Waiting for browser language.\nA/B: choose on this cartridge.");
 +static const u8 sIntroEn[] = _("There you are! Welcome to\nTaichung. Some quick tips!");
-+static const u8 sIntroZh[] = _("你來啦！歡迎來到臺中。\n出發前，先說幾件事。");
++static const u8 sIntroZh[] = _("你來啦！歡迎來到臺中！\n先教你幾招。");
 +static const u8 sBikeEn[] = _("Getting around is much easier\nby bike. It's twice as fast!\pOutdoors, press B to hop on.\nPress B again to walk.");
-+static const u8 sBikeZh[] = _("騎車比走路快很多，\n在城市裡找路更快！\p在戶外按B就能上車，\n再按一次B就下車走路。");
++static const u8 sBikeZh[] = _("騎車逛城市，\n比走路快很多！\p在戶外按B上車，\n再按B下車。");
 +static const u8 sMapEn[] = _("Not sure where to go? Check\nthe small map at the top left.\pTap it, or the City Map button,\nto see every landmark.");
-+static const u8 sMapZh[] = _("不確定往哪走？\n左上角的小地圖會帶路。\p點小地圖或城市地圖，\n就能看到所有地標。");
++static const u8 sMapZh[] = _("找不到路？\n看左上角的小地圖！\p點小地圖或城市地圖，\n能看到所有地標。");
 +static const u8 sTeamEn[] = _("Menu (START) opens your TEAM,\nBAG, SAVE and more.\pTEAM adds or swaps POKéMON.\nAny of 150, free, at Lv50.");
-+static const u8 sTeamZh[] = _("按選單START，可以打開\n隊伍、背包、儲存等。\p在隊伍加入或更換寶可夢，\n150隻任選，免費又有50級。");
++static const u8 sTeamZh[] = _("START選單裡有\n隊伍、背包、儲存等。\p隊伍可加入或換寶可夢，\n150隻免費任選，都是50級。");
 +static const u8 sLandmarksEn[] = _("Your first gym is Old Station,\njust east, over the bridge!\pMiyahara is north, up this\nstreet. Taichung Park is beyond.\pThe City Map shows the way.");
-+static const u8 sLandmarksZh[] = _("第一座道館是舊車站，\n過橋往東走就到！\p宮原就在這條街往北，\n臺中公園在更北邊。\p城市地圖會帶你去。");
++static const u8 sLandmarksZh[] = _("第一座道館是舊車站，\n過橋往東就到！\p宮原沿這條街往北，\n臺中公園在更北邊。\p城市地圖會帶路。");
 +static const u8 sReleaseEn[] = _("That's everything! Have fun\nexploring with your partner.");
-+static const u8 sReleaseZh[] = _("都說完了！\n帶著夥伴去探索臺中吧！");
++static const u8 sReleaseZh[] = _("說完啦！\n和夥伴去探索臺中吧！");
 +
 +const u8 *const gTaichungOnboardingTopics[5][2] = {
 +    {sIntroEn, sIntroZh},
@@ -466071,7 +466119,7 @@ index 0000000..9afd2af
 +}
 diff --git a/src/taichung_park_gym.c b/src/taichung_park_gym.c
 new file mode 100644
-index 0000000..25432dc
+index 0000000..b8e0462
 --- /dev/null
 +++ b/src/taichung_park_gym.c
 @@ -0,0 +1,59 @@
@@ -466084,25 +466132,25 @@ index 0000000..25432dc
 +// Story-authored draft. Team balance, exact prose and badge title remain
 +// revisable; only a matching native win may award permanent Park bit 1.
 +const u8 TaichungGym_Text_ParkIntroEn[] = _("Wings ready. Watch the water.\nLet's see your teamwork.");
-+const u8 TaichungGym_Text_ParkIntroZh[] = _("翅膀就位，留意水面。\n讓我看看你們的默契吧。");
++const u8 TaichungGym_Text_ParkIntroZh[] = _("翅膀就位，留意水面。\n看看你們的默契吧！");
 +const u8 TaichungGym_Text_ParkDefeatEn[] = _("You spotted the opening!");
-+const u8 TaichungGym_Text_ParkDefeatZh[] = _("那個空檔，被你看見了！");
++const u8 TaichungGym_Text_ParkDefeatZh[] = _("空檔被你看見了！");
 +static const u8 sGreetingEn[] = _("I'm Lian. I care for this park.\nI watch the pond birds too.");
-+static const u8 sGreetingZh[] = _("我是莉安，照顧這座公園。\n也在觀察池邊的鳥兒。");
++static const u8 sGreetingZh[] = _("我是莉安，照顧公園，\n也觀察池邊鳥兒。");
 +static const u8 sOfferEn[] = _("Want a park gym challenge?\nA win earns this gym's badge.");
-+static const u8 sOfferZh[] = _("想挑戰公園道館嗎？\n獲勝就能得到這裡的徽章。");
++static const u8 sOfferZh[] = _("想挑戰公園道館嗎？\n獲勝可得徽章。");
 +static const u8 sCompleteEn[] = _("You kept an eye on everyone.\nA park needs that kind of care.\pPark badge recorded!\nKeep exploring at your pace.");
-+static const u8 sCompleteZh[] = _("你沒有漏看任何一位夥伴。\n照顧公園，也需要這種細心。\p公園徽章已記在城市護照。\n照你的步調，繼續探索吧。");
++static const u8 sCompleteZh[] = _("你顧到了每位夥伴。\n公園需要這種細心。\p公園徽章記入城市護照！\n慢慢探索吧。");
 +static const u8 sAlreadyEn[] = _("Your park badge is recorded.\nThe birds have more to teach me.");
-+static const u8 sAlreadyZh[] = _("公園徽章已經記好了。\n池邊的鳥，還有好多事要教我。");
++static const u8 sAlreadyZh[] = _("公園徽章記好了。\n鳥兒還有好多要教我。");
 +static const u8 sDeclinedEn[] = _("Of course. Take your time.\nThe next ripple can wait.");
-+static const u8 sDeclinedZh[] = _("好啊，慢慢來。\n下一圈水波等等也沒關係。");
++static const u8 sDeclinedZh[] = _("好啊，慢慢來。\n下一圈水波不急。");
 +static const u8 sLossEn[] = _("Even good watchers miss things.\nRest in the shade. Try later.");
-+static const u8 sLossZh[] = _("再細心，也難免有漏看的。\n先到樹蔭歇歇，想試再來。");
++static const u8 sLossZh[] = _("再細心也難免漏看。\n到樹蔭歇歇，再來吧。");
 +static const u8 sNotRecordedEn[] = _("No new badge was recorded.\nYou're welcome to try again.");
-+static const u8 sNotRecordedZh[] = _("這次沒有新增徽章。\n歡迎再次挑戰。");
++static const u8 sNotRecordedZh[] = _("沒有新增徽章。\n歡迎再挑戰！");
 +static const u8 sUnavailableEn[] = _("Bring a POKéMON partner\nwhen you're ready to battle.");
-+static const u8 sUnavailableZh[] = _("準備對戰時，\n請帶著你的寶可夢夥伴。");
++static const u8 sUnavailableZh[] = _("帶寶可夢夥伴\n來對戰吧！");
 +
 +static const u8 *const sMessages[][2] = {
 +    [TAICHUNG_GYM_MESSAGE_OFFER] = {sOfferEn, sOfferZh},
@@ -466203,7 +466251,7 @@ index 0000000..22d2f8b
 +}
 diff --git a/src/taichung_player_text.c b/src/taichung_player_text.c
 new file mode 100644
-index 0000000..4f0d1cc
+index 0000000..5254799
 --- /dev/null
 +++ b/src/taichung_player_text.c
 @@ -0,0 +1,153 @@
@@ -466218,39 +466266,39 @@ index 0000000..4f0d1cc
 +static const u8 sYouEn[] = _("YOU");
 +static const u8 sYouZh[] = _("你");
 +static const u8 sYourTrainerCardEn[] = _("YOUR TRAINER CARD");
-+static const u8 sYourTrainerCardZh[] = _("你的訓練家卡");
++static const u8 sYourTrainerCardZh[] = _("訓練家卡");
 +static const u8 sGotMoneyEn[] = _("You got ¥{B_BUFF1}\nfor winning!\p");
-+static const u8 sGotMoneyZh[] = _("你贏得了\n¥{B_BUFF1}！\p");
++static const u8 sGotMoneyZh[] = _("你贏得\n¥{B_BUFF1}！\p");
 +static const u8 sWhiteoutEn[] = _("You have no POKéMON\nleft to battle!\p");
-+static const u8 sWhiteoutZh[] = _("你的寶可夢\n都無法繼續戰鬥了！\p");
++static const u8 sWhiteoutZh[] = _("你的寶可夢\n都倒下了！\p");
 +static const u8 sPanickedEn[] = _("You panicked and lost\n¥{B_BUFF1}…\p… … … …\pYou whited out!{PAUSE_UNTIL_PRESS}");
-+static const u8 sPanickedZh[] = _("你慌張地掉了\n¥{B_BUFF1}……\p……\p你眼前一片空白！{PAUSE_UNTIL_PRESS}");
++static const u8 sPanickedZh[] = _("你一慌，掉了\n¥{B_BUFF1}……\p……\p你眼前一黑！{PAUSE_UNTIL_PRESS}");
 +static const u8 sWhiteoutTrainerEn[] = _("You have no POKéMON\nleft to battle!\pYou lost against\n{B_TRAINER1_CLASS} {B_TRAINER1_NAME}!{PAUSE_UNTIL_PRESS}");
-+static const u8 sWhiteoutTrainerZh[] = _("你的寶可夢\n都無法繼續戰鬥了！\p你輸給了\n{B_TRAINER1_CLASS} {B_TRAINER1_NAME}！{PAUSE_UNTIL_PRESS}");
++static const u8 sWhiteoutTrainerZh[] = _("你的寶可夢\n都倒下了！\p你輸給了\n{B_TRAINER1_CLASS} {B_TRAINER1_NAME}！{PAUSE_UNTIL_PRESS}");
 +static const u8 sPaidPrizeEn[] = _("You paid ¥{B_BUFF1}\nin prize money…\p… … … …\pYou whited out!{PAUSE_UNTIL_PRESS}");
-+static const u8 sPaidPrizeZh[] = _("你付出了\n¥{B_BUFF1}獎金……\p……\p你眼前一片空白！{PAUSE_UNTIL_PRESS}");
++static const u8 sPaidPrizeZh[] = _("你付了\n¥{B_BUFF1}獎金……\p……\p你眼前一黑！{PAUSE_UNTIL_PRESS}");
 +static const u8 sWhiteoutEndEn[] = _("You whited out!{PAUSE_UNTIL_PRESS}");
-+static const u8 sWhiteoutEndZh[] = _("你眼前一片空白！{PAUSE_UNTIL_PRESS}");
++static const u8 sWhiteoutEndZh[] = _("你眼前一黑！{PAUSE_UNTIL_PRESS}");
 +static const u8 sPickedUpMoneyEn[] = _("You picked up\n¥{B_BUFF1}!\p");
-+static const u8 sPickedUpMoneyZh[] = _("你撿到了\n¥{B_BUFF1}！\p");
++static const u8 sPickedUpMoneyZh[] = _("你撿到\n¥{B_BUFF1}！\p");
 +static const u8 sSwitchQuestionEn[] = _("{B_TRAINER1_CLASS} {B_TRAINER1_NAME} is\nabout to use {B_BUFF2}.\pWill you change\nPOKéMON?");
-+static const u8 sSwitchQuestionZh[] = _("{B_TRAINER1_CLASS} {B_TRAINER1_NAME}\n即將派出{B_BUFF2}。\p你要更換寶可夢嗎？");
++static const u8 sSwitchQuestionZh[] = _("{B_TRAINER1_CLASS} {B_TRAINER1_NAME}\n將派出{B_BUFF2}。\p要換寶可夢嗎？");
 +static const u8 sThrewRockEn[] = _("You threw a ROCK\nat the {B_OPPONENT_MON1_NAME}!");
-+static const u8 sThrewRockZh[] = _("你向{B_OPPONENT_MON1_NAME}\n丟出了石頭！");
++static const u8 sThrewRockZh[] = _("你向{B_OPPONENT_MON1_NAME}\n丟石頭！");
 +static const u8 sThrewBaitEn[] = _("You threw some BAIT\nat the {B_OPPONENT_MON1_NAME}!");
-+static const u8 sThrewBaitZh[] = _("你向{B_OPPONENT_MON1_NAME}\n丟出了誘餌！");
++static const u8 sThrewBaitZh[] = _("你向{B_OPPONENT_MON1_NAME}\n丟誘餌！");
 +static const u8 sUsedItemEn[] = _("You used\n{B_LAST_ITEM}!");
-+static const u8 sUsedItemZh[] = _("你使用了\n{B_LAST_ITEM}！");
++static const u8 sUsedItemZh[] = _("你用了\n{B_LAST_ITEM}！");
 +static const u8 sFluteTuneEn[] = _("You played the\n{B_LAST_ITEM}.\pWhat a catchy tune!");
-+static const u8 sFluteTuneZh[] = _("你吹響了\n{B_LAST_ITEM}。\p真是動聽的旋律！");
++static const u8 sFluteTuneZh[] = _("你吹了\n{B_LAST_ITEM}。\p真好聽！");
 +static const u8 sPlayedFluteEn[] = _("You played the\n{B_LAST_ITEM}.");
-+static const u8 sPlayedFluteZh[] = _("你吹響了\n{B_LAST_ITEM}。");
++static const u8 sPlayedFluteZh[] = _("你吹了\n{B_LAST_ITEM}。");
 +static const u8 sOakIntroEn[] = _("OAK: This is your first\nPOKéMON battle, isn't it?\pTRAINERS battle by having\ntheir POKéMON face each other.\p");
-+static const u8 sOakIntroZh[] = _("大木博士：這是你的\n第一場寶可夢對戰吧？\p訓練家會派出寶可夢，\n和對手的寶可夢切磋。\p");
++static const u8 sOakIntroZh[] = _("大木博士：這是你的\n第一場對戰吧？\p訓練家讓寶可夢\n上場對戰。\p");
 +static const u8 sOakLossEn[] = _("OAK: When you win, your\nPOKéMON grow stronger.\pSome battles also award\nprize money.\pIf you lose, you may have\nto pay prize money.\pI'll cover it this time.\nKeep training your team!\p");
-+static const u8 sOakLossZh[] = _("大木博士：贏得對戰，\n能讓你的寶可夢成長。\p有些對戰還會\n提供獎金。\p若是落敗，你可能\n需要支付獎金。\p這次由我來付吧。\n繼續和夥伴一起練習！\p");
++static const u8 sOakLossZh[] = _("大木博士：贏了，\n寶可夢會成長。\p有些對戰\n還有獎金。\p輸了可能\n要付獎金。\p這次我來付吧。\n繼續訓練隊伍！\p");
 +static const u8 sThrowQuestionEn[] = _("What will you\nthrow?");
-+static const u8 sThrowQuestionZh[] = _("你要丟出\n什麼呢？");
++static const u8 sThrowQuestionZh[] = _("要丟什麼？");
 +static const u8 sLinkWinEn[] = _("You defeated\n{B_LINK_OPPONENT1_NAME}!");
 +static const u8 sLinkWinZh[] = _("你擊敗了\n{B_LINK_OPPONENT1_NAME}！");
 +static const u8 sTwoLinkWinEn[] = _("You defeated {B_LINK_OPPONENT1_NAME}\nand {B_LINK_OPPONENT2_NAME}!");
@@ -466260,7 +466308,7 @@ index 0000000..4f0d1cc
 +static const u8 sTwoLinkLossEn[] = _("You lost to {B_LINK_OPPONENT1_NAME}\nand {B_LINK_OPPONENT2_NAME}!");
 +static const u8 sTwoLinkLossZh[] = _("你輸給了{B_LINK_OPPONENT1_NAME}\n和{B_LINK_OPPONENT2_NAME}！");
 +static const u8 sLinkDrawEn[] = _("You drew against\n{B_LINK_OPPONENT1_NAME}!");
-+static const u8 sLinkDrawZh[] = _("你和{B_LINK_OPPONENT1_NAME}\n打成了平手！");
++static const u8 sLinkDrawZh[] = _("你和{B_LINK_OPPONENT1_NAME}\n打成平手！");
 +static const u8 sTwoLinkDrawEn[] = _("You drew against\n{B_LINK_OPPONENT1_NAME} and {B_LINK_OPPONENT2_NAME}!");
 +static const u8 sTwoLinkDrawZh[] = _("你和{B_LINK_OPPONENT1_NAME}\n及{B_LINK_OPPONENT2_NAME}打成平手！");
 +static const u8 sTrainerWinEn[] = _("You defeated\n{B_TRAINER1_CLASS} {B_TRAINER1_NAME}!\p");
@@ -466270,23 +466318,23 @@ index 0000000..4f0d1cc
 +static const u8 sTrainerDrawEn[] = _("You drew against\n{B_TRAINER1_CLASS} {B_TRAINER1_NAME}!");
 +static const u8 sTrainerDrawZh[] = _("你和{B_TRAINER1_CLASS}\n{B_TRAINER1_NAME}打成平手！");
 +static const u8 sItemForbiddenEn[] = _("You can't use that here.{PAUSE_UNTIL_PRESS}");
-+static const u8 sItemForbiddenZh[] = _("你現在不能使用這個。{PAUSE_UNTIL_PRESS}");
++static const u8 sItemForbiddenZh[] = _("現在不能用。{PAUSE_UNTIL_PRESS}");
 +static const u8 sFieldItemEn[] = _("You used the\n{STR_VAR_2}.{PAUSE_UNTIL_PRESS}");
-+static const u8 sFieldItemZh[] = _("你使用了\n{STR_VAR_2}。{PAUSE_UNTIL_PRESS}");
++static const u8 sFieldItemZh[] = _("你用了\n{STR_VAR_2}。{PAUSE_UNTIL_PRESS}");
 +static const u8 sWildLuredEn[] = _("You used the\n{STR_VAR_2}.\pWild POKéMON will be lured.{PAUSE_UNTIL_PRESS}");
-+static const u8 sWildLuredZh[] = _("你使用了\n{STR_VAR_2}。\p野生寶可夢會被吸引過來。{PAUSE_UNTIL_PRESS}");
++static const u8 sWildLuredZh[] = _("你用了\n{STR_VAR_2}。\p會引來野生寶可夢。{PAUSE_UNTIL_PRESS}");
 +static const u8 sWildRepelledEn[] = _("You used the\n{STR_VAR_2}.\pWild POKéMON will be repelled.{PAUSE_UNTIL_PRESS}");
-+static const u8 sWildRepelledZh[] = _("你使用了\n{STR_VAR_2}。\p野生寶可夢暫時不會靠近。{PAUSE_UNTIL_PRESS}");
++static const u8 sWildRepelledZh[] = _("你用了\n{STR_VAR_2}。\p野生寶可夢暫不靠近。{PAUSE_UNTIL_PRESS}");
 +static const u8 sPartyHelpEn[] = _("Here are your POKéMON.\pCheck their skills and moves,\nor choose one to use an item on.{PAUSE_UNTIL_PRESS}");
-+static const u8 sPartyHelpZh[] = _("這裡列出了你的寶可夢。\p你可以查看牠們的能力和招式，\n也能選擇要使用道具的夥伴。{PAUSE_UNTIL_PRESS}");
++static const u8 sPartyHelpZh[] = _("這是你的寶可夢。\p可查看能力和招式，\n或對牠們使用道具。{PAUSE_UNTIL_PRESS}");
 +static const u8 sYourPcEn[] = _("YOUR PC");
 +static const u8 sYourPcZh[] = _("你的電腦");
 +static const u8 sYourRecordsEn[] = _("YOUR BATTLE RESULTS");
-+static const u8 sYourRecordsZh[] = _("你的對戰紀錄");
++static const u8 sYourRecordsZh[] = _("對戰紀錄");
 +static const u8 sToCenterEn[] = _("You hurried to a POKéMON CENTER,\nkeeping your exhausted POKéMON\nsafe from further harm…\p");
-+static const u8 sToCenterZh[] = _("你帶著疲憊的夥伴，\n趕往寶可夢中心休息。\p");
++static const u8 sToCenterZh[] = _("你帶寶可夢\n趕回寶可夢中心。\p");
 +static const u8 sToHomeEn[] = _("You hurried home, keeping your\nexhausted POKéMON safe from\nfurther harm…\p");
-+static const u8 sToHomeZh[] = _("你帶著疲憊的夥伴，\n趕回家中休息。\p");
++static const u8 sToHomeZh[] = _("你帶寶可夢\n趕回家。\p");
 +static const u8 sSavedGameEn[] = _("You saved the game.");
 +static const u8 sSavedGameZh[] = _("你儲存了遊戲。");
 +static const u8 sEmpty[] = _("");
@@ -466362,7 +466410,7 @@ index 0000000..4f0d1cc
 +}
 diff --git a/src/taichung_quest_log_text.c b/src/taichung_quest_log_text.c
 new file mode 100644
-index 0000000..437ea07
+index 0000000..3f39e5c
 --- /dev/null
 +++ b/src/taichung_quest_log_text.c
 @@ -0,0 +1,84 @@
@@ -466374,47 +466422,47 @@ index 0000000..437ea07
 +// Quest-log narration addresses the local player; it never renames saved data.
 +// Complete sentences keep possessives and second-person grammar contextual.
 +static const u8 sSwitchMon1WithMon2En[] = _("You switched {STR_VAR_1}\nwith {STR_VAR_2}.");
-+static const u8 sSwitchMon1WithMon2Zh[] = _("你交換了寶可夢：\n{STR_VAR_1}和\n{STR_VAR_2}。");
++static const u8 sSwitchMon1WithMon2Zh[] = _("你交換了{STR_VAR_1}\n和{STR_VAR_2}。");
 +static const u8 sUsedTheItemEn[] = _("You used the\n{STR_VAR_1}.");
-+static const u8 sUsedTheItemZh[] = _("你使用了\n{STR_VAR_1}。");
++static const u8 sUsedTheItemZh[] = _("你用了\n{STR_VAR_1}。");
 +static const u8 sWithdrewItemFromPCEn[] = _("You took {STR_VAR_1}\nfrom your PC.");
-+static const u8 sWithdrewItemFromPCZh[] = _("你從自己的電腦取出了\n{STR_VAR_1}。");
++static const u8 sWithdrewItemFromPCZh[] = _("你從電腦取出\n{STR_VAR_1}。");
 +static const u8 sGaveMonHeldItemFromPCEn[] = _("You took {STR_VAR_1}\nfrom your PC and gave it to\n{STR_VAR_2} to hold.");
-+static const u8 sGaveMonHeldItemFromPCZh[] = _("你從自己的電腦取出\n{STR_VAR_1}，\n交給{STR_VAR_2}攜帶。");
++static const u8 sGaveMonHeldItemFromPCZh[] = _("你從電腦取出\n{STR_VAR_1}，\n讓{STR_VAR_2}攜帶。");
 +static const u8 sGaveMonHeldItem2En[] = _("You gave {STR_VAR_1}\n{STR_VAR_2} to hold.");
-+static const u8 sGaveMonHeldItem2Zh[] = _("你讓{STR_VAR_1}\n攜帶了{STR_VAR_2}。");
++static const u8 sGaveMonHeldItem2Zh[] = _("你讓{STR_VAR_1}\n攜帶{STR_VAR_2}。");
 +static const u8 sLeftTownsLocationForNextDestinationEn[] = _("You left {STR_VAR_1}'s\n{STR_VAR_2} for your\nnext destination.");
-+static const u8 sLeftTownsLocationForNextDestinationZh[] = _("你離開了{STR_VAR_1}的\n{STR_VAR_2}，\n繼續前往下一個地點。");
++static const u8 sLeftTownsLocationForNextDestinationZh[] = _("你離開{STR_VAR_1}的\n{STR_VAR_2}，\n前往下一站。");
 +static const u8 sRestedAtHomeEn[] = _("You rested comfortably at home.");
-+static const u8 sRestedAtHomeZh[] = _("你在家裡好好休息了。");
++static const u8 sRestedAtHomeZh[] = _("你在家好好休息。");
 +static const u8 sLeftOaksLabEn[] = _("You left PROF. OAK's\nPOKéMON RESEARCH LAB.");
-+static const u8 sLeftOaksLabZh[] = _("你離開了大木博士的\n寶可夢研究所。");
++static const u8 sLeftOaksLabZh[] = _("你離開\n大木研究所。");
 +static const u8 sHadGreatTimeInSafariZoneEn[] = _("You enjoyed the SAFARI ZONE\nwith your POKéMON.");
-+static const u8 sHadGreatTimeInSafariZoneZh[] = _("你在SAFARI ZONE\n和寶可夢玩得很開心。");
++static const u8 sHadGreatTimeInSafariZoneZh[] = _("你在SAFARI ZONE\n和寶可夢同樂。");
 +static const u8 sUsedEscapeRopeEn[] = _("You used an ESCAPE ROPE\nto get out of\n{STR_VAR_2}.");
-+static const u8 sUsedEscapeRopeZh[] = _("你使用了離洞繩，\n離開了{STR_VAR_2}。");
++static const u8 sUsedEscapeRopeZh[] = _("你用離洞繩\n離開{STR_VAR_2}。");
 +static const u8 sDepartedFromLocationToNextDestinationEn[] = _("You departed from\n{STR_VAR_2} for your\nnext destination.");
-+static const u8 sDepartedFromLocationToNextDestinationZh[] = _("你離開了{STR_VAR_2}，\n繼續前往下一個地點。");
++static const u8 sDepartedFromLocationToNextDestinationZh[] = _("你離開{STR_VAR_2}，\n前往下一站。");
 +static const u8 sObtainedItemInLocationEn[] = _("You got {STR_VAR_2}\nhere in {STR_VAR_1}.");
-+static const u8 sObtainedItemInLocationZh[] = _("你在{STR_VAR_1}\n得到了{STR_VAR_2}。");
++static const u8 sObtainedItemInLocationZh[] = _("你在{STR_VAR_1}\n得到{STR_VAR_2}。");
 +static const u8 sSavedGameAtLocationEn[] = _("You saved the game here:\n{STR_VAR_1}.");
 +static const u8 sSavedGameAtLocationZh[] = _("你在這裡儲存了遊戲：\n{STR_VAR_1}。");
 +static const u8 sMultiBattleWithPeopleResultedInOutcomeEn[] = _("You and {DYNAMIC 0x01} took on\n{DYNAMIC 0x02} and {DYNAMIC 0x03}\nand got a {DYNAMIC 0x04}.");
-+static const u8 sMultiBattleWithPeopleResultedInOutcomeZh[] = _("你和{DYNAMIC 0x01}對戰\n{DYNAMIC 0x02}和{DYNAMIC 0x03}。\n對戰結果：{DYNAMIC 0x04}。");
++static const u8 sMultiBattleWithPeopleResultedInOutcomeZh[] = _("你和{DYNAMIC 0x01}對戰\n{DYNAMIC 0x02}和{DYNAMIC 0x03}，\n結果：{DYNAMIC 0x04}。");
 +static const u8 sPlayerBattledChampionRivalEn[] = _("You battled the CHAMPION,\n{DYNAMIC 0x01}.");
-+static const u8 sPlayerBattledChampionRivalZh[] = _("你和冠軍{DYNAMIC 0x01}\n進行了一場精彩的對戰。");
++static const u8 sPlayerBattledChampionRivalZh[] = _("你和冠軍{DYNAMIC 0x01}對戰。");
 +static const u8 sPlayerSentOutMon1RivalSentOutMon2En[] = _("In the end, {DYNAMIC 0x00} sent out\n{DYNAMIC 0x01}, while you sent out\n{DYNAMIC 0x03}.");
-+static const u8 sPlayerSentOutMon1RivalSentOutMon2Zh[] = _("最後，{DYNAMIC 0x00}派出\n{DYNAMIC 0x01}，\n你則派出{DYNAMIC 0x03}。");
++static const u8 sPlayerSentOutMon1RivalSentOutMon2Zh[] = _("最後，{DYNAMIC 0x00}派出\n{DYNAMIC 0x01}，\n你派出{DYNAMIC 0x03}。");
 +static const u8 sDefeatedWildMonEn[] = _("You defeated {DYNAMIC 0x01}\nin {DYNAMIC 0x00}.");
-+static const u8 sDefeatedWildMonZh[] = _("你在{DYNAMIC 0x00}\n擊敗了{DYNAMIC 0x01}。");
++static const u8 sDefeatedWildMonZh[] = _("你在{DYNAMIC 0x00}\n擊敗{DYNAMIC 0x01}。");
 +static const u8 sCaughtWildMonEn[] = _("You caught {DYNAMIC 0x03}\nin {DYNAMIC 0x00}.");
-+static const u8 sCaughtWildMonZh[] = _("你在{DYNAMIC 0x00}\n捕捉了{DYNAMIC 0x03}。");
++static const u8 sCaughtWildMonZh[] = _("你在{DYNAMIC 0x00}\n捉到{DYNAMIC 0x03}。");
 +static const u8 sDefeatedWildMonAndCaughtWildMonEn[] = _("You defeated {DYNAMIC 0x01}\nand caught {DYNAMIC 0x03}\nin {DYNAMIC 0x00}.");
-+static const u8 sDefeatedWildMonAndCaughtWildMonZh[] = _("你在{DYNAMIC 0x00}\n擊敗了{DYNAMIC 0x01}，\n也捕捉了{DYNAMIC 0x03}。");
++static const u8 sDefeatedWildMonAndCaughtWildMonZh[] = _("你在{DYNAMIC 0x00}\n擊敗{DYNAMIC 0x01}，\n捉到{DYNAMIC 0x03}。");
 +static const u8 sDefeatedWildMonsAndCaughtWildMonEn[] = _("You defeated {DYNAMIC 0x02} wild POKéMON,\nincluding {DYNAMIC 0x01}, and caught\n{DYNAMIC 0x03} in {DYNAMIC 0x00}.");
-+static const u8 sDefeatedWildMonsAndCaughtWildMonZh[] = _("你在{DYNAMIC 0x00}擊敗\n{DYNAMIC 0x02}隻寶可夢，包含{DYNAMIC 0x01}，\n也捕捉了{DYNAMIC 0x03}。");
++static const u8 sDefeatedWildMonsAndCaughtWildMonZh[] = _("你在{DYNAMIC 0x00}擊敗\n{DYNAMIC 0x02}隻寶可夢，包含{DYNAMIC 0x01}，\n捉到{DYNAMIC 0x03}。");
 +static const u8 sSoldNumOfItemEn[] = _("You sold {DYNAMIC 0x03} of this item\nat {DYNAMIC 0x01}'s MART:\n{DYNAMIC 0x02}.");
-+static const u8 sSoldNumOfItemZh[] = _("你在{DYNAMIC 0x01}的商店\n賣出了{DYNAMIC 0x02}，\n數量：{DYNAMIC 0x03}。");
++static const u8 sSoldNumOfItemZh[] = _("你在{DYNAMIC 0x01}商店\n賣出{DYNAMIC 0x02}，\n數量：{DYNAMIC 0x03}。");
 +
 +const u8 *TaichungQuestLogPlayerText(const u8 *src)
 +{
@@ -470317,7 +470365,7 @@ index 0000000..608f6ab
 +}
 diff --git a/src/taichung_science_gym.c b/src/taichung_science_gym.c
 new file mode 100644
-index 0000000..72ec76c
+index 0000000..896ae68
 --- /dev/null
 +++ b/src/taichung_science_gym.c
 @@ -0,0 +1,40 @@
@@ -470326,25 +470374,25 @@ index 0000000..72ec76c
 +
 +// Story paired draft; roster/moves and exact prose remain revisable defaults.
 +const u8 TaichungGym_Text_ScienceGreetingEn[] = _("I'm Yicheng. Fossils, forces!\nWant to see an experiment?");
-+const u8 TaichungGym_Text_ScienceGreetingZh[] = _("我是以澄，研究化石與物理。\n想看看我的實驗嗎？");
++const u8 TaichungGym_Text_ScienceGreetingZh[] = _("我是以澄，愛化石與物理！\n想看實驗嗎？");
 +const u8 TaichungGym_Text_ScienceOfferEn[] = _("Try a Science gym challenge?\nA win earns this gym's badge.");
-+const u8 TaichungGym_Text_ScienceOfferZh[] = _("想挑戰科博館道館嗎？\n獲勝就能得到這裡的徽章。");
++const u8 TaichungGym_Text_ScienceOfferZh[] = _("想挑戰科博館道館嗎？\n獲勝可得徽章。");
 +const u8 TaichungGym_Text_ScienceIntroEn[] = _("Hypothesis ready. Observe!\nLet's see what the data says.");
-+const u8 TaichungGym_Text_ScienceIntroZh[] = _("假設準備好了，開始觀察！\n讓結果來回答我們吧。");
++const u8 TaichungGym_Text_ScienceIntroZh[] = _("假設好了，開始觀察！\n看結果怎麼說！");
 +const u8 TaichungGym_Text_ScienceDefeatEn[] = _("A result worth writing down!");
-+const u8 TaichungGym_Text_ScienceDefeatZh[] = _("這個結果，值得記下來！");
++const u8 TaichungGym_Text_ScienceDefeatZh[] = _("這結果值得記下來！");
 +const u8 TaichungGym_Text_ScienceDeclinedEn[] = _("Good. More time to wonder.\nCome back with a fresh idea.");
-+const u8 TaichungGym_Text_ScienceDeclinedZh[] = _("好啊，多點時間想點子。\n有新想法，隨時再回來。");
++const u8 TaichungGym_Text_ScienceDeclinedZh[] = _("好啊，多想一想。\n有新點子再來！");
 +const u8 TaichungGym_Text_ScienceAlreadyEn[] = _("Your Science badge is safe.\nYour next question is yours.");
-+const u8 TaichungGym_Text_ScienceAlreadyZh[] = _("科博館徽章已經記好了。\n下一個問題，就由你來選。");
++const u8 TaichungGym_Text_ScienceAlreadyZh[] = _("科博館徽章記好了。\n下個問題由你來選。");
 +const u8 TaichungGym_Text_ScienceLossEn[] = _("One result. Not the last.\nThere's another idea to try.");
-+const u8 TaichungGym_Text_ScienceLossZh[] = _("這只是一個結果。\n還有別的點子可以試。");
++const u8 TaichungGym_Text_ScienceLossZh[] = _("這只是一個結果。\n還有點子能試！");
 +const u8 TaichungGym_Text_ScienceNotRecordedEn[] = _("No new badge was recorded.\nYou're welcome to try again.");
-+const u8 TaichungGym_Text_ScienceNotRecordedZh[] = _("這次沒有新增徽章。\n歡迎再次挑戰。");
++const u8 TaichungGym_Text_ScienceNotRecordedZh[] = _("沒有新增徽章。\n歡迎再挑戰！");
 +const u8 TaichungGym_Text_ScienceUnavailableEn[] = _("Bring a POKéMON partner\nwhen you're ready to battle.");
-+const u8 TaichungGym_Text_ScienceUnavailableZh[] = _("準備對戰時，\n請帶著你的寶可夢夥伴。");
++const u8 TaichungGym_Text_ScienceUnavailableZh[] = _("帶寶可夢夥伴\n來對戰吧！");
 +const u8 TaichungGym_Text_ScienceCompleteEn[] = _("My prediction was wrong.\nBest thing I've learned today.\pScience badge recorded!\nKeep exploring at your pace.");
-+const u8 TaichungGym_Text_ScienceCompleteZh[] = _("我的預測錯了。\n這是我今天最有趣的發現。\p科博館徽章已記在城市護照。\n照你的步調，繼續探索吧。");
++const u8 TaichungGym_Text_ScienceCompleteZh[] = _("我預測錯了。\n這是今天最大的發現！\p科博館徽章記入城市護照！\n慢慢探索吧。");
 +
 +static const u8 *const sMessages[][2] = {
 +    [TAICHUNG_GYM_MESSAGE_OFFER] = {TaichungGym_Text_ScienceOfferEn, TaichungGym_Text_ScienceOfferZh},
@@ -470363,7 +470411,7 @@ index 0000000..72ec76c
 +}
 diff --git a/src/taichung_shen_ji_gym.c b/src/taichung_shen_ji_gym.c
 new file mode 100644
-index 0000000..463c2df
+index 0000000..8953f2c
 --- /dev/null
 +++ b/src/taichung_shen_ji_gym.c
 @@ -0,0 +1,40 @@
@@ -470372,25 +470420,25 @@ index 0000000..463c2df
 +
 +// Story paired draft; roster/moves and exact prose remain revisable defaults.
 +const u8 TaichungGym_Text_ShenJiGreetingEn[] = _("I'm Axiu. I remake old things.\nEach patch tells a new story.");
-+const u8 TaichungGym_Text_ShenJiGreetingZh[] = _("我是阿修，專做舊物改造。\n每塊補丁，都還有下一段。");
++const u8 TaichungGym_Text_ShenJiGreetingZh[] = _("我是阿修，改造舊物。\n每塊補丁都有新故事。");
 +const u8 TaichungGym_Text_ShenJiOfferEn[] = _("Try a Shen Ji gym challenge?\nA win earns this gym's badge.");
-+const u8 TaichungGym_Text_ShenJiOfferZh[] = _("想挑戰審計道館嗎？\n獲勝就能得到這裡的徽章。");
++const u8 TaichungGym_Text_ShenJiOfferZh[] = _("想挑戰審計道館嗎？\n獲勝可得徽章。");
 +const u8 TaichungGym_Text_ShenJiIntroEn[] = _("Hands ready. A new pattern!\nLet's build together.");
-+const u8 TaichungGym_Text_ShenJiIntroZh[] = _("動手，試一個新樣式。\n一起做出新的點子吧。");
++const u8 TaichungGym_Text_ShenJiIntroZh[] = _("動手，試個新花樣！\n一起來做吧！");
 +const u8 TaichungGym_Text_ShenJiDefeatEn[] = _("Now that is worth keeping.");
-+const u8 TaichungGym_Text_ShenJiDefeatZh[] = _("這一招，值得留下來。");
++const u8 TaichungGym_Text_ShenJiDefeatZh[] = _("這招值得留著！");
 +const u8 TaichungGym_Text_ShenJiDeclinedEn[] = _("Sure. An idea can wait.\nI've got a seam to finish.");
-+const u8 TaichungGym_Text_ShenJiDeclinedZh[] = _("好啊，點子可以等。\n我先把這道線縫完。");
++const u8 TaichungGym_Text_ShenJiDeclinedZh[] = _("好啊，點子能等。\n我先縫完這道線。");
 +const u8 TaichungGym_Text_ShenJiAlreadyEn[] = _("Your Shen Ji badge is safe.\nMy scrap pile keeps growing.");
-+const u8 TaichungGym_Text_ShenJiAlreadyZh[] = _("審計徽章已經記在護照裡。\n我的剩布倒是越堆越多。");
++const u8 TaichungGym_Text_ShenJiAlreadyZh[] = _("審計徽章記好了。\n我的剩布越堆越多。");
 +const u8 TaichungGym_Text_ShenJiLossEn[] = _("A loose thread. Fixable.\nRest first. We'll try again.");
-+const u8 TaichungGym_Text_ShenJiLossZh[] = _("線鬆了一點，還能補。\n先休息，想試再回來。");
++const u8 TaichungGym_Text_ShenJiLossZh[] = _("線鬆了，還能補。\n先休息，再來試！");
 +const u8 TaichungGym_Text_ShenJiNotRecordedEn[] = _("No new badge was recorded.\nYou're welcome to try again.");
-+const u8 TaichungGym_Text_ShenJiNotRecordedZh[] = _("這次沒有新增徽章。\n歡迎再次挑戰。");
++const u8 TaichungGym_Text_ShenJiNotRecordedZh[] = _("沒有新增徽章。\n歡迎再挑戰！");
 +const u8 TaichungGym_Text_ShenJiUnavailableEn[] = _("Bring a POKéMON partner\nwhen you're ready to battle.");
-+const u8 TaichungGym_Text_ShenJiUnavailableZh[] = _("準備對戰時，\n請帶著你的寶可夢夥伴。");
++const u8 TaichungGym_Text_ShenJiUnavailableZh[] = _("帶寶可夢夥伴\n來對戰吧！");
 +const u8 TaichungGym_Text_ShenJiCompleteEn[] = _("You gave that plan a new use.\nI like a good second idea.\pShen Ji badge recorded!\nKeep exploring at your pace.");
-+const u8 TaichungGym_Text_ShenJiCompleteZh[] = _("你把剛才的計畫換了個用法。\n我就喜歡這種新的點子。\p審計徽章已記在城市護照。\n照你的步調，繼續探索吧。");
++const u8 TaichungGym_Text_ShenJiCompleteZh[] = _("你把計畫換了個用法！\n我就愛這種點子。\p審計徽章記入城市護照！\n慢慢探索吧。");
 +
 +static const u8 *const sMessages[][2] = {
 +    [TAICHUNG_GYM_MESSAGE_OFFER] = {TaichungGym_Text_ShenJiOfferEn, TaichungGym_Text_ShenJiOfferZh},
@@ -470464,7 +470512,7 @@ index 0000000..778fa38
 +}
 diff --git a/src/taichung_starter_menu.c b/src/taichung_starter_menu.c
 new file mode 100644
-index 0000000..355fbd6
+index 0000000..da9aa63
 --- /dev/null
 +++ b/src/taichung_starter_menu.c
 @@ -0,0 +1,299 @@
@@ -470513,17 +470561,17 @@ index 0000000..355fbd6
 +};
 +
 +static const u8 sTitleEn[] = _("CHOOSE YOUR PARTNER");
-+static const u8 sTitleZh[] = _("選擇你的夥伴");
++static const u8 sTitleZh[] = _("選擇夥伴");
 +static const u8 sConfirmTitleEn[] = _("TAKE THIS PARTNER?");
-+static const u8 sConfirmTitleZh[] = _("就選這位夥伴嗎？");
++static const u8 sConfirmTitleZh[] = _("就選牠嗎？");
 +static const u8 sBrowseHelpEn[] = _("Choose your first city companion.");
-+static const u8 sBrowseHelpZh[] = _("選一位夥伴，一起探索臺中。");
++static const u8 sBrowseHelpZh[] = _("選第一位夥伴。");
 +static const u8 sBrowseControlsEn[] = _("D-pad: switch     A: choose");
 +static const u8 sBrowseControlsZh[] = _("方向鍵選擇    A確認");
 +static const u8 sConfirmHelpEn[] = _("Your adventure starts together!");
-+static const u8 sConfirmHelpZh[] = _("和這位夥伴一起出發吧！");
++static const u8 sConfirmHelpZh[] = _("一起出發吧！");
 +static const u8 sConfirmControlsEn[] = _("A: confirm     B: keep choosing");
-+static const u8 sConfirmControlsZh[] = _("A確認    B繼續選擇");
++static const u8 sConfirmControlsZh[] = _("A確認    B重選");
 +static const u8 sCursor[] = _(">");
 +static const u8 sLv[] = _("Lv");
 +static const u8 sFireEn[] = _("FIRE");
@@ -470879,7 +470927,7 @@ index 0000000..6cfe71e
 +}
 diff --git a/src/taichung_team_menu.c b/src/taichung_team_menu.c
 new file mode 100644
-index 0000000..4b81781
+index 0000000..68d98a5
 --- /dev/null
 +++ b/src/taichung_team_menu.c
 @@ -0,0 +1,556 @@
@@ -470999,17 +471047,17 @@ index 0000000..4b81781
 +static const u8 sTitleEn[] = _("TEAM");
 +static const u8 sTitleZh[] = _("隊伍");
 +static const u8 sSlotHelpEn[] = _("Choose a slot to add or replace.");
-+static const u8 sSlotHelpZh[] = _("選擇位置加入或更換");
++static const u8 sSlotHelpZh[] = _("選位置加入或更換");
 +static const u8 sSlotFooterEn[] = _("A: choose   SELECT: party   B: back");
 +static const u8 sSlotFooterZh[] = _("A選擇 SELECT查看 B返回");
 +static const u8 sCategoryTitleEn[] = _("CHOOSE TYPE");
 +static const u8 sCategoryTitleZh[] = _("選擇屬性");
 +static const u8 sCategoryHintEn[] = _("Sorted by No. Dual types show in both.");
-+static const u8 sCategoryHintZh[] = _("依編號排序，雙屬性兩邊都有");
++static const u8 sCategoryHintZh[] = _("編號排序，雙屬性兩邊都有");
 +static const u8 sCategoryFooterEn[] = _("A: choose   B: back");
 +static const u8 sCategoryFooterZh[] = _("A選擇 B返回");
 +static const u8 sSpeciesHintEn[] = _("Sorted by No.");
-+static const u8 sSpeciesHintZh[] = _("依編號排序");
++static const u8 sSpeciesHintZh[] = _("編號排序");
 +static const u8 sSpeciesFooterEn[] = _("A: choose   B: types   Left/Right: page");
 +static const u8 sSpeciesFooterZh[] = _("A選擇 B屬性 左右換頁");
 +static const u8 sSlash[] = _("/");
@@ -471022,13 +471070,13 @@ index 0000000..4b81781
 +static const u8 sMovesEn[] = _("PRESET MOVES");
 +static const u8 sMovesZh[] = _("招式");
 +static const u8 sConfirmEn[] = _("Use this POKéMON in this slot?");
-+static const u8 sConfirmZh[] = _("要使用這隻寶可夢嗎？");
++static const u8 sConfirmZh[] = _("要選這隻嗎？");
 +static const u8 sConfirmFooterEn[] = _("A: confirm   B: keep choosing");
-+static const u8 sConfirmFooterZh[] = _("A確認 B繼續選擇");
++static const u8 sConfirmFooterZh[] = _("A確認 B重選");
 +static const u8 sReplacingEn[] = _("Replacing:");
 +static const u8 sReplacingZh[] = _("更換：");
 +static const u8 sFullHpEn[] = _("Full HP and PP. Ready to battle.");
-+static const u8 sFullHpZh[] = _("體力與招式全滿，準備對戰。");
++static const u8 sFullHpZh[] = _("HP與PP全滿，準備對戰。");
 +
 +static const u16 sPalette[] = {
 +    RGB(31, 30, 27), RGB(31, 30, 27), RGB(3, 10, 8), RGB(19, 22, 18),
@@ -471484,7 +471532,7 @@ index 0000000..8e46850
 +}
 diff --git a/src/taichung_theater_gym.c b/src/taichung_theater_gym.c
 new file mode 100644
-index 0000000..7b82218
+index 0000000..5960ec1
 --- /dev/null
 +++ b/src/taichung_theater_gym.c
 @@ -0,0 +1,40 @@
@@ -471493,25 +471541,25 @@ index 0000000..7b82218
 +
 +// Story paired draft; roster/moves and exact prose remain revisable defaults.
 +const u8 TaichungGym_Text_TheaterGreetingEn[] = _("I'm Ling. I direct the show.\nEvery partner gets a turn.");
-+const u8 TaichungGym_Text_TheaterGreetingZh[] = _("我是聆，導演也編曲。\n每位夥伴，都有登場的時刻。");
++const u8 TaichungGym_Text_TheaterGreetingZh[] = _("我是聆，導演也編曲。\n每位夥伴都會登場。");
 +const u8 TaichungGym_Text_TheaterOfferEn[] = _("Want a Theater gym challenge?\nA win earns this gym's badge.");
-+const u8 TaichungGym_Text_TheaterOfferZh[] = _("想挑戰歌劇院道館嗎？\n獲勝就能得到這裡的徽章。");
++const u8 TaichungGym_Text_TheaterOfferZh[] = _("想挑戰歌劇院道館嗎？\n獲勝可得徽章。");
 +const u8 TaichungGym_Text_TheaterIntroEn[] = _("Voices ready. Curtain up!\nLet's give this scene life.");
-+const u8 TaichungGym_Text_TheaterIntroZh[] = _("歌聲準備，開幕！\n讓這一幕活起來吧。");
++const u8 TaichungGym_Text_TheaterIntroZh[] = _("歌聲就位，開幕！\n讓這幕活起來！");
 +const u8 TaichungGym_Text_TheaterDefeatEn[] = _("A cue worth listening for!");
-+const u8 TaichungGym_Text_TheaterDefeatZh[] = _("這個提示，值得仔細聽！");
++const u8 TaichungGym_Text_TheaterDefeatZh[] = _("這提示值得細聽！");
 +const u8 TaichungGym_Text_TheaterDeclinedEn[] = _("Of course. We can wait.\nCome back when it feels right.");
-+const u8 TaichungGym_Text_TheaterDeclinedZh[] = _("當然，舞臺會等你。\n想來的時候，再回來就好。");
++const u8 TaichungGym_Text_TheaterDeclinedZh[] = _("當然，舞臺會等你。\n想來再來就好。");
 +const u8 TaichungGym_Text_TheaterAlreadyEn[] = _("Your Theater badge is safe.\nMore scenes await in the city.");
-+const u8 TaichungGym_Text_TheaterAlreadyZh[] = _("歌劇院徽章已經記好了。\n城市裡，還有別的好戲。");
++const u8 TaichungGym_Text_TheaterAlreadyZh[] = _("歌劇院徽章記好了。\n城裡還有更多好戲。");
 +const u8 TaichungGym_Text_TheaterLossEn[] = _("We missed each other's cue.\nRest. There's another scene.");
-+const u8 TaichungGym_Text_TheaterLossZh[] = _("這次，沒接上彼此的提示。\n先休息，還有下一場。");
++const u8 TaichungGym_Text_TheaterLossZh[] = _("沒接上彼此的提示。\n先休息，還有下一場。");
 +const u8 TaichungGym_Text_TheaterNotRecordedEn[] = _("No new badge was recorded.\nYou're welcome to try again.");
-+const u8 TaichungGym_Text_TheaterNotRecordedZh[] = _("這次沒有新增徽章。\n歡迎再次挑戰。");
++const u8 TaichungGym_Text_TheaterNotRecordedZh[] = _("沒有新增徽章。\n歡迎再挑戰！");
 +const u8 TaichungGym_Text_TheaterUnavailableEn[] = _("Bring a POKéMON partner\nwhen you're ready to battle.");
-+const u8 TaichungGym_Text_TheaterUnavailableZh[] = _("準備對戰時，\n請帶著你的寶可夢夥伴。");
++const u8 TaichungGym_Text_TheaterUnavailableZh[] = _("帶寶可夢夥伴\n來對戰吧！");
 +const u8 TaichungGym_Text_TheaterCompleteEn[] = _("What phrasing! What movement!\nThat deserves a curtain call.\pTheater badge recorded!\nKeep exploring at your pace.");
-+const u8 TaichungGym_Text_TheaterCompleteZh[] = _("這個樂句！這個動作！\n這一幕，值得好好謝幕。\p歌劇院徽章已記在城市護照。\n照你的步調，繼續探索吧。");
++const u8 TaichungGym_Text_TheaterCompleteZh[] = _("好樂句！好動作！\n這一幕值得謝幕！\p歌劇院徽章記入城市護照！\n慢慢探索吧。");
 +
 +static const u8 *const sMessages[][2] = {
 +    [TAICHUNG_GYM_MESSAGE_OFFER] = {TaichungGym_Text_TheaterOfferEn, TaichungGym_Text_TheaterOfferZh},
@@ -471529,37 +471577,52 @@ index 0000000..7b82218
 +    TaichungGymCopyLandmarkMessage(TAICHUNG_GYM_THEATER, sMessages);
 +}
 diff --git a/src/text.c b/src/text.c
-index f3eef07..71e9d53 100644
+index f3eef07..817b325 100644
 --- a/src/text.c
 +++ b/src/text.c
-@@ -5,6 +5,8 @@
+@@ -5,6 +5,9 @@
  #include "graphics.h"
  #include "dynamic_placeholder_text_util.h"
  #include "constants/songs.h"
 +#include "taichung_language.h"
 +#include "data/taichung_glyphs.h"
++#include "data/taichung_cjk_punctuation.h"
  
  #define TAG_CURSOR 0x8000
  
-@@ -626,6 +628,32 @@ void DrawDownArrow(u8 windowId, u16 x, u16 y, u8 bgColor, bool8 drawArrow, u8 *c
+@@ -626,6 +629,65 @@ void DrawDownArrow(u8 windowId, u16 x, u16 y, u8 bgColor, bool8 drawArrow, u8 *c
      }
  }
  
-+static void DecompressGlyph_Taichung(u16 glyphId)
++// Chinese glyphs are 12x14 bitmap cells. Each one is drawn with the FireRed
++// text shadow (one pixel right, below and diagonally) and advances 13 pixels,
++// leaving a one-pixel gap so neighbouring characters do not touch.
++#define TAICHUNG_CJK_ADVANCE 13
++
++static void DecompressGlyph_TaichungRows(const u16 *rows)
 +{
 +    u32 x, y;
 +    u32 offset;
++    u32 here, left, above, aboveLeft;
 +    u8 color;
 +    u8 bg = GetLastTextColor(2);
 +    u8 fg = GetLastTextColor(0);
-+    if (glyphId >= ARRAY_COUNT(sTaichungChineseGlyphs))
-+        glyphId = 0;
++    u8 shadow = GetLastTextColor(1);
 +    memset(gGlyphInfo.pixels, bg | (bg << 4), sizeof(gGlyphInfo.pixels));
 +    for (y = 0; y < 14; y++)
 +    {
-+        for (x = 0; x < 12; x++)
++        for (x = 0; x < TAICHUNG_CJK_ADVANCE; x++)
 +        {
-+            color = (sTaichungChineseGlyphs[glyphId][y] & (1 << x)) ? fg : bg;
++            here = x < 12 && (rows[y] & (1 << x));
++            left = x > 0 && (rows[y] & (1 << (x - 1)));
++            above = y > 0 && x < 12 && (rows[y - 1] & (1 << x));
++            aboveLeft = y > 0 && x > 0 && (rows[y - 1] & (1 << (x - 1)));
++            if (here)
++                color = fg;
++            else if (left || above || aboveLeft)
++                color = shadow;
++            else
++                continue;
 +            offset = ((y / 8) * 2 + x / 8) * 32 + (y % 8) * 4 + (x % 8) / 2;
 +            if (x & 1)
 +                gGlyphInfo.pixels[offset] = (gGlyphInfo.pixels[offset] & 0x0F) | (color << 4);
@@ -471567,14 +471630,33 @@ index f3eef07..71e9d53 100644
 +                gGlyphInfo.pixels[offset] = (gGlyphInfo.pixels[offset] & 0xF0) | color;
 +        }
 +    }
-+    gGlyphInfo.width = 12;
++    gGlyphInfo.width = TAICHUNG_CJK_ADVANCE;
 +    gGlyphInfo.height = 14;
++}
++
++static void DecompressGlyph_Taichung(u16 glyphId)
++{
++    if (glyphId >= ARRAY_COUNT(sTaichungChineseGlyphs))
++        glyphId = 0;
++    DecompressGlyph_TaichungRows(sTaichungChineseGlyphs[glyphId]);
++}
++
++// ！？。 share FireRed's Latin bytes with English text. Right after a Chinese
++// glyph (FC 19 lo hi; lo and hi are 1-240 so never FC) they use full-width rows.
++static bool32 TaichungFollowsCjk(const u8 *punctuation)
++{
++    return punctuation[-4] == EXT_CTRL_CODE_BEGIN && punctuation[-3] == EXT_CTRL_CODE_TAICHUNG_CJK;
++}
++
++static bool32 TaichungIsCjkPunctuation(u16 c)
++{
++    return c == CHAR_EXCL_MARK || c == CHAR_QUESTION_MARK || c == CHAR_PERIOD;
 +}
 +
  u16 RenderText(struct TextPrinter *textPrinter)
  {
      struct TextPrinterSubStruct *subStruct = &textPrinter->subUnion.sub;
-@@ -672,6 +700,17 @@ u16 RenderText(struct TextPrinter *textPrinter)
+@@ -672,6 +734,17 @@ u16 RenderText(struct TextPrinter *textPrinter)
              textPrinter->printerTemplate.currentChar++;
              switch (currChar)
              {
@@ -471592,7 +471674,20 @@ index f3eef07..71e9d53 100644
              case EXT_CTRL_CODE_COLOR:
                  textPrinter->printerTemplate.fgColor = *textPrinter->printerTemplate.currentChar;
                  textPrinter->printerTemplate.currentChar++;
-@@ -836,6 +875,7 @@ u16 RenderText(struct TextPrinter *textPrinter)
+@@ -814,6 +887,12 @@ u16 RenderText(struct TextPrinter *textPrinter)
+             return RENDER_FINISH;
+         }
+ 
++        if (TaichungIsCjkPunctuation(currChar) && TaichungFollowsCjk(textPrinter->printerTemplate.currentChar - 1))
++        {
++            DecompressGlyph_TaichungRows(sTaichungCjkPunctuation[currChar - CHAR_EXCL_MARK]);
++            goto drawGlyph;
++        }
++
+         switch (subStruct->glyphId)
+         {
+         case FONT_SMALL:
+@@ -836,6 +915,7 @@ u16 RenderText(struct TextPrinter *textPrinter)
              break;
          }
  
@@ -471600,25 +471695,49 @@ index f3eef07..71e9d53 100644
          CopyGlyphToWindow(textPrinter);
  
          if (textPrinter->minLetterSpacing)
-@@ -1028,6 +1068,7 @@ s32 GetStringWidth(u8 fontId, const u8 *str, s16 letterSpacing)
+@@ -1027,7 +1107,9 @@ s32 GetStringWidth(u8 fontId, const u8 *str, s16 letterSpacing)
+     const u8 *bufferPointer;
      int glyphWidth;
      u32 width;
++    bool32 afterCjk = FALSE, wasCjk;
  
 +    str = TaichungTranslate(str);
      isJapanese = FALSE;
      minGlyphWidth = 0;
  
-@@ -1087,6 +1128,10 @@ s32 GetStringWidth(u8 fontId, const u8 *str, s16 letterSpacing)
+@@ -1046,6 +1128,8 @@ s32 GetStringWidth(u8 fontId, const u8 *str, s16 letterSpacing)
+ 
+     while (*str != EOS)
+     {
++        wasCjk = afterCjk;
++        afterCjk = FALSE;
+         switch (*str)
+         {
+         case CHAR_NEWLINE:
+@@ -1087,6 +1171,11 @@ s32 GetStringWidth(u8 fontId, const u8 *str, s16 letterSpacing)
          case EXT_CTRL_CODE_BEGIN:
              switch (*++str)
              {
 +            case EXT_CTRL_CODE_TAICHUNG_CJK:
 +                str += 2;
-+                lineWidth += minGlyphWidth > 12 ? minGlyphWidth : 12;
++                lineWidth += minGlyphWidth > TAICHUNG_CJK_ADVANCE ? minGlyphWidth : TAICHUNG_CJK_ADVANCE;
++                afterCjk = TRUE;
 +                break;
              case EXT_CTRL_CODE_COLOR_HIGHLIGHT_SHADOW:
                  ++str;
              case EXT_CTRL_CODE_PLAY_BGM:
+@@ -1155,7 +1244,10 @@ s32 GetStringWidth(u8 fontId, const u8 *str, s16 letterSpacing)
+             lineWidth += glyphWidth;
+             break;
+         default:
+-            glyphWidth = func(*str, isJapanese);
++            if (wasCjk && TaichungIsCjkPunctuation(*str))
++                glyphWidth = TAICHUNG_CJK_ADVANCE;
++            else
++                glyphWidth = func(*str, isJapanese);
+             if (minGlyphWidth > 0)
+             {
+                 if (glyphWidth < minGlyphWidth)
 diff --git a/src/text_printer.c b/src/text_printer.c
 index e425ccb..6089354 100644
 --- a/src/text_printer.c
@@ -486067,10 +486186,10 @@ index 0000000..30370c8
 +if __name__=='__main__':main()
 diff --git a/tools/taichung/home_start.py b/tools/taichung/home_start.py
 new file mode 100644
-index 0000000..d7174ae
+index 0000000..3c24da4
 --- /dev/null
 +++ b/tools/taichung/home_start.py
-@@ -0,0 +1,399 @@
+@@ -0,0 +1,406 @@
 +#!/usr/bin/env python3
 +"""Guest house opening and no waterway signs, as one exact layer over BASE.
 +
@@ -486180,7 +486299,7 @@ index 0000000..d7174ae
 +    "data/scripts/taichung_city.inc": "c60b68f60188de1ae06c71b50a7a719dbca18cef06c0945e3302765414f2e534",
 +    "src/new_game.c": "02b47c2be75476f875a3aab93d7e369bc7d88542a475d142183a7c35a0713e21",
 +    "src/taichung_onboarding.c": "3516402251e320be219aa269e963aad9a1ea66a3b72333abd477a282775c28e7",
-+    "src/taichung_onboarding_text.c": "2865818c96f636d74fb178dde71ac7691cc3cc2cb22193fd102e56f0c7c52dfc",
++    "src/taichung_onboarding_text.c": "c34420d9ac519ee262a103f1e48c9ac726979f83cb8a019e3293bf36cc909bef",
 +    "tests/test_taichung_onboarding.c": "68575c596ffa53796f166e23afa830811a7c2168a2836e49c9c28338e80dd3b2",
 +    "data/taichung/minimap-contract.json": "af14f03233e15d679ba5ef9c4d3caadda1dd0ef134c2b68e303305ba107aafef",
 +}
@@ -486188,8 +486307,8 @@ index 0000000..d7174ae
 +    "data/maps/TaichungGuestHouse_1F/map.json": "3ea65083e6f02cafd2408c2adb64e50d9c885d80e0bf90ded315f1770379053d",
 +    "data/maps/TaichungGuestHouse_1F/scripts.inc": "6432bf35c4ebbbaa7f69414edc3c98d3c3eb90ceccca6ac20af8ee9e65f88e70",
 +    "data/maps/TaichungGuestHouse_2F/map.json": "299f891aee02aeeb81b9847dc3f9ebac5b7e927e162845a5262b0b407847a067",
-+    "data/maps/TaichungGuestHouse_2F/scripts.inc": "4fb7abef49899df40d01801b3ac544c14572d4bd791ad8686c6c167a4c4cbe6a",
-+    "src/taichung_guest_house.c": "55839ccd1e286a254f3ccf651b3e7aaf7d426b3e55c587b067b3f4f5cbeda40f",
++    "data/maps/TaichungGuestHouse_2F/scripts.inc": "124a5f1f7f60425578e69962c4e596f9457a751c8e888d1ca6d740aaf9b95246",
++    "src/taichung_guest_house.c": "81c22c507cdca76f6818b425d357ee68fbf983ec6d5eab137eec1bd64cd1b7e7",
 +}
 +ADDED_DIRS = ("data/maps/TaichungGuestHouse_1F", "data/maps/TaichungGuestHouse_2F")
 +
@@ -486353,6 +486472,13 @@ index 0000000..d7174ae
 +    for name in WIDTH:
 +        signs += [e["script"] for e in json.loads(read(MAP_JSON[name]))["bg_events"] if e.get("type") == "sign"]
 +    require(not [s for s in signs if any(word in s for word in water)], "A waterway sign is still in place")
++    # The bedroom opens one settings screen (language row first, then encounters); the
++    # web answers its startup wait with the browser language, and there is no prompt.
++    bedroom = read("data/maps/TaichungGuestHouse_2F/scripts.inc").decode()
++    wake = bedroom[bedroom.index("TaichungGuestHouse_2F_WakeUp::"):bedroom.index("TaichungGuestHouse_2F_Console::")]
++    require("TaichungExploration_ScriptOpenStartup" in wake and "Taichung_InitLanguageCore" not in wake
++            and "Taichung_ChooseLanguageCore" not in wake and "multichoice" not in wake,
++            "The bedroom must open the settings screen without a separate language prompt")
 +    report = {"door": {"cell": list(DOOR_CELL), "metatile": f"{DOOR:#x}", "copyOf": f"{PAINTED_DOOR:#x}",
 +                       "warp": GUEST_HOUSE_WARP},
 +              "guide": {"from": list(GUIDE_FROM), "to": list(GUIDE_TO)},
@@ -513874,3 +514000,83 @@ index 0000000..79784ee
 +  "$GAME_ROOT/src/taichung_peiqi.c" "$GAME_ROOT/tests/taichung_peiqi_test.c" \
 +  -o "$GAME_ROOT/build/taichung-tests/peiqi"
 +"$GAME_ROOT/build/taichung-tests/peiqi"
+diff --git a/src/data/taichung_cjk_punctuation.h b/src/data/taichung_cjk_punctuation.h
+new file mode 100644
+index 0000000..910ee5e
+--- /dev/null
++++ b/src/data/taichung_cjk_punctuation.h
+@@ -0,0 +1,8 @@
++// Generated by tools/taichung_gameplay/generate-cjk-punctuation.py. Do not edit.
++// Full-width ！？。 drawn after a Chinese glyph; index = Latin byte - CHAR_EXCL_MARK.
++// Taichung Native Bitmap12; source/licenses: assets/fonts/taichung-native-font.json
++static const u16 sTaichungCjkPunctuation[3][14] = {
++    {0x000, 0x000, 0x000, 0x020, 0x070, 0x070, 0x070, 0x020, 0x020, 0x020, 0x000, 0x020, 0x000, 0x000}, // ！
++    {0x000, 0x000, 0x000, 0x070, 0x088, 0x088, 0x080, 0x040, 0x020, 0x020, 0x000, 0x020, 0x000, 0x000}, // ？
++    {0x000, 0x000, 0x000, 0x000, 0x000, 0x000, 0x060, 0x090, 0x090, 0x060, 0x000, 0x000, 0x000, 0x000}, // 。
++};
+diff --git a/tools/taichung_gameplay/generate-cjk-punctuation.py b/tools/taichung_gameplay/generate-cjk-punctuation.py
+new file mode 100644
+index 0000000..76af314
+--- /dev/null
++++ b/tools/taichung_gameplay/generate-cjk-punctuation.py
+@@ -0,0 +1,60 @@
++#!/usr/bin/env python3
++"""Generate the full-width ！？。 rows drawn after a Chinese glyph.
++
++The character map keeps ！？。 on FireRed's Latin bytes (!?.), which original
++English text also uses. The renderer instead draws these full-width rows when
++one of those bytes directly follows a Chinese glyph, so Chinese lines get
++Chinese punctuation and English text is unchanged.
++
++Rows come from the pinned bitmap font through the shared glyph loader, in the
++same 12x14 mask format as src/data/taichung_glyphs.h. The header is
++generated. Check mode is the default; --write replaces the header.
++"""
++import argparse
++import importlib.util
++from pathlib import Path
++
++ROOT = Path(__file__).resolve().parents[2]
++HEADER = 'src/data/taichung_cjk_punctuation.h'
++# Order matches CHAR_EXCL_MARK (0xAB), CHAR_QUESTION_MARK (0xAC), CHAR_PERIOD (0xAD).
++CHARACTERS = '！？。'
++
++
++def render(game):
++    spec = importlib.util.spec_from_file_location('taichung_chinese_glyph_font', game / 'tools/taichung_gameplay/chinese_glyph_font.py')
++    module = importlib.util.module_from_spec(spec)
++    spec.loader.exec_module(module)
++    font = module.load_font(game)
++    lines = [
++        '// Generated by tools/taichung_gameplay/generate-cjk-punctuation.py. Do not edit.',
++        '// Full-width ！？。 drawn after a Chinese glyph; index = Latin byte - CHAR_EXCL_MARK.',
++        '// Taichung Native Bitmap12; source/licenses: assets/fonts/taichung-native-font.json',
++        'static const u16 sTaichungCjkPunctuation[3][14] = {',
++    ]
++    for character in CHARACTERS:
++        masks = font.render(character)
++        if len(masks) != 14 or not any(masks):
++            raise ValueError('Unexpected punctuation glyph: ' + character)
++        lines.append('    {' + ', '.join(f'0x{mask:03x}' for mask in masks) + '}, // ' + character)
++    lines.append('};')
++    return ('\n'.join(lines) + '\n').encode()
++
++
++def main():
++    parser = argparse.ArgumentParser(description=__doc__)
++    parser.add_argument('--game', type=Path, default=ROOT)
++    parser.add_argument('--write', action='store_true')
++    args = parser.parse_args()
++    game = args.game.resolve()
++    candidate = render(game)
++    dest = game / HEADER
++    if args.write:
++        dest.write_bytes(candidate)
++        print('Wrote ' + HEADER)
++    else:
++        assert dest.read_bytes() == candidate, HEADER + ' differs from the pinned font; rerun with --write'
++        print('OK ' + HEADER)
++
++
++if __name__ == '__main__':
++    main()

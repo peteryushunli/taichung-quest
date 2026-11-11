@@ -23,10 +23,6 @@ const makeView = () => createOnboardingView({
 });
 let view = makeView();
 function showTopic() { view.showCard({ topic: topics[step], context: 100 + step, phase: 5 + step }); }
-document.querySelector('#show-language')!.addEventListener('click', async () => {
-  const locale = await view.chooseLanguage();
-  status.textContent = locale ? `Selected ${locale}. Real startup must await native readiness/ack before guide text.` : 'Cancelled before any runtime started.';
-});
 document.querySelector('#show-coach')!.addEventListener('click', () => { step = 0; showTopic(); });
 document.querySelector('#run')!.addEventListener('click', async () => {
   const lines: string[] = [];
@@ -35,18 +31,8 @@ document.querySelector('#run')!.addEventListener('click', async () => {
     try { await test(); lines.push(`PASS ${name}`); } catch (error) { lines.push(`FAIL ${name}: ${error}`); }
     status.textContent = lines.join('\n');
   }
-  await check('readable bilingual language choice returns a locale without starting a game', async () => {
-    const chosen = view.chooseLanguage();
-    const dialog = document.querySelector<HTMLDialogElement>('#startup-language')!;
-    assert(dialog.open && dialog.querySelectorAll('input[type="radio"]').length === 2, 'Expected two accessible choices');
-    dialog.querySelector<HTMLInputElement>('input[value="zh-Hant"]')!.checked = true;
-    dialog.querySelector<HTMLButtonElement>('button[type="submit"]')!.click();
-    assert(await chosen === 'zh-Hant' && !view.languageOpen, 'Selected locale did not resolve');
-  });
-  await check('cancel returns without a selected language or native action', async () => {
-    const chosen = view.chooseLanguage();
-    view.cancelLanguage();
-    assert(await chosen === undefined, 'Cancel started a language request');
+  await check('the web shows no language picker of its own: the game\'s first screen holds it', () => {
+    assert(!document.querySelector('#startup-language, .language-choice'), 'A web language picker is still rendered');
   });
   await check('all four native-message hit regions stay in the game screen without repainting its dialogue', () => {
     for (const locale of ['en', 'zh-Hant'] as const) {
@@ -103,6 +89,7 @@ document.querySelector('#run-adapter')!.addEventListener('click', async () => {
   words.set([metadata.magicA, metadata.magicB, 0x00300001, metadata.address, 2, 1, 1 | 3 << 8, 0, 0, 0, 43 << 16, 30 | 66 << 16]);
   const host = { running: true, paused: false, restarting: false, immersive: true };
   const commands: number[] = [];
+  const languages: number[] = [];
   let simulationError: unknown;
   const assert = (value: unknown, message: string) => { if (!value) throw new Error(message); };
   const waitFor = async (condition: () => boolean) => {
@@ -125,6 +112,7 @@ document.querySelector('#run-adapter')!.addEventListener('click', async () => {
     if (words[7] && words[7] !== words[8]) {
       assert(words[9] === words[5], 'Adapter used a stale context');
       const command = heap[64 + 40]; commands.push(command);
+      if (command === 1) languages.push(heap[64 + 41]);
       const next = command === 1 ? 2 : (words[6] & 255) + 1;
       publish(next, next === 9 ? 5 : 3);
       words[4]++; words[6] |= 1 << 24; words[8] = words[7]; words[4]++;
@@ -133,12 +121,13 @@ document.querySelector('#run-adapter')!.addEventListener('click', async () => {
   }, 20);
   try {
     setLocale('en');
-    assert(await adapter.prepareLanguage(false, false), 'Legacy capability was blocked');
-    assert(!document.querySelector<HTMLDialogElement>('#startup-language')!.open, 'Legacy cartridge got an extra language picker');
-    assert(await adapter.prepareLanguage(true, false), 'Remembered language was lost');
+    adapter.prepareLanguage(false);
+    assert(!document.querySelector('#startup-language'), 'Legacy cartridge got a web language picker');
+    adapter.prepareLanguage(true);
     adapter.attach(metadata);
     await waitFor(() => (words[6] & 255) === 2);
     assert(commands.join(',') === '1', 'Startup did not use the dedicated command');
+    assert(languages.join(',') === '1', 'Startup did not send the remembered/browser language without asking');
     publish(5);
     await waitFor(() => document.querySelector<HTMLDialogElement>('#outdoor-coach')!.open);
     assert(host.paused && adapter.blocksInput && adapter.canAdvanceGuide, 'Coach did not pause/release controls or expose Interact');

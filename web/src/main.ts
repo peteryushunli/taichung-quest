@@ -11,7 +11,7 @@ import titlePikachu from './assets/pokemon/front/pikachu.png';
 import titleSquirtle from './assets/pokemon/front/squirtle.png';
 import type { mGBAEmulator } from '@thenick775/mgba-wasm';
 import { createCityGuide } from './city-guide';
-import { initializeLocalization, languageControl, onLocaleChange, setLocale, t } from './i18n';
+import { initializeLocalization, onLocaleChange, setLocale, t } from './i18n';
 import { createLanding } from './landing';
 import { NativeLanguageBridge, parseLanguageBridgeMetadata } from './language-bridge';
 import type { LanguageBridgeState } from './language-bridge';
@@ -67,7 +67,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
       <section class="game-column" aria-label="Playable game">
         <div class="console" id="console">
           <div class="immersive-bar"><button id="exit-fullscreen-button" class="fullscreen-exit"><span aria-hidden="true">←</span> <span data-i18n="Back to site">Back to site</span></button><span>POKÉMON × TAICHUNG</span><div class="immersive-actions"><button id="game-sound-button" disabled aria-label="Sound off" title="Sound off" aria-pressed="true">${icon('mute')}</button><button id="game-options-button" aria-haspopup="dialog" aria-controls="game-options" data-i18n="Game options">Game options</button></div></div>
-          <dialog id="game-options" class="player-options" aria-labelledby="game-options-title"><div class="options-heading"><h2 id="game-options-title" data-i18n="Game options">Game options</h2><button data-close-options data-i18n="Close">Close</button></div>${languageControl('player-language')}<div id="options-toolbar-slot"></div><div id="options-save-slot"></div><p id="options-feedback" role="status"></p><p class="options-key-help" data-i18n="Arrow keys move. F interacts or confirms. D goes back. M opens the game menu.">Arrow keys move. F interacts or confirms. D goes back. M opens the game menu.</p></dialog>
+          <dialog id="game-options" class="player-options" aria-labelledby="game-options-title"><div class="options-heading"><h2 id="game-options-title" data-i18n="Game options">Game options</h2><button data-close-options data-i18n="Close">Close</button></div><div id="options-toolbar-slot"></div><div id="options-save-slot"></div><p id="options-feedback" role="status"></p><p class="options-key-help" data-i18n="Arrow keys move. F interacts or confirms. D goes back. M opens the game menu.">Arrow keys move. F interacts or confirms. D goes back. M opens the game menu.</p></dialog>
           <div class="console-top"><span><i class="power-light"></i> TAICHUNG QUEST</span><span>TAICHUNG CITY · 臺中城區</span></div>
           <div class="screen-bezel">
             <div class="screen" id="screen">
@@ -158,14 +158,10 @@ function message(text: string, error = false) {
 
 function setStatus(text: string) { statusText = text; status.textContent = t(text); }
 
+// The game's own settings screen is the only language control while playing; the
+// website's EN/中文 toggle only pauses while a native language change is queued.
 function refreshLanguageConnection() {
   const phase = languageState?.phase;
-  const hint = phase === 'discovering' ? 'Connecting to game…' : phase === 'startup' ? onboarding?.supported ? 'Connecting your language choice…' : 'Choose inside the game first' : phase === 'ready' ? 'Taichung text + City Map' : phase === 'pending' ? 'Queued until gameplay resumes' : phase === 'unavailable' ? 'Game: use its Language menu' : 'Player & City Map';
-  document.querySelectorAll<HTMLElement>('[data-language-hint]').forEach((element) => {
-    element.dataset.i18n = hint;
-    element.dataset.languagePhase = phase ?? 'interface';
-    element.textContent = t(hint);
-  });
   document.querySelectorAll<HTMLSelectElement | HTMLButtonElement>('[data-locale-select], [data-locale-toggle]').forEach((control) => { control.disabled = restarting || phase === 'pending'; });
 }
 
@@ -375,13 +371,9 @@ async function startGame() {
     const buildId = romSha256.slice(0, 16);
     const metadata = metadataResponse?.ok ? await metadataResponse.json().catch(() => undefined) : undefined;
     const onboardingMetadata = parseOnboardingMetadata(metadata, romSha256, rom.length);
-    // No native runtime exists yet for the first readable language choice.
-    if (onboarding && !(await onboarding.prepareLanguage(!!onboardingMetadata, !!savedAt || cartridgeBootIntent === 'import'))) {
-      gameView.leave();
-      setStatus('READY WHEN YOU ARE');
-      message('Choose a language when you’re ready to begin.');
-      return;
-    }
+    // The game's first settings screen shows this language (the website choice, else the
+    // browser's), and the player can change it there. No web picker comes first.
+    onboarding?.prepareLanguage(!!onboardingMetadata);
     if (!emulator) {
       const createEmulator = await getRuntimeFactory();
       emulator = await createEmulator({ canvas });

@@ -22,8 +22,9 @@ export function createOnboarding(options: {
   let supported = false;
   let bridge: NativeOnboardingBridge | undefined;
   let state: OnboardingState = { status: 'unavailable' };
-  let startupLocale: Locale | undefined = getRememberedLocale();
-  let choosing = false;
+  // The visitor's own choice on the website wins; otherwise the browser's language.
+  // The game shows it on its first settings screen, where the player can change it.
+  let startupLocale: Locale = getRememberedLocale() ?? getLocale();
   let ownsPause = false;
   let queuedCard: TutorialCard | undefined;
   let submittedCard: TutorialCard | undefined;
@@ -69,7 +70,7 @@ export function createOnboarding(options: {
     }
     if (ack.command === 1 && (ack.result === 2 || ack.result === 4)) {
       startupFailed = true;
-      options.message('The opening connection is unavailable. Use Interact to continue with the game’s language menu.', true);
+      options.message('The opening connection is unavailable. Use Interact to continue, then pick your language on the game’s first settings screen.', true);
     }
     if (ack.command === 2) {
       if (ack.result === 1) acknowledgedContext = ack.context;
@@ -95,28 +96,18 @@ export function createOnboarding(options: {
       if (resume && options.getState().immersive) options.resume();
       if (!unavailableShown) {
         unavailableShown = true;
-        options.message('The opening connection is unavailable. Use Interact to continue with the game’s language menu.', true);
+        options.message('The opening connection is unavailable. Use Interact to continue, then pick your language on the game’s first settings screen.', true);
       }
       return;
     }
     if (next.status !== 'live' || !packet || !options.getState().immersive) return;
     if (packet.phase === 10) {
-      options.message('Choose your language in the game to continue. You can switch it later in Game options.');
+      options.message('Pick your language on the game’s first settings screen.');
       return;
     }
     if (packet.phase === 1 && (packet.flags & 3) === 3) {
       if (startupFailed) return;
-      if (!startupLocale && !choosing) {
-        choosing = true;
-        options.releaseInputs();
-        void view.chooseLanguage().then((choice) => {
-          choosing = false;
-          if (choice) startupLocale = choice;
-          else options.leaveGame();
-          bridge?.refresh();
-          options.refreshInput();
-        });
-      } else if (startupLocale && startupRequestContext !== packet.context) {
+      if (startupRequestContext !== packet.context) {
         startupRequestContext = packet.context;
         if (!bridge?.requestStartupLanguage(startupLocale === 'zh-Hant' ? 2 : 1, packet.context)) startupRequestContext = 0;
       }
@@ -150,18 +141,13 @@ export function createOnboarding(options: {
     }
   }
 
-  const inputBlocked = () => view.languageOpen || view.cardOpen || state.status === 'pending' || !!queuedCard || !!submittedCard || (!startupFailed && startupWaiting);
+  const inputBlocked = () => view.cardOpen || state.status === 'pending' || !!queuedCard || !!submittedCard || (!startupFailed && startupWaiting);
 
   return {
-    async prepareLanguage(hasCapability: boolean, savedGameHint: boolean): Promise<boolean> {
+    /** Before boot: settle the language the game's first screen will show. Never asks. */
+    prepareLanguage(hasCapability: boolean) {
       supported = hasCapability;
-      startupLocale ??= getRememberedLocale();
-      if (!supported) return true;
-      if (savedGameHint) { startupLocale ??= getLocale(); return true; }
-      if (startupLocale) return true;
-      const choice = await view.chooseLanguage();
-      startupLocale = choice;
-      return choice !== undefined;
+      startupLocale = getRememberedLocale() ?? getLocale();
     },
     attach(metadata: OnboardingMetadata | undefined) {
       bridge?.stop();
@@ -183,13 +169,13 @@ export function createOnboarding(options: {
       void bridge.start();
     },
     beforeLeave() {
-      view.cancelLanguage(); view.closeCard();
+      view.closeCard();
       queuedCard = undefined;
       ownsPause = false;
       options.releaseInputs();
     },
     refresh() { bridge?.refresh(); },
-    stop() { bridge?.stop(); view.cancelLanguage(); view.closeCard(); queuedCard = submittedCard = undefined; ownsPause = startupWaiting = nativeGuideActive = false; },
+    stop() { bridge?.stop(); view.closeCard(); queuedCard = submittedCard = undefined; ownsPause = startupWaiting = nativeGuideActive = false; },
     destroy() { bridge?.stop(); stopLocaleListener(); view.destroy(); },
     get supported() { return supported; },
     get startupLanguagePending() { return supported && startupWaiting; },

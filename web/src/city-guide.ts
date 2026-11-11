@@ -6,7 +6,7 @@ import { cityPlaceSummary, districtLabelSpots, isGym, localizedPlace, markerPosi
 import type { LandingLandmark } from './landing-model';
 import type { MinimapGeometry } from './minimap-model';
 import './city-guide.css';
-import { getLocale, initializeLocalization, languageControl, localizeTree, onLocaleChange, t } from './i18n';
+import { getLocale, initializeLocalization, localizeTree, onLocaleChange, t } from './i18n';
 import { landmarkSketch } from './landmark-art';
 
 interface Landmark extends LandingLandmark {
@@ -46,7 +46,6 @@ export function createCityGuide(host: GuideHost) {
     <div class="guide-shell">
       <header class="guide-header"><div><p class="guide-eyebrow"><span data-i18n="TAICHUNG FIELD GUIDE">TAICHUNG FIELD GUIDE</span> <span class="guide-bilingual-heading" lang="zh-Hant">· 台中城市導覽</span></p><h2 id="city-guide-title" data-i18n="A small map. A bigger city.">A small map. A bigger city.</h2></div><button class="guide-close" aria-label="Close City Map" data-i18n-label="Close City Map" autofocus>×</button></header>
       <p class="guide-intro" id="city-guide-intro"><span id="guide-place-count"></span> <span data-i18n="Choose a landmark to explore its game-world stop and find visitor information where available.">Choose a landmark to explore its game-world stop and find visitor information where available.</span></p>
-      <div class="guide-language">${languageControl('guide-interface-language')}</div>
       <div class="guide-body">
         <section class="guide-overview" aria-label="Taichung city map" data-i18n-label="Taichung city map">
           <div class="overview-heading"><span>TAICHUNG <span lang="zh-Hant">臺中</span></span><span class="compass" aria-label="North points up">N ↑</span></div>

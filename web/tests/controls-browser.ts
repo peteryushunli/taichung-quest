@@ -1,3 +1,4 @@
+import '../src/controls.css';
 import { createGameControls } from '../src/game-controls';
 import { createGameView } from '../src/game-view';
 import { protectGameDisplay } from '../src/game-display';
@@ -34,6 +35,11 @@ function pointer(type: string, id: number, target: Element, x = .5, y = .5, poin
   if (['pointerup', 'pointercancel', 'lostpointercapture'].includes(type)) captured.delete(id);
   target.dispatchEvent(new PointerEvent(type, { pointerId: id, pointerType, button: 0, buttons: type === 'pointerup' ? 0 : 1,
     clientX: rect.left + rect.width * x, clientY: rect.top + rect.height * y, bubbles: true, cancelable: true }));
+}
+/** A live finger on `target` at a fraction of its box, as a TouchEvent's touches list carries it. */
+function finger(identifier: number, target: Element, x = .5, y = .5) {
+  const rect = target.getBoundingClientRect();
+  return new Touch({ identifier, target, clientX: rect.left + rect.width * x, clientY: rect.top + rect.height * y });
 }
 function equal(actual: unknown, expected: unknown) {
   if (actual instanceof Node || expected instanceof Node) {
@@ -165,26 +171,51 @@ run.addEventListener('click', async () => {
     pointer('pointerup', 80, document.body); held('');
     equal(events, ['+Right', '+A', '-Right', '-A', '+Right', '-Right']);
   });
-  await check('last-touch fallback preserves another active finger and recovers a missed terminal pointer event', () => {
+  await check('a lifted finger releases its hold even without its pointer event, and never another finger\'s', () => {
     pointer('pointerdown', 73, pad, .9, .5);
     pointer('pointerdown', 74, action);
     // Touch.identifier is independent of pointerId. Do not assume they match.
-    const rightTouch = new Touch({ identifier: 901, target: pad });
-    const actionTouch = new Touch({ identifier: 902, target: action });
+    const rightTouch = finger(901, pad, .9, .5);
+    const actionTouch = finger(902, action);
     document.body.dispatchEvent(new TouchEvent('touchend', { bubbles: true, touches: [actionTouch], changedTouches: [rightTouch] }));
-    held('A,Right'); // A surviving touch must not trigger blanket touch cleanup.
+    held('A'); // No finger is left on the pad; the finger still on A keeps A.
     pointer('pointerup', 73, document.body);
     held('A'); equal(root.querySelector('[data-gba="Right"]')!.classList.contains('pressed'), false);
     document.body.dispatchEvent(new TouchEvent('touchcancel', { bubbles: true, touches: [], changedTouches: [actionTouch] }));
     held(''); equal(events, ['+Right', '+A', '-Right', '-A']);
+  });
+  await check('a touch hold whose finger vanished without any end event clears on the next touch', () => {
+    // iOS can hand a touch to a long-press callout or system gesture and never end it for us.
+    pointer('pointerdown', 82, action);
+    held('A');
+    pointer('pointerdown', 83, pad, .9, .5);
+    document.body.dispatchEvent(new TouchEvent('touchstart', { bubbles: true, touches: [finger(905, pad, .9, .5)], changedTouches: [finger(905, pad, .9, .5)] }));
+    held('Right'); // The A finger is gone: no live touch is over the A button.
+    document.body.dispatchEvent(new TouchEvent('touchmove', { bubbles: true, touches: [finger(905, pad, .9, .5)], changedTouches: [finger(905, pad, .9, .5)] }));
+    held('Right'); // A finger still on the pad keeps its hold.
+    pointer('pointerup', 83, document.body); held('');
+    equal(events, ['+A', '+Right', '-A', '-Right']);
+  });
+  await check('touches on controls cannot start selection, callouts or zoom', () => {
+    for (const target of [action, pad.querySelector('.direction')!]) {
+      const event = new TouchEvent('touchstart', { bubbles: true, cancelable: true, touches: [finger(906, target)], changedTouches: [finger(906, target)] });
+      target.dispatchEvent(event);
+      equal(event.defaultPrevented, true);
+      const select = new Event('selectstart', { bubbles: true, cancelable: true });
+      target.dispatchEvent(select);
+      equal(select.defaultPrevented, true);
+      document.body.dispatchEvent(new TouchEvent('touchend', { bubbles: true, touches: [], changedTouches: [finger(906, target)] }));
+    }
+    held(''); equal(events, []);
+    equal(getComputedStyle(action).webkitUserSelect || getComputedStyle(action).userSelect, 'none');
   });
   await check('continuous holds survive time and another finger ending; final touch preserves keyboard/mouse owners', async () => {
     pointer('pointerdown', 75, pad, .9, .5);
     await new Promise(resolve => setTimeout(resolve, 1200));
     held('Right');
     pointer('pointerdown', 76, action);
-    const rightTouch = new Touch({ identifier: 903, target: pad });
-    const actionTouch = new Touch({ identifier: 904, target: action });
+    const rightTouch = finger(903, pad, .9, .5);
+    const actionTouch = finger(904, action);
     pointer('pointerup', 76, document.body);
     document.body.dispatchEvent(new TouchEvent('touchend', { bubbles: true, touches: [rightTouch], changedTouches: [actionTouch] }));
     held('Right');
