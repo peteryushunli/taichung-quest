@@ -93041,7 +93041,7 @@ index 0000000..e0392e9
 +if __name__=='__main__':sys.exit(main())
 diff --git a/data/taichung/gym-interiors/manifest.json b/data/taichung/gym-interiors/manifest.json
 new file mode 100644
-index 0000000..0bab546
+index 0000000..adf64be
 --- /dev/null
 +++ b/data/taichung/gym-interiors/manifest.json
 @@ -0,0 +1,249 @@
@@ -93254,7 +93254,7 @@ index 0000000..0bab546
 +    "data/tilesets/secondary/taichung_gym_theater/palettes/14.pal": "ea391b70a00c55f0fe13590e345ee9b66fb9013864b737f40258d99f70f6eb04",
 +    "data/tilesets/secondary/taichung_gym_theater/palettes/15.pal": "ea391b70a00c55f0fe13590e345ee9b66fb9013864b737f40258d99f70f6eb04",
 +    "data/tilesets/secondary/taichung_gym_theater/tiles.png": "b9b9fd1be806f606bd748135fc21f3cb1f4eb3e56332e253b94a1445172d6507",
-+    "docs/gym-interiors.md": "50c0dfe5c8cfdaafd4dd61486e18c76e0bb8a09a390f3a2e6fa2d395f005fa50",
++    "docs/gym-interiors.md": "866cef310042548a68eafd4a525128840a1a3eebc227ade624f9c4d0dd1df9dc",
 +    "tests/taichung_save_v12_test.c": "8e6bfe94955665d2d3ed3544ca1a2689de47ce35a2da328e0ec02419511c0f62",
 +    "tools/taichung/gym_interiors/art_market.py": "1ce38b593891b73cbd33bb68993106015b5f391ba0afdffd9b32906bee2d6e5c",
 +    "tools/taichung/gym_interiors/art_miya.py": "7750dcd5751c1c3560c7924fb2c904b9f199ec085732d6bab41c285ac42e4038",
@@ -474586,10 +474586,10 @@ index 0000000..07fc43a
 +delivered separately under `artifacts/worktrees/c291d4842985/greenway-native/`.
 diff --git a/docs/gym-interiors.md b/docs/gym-interiors.md
 new file mode 100644
-index 0000000..5c92d1b
+index 0000000..f13aed8
 --- /dev/null
 +++ b/docs/gym-interiors.md
-@@ -0,0 +1,42 @@
+@@ -0,0 +1,47 @@
 +# Gym interiors and the Wanhe Temple gym (save v12)
 +
 +Approved by the user on 2026-11-11 from the gym interiors review board (draft 3; the Park room from draft 4, option B). Base: native `9cb6855` (the guest house opening).
@@ -474627,6 +474627,11 @@ index 0000000..5c92d1b
 +`install_gyms.py` reproduces the installed files byte for byte. `tools/taichung/gym_interiors_guard.py` pins every edited and added file,
 +ships the base copies of edited files in `data/taichung/gym-interiors/baseline`, and offers `underneath()` so older guards read the
 +tree beneath this layer; `home_start.py` peels it first, so every guard that peels the guest house layer also sees beneath this one.
++
++After editing a pinned file, or merging another change over this layer, re-pin with `gym_interiors_guard.py --install`. It refreshes
++the files the manifest already lists, so a merged change's own files stay out of this layer. `--install --rescan` takes the list from
++git against `9cb6855` instead, whether the layer is committed or not, to add or drop files; on a merged tree it would also take the
++other change's files. When the git history is there, the self-test also checks that each pinned file is edited or added as git says.
 +
 +Runtime QA (2026-11-11, ROM built from this tree): each room loaded from a v11 save made inside it and arrived on its exit mat;
 +the leader and helper each talked; the exit led to the building's door and re-entering landed on the mat; the theater's seat aisles
@@ -519504,10 +519509,10 @@ index 0000000..aca415e
 +sys.exit(1 if bad else 0)
 diff --git a/tools/taichung/gym_interiors_guard.py b/tools/taichung/gym_interiors_guard.py
 new file mode 100644
-index 0000000..6e2ba46
+index 0000000..b887027
 --- /dev/null
 +++ b/tools/taichung/gym_interiors_guard.py
-@@ -0,0 +1,304 @@
+@@ -0,0 +1,367 @@
 +#!/usr/bin/env python3
 +"""Gym interiors and the Wanhe Temple gym (save v12), as one exact layer over BASE.
 +
@@ -519530,9 +519535,13 @@ index 0000000..6e2ba46
 +home_start.py peels it first, so every guard beneath the guest house sees
 +beneath this layer too.
 +
-+  gym_interiors_guard.py             print the report
-+  gym_interiors_guard.py --install   write the baseline bundle and manifest (needs BASE in git)
-+  gym_interiors_guard.py --self-test also prove each corruption probe is caught
++  gym_interiors_guard.py                    print the report
++  gym_interiors_guard.py --install          re-pin the manifest's files after an edit or a merge
++                                            (writes the baseline bundle and manifest; needs BASE in git)
++  gym_interiors_guard.py --install --rescan take the file list from git against BASE instead, to add
++                                            or drop files (on a merged tree it also takes the other
++                                            change's files)
++  gym_interiors_guard.py --self-test        also prove each corruption probe is caught
 +"""
 +from __future__ import annotations
 +
@@ -519552,7 +519561,7 @@ index 0000000..6e2ba46
 +LAYER = "data/taichung/gym-interiors"
 +BUNDLE = f"{LAYER}/baseline"
 +MANIFEST = f"{LAYER}/manifest.json"
-+MANIFEST_SHA256 = "e8176b7a1674933918a61577abaa9aa97bf5f90360c664d82e1c0d3454a3e605"
++MANIFEST_SHA256 = "55356942cdc5c25cae16e3142b3f5f580ac7829feacd1ed75890bd185f4e7d88"
 +
 +LAYOUTS = "data/layouts/layouts.json"
 +SAVE_HEADER = "include/taichung_save.h"
@@ -519715,23 +519724,75 @@ index 0000000..6e2ba46
 +        return set()
 +
 +
-+def install(source=ROOT):
-+    """Write the BASE copies of every edited file and the manifest pinning every
-+    edited and added file, then this guard's MANIFEST_SHA256. Needs BASE in git."""
++GUARD = "tools/taichung/gym_interiors_guard.py"
++
++
++def _git(source):
++    return lambda *args: subprocess.run(["git", *args], cwd=source, check=True, capture_output=True).stdout
++
++
++def has_base(source):
++    """True when `source` is a git checkout that holds BASE."""
++    try:
++        _git(source)("cat-file", "-e", f"{BASE}^{{commit}}")
++        return True
++    except (OSError, subprocess.CalledProcessError):
++        return False
++
++
++def scan(source=ROOT):
++    """(edited, added): every file the tree changes against BASE, committed or not,
++    leaving out this layer's own folder, this guard and build output. Files that
++    BASE lacks are added even once committed. Needs BASE in git. On a tree where a
++    later change is merged over this layer, its files are listed too."""
++    git = _git(Path(source).resolve())
++    skip = lambda path: path.startswith(("build/", LAYER + "/")) or path == GUARD
++    edited, new = set(), set()
++    fields = git("diff", "--name-status", "--no-renames", "-z", BASE, "--").decode().split("\0")
++    for status, path in zip(fields[0::2], fields[1::2]):
++        if skip(path):
++            continue
++        require(status in ("M", "T", "A"), f"The gym interiors layer does not delete files: {status} {path}")
++        (new if status == "A" else edited).add(path)
++    new |= {path for path in git("ls-files", "--others", "--exclude-standard", "-z").decode().split("\0")
++            if path and not skip(path)}
++    return sorted(edited), sorted(new)
++
++
++def install(source=ROOT, rescan=False):
++    """Pin the layer: write the BASE copy of every edited file to BUNDLE, the manifest
++    with the current digest of every edited and added file, then this guard's
++    MANIFEST_SHA256. Needs BASE in git.
++
++    By default it re-pins the files the manifest already lists, which is what an
++    edit or a merge of another change over this layer needs. `rescan` takes the
++    file list from git against BASE instead (scan), for adding or dropping files;
++    on a merged tree that also picks up the other change's files."""
 +    source = Path(source).resolve()
-+    git = lambda *args: subprocess.run(["git", *args], cwd=source, check=True, capture_output=True).stdout
-+    edited = sorted(p for p in git("diff", "--name-only", BASE).decode().split("\n") if p and not p.startswith(LAYER + "/"))
-+    own = {"tools/taichung/gym_interiors_guard.py", MANIFEST}
-+    new = sorted(p for p in git("ls-files", "--others", "--exclude-standard").decode().split("\n")
-+                 if p and not p.startswith(("build/", LAYER + "/")) and p not in own)
++    git = _git(source)
++    if rescan or not (source / MANIFEST).exists():
++        edited, new = scan(source)
++    else:
++        pinned = json.loads((source / MANIFEST).read_bytes())
++        edited, new = sorted(pinned["edited"]), sorted(pinned["added"])
++    exists = lambda path: subprocess.run(["git", "cat-file", "-e", f"{BASE}:{path}"], cwd=source,
++                                         capture_output=True).returncode == 0
++    for path in edited:
++        require(exists(path), f"{path} is not in BASE, so it is added, not edited")
++    for path in new:
++        require(not exists(path), f"{path} is in BASE, so it is edited, not added")
 +    before = {}
 +    for path in edited:
 +        raw = git("show", f"{BASE}:{path}")
 +        target = source / BUNDLE / path
 +        target.parent.mkdir(parents=True, exist_ok=True); target.write_bytes(raw)
 +        before[path] = digest(raw)
-+    exists = lambda path: subprocess.run(["git", "cat-file", "-e", f"{BASE}:{path}"], cwd=source,
-+                                         capture_output=True).returncode == 0
++    bundle = source / BUNDLE
++    for stale in sorted(bundle.rglob("*"), reverse=True):
++        if stale.is_file() and stale.relative_to(bundle).as_posix() not in before:
++            stale.unlink()
++        elif stale.is_dir() and not any(stale.iterdir()):
++            stale.rmdir()
 +    folders = set()
 +    for path in new:
 +        parts = PurePosixPath(path).parts
@@ -519790,20 +519851,27 @@ index 0000000..6e2ba46
 +    peels = (b"TAICHUNG_SAVE_VERSION 11" in under.get(SAVE_HEADER, b"")
 +             and {"data/layouts/TaichungGymTheater", "data/tilesets/secondary/taichung_gym_theater",
 +                  "tests/taichung_save_v12_test.c"} <= hidden)
-+    return {"passed": good["passed"] and portable and all(caught.values()) and peels, "tree": good,
-+            "portableWithoutGit": portable, "underneathRestoresV11AndHidesRooms": peels,
-+            "rejectedCorruptionProbes": caught}
++    # With BASE in git, each pinned path must be what git says it is (edited or added),
++    # committed or not; None in a portable copy without the history.
++    kinds = None
++    if has_base(source):
++        edited, new = scan(source)
++        kinds = set(record["edited"]) <= set(edited) and set(record["added"]) <= set(new)
++    return {"passed": good["passed"] and portable and all(caught.values()) and peels and kinds is not False,
++            "tree": good, "portableWithoutGit": portable, "underneathRestoresV11AndHidesRooms": peels,
++            "pinnedKindsMatchGit": kinds, "rejectedCorruptionProbes": caught}
 +
 +
 +def main():
 +    parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
 +    parser.add_argument("--source", type=Path, default=ROOT)
 +    parser.add_argument("--install", action="store_true")
++    parser.add_argument("--rescan", action="store_true", help="with --install: take the file list from git, not the manifest")
 +    parser.add_argument("--self-test", action="store_true")
 +    args = parser.parse_args()
 +    if args.install:
-+        install(args.source)
-+        print("Installed; run again without --install to check.")
++        record = install(args.source, rescan=args.rescan)
++        print(f"Pinned {len(record['edited'])} edited and {len(record['added'])} added files; run again without --install to check.")
 +        return
 +    report = self_test(args.source) if args.self_test else check(args.source)
 +    print(json.dumps(report, indent=2, ensure_ascii=False))

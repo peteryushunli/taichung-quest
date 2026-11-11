@@ -7,7 +7,7 @@ This change answers four notes from a phone playtest on 2026-11-11.
 - Language was chosen in a web dialog outside the game.
 - A button stayed held in Chrome on iPhone until the game was paused.
 
-Native work is commit b8b762b on `claude/settings-language-encounters` over native 9cb6855. It ships together with the gym interiors (`docs/gym-interiors.md`): native merge `1ce0e1b` on `claude/gym-interiors-chinese-font` combines it with `cf76598`, and `patches/taichung.patch` is exported from that merge. Applying the patch to baseline `ce6406d` reproduces the merge's tree exactly. The combined cartridge is `1f1b4c36…` (16,777,216 bytes). On its own, this work's cartridge was `d811cb2a…`. Earlier ones were `619d5639…` (shorter text only) and `82018e09…` (neither change).
+Native work is commit b8b762b on `claude/settings-language-encounters` over native 9cb6855. It ships together with the gym interiors (`docs/gym-interiors.md`): native merge `1ce0e1b` on `claude/gym-interiors-chinese-font` combines it with `cf76598`. `patches/taichung.patch` is exported from the next commit, `59e51d9`, a gym guard fix. Applying the patch to baseline `ce6406d` reproduces that tree exactly. The combined cartridge is `1f1b4c36…` (16,777,216 bytes). On its own, this work's cartridge was `d811cb2a…`. Earlier ones were `619d5639…` (shorter text only) and `82018e09…` (neither change).
 
 ## Language on the first settings screen
 
