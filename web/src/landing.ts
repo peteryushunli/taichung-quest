@@ -139,7 +139,7 @@ function markup() {
             <div class="lp-shot">${landingMedia.bikeShot ? `<img class="lp-px" src="${escapeHtml(landingMedia.bikeShot)}" alt="${escapeHtml(t('Biking down the Greenway'))}" data-i18n-alt="Biking down the Greenway" loading="lazy">` : placeholder('Biking down the Greenway', 'lp-slot-fill')}</div>
             <span class="lp-step-label">${copy('STEP 2')}</span>
             <h3>${copy('Ride across town')}</h3>
-            <p>${copy('The bike is yours from the start — tap B. Turn wild encounters and trainer challenges to Off, Low or Normal.')}</p>
+            <p>${copy('The bike is yours from the start — tap B. On the first screen, pick your language and set wild Pokémon encounters and trainer encounters to Off, Low or Normal.')}</p>
           </div>
           <div class="lp-step">
             <div class="lp-pass" id="lp-pass">${renderPass()}</div>

@@ -37,15 +37,17 @@ for catalog in ('landmarks.json', 'sights.json'):
         print(place['id'], f'{x1 - x0}x{y1 - y0} tiles')
 
 # --- Radar map ---------------------------------------------------------------
-RADAR_TILE, RADAR_MARGIN = 2, 2
+RADAR_TILE, RADAR_MARGIN = 1, 2
 STREET, HIGHWAY, STILL_WATER = (0x5A, 0x5A, 0x73), (0x41, 0x4A, 0x6A), (0x6A, 0xA4, 0xE6)
 # Strong road tiles are mostly asphalt. Weak ones (cars, zebra crossings, lane edges) are
 # road only when they touch a long run of strong road; building roofs that reuse the
 # asphalt greys form small islands and are dropped.
 STRONG_ROAD, WEAK_ROAD, MIN_ROAD_RUN = .6, .25, 24
+# A FireRed Town Map palette (every channel a multiple of 8, as on the GBA): grass-green
+# land, cream roads, sea blue, slate beyond the city's edge.
 COLOURS = {
-    'outside': (0x1B, 0x1E, 0x24), 'land': (0xD6, 0xB0, 0x76),
-    'road': (0x55, 0x53, 0x5C), 'water': (0x5E, 0x86, 0xAE),
+    'outside': (0x38, 0x48, 0x58), 'land': (0x88, 0xC8, 0x70),
+    'road': (0xF8, 0xF0, 0xC8), 'water': (0x50, 0x90, 0xE8),
 }
 WIDTH, HEIGHT = city.width // TILE, city.height // TILE
 red, green, blue, alpha = city.split()

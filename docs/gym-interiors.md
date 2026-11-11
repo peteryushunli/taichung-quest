@@ -33,3 +33,14 @@ Native work is commit `cf76598` on `claude/gym-interiors`, over native `9cb6855`
 - Native: the gym layer guard and the guest house and approved-art guards self-test; `validate_city`, `export_minimap --check` and `verify_gyms` pass; the save v12 host suite passes (2,140 cases) and `test-save.sh` passes. Every other native check matches its result on `9cb6855`.
 - Runtime, on cartridges built from this tree: each room loaded from a save made inside it and arrived on its exit mat; the leader and helper each talked; the exit led to the building's door and re-entering landed on the mat. Wanhe Temple and Maple Garden were walked again on `056a1ca6` (the build before the Park redo), and the Park tea hall on `bf68b580`.
 - Website: `npm run check`, `npm test` (57 pass) and `npm run build` pass, and `scripts/test-build-game-metadata.py` passes.
+
+## Combined with the settings, minimap and Chinese text work
+
+This change ships in one release with `docs/settings-minimap-touch.md`. That work covers the language row on the settings screen, the Town Map minimap, the touch fix, shorter Chinese text and the Chinese glyph gap and shadow.
+
+- **Native.** Merge `1ce0e1b` on `claude/gym-interiors-chinese-font` combines `cf76598` with `b8b762b`. `patches/taichung.patch` is exported from it, and applying the patch to `ce6406d` reproduces its tree exactly (`236bd367`).
+- **Combined cartridge.** `1f1b4c36…` (SHA-256 `1f1b4c364bf52d34e664fa602b6e48265383c7e3ddbc77c5e78ec9bbacc7c540`, 16,777,216 bytes). The minimap geometry fingerprint stays `48fe4ba5…`.
+- **Glyphs.** This change's 13 glyphs keep indices 770–782, and 黑 from the other change is appended at 783.
+- **Muqing.** Her Wanhe Temple lines are kept and shortened in the same style as the other gyms, for example 萬和宮徽章記入城市護照！
+- **Guard.** The gym interiors manifest re-pins the six files both changes touch: `charmap.txt`, `taichung_glyphs.h`, `taichung_maple_garden_gym.c`, `taichung_landmark_history.c`, `home_start.py` and `docs/taichung-gym-progress.md`. The layer still holds the same 34 edited and 153 added files.
+- **Checks on the combined tree.** The gym layer self-test, save v12 (2,140 cases), `verify_gyms.py`, `home_start` and both `approved_art_guard` self-tests, the city, seam and minimap checks, and every native host test all pass. The quest-log audit was already failing before either change. Wanhe Temple, Taichung Park and the theater were walked headlessly on the combined cartridge: you arrive on the mat, both people talk, and the door leads out and back in.

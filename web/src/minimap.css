@@ -1,14 +1,17 @@
-/* GTA-style radar: a north-up circle with a dark rim, an N badge on top and solid blips. */
-.live-minimap { position: absolute; z-index: 3; top: 10px; left: 8px; width: clamp(88px, 26%, 156px); aspect-ratio: 1; padding: 0; border: 2px solid #111317; border-radius: 50%; background: #1b1e24; box-shadow: 0 0 0 1px #f4ecd866, 0 2px 6px #0007; cursor: pointer; container-type: inline-size; }
+/* The minimap is drawn like a FireRed Town Map window: one GBA pixel per world tile, sized and
+   placed in GBA pixels (the screen is 240x160), so its pixels match the game's own. */
+.live-minimap { position: absolute; z-index: 3; top: calc(100% * 3 / 160); left: calc(100% * 3 / 240); width: calc(100% * 64 / 240); aspect-ratio: 64 / 48; padding: 0; border: 0; border-radius: 0; background: none; box-shadow: none; cursor: pointer; }
 .live-minimap[hidden] { display: none; }
-.live-minimap svg { display: block; width: 100%; height: 100%; overflow: hidden; border-radius: 50%; clip-path: circle(50%); background: #1b1e24; fill: none; stroke: none; }
+.live-minimap svg { display: block; width: 100%; height: 100%; overflow: hidden; fill: none; stroke: none; }
+.live-minimap svg path, .live-minimap svg rect { stroke: none; }
 .live-minimap image { image-rendering: pixelated; }
-.live-minimap .minimap-blip, .live-minimap .minimap-player { stroke: #111317; stroke-width: 1; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
-.live-minimap .minimap-gym { fill: #e3412f; }
-.live-minimap .minimap-sight { fill: #ffd23f; }
-.live-minimap .minimap-home { fill: #a052d8; }
-.live-minimap .minimap-player { fill: #fffdf6; }
-.minimap-north { position: absolute; top: 0; left: 50%; display: grid; place-items: center; width: clamp(12px, 15%, 18px); aspect-ratio: 1; border: 1px solid #f4ecd8aa; border-radius: 50%; background: #111317; color: #f4ecd8; font: 700 clamp(7px, 7cqi, 10px)/1 Arial, sans-serif; transform: translate(-50%, -66%); pointer-events: none; }
+.live-minimap .minimap-outside { fill: #384858; }
+.live-minimap .minimap-outline { fill: #283038; }
+.live-minimap .minimap-light { fill: #f8f8f8; }
+.live-minimap .minimap-gym-fill { fill: #e83820; }
+.live-minimap .minimap-sight-fill { fill: #f8d030; }
+.live-minimap .minimap-home-roof { fill: #4878e8; }
+.live-minimap .minimap-gym:not(.on-rim) .minimap-pinned, .live-minimap .minimap-gym.on-rim .minimap-full { display: none; }
 .live-minimap:focus-visible { outline: 2px solid #db8b50; outline-offset: 2px; }
 .minimap-setting { display: grid; grid-template-columns: 1fr auto; gap: 8px; margin-top: 16px; padding-top: 16px; border-top: 1px solid #c6d1ba; font-size: 13px; align-items: center; }
 .minimap-setting select { min-height: 44px; min-width: 100px; padding: 8px; border: 1px solid #b5c5a8; border-radius: 6px; background: #e8ecde; color: #244d3c; font-size: 14px; }

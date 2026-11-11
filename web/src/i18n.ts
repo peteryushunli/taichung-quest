@@ -2,16 +2,23 @@ export type Locale = 'en' | 'zh-Hant';
 export type LocaleChange = { locale: Locale; source: 'user' | 'native' };
 
 const STORAGE_KEY = 'taichung-quest-interface-language';
-let locale: Locale = 'en';
-try { if (localStorage.getItem(STORAGE_KEY) === 'zh-Hant') locale = 'zh-Hant'; } catch { /* Language selection still works without browser storage. */ }
+/** The first Chinese or English tag in the browser's preferences; English otherwise. */
+export function browserLocale(languages: readonly string[] = typeof navigator === 'undefined' ? [] : navigator.languages?.length ? navigator.languages : [navigator.language]): Locale {
+  for (const tag of languages) {
+    const lower = (tag ?? '').toLowerCase();
+    if (lower.startsWith('zh')) return 'zh-Hant';
+    if (lower.startsWith('en')) return 'en';
+  }
+  return 'en';
+}
+// A choice made on the site (or in the game) is remembered; first visits follow the browser.
+let locale: Locale = getRememberedLocale() ?? browserLocale();
 const listeners = new Set<(change: LocaleChange) => void>();
 const boundControls = new WeakSet<HTMLSelectElement>();
 
 const zh: Record<string, string> = {
-  'The opening connection is unavailable. Use Interact to continue with the game’s language menu.': '開場連線暫時無法使用。請按「互動／確認」，從遊戲內的語言選單繼續。',
-  'Choose your language in the game to continue. You can switch it later in Game options.': '請從遊戲內的語言選單繼續。之後也能在遊戲選項中切換。',
-  'Connecting your language choice…': '正在設定開場語言…',
-  'Choose a language when you’re ready to begin.': '準備好出發時，再選擇你的語言。',
+  'The opening connection is unavailable. Use Interact to continue, then pick your language on the game’s first settings screen.': '開場連線暫時無法使用。請按「互動／確認」繼續，再到遊戲的第一個設定畫面選擇語言。',
+  'Pick your language on the game’s first settings screen.': '請在遊戲的第一個設定畫面選擇語言。',
   'After the tour: B / Bike to ride outdoors. Press again to get off.': '導覽後，戶外按B或「騎車」。再按一次下車。',
   'Tap Minimap or City Map to find all landmarks.': '點小地圖或「城市地圖」，查看所有地標。',
   'Menu → Team: add or swap. All 150 choices are free and join at Lv50.': '選單 → 隊伍：加入或更換。150隻免費選，加入就50級。',
@@ -50,11 +57,6 @@ const zh: Record<string, string> = {
   'Interface language': '介面語言',
   'Language': '語言',
   'Player & City Map': '玩家介面與城市導覽',
-  'Connecting to game…': '正在連接遊戲語言…',
-  'Choose inside the game first': '請先在遊戲內選擇語言',
-  'Taichung text + City Map': '台中內容與城市導覽',
-  'Queued until gameplay resumes': '恢復探索後會套用語言',
-  'Game: use its Language menu': '遊戲語言：請使用遊戲內選單',
   'TAIWAN, WITH A LITTLE WONDER': '在台灣，發現生活的小驚喜',
   'Take the scenic route.': '沿著風景，慢慢走。',
   'A pocket-sized adventure through Taichung.\nArrive at the old station. Explore three city districts.': '把台中裝進口袋，展開一段小冒險。\n從舊車站抵達，探索三個城市街區。',
@@ -275,7 +277,7 @@ const zh: Record<string, string> = {
   'Add any of the original 150 from the TEAM menu, evolved forms included, all at level 50. Swap them out whenever you like.': '從 TEAM 選單加入初代 150 隻中的任何一隻，進化型也可以，全部都是 50 級，隨時都能更換。',
   'Biking down the Greenway': '騎車穿越草悟道',
   'Ride across town': '騎車穿越城市',
-  'The bike is yours from the start — tap B. Turn wild encounters and trainer challenges to Off, Low or Normal.': '自行車從一開始就是你的，按 B 鍵就能騎。野生遭遇與訓練家挑戰都可設為關閉、低或一般。',
+  'The bike is yours from the start — tap B. On the first screen, pick your language and set wild Pokémon encounters and trainer encounters to Off, Low or Normal.': '自行車從一開始就是你的，按 B 鍵就能騎。第一個畫面可以選擇語言，並把野生寶可夢遭遇與訓練家遭遇設為關閉、減少或正常。',
   'Fill your City Pass': '集滿城市護照',
   'Beat a landmark\'s leader to earn its stamp. Lose, and you\'re healed back at the plaza for another try.': '打敗地標館主就能獲得印記。輸了也沒關係，你會在廣場恢復體力，再挑戰一次。',
   'YOUR JOURNEY STARTS AT': '你的旅程從這裡開始',

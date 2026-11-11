@@ -1,6 +1,11 @@
 import { InputState, KEY_BINDINGS, dpadDirection } from './input-state';
 import type { GameButton } from './input-state';
 
+/** CSS pixels around a control that still count as a finger being on it. The d-pad gets more,
+ * so a thumb rolling just off its edge keeps its hold; A and B sit close, so they get little. */
+const PAD_SLACK = 48;
+const BUTTON_SLACK = 8;
+
 export function createGameControls(options: {
   root: HTMLElement;
   canvas: HTMLCanvasElement;
@@ -97,16 +102,33 @@ export function createGameControls(options: {
     // Ignore loss of a child's implicit capture while capture moves to root.
     if (!root.hasPointerCapture(event.pointerId)) releasePointer(event.pointerId);
   }, { capture: true });
-  const releaseFinalTouches = (event: TouchEvent) => {
-    if (event.touches.length) return;
-    // iOS may end its touch stream without delivering our pointer terminal
-    // event. Touch identifiers are not pointer IDs: only the last-touch signal
-    // authorizes clearing touch owners; keyboard/mouse/pen holds stay intact.
-    for (const [id, pointer] of pointers) if (pointer.pointerType === 'touch') releasePointer(id);
+  const reconcileTouches = (event: TouchEvent) => {
+    if (!pointers.size) return;
+    // iOS (Safari and Chrome alike) can end or hijack a touch, for a long-press
+    // callout or a system gesture, without any pointer terminal event. Touch
+    // identifiers are not pointer IDs, so check geometry instead: a touch hold
+    // stays only while some live finger is still over its pad or button. Any
+    // finger activity re-checks, so a stuck hold clears on the next tap.
+    // Keyboard, mouse and pen holds are never touched here.
+    const live = [...event.touches];
+    for (const [id, pointer] of pointers) {
+      if (pointer.pointerType !== 'touch') continue;
+      const rect = ('pad' in pointer ? pad : pointer.button).getBoundingClientRect();
+      const slack = 'pad' in pointer ? PAD_SLACK : BUTTON_SLACK;
+      const held = live.some((touch) => touch.clientX >= rect.left - slack && touch.clientX <= rect.right + slack
+        && touch.clientY >= rect.top - slack && touch.clientY <= rect.bottom + slack);
+      if (!held) releasePointer(id);
+    }
   };
-  window.addEventListener('touchend', releaseFinalTouches, { capture: true, passive: true });
-  window.addEventListener('touchcancel', releaseFinalTouches, { capture: true, passive: true });
-  root.addEventListener('contextmenu', (event) => event.preventDefault());
+  for (const type of ['touchstart', 'touchmove', 'touchend', 'touchcancel'] as const) {
+    window.addEventListener(type, reconcileTouches, { capture: true, passive: true });
+  }
+  // A long press on a control must never start text selection, the copy/search
+  // callout or the magnifier: each of those takes the touch away mid-hold.
+  root.addEventListener('touchstart', (event) => {
+    if (event.target instanceof Element && (pad.contains(event.target) || event.target.closest('[data-gba]'))) event.preventDefault();
+  }, { passive: false });
+  for (const type of ['contextmenu', 'selectstart', 'dragstart'] as const) root.addEventListener(type, (event) => event.preventDefault());
 
   for (const button of buttons) {
     const binding = button.dataset.gba as GameButton;

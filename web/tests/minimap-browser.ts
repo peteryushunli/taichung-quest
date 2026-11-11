@@ -5,7 +5,7 @@ import { initializeLocalization, languageControl, onLocaleChange, setLocale } fr
 import geometry from '../src/data/minimap-contract.json';
 import landmarkCatalog from '../src/data/landmarks.json';
 import sightCatalog from '../src/data/sights.json';
-import { RADAR } from '../src/minimap-model';
+import { RADAR, RADAR_PANEL } from '../src/minimap-model';
 import { isGym, placeWorld } from '../src/landing-model';
 import type { LandingLandmark } from '../src/landing-model';
 import type { NavigationSnapshot } from '../src/navigation-bridge';
@@ -19,8 +19,8 @@ const storage = { getItem: (key: string) => values.get(key) ?? null, setItem: (k
 let opened = 0;
 const hud = createMinimap({ screen, toggle, hint, geometry, storage, openGuide: () => { opened++; } });
 const button = screen.querySelector<HTMLButtonElement>('#live-minimap')!;
-const player = button.querySelector<SVGPathElement>('.minimap-player')!;
-const drawing = () => button.querySelector('svg')!;
+const player = button.querySelector<SVGGElement>('.minimap-player')!;
+const drawing = () => button.querySelector<SVGSVGElement>('.minimap-map')!;
 const places = [...landmarkCatalog, ...sightCatalog] as LandingLandmark[];
 const shown = (element: Element) => element.getAttribute('display') !== 'none';
 const translation = (element: Element) => (/translate\(([-\d.e]+) ([-\d.e]+)\)/.exec(element.getAttribute('transform') ?? '') ?? []).slice(1).map(Number);
@@ -64,22 +64,32 @@ document.querySelector<HTMLButtonElement>('#run')!.addEventListener('click', () 
     document.querySelector('#results')!.textContent = lines.join('\n');
   }
   setLocale('en');
-  check('default On centres a 60-tile north-up radar on the mapped tile with every gym, landmark and home blip', () => {
+  check('default On centres a 60×44-tile north-up map on the mapped tile with every gym, landmark and home blip', () => {
     showField();
     assert(toggle.value === 'on' && !button.hidden, 'Expected default On');
-    assert(player.getAttribute('transform') === 'translate(115.5 119.5) rotate(0)', 'Incorrect mapped tile center or facing');
-    assert(drawing().getAttribute('viewBox') === '85.5 89.5 60 60', 'Expected a 60-tile view centred on the player');
+    assert(player.getAttribute('transform') === 'translate(115 119) rotate(0 .5 .5)', 'Incorrect mapped tile or facing');
+    assert(drawing().getAttribute('viewBox') === '85 97 60 44', 'Expected a 60×44-tile view centred on the player');
     assert(button.querySelectorAll('.minimap-gym').length === 10 && button.querySelectorAll('.minimap-sight').length === 10, 'Expected ten gyms and ten landmarks');
     assert(button.querySelectorAll('[data-landmark]').length === 20, 'Expected data-landmark on every place blip');
     assert(shown(button.querySelector('.minimap-home')!), 'Expected the home blip');
     assert(button.querySelector('image')?.getAttribute('href'), 'Expected the radar art under the blips');
-    assert(button.textContent!.trim() === 'N', 'Expected no caption text, only the N badge');
+    assert(button.textContent!.trim() === '', 'Expected no caption text: the N tab is pixel art');
     assert(hint.textContent!.includes('Hidden indoors'), 'Settings hint must say the radar hides indoors');
   });
-  check('the radar is a circle at the HUD content width, unaffected by shared button icon styles', () => {
-    const box = drawing().getBoundingClientRect();
-    assert(box.width >= 84 && Math.abs(box.width - box.height) < 1, `Expected a round radar, got ${box.width}×${box.height}`);
-    assert(getComputedStyle(drawing()).clipPath.startsWith('circle'), 'Expected a circular clip');
+  check('the minimap is a 64×48 GBA-pixel panel, crisp and unaffected by shared button icon styles', () => {
+    const box = button.getBoundingClientRect();
+    // The game canvas fills the screen's padding box, so GBA pixels are measured inside its border.
+    const field = screen.getBoundingClientRect();
+    const pixel = screen.clientWidth / 240;
+    const [left, top] = [field.left + screen.clientLeft, field.top + screen.clientTop];
+    assert(Math.abs(box.width - 64 * pixel) < 1 && Math.abs(box.height - 48 * pixel) < 1, `Expected 64×48 GBA pixels, got ${box.width}×${box.height} at ${pixel}px`);
+    assert(Math.abs(box.left - left - 3 * pixel) < 1 && Math.abs(box.top - top - 3 * pixel) < 1, 'Expected the panel 3 GBA pixels from the top-left corner');
+    const outer = button.querySelector('svg')!;
+    assert(outer.getAttribute('viewBox') === `0 0 ${RADAR_PANEL.width} ${RADAR_PANEL.height}` && outer.getAttribute('shape-rendering') === 'crispEdges', 'Expected a crisp 64×48 drawing');
+    assert(getComputedStyle(button.querySelector('image')!).imageRendering === 'pixelated', 'Expected pixelated map art');
+    for (const path of button.querySelectorAll('path')) assert(getComputedStyle(path).stroke === 'none', 'Shared icon strokes leaked into the pixel art');
+    const fills = new Set([...button.querySelectorAll('path')].map((path) => getComputedStyle(path).fill));
+    assert(fills.size >= 5 && !fills.has('none'), `Expected filled pixel sprites, got ${[...fills].join(', ')}`);
   });
   check('menu Off hides immediately and persists for a reconstructed HUD', () => {
     preference('off');
@@ -120,28 +130,30 @@ document.querySelector<HTMLButtonElement>('#run')!.addEventListener('click', () 
     showField({ ...field, mapNumber: 99 });
     assert(button.hidden, 'Unknown native map was rendered');
   });
-  check('at the west highway the view stays centred past the world edge and far gyms pin to the rim along their bearing', () => {
+  check('at the west highway the view stays centred past the world edge and far gyms pin to the edge along their bearing', () => {
     showField(fieldAt(3, 40, 3));
-    assert(drawing().getAttribute('viewBox') === '-26.5 10.5 60 60', 'Expected no clamping at the world edge');
-    assert(player.getAttribute('transform') === 'translate(3.5 40.5) rotate(270)', 'Expected a west-facing arrow');
+    assert(drawing().getAttribute('viewBox') === '-27 18 60 44', 'Expected no clamping at the world edge');
+    assert(player.getAttribute('transform') === 'translate(3 40) rotate(270 .5 .5)', 'Expected a west-facing arrow');
     let pinned = 0;
     for (const place of places) {
       const blip = button.querySelector<SVGElement>(`[data-landmark="${place.id}"]`)!;
       const [x, y] = placeWorld(place, geometry.markersById);
-      const far = Math.hypot(x - 3, y - 40) > RADAR.rim;
+      const far = Math.abs(x - 3) > RADAR.pinX || Math.abs(y - 40) > RADAR.pinY;
       if (!isGym(place)) { assert(shown(blip) === !far, `${place.id} visibility`); continue; }
       assert(shown(blip), `${place.id} gym must always show`);
       const [bx, by] = translation(blip);
       assert(blip.classList.contains('on-rim') === far, `${place.id} rim state`);
       if (far) {
         pinned++;
-        assert(Math.abs(Math.hypot(bx - 3.5, by - 40.5) - RADAR.rim) < 1e-6, `${place.id} not on the rim`);
-        assert(Math.abs(Math.atan2(by - 40.5, bx - 3.5) - Math.atan2(y - 40, x - 3)) < 1e-6, `${place.id} bearing`);
-      } else assert(bx === x + .5 && by === y + .5, `${place.id} in place`);
+        assert(Number.isInteger(bx) && Number.isInteger(by), `${place.id} off the pixel grid`);
+        assert(Math.abs(bx - 3) === RADAR.pinX || Math.abs(by - 40) === RADAR.pinY, `${place.id} not on the pin edge`);
+        assert(Math.abs(bx - 3) <= RADAR.pinX && Math.abs(by - 40) <= RADAR.pinY, `${place.id} outside the pin box`);
+        assert(Math.abs(Math.atan2(by - 40, bx - 3) - Math.atan2(y - 40, x - 3)) < .08, `${place.id} bearing`);
+      } else assert(bx === x && by === y, `${place.id} in place`);
     }
     assert(pinned > 0, 'Expected at least one pinned gym');
     const home = button.querySelector<SVGElement>('.minimap-home')!;
-    assert(shown(home) && home.classList.contains('on-rim'), 'Home must pin to the rim when far away');
+    assert(shown(home) && home.classList.contains('on-rim'), 'Home must pin to the edge when far away');
   });
   check('every landmark entrance centres the radar with its own blip in place and names it for assistive tech', () => {
     for (const locale of ['en', 'zh-Hant'] as const) {
@@ -151,7 +163,7 @@ document.querySelector<HTMLButtonElement>('#run')!.addEventListener('click', () 
         const [mapGroup, mapNumber] = marker.exteriorNativeKey.split(':').map(Number);
         showField({ ...field, mapGroup, mapNumber, width: map.width, height: map.height, x: marker.localEntrance[0], y: marker.localEntrance[1] });
         const [x, y] = marker.world;
-        assert(drawing().getAttribute('viewBox') === `${x + .5 - 30} ${y + .5 - 30} 60 60`, `${marker.id} view not centred`);
+        assert(drawing().getAttribute('viewBox') === `${x - 30} ${y - 22} 60 44`, `${marker.id} view not centred`);
         const blip = button.querySelector<SVGElement>(`[data-landmark="${marker.id}"]`)!;
         assert(shown(blip) && !blip.classList.contains('on-rim'), `${marker.id} blip should be in place`);
         const place = landmarkCatalog.find((entry) => entry.id === marker.id)!;
