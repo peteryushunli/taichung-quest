@@ -51,4 +51,20 @@ and this worktree’s `artifacts/minimap-review/`.
 
 ## Publication
 
-The production receipt will be appended after the preview and public URL checks.
+Published at https://taichung-quest.vercel.app on2026-11-12. [Release receipt](releases/2026-11-12-minimap-intro.json).
+
+PR: https://github.com/peteryushunli/taichung-quest/pull/16.
+Frontend artifact: `005cbae345274cee0fcc3aaa4a9a12ddbcf8cf10`.
+Production deployment: `dpl_5PF5Za58P4xNSj1p31Doq4D4QFSL`, READY.
+Protected preview: `dpl_G18CzFxUwPR2nkqcLc2YU7S5NDLf`.
+
+The cartridge downloaded from both preview and public URL matches the approved
+preview hash above. Served client/style hashes match the prebuilt artifact.
+Production checks confirm COOP/COEP headers, Wasm MIME and no-store metadata.
+
+The actual public player passes English desktop and Chinese mobile viewport runs:
+the minimap reveals on its native dialogue topic, stays through the next tip and
+continues in exploration. Width is20% of the game viewport in both(previously
+26.667%), with no page errors. The public source patch reconstructs11,430 files
+in a fresh shallow upstream checkout and all three portable guards pass there.
+The checkout follows the repository’s existing palette line-ending attributes.

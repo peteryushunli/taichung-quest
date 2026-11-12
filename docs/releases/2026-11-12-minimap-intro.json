@@ -1,0 +1,63 @@
+{
+  "publishedAtTaipei": "2026-11-12T13:07:58.546442+08:00",
+  "url": "https://taichung-quest.vercel.app",
+  "pullRequest": "https://github.com/peteryushunli/taichung-quest/pull/16",
+  "approvedByUserBeforePublication": true,
+  "deploymentId": "dpl_5PF5Za58P4xNSj1p31Doq4D4QFSL",
+  "deploymentUrl": "https://taichung-quest-qqiaqy6fl-peteryushunli-6635s-projects.vercel.app",
+  "deploymentState": "READY",
+  "frontendArtifactCommit": "005cbae345274cee0fcc3aaa4a9a12ddbcf8cf10",
+  "nativeSourceCommit": "250ba92128fea49c1f3a19da4f6d8df6a23fcdf6",
+  "romBytes": 16777216,
+  "romSha256": "a7918845bb7bddc721b19d3759fde9ba2cbf8ce5cd4bf3d5985bc0667b2d3186",
+  "previewCartridgeMatchesApprovedPreview": true,
+  "publicCartridgeHashVerified": true,
+  "portablePatchSha256": "c52f405f41e1d9ba824eaa2e65f05541c0faddb2e5d5c042aa703ec6d547fd91",
+  "geometryFingerprintSha256": "48fe4ba5208d0a2b1285c1b6aa6f776377ef003d5501e5ae837ca45c6127e92a",
+  "saveVersion": 12,
+  "retainedFrontendBase": "f92ee10fc7d0db87c026ab541c54b341915aa264",
+  "retainedNativeBase": "59e51d99604ce612ccd680d07b61fe968a85be4d",
+  "widthReductionPercent": 25,
+  "oldPanelGbaEquivalentPixels": [
+    64,
+    48
+  ],
+  "newPanelGbaEquivalentPixels": [
+    48,
+    36
+  ],
+  "frontendTests": 59,
+  "browserMinimapChecks": 13,
+  "fontTests": 7,
+  "nativeOnboardingHostTestsPassed": true,
+  "sourceGuardMutationProbes": {
+    "gymInteriorsAndText": 12,
+    "guestHouse": 11,
+    "approvedArt": 13
+  },
+  "sourceReconstructionFiles": 11430,
+  "privateGitHistoryRequiredForPortableChecks": false,
+  "productionRuntimeChecks": [
+    {
+      "language": 1,
+      "mobile": false,
+      "revealed": true,
+      "staysDuringNextTip": true,
+      "staysInExploration": true,
+      "widthRatio": 0.19988269030239833,
+      "errors": []
+    },
+    {
+      "language": 2,
+      "mobile": true,
+      "revealed": true,
+      "staysDuringNextTip": true,
+      "staysInExploration": true,
+      "widthRatio": 0.1999633431085044,
+      "errors": []
+    }
+  ],
+  "runtimeFixtureScope": "Explicitly synthetic SRAM stage/location fixtures imported through normal web-player UI; native keyboard input afterward. No emulator snapshots or RAM position writes. Mobile uses an emulated touch viewport.",
+  "productionIsolationHeadersAndWasmMimeVerified": true,
+  "localEvidence": "artifacts/downloads/minimap-intro-release-20261112/"
+}
