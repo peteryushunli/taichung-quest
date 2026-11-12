@@ -1,6 +1,7 @@
-# Minimap and Xiaoyu intro — awaiting user approval
+# Minimap and Xiaoyu intro — approved
 
-Local preview only. Do not publish/merge/deploy until the user approves the screenshots.
+The user approved these screenshots and requested Vercel publication on2026-11-12.
+See [the release record](minimap-intro-release.md) for final source and publication status.
 Base frontend: f92ee10 (latest main on2026-11-12). Native base59e51d9 retains
 Claude’s guest house, gym interiors, map and current font.
 
@@ -29,9 +30,9 @@ Frontend branch/worktree: codex/minimap-intro-review,
 `/Users/peter/devday_hackathon/.worktrees/minimap-intro-review`.
 Native branch/worktree: codex/minimap-intro-text,
 `/Users/peter/devday_hackathon/.worktrees/game-minimap-intro-review`.
-Native preview commit: c952dec. No portable patch export, PR or Vercel deployment yet.
-After approval, register the reviewed text/font changes with the existing native
-source guards before exporting a production patch. Do not weaken those guards.
+Native preview commit: c952dec. Release registrations are complete in native
+250ba92; portable source checks pass. This document preserves the original review
+evidence. The release record identifies the final publication.
 
 59 frontend tests and TypeScript pass;13 browser minimap checks pass, including
 intro timing, Off preference, real-position projection and menu/paused hiding.
