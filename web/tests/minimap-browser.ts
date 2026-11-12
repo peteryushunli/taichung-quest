@@ -9,6 +9,7 @@ import { RADAR, RADAR_PANEL } from '../src/minimap-model';
 import { isGym, placeWorld } from '../src/landing-model';
 import type { LandingLandmark } from '../src/landing-model';
 import type { NavigationSnapshot } from '../src/navigation-bridge';
+import type { OnboardingSnapshot } from '../src/onboarding-bridge';
 
 document.querySelector('#locale')!.innerHTML = languageControl('fixture-language');
 const screen = document.querySelector<HTMLElement>('.fixture-screen')!;
@@ -73,23 +74,23 @@ document.querySelector<HTMLButtonElement>('#run')!.addEventListener('click', () 
     assert(button.querySelectorAll('[data-landmark]').length === 20, 'Expected data-landmark on every place blip');
     assert(shown(button.querySelector('.minimap-home')!), 'Expected the home blip');
     assert(button.querySelector('image')?.getAttribute('href'), 'Expected the radar art under the blips');
-    assert(button.textContent!.trim() === '', 'Expected no caption text: the N tab is pixel art');
+    assert(button.textContent!.trim() === 'N', 'Expected only a small north label');
     assert(hint.textContent!.includes('Hidden indoors'), 'Settings hint must say the radar hides indoors');
   });
-  check('the minimap is a 64×48 GBA-pixel panel, crisp and unaffected by shared button icon styles', () => {
+  check('the minimap is 25% narrower at 48×36 GBA-equivalent pixels with smooth vector symbols', () => {
     const box = button.getBoundingClientRect();
     // The game canvas fills the screen's padding box, so GBA pixels are measured inside its border.
     const field = screen.getBoundingClientRect();
     const pixel = screen.clientWidth / 240;
     const [left, top] = [field.left + screen.clientLeft, field.top + screen.clientTop];
-    assert(Math.abs(box.width - 64 * pixel) < 1 && Math.abs(box.height - 48 * pixel) < 1, `Expected 64×48 GBA pixels, got ${box.width}×${box.height} at ${pixel}px`);
+    assert(Math.abs(box.width - 48 * pixel) < 1 && Math.abs(box.height - 36 * pixel) < 1, `Expected 48×36 GBA pixels, got ${box.width}×${box.height} at ${pixel}px`);
     assert(Math.abs(box.left - left - 3 * pixel) < 1 && Math.abs(box.top - top - 3 * pixel) < 1, 'Expected the panel 3 GBA pixels from the top-left corner');
     const outer = button.querySelector('svg')!;
-    assert(outer.getAttribute('viewBox') === `0 0 ${RADAR_PANEL.width} ${RADAR_PANEL.height}` && outer.getAttribute('shape-rendering') === 'crispEdges', 'Expected a crisp 64×48 drawing');
-    assert(getComputedStyle(button.querySelector('image')!).imageRendering === 'pixelated', 'Expected pixelated map art');
-    for (const path of button.querySelectorAll('path')) assert(getComputedStyle(path).stroke === 'none', 'Shared icon strokes leaked into the pixel art');
-    const fills = new Set([...button.querySelectorAll('path')].map((path) => getComputedStyle(path).fill));
-    assert(fills.size >= 5 && !fills.has('none'), `Expected filled pixel sprites, got ${[...fills].join(', ')}`);
+    assert(outer.getAttribute('viewBox') === `0 0 ${RADAR_PANEL.width} ${RADAR_PANEL.height}` && outer.getAttribute('shape-rendering') === 'geometricPrecision', 'Expected a smooth drawing with unchanged map coverage');
+    assert(getComputedStyle(button.querySelector('image')!).imageRendering === 'auto', 'Expected smoothly sampled map art');
+    assert(button.querySelectorAll('circle.minimap-sight-fill').length === 10, 'Landmarks must be smooth yellow dots');
+    assert(button.querySelectorAll('rect.minimap-gym-fill').length === 20, 'Gyms must retain full and pinned red squares');
+    assert(getComputedStyle(button.querySelector('.minimap-frame-outer')!).fill === 'none', 'Frame must not cover the map');
   });
   check('menu Off hides immediately and persists for a reconstructed HUD', () => {
     preference('off');
@@ -178,6 +179,27 @@ document.querySelector<HTMLButtonElement>('#run')!.addEventListener('click', () 
     assert(screen.querySelector('#live-minimap') === button && button.getAttribute('aria-label')!.includes('舊臺中車站'), 'Chinese name or node identity failed');
     assert(hint.textContent!.includes('室內'), 'Chinese hint must say the radar hides indoors');
     setLocale('en');
+  });
+  check('Xiaoyu reveals the minimap at her map topic and keeps it through the handoff to exploration', () => {
+    const tour = (phase: number, flags = 5): OnboardingSnapshot => ({
+      phase, flags, frame: 2, context: phase, activeLanguage: 1, result: 0,
+      requestSequence: 0, ackSequence: 0, requestedContext: 0, command: 0,
+      requestedLanguage: 0, mapGroup: 43, mapNumber: 0, x: 20, y: 68,
+    });
+    showField(); hud.updateOnboarding({ status: 'live', snapshot: tour(5) });
+    assert(button.hidden, 'Bike tip revealed the minimap too early');
+    hud.update({ phase: 'hidden' });
+    for (const phase of [6, 7, 8, 9]) {
+      hud.updateOnboarding({ status: 'live', snapshot: tour(phase) });
+      assert(!button.hidden && button.classList.contains('is-tutorial'), `Missing tour map at ${phase}`);
+      assert(drawing().getAttribute('viewBox') === '75 99 60 44', 'Tour map must use its real coordinates');
+    }
+    preference('off'); assert(button.hidden, 'Off must also work during the tour'); preference('on');
+    hud.updateOnboarding({ status: 'live', snapshot: tour(9, 1) });
+    assert(!button.hidden, 'Minimap flickered off before navigation resumed');
+    showField(); assert(!button.hidden && !button.classList.contains('is-tutorial'), 'Did not hand over to live navigation');
+    showField({ ...field, contextFlags: 32 }); assert(button.hidden, 'Finished tour left a stale map over a menu');
+    hud.updateOnboarding({ status: 'discovering' }); showField();
   });
   check('tapping the minimap opens the existing City Map action once', () => {
     const before = opened;

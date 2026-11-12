@@ -1,13 +1,13 @@
 # Taichung Quest — current state and concurrent work
 
-Canonical frontend: https://taichung-quest.vercel.app. The current approved-art
-release is documented in [approved-landmark-release.md](approved-landmark-release.md).
-It retains Claude’s twenty-place city (native2362263, frontend757e90c), installs
-the ten approved scenes, and moves save compatibility to version11. Published
-native source is `09534a8786360f3bf1f9013e11ea41d13e8646d8`; cartridge SHA-256
-`400e3237b5640a72d211687c06ec4cb0ca4e4b82af57a232577c0918ff1fee21`.
-The release receipt confirms the Vercel production deployment and exact served ROM.
-Earlier checkpoints and ownership notes below are historical context.
+Canonical frontend: https://taichung-quest.vercel.app. The latest publication is
+[the approved minimap and Xiaoyu guide](minimap-intro-release.md), released
+2026-11-12. Its receipt identifies the exact source and served cartridge. It
+retains Claude’s city, guest house, gym interiors and save12, with a smaller
+smooth minimap and bilingual marker explanation. Native source is
+`250ba92128fea49c1f3a19da4f6d8df6a23fcdf6`; frontend artifact is
+`005cbae345274cee0fcc3aaa4a9a12ddbcf8cf10`. Earlier checkpoint and ownership notes below
+are historical context; use the latest release receipt for publication.
 
 ## Source and release inputs
 

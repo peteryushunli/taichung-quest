@@ -12526,10 +12526,10 @@ index 0000000..be81428
 +  "encodingPolicy": "Preserve every existing FC19 character index; only regenerate bitmap rows and append missing characters."
 +}
 diff --git a/charmap.txt b/charmap.txt
-index b9d0ed9..20ca048 100644
+index b9d0ed9..d58f9b1 100644
 --- a/charmap.txt
 +++ b/charmap.txt
-@@ -910,3 +910,789 @@ EMOJI_BIGANGER = F9 FE
+@@ -910,3 +910,791 @@ EMOJI_BIGANGER = F9 FE
  '\l' = FA @ scroll up window text
  '\p' = FB @ new paragraph
  '\n' = FE @ new line
@@ -13319,6 +13319,8 @@ index b9d0ed9..20ca048 100644
 +'較' = FC 19 3E 04
 +'靜' = FC 19 3F 04
 +'黑' = FC 19 40 04
++'圓' = FC 19 41 04
++'黃' = FC 19 42 04
 diff --git a/data/event_scripts.s b/data/event_scripts.s
 index 88d7594..65bf894 100644
 --- a/data/event_scripts.s
@@ -82484,6 +82486,39 @@ index 0000000..d025e09
 +{
 +    TaichungGymCopyLandmarkMessage(TAICHUNG_GYM_MAPLE_GARDEN, sMessages);
 +}
+diff --git a/data/taichung/gym-interiors/baseline/src/taichung_onboarding_text.c b/data/taichung/gym-interiors/baseline/src/taichung_onboarding_text.c
+new file mode 100644
+index 0000000..e2dbb53
+--- /dev/null
++++ b/data/taichung/gym-interiors/baseline/src/taichung_onboarding_text.c
+@@ -0,0 +1,27 @@
++#include "global.h"
++#include "taichung_onboarding.h"
++
++// Xiaoyu's plaza tour. Each topic is ordinary native dialogue (A/B to advance).
++const u8 gTaichungOnboardingLanguageHint[] = _("Waiting for browser language.\nA/B: choose on this cartridge.");
++static const u8 sIntroEn[] = _("There you are! Welcome to\nTaichung. Some quick tips!");
++static const u8 sIntroZh[] = _("你來啦！歡迎來到臺中。\n出發前，先說幾件事。");
++static const u8 sBikeEn[] = _("Getting around is much easier\nby bike. It's twice as fast!\pOutdoors, press B to hop on.\nPress B again to walk.");
++static const u8 sBikeZh[] = _("騎車比走路快很多，\n在城市裡找路更快！\p在戶外按B就能上車，\n再按一次B就下車走路。");
++static const u8 sMapEn[] = _("Not sure where to go? Check\nthe small map at the top left.\pTap it, or the City Map button,\nto see every landmark.");
++static const u8 sMapZh[] = _("不確定往哪走？\n左上角的小地圖會帶路。\p點小地圖或城市地圖，\n就能看到所有地標。");
++static const u8 sTeamEn[] = _("Menu (START) opens your TEAM,\nBAG, SAVE and more.\pTEAM adds or swaps POKéMON.\nAny of 150, free, at Lv50.");
++static const u8 sTeamZh[] = _("按選單START，可以打開\n隊伍、背包、儲存等。\p在隊伍加入或更換寶可夢，\n150隻任選，免費又有50級。");
++static const u8 sLandmarksEn[] = _("Your first gym is Old Station,\njust east, over the bridge!\pMiyahara is north, up this\nstreet. Taichung Park is beyond.\pThe City Map shows the way.");
++static const u8 sLandmarksZh[] = _("第一座道館是舊車站，\n過橋往東走就到！\p宮原就在這條街往北，\n臺中公園在更北邊。\p城市地圖會帶你去。");
++static const u8 sReleaseEn[] = _("That's everything! Have fun\nexploring with your partner.");
++static const u8 sReleaseZh[] = _("都說完了！\n帶著夥伴去探索臺中吧！");
++
++const u8 *const gTaichungOnboardingTopics[5][2] = {
++    {sIntroEn, sIntroZh},
++    {sBikeEn, sBikeZh},
++    {sMapEn, sMapZh},
++    {sTeamEn, sTeamZh},
++    {sLandmarksEn, sLandmarksZh},
++};
++
++const u8 *const gTaichungOnboardingRelease[2] = {sReleaseEn, sReleaseZh};
 diff --git a/data/taichung/gym-interiors/baseline/src/taichung_save.c b/data/taichung/gym-interiors/baseline/src/taichung_save.c
 new file mode 100644
 index 0000000..608f6ab
@@ -93041,10 +93076,10 @@ index 0000000..e0392e9
 +if __name__=='__main__':sys.exit(main())
 diff --git a/data/taichung/gym-interiors/manifest.json b/data/taichung/gym-interiors/manifest.json
 new file mode 100644
-index 0000000..adf64be
+index 0000000..bef18fc
 --- /dev/null
 +++ b/data/taichung/gym-interiors/manifest.json
-@@ -0,0 +1,249 @@
+@@ -0,0 +1,251 @@
 +{
 +  "base": "9cb6855eb178cffbcae8b533ff90e90e607c29e1",
 +  "before": {
@@ -93074,6 +93109,7 @@ index 0000000..adf64be
 +    "src/taichung_badges.c": "175eebadeea224f9b4241000712e725435ff576044d9dd3bcc2d579569e158dd",
 +    "src/taichung_landmark_history.c": "56ab4bd931d8fcb3c02a71d04d0d9a62c0268c4e4169db17fe5449a1c5e9fe83",
 +    "src/taichung_maple_garden_gym.c": "762ef8de604dce34026006675ae9b3ed875fb783ac67308a3d6c5fc919156ab8",
++    "src/taichung_onboarding_text.c": "2865818c96f636d74fb178dde71ac7691cc3cc2cb22193fd102e56f0c7c52dfc",
 +    "src/taichung_save.c": "ea4d6581ce7f94465621013ca9b5a87219f41508de11e9abcf9955933e28e3c4",
 +    "tests/taichung_landmark_history_test.c": "b62cea627b5af8a5ee7450f822261e77ad67946c3f0f345b4b9b38f1fe093fe5",
 +    "tests/taichung_save_facing_test.c": "b87723bf47a3a9a2d18966313bfd822a6d790bedc97ed1c8c7dc845ebf0bfad2",
@@ -93084,7 +93120,7 @@ index 0000000..adf64be
 +    "tools/taichung_gameplay/generate-approved-art-save.py": "4e905566ae764a16306cc2b8c0445a4bd382c25ed050b00ae55613a8c592a750"
 +  },
 +  "edited": {
-+    "charmap.txt": "8ffa9ad36dfcd30a04b1e7f2b894b1e1969f7b27c3a6f82c0b9a83d7d1e793f9",
++    "charmap.txt": "1377bcf51ac0e185dcd5bde01b9185de11430c9dd1722a9fe99e8a858b19aa82",
 +    "data/layouts/layouts.json": "42877701e986adea1f7de3d02c28f9fe297351d49b42fda8967d1abe6f23cc3e",
 +    "data/maps/TaichungFengjia_Gym/map.json": "af10c32195571ce06338e8e8771c76ef06b5a4cc6580d9a9ac8e63a82140341e",
 +    "data/maps/TaichungFineArts_Gym/map.json": "0faf5640bf96bd3462c6514e72326431dc3e44c403df1e076e575967f35d5af2",
@@ -93103,20 +93139,21 @@ index 0000000..adf64be
 +    "graphics/taichung/badges/assets.json": "4012a58feda202cf6d12bd15366004d7415ecef3bd09d669a18285080ac70d31",
 +    "include/constants/event_objects.h": "2afb705465445d7aea3ffa583f3fec408f7cd2bd64369ba58db976ec406101ba",
 +    "include/taichung_save.h": "5fd70aa1748e2f9a6f7c5b2af482d6f92907a191bb7f3f03985332a99477520f",
-+    "src/data/taichung_glyphs.h": "b8009b1cd2052e42dce50f303e808719229b611cdf45dcb12ab02c73718dd109",
++    "src/data/taichung_glyphs.h": "53895561023fbd7d7ab0bcd301ba83a492e3d9cb0728866d1df587ea128ab96d",
 +    "src/data/tilesets/graphics.h": "d70c35888ef7fa7f37110503c6b01667a33f5411b5103b39e61eff6d9c0ae276",
 +    "src/data/tilesets/headers.h": "b22f1c150ca07fb687bea94e4529c8397bbf5bddaffc54d885f16c8aec2a4b2e",
 +    "src/data/tilesets/metatiles.h": "a5d372dbab6524318687ac78af96ee4f7cb24b2f3c6fa1b724216b61f4bcc270",
 +    "src/taichung_badges.c": "d6fd3a21c025431480870ade1be9b8824dc58e866c44a73056e198aac112baa5",
 +    "src/taichung_landmark_history.c": "24d27466de2485ee67d15fc660ad6fdf7b8d020ada6dfce081bf345fcfa9568a",
 +    "src/taichung_maple_garden_gym.c": "ee1ee8532ae15694dfe3817bdb0bb073f25302f221720fff533b5a32c0b78fd4",
++    "src/taichung_onboarding_text.c": "4177fc0ed6044898cdf4ea6f47698503ecc31a60d1e85c4328836ffe652e33c1",
 +    "src/taichung_save.c": "7327cb6437ccc716994056d535f2f9209ddb5c937f441c98f449c71c00f45b9f",
 +    "tests/taichung_landmark_history_test.c": "9c83be7be0a98bcfd993a8e2dd27a3df66c902ad365a2f42ff57d83b9f83b1df",
 +    "tests/taichung_save_facing_test.c": "fdb06969a4cd98bd75af00355dc2579658bd2959b782bdadd07614f5b721b00c",
 +    "tests/taichung_save_test.c": "8a5560beb81ccc06ecb3822e67b234e9dd1c39e37f76e99c21438425612be1b3",
 +    "tests/taichung_save_v11_test.c": "13ee5d3540838af8a5cf0caf715ce7328d6a5334599ca193c1a1bcc1154eb7cd",
 +    "tools/taichung/approved_art_guard.py": "92c045fb9556e816d8d827c41bfbac7e1f591032326cf3fe32bf612e34ebdaca",
-+    "tools/taichung/home_start.py": "d58e7dac965e882ab95809fff5b95843db89ceeff6768fd26ab88341a702da90",
++    "tools/taichung/home_start.py": "95c67d3f548a85916cd62a5e04fd8e39f676fe793a6bbe48d8dc310acab6c89f",
 +    "tools/taichung_gameplay/generate-approved-art-save.py": "e903e885dc19e56b2c6f9d63cc9a491c359ebf79162b0e74b878b55084735962"
 +  },
 +  "added": {
@@ -489445,10 +489482,10 @@ index 0000000..910ee5e
 +};
 diff --git a/src/data/taichung_glyphs.h b/src/data/taichung_glyphs.h
 new file mode 100644
-index 0000000..3fb6fa2
+index 0000000..04fbd32
 --- /dev/null
 +++ b/src/data/taichung_glyphs.h
-@@ -0,0 +1,788 @@
+@@ -0,0 +1,790 @@
 +// Generated by tools/taichung_gameplay/refresh-chinese-glyphs.py.
 +// Taichung Native Bitmap12; source/licenses: assets/fonts/taichung-native-font.json
 +static const u16 sTaichungChineseGlyphs[][14] = {
@@ -490236,6 +490273,8 @@ index 0000000..3fb6fa2
 +    {0x000, 0x000, 0x104, 0x7df, 0x004, 0x25f, 0x435, 0x25f, 0x255, 0x29f, 0x104, 0x29f, 0x464, 0x000}, // 781: 較
 +    {0x000, 0x000, 0x604, 0x1df, 0x544, 0x29f, 0x7c4, 0x51f, 0x7f2, 0x51e, 0x7d2, 0x11e, 0x191, 0x000}, // 782: 靜
 +    {0x000, 0x000, 0x3fe, 0x222, 0x2aa, 0x222, 0x3fe, 0x020, 0x3fe, 0x020, 0x7ff, 0x24a, 0x491, 0x000}, // 783: 黑
++    {0x000, 0x000, 0x7ff, 0x4f9, 0x489, 0x5fd, 0x505, 0x5fd, 0x505, 0x5fd, 0x489, 0x505, 0x7ff, 0x000}, // 784: 圓
++    {0x000, 0x000, 0x088, 0x3fe, 0x088, 0x0f8, 0x000, 0x7ff, 0x222, 0x3fe, 0x222, 0x3fe, 0x603, 0x000}, // 785: 黃
 +};
 diff --git a/src/data/taichung_team_presets.h b/src/data/taichung_team_presets.h
 new file mode 100644
@@ -496614,7 +496653,7 @@ index 0000000..527764b
 +}
 diff --git a/src/taichung_onboarding_text.c b/src/taichung_onboarding_text.c
 new file mode 100644
-index 0000000..ad713ff
+index 0000000..c3dd740
 --- /dev/null
 +++ b/src/taichung_onboarding_text.c
 @@ -0,0 +1,27 @@
@@ -496627,8 +496666,8 @@ index 0000000..ad713ff
 +static const u8 sIntroZh[] = _("你來啦！歡迎來到臺中！\n先教你幾招。");
 +static const u8 sBikeEn[] = _("Getting around is much easier\nby bike. It's twice as fast!\pOutdoors, press B to hop on.\nPress B again to walk.");
 +static const u8 sBikeZh[] = _("騎車逛城市，\n比走路快很多！\p在戶外按B上車，\n再按B下車。");
-+static const u8 sMapEn[] = _("Not sure where to go? Check\nthe small map at the top left.\pTap it, or the City Map button,\nto see every landmark.");
-+static const u8 sMapZh[] = _("找不到路？\n看左上角的小地圖！\p點小地圖或城市地圖，\n能看到所有地標。");
++static const u8 sMapEn[] = _("See the minimap at top left?\nRed squares are gyms.\pYellow dots are landmarks.\nTap it to open the City Map.");
++static const u8 sMapZh[] = _("看左上角的小地圖！\n紅色方塊是道館。\p黃色圓點是地標。\n點小地圖可開城市地圖。");
 +static const u8 sTeamEn[] = _("Menu (START) opens your TEAM,\nBAG, SAVE and more.\pTEAM adds or swaps POKéMON.\nAny of 150, free, at Lv50.");
 +static const u8 sTeamZh[] = _("START選單裡有\n隊伍、背包、儲存等。\p隊伍可加入或換寶可夢，\n150隻免費任選，都是50級。");
 +static const u8 sLandmarksEn[] = _("Your first gym is Old Station,\njust east, over the bridge!\pMiyahara is north, up this\nstreet. Taichung Park is beyond.\pThe City Map shows the way.");
@@ -519509,10 +519548,10 @@ index 0000000..aca415e
 +sys.exit(1 if bad else 0)
 diff --git a/tools/taichung/gym_interiors_guard.py b/tools/taichung/gym_interiors_guard.py
 new file mode 100644
-index 0000000..b887027
+index 0000000..eb6226a
 --- /dev/null
 +++ b/tools/taichung/gym_interiors_guard.py
-@@ -0,0 +1,367 @@
+@@ -0,0 +1,370 @@
 +#!/usr/bin/env python3
 +"""Gym interiors and the Wanhe Temple gym (save v12), as one exact layer over BASE.
 +
@@ -519561,7 +519600,7 @@ index 0000000..b887027
 +LAYER = "data/taichung/gym-interiors"
 +BUNDLE = f"{LAYER}/baseline"
 +MANIFEST = f"{LAYER}/manifest.json"
-+MANIFEST_SHA256 = "55356942cdc5c25cae16e3142b3f5f580ac7829feacd1ed75890bd185f4e7d88"
++MANIFEST_SHA256 = "50b57989c98196ecfcecaa52130dd9ffb7291e83b6ef62928e4e8e635529150f"
 +
 +LAYOUTS = "data/layouts/layouts.json"
 +SAVE_HEADER = "include/taichung_save.h"
@@ -519819,7 +519858,10 @@ index 0000000..b887027
 +    read = _reader(source, None)
 +    record = manifest(read)
 +    probes = {}
-+    for name, path in [("room-map", "data/layouts/TaichungGymTheater/map.bin"),
++    for name, path in [("minimap-dialogue", "src/taichung_onboarding_text.c"),
++                       ("glyph-table", "src/data/taichung_glyphs.h"),
++                       ("glyph-mapping", "charmap.txt"),
++                       ("room-map", "data/layouts/TaichungGymTheater/map.bin"),
 +                       ("room-tileset", "data/tilesets/secondary/taichung_gym_theater/metatile_attributes.bin"),
 +                       ("wanhe-map", "data/maps/TaichungWanheTemple_Hall/map.json"),
 +                       ("save-migration", "src/taichung_save.c"),
@@ -519882,10 +519924,10 @@ index 0000000..b887027
 +    main()
 diff --git a/tools/taichung/home_start.py b/tools/taichung/home_start.py
 new file mode 100644
-index 0000000..68b215d
+index 0000000..706dc64
 --- /dev/null
 +++ b/tools/taichung/home_start.py
-@@ -0,0 +1,464 @@
+@@ -0,0 +1,465 @@
 +#!/usr/bin/env python3
 +"""Guest house opening and no waterway signs, as one exact layer over BASE.
 +
@@ -520002,7 +520044,8 @@ index 0000000..68b215d
 +    "data/scripts/taichung_city.inc": "c60b68f60188de1ae06c71b50a7a719dbca18cef06c0945e3302765414f2e534",
 +    "src/new_game.c": "02b47c2be75476f875a3aab93d7e369bc7d88542a475d142183a7c35a0713e21",
 +    "src/taichung_onboarding.c": "3516402251e320be219aa269e963aad9a1ea66a3b72333abd477a282775c28e7",
-+    "src/taichung_onboarding_text.c": "c34420d9ac519ee262a103f1e48c9ac726979f83cb8a019e3293bf36cc909bef",
++    # Text now belongs to the newer registered layer; check its exact BASE bytes here.
++    "src/taichung_onboarding_text.c": "2865818c96f636d74fb178dde71ac7691cc3cc2cb22193fd102e56f0c7c52dfc",
 +    "tests/test_taichung_onboarding.c": "68575c596ffa53796f166e23afa830811a7c2168a2836e49c9c28338e80dd3b2",
 +    "data/taichung/minimap-contract.json": "af14f03233e15d679ba5ef9c4d3caadda1dd0ef134c2b68e303305ba107aafef",
 +}

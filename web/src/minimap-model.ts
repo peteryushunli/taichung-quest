@@ -1,5 +1,6 @@
 import { isFieldSnapshot, NAVIGATION_FLAGS } from './navigation-bridge.ts';
 import type { NavigationSnapshot } from './navigation-bridge';
+import type { OnboardingSnapshot } from './onboarding-bridge';
 
 type Pair = number[];
 type LocalizedName = { en: string; zh: string };
@@ -65,17 +66,42 @@ export function radarPosition(position?: MinimapPosition) {
   return position && !position.indoor ? position : undefined;
 }
 
+/** The native tour publishes its real position even while dialogue hides navigation.
+ * Only its minimap topic through farewell may use this separate, non-navigation view.
+ */
+export function projectTutorial(packet: OnboardingSnapshot, geometry: MinimapGeometry): MinimapPosition | undefined {
+  if (geometry.schemaVersion !== 1 || packet.phase < 6 || packet.phase > 9 ||
+      !(packet.flags & 1) || !(packet.flags & 4)) return;
+  const key = `${packet.mapGroup}:${packet.mapNumber}`;
+  const map = geometry.mapsByNativeKey[key];
+  if (map?.kind !== 'exterior' || map.projection !== 'local-plus-world-origin' || !map.worldOrigin ||
+      !Number.isInteger(packet.x) || !Number.isInteger(packet.y) || packet.x < 0 || packet.y < 0 ||
+      packet.x >= map.width || packet.y >= map.height) return;
+  const [worldX, worldY] = [map.worldOrigin[0] + packet.x, map.worldOrigin[1] + packet.y];
+  if (worldX < 0 || worldY < 0 || worldX >= geometry.world.width || worldY >= geometry.world.height) return;
+  const own = Object.values(geometry.markersById).filter((marker) => marker.exteriorNativeKey === key);
+  const candidates = own.length ? own : Object.values(geometry.markersById);
+  const nearest = candidates.reduce<typeof candidates[number] | undefined>((best, marker) => {
+    const distance = (m: typeof marker) => (m.world[0] - worldX) ** 2 + (m.world[1] - worldY) ** 2;
+    return !best || distance(marker) < distance(best) ? marker : best;
+  }, undefined);
+  if (!nearest) return;
+  return { worldX, worldY, u: (worldX + .5) / geometry.world.width, v: (worldY + .5) / geometry.world.height,
+    // The tour has no facing field. Use a dot, rather than inventing a heading.
+    facing: 0, districtKey: key, indoor: false, landmarkId: nearest.id, landmarkName: nearest.name };
+}
+
 /**
  * The minimap is a north-up rectangle `width` x `height` world tiles, one GBA pixel per tile,
  * always centred on the player (no clamping at the world edge, so the dark surround outlines
- * the city). Blips are pixel sprites drawn around their tile. Places within `pinX`/`pinY` tiles
+ * the city). Vector markers are centred on their exact tile. Places within `pinX`/`pinY` tiles
  * of the player show in place; pinned blips (gyms, home) further out sit on that inner box
  * along their bearing, so they always point the way without touching the frame.
  */
 export const RADAR = { width: 60, height: 44, pinX: 27, pinY: 19 } as const;
 /** src/assets/minimap/city.png: `tile` px per world tile plus a `margin`-tile dark border (scripts/derive-city-art.py). */
 export const RADAR_ART = { tile: 1, margin: 2 } as const;
-/** The panel around the map, in GBA pixels: a 2-pixel frame on every side. */
+/** Logical 64×48 drawing with a 2-unit frame; CSS renders it at 48×36 GBA-equivalent pixels. */
 export const RADAR_PANEL = { width: RADAR.width + 4, height: RADAR.height + 4, frame: 2 } as const;
 /** World tile of the door of the house the game starts in. */
 export const HOME_WORLD: Pair = [105, 120];
