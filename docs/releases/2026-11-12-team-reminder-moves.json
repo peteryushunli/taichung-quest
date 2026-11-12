@@ -1,0 +1,65 @@
+{
+  "url": "https://taichung-quest.vercel.app",
+  "pullRequest": "https://github.com/peteryushunli/taichung-quest/pull/17",
+  "frontendArtifactCommit": "3039d1a773a6f87cf6a649fefb68adb90847bb62",
+  "trackedSourceDirty": false,
+  "nativeCommit": "6ae533a874c6a4d05775c60f589472947bca0d28",
+  "cartridgeSHA256": "1719f61c92ded319c48cb1111a980ffb215ef3533ef6e4cc9cce4b92189c21ec",
+  "previewDeployment": "dpl_C74CuV25wN3Eb8YSEbk9vfNWF4mV",
+  "productionDeployment": "dpl_HmW9PzmGqPLpYFbScALefhn3aLKi",
+  "productionState": "READY",
+  "saveVersion": 12,
+  "geometryFingerprint": "48fe4ba5208d0a2b1285c1b6aa6f776377ef003d5501e5ae837ca45c6127e92a",
+  "gymLeaderTeamSize": 3,
+  "features": [
+    "Native bilingual once-per-visit one-member team reminder in ten unbeaten gyms",
+    "Choose team or Not now/B; picker returns to same field script",
+    "150 intentional species profiles, evolution differences, Gen III move legality",
+    "Existing party move-only update; preserve HP/status/identity/items/EXP and unchanged PP"
+  ],
+  "checks": {
+    "presetSpecies": 150,
+    "presetMoveSlots": 590,
+    "frontendTests": 59,
+    "typescript": true,
+    "fontTests": 7,
+    "nativeTeamHost": true,
+    "nativeOnboardingHost": true,
+    "nativeGymProgressHost": true,
+    "nativeLandmarkGymsHost": true,
+    "nativeBuild": true,
+    "frontendBuild": true,
+    "cityGeometry": true,
+    "minimapRoundtrip": true,
+    "sourceGuardMutationProbes": {
+      "gymInteriors": 15,
+      "guestHouse": 11,
+      "approvedArt": 13
+    },
+    "portablePatchFilesCompared": 11455,
+    "portablePatchMismatches": [],
+    "protectedPreviewExactCartridge": true,
+    "publicExactCartridgeAndAssets": true,
+    "isolationHeaders": true,
+    "wasmMIME": true,
+    "normalInputRuntimeCases": [
+      "English: enter, choose team, add partner, return to gym, move",
+      "Chinese: enter, choose Not now, return to movement",
+      "Two-member team: enter without reminder",
+      "Completed gym: enter without reminder"
+    ],
+    "livePartyReadOnlyVerification": {
+      "beforeCount": 1,
+      "afterCount": 2,
+      "venusaurMoves": [
+        "MOVE_SOLAR_BEAM",
+        "MOVE_SUNNY_DAY",
+        "MOVE_SLUDGE_BOMB",
+        "MOVE_SLEEP_POWDER"
+      ],
+      "existingMewtwoHPStatusIdentityPreserved": true,
+      "nativeMonChecksumsValid": true
+    }
+  },
+  "localEvidence": "artifacts/downloads/team-warning-release/"
+}

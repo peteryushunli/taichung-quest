@@ -36,3 +36,14 @@ tests and TypeScript. Local runtime evidence is under the main repository's
 fixtures imported through Continue, normal input only, both reminder choices,
 adding a partner/returning to movement, and no reminder for two-member/completed
 gym visits. Test images and exports stay within the repository.
+
+## Publication
+
+Published on 2026-11-12 at https://taichung-quest.vercel.app.
+[Release receipt](releases/2026-11-12-team-reminder-moves.json).
+[PR #17](https://github.com/peteryushunli/taichung-quest/pull/17).
+The canonical cartridge and client/style/Wasm files match the prebuilt artifact.
+The actual native party check adds Venusaur with Solar Beam, Sunny Day, Sludge
+Bomb and Sleep Powder, and verifies the existing Mewtwo's changed moves while
+preserving its HP, status, EXP, held item, personality and owner ID. Encrypted
+Pokémon checksums remain valid.
