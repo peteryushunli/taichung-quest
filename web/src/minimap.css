@@ -1,10 +1,19 @@
-/* The minimap is drawn like a FireRed Town Map window: one GBA pixel per world tile, sized and
-   placed in GBA pixels (the screen is 240x160), so its pixels match the game's own. */
-.live-minimap { position: absolute; z-index: 3; top: calc(100% * 3 / 160); left: calc(100% * 3 / 240); width: calc(100% * 64 / 240); aspect-ratio: 64 / 48; padding: 0; border: 0; border-radius: 0; background: none; box-shadow: none; cursor: pointer; }
+/* Review candidate: 48 instead of 64 GBA-equivalent pixels wide (25% narrower),
+   preserving its aspect ratio and map coverage with smoothly rendered symbols. */
+.live-minimap { position: absolute; z-index: 3; top: calc(100% * 3 / 160); left: calc(100% * 3 / 240); width: calc(100% * 48 / 240); aspect-ratio: 64 / 48; padding: 0; border: 0; border-radius: 4%; background: #f8f8f8; box-shadow: none; cursor: pointer; }
 .live-minimap[hidden] { display: none; }
 .live-minimap svg { display: block; width: 100%; height: 100%; overflow: hidden; fill: none; stroke: none; }
-.live-minimap svg path, .live-minimap svg rect { stroke: none; }
-.live-minimap image { image-rendering: pixelated; }
+.live-minimap svg path, .live-minimap svg rect, .live-minimap svg circle { stroke: none; }
+.live-minimap .minimap-marker { stroke: #283038; stroke-width: .65; stroke-linejoin: round; }
+.live-minimap .minimap-frame-outer { fill: none; stroke: #283038; stroke-width: .9; }
+.live-minimap .minimap-frame-inner { fill: none; stroke: #f8f8f8; stroke-width: 1.2; }
+.live-minimap .minimap-north rect { fill: #f8f8f8; stroke: #283038; stroke-width: .6; }
+.live-minimap .minimap-north text { fill: #283038; font: 700 5.1px Arial, sans-serif; }
+.live-minimap .minimap-home-mark { fill: #4878e8; }
+.live-minimap .minimap-home-door, .live-minimap .minimap-player-arrow, .live-minimap .minimap-player-dot { fill: #fff; }
+.live-minimap .minimap-player-dot, .live-minimap.is-tutorial .minimap-player-arrow { display: none; }
+.live-minimap.is-tutorial .minimap-player-dot { display: block; }
+.live-minimap image { image-rendering: auto; }
 .live-minimap .minimap-outside { fill: #384858; }
 .live-minimap .minimap-outline { fill: #283038; }
 .live-minimap .minimap-light { fill: #f8f8f8; }

@@ -511,6 +511,7 @@ const minimap = createMinimap({
 });
 onboarding = createOnboarding({
   host: el('console'),
+  onState: (state) => minimap.updateOnboarding(state),
   getState: () => ({ running, paused, restarting, immersive: gameView.immersive }),
   getHeap: () => (emulator as LanguageRuntime | undefined)?.getTaichungHeapU8?.(),
   pause: () => setPaused(true), resume: () => setPaused(false), leaveGame: () => gameView.leave(),

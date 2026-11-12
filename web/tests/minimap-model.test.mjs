@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { readFileSync } from 'node:fs';
-import { projectNavigation, secondaryAction, readMinimapPreference, radarPosition, radarViewBox, radarBlip, RADAR, RADAR_ART, RADAR_PANEL, HOME_WORLD, FACING_DEGREES } from '../src/minimap-model.ts';
+import { projectNavigation, projectTutorial, secondaryAction, readMinimapPreference, radarPosition, radarViewBox, radarBlip, RADAR, RADAR_ART, RADAR_PANEL, HOME_WORLD, FACING_DEGREES } from '../src/minimap-model.ts';
 
 const geometry = JSON.parse(readFileSync(new URL('../src/data/minimap-contract.json', import.meta.url), 'utf8'));
 const packet = { sequence: 2, frame: 1, flags: 79, x: 30, y: 66, mapGroup: 43, mapNumber: 0, facing: 2, mapType: 1, width: 44, height: 77, contextFlags: 0 };
@@ -124,4 +124,15 @@ test('minimap defaults On and tolerates unavailable browser storage', () => {
   assert.equal(readMinimapPreference({ getItem: () => 'on' }), true);
   assert.equal(readMinimapPreference({ getItem: () => 'unexpected' }), true);
   assert.equal(readMinimapPreference({ getItem: () => { throw new Error('Storage blocked'); } }), true);
+});
+
+
+test('the tour projects real exterior coordinates only from the minimap topic through farewell', () => {
+  const tour = { phase: 6, flags: 5, mapGroup: 43, mapNumber: 0, x: 20, y: 68 };
+  const position = projectTutorial(tour, geometry);
+  assert.deepEqual([position.worldX, position.worldY, position.facing], [105, 121, 0]);
+  for (const phase of [1, 2, 3, 4, 5, 10]) assert.equal(projectTutorial({ ...tour, phase }, geometry), undefined);
+  for (const phase of [6, 7, 8, 9]) assert.ok(projectTutorial({ ...tour, phase }, geometry));
+  for (const invalid of [{ flags: 0 }, { flags: 1 }, { mapNumber: 99 }, { mapNumber: 3 }, { x: -1 }, { x: 44 }, { y: 77 }, { x: NaN }])
+    assert.equal(projectTutorial({ ...tour, ...invalid }, geometry), undefined);
 });

@@ -18,6 +18,7 @@ export function createOnboarding(options: {
   releaseInputs(): void;
   refreshInput(): void;
   message(text: string, error?: boolean): void;
+  onState?(state: OnboardingState): void;
 }) {
   let supported = false;
   let bridge: NativeOnboardingBridge | undefined;
@@ -80,6 +81,7 @@ export function createOnboarding(options: {
 
   function onState(next: OnboardingState) {
     state = next;
+    options.onState?.(next);
     const packet = next.snapshot;
     if (packet) {
       startupWaiting = packet.phase === 1;
@@ -175,7 +177,7 @@ export function createOnboarding(options: {
       options.releaseInputs();
     },
     refresh() { bridge?.refresh(); },
-    stop() { bridge?.stop(); view.closeCard(); queuedCard = submittedCard = undefined; ownsPause = startupWaiting = nativeGuideActive = false; },
+    stop() { bridge?.stop(); view.closeCard(); queuedCard = submittedCard = undefined; ownsPause = startupWaiting = nativeGuideActive = false; options.onState?.({ status: 'unavailable' }); },
     destroy() { bridge?.stop(); stopLocaleListener(); view.destroy(); },
     get supported() { return supported; },
     get startupLanguagePending() { return supported && startupWaiting; },
