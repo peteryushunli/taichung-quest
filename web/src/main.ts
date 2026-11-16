@@ -3,6 +3,7 @@ import './confirm.css';
 import './controls.css';
 import './immersive.css';
 import './minimap.css';
+import './street-label.css';
 import './title-screen.css';
 import titleStation from './assets/landmarks/old-station.png';
 import titleBulbasaur from './assets/pokemon/front/bulbasaur.png';
@@ -21,6 +22,7 @@ import { protectGameDisplay } from './game-display';
 import { NativeNavigationBridge, parseNavigationMetadata } from './navigation-bridge';
 import type { NavigationState } from './navigation-bridge';
 import { createMinimap } from './minimap';
+import { createStreetLabel } from './street-label';
 import { projectNavigation, secondaryAction } from './minimap-model';
 import minimapGeometry from './data/minimap-contract.json';
 import { createOnboarding } from './onboarding';
@@ -208,6 +210,7 @@ function renderNavigation() {
   el<HTMLButtonElement>('touch-city-map-button').disabled = restarting || !!onboarding?.blocksCityMap;
   const state: NavigationState = canPlayGame() ? navigationState : { phase: navigationState.phase === 'unavailable' ? 'unavailable' : 'hidden' };
   minimap.update(state);
+  streetLabel.update(state);
   const packet = state.phase === 'live' ? state.snapshot : undefined;
   const position = packet ? projectNavigation(packet, minimapGeometry) : undefined;
   const action = secondaryAction(packet, position);
@@ -599,6 +602,7 @@ const minimapSetting = document.createElement('label');
 minimapSetting.className = 'minimap-setting';
 minimapSetting.innerHTML = '<span id="minimap-label" data-i18n="Minimap">Minimap</span><select id="minimap-visibility" aria-labelledby="minimap-label" aria-describedby="minimap-hint"><option value="on" data-i18n="On">On</option><option value="off" data-i18n="Off">Off</option></select><small id="minimap-hint"></small>';
 el('options-toolbar-slot').before(minimapSetting);
+const streetLabel = createStreetLabel(el('screen'), minimapGeometry);
 const minimap = createMinimap({
   screen: el('screen'), toggle: el<HTMLSelectElement>('minimap-visibility'), hint: el('minimap-hint'), geometry: minimapGeometry,
   openGuide: () => { if (!onboarding?.blocksCityMap) cityGuide.open(el('live-minimap')); },

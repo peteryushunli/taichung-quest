@@ -1,0 +1,4 @@
+/* Lower-right field label; native dialogue/menu/battle contexts remove it. */
+.current-street { position: absolute; z-index: 3; right: calc(100% * 3 / 240); bottom: calc(100% * 3 / 160); max-width: 43%; box-sizing: border-box; padding: 3px 7px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; border: 1px solid #667364; border-radius: 3px; background: #f5f1e6ed; color: #314c40; font: 600 clamp(10px, 1.4vw, 14px)/1.3 var(--font-ui, system-ui); pointer-events: none; user-select: none; -webkit-user-select: none; }
+.current-street:lang(zh-Hant) { font-family: var(--font-ui-tc, system-ui); }
+.current-street[hidden] { display: none; }

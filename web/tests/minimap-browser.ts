@@ -1,5 +1,10 @@
 import '../src/style.css';
 import '../src/minimap.css';
+import '../src/street-label.css';
+import { createCityGuide } from '../src/city-guide';
+import { createStreetLabel } from '../src/street-label';
+import type { CityGeometry } from '../src/city-geometry';
+import type { NavigationState } from '../src/navigation-bridge';
 import { createMinimap } from '../src/minimap';
 import { initializeLocalization, languageControl, onLocaleChange, setLocale } from '../src/i18n';
 import geometry from '../src/data/minimap-contract.json';
@@ -17,6 +22,15 @@ const toggle = document.querySelector<HTMLSelectElement>('#minimap-visibility')!
 const hint = document.querySelector<HTMLElement>('#minimap-hint')!;
 const values = new Map<string, string>();
 const storage = { getItem: (key: string) => values.get(key) ?? null, setItem: (key: string, value: string) => { values.set(key, value); } };
+// Road positions here are explicit simulated UI data, never a shipped street export.
+const streetGeometry: CityGeometry = { ...geometry, presentation: {
+  geometryFingerprintSha256: geometry.geometryFingerprintSha256,
+  streets: [{ id: 'fixture-boulevard', name: { en: 'Taiwan Boulevard', zh: '臺灣大道' }, worldRects: [[110,118,122,121]], priority: 1 }],
+} };
+const guide = createCityGuide({ getState: () => ({ running: false, paused: false }), pause() {}, resume() {}, releaseInputs() {} });
+document.querySelector('#preview-guide')!.addEventListener('click', () => guide.open());
+const street = createStreetLabel(screen, streetGeometry);
+const streetNode = screen.querySelector<HTMLElement>('#current-street')!;
 let opened = 0;
 const hud = createMinimap({ screen, toggle, hint, geometry, storage, openGuide: () => { opened++; } });
 const button = screen.querySelector<HTMLButtonElement>('#live-minimap')!;
@@ -26,7 +40,8 @@ const places = [...landmarkCatalog, ...sightCatalog] as LandingLandmark[];
 const shown = (element: Element) => element.getAttribute('display') !== 'none';
 const translation = (element: Element) => (/translate\(([-\d.e]+) ([-\d.e]+)\)/.exec(element.getAttribute('transform') ?? '') ?? []).slice(1).map(Number);
 const field: NavigationSnapshot = { frame: 2, sequence: 4, flags: 79, x: 30, y: 66, width: 44, height: 77, mapGroup: 43, mapNumber: 0, facing: 2, mapType: 1, contextFlags: 0 };
-function showField(packet = field) { hud.update({ phase: 'live', snapshot: packet }); }
+function update(state: NavigationState) { hud.update(state); street.update(state); }
+function showField(packet = field) { update({ phase: 'live', snapshot: packet }); }
 /** A simulated field packet for a world tile, in whichever exterior district contains it. */
 function fieldAt(worldX: number, worldY: number, facing = 2): NavigationSnapshot {
   for (const [key, map] of Object.entries(geometry.mapsByNativeKey)) {
@@ -41,7 +56,7 @@ function fieldAt(worldX: number, worldY: number, facing = 2): NavigationSnapshot
 function preference(value: string) { toggle.value = value; toggle.dispatchEvent(new Event('change', { bubbles: true })); }
 function assert(condition: unknown, message: string) { if (!condition) throw new Error(message); }
 initializeLocalization();
-onLocaleChange(() => hud.refreshLocale());
+onLocaleChange(() => { hud.refreshLocale(); street.refreshLocale(); });
 // ?world=x,y[&facing=1-4] shows a fixed world tile, for screenshots.
 const requested = new URLSearchParams(location.search);
 const world = requested.get('world')?.split(',').map(Number);
@@ -56,7 +71,7 @@ document.querySelector('#context')!.addEventListener('change', (event) => {
   else if (value === 'highway') showField(fieldAt(3, 40, 3));
   else if (value === 'wanhe') showField(fieldAt(31, 143, 4));
   else if (value === 'menu') showField({ ...field, contextFlags: 32 });
-  else hud.update({ phase: value === 'unsupported' ? 'unavailable' : 'hidden' });
+  else update({ phase: value === 'unsupported' ? 'unavailable' : 'hidden' });
 });
 document.querySelector<HTMLButtonElement>('#run')!.addEventListener('click', () => {
   const lines: string[] = [];
@@ -65,7 +80,7 @@ document.querySelector<HTMLButtonElement>('#run')!.addEventListener('click', () 
     document.querySelector('#results')!.textContent = lines.join('\n');
   }
   setLocale('en');
-  check('default On centres a 60×44-tile north-up map on the mapped tile with every gym, landmark and home blip', () => {
+  check('default On centres a 60×44-tile game-oriented map on the mapped tile with every gym, landmark and home blip', () => {
     showField();
     assert(toggle.value === 'on' && !button.hidden, 'Expected default On');
     assert(player.getAttribute('transform') === 'translate(115 119) rotate(0 .5 .5)', 'Incorrect mapped tile or facing');
@@ -74,7 +89,7 @@ document.querySelector<HTMLButtonElement>('#run')!.addEventListener('click', () 
     assert(button.querySelectorAll('[data-landmark]').length === 20, 'Expected data-landmark on every place blip');
     assert(shown(button.querySelector('.minimap-home')!), 'Expected the home blip');
     assert(button.querySelector('image')?.getAttribute('href'), 'Expected the radar art under the blips');
-    assert(button.textContent!.trim() === 'N', 'Expected only a small north label');
+    assert(!button.querySelector('.minimap-north') && !button.querySelector('text'), 'Game-up must not claim geographic north');
     assert(hint.textContent!.includes('Hidden indoors'), 'Settings hint must say the radar hides indoors');
   });
   check('the minimap is 25% narrower at 48×36 GBA-equivalent pixels with smooth vector symbols', () => {
@@ -200,6 +215,38 @@ document.querySelector<HTMLButtonElement>('#run')!.addEventListener('click', () 
     showField(); assert(!button.hidden && !button.classList.contains('is-tutorial'), 'Did not hand over to live navigation');
     showField({ ...field, contextFlags: 32 }); assert(button.hidden, 'Finished tour left a stale map over a menu');
     hud.updateOnboarding({ status: 'discovering' }); showField();
+  });
+  check('street label persists while stationary and localizes the same node', () => {
+    setLocale('en'); showField();
+    assert(!streetNode.hidden && streetNode.textContent === 'Taiwan Boulevard', 'Missing English street');
+    const node = streetNode;
+    for (const facing of [1, 2, 3, 4]) showField({ ...field, facing, frame: field.frame + facing });
+    assert(streetNode === node && streetNode.textContent === 'Taiwan Boulevard', 'Stationary field lost the street');
+    setLocale('zh-Hant');
+    assert(streetNode.textContent === '臺灣大道' && streetNode.lang === 'zh-Hant', 'Chinese street failed');
+    setLocale('en');
+  });
+  check('street is independent of minimap preference', () => {
+    showField(); preference('off');
+    assert(button.hidden && !streetNode.hidden, 'Radar Off must not hide the road name');
+    preference('on');
+  });
+  check('street hides off-road, indoors, in menus/battles and on stale/unknown contexts', () => {
+    for (const packet of [{ ...field, x: 0, y: 0 }, { ...field, flags: 23, mapNumber: 3, x: 6, y: 5, width: 13, height: 16, mapType: 8 }, ...[1,4,16,32,0x8000].map((contextFlags) => ({ ...field, contextFlags })), { ...field, mapNumber: 99 }]) {
+      showField(); showField(packet);
+      assert(streetNode.hidden && !streetNode.textContent && !streetNode.hasAttribute('title') && !streetNode.dataset.streetId, 'Cached street survived a hidden context');
+    }
+    for (const phase of ['hidden', 'connecting', 'unavailable'] as const) { showField(); update({ phase }); assert(streetNode.hidden, `Street survived ${phase}`); }
+    showField();
+  });
+  check('street sits in the lower-right, clear of the minimap and upper-center area label', () => {
+    showField();
+    const area = screen.getBoundingClientRect();
+    const road = streetNode.getBoundingClientRect();
+    const radar = button.getBoundingClientRect();
+    assert(road.left > area.left + area.width / 2 && road.top > area.top + area.height * .75, 'Wrong street corner');
+    assert(road.right <= area.right && road.bottom <= area.bottom && road.top > radar.bottom, 'HUD collision or overflow');
+    assert(getComputedStyle(streetNode).pointerEvents === 'none' && getComputedStyle(streetNode).userSelect === 'none', 'Street must not catch game input or select text');
   });
   check('tapping the minimap opens the existing City Map action once', () => {
     const before = opened;

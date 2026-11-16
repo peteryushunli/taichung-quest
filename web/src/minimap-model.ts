@@ -92,7 +92,7 @@ export function projectTutorial(packet: OnboardingSnapshot, geometry: MinimapGeo
 }
 
 /**
- * The minimap is a north-up rectangle `width` x `height` world tiles, one GBA pixel per tile,
+ * The minimap is a game-oriented rectangle `width` x `height` world tiles, one GBA pixel per tile,
  * always centred on the player (no clamping at the world edge, so the dark surround outlines
  * the city). Vector markers are centred on their exact tile. Places within `pinX`/`pinY` tiles
  * of the player show in place; pinned blips (gyms, home) further out sit on that inner box
@@ -105,7 +105,7 @@ export const RADAR_ART = { tile: 1, margin: 2 } as const;
 export const RADAR_PANEL = { width: RADAR.width + 4, height: RADAR.height + 4, frame: 2 } as const;
 /** World tile of the door of the house the game starts in. */
 export const HOME_WORLD: Pair = [105, 120];
-/** Native facing (1 south, 2 north, 3 west, 4 east) as a clockwise rotation from north. */
+/** Native facing (1 south, 2 north, 3 west, 4 east) as a clockwise rotation from game-up. */
 export const FACING_DEGREES: Record<number, number> = { 1: 180, 2: 0, 3: 270, 4: 90 };
 
 /** The map's viewBox in tiles: the player's tile sits at column width/2 and row height/2. */

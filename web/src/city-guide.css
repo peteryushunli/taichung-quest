@@ -86,3 +86,6 @@ html[lang="zh-Hant"] .landmark-tab-names b { font-size: 9px; color: #99a28b; }
   .landmark-art.is-map-view img { width: 100%; }
 }
 @media(max-width:450px) { .map-district { font-size: 7px; letter-spacing: .5px; } .map-district.is-sign { padding: 1px 3px; } }
+
+.game-map-orientation { font-size: 10px; font-weight: 500; letter-spacing: 0; color: #657461; text-align: right; }
+.visitor-map-link { margin-top: 10px; }

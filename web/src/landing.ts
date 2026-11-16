@@ -8,7 +8,8 @@ import type { Locale } from './i18n';
 import { badgeArt, landingMedia, landmarkArt } from './landing-assets';
 import type { PokemonIcon } from './landing-assets';
 import { pixelFlag } from './landing-flag';
-import { cityPlaceSummary, districtCount, districtLabelSpots, gymStatusSummary, isGym, isGymOpen, localizedPlace, markerPosition, orderPlaces, placeStatus, placeWorld } from './landing-model';
+import { cityPlaceSummary, districtCount, districtLabelSpots, gymStatusSummary, isGym, isGymOpen, localizedPlace, markerPosition, orderPlaces, placeStatus } from './landing-model';
+import { placeWorldInGeometry } from './city-geometry';
 import type { LandingLandmark } from './landing-model';
 import type { MinimapGeometry } from './minimap-model';
 
@@ -101,7 +102,7 @@ function markup() {
       </section>
 
       <section class="lp-map-section" id="map"><div class="lp-wrap">
-        ${sectionHead('01 — THE MAP', cityPlaceSummary(landmarks, getLocale()), "Distances are compressed, but the city keeps its shape: the old city around the station, the Greenway's museums in the middle, Xitun's theater and night market to the northwest, and Nantun's temples and parks to the south. Green pins are gyms; gold pins are landmarks to find on foot.", 'lp-map-heading')}
+        ${sectionHead('01 — THE MAP', cityPlaceSummary(landmarks, getLocale()), "Explore the city along its streets, from landmark gyms to markets, temples and parks. Green pins are gyms; gold pins are landmarks to find on foot. Game directions follow the streets on this map; visitor links use real-world locations.", 'lp-map-heading')}
         <div class="lp-map-body">
           <div class="lp-map" id="lp-map" style="aspect-ratio:${city.world.width} / ${city.world.height};background-size:${800 / city.world.width}% ${800 / city.world.height}%" role="group" aria-label="${escapeHtml(t('Choose a landmark'))}" data-i18n-label="Choose a landmark">
             ${cityMap()}
@@ -174,7 +175,9 @@ function markup() {
 function renderMarkers(selected: string) {
   const locale = getLocale();
   return landmarks.map((place, index) => {
-    const { x, y, side } = markerPosition(placeWorld(place, city.markersById), city.world);
+    const world = placeWorldInGeometry(place, city);
+    if (!world) return '';
+    const { x, y, side } = markerPosition(world, city.world);
     const { name, mapLabel } = localizedPlace(place, locale);
     const state = `${!isGym(place) ? 'is-landmark' : isGymOpen(place) ? 'is-open' : 'is-planned'}${place.id === selected ? ' is-selected' : ''}`;
     return `<div class="lp-pin ${state} lp-side-${place.landingLabelSide ?? side}" data-pin="${escapeHtml(place.id)}" style="left:${x}%;top:${y}%">

@@ -1,0 +1,37 @@
+{
+  "base": "8bdc3b340a3d86071795ad10d8ebe7a4511aa9d1",
+  "status": "independent frontend slice; actual new geometry pending Maps",
+  "checks": {
+    "unitTests": "68/68",
+    "typescriptProductionBuild": "pass",
+    "browserHudDesktop": "17/17",
+    "browserHud390x844": "17/17",
+    "bilingualStreet": "EN/ZH visible in same lower-right node",
+    "visitorGps": "https://www.google.com/maps/search/?api=1&query=24.13678%2C120.68501",
+    "unchangedSourceFiles": [
+      "game-controls.ts",
+      "game-display.ts",
+      "game-display.css",
+      "input-state.ts",
+      "onboarding.ts",
+      "onboarding-view.ts",
+      "onboarding.css",
+      "onboarding-bridge.ts",
+      "language-bridge.ts",
+      "navigation-bridge.ts"
+    ]
+  },
+  "limits": [
+    "Browser road region is simulated fixture data, not actual new native geometry",
+    "Shipped geometry/catalog/map images remain unchanged",
+    "No native runtime or physical device proof",
+    "Actual Maps export and combined ROM/fingerprint binding remain release dependencies"
+  ],
+  "screenshots": {
+    "guide-en-desktop.jpg": "458f95fca03da82cd14ad089931487867fa01de6fa73b48faba469d55c94bb22",
+    "street-en-desktop.jpg": "98f9bbe5bfa71e051e2b66776f8180a4b45f76ebbfe348dd8731fe72f86182d8",
+    "street-en-phone.jpg": "3d72d7df731d33e8f9e547bb65f7b7d36b7f8598e0222a56eaa5d65bb480810f",
+    "street-zh-phone.jpg": "a57d7fc055affaa9ea905fb338d06c2209130332aa875131323916ca83cf8187"
+  },
+  "cleanup": "Owned browser tab2015921006 closed; viewport reset; own port4217/session22176 stopped"
+}
