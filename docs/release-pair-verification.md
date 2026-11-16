@@ -31,7 +31,9 @@ The verifier requires:
   0x9000000` output equals every ROM byte. Bridge addresses come from that ELF,
   with required exact schemas, sizes, alignment, disjoint EWRAM storage and metadata.
 - Complete native/web minimap JSON equality, recomputed geometry fingerprint,
-  metadata binding, and all native `sourceSha256` entries matching tracked files.
+  metadata binding, and all native `sourceSha256` entries matching both current
+  file bytes and committed Git blobs. Pins are lowercase 64-digit SHA256 values;
+  absolute, non-normalized, parent-traversing and backslash paths are rejected.
   Duplicate JSON keys, non-finite numbers and incompatible schema types fail.
 - The portable binary patch recreating the entire HEAD tree from the pinned
   upstream in a temporary Git index **and object store**. The real index is
@@ -57,6 +59,19 @@ source without an independently trusted build attestation or reproducible build.
 It also does not replace source guards, native play testing or browser persistence
 acceptance. Main remains the only release integrator/publisher.
 
+The geometry discriminator has two explicit paths. Absent `geometryVersion`, or
+`baseline-v1`, retains the published six-field fingerprint exactly:
+`schemaVersion`, `coordinateSystem`, `world`, `mapsByNativeKey`, `markersById`,
+`seams`. `horizontal-v1` adds `geometryVersion`, `roads`, `placesById`,
+`residence`, and `exteriorSourceSha256`, matching the native exporter. Unknown
+versions, missing fields and horizontal fields masquerading as legacy fail.
+Every exterior pin gets the same safe-path/current-file/committed-blob checks.
+Native bank/map keys, packed IDs and reverse lookup must agree. Interior anchors
+must reference their exterior and landmark, or the separate guest-house residence
+with `parentMarkerId: null` and `parentPlaceId: "guest-house"`. No fingerprint or
+native address is exempted by a known value. This is a structural/pair check;
+native source guards still own complete geometry and collision qualification.
+
 ## Focused checks
 
 ```sh
@@ -72,3 +87,23 @@ dirty/staged/untracked source, source/tree/ROM/ELF mismatch, bridge corruption,
 duplicate/unregistered packets, stale/different geometry/source pins, malformed
 JSON, incomplete patches and output overwrite. They also verify stable manifests
 and unchanged real Git index/object files.
+
+To additionally test the real horizontal `61734270…` contract and its 27 contexts,
+32 ordinary pins and 60 exterior pins, point the same suite at a clean frozen
+native checkout:
+
+```sh
+PYTHONDONTWRITEBYTECODE=1 \
+TAICHUNG_BINUTILS=/Users/peter/devday_hackathon/.tools/binutils/arm-none-eabi-binutils/2.47/bin \
+TAICHUNG_HORIZONTAL_NATIVE=/absolute/frozen-horizontal-native \
+python3 scripts/test-verify-release-pair.py -v
+```
+
+These extra tests only read that checkout. Corrupted road/place/residence data,
+native IDs, source hashes/bytes, version and missing fields are tested in private
+committed fixture copies. Rehashed invalid IDs/parent relations and stale file
+pins must still fail. A separate negative proves an updated pin cannot bless
+uncommitted file bytes hidden with Git's `assume-unchanged` flag. The real contract
+tests make no horizontal ROM or runtime claim; the existing ELF/ROM fixtures
+remain explicitly synthetic and non-playable. A full published legacy-pair run
+with its actual ROM/ELF/patch remains the compatibility acceptance check.

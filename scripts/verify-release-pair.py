@@ -18,6 +18,8 @@ UPSTREAM = 'ce6406d8c2eaf46d543c8a2606de0c3cb1951982'
 NATIVE_CONTRACT = 'data/taichung/minimap-contract.json'
 GEOMETRY_KEYS = ('schemaVersion', 'coordinateSystem', 'world',
                  'mapsByNativeKey', 'markersById', 'seams')
+HORIZONTAL_GEOMETRY_KEYS = GEOMETRY_KEYS + (
+    'geometryVersion', 'roads', 'placesById', 'residence', 'exteriorSourceSha256')
 # Register new packets only after their native and browser contracts are agreed.
 BRIDGES = {
     'languageBridge': ('gTaichungLanguageBridge', 32, 1, 0x414C4354, 0x3130474E),
@@ -173,6 +175,116 @@ def verify_bridges(metadata, symbols):
     return result
 
 
+def geometry_keys(contract):
+    """Match the native exporter's two explicit fingerprint schemas."""
+    require(all(key in contract for key in GEOMETRY_KEYS), 'Minimap geometry fields missing')
+    version = contract.get('geometryVersion', 'baseline-v1')
+    require(version in ('baseline-v1', 'horizontal-v1'), 'Unsupported minimap geometryVersion')
+    if version == 'horizontal-v1':
+        require(all(key in contract for key in HORIZONTAL_GEOMETRY_KEYS),
+                'Horizontal minimap geometry fields missing')
+        return HORIZONTAL_GEOMETRY_KEYS
+    require(not any(key in contract for key in HORIZONTAL_GEOMETRY_KEYS[len(GEOMETRY_KEYS) + 1:]),
+            'Horizontal minimap fields require geometryVersion horizontal-v1')
+    return GEOMETRY_KEYS  # Keep the published legacy six-field algorithm byte-exact.
+
+
+def verify_horizontal_schema(contract):
+    """Check registered native IDs and parent anchors, including non-landmark residence rooms."""
+    maps, markers = contract['mapsByNativeKey'], contract['markersById']
+    require(type(maps) is dict and maps and type(markers) is dict,
+            'Horizontal minimap requires registered maps/markers')
+    require(type(contract['roads']) is list and contract['roads']
+            and all(type(road) is dict for road in contract['roads'])
+            and type(contract['placesById']) is dict and contract['placesById']
+            and type(contract['residence']) is dict and contract['residence'],
+            'Horizontal roads/places/residence schema is invalid')
+    reverse = {}
+    for key, entry in maps.items():
+        require(type(entry) is dict, f'Invalid horizontal native map: {key}')
+        bank, number = entry.get('group'), entry.get('number')
+        require(type(bank) is int and type(number) is int and 0 <= bank <= 255 and 0 <= number <= 255
+                and key == f'{bank}:{number}' and entry.get('nativeKey') == key
+                and type(entry.get('packedMapId')) is int and entry['packedMapId'] == (bank << 8 | number),
+                f'Horizontal native bank/map ID mismatch: {key}')
+        identity = entry.get('mapId')
+        require(type(identity) is str and identity and identity not in reverse
+                and entry.get('kind') in ('exterior', 'interior')
+                and all(type(entry.get(dim)) is int and entry[dim] > 0 for dim in ('width', 'height')),
+                f'Invalid horizontal map registration: {key}')
+        reverse[identity] = key
+    require(contract.get('nativeKeysByMapId') == reverse, 'Horizontal native ID reverse lookup differs')
+
+    def anchor(key, local):
+        require(type(key) is str, 'Invalid horizontal exterior native key')
+        parent = maps.get(key)
+        require(type(parent) is dict and parent['kind'] == 'exterior'
+                and type(local) is list and len(local) == 2
+                and all(type(value) is int and 0 <= value < parent[dim]
+                        for value, dim in zip(local, ('width', 'height')))
+                and type(parent.get('worldOrigin')) is list and len(parent['worldOrigin']) == 2
+                and all(type(value) is int for value in parent['worldOrigin']),
+                f'Invalid horizontal exterior anchor: {key}')
+        return parent, [parent['worldOrigin'][i] + local[i] for i in (0, 1)]
+
+    for identity, place in contract['placesById'].items():
+        require(type(place) is dict and place.get('id') == identity,
+                f'Invalid horizontal place: {identity}')
+        for local_field, world_field in (('localArrival', 'arrival'), ('localApproach', 'approach'),
+                                         ('localSign', 'sign')):
+            if world_field == 'sign' and place.get('sign') is None:
+                require(place.get('localSign') is None, f'Horizontal place sign differs: {identity}')
+                continue  # Some new places intentionally have no authored exterior sign yet.
+            parent, world = anchor(place.get('nativeKey'), place.get(local_field))
+            require(place.get('mapId') == parent['mapId'] and place.get(world_field) == world,
+                    f'Horizontal place parent/anchor differs: {identity}')
+        if place.get('door') is not None:
+            _, world = anchor(place.get('nativeKey'), place.get('localDoor'))
+            require(place['door'] == world, f'Horizontal place door differs: {identity}')
+    home = contract['residence']
+    parent, world = anchor(home.get('nativeKey'), home.get('localDoor'))
+    require(home.get('mapId') == parent['mapId'] and home.get('door') == world
+            and type(home.get('interiorMapId')) is str
+            and maps.get(reverse.get(home['interiorMapId']), {}).get('kind') == 'interior',
+            'Horizontal residence parent/door differs')
+    for key, room in maps.items():
+        if room['kind'] != 'interior':
+            continue
+        parent, world = anchor(room.get('parentNativeKey'), room.get('parentEntranceLocal'))
+        require(room.get('parentMapId') == parent['mapId'] and room.get('parentEntranceWorld') == world
+                and room.get('projection') == 'parent-entrance' and room.get('ignoreIndoorLocalXYForWorld') is True,
+                f'Horizontal interior parent anchor differs: {key}')
+        if room.get('parentMarkerId') is None:
+            require(room.get('parentPlaceId') == 'guest-house' and room['parentNativeKey'] == home['nativeKey']
+                    and room['parentEntranceLocal'] == home['localDoor'] and world == home['door'],
+                    f'Horizontal residence room parent differs: {key}')
+        else:
+            require(type(room['parentMarkerId']) is str, f'Invalid horizontal interior marker: {key}')
+            marker = markers.get(room['parentMarkerId'])
+            require(type(marker) is dict and marker.get('exteriorNativeKey') == room['parentNativeKey']
+                    and marker.get('localEntrance') == room['parentEntranceLocal'] and marker.get('world') == world,
+                    f'Horizontal interior marker differs: {key}')
+
+
+def verify_source_hashes(source, state, source_hashes, *, exterior=False):
+    label = 'exterior minimap' if exterior else 'minimap'
+    require(type(source_hashes) is dict and source_hashes,
+            f'{label.capitalize()} contract must pin its native source files')
+    for name, digest in source_hashes.items():
+        relative = PurePosixPath(name)
+        require(name == str(relative) and not relative.is_absolute() and '..' not in relative.parts
+                and '\\' not in name,
+                f'Unsafe {label} source path: {name}')
+        path = source / relative
+        require(path.resolve().is_relative_to(source) and path.is_file() and not path.is_symlink(),
+                f'Missing or unsafe {label} source file: {name}')
+        committed = git(source, 'cat-file', 'blob', f'{state["commit"]}:{name}')
+        require(type(digest) is str and re.fullmatch(r'[0-9a-f]{64}', digest)
+                and sha256(path.read_bytes()) == digest and sha256(committed) == digest,
+                f'Stale {label} source hash: {name}')
+    return len(source_hashes)
+
+
 def verify_contract(source, state, native_raw, web_raw, metadata):
     native = read_json(native_raw, 'Native minimap contract')
     web = read_json(web_raw, 'Web minimap contract')
@@ -182,30 +294,24 @@ def verify_contract(source, state, native_raw, web_raw, metadata):
     require(canonical(native) == canonical(web), 'Native/web minimap contracts differ')
     require(type(native.get('schemaVersion')) is int and native['schemaVersion'] == 1,
             'Unsupported minimap contract schema')
-    require(all(key in native for key in GEOMETRY_KEYS), 'Minimap geometry fields missing')
-    fingerprint = sha256(canonical({key: native[key] for key in GEOMETRY_KEYS}))
+    keys = geometry_keys(native)
+    if keys == HORIZONTAL_GEOMETRY_KEYS:
+        verify_horizontal_schema(native)
+    fingerprint = sha256(canonical({key: native[key] for key in keys}))
     require(native.get('geometryFingerprintSha256') == fingerprint,
             'Minimap geometry fingerprint does not match actual geometry')
     binding = metadata.get('minimap')
     require(type(binding) is dict and type(binding.get('schemaVersion')) is int
             and binding == dict(schemaVersion=1, geometryFingerprintSha256=fingerprint),
             'Metadata minimap binding differs from verified geometry')
-    source_hashes = native.get('sourceSha256')
-    require(type(source_hashes) is dict and source_hashes,
-            'Minimap contract must pin its native source files')
-    for name, digest in source_hashes.items():
-        relative = PurePosixPath(name)
-        require(name == str(relative) and not relative.is_absolute() and '..' not in relative.parts,
-                f'Unsafe minimap source path: {name}')
-        path = source / relative
-        require(path.resolve().is_relative_to(source) and path.is_file() and not path.is_symlink(),
-                f'Missing or unsafe minimap source file: {name}')
-        git(source, 'cat-file', '-e', f'{state["commit"]}:{name}')
-        require(type(digest) is str and re.fullmatch(r'[0-9a-f]{64}', digest)
-                and sha256(path.read_bytes()) == digest,
-                f'Stale minimap source hash: {name}')
-    return dict(schemaVersion=1, geometryFingerprintSha256=fingerprint,
-                canonicalSha256=sha256(canonical(native)), sourceFilesVerified=len(source_hashes))
+    count = verify_source_hashes(source, state, native.get('sourceSha256'))
+    result = dict(schemaVersion=1, geometryFingerprintSha256=fingerprint,
+                  canonicalSha256=sha256(canonical(native)), sourceFilesVerified=count)
+    if keys == HORIZONTAL_GEOMETRY_KEYS:
+        result.update(geometryVersion='horizontal-v1',
+                      exteriorSourceFilesVerified=verify_source_hashes(
+                          source, state, native['exteriorSourceSha256'], exterior=True))
+    return result
 
 
 def verify_pair(*, native, rom, metadata, elf, web_contract, patch, binutils,

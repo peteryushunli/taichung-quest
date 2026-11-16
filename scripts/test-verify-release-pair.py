@@ -138,6 +138,43 @@ class ReleasePairTests(unittest.TestCase):
     def save_metadata(self):
         self.metadata.write_bytes(PAIR.json_bytes(self.build))
 
+    def publish_contract_fixture(self, *, fingerprint=True):
+        if fingerprint:
+            keys = ('schemaVersion', 'coordinateSystem', 'world', 'mapsByNativeKey', 'markersById', 'seams',
+                    'geometryVersion', 'roads', 'placesById', 'residence', 'exteriorSourceSha256')
+            self.contract['geometryFingerprintSha256'] = PAIR.sha256(PAIR.canonical(
+                {key: self.contract[key] for key in keys if key in self.contract}))
+        self.native_contract.write_bytes(PAIR.json_bytes(self.contract))
+        self.web.write_bytes(PAIR.json_bytes(self.contract))
+        self.commit('committed horizontal source-contract fixture')
+        self.build['sourceCommit'] = self.git('rev-parse', 'HEAD').decode().strip()
+        self.build['minimap']['geometryFingerprintSha256'] = self.contract['geometryFingerprintSha256']
+        self.save_metadata()
+        self.patch.write_bytes(self.git('diff', '--binary', self.upstream, 'HEAD'))
+
+    def horizontal_fixture(self):
+        """Small schema fixture; synthetic ELF remains explicitly non-playable."""
+        exterior = dict(nativeKey='43:0', group=43, number=0, packedMapId=43 << 8,
+                        mapId='MAP_CITY', kind='exterior', width=2, height=2, worldOrigin=[0, 0])
+        room = dict(nativeKey='43:19', group=43, number=19, packedMapId=(43 << 8) | 19,
+                    mapId='MAP_HOME', kind='interior', width=2, height=2,
+                    parentNativeKey='43:0', parentMapId='MAP_CITY', parentMarkerId=None,
+                    parentPlaceId='guest-house', parentEntranceLocal=[0, 0], parentEntranceWorld=[0, 0],
+                    projection='parent-entrance', ignoreIndoorLocalXYForWorld=True)
+        path = self.source / 'data/exterior.bin'
+        path.write_bytes(b'Explicit exterior source fixture, not a game map.\n')
+        self.contract.update(geometryVersion='horizontal-v1',
+                             mapsByNativeKey={'43:0': exterior, '43:19': room},
+                             nativeKeysByMapId={'MAP_CITY': '43:0', 'MAP_HOME': '43:19'},
+                             roads=[dict(id='road', points=[[0, 0], [1, 1]], name={'en': 'Road'})],
+                             placesById={'place': dict(id='place', nativeKey='43:0', mapId='MAP_CITY',
+                                                      localArrival=[1, 1], arrival=[1, 1],
+                                                      localApproach=[1, 0], approach=[1, 0], sign=None, door=None)},
+                             residence=dict(nativeKey='43:0', mapId='MAP_CITY', localDoor=[0, 0],
+                                            door=[0, 0], interiorMapId='MAP_HOME'),
+                             exteriorSourceSha256={'data/exterior.bin': PAIR.sha256(path.read_bytes())})
+        self.publish_contract_fixture()
+
     def verify(self):
         index = (self.source / '.git/index').read_bytes()
         objects = sorted(str(p.relative_to(self.source / '.git/objects'))
@@ -348,6 +385,208 @@ class ReleasePairTests(unittest.TestCase):
         with self.assertRaisesRegex(PAIR.PairError, 'outside the native'):
             PAIR.write_output(receipt, payload, freeze_dir=self.source / 'output', native=self.source)
         self.assertFalse((self.source / 'output').exists())
+
+    def test_legacy_baseline_version_keeps_exact_six_field_hash(self):
+        before = self.contract['geometryFingerprintSha256']
+        self.contract['geometryVersion'] = 'baseline-v1'
+        self.publish_contract_fixture(fingerprint=False)
+        receipt, _ = self.verify()
+        self.assertEqual(receipt['minimap']['geometryFingerprintSha256'], before)
+        self.assertNotIn('geometryVersion', receipt['minimap'])
+
+    def test_horizontal_pair_and_atomic_freeze(self):
+        self.horizontal_fixture()
+        receipt, payload = self.verify()
+        self.assertEqual(receipt['minimap']['geometryVersion'], 'horizontal-v1')
+        self.assertEqual(receipt['minimap']['exteriorSourceFilesVerified'], 1)
+        for name in ['horizontal-first', 'horizontal-second']:
+            PAIR.write_output(receipt, payload, freeze_dir=self.root / name, native=self.source)
+        self.assertEqual((self.root / 'horizontal-first/manifest.json').read_bytes(),
+                         (self.root / 'horizontal-second/manifest.json').read_bytes())
+
+    def test_horizontal_unknown_version_downgrade_and_missing_fields(self):
+        self.horizontal_fixture()
+        original = copy.deepcopy(self.contract)
+        for value in ['horizontal-v2', 'baseline-v1', None, 1, []]:
+            self.contract = copy.deepcopy(original)
+            self.contract['geometryVersion'] = value
+            self.publish_contract_fixture()
+            with self.subTest(version=value), self.assertRaisesRegex(PAIR.PairError, 'geometryVersion'):
+                self.verify()
+        for key in (*PAIR.HORIZONTAL_GEOMETRY_KEYS, 'sourceSha256'):
+            self.contract = copy.deepcopy(original)
+            del self.contract[key]
+            self.publish_contract_fixture()
+            with self.subTest(missing=key), self.assertRaisesRegex(PAIR.PairError, 'fields missing|geometryVersion|pin its native|Unsupported minimap contract schema'):
+                self.verify()
+
+    def test_horizontal_new_fields_participate_in_fingerprint(self):
+        self.horizontal_fixture()
+        original = copy.deepcopy(self.contract)
+        mutations = {
+            'roads': lambda c: c['roads'][0]['name'].update(en='changed'),
+            'places': lambda c: c['placesById']['place'].update(description='changed'),
+            'residence': lambda c: c['residence'].update(localArrival=[1, 1]),
+        }
+        for name, mutate in mutations.items():
+            self.contract = copy.deepcopy(original)
+            mutate(self.contract)
+            self.publish_contract_fixture(fingerprint=False)
+            with self.subTest(field=name), self.assertRaisesRegex(PAIR.PairError, 'fingerprint does not match actual geometry'):
+                self.verify()
+
+    def test_horizontal_rehashed_invalid_ids_and_parent_relations_fail(self):
+        self.horizontal_fixture()
+        original = copy.deepcopy(self.contract)
+        mutations = {
+            'bank': lambda c: c['mapsByNativeKey']['43:0'].update(group=44),
+            'map': lambda c: c['mapsByNativeKey']['43:0'].update(number=1),
+            'packed': lambda c: c['mapsByNativeKey']['43:0'].update(packedMapId=True),
+            'reverse': lambda c: c['nativeKeysByMapId'].update(MAP_CITY='43:19'),
+            'residence': lambda c: c['residence'].update(mapId='MAP_HOME'),
+            'place': lambda c: c['placesById']['place'].update(mapId='MAP_HOME'),
+            'guesthouse-place': lambda c: c['mapsByNativeKey']['43:19'].update(parentPlaceId='missing'),
+            'guesthouse-marker': lambda c: c['mapsByNativeKey']['43:19'].update(parentMarkerId='missing'),
+        }
+        for name, mutate in mutations.items():
+            self.contract = copy.deepcopy(original)
+            mutate(self.contract)
+            self.publish_contract_fixture()
+            with self.subTest(mutation=name), self.assertRaisesRegex(PAIR.PairError, 'Horizontal|horizontal'):
+                self.verify()
+
+    def test_horizontal_exterior_source_bytes_digest_and_paths(self):
+        self.horizontal_fixture()
+        original = copy.deepcopy(self.contract)
+        for name, digest, message in [
+                ('data/exterior.bin', '0' * 64, 'Stale exterior'),
+                ('data/exterior.bin', 'A' * 64, 'Stale exterior'),
+                ('../exterior.bin', '0' * 64, 'Unsafe exterior'),
+                ('data/../exterior.bin', '0' * 64, 'Unsafe exterior'),
+                ('data\\exterior.bin', '0' * 64, 'Unsafe exterior'),
+                ('/data/exterior.bin', '0' * 64, 'Unsafe exterior')]:
+            self.contract = copy.deepcopy(original)
+            self.contract['exteriorSourceSha256'] = {name: digest}
+            self.publish_contract_fixture()
+            with self.subTest(path=name, digest=digest), self.assertRaisesRegex(PAIR.PairError, message):
+                self.verify()
+        self.contract = copy.deepcopy(original)
+        (self.source / 'data/exterior.bin').write_bytes(b'changed committed exterior without updated pin')
+        self.publish_contract_fixture()
+        with self.assertRaisesRegex(PAIR.PairError, 'Stale exterior minimap source hash'):
+            self.verify()
+
+    def test_horizontal_pin_cannot_bless_assume_unchanged_uncommitted_bytes(self):
+        self.horizontal_fixture()
+        self.git('update-index', '--assume-unchanged', 'data/exterior.bin')
+        path = self.source / 'data/exterior.bin'
+        path.write_bytes(b'Uncommitted bytes hidden from Git status')
+        self.contract['exteriorSourceSha256']['data/exterior.bin'] = PAIR.sha256(path.read_bytes())
+        self.publish_contract_fixture()
+        self.assertEqual(self.git('status', '--porcelain'), b'')
+        with self.assertRaisesRegex(PAIR.PairError, 'Stale exterior minimap source hash'):
+            self.verify()
+
+
+@unittest.skipUnless(os.environ.get('TAICHUNG_HORIZONTAL_NATIVE'),
+                     'Set TAICHUNG_HORIZONTAL_NATIVE for the real horizontal source-contract checks')
+class HorizontalNativeContractTests(unittest.TestCase):
+    """Real 617 contract/files, read-only; negatives use disposable committed copies, never a game ELF."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.native = Path(os.environ['TAICHUNG_HORIZONTAL_NATIVE']).resolve()
+        cls.state = PAIR.native_state(cls.native)
+        cls.raw = (cls.native / PAIR.NATIVE_CONTRACT).read_bytes()
+        cls.contract = PAIR.read_json(cls.raw, 'Real horizontal source fixture')
+
+    def test_real_617_all_27_contexts_and_92_source_pins(self):
+        index = PAIR.index_digest(self.native)
+        fingerprint = self.contract['geometryFingerprintSha256']
+        self.assertEqual(fingerprint, '61734270b5b95656fff77fea5feb864c401c247fe658040c841d670a3ddc3e37')
+        result = PAIR.verify_contract(self.native, self.state, self.raw, self.raw,
+                                      {'minimap': dict(schemaVersion=1, geometryFingerprintSha256=fingerprint)})
+        self.assertEqual(result['sourceFilesVerified'], 32)
+        self.assertEqual(result['exteriorSourceFilesVerified'], 60)
+        self.assertEqual(len(self.contract['mapsByNativeKey']), 27)
+        self.assertEqual(sum(m['kind'] == 'exterior' for m in self.contract['mapsByNativeKey'].values()), 12)
+        for key in ('43:19', '43:20'):
+            room = self.contract['mapsByNativeKey'][key]
+            self.assertIsNone(room['parentMarkerId'])
+            self.assertEqual(room['parentPlaceId'], 'guest-house')
+            self.assertEqual(room['parentEntranceWorld'], self.contract['residence']['door'])
+        self.assertEqual(PAIR.native_state(self.native), self.state)
+        self.assertEqual(PAIR.index_digest(self.native), index)
+
+    def test_real_contract_corruptions_in_disposable_committed_copies(self):
+        with tempfile.TemporaryDirectory(prefix='horizontal-contract-test-') as temporary:
+            source = Path(temporary).resolve()
+            for name in set(self.contract['sourceSha256']) | set(self.contract['exteriorSourceSha256']):
+                target = source / name
+                target.parent.mkdir(parents=True, exist_ok=True)
+                target.write_bytes((self.native / name).read_bytes())
+            native_contract = source / PAIR.NATIVE_CONTRACT
+            native_contract.parent.mkdir(parents=True, exist_ok=True)
+            subprocess.run(['git', '-C', str(source), 'init', '-q'], check=True)
+            subprocess.run(['git', '-C', str(source), 'config', 'user.name', 'Contract fixture'], check=True)
+            subprocess.run(['git', '-C', str(source), 'config', 'user.email', 'fixture@example.invalid'], check=True)
+            subprocess.run(['git', '-C', str(source), 'config', 'core.autocrlf', 'false'], check=True)
+
+            def check(contract, *, rehash=False, expected_error=None, web=None):
+                if rehash:
+                    contract['geometryFingerprintSha256'] = PAIR.sha256(PAIR.canonical(
+                        {key: contract[key] for key in PAIR.HORIZONTAL_GEOMETRY_KEYS}))
+                raw = PAIR.json_bytes(contract)
+                native_contract.write_bytes(raw)
+                subprocess.run(['git', '-C', str(source), 'add', '.'], check=True)
+                subprocess.run(['git', '-C', str(source), 'commit', '-qm', 'Source-contract fixture', '--allow-empty'], check=True)
+                state = PAIR.native_state(source)
+                metadata = {'minimap': dict(schemaVersion=1, geometryFingerprintSha256=contract['geometryFingerprintSha256'])}
+                if expected_error:
+                    with self.assertRaisesRegex(PAIR.PairError, expected_error):
+                        PAIR.verify_contract(source, state, raw, web or raw, metadata)
+                else:
+                    PAIR.verify_contract(source, state, raw, raw, metadata)
+
+            check(copy.deepcopy(self.contract))
+            for name, mutate in {
+                    'roads': lambda c: c['roads'][0]['name'].update(en='Corrupt road'),
+                    'places': lambda c: c['placesById']['miyahara']['name'].update(en='Corrupt place'),
+                    'residence': lambda c: c['residence'].update(localGuide=[0, 0]),
+                    'exterior-source': lambda c: c['exteriorSourceSha256'].update({next(iter(c['exteriorSourceSha256'])): '0' * 64}),
+            }.items():
+                contract = copy.deepcopy(self.contract)
+                mutate(contract)
+                with self.subTest(stale_fingerprint=name):
+                    check(contract, expected_error='fingerprint does not match actual geometry')
+            for name, mutate in {
+                    'bank': lambda c: c['mapsByNativeKey']['43:21'].update(group=44),
+                    'map': lambda c: c['mapsByNativeKey']['43:21'].update(number=22),
+                    'residence': lambda c: c['residence'].update(mapId='MAP_TAICHUNG_XITUN'),
+                    'places': lambda c: c['placesById']['miyahara'].update(mapId='MAP_TAICHUNG_XITUN'),
+                    'guesthouse-parent': lambda c: c['mapsByNativeKey']['43:20'].update(parentPlaceId='unknown'),
+                    'source-hash': lambda c: c['exteriorSourceSha256'].update({next(iter(c['exteriorSourceSha256'])): '0' * 64}),
+                    'source-hash-type': lambda c: c['exteriorSourceSha256'].update({next(iter(c['exteriorSourceSha256'])): 7}),
+            }.items():
+                contract = copy.deepcopy(self.contract)
+                mutate(contract)
+                with self.subTest(rehashed_corruption=name):
+                    check(contract, rehash=True, expected_error='Horizontal|horizontal|Stale exterior')
+            contract = copy.deepcopy(self.contract)
+            contract['geometryVersion'] = 'horizontal-v2'
+            check(contract, rehash=True, expected_error='Unsupported minimap geometryVersion')
+            for key in PAIR.HORIZONTAL_GEOMETRY_KEYS:
+                contract = copy.deepcopy(self.contract)
+                del contract[key]
+                with self.subTest(missing=key):
+                    check(contract, expected_error='fields missing|geometryVersion|Unsupported minimap contract schema')
+            web = copy.deepcopy(self.contract)
+            web['roads'][0]['name']['en'] = 'Web-only corruption'
+            check(copy.deepcopy(self.contract), expected_error='Native/web minimap contracts differ', web=PAIR.json_bytes(web))
+            pin = next(iter(self.contract['exteriorSourceSha256']))
+            with (source / pin).open('ab') as stream:
+                stream.write(b'Corrupt committed exterior input, not native game data.')
+            check(copy.deepcopy(self.contract), expected_error='Stale exterior minimap source hash')
 
 
 if __name__ == '__main__':
