@@ -44,10 +44,12 @@ directory before one atomic directory rename. Receipt/manifest contents have no
 timestamps or machine-specific input paths, so identical inputs/tools yield
 identical receipts/manifests. Existing evidence is never replaced.
 
-Language, navigation and onboarding packets are currently registered. Unknown
-native or metadata bridge names fail closed. When Gameplay's encounter packet and
-Main's metadata contract are final, add its agreed tuple to `BRIDGES`; do not infer
-a packet's ABI from an address or silently omit an unknown bridge.
+Language, navigation, onboarding and encounter packets are registered. Encounter
+ABI1 is exactly64 bytes, symbol `gTaichungEncounterBridge`, metadata key
+`encounterBridge`, magicA `0x4E454354`, magicB `0x31525443`. Pre-encounter pairs may
+omit it only when both ELF symbol and metadata are absent; one-sided presence,
+wrong size/version/magic, overlap or invalid storage is rejected. Unknown native
+or metadata bridge names fail closed; never infer a packet ABI from its address.
 
 This proves pair consistency and the declared committed source/portable tree.
 It cannot prove that an arbitrary ELF was originally compiled from the claimed

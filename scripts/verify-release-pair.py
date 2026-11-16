@@ -23,7 +23,9 @@ BRIDGES = {
     'languageBridge': ('gTaichungLanguageBridge', 32, 1, 0x414C4354, 0x3130474E),
     'navigationBridge': ('gTaichungNavigationBridge', 48, 1, 0x414E4354, 0x31303056),
     'onboardingBridge': ('gTaichungOnboardingBridge', 48, 1, 0x4E494354, 0x314F5254),
+    'encounterBridge': ('gTaichungEncounterBridge', 64, 1, 0x4E454354, 0x31525443),
 }
+OPTIONAL_BRIDGES = {'encounterBridge'}  # Pre-encounter releases have neither symbol nor metadata.
 
 
 class PairError(ValueError):
@@ -146,6 +148,8 @@ def verify_bridges(metadata, symbols):
     ranges = []
     for key, (name, size, version, magic_a, magic_b) in BRIDGES.items():
         entries = rows.get(name, [])
+        if key in OPTIONAL_BRIDGES and not entries and key not in metadata:
+            continue
         require(len(entries) == 1 and len(entries[0]) == 4,
                 f'{key}: expected one sized ELF symbol {name}')
         try:

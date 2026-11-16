@@ -248,11 +248,44 @@ class ReleasePairTests(unittest.TestCase):
 
     def test_duplicate_missing_and_unregistered_bridge_symbols(self):
         for symbols in [self.symbols + [self.symbols[0]], self.symbols[1:],
-                        self.symbols + [('gTaichungEncounterBridge', 0x0203E100, 64)]]:
+                        self.symbols + [('gTaichungUnregisteredBridge', 0x0203E100, 64)]]:
             with self.subTest(symbols=symbols):
                 self.elf.write_bytes(synthetic_elf(self.text, symbols))
                 with self.assertRaisesRegex(PAIR.PairError, 'expected one sized ELF|Unregistered bridge'):
                     self.verify()
+
+    def test_encounter_exact_agreed_64_byte_abi(self):
+        expected = dict(address=0x0203E140, size=64, version=1,
+                        magicA=0x4E454354, magicB=0x31525443)
+        self.build['encounterBridge'] = expected.copy()
+        symbols = [row for row in self.symbols if row[0] != 'gTaichungEncounterBridge']
+        symbols.append(('gTaichungEncounterBridge', 0x0203E140, 64))
+        self.elf.write_bytes(synthetic_elf(self.text, symbols))
+        self.save_metadata()
+        receipt, _ = self.verify()
+        self.assertEqual(receipt['bridges']['encounterBridge'],
+                         dict(symbol='gTaichungEncounterBridge', **expected))
+        for size in [32, 48, 68]:
+            with self.subTest(size=size):
+                symbols[-1] = ('gTaichungEncounterBridge', 0x0203E140, size)
+                self.elf.write_bytes(synthetic_elf(self.text, symbols))
+                self.build['encounterBridge']['size'] = size
+                self.save_metadata()
+                with self.assertRaisesRegex(PAIR.PairError, 'encounterBridge: incompatible ELF'):
+                    self.verify()
+
+    def test_encounter_absent_only_when_both_sides_are_absent(self):
+        without_symbol = [row for row in self.symbols if row[0] != 'gTaichungEncounterBridge']
+        self.elf.write_bytes(synthetic_elf(self.text, without_symbol))
+        with self.assertRaisesRegex(PAIR.PairError, 'encounterBridge: expected one sized ELF'):
+            self.verify()
+        del self.build['encounterBridge']
+        self.save_metadata()
+        receipt, _ = self.verify()
+        self.assertNotIn('encounterBridge', receipt['bridges'])
+        self.elf.write_bytes(synthetic_elf(self.text, self.symbols))
+        with self.assertRaisesRegex(PAIR.PairError, 'encounterBridge: metadata does not match ELF'):
+            self.verify()
 
     def test_web_contract_differs_even_with_identical_fingerprint(self):
         other = copy.deepcopy(self.contract)
