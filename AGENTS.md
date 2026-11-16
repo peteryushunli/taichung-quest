@@ -38,3 +38,8 @@ districts distinct building palettes, including modern Xitun high-rises and
 recognizable convenience stores. All new location designs require the user's
 explicit approval before installation. Tiger City is an approved additional
 non-gym destination; retain ten gyms. Technical checks are not visual approval.
+
+The highway forms a hard playable boundary where it defines the city's outer
+edge. Place Rainbow Village inside it on the Nantun/city side using deliberate
+game-world compression; do not add a playable area beyond the highway for it.
+Keep real-world coordinates and map links accurate and separate from game positions.
