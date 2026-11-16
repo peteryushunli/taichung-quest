@@ -2,6 +2,7 @@ import { NativeOnboardingBridge, onboardingAccepts } from './onboarding-bridge';
 import type { OnboardingMetadata, OnboardingState, OnboardingAcknowledgement } from './onboarding-bridge';
 import { createOnboardingView } from './onboarding-view';
 import type { TutorialCard, TutorialTopic } from './onboarding-view';
+import { OpeningFallbackNotice } from './onboarding-fallback';
 import { getRememberedLocale, getLocale, onLocaleChange, setLocale } from './i18n';
 import type { Locale } from './i18n';
 
@@ -31,7 +32,7 @@ export function createOnboarding(options: {
   let submittedCard: TutorialCard | undefined;
   let acknowledgedContext = 0;
   let startupRequestContext = 0;
-  let unavailableShown = false;
+  const fallbackNotice = new OpeningFallbackNotice();
   let startupFailed = false;
   let startupWaiting = false;
   let nativeGuideActive = false;
@@ -80,6 +81,7 @@ export function createOnboarding(options: {
   }
 
   function onState(next: OnboardingState) {
+    fallbackNotice.observe(next);
     state = next;
     options.onState?.(next);
     const packet = next.snapshot;
@@ -96,8 +98,7 @@ export function createOnboarding(options: {
       const resume = ownsPause;
       ownsPause = false;
       if (resume && options.getState().immersive) options.resume();
-      if (!unavailableShown) {
-        unavailableShown = true;
+      if (fallbackNotice.take()) {
         options.message('The opening connection is unavailable. Use Interact to continue, then pick your language on the game’s first settings screen.', true);
       }
       return;
@@ -155,7 +156,7 @@ export function createOnboarding(options: {
       bridge?.stop();
       queuedCard = submittedCard = undefined;
       acknowledgedContext = startupRequestContext = 0;
-      unavailableShown = false;
+      fallbackNotice.reset();
       startupFailed = false;
       startupWaiting = nativeGuideActive = false;
       supported = !!metadata;

@@ -6,6 +6,7 @@ import { escapeHtml } from './city-guide';
 import { getLocale, onLocaleChange, setLocale, t } from './i18n';
 import type { Locale } from './i18n';
 import { badgeArt, landingMedia, landmarkArt } from './landing-assets';
+import { landmarkCaptureCopy } from './capture-copy';
 import type { PokemonIcon } from './landing-assets';
 import { pixelFlag } from './landing-flag';
 import { cityPlaceSummary, districtCount, districtLabelSpots, gymStatusSummary, isGym, isGymOpen, localizedPlace, markerPosition, orderPlaces, placeStatus, placeWorld } from './landing-model';
@@ -123,14 +124,14 @@ function markup() {
           <div class="lp-step-one-copy">
             <span class="lp-step-label">${copy('STEP 1')}</span>
             <h3 class="lp-step-one-title lp-display">${copy('Pick your partner.')}</h3>
-            <p>${copy('Four Pokémon wait inside Old Taichung Station. The one you choose steps out into the plaza with you.')}</p>
+            <p>${copy('Wake up in a guest house near Old Taichung Station. Choose your first Pokémon, then meet your guide outside.')}</p>
           </div>
           <div class="lp-starters">${starters.map((starter) => `<div class="lp-starter">
             <div class="lp-starter-art" style="background:${starter.tint}">${landingMedia.starters[starter.key] ? pixelImage(landingMedia.starters[starter.key]!, starter.name) : placeholder(`${starter.name} sprite`, 'lp-slot-fill')}</div>
             <div class="lp-starter-body"><div class="lp-starter-meta"><span>No. ${starter.dex}</span><span class="lp-type" style="background:${starter.tint};color:${starter.ink}">${copy(starter.type)}</span></div><span class="lp-starter-name">${copy(starter.name)}</span></div>
           </div>`).join('')}</div>
           <div class="lp-team">
-            <div class="lp-team-copy"><span>${copy('Then build a team of six.')}</span><p>${copy('Add any of the original 150 from the TEAM menu, evolved forms included, all at level 50. Swap them out whenever you like.')}</p></div>
+            <div class="lp-team-copy"><span>${copy('Then build a team of six.')}</span><p>${copy('Use TEAM to add or swap available Pokémon at Lv50. Rare landmark Pokémon unlock after you catch them.')}</p></div>
             <div class="lp-party">${[0, 1, 2, 3, 4, 5].map((slot) => landingMedia.party[slot] ? `<div class="lp-party-slot">${monIcon(landingMedia.party[slot]!, slot)}</div>` : `<div class="lp-party-slot lp-party-empty">${slot + 1}</div>`).join('')}</div>
           </div>
         </div>
@@ -152,7 +153,7 @@ function markup() {
 
       <section class="lp-cta" id="play"><div class="lp-wrap lp-cta-inner">
         <div class="lp-cta-copy">
-          <p class="lp-eyebrow">${copy('YOUR JOURNEY STARTS AT')}</p>
+          <p class="lp-eyebrow">${copy('YOUR JOURNEY STARTS NEAR')}</p>
           <h2 class="lp-cta-title lp-display">${copy('Old Taichung Station.')}<span class="lp-cta-zh" lang="zh-Hant">舊臺中車站</span></h2>
           <p class="lp-cta-text">${copy('Runs in any modern browser with keyboard or touch. Saves stay on your device — export a backup anytime.')}</p>
           <div class="lp-actions">
@@ -206,7 +207,7 @@ function renderDetail(id: string) {
       <div class="lp-detail-names"><h3 class="lp-display">${escapeHtml(info.name)}</h3><span>${escapeHtml(info.otherName)}</span></div>
       <p class="lp-detail-text">${escapeHtml(info.description)}</p>
       <div class="lp-detail-foot">
-        ${isGym(place) ? `<div class="lp-leader">${portrait}<div class="lp-leader-name"><small>${copy('Gym leader')}</small><b>${info.leader ? escapeHtml(info.leader) : copy('To be revealed')}</b></div>${teamSprites}</div>` : `<p class="lp-landmark-note">${copy(place.kind === 'sight' ? 'In the game: find it on the city map and read its sign. There is no gym battle or badge here.' : 'In the game: step inside the hall and meet its host. There is no gym battle or badge here.')}</p>`}
+        ${isGym(place) ? `<div class="lp-leader">${portrait}<div class="lp-leader-name"><small>${copy('Gym leader')}</small><b>${info.leader ? escapeHtml(info.leader) : copy('To be revealed')}</b></div>${teamSprites}</div>` : `<p class="lp-landmark-note">${copy(landmarkCaptureCopy(place.id, 'landing') ?? 'Visit this landmark and learn its local history.')}</p>`}
         ${info.url ? `<div class="lp-real-life"><span>${copy('In real life')}</span><a href="${escapeHtml(info.url)}" target="_blank" rel="noopener">${copy('Visitor info ↗')}</a></div>` : ''}
       </div>
     </div>`;
@@ -229,7 +230,7 @@ function renderGallery() {
       <div class="lp-gallery-grid">${places.map((place) => renderCard(place, locale)).join('')}</div>
     </div>`;
   return group('Gyms', 'Beat the leader inside to earn a City Pass stamp.', gyms)
-    + group('Landmarks', 'No battles here: real places drawn into the city, from temples and markets to parks.', sights);
+    + group('Landmarks', 'Explore temples, markets and parks. Selected landmarks offer rare Pokémon captures that unlock new TEAM choices.', sights);
 }
 
 /** Renders into `root` and binds; call refresh() whenever host state changes. */

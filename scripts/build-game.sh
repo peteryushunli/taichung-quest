@@ -152,6 +152,18 @@ if onboarding_symbols:
         'magicA': 0x4E494354,
         'magicB': 0x314F5254,
     }
+encounter_symbols = [columns for line in symbols.splitlines()
+                     if (columns := line.split()) and columns[-1] == 'gTaichungEncounterBridge']
+if encounter_symbols:
+    if len(encounter_symbols) != 1 or len(encounter_symbols[0]) != 4:
+        raise SystemExit('Unexpected native encounter bridge symbol; refusing incompatible metadata.')
+    address, size = (int(value, 16) for value in encounter_symbols[0][:2])
+    if size != 64 or address % 4 or not 0x02000000 <= address <= 0x02040000 - size:
+        raise SystemExit('Unexpected native encounter bridge layout; refusing incompatible metadata.')
+    metadata['encounterBridge'] = {
+        'version': 1, 'size': size, 'address': address,
+        'magicA': 0x4E454354, 'magicB': 0x31525443,
+    }
 (rom.parent / 'build.json').write_text(json.dumps(metadata, indent=2) + '\n')
 print(f"ROM ready: {rom} ({len(data):,} bytes)")
 PY
