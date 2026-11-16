@@ -52,11 +52,17 @@ runtime acceptance.
 - A separate genuine trial exhausts all three Great Balls. Native RESULT Save4 and
   its independent ACK complete; the species stays locked and snapshot protection
   clears. Battle HP/PP/faint changes remain native-owned.
+- With wild encounters Off, a genuine Gyarados Lv70 capture completes RESULT
+  Save5 + ACK, persisting its unlock. Four Seismic Tosses and Thunder Wave were
+  ordinary native battle actions; the second temporary ball caught it. Full SRAM
+  comparison confirms five normal Poké Balls remain and no party/PC grant occurs.
+  Ordinary refresh and a fresh cartridge Restart→native Continue preserve unlock2.
+  TEAM then permits #130, and an explicit confirmation adds Gyarados as slot4.
 - The city guide and game options were visually checked at390px width in desktop
   Chrome emulation. This is not physical-iPhone acceptance.
 
-Still required before production: successful catch/unlock/TEAM/refresh acceptance,
-remaining native door/seam travel, fresh bilingual onboarding, whiteout and a
+Still required before production: remaining native door/seam travel, fresh
+bilingual onboarding, whiteout and a
 representative gym battle; production-client smoke and remote preview asset checks.
 The existing hero reel and bike screenshot depict the previously released city.
 No production publication is claimed by this checkpoint.
