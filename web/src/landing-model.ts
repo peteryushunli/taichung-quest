@@ -1,3 +1,6 @@
+import { districtLabelsInGeometry, isReleasedGeometry } from './city-geometry.ts';
+import type { CityGeometry } from './city-geometry';
+
 /** Pure landing-page rules. Gym claims always derive from landmarks.json. */
 export type LandingLocale = 'en' | 'zh-Hant';
 
@@ -80,7 +83,9 @@ const DISTRICT_LABELS = [
 const FREEWAY_ROWS = 6;
 
 /** Percent positions of the district names drawn over the city render (landing map and in-game City Map). */
-export function districtLabelSpots(city: { world: { width: number; height: number }; mapsByNativeKey: Record<string, { worldRect?: readonly number[] }> }) {
+export function districtLabelSpots(city: CityGeometry) {
+  const supplied = districtLabelsInGeometry(city);
+  if (supplied.length || !isReleasedGeometry(city)) return supplied;
   const { width, height } = city.world;
   return DISTRICT_LABELS.map(({ key, label, sign, rows }) => {
     const [left, top, right] = city.mapsByNativeKey[key].worldRect!;
@@ -126,4 +131,10 @@ export function localizedPlace(place: LandingLandmark, locale: LandingLocale) {
     leader: isGymOpen(place) ? (chinese ? place.gymLeaderZh : place.gymLeaderEn) : undefined,
     url: url?.href,
   };
+}
+
+/** Real GPS stays geographic even when game-up is rotated. */
+export function visitorMapUrl(location?: { latitude: number; longitude: number }) {
+  if (!location || !Number.isFinite(location.latitude) || !Number.isFinite(location.longitude) || Math.abs(location.latitude) > 90 || Math.abs(location.longitude) > 180) return;
+  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${location.latitude},${location.longitude}`)}`;
 }

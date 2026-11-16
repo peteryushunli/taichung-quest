@@ -30,8 +30,8 @@
     "districtEn": "Old city",
     "districtZh": "舊城區",
     "cityAnchor": {
-      "x": 32,
-      "y": 64
+      "x": 53,
+      "y": 24
     },
     "landmarkHallRef": "MAP_TAICHUNG_OLD_STATION_GYM",
     "gymStatus": "playable",
@@ -45,7 +45,17 @@
       "https://travel.taichung.gov.tw/en/attractions/intro/1942"
     ],
     "badgeNameEn": "Departure Badge",
-    "badgeNameZh": "啟程徽章"
+    "badgeNameZh": "啟程徽章",
+    "world": [
+      333,
+      96
+    ],
+    "artRect": [
+      327,
+      89,
+      339,
+      97
+    ]
   },
   {
     "id": "taichung-park",
@@ -69,8 +79,8 @@
     },
     "districtId": "old-city",
     "phase": "city-v1",
-    "gameAreaRef": "MAP_TAICHUNG_OLD_CITY",
-    "gameLayoutRef": "LAYOUT_TAICHUNG_OLD_CITY",
+    "gameAreaRef": "MAP_TAICHUNG_OLD_CITY_NORTH",
+    "gameLayoutRef": "LAYOUT_TAICHUNG_OLD_CITY_NORTH",
     "mapX": 86.4,
     "mapY": 62.6,
     "mapLabelSide": "left",
@@ -78,8 +88,8 @@
     "districtEn": "Old city",
     "districtZh": "舊城區",
     "cityAnchor": {
-      "x": 32,
-      "y": 30
+      "x": 50,
+      "y": 58
     },
     "landmarkHallRef": "MAP_TAICHUNG_PARK_GYM",
     "gymStatus": "playable",
@@ -91,7 +101,17 @@
       "https://travel.taichung.gov.tw/en/attractions/intro/882"
     ],
     "badgeNameEn": "Pavilion Badge",
-    "badgeNameZh": "湖亭徽章"
+    "badgeNameZh": "湖亭徽章",
+    "world": [
+      330,
+      58
+    ],
+    "artRect": [
+      321,
+      41,
+      338,
+      59
+    ]
   },
   {
     "id": "miyahara",
@@ -125,8 +145,8 @@
     "districtEn": "Old city",
     "districtZh": "舊城區",
     "cityAnchor": {
-      "x": 20,
-      "y": 51
+      "x": 44,
+      "y": 42
     },
     "gymLeaderEn": "Peiqi",
     "gymLeaderZh": "沛琪",
@@ -139,7 +159,17 @@
       "https://travel.taichung.gov.tw/en/Attractions/Intro/1239"
     ],
     "badgeNameEn": "Chill Badge",
-    "badgeNameZh": "沁涼徽章"
+    "badgeNameZh": "沁涼徽章",
+    "world": [
+      324,
+      114
+    ],
+    "artRect": [
+      319,
+      107,
+      329,
+      115
+    ]
   },
   {
     "id": "natural-science-museum",
@@ -150,7 +180,7 @@
     "officialUrl": "https://www.nmns.edu.tw/en/",
     "officialSourceTitle": "National Museum of Natural Science — Galleries",
     "playable": true,
-    "gameAreaRef": "MAP_TAICHUNG_GREENWAY",
+    "gameAreaRef": "MAP_TAICHUNG_MUSEUM_QUARTER",
     "location": {
       "address": "No. 1, Guanqian Rd., North Dist., Taichung City, Taiwan",
       "latitude": 24.157233,
@@ -165,15 +195,15 @@
     "descriptionZh": "國立自然科學博物館第一期於1986年元旦開放，之後陸續增建，1999年植物園開放後，成為包含科學中心、太空劇場、生命科學廳、人類文化廳、地球環境廳與植物園的六大場館。機械暴龍與按原尺寸復原的蘇頌水運儀象臺都很受歡迎；4.5公頃的植物園與熱帶雨林溫室，能近距離認識臺灣原生植物。每年參觀人次近三百萬。",
     "districtId": "greenway",
     "phase": "city-v1",
-    "gameLayoutRef": "LAYOUT_TAICHUNG_GREENWAY",
+    "gameLayoutRef": "LAYOUT_TAICHUNG_MUSEUM_QUARTER",
     "mapX": 52.8,
     "mapY": 44.4,
     "mapLabelSide": "right",
     "districtEn": "Greenway & culture",
     "districtZh": "草悟道文化區",
     "cityAnchor": {
-      "x": 24,
-      "y": 57
+      "x": 50,
+      "y": 64
     },
     "landmarkHallRef": "MAP_TAICHUNG_SCIENCE_MUSEUM_GYM",
     "gymStatus": "playable",
@@ -185,7 +215,17 @@
       "https://www.nmns.edu.tw/en/"
     ],
     "badgeNameEn": "Discovery Badge",
-    "badgeNameZh": "發現徽章"
+    "badgeNameZh": "發現徽章",
+    "world": [
+      258,
+      64
+    ],
+    "artRect": [
+      253,
+      58,
+      264,
+      65
+    ]
   },
   {
     "id": "calligraphy-greenway",
@@ -218,8 +258,8 @@
     "districtEn": "Greenway & culture",
     "districtZh": "草悟道文化區",
     "cityAnchor": {
-      "x": 22,
-      "y": 73
+      "x": 50,
+      "y": 32
     },
     "landmarkHallRef": "MAP_TAICHUNG_GREENWAY_GYM",
     "landingNameEn": "Greenway",
@@ -232,7 +272,17 @@
       "https://travel.taichung.gov.tw/en/Attractions/Intro/1050"
     ],
     "badgeNameEn": "Brush Badge",
-    "badgeNameZh": "筆意徽章"
+    "badgeNameZh": "筆意徽章",
+    "world": [
+      258,
+      104
+    ],
+    "artRect": [
+      254,
+      95,
+      263,
+      105
+    ]
   },
   {
     "id": "shen-ji-new-village",
@@ -266,8 +316,8 @@
     "districtEn": "Greenway & culture",
     "districtZh": "草悟道文化區",
     "cityAnchor": {
-      "x": 11,
-      "y": 81
+      "x": 38,
+      "y": 51
     },
     "landmarkHallRef": "MAP_TAICHUNG_SHEN_JI_GYM",
     "landingNameEn": "Shen Ji",
@@ -280,7 +330,17 @@
       "https://news.pts.org.tw/article/370975"
     ],
     "badgeNameEn": "Craft Badge",
-    "badgeNameZh": "巧作徽章"
+    "badgeNameZh": "巧作徽章",
+    "world": [
+      246,
+      123
+    ],
+    "artRect": [
+      243,
+      118,
+      254,
+      124
+    ]
   },
   {
     "id": "fine-arts-museum",
@@ -313,8 +373,8 @@
     "districtEn": "Greenway & culture",
     "districtZh": "草悟道文化區",
     "cityAnchor": {
-      "x": 13,
-      "y": 99
+      "x": 57,
+      "y": 58
     },
     "landmarkHallRef": "MAP_TAICHUNG_FINE_ARTS_GYM",
     "gymStatus": "playable",
@@ -326,7 +386,17 @@
       "https://www.ntmofa.gov.tw/en/cp.aspx?n=1579"
     ],
     "badgeNameEn": "Palette Badge",
-    "badgeNameZh": "調色徽章"
+    "badgeNameZh": "調色徽章",
+    "world": [
+      265,
+      130
+    ],
+    "artRect": [
+      260,
+      124,
+      273,
+      135
+    ]
   },
   {
     "id": "fengjia-night-market",
@@ -350,8 +420,8 @@
     },
     "districtId": "xitun",
     "phase": "city-v1",
-    "gameAreaRef": "MAP_TAICHUNG_XITUN",
-    "gameLayoutRef": "LAYOUT_TAICHUNG_XITUN",
+    "gameAreaRef": "MAP_TAICHUNG_FENGJIA_QUARTER",
+    "gameLayoutRef": "LAYOUT_TAICHUNG_FENGJIA_QUARTER",
     "mapX": 24.8,
     "mapY": 16.4,
     "mapLabelSide": "right",
@@ -359,8 +429,8 @@
     "districtEn": "Xitun",
     "districtZh": "西屯區",
     "cityAnchor": {
-      "x": 29,
-      "y": 17
+      "x": 56,
+      "y": 40
     },
     "landmarkHallRef": "MAP_TAICHUNG_FENGJIA_GYM",
     "gymStatus": "playable",
@@ -372,7 +442,17 @@
       "https://travel.taichung.gov.tw/en/Attractions/Intro/850"
     ],
     "badgeNameEn": "Feast Badge",
-    "badgeNameZh": "豐味徽章"
+    "badgeNameZh": "豐味徽章",
+    "world": [
+      160,
+      40
+    ],
+    "artRect": [
+      155,
+      35,
+      165,
+      41
+    ]
   },
   {
     "id": "wanhe-temple",
@@ -394,18 +474,18 @@
     "gameAreaRef": "MAP_TAICHUNG_NANTUN_WANHE",
     "landmarkHallRef": "MAP_TAICHUNG_WANHE_TEMPLE_HALL",
     "cityAnchor": {
-      "x": 31,
-      "y": 33
+      "x": 24,
+      "y": 40
     },
     "gymStatus": "playable",
     "mapX": 22.083333333333332,
     "mapY": 78.125,
     "mapLabelSide": "right",
     "artRect": [
-      26,
-      135,
-      37,
-      144
+      228,
+      178,
+      237,
+      185
     ],
     "descriptionSources": [
       "https://en.wikipedia.org/wiki/Wanhe_Temple",
@@ -417,7 +497,11 @@
     "gymLeaderEn": "Muqing",
     "gymLeaderZh": "沐晴",
     "badgeNameEn": "Tide Badge",
-    "badgeNameZh": "潮汐徽章"
+    "badgeNameZh": "潮汐徽章",
+    "world": [
+      232,
+      184
+    ]
   },
   {
     "id": "taichung-theater",
@@ -450,8 +534,8 @@
     "districtEn": "Xitun",
     "districtZh": "西屯區",
     "cityAnchor": {
-      "x": 17,
-      "y": 49
+      "x": 64,
+      "y": 40
     },
     "landmarkHallRef": "MAP_TAICHUNG_THEATER_GYM",
     "gymStatus": "playable",
@@ -463,7 +547,17 @@
       "https://www.npac-ntt.org/en/about/architecture/design"
     ],
     "badgeNameEn": "Encore Badge",
-    "badgeNameZh": "謝幕徽章"
+    "badgeNameZh": "謝幕徽章",
+    "world": [
+      168,
+      112
+    ],
+    "artRect": [
+      160,
+      106,
+      176,
+      113
+    ]
   },
   {
     "id": "maple-garden",
@@ -498,8 +592,8 @@
     "districtEn": "Xitun",
     "districtZh": "西屯區",
     "cityAnchor": {
-      "x": 17,
-      "y": 37
+      "x": 34,
+      "y": 28
     },
     "landmarkHallRef": "MAP_TAICHUNG_MAPLE_GARDEN_GYM",
     "gymStatus": "not-a-gym",
@@ -509,10 +603,14 @@
       "https://english.taichung.gov.tw/10273/10554/10719/730143"
     ],
     "artRect": [
-      14,
-      31,
-      26,
-      40
+      136,
+      95,
+      146,
+      102
+    ],
+    "world": [
+      138,
+      100
     ]
   },
   {
@@ -536,18 +634,18 @@
     "gameAreaRef": "MAP_TAICHUNG_NANTUN_WANHE",
     "landmarkHallRef": "MAP_TAICHUNG_WENCHANG_TEMPLE_HALL",
     "cityAnchor": {
-      "x": 21,
-      "y": 33
+      "x": 12,
+      "y": 40
     },
     "gymStatus": "not-a-gym",
     "mapX": 13.750000000000002,
     "mapY": 78.125,
     "mapLabelSide": "left",
     "artRect": [
-      17,
-      136,
-      26,
-      144
+      217,
+      179,
+      224,
+      185
     ],
     "descriptionSources": [
       "https://zh.wikipedia.org/wiki/南屯文昌公廟",
@@ -556,6 +654,10 @@
     ],
     "officialUrl": "https://www.wcgt.org/web/pages/page.php?lang=zh_tw&sid=1",
     "officialSourceTitle": "Taichung Wenchang Temple — official site",
-    "landingLabelSide": "above"
+    "landingLabelSide": "above",
+    "world": [
+      220,
+      184
+    ]
   }
 ]

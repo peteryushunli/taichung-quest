@@ -4,6 +4,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const geometryFields = ['schemaVersion', 'coordinateSystem', 'world', 'mapsByNativeKey', 'markersById', 'seams'];
+const horizontalFields = ['geometryVersion', 'roads', 'placesById', 'residence', 'exteriorSourceSha256'];
 const bundledGeometry = new URL('../src/data/minimap-contract.json', import.meta.url);
 // Match the native exporter's sorted UTF-8 JSON fingerprint, excluding source provenance.
 const canonical = (value) => Array.isArray(value) ? value.map(canonical) : value && typeof value === 'object'
@@ -38,9 +39,13 @@ export async function verifyCartridge(directory, { geometryFile = bundledGeometr
   let geometry;
   try {
     geometry = JSON.parse(await readFile(geometryFile, 'utf8'));
-    if (!geometry || geometry.schemaVersion !== 1 || !geometryFields.every((key) => Object.hasOwn(geometry, key)) ||
+    // Exact payload parity with tools/taichung/export_minimap.py. Keep the
+    // original six-field format for released cartridges; never guess a version.
+    if (geometry?.geometryVersion !== undefined && geometry.geometryVersion !== 'horizontal-v1') throw new Error();
+    const fields = geometry?.geometryVersion === 'horizontal-v1' ? [...geometryFields, ...horizontalFields] : geometryFields;
+    if (!geometry || geometry.schemaVersion !== 1 || !fields.every((key) => Object.hasOwn(geometry, key)) ||
         typeof geometry.geometryFingerprintSha256 !== 'string' || !/^[a-f\d]{64}$/.test(geometry.geometryFingerprintSha256)) throw new Error();
-    const layout = Object.fromEntries(geometryFields.map((key) => [key, geometry[key]]));
+    const layout = Object.fromEntries(fields.map((key) => [key, geometry[key]]));
     const fingerprint = createHash('sha256').update(JSON.stringify(canonical(layout))).digest('hex');
     if (fingerprint !== geometry.geometryFingerprintSha256) throw new Error();
   } catch {

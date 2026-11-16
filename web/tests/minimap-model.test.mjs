@@ -3,7 +3,7 @@ import test from 'node:test';
 import { readFileSync } from 'node:fs';
 import { projectNavigation, projectTutorial, secondaryAction, readMinimapPreference, radarPosition, radarViewBox, radarBlip, RADAR, RADAR_ART, RADAR_PANEL, HOME_WORLD, FACING_DEGREES } from '../src/minimap-model.ts';
 
-const geometry = JSON.parse(readFileSync(new URL('../src/data/minimap-contract.json', import.meta.url), 'utf8'));
+const geometry = JSON.parse(readFileSync(new URL('./fixtures/released48fe-minimap-contract.json', import.meta.url), 'utf8'));
 const packet = { sequence: 2, frame: 1, flags: 79, x: 30, y: 66, mapGroup: 43, mapNumber: 0, facing: 2, mapType: 1, width: 44, height: 77, contextFlags: 0 };
 
 test('all exterior tiles project into their authored district, or to the nearest landmark anywhere when the district has none', () => {
@@ -69,7 +69,8 @@ test('the minimap is zoomed out and stays centred on the player even at the worl
 test('the minimap art covers the world plus its dark margin, one pixel per tile, in four flat colours', () => {
   const png = readFileSync(new URL('../src/assets/minimap/city.png', import.meta.url));
   const size = [png.readUInt32BE(16), png.readUInt32BE(20)];
-  assert.deepEqual(size, [geometry.world.width, geometry.world.height].map((tiles) => (tiles + 2 * RADAR_ART.margin) * RADAR_ART.tile));
+  const current = JSON.parse(readFileSync(new URL('../src/data/minimap-contract.json', import.meta.url)));
+  assert.deepEqual(size, [current.world.width, current.world.height].map((tiles) => (tiles + 2 * RADAR_ART.margin) * RADAR_ART.tile));
   assert.equal(RADAR_ART.tile, 1);
   assert.ok(png.length < 8192, 'the minimap art is a few flat colours, not a render');
 });

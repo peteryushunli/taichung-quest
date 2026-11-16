@@ -7,8 +7,8 @@ export type TutorialCard = { topic: TutorialTopic; context: number; phase: numbe
 const topics: Record<TutorialTopic, { title: string; body: string }> = {
   bike: { title: 'Bike', body: 'After the tour: B / Bike to ride outdoors. Press again to get off.' },
   map: { title: 'City Map', body: 'Tap Minimap or City Map to find all landmarks.' },
-  team: { title: 'Team', body: 'Menu → Team: add or swap. All 150 choices are free and join at Lv50.' },
-  landmarks: { title: 'Nearby landmarks', body: 'South to the road, then west. Find nearby gyms on City Map.' },
+  team: { title: 'Team', body: 'Menu → Team: add or swap available Pokémon. Capture rare landmark Pokémon to unlock them.' },
+  landmarks: { title: 'Nearby landmarks', body: 'Taiwan Boulevard runs west to east. Find nearby gyms on City Map.' },
 };
 
 /** Readable presentation only. Native state owns language, stages and party: the game's

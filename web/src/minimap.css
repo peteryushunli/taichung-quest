@@ -7,8 +7,6 @@
 .live-minimap .minimap-marker { stroke: #283038; stroke-width: .65; stroke-linejoin: round; }
 .live-minimap .minimap-frame-outer { fill: none; stroke: #283038; stroke-width: .9; }
 .live-minimap .minimap-frame-inner { fill: none; stroke: #f8f8f8; stroke-width: 1.2; }
-.live-minimap .minimap-north rect { fill: #f8f8f8; stroke: #283038; stroke-width: .6; }
-.live-minimap .minimap-north text { fill: #283038; font: 700 5.1px Arial, sans-serif; }
 .live-minimap .minimap-home-mark { fill: #4878e8; }
 .live-minimap .minimap-home-door, .live-minimap .minimap-player-arrow, .live-minimap .minimap-player-dot { fill: #fff; }
 .live-minimap .minimap-player-dot, .live-minimap.is-tutorial .minimap-player-arrow { display: none; }

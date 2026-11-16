@@ -3,6 +3,7 @@ import './confirm.css';
 import './controls.css';
 import './immersive.css';
 import './minimap.css';
+import './street-label.css';
 import './title-screen.css';
 import titleStation from './assets/landmarks/old-station.png';
 import titleBulbasaur from './assets/pokemon/front/bulbasaur.png';
@@ -21,10 +22,15 @@ import { protectGameDisplay } from './game-display';
 import { NativeNavigationBridge, parseNavigationMetadata } from './navigation-bridge';
 import type { NavigationState } from './navigation-bridge';
 import { createMinimap } from './minimap';
+import { createStreetLabel } from './street-label';
 import { projectNavigation, secondaryAction } from './minimap-model';
 import minimapGeometry from './data/minimap-contract.json';
 import { createOnboarding } from './onboarding';
 import { parseOnboardingMetadata } from './onboarding-bridge';
+import { NativeEncounterBridge, parseEncounterMetadata } from './encounter-bridge';
+import type { EncounterMetadata } from './encounter-bridge';
+import { CaptureStorageController } from './capture-storage';
+import { CAPTURE_BOOT_INTENT_KEY, captureBlocksSnapshots, readCaptureBootPolicy } from './capture-persistence';
 
 type RuntimeFactory = (options: { canvas: HTMLCanvasElement }) => Promise<mGBAEmulator>;
 type RuntimeWindow = Window & { taichungCreateEmulator?: RuntimeFactory };
@@ -40,7 +46,11 @@ const SAVE_STORE = 'FILE_DATA';
 const SAVE_STAMP = 'taichung-quest-save-time';
 const CARTRIDGE_BOOT_PARAM = 'cartridge-boot';
 const cartridgeBootIntent = new URL(window.location.href).searchParams.get(CARTRIDGE_BOOT_PARAM);
-let bootFromCartridge = cartridgeBootIntent === '1' || cartridgeBootIntent === 'import';
+function captureBootRequired() {
+  try { return readCaptureBootPolicy(localStorage).forceCartridge; } catch { return true; }
+}
+let bootFromCartridge = cartridgeBootIntent === '1' || cartridgeBootIntent === 'import' || captureBootRequired();
+let explicitCartridgeRestart = false;
 let savedAt: string | null = null;
 try { savedAt = localStorage.getItem(SAVE_STAMP); } catch { /* Storage can be disabled in private browser sessions. */ }
 let hasSave = savedAt !== null;
@@ -129,6 +139,10 @@ let languageState: LanguageBridgeState | undefined;
 let navigationBridge: NativeNavigationBridge | undefined;
 let navigationState: NavigationState = { phase: 'unavailable' };
 let onboarding: ReturnType<typeof createOnboarding> | undefined;
+let encounterBridge: NativeEncounterBridge | undefined;
+let encounterMetadata: EncounterMetadata | undefined;
+let captureStorage: CaptureStorageController | undefined;
+let activeRomSha256: string | undefined;
 let gamePath: string | undefined;
 let starting = false;
 let running = false;
@@ -196,6 +210,7 @@ function renderNavigation() {
   el<HTMLButtonElement>('touch-city-map-button').disabled = restarting || !!onboarding?.blocksCityMap;
   const state: NavigationState = canPlayGame() ? navigationState : { phase: navigationState.phase === 'unavailable' ? 'unavailable' : 'hidden' };
   minimap.update(state);
+  streetLabel.update(state);
   const packet = state.phase === 'live' ? state.snapshot : undefined;
   const position = packet ? projectNavigation(packet, minimapGeometry) : undefined;
   const action = secondaryAction(packet, position);
@@ -304,6 +319,76 @@ function discardOwnedSnapshot(path: string | undefined) {
   if (/^taichung-firered(?:-[a-f0-9]{16})?_auto\.ss$/.test(filename) && emulator.FS.analyzePath(path).exists) emulator.FS.unlink(path);
 }
 
+function ownedSnapshotPath() {
+  if (!emulator || !gamePath) return;
+  return `${emulator.filePaths().autosave}/${gamePath.slice(gamePath.lastIndexOf('/') + 1).replace(/\.gba$/, '_auto.ss')}`;
+}
+
+function blocksCaptureSnapshot() {
+  if (captureBootRequired() || captureStorage?.blocksSnapshots) return true;
+  if (!encounterMetadata) return false;
+  const snapshot = encounterBridge?.currentSnapshot;
+  return !snapshot || captureBlocksSnapshots(snapshot.phase);
+}
+
+function connectNativeEncounters() {
+  encounterBridge?.stop();
+  encounterBridge = undefined;
+  captureStorage = undefined;
+  if (!encounterMetadata || !activeRomSha256 || !emulator) return;
+  let controller: CaptureStorageController | undefined;
+  let nextReconcile = 0;
+  let reportedFailure = false;
+  const bridge = new NativeEncounterBridge({
+    metadata: encounterMetadata,
+    getHeap: () => (emulator as LanguageRuntime | undefined)?.getTaichungHeapU8?.(),
+    isActive: () => running && !paused && !restarting,
+    onState: ({ status: connection, snapshot }) => {
+      if (encounterBridge !== bridge || restarting) return;
+      if ((connection === 'unavailable' || snapshot?.phase === 6) && !reportedFailure) {
+        reportedFailure = true;
+        message('Browser storage is unavailable. Download your save for a backup.', true);
+      }
+      if (connection === 'live' && snapshot?.phase === 0 && controller?.blocksSnapshots && Date.now() >= nextReconcile) {
+        nextReconcile = Date.now() + 1000;
+        void controller.reconcile(snapshot).catch(error => {
+          console.info('Interrupted landmark save reconciliation unavailable:', error);
+          if (!reportedFailure) { reportedFailure = true; message('Browser storage is unavailable. Download your save for a backup.', true); }
+        });
+      }
+    },
+    onDurableSave: async snapshot => {
+      try {
+        if (!controller) throw new Error('Browser save-intent storage is unavailable.');
+        await controller.persist(snapshot);
+        if (encounterBridge !== bridge || restarting) return;
+        hasSave = true;
+        savedAt = new Date().toISOString();
+        try { localStorage.setItem(SAVE_STAMP, savedAt); } catch { /* Optional landing-page hint, not the durability fence. */ }
+        landing.refresh();
+      } catch (error) {
+        reportedFailure = true;
+        message('Browser storage is unavailable. Download your save for a backup.', true);
+        throw error;
+      }
+    },
+  });
+  try {
+    controller = new CaptureStorageController({
+      romSha256: activeRomSha256, storage: localStorage,
+      readSave: () => {
+        try { return emulator?.FS.readFile(SAVE_PATH, { encoding: 'binary' }); } catch { return; }
+      },
+      flush: flushFilesystem,
+      discardSnapshot: () => discardOwnedSnapshot(ownedSnapshotPath()),
+      getCurrent: () => bridge.currentSnapshot,
+    });
+  } catch { /* The live packet client emits a failure ACK if an encounter is requested. */ }
+  captureStorage = controller;
+  encounterBridge = bridge;
+  void bridge.start();
+}
+
 function startSaveTimer() {
   if (saveInterval) clearInterval(saveInterval);
   saveInterval = setInterval(() => { if (!paused && !restarting) void persist(); }, 20_000);
@@ -332,6 +417,10 @@ function releaseInputs() {
 
 async function persist(showFeedback = false) {
   if (!emulator || !running || saving || restarting) return;
+  if (blocksCaptureSnapshot()) {
+    if (showFeedback) message('Finish this encounter before saving a spot.');
+    return;
+  }
   saving = true;
   try {
     if (!emulator.forceAutoSaveState()) throw new Error('The game could not capture your spot yet.');
@@ -371,6 +460,8 @@ async function startGame() {
     const buildId = romSha256.slice(0, 16);
     const metadata = metadataResponse?.ok ? await metadataResponse.json().catch(() => undefined) : undefined;
     const onboardingMetadata = parseOnboardingMetadata(metadata, romSha256, rom.length);
+    encounterMetadata = parseEncounterMetadata(metadata, romSha256, rom.length);
+    activeRomSha256 = romSha256;
     // The game's first settings screen shows this language (the website choice, else the
     // browser's), and the player can change it there. No web picker comes first.
     onboarding?.prepareLanguage(!!onboardingMetadata);
@@ -392,6 +483,7 @@ async function startGame() {
           if (restarting) return;
           navigationBridge?.stop();
           onboarding?.stop();
+          encounterBridge?.stop();
           setStatus('ADVENTURE INTERRUPTED');
           message('The game stopped unexpectedly. Restart it to return to your saved progress.', true);
         },
@@ -414,6 +506,10 @@ async function startGame() {
       // This is a new runtime with no emulation thread running yet. Remove the
       // old CPU snapshot durably before loading the cartridge and its SRAM.
       await flushFilesystem();
+      if (explicitCartridgeRestart) {
+        try { localStorage.removeItem(CAPTURE_BOOT_INTENT_KEY); } catch { /* Continue conservatively from native SRAM. */ }
+        explicitCartridgeRestart = false;
+      }
     }
     if (!gameView.immersive) {
       setStatus('READY WHEN YOU ARE');
@@ -434,13 +530,14 @@ async function startGame() {
     if (!muted) { emulator.resumeAudio(); void emulator.SDL2?.audioContext?.resume(); }
     running = true;
     paused = false;
+    connectNativeEncounters();
     document.body.classList.add('game-active');
     gameInput?.refresh();
     el('start-screen').hidden = true;
     canvas.classList.add('playing');
     document.querySelectorAll<HTMLButtonElement>('#pause-button, #sound-button, #game-sound-button, #save-button, #restart-button, #export-button, #import-button').forEach((button) => button.disabled = false);
     setStatus('OUT EXPLORING');
-    message(freshCartridgeBoot && cartridgeBootIntent ? cartridgeBootIntent === 'import' ? 'Save imported. Choose Continue from the game’s title screen.' : 'Cartridge restarted. Continue your in-game save or begin a new adventure.' : !freshCartridgeBoot && emulator.getAutoSaveState() ? 'Welcome back. Your last saved spot is waiting for you.' : 'New adventures begin at the old station. Use City Map to discover Taichung’s landmarks.');
+    message(freshCartridgeBoot && cartridgeBootIntent ? cartridgeBootIntent === 'import' ? 'Save imported. Choose Continue from the game’s title screen.' : 'Cartridge restarted. Continue your in-game save or begin a new adventure.' : !freshCartridgeBoot && emulator.getAutoSaveState() ? 'Welcome back. Your last saved spot is waiting for you.' : 'Wake up in the guest house near Old Station. Use City Map to discover Taichung’s landmarks.');
     canvas.focus({ preventScroll: true });
     // The Play button may have scrolled the intro into view. Collapsing that
     // intro must not leave a phone looking below its newly positioned game.
@@ -505,6 +602,7 @@ const minimapSetting = document.createElement('label');
 minimapSetting.className = 'minimap-setting';
 minimapSetting.innerHTML = '<span id="minimap-label" data-i18n="Minimap">Minimap</span><select id="minimap-visibility" aria-labelledby="minimap-label" aria-describedby="minimap-hint"><option value="on" data-i18n="On">On</option><option value="off" data-i18n="Off">Off</option></select><small id="minimap-hint"></small>';
 el('options-toolbar-slot').before(minimapSetting);
+const streetLabel = createStreetLabel(el('screen'), minimapGeometry);
 const minimap = createMinimap({
   screen: el('screen'), toggle: el<HTMLSelectElement>('minimap-visibility'), hint: el('minimap-hint'), geometry: minimapGeometry,
   openGuide: () => { if (!onboarding?.blocksCityMap) cityGuide.open(el('live-minimap')); },
@@ -534,6 +632,7 @@ async function startNewGame() {
   if (running) { void restartCartridge(); return; }
   if (savedAt && !bootFromCartridge && !(await confirmAction('Start a new game?', 'The cartridge restarts at its title screen, where you can choose New Game. Your in-game save is kept until you save over it; progress since that save will be lost.', 'Restart'))) return;
   bootFromCartridge = true;
+  explicitCartridgeRestart = true;
   savedAt = null;
   try { localStorage.removeItem(SAVE_STAMP); } catch { /* The snapshot itself is stored separately in IndexedDB. */ }
   openGame();
@@ -575,6 +674,7 @@ async function restartCartridge(importedSave?: Uint8Array) {
   const previousSave = importedSave ? emulator.getSave()?.slice() : undefined;
   const wasPaused = paused;
   restarting = true;
+  encounterBridge?.stop();
   gameInput?.refresh();
   refreshNavigation();
   refreshLanguageConnection();
@@ -591,8 +691,8 @@ async function restartCartridge(importedSave?: Uint8Array) {
     (emulator as SchedulerRuntime).pauseMainLoop();
     console.info('Cartridge reboot: JavaScript scheduler paused.');
     paused = true;
-    // Drain pending writes and durably flush SRAM. Snapshot removal happens in
-    // the next runtime before loadGame, after all old workers are gone.
+    // Drain pending writes and flush SRAM, then invalidate the owned snapshot
+    // before clearing any capture safeguard. The next runtime repeats removal.
     let timeout: ReturnType<typeof setTimeout> | undefined;
     try {
       const saveWrites = (async () => {
@@ -602,6 +702,8 @@ async function restartCartridge(importedSave?: Uint8Array) {
           emulator!.FS.writeFile(SAVE_PATH, importedSave);
           await flushFilesystem();
         }
+        discardOwnedSnapshot(ownedSnapshotPath());
+        await flushFilesystem();
       })();
       await Promise.race([
         saveWrites,
@@ -609,6 +711,9 @@ async function restartCartridge(importedSave?: Uint8Array) {
       ]);
     } finally { if (timeout) clearTimeout(timeout); }
     console.info('Cartridge reboot: save files flushed.');
+    // The user confirmed this restart/import. The snapshot deletion and latest
+    // SRAM are durable, so it is safe to clear the old encounter boot safeguard.
+    try { localStorage.removeItem(CAPTURE_BOOT_INTENT_KEY); } catch { /* Conservative cartridge-only fallback remains. */ }
     try { localStorage.removeItem(SAVE_STAMP); } catch { /* SRAM is stored in IndexedDB, separately from this hint. */ }
     const restartUrl = new URL(window.location.href);
     restartUrl.searchParams.set(CARTRIDGE_BOOT_PARAM, importedSave ? 'import' : '1');
@@ -623,6 +728,7 @@ async function restartCartridge(importedSave?: Uint8Array) {
       void flushFilesystem().catch(() => undefined);
     }
     restarting = false;
+    connectNativeEncounters();
     refreshLanguageConnection();
     document.querySelectorAll<HTMLButtonElement>('#pause-button, #resume-button, #sound-button, #game-sound-button, #save-button, #restart-button, #import-button, #touch-city-map-button').forEach((button) => button.disabled = false);
     paused = wasPaused;
@@ -678,7 +784,7 @@ gameInput = createGameControls({
   release: (button) => emulator?.buttonUnpress(button),
 });
 document.addEventListener('visibilitychange', () => { if (!restarting && !confirmationOpen && document.hidden && running && !paused) setPaused(true); });
-window.addEventListener('pagehide', () => { languageBridge?.stop(); navigationBridge?.stop(); onboarding?.stop(); releaseInputs(); if (saveInterval) clearInterval(saveInterval); });
+window.addEventListener('pagehide', () => { languageBridge?.stop(); navigationBridge?.stop(); onboarding?.stop(); encounterBridge?.stop(); releaseInputs(); if (saveInterval) clearInterval(saveInterval); });
 
 // Locale refresh updates existing nodes, preserving the live emulator canvas.
 document.querySelectorAll<HTMLElement>('[aria-label]').forEach((element) => {

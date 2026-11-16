@@ -2,7 +2,8 @@ import landmarkCatalog from './data/landmarks.json';
 import sightCatalog from './data/sights.json';
 import cityContract from './data/minimap-contract.json';
 import { landingMedia, landmarkArt } from './landing-assets';
-import { cityPlaceSummary, districtLabelSpots, isGym, localizedPlace, markerPosition, orderPlaces, placeWorld } from './landing-model';
+import { cityPlaceSummary, districtLabelSpots, isGym, localizedPlace, markerPosition, orderPlaces, visitorMapUrl } from './landing-model';
+import { placeWorldInGeometry, visitorLocationInGeometry } from './city-geometry';
 import type { LandingLandmark } from './landing-model';
 import type { MinimapGeometry } from './minimap-model';
 import './city-guide.css';
@@ -48,12 +49,14 @@ export function createCityGuide(host: GuideHost) {
       <p class="guide-intro" id="city-guide-intro"><span id="guide-place-count"></span> <span data-i18n="Choose a landmark to explore its game-world stop and find visitor information where available.">Choose a landmark to explore its game-world stop and find visitor information where available.</span></p>
       <div class="guide-body">
         <section class="guide-overview" aria-label="Taichung city map" data-i18n-label="Taichung city map">
-          <div class="overview-heading"><span>TAICHUNG <span lang="zh-Hant">臺中</span></span><span class="compass" aria-label="North points up">N ↑</span></div>
+          <div class="overview-heading"><span>TAICHUNG <span lang="zh-Hant">臺中</span></span><span class="game-map-orientation" data-i18n="Game map · not north-up">Game map · not north-up</span></div>
           <div class="guide-map" style="--guide-map-aspect:${width} / ${height}">
             <img class="guide-map-drawing" src="${escapeHtml(landingMedia.cityMap)}" width="${width * 16}" height="${height * 16}" alt="">
             ${districtLabelSpots(cityGeometry).map(({ label, sign, x, y }) => `<span class="map-district${sign ? ' is-sign' : ''}" style="left:${x}%;top:${y}%">${label}</span>`).join('')}
             ${landmarks.map((place, index) => {
-              const { x, y, side } = markerPosition(placeWorld(place, cityGeometry.markersById), cityGeometry.world);
+              const world = placeWorldInGeometry(place, cityGeometry);
+              if (!world) return '';
+              const { x, y, side } = markerPosition(world, cityGeometry.world);
               const kind = isGym(place) ? 'is-gym' : 'is-landmark';
               // This map's two-line labels can need a different side from the website's one-line ones.
               const labelSide = place.guideLabelSide ?? place.landingLabelSide ?? side;
@@ -61,7 +64,7 @@ export function createCityGuide(host: GuideHost) {
             }).join('')}
           </div>
           <div class="map-legend"><span><i class="legend-gym"></i><span data-i18n="Gym">Gym</span></span><span><i class="legend-landmark"></i><span data-i18n="Landmark">Landmark</span></span><span><i class="legend-selected"></i><span data-i18n="Selected">Selected</span></span></div>
-          <p class="map-caveat" data-i18n="Drawn from the game’s own map, so the streets are the ones you walk. Only gyms have battles and badges.">Drawn from the game’s own map, so the streets are the ones you walk. Only gyms have battles and badges.</p>
+          <p class="map-caveat" data-i18n="Taiwan Boulevard runs left to right: Tunghai to Old Station. Gyms award badges; selected landmarks offer rare Pokémon captures.">Taiwan Boulevard runs left to right: Tunghai to Old Station. Gyms award badges; selected landmarks offer rare Pokémon captures.</p>
           <div class="landmark-tabs" aria-label="Choose a landmark">${landmarks.map((place, index) => `<button class="${isGym(place) ? 'is-gym' : 'is-landmark'}" data-guide-select="${escapeHtml(place.id)}" aria-pressed="false" aria-controls="landmark-detail"><span class="landmark-tab-number">${String(index + 1).padStart(2, '0')}</span><span class="landmark-tab-names"><b lang="en">${escapeHtml(place.shortNameEn)}</b><span lang="zh-Hant">${escapeHtml(place.shortNameZh)}</span></span></button>`).join('')}</div>
         </section>
         <section class="landmark-detail" id="landmark-detail" aria-label="Selected landmark information" aria-live="polite"></section>
@@ -85,19 +88,20 @@ export function createCityGuide(host: GuideHost) {
     });
     const chinese = getLocale() === 'zh-Hant';
     const info = localizedPlace(place, getLocale());
+    const realMap = visitorMapUrl(visitorLocationInGeometry(place, cityGeometry));
     dialog.querySelector('#landmark-detail')!.classList.toggle('is-visit', !isGym(place));
     const gym = isGym(place);
     const outdoor = place.kind === 'sight';
     const areaLabel = !place.playable ? 'PLANNED AREA · NOT PLAYABLE' : place.phase === 'arrival' ? 'ARRIVAL AREA · EXPLORABLE' : 'EXPLORABLE GAME AREA';
     const areaNote = !place.playable ? 'This landmark is in the city plan; its game area is not playable in this build.' : outdoor ? 'Walk to it on the city streets and read its sign.' : 'Explore this landmark’s district and visitor hall.';
-    const gymNote = outdoor ? 'This landmark has no gym battle or badge.' : !gym ? 'Visit the hall and meet its host. This stop has no gym battle or badge.' : place.gymStatus === 'playable' ? 'A gym battle is playable here. Speak to the leader and win to earn a badge.' : place.gymStatus === 'pending-verification' ? 'This gym challenge is being verified. The district and visitor hall are explorable.' : 'This landmark’s fictional gym challenge is still in development.';
+    const gymNote = outdoor || place.id === 'maple-garden' ? 'The sign offers a rare Pokémon encounter. A successful capture unlocks that Pokémon in TEAM.' : !gym ? 'Meet the hall host to begin a rare Pokémon encounter. Successful captures unlock TEAM choices.' : place.gymStatus === 'playable' ? 'A gym battle is playable here. Speak to the leader and win to earn a badge.' : place.gymStatus === 'pending-verification' ? 'This gym challenge is being verified. The district and visitor hall are explorable.' : 'This landmark’s fictional gym challenge is still in development.';
     const artLabel = chinese ? `${place.nameZh}原創插圖` : `Original illustration of ${place.nameEn}`;
     const mapView = !gym && landmarkArt[place.id]?.mapView ? landmarkArt[place.id].facade : undefined;
     const art = gym ? `<div class="landmark-art">${landmarkSketch(place.id, artLabel)}<span>${t('ORIGINAL FIELD SKETCH')}</span></div>`
       : mapView ? `<div class="landmark-art is-map-view"><img src="${escapeHtml(mapView)}" alt="${escapeHtml(chinese ? `遊戲地圖上的${place.nameZh}` : `${place.nameEn} on the game map`)}"><span>${t('ON THE GAME MAP')}</span></div>` : '';
     dialog.querySelector('#landmark-detail')!.innerHTML = `
       ${art}
-      <div class="landmark-copy"><p class="landmark-category">${escapeHtml(chinese ? place.categoryZh : place.category)} <span>· ${escapeHtml(chinese ? place.districtZh : place.districtEn)}</span></p><h3>${escapeHtml(chinese ? place.nameZh : place.nameEn)}<span lang="${chinese ? 'en' : 'zh-Hant'}">${escapeHtml(chinese ? place.nameEn : place.nameZh)}</span></h3><p class="visitor-description">${escapeHtml(chinese ? place.descriptionZh : place.description)}</p>${place.location ? `<div class="visitor-address"><span>${t('Real-world address')}</span><address>${escapeHtml(chinese ? place.location.addressZh : place.location.address)}</address></div>` : ''}${info.url ? `<a class="official-link" href="${escapeHtml(info.url)}" target="_blank" rel="noopener noreferrer">${t('Official visitor information')} <span aria-hidden="true">↗</span></a>` : ''}${info.url && place.officialSourceTitle ? `<p class="visitor-source">${t('Source')}: ${escapeHtml(place.officialSourceTitle)}</p>` : ''}</div>
+      <div class="landmark-copy"><p class="landmark-category">${escapeHtml(chinese ? place.categoryZh : place.category)} <span>· ${escapeHtml(chinese ? place.districtZh : place.districtEn)}</span></p><h3>${escapeHtml(chinese ? place.nameZh : place.nameEn)}<span lang="${chinese ? 'en' : 'zh-Hant'}">${escapeHtml(chinese ? place.nameEn : place.nameZh)}</span></h3><p class="visitor-description">${escapeHtml(chinese ? place.descriptionZh : place.description)}</p>${place.location ? `<div class="visitor-address"><span>${t('Real-world address')}</span><address>${escapeHtml(chinese ? place.location.addressZh : place.location.address)}</address></div>` : ''}${info.url ? `<a class="official-link" href="${escapeHtml(info.url)}" target="_blank" rel="noopener noreferrer">${t('Official visitor information')} <span aria-hidden="true">↗</span></a>` : ''}${realMap ? `<a class="official-link visitor-map-link" href="${escapeHtml(realMap)}" target="_blank" rel="noopener noreferrer">${t('View real-world map')} <span aria-hidden="true">↗</span></a>` : ''}${info.url && place.officialSourceTitle ? `<p class="visitor-source">${t('Source')}: ${escapeHtml(place.officialSourceTitle)}</p>` : ''}</div>
       <div class="landmark-game-note"><span class="area-status ${place.playable ? 'area-playable' : 'area-planned'}">${t(areaLabel)}</span><p>${t(areaNote)}</p><div class="gym-note"><span>${t(gym ? 'FICTIONAL GYM CHALLENGE' : 'LANDMARK')}</span><p>${t(gymNote)}</p></div></div>`;
     if (reveal && matchMedia('(max-width: 670px)').matches) dialog.querySelector('#landmark-detail')!.scrollIntoView({ block: 'nearest', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' });
   }
