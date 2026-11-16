@@ -27,3 +27,14 @@ Current assignments and source checkpoints are recorded in
 `artifacts/coordination/2026-11-16-city-development/BRIEF.md`; verify current Git
 and deployment state rather than treating that dated checkpoint as permanently
 current.
+
+## Map visual quality and approval
+
+Use the prior native maps as the baseline for density, building/object variety
+and coherent neighborhood composition. Preserve the highway/water boundary
+language when changing geometry. Real named arterials may be supplemented with
+designed unlabeled local streets and varied orthogonal street patterns. Give
+districts distinct building palettes, including modern Xitun high-rises and
+recognizable convenience stores. All new location designs require the user's
+explicit approval before installation. Tiger City is an approved additional
+non-gym destination; retain ten gyms. Technical checks are not visual approval.
