@@ -1,6 +1,14 @@
 {
   "schemaVersion": 1,
   "contractId": "taichung-current-native-minimap",
+  "geometryVersion": "horizontal-v1",
+  "outdoorSpawn": {
+    "nativeKey": "43:0",
+    "local": [
+      30,
+      45
+    ]
+  },
   "status": "source-registered baseline geometry; Main must bind to the exact built ROM",
   "coordinateSystem": {
     "units": "metatiles",
@@ -8,25 +16,26 @@
     "origin": "zero-based unbuffered map-local tile",
     "x": "right",
     "y": "down",
-    "northUp": true,
+    "northUp": false,
     "nativeLocalSource": "gSaveBlock1Ptr->pos; object-event virtual coordinates require subtracting MAP_OFFSET before use",
     "virtualMapOffset": 7,
     "rectConvention": "[minX,minY,maxXExclusive,maxYExclusive]",
-    "markerAnchor": "exterior entrance tile; display at tile center"
+    "markerAnchor": "exterior entrance tile; display at tile center",
+    "orientation": "Taiwan Boulevard horizontal: Tunghai left, Station right; not a rigid rotation"
   },
   "world": {
-    "width": 129,
-    "height": 181,
+    "width": 352,
+    "height": 216,
     "bounds": [
       0,
       0,
-      129,
-      181
+      352,
+      216
     ],
     "coordinateSpace": "compressed playable baseline, not geographic GPS",
     "cityContractOffset": [
-      5,
-      5
+      0,
+      0
     ]
   },
   "policy": {
@@ -49,33 +58,163 @@
   },
   "gymIdNamespace": "stable landmark string ID; numeric progression/save bits are owned by Gameplay, not inferred here",
   "mapsByNativeKey": {
-    "43:0": {
-      "mapId": "MAP_TAICHUNG_OLD_CITY",
-      "nativeMapName": "TaichungOldCity",
-      "nativeKey": "43:0",
+    "43:21": {
+      "mapId": "MAP_TAICHUNG_TUNGHAI_NORTH",
+      "nativeMapName": "TaichungTunghaiNorth",
+      "nativeKey": "43:21",
       "group": 43,
-      "number": 0,
-      "packedMapId": 11008,
-      "layoutId": "LAYOUT_TAICHUNG_OLD_CITY",
-      "width": 44,
-      "height": 77,
+      "number": 21,
+      "packedMapId": 11029,
+      "layoutId": "LAYOUT_TAICHUNG_TUNGHAI_NORTH",
+      "width": 104,
+      "height": 72,
       "registration": "registered-source",
       "kind": "exterior",
       "projection": "local-plus-world-origin",
       "worldOrigin": [
-        85,
-        53
+        0,
+        0
       ],
       "worldRect": [
-        85,
-        53,
-        129,
-        130
+        0,
+        0,
+        104,
+        72
+      ],
+      "markerIds": []
+    },
+    "43:22": {
+      "mapId": "MAP_TAICHUNG_FENGJIA_QUARTER",
+      "nativeMapName": "TaichungFengjiaQuarter",
+      "nativeKey": "43:22",
+      "group": 43,
+      "number": 22,
+      "packedMapId": 11030,
+      "layoutId": "LAYOUT_TAICHUNG_FENGJIA_QUARTER",
+      "width": 104,
+      "height": 72,
+      "registration": "registered-source",
+      "kind": "exterior",
+      "projection": "local-plus-world-origin",
+      "worldOrigin": [
+        104,
+        0
+      ],
+      "worldRect": [
+        104,
+        0,
+        208,
+        72
       ],
       "markerIds": [
-        "old-taichung-station",
-        "taichung-park",
-        "miyahara"
+        "fengjia-night-market"
+      ]
+    },
+    "43:23": {
+      "mapId": "MAP_TAICHUNG_MUSEUM_QUARTER",
+      "nativeMapName": "TaichungMuseumQuarter",
+      "nativeKey": "43:23",
+      "group": 43,
+      "number": 23,
+      "packedMapId": 11031,
+      "layoutId": "LAYOUT_TAICHUNG_MUSEUM_QUARTER",
+      "width": 72,
+      "height": 72,
+      "registration": "registered-source",
+      "kind": "exterior",
+      "projection": "local-plus-world-origin",
+      "worldOrigin": [
+        208,
+        0
+      ],
+      "worldRect": [
+        208,
+        0,
+        280,
+        72
+      ],
+      "markerIds": [
+        "natural-science-museum"
+      ]
+    },
+    "43:18": {
+      "mapId": "MAP_TAICHUNG_OLD_CITY_NORTH",
+      "nativeMapName": "TaichungOldCityNorth",
+      "nativeKey": "43:18",
+      "group": 43,
+      "number": 18,
+      "packedMapId": 11026,
+      "layoutId": "LAYOUT_TAICHUNG_OLD_CITY_NORTH",
+      "width": 72,
+      "height": 72,
+      "registration": "registered-source",
+      "kind": "exterior",
+      "projection": "local-plus-world-origin",
+      "worldOrigin": [
+        280,
+        0
+      ],
+      "worldRect": [
+        280,
+        0,
+        352,
+        72
+      ],
+      "markerIds": [
+        "taichung-park"
+      ]
+    },
+    "43:24": {
+      "mapId": "MAP_TAICHUNG_TUNGHAI",
+      "nativeMapName": "TaichungTunghai",
+      "nativeKey": "43:24",
+      "group": 43,
+      "number": 24,
+      "packedMapId": 11032,
+      "layoutId": "LAYOUT_TAICHUNG_TUNGHAI",
+      "width": 104,
+      "height": 72,
+      "registration": "registered-source",
+      "kind": "exterior",
+      "projection": "local-plus-world-origin",
+      "worldOrigin": [
+        0,
+        72
+      ],
+      "worldRect": [
+        0,
+        72,
+        104,
+        144
+      ],
+      "markerIds": []
+    },
+    "43:2": {
+      "mapId": "MAP_TAICHUNG_XITUN",
+      "nativeMapName": "TaichungXitun",
+      "nativeKey": "43:2",
+      "group": 43,
+      "number": 2,
+      "packedMapId": 11010,
+      "layoutId": "LAYOUT_TAICHUNG_XITUN",
+      "width": 104,
+      "height": 72,
+      "registration": "registered-source",
+      "kind": "exterior",
+      "projection": "local-plus-world-origin",
+      "worldOrigin": [
+        104,
+        72
+      ],
+      "worldRect": [
+        104,
+        72,
+        208,
+        144
+      ],
+      "markerIds": [
+        "maple-garden",
+        "taichung-theater"
       ]
     },
     "43:1": {
@@ -86,56 +225,79 @@
       "number": 1,
       "packedMapId": 11009,
       "layoutId": "LAYOUT_TAICHUNG_GREENWAY",
-      "width": 40,
-      "height": 109,
+      "width": 72,
+      "height": 72,
       "registration": "registered-source",
       "kind": "exterior",
       "projection": "local-plus-world-origin",
       "worldOrigin": [
-        45,
-        0
+        208,
+        72
       ],
       "worldRect": [
-        45,
-        0,
-        85,
-        109
+        208,
+        72,
+        280,
+        144
       ],
       "markerIds": [
-        "natural-science-museum",
         "calligraphy-greenway",
         "shen-ji-new-village",
         "fine-arts-museum"
       ]
     },
-    "43:2": {
-      "mapId": "MAP_TAICHUNG_XITUN",
-      "nativeMapName": "TaichungXitun",
-      "nativeKey": "43:2",
+    "43:0": {
+      "mapId": "MAP_TAICHUNG_OLD_CITY",
+      "nativeMapName": "TaichungOldCity",
+      "nativeKey": "43:0",
       "group": 43,
-      "number": 2,
-      "packedMapId": 11010,
-      "layoutId": "LAYOUT_TAICHUNG_XITUN",
-      "width": 45,
-      "height": 69,
+      "number": 0,
+      "packedMapId": 11008,
+      "layoutId": "LAYOUT_TAICHUNG_OLD_CITY",
+      "width": 72,
+      "height": 72,
+      "registration": "registered-source",
+      "kind": "exterior",
+      "projection": "local-plus-world-origin",
+      "worldOrigin": [
+        280,
+        72
+      ],
+      "worldRect": [
+        280,
+        72,
+        352,
+        144
+      ],
+      "markerIds": [
+        "old-taichung-station",
+        "miyahara"
+      ]
+    },
+    "43:25": {
+      "mapId": "MAP_TAICHUNG_RAINBOW_QUARTER",
+      "nativeMapName": "TaichungRainbowQuarter",
+      "nativeKey": "43:25",
+      "group": 43,
+      "number": 25,
+      "packedMapId": 11033,
+      "layoutId": "LAYOUT_TAICHUNG_RAINBOW_QUARTER",
+      "width": 104,
+      "height": 72,
       "registration": "registered-source",
       "kind": "exterior",
       "projection": "local-plus-world-origin",
       "worldOrigin": [
         0,
-        0
+        144
       ],
       "worldRect": [
         0,
-        0,
-        45,
-        69
+        144,
+        104,
+        216
       ],
-      "markerIds": [
-        "fengjia-night-market",
-        "maple-garden",
-        "taichung-theater"
-      ]
+      "markerIds": []
     },
     "43:14": {
       "mapId": "MAP_TAICHUNG_NANTUN_NORTH",
@@ -145,20 +307,20 @@
       "number": 14,
       "packedMapId": 11022,
       "layoutId": "LAYOUT_TAICHUNG_NANTUN_NORTH",
-      "width": 45,
-      "height": 40,
+      "width": 104,
+      "height": 72,
       "registration": "registered-source",
       "kind": "exterior",
       "projection": "local-plus-world-origin",
       "worldOrigin": [
-        0,
-        69
+        104,
+        144
       ],
       "worldRect": [
-        0,
-        69,
-        45,
-        109
+        104,
+        144,
+        208,
+        216
       ],
       "markerIds": []
     },
@@ -170,48 +332,48 @@
       "number": 15,
       "packedMapId": 11023,
       "layoutId": "LAYOUT_TAICHUNG_NANTUN_WANHE",
-      "width": 85,
+      "width": 72,
       "height": 72,
       "registration": "registered-source",
       "kind": "exterior",
       "projection": "local-plus-world-origin",
       "worldOrigin": [
-        0,
-        109
+        208,
+        144
       ],
       "worldRect": [
-        0,
-        109,
-        85,
-        181
+        208,
+        144,
+        280,
+        216
       ],
       "markerIds": [
         "wanhe-temple",
         "wenchang-temple"
       ]
     },
-    "43:18": {
-      "mapId": "MAP_TAICHUNG_OLD_CITY_NORTH",
-      "nativeMapName": "TaichungOldCityNorth",
-      "nativeKey": "43:18",
+    "43:26": {
+      "mapId": "MAP_TAICHUNG_HERITAGE_QUARTER",
+      "nativeMapName": "TaichungHeritageQuarter",
+      "nativeKey": "43:26",
       "group": 43,
-      "number": 18,
-      "packedMapId": 11026,
-      "layoutId": "LAYOUT_TAICHUNG_OLD_CITY_NORTH",
-      "width": 44,
-      "height": 53,
+      "number": 26,
+      "packedMapId": 11034,
+      "layoutId": "LAYOUT_TAICHUNG_HERITAGE_QUARTER",
+      "width": 72,
+      "height": 72,
       "registration": "registered-source",
       "kind": "exterior",
       "projection": "local-plus-world-origin",
       "worldOrigin": [
-        85,
-        0
+        280,
+        144
       ],
       "worldRect": [
-        85,
-        0,
-        129,
-        53
+        280,
+        144,
+        352,
+        216
       ],
       "markerIds": []
     },
@@ -232,12 +394,12 @@
       "parentNativeKey": "43:0",
       "parentMarkerId": "old-taichung-station",
       "parentEntranceLocal": [
-        32,
-        64
+        53,
+        24
       ],
       "parentEntranceWorld": [
-        117,
-        117
+        333,
+        96
       ],
       "ignoreIndoorLocalXYForWorld": true,
       "indoorLabel": {
@@ -258,16 +420,16 @@
       "registration": "registered-source",
       "kind": "interior",
       "projection": "parent-entrance",
-      "parentMapId": "MAP_TAICHUNG_OLD_CITY",
-      "parentNativeKey": "43:0",
+      "parentMapId": "MAP_TAICHUNG_OLD_CITY_NORTH",
+      "parentNativeKey": "43:18",
       "parentMarkerId": "taichung-park",
       "parentEntranceLocal": [
-        32,
-        30
+        50,
+        58
       ],
       "parentEntranceWorld": [
-        117,
-        83
+        330,
+        58
       ],
       "ignoreIndoorLocalXYForWorld": true,
       "indoorLabel": {
@@ -292,12 +454,12 @@
       "parentNativeKey": "43:0",
       "parentMarkerId": "miyahara",
       "parentEntranceLocal": [
-        20,
-        51
+        44,
+        42
       ],
       "parentEntranceWorld": [
-        105,
-        104
+        324,
+        114
       ],
       "ignoreIndoorLocalXYForWorld": true,
       "indoorLabel": {
@@ -318,16 +480,16 @@
       "registration": "registered-source",
       "kind": "interior",
       "projection": "parent-entrance",
-      "parentMapId": "MAP_TAICHUNG_GREENWAY",
-      "parentNativeKey": "43:1",
+      "parentMapId": "MAP_TAICHUNG_MUSEUM_QUARTER",
+      "parentNativeKey": "43:23",
       "parentMarkerId": "natural-science-museum",
       "parentEntranceLocal": [
-        24,
-        57
+        50,
+        64
       ],
       "parentEntranceWorld": [
-        69,
-        57
+        258,
+        64
       ],
       "ignoreIndoorLocalXYForWorld": true,
       "indoorLabel": {
@@ -352,12 +514,12 @@
       "parentNativeKey": "43:1",
       "parentMarkerId": "calligraphy-greenway",
       "parentEntranceLocal": [
-        22,
-        73
+        50,
+        32
       ],
       "parentEntranceWorld": [
-        67,
-        73
+        258,
+        104
       ],
       "ignoreIndoorLocalXYForWorld": true,
       "indoorLabel": {
@@ -382,12 +544,12 @@
       "parentNativeKey": "43:1",
       "parentMarkerId": "shen-ji-new-village",
       "parentEntranceLocal": [
-        11,
-        81
+        38,
+        51
       ],
       "parentEntranceWorld": [
-        56,
-        81
+        246,
+        123
       ],
       "ignoreIndoorLocalXYForWorld": true,
       "indoorLabel": {
@@ -412,12 +574,12 @@
       "parentNativeKey": "43:1",
       "parentMarkerId": "fine-arts-museum",
       "parentEntranceLocal": [
-        13,
-        99
+        57,
+        58
       ],
       "parentEntranceWorld": [
-        58,
-        99
+        265,
+        130
       ],
       "ignoreIndoorLocalXYForWorld": true,
       "indoorLabel": {
@@ -438,16 +600,16 @@
       "registration": "registered-source",
       "kind": "interior",
       "projection": "parent-entrance",
-      "parentMapId": "MAP_TAICHUNG_XITUN",
-      "parentNativeKey": "43:2",
+      "parentMapId": "MAP_TAICHUNG_FENGJIA_QUARTER",
+      "parentNativeKey": "43:22",
       "parentMarkerId": "fengjia-night-market",
       "parentEntranceLocal": [
-        29,
-        17
+        56,
+        40
       ],
       "parentEntranceWorld": [
-        29,
-        17
+        160,
+        40
       ],
       "ignoreIndoorLocalXYForWorld": true,
       "indoorLabel": {
@@ -472,12 +634,12 @@
       "parentNativeKey": "43:2",
       "parentMarkerId": "maple-garden",
       "parentEntranceLocal": [
-        17,
-        37
+        34,
+        28
       ],
       "parentEntranceWorld": [
-        17,
-        37
+        138,
+        100
       ],
       "ignoreIndoorLocalXYForWorld": true,
       "indoorLabel": {
@@ -502,12 +664,12 @@
       "parentNativeKey": "43:2",
       "parentMarkerId": "taichung-theater",
       "parentEntranceLocal": [
-        17,
-        49
+        64,
+        40
       ],
       "parentEntranceWorld": [
-        17,
-        49
+        168,
+        112
       ],
       "ignoreIndoorLocalXYForWorld": true,
       "indoorLabel": {
@@ -532,12 +694,12 @@
       "parentNativeKey": "43:15",
       "parentMarkerId": "wanhe-temple",
       "parentEntranceLocal": [
-        31,
-        33
+        24,
+        40
       ],
       "parentEntranceWorld": [
-        31,
-        142
+        232,
+        184
       ],
       "ignoreIndoorLocalXYForWorld": true,
       "indoorLabel": {
@@ -562,12 +724,12 @@
       "parentNativeKey": "43:15",
       "parentMarkerId": "wenchang-temple",
       "parentEntranceLocal": [
-        21,
-        33
+        12,
+        40
       ],
       "parentEntranceWorld": [
-        21,
-        142
+        220,
+        184
       ],
       "ignoreIndoorLocalXYForWorld": true,
       "indoorLabel": {
@@ -592,12 +754,12 @@
       "parentNativeKey": "43:0",
       "parentMarkerId": "old-taichung-station",
       "parentEntranceLocal": [
-        32,
-        64
+        53,
+        24
       ],
       "parentEntranceWorld": [
-        117,
-        117
+        333,
+        96
       ],
       "ignoreIndoorLocalXYForWorld": true,
       "indoorLabel": {
@@ -609,22 +771,90 @@
         "nativeKey": "43:0",
         "local": [
           30,
-          66
+          45
         ],
         "world": [
-          115,
-          119
+          310,
+          117
         ]
+      }
+    },
+    "43:19": {
+      "mapId": "MAP_TAICHUNG_GUEST_HOUSE_1F",
+      "nativeMapName": "TaichungGuestHouse_1F",
+      "nativeKey": "43:19",
+      "group": 43,
+      "number": 19,
+      "packedMapId": 11027,
+      "layoutId": "LAYOUT_PALLET_TOWN_PLAYERS_HOUSE_1F",
+      "width": 13,
+      "height": 10,
+      "registration": "registered-source",
+      "kind": "interior",
+      "projection": "parent-entrance",
+      "parentMapId": "MAP_TAICHUNG_OLD_CITY",
+      "parentNativeKey": "43:0",
+      "parentMarkerId": null,
+      "parentPlaceId": "guest-house",
+      "parentEntranceLocal": [
+        32,
+        42
+      ],
+      "parentEntranceWorld": [
+        312,
+        114
+      ],
+      "ignoreIndoorLocalXYForWorld": true,
+      "indoorLabel": {
+        "en": "Guest house",
+        "zh": "旅宿"
+      }
+    },
+    "43:20": {
+      "mapId": "MAP_TAICHUNG_GUEST_HOUSE_2F",
+      "nativeMapName": "TaichungGuestHouse_2F",
+      "nativeKey": "43:20",
+      "group": 43,
+      "number": 20,
+      "packedMapId": 11028,
+      "layoutId": "LAYOUT_PALLET_TOWN_PLAYERS_HOUSE_2F",
+      "width": 12,
+      "height": 9,
+      "registration": "registered-source",
+      "kind": "interior",
+      "projection": "parent-entrance",
+      "parentMapId": "MAP_TAICHUNG_OLD_CITY",
+      "parentNativeKey": "43:0",
+      "parentMarkerId": null,
+      "parentPlaceId": "guest-house",
+      "parentEntranceLocal": [
+        32,
+        42
+      ],
+      "parentEntranceWorld": [
+        312,
+        114
+      ],
+      "ignoreIndoorLocalXYForWorld": true,
+      "indoorLabel": {
+        "en": "Guest house",
+        "zh": "旅宿"
       }
     }
   },
   "nativeKeysByMapId": {
-    "MAP_TAICHUNG_OLD_CITY": "43:0",
-    "MAP_TAICHUNG_GREENWAY": "43:1",
+    "MAP_TAICHUNG_TUNGHAI_NORTH": "43:21",
+    "MAP_TAICHUNG_FENGJIA_QUARTER": "43:22",
+    "MAP_TAICHUNG_MUSEUM_QUARTER": "43:23",
+    "MAP_TAICHUNG_OLD_CITY_NORTH": "43:18",
+    "MAP_TAICHUNG_TUNGHAI": "43:24",
     "MAP_TAICHUNG_XITUN": "43:2",
+    "MAP_TAICHUNG_GREENWAY": "43:1",
+    "MAP_TAICHUNG_OLD_CITY": "43:0",
+    "MAP_TAICHUNG_RAINBOW_QUARTER": "43:25",
     "MAP_TAICHUNG_NANTUN_NORTH": "43:14",
     "MAP_TAICHUNG_NANTUN_WANHE": "43:15",
-    "MAP_TAICHUNG_OLD_CITY_NORTH": "43:18",
+    "MAP_TAICHUNG_HERITAGE_QUARTER": "43:26",
     "MAP_TAICHUNG_OLD_STATION_GYM": "43:3",
     "MAP_TAICHUNG_PARK_GYM": "43:4",
     "MAP_TAICHUNG_MIYAHARA_GYM": "43:5",
@@ -637,7 +867,9 @@
     "MAP_TAICHUNG_THEATER_GYM": "43:12",
     "MAP_TAICHUNG_WANHE_TEMPLE_HALL": "43:16",
     "MAP_TAICHUNG_WENCHANG_TEMPLE_HALL": "43:17",
-    "MAP_TAICHUNG_STATION_WELCOME": "43:13"
+    "MAP_TAICHUNG_STATION_WELCOME": "43:13",
+    "MAP_TAICHUNG_GUEST_HOUSE_1F": "43:19",
+    "MAP_TAICHUNG_GUEST_HOUSE_2F": "43:20"
   },
   "markersById": {
     "old-taichung-station": {
@@ -651,12 +883,12 @@
       "exteriorMapId": "MAP_TAICHUNG_OLD_CITY",
       "exteriorNativeKey": "43:0",
       "localEntrance": [
-        32,
-        64
+        53,
+        24
       ],
       "world": [
-        117,
-        117
+        333,
+        96
       ],
       "exteriorWarpId": 0,
       "gymMapId": "MAP_TAICHUNG_OLD_STATION_GYM",
@@ -671,17 +903,17 @@
         "zh": "臺中公園"
       },
       "kind": "landmark-gym",
-      "exteriorMapId": "MAP_TAICHUNG_OLD_CITY",
-      "exteriorNativeKey": "43:0",
+      "exteriorMapId": "MAP_TAICHUNG_OLD_CITY_NORTH",
+      "exteriorNativeKey": "43:18",
       "localEntrance": [
-        32,
-        30
+        50,
+        58
       ],
       "world": [
-        117,
-        83
+        330,
+        58
       ],
-      "exteriorWarpId": 1,
+      "exteriorWarpId": 0,
       "gymMapId": "MAP_TAICHUNG_PARK_GYM",
       "gymNativeKey": "43:4",
       "gymEntryWarpId": 1
@@ -697,14 +929,14 @@
       "exteriorMapId": "MAP_TAICHUNG_OLD_CITY",
       "exteriorNativeKey": "43:0",
       "localEntrance": [
-        20,
-        51
+        44,
+        42
       ],
       "world": [
-        105,
-        104
+        324,
+        114
       ],
-      "exteriorWarpId": 2,
+      "exteriorWarpId": 1,
       "gymMapId": "MAP_TAICHUNG_MIYAHARA_GYM",
       "gymNativeKey": "43:5",
       "gymEntryWarpId": 1
@@ -717,15 +949,15 @@
         "zh": "國立自然科學博物館"
       },
       "kind": "landmark-gym",
-      "exteriorMapId": "MAP_TAICHUNG_GREENWAY",
-      "exteriorNativeKey": "43:1",
+      "exteriorMapId": "MAP_TAICHUNG_MUSEUM_QUARTER",
+      "exteriorNativeKey": "43:23",
       "localEntrance": [
-        24,
-        57
+        50,
+        64
       ],
       "world": [
-        69,
-        57
+        258,
+        64
       ],
       "exteriorWarpId": 0,
       "gymMapId": "MAP_TAICHUNG_SCIENCE_MUSEUM_GYM",
@@ -743,14 +975,14 @@
       "exteriorMapId": "MAP_TAICHUNG_GREENWAY",
       "exteriorNativeKey": "43:1",
       "localEntrance": [
-        22,
-        73
+        50,
+        32
       ],
       "world": [
-        67,
-        73
+        258,
+        104
       ],
-      "exteriorWarpId": 1,
+      "exteriorWarpId": 0,
       "gymMapId": "MAP_TAICHUNG_GREENWAY_GYM",
       "gymNativeKey": "43:7",
       "gymEntryWarpId": 1
@@ -766,14 +998,14 @@
       "exteriorMapId": "MAP_TAICHUNG_GREENWAY",
       "exteriorNativeKey": "43:1",
       "localEntrance": [
-        11,
-        81
+        38,
+        51
       ],
       "world": [
-        56,
-        81
+        246,
+        123
       ],
-      "exteriorWarpId": 2,
+      "exteriorWarpId": 1,
       "gymMapId": "MAP_TAICHUNG_SHEN_JI_GYM",
       "gymNativeKey": "43:8",
       "gymEntryWarpId": 1
@@ -789,14 +1021,14 @@
       "exteriorMapId": "MAP_TAICHUNG_GREENWAY",
       "exteriorNativeKey": "43:1",
       "localEntrance": [
-        13,
-        99
+        57,
+        58
       ],
       "world": [
-        58,
-        99
+        265,
+        130
       ],
-      "exteriorWarpId": 3,
+      "exteriorWarpId": 2,
       "gymMapId": "MAP_TAICHUNG_FINE_ARTS_GYM",
       "gymNativeKey": "43:9",
       "gymEntryWarpId": 1
@@ -809,15 +1041,15 @@
         "zh": "逢甲夜市"
       },
       "kind": "landmark-gym",
-      "exteriorMapId": "MAP_TAICHUNG_XITUN",
-      "exteriorNativeKey": "43:2",
+      "exteriorMapId": "MAP_TAICHUNG_FENGJIA_QUARTER",
+      "exteriorNativeKey": "43:22",
       "localEntrance": [
-        29,
-        17
+        56,
+        40
       ],
       "world": [
-        29,
-        17
+        160,
+        40
       ],
       "exteriorWarpId": 0,
       "gymMapId": "MAP_TAICHUNG_FENGJIA_GYM",
@@ -835,14 +1067,14 @@
       "exteriorMapId": "MAP_TAICHUNG_XITUN",
       "exteriorNativeKey": "43:2",
       "localEntrance": [
-        17,
-        37
+        34,
+        28
       ],
       "world": [
-        17,
-        37
+        138,
+        100
       ],
-      "exteriorWarpId": 1,
+      "exteriorWarpId": 0,
       "gymMapId": "MAP_TAICHUNG_MAPLE_GARDEN_GYM",
       "gymNativeKey": "43:11",
       "gymEntryWarpId": 1
@@ -858,14 +1090,14 @@
       "exteriorMapId": "MAP_TAICHUNG_XITUN",
       "exteriorNativeKey": "43:2",
       "localEntrance": [
-        17,
-        49
+        64,
+        40
       ],
       "world": [
-        17,
-        49
+        168,
+        112
       ],
-      "exteriorWarpId": 2,
+      "exteriorWarpId": 1,
       "gymMapId": "MAP_TAICHUNG_THEATER_GYM",
       "gymNativeKey": "43:12",
       "gymEntryWarpId": 1
@@ -881,12 +1113,12 @@
       "exteriorMapId": "MAP_TAICHUNG_NANTUN_WANHE",
       "exteriorNativeKey": "43:15",
       "localEntrance": [
-        31,
-        33
+        24,
+        40
       ],
       "world": [
-        31,
-        142
+        232,
+        184
       ],
       "exteriorWarpId": 0,
       "gymMapId": "MAP_TAICHUNG_WANHE_TEMPLE_HALL",
@@ -904,12 +1136,12 @@
       "exteriorMapId": "MAP_TAICHUNG_NANTUN_WANHE",
       "exteriorNativeKey": "43:15",
       "localEntrance": [
-        21,
-        33
+        12,
+        40
       ],
       "world": [
-        21,
-        142
+        220,
+        184
       ],
       "exteriorWarpId": 1,
       "gymMapId": "MAP_TAICHUNG_WENCHANG_TEMPLE_HALL",
@@ -919,147 +1151,15 @@
   },
   "seams": [
     {
-      "fromNativeKey": "43:0",
-      "toNativeKey": "43:18",
-      "direction": "up",
-      "nativeOffset": 0,
-      "coordinateRule": "target transverse local = source transverse local - nativeOffset",
-      "overlappingEdgeTiles": 44,
-      "first": {
-        "fromLocal": [
-          0,
-          0
-        ],
-        "toLocal": [
-          0,
-          52
-        ],
-        "fromWorld": [
-          85,
-          53
-        ],
-        "toWorld": [
-          85,
-          52
-        ]
-      },
-      "last": {
-        "fromLocal": [
-          43,
-          0
-        ],
-        "toLocal": [
-          43,
-          52
-        ],
-        "fromWorld": [
-          128,
-          53
-        ],
-        "toWorld": [
-          128,
-          52
-        ]
-      }
-    },
-    {
-      "fromNativeKey": "43:0",
-      "toNativeKey": "43:1",
-      "direction": "left",
-      "nativeOffset": -53,
-      "coordinateRule": "target transverse local = source transverse local - nativeOffset",
-      "overlappingEdgeTiles": 56,
-      "first": {
-        "fromLocal": [
-          0,
-          0
-        ],
-        "toLocal": [
-          39,
-          53
-        ],
-        "fromWorld": [
-          85,
-          53
-        ],
-        "toWorld": [
-          84,
-          53
-        ]
-      },
-      "last": {
-        "fromLocal": [
-          0,
-          55
-        ],
-        "toLocal": [
-          39,
-          108
-        ],
-        "fromWorld": [
-          85,
-          108
-        ],
-        "toWorld": [
-          84,
-          108
-        ]
-      }
-    },
-    {
-      "fromNativeKey": "43:0",
-      "toNativeKey": "43:15",
-      "direction": "left",
-      "nativeOffset": 56,
-      "coordinateRule": "target transverse local = source transverse local - nativeOffset",
-      "overlappingEdgeTiles": 21,
-      "first": {
-        "fromLocal": [
-          0,
-          56
-        ],
-        "toLocal": [
-          84,
-          0
-        ],
-        "fromWorld": [
-          85,
-          109
-        ],
-        "toWorld": [
-          84,
-          109
-        ]
-      },
-      "last": {
-        "fromLocal": [
-          0,
-          76
-        ],
-        "toLocal": [
-          84,
-          20
-        ],
-        "fromWorld": [
-          85,
-          129
-        ],
-        "toWorld": [
-          84,
-          129
-        ]
-      }
-    },
-    {
-      "fromNativeKey": "43:1",
-      "toNativeKey": "43:18",
+      "fromNativeKey": "43:21",
+      "toNativeKey": "43:22",
       "direction": "right",
       "nativeOffset": 0,
       "coordinateRule": "target transverse local = source transverse local - nativeOffset",
-      "overlappingEdgeTiles": 53,
+      "overlappingEdgeTiles": 72,
       "first": {
         "fromLocal": [
-          39,
+          103,
           0
         ],
         "toLocal": [
@@ -1067,219 +1167,263 @@
           0
         ],
         "fromWorld": [
-          84,
+          103,
           0
         ],
         "toWorld": [
-          85,
+          104,
           0
         ]
       },
       "last": {
         "fromLocal": [
-          39,
-          52
+          103,
+          71
         ],
         "toLocal": [
           0,
-          52
+          71
         ],
         "fromWorld": [
-          84,
-          52
+          103,
+          71
         ],
         "toWorld": [
-          85,
-          52
+          104,
+          71
         ]
       }
     },
     {
-      "fromNativeKey": "43:1",
-      "toNativeKey": "43:0",
-      "direction": "right",
-      "nativeOffset": 53,
+      "fromNativeKey": "43:21",
+      "toNativeKey": "43:24",
+      "direction": "down",
+      "nativeOffset": 0,
       "coordinateRule": "target transverse local = source transverse local - nativeOffset",
-      "overlappingEdgeTiles": 56,
+      "overlappingEdgeTiles": 104,
       "first": {
         "fromLocal": [
-          39,
-          53
+          0,
+          71
         ],
         "toLocal": [
           0,
           0
         ],
         "fromWorld": [
-          84,
-          53
+          0,
+          71
         ],
         "toWorld": [
-          85,
-          53
+          0,
+          72
         ]
       },
       "last": {
         "fromLocal": [
-          39,
-          108
+          103,
+          71
         ],
         "toLocal": [
-          0,
-          55
+          103,
+          0
         ],
         "fromWorld": [
-          84,
-          108
+          103,
+          71
         ],
         "toWorld": [
-          85,
-          108
+          103,
+          72
         ]
       }
     },
     {
-      "fromNativeKey": "43:1",
+      "fromNativeKey": "43:22",
+      "toNativeKey": "43:21",
+      "direction": "left",
+      "nativeOffset": 0,
+      "coordinateRule": "target transverse local = source transverse local - nativeOffset",
+      "overlappingEdgeTiles": 72,
+      "first": {
+        "fromLocal": [
+          0,
+          0
+        ],
+        "toLocal": [
+          103,
+          0
+        ],
+        "fromWorld": [
+          104,
+          0
+        ],
+        "toWorld": [
+          103,
+          0
+        ]
+      },
+      "last": {
+        "fromLocal": [
+          0,
+          71
+        ],
+        "toLocal": [
+          103,
+          71
+        ],
+        "fromWorld": [
+          104,
+          71
+        ],
+        "toWorld": [
+          103,
+          71
+        ]
+      }
+    },
+    {
+      "fromNativeKey": "43:22",
+      "toNativeKey": "43:23",
+      "direction": "right",
+      "nativeOffset": 0,
+      "coordinateRule": "target transverse local = source transverse local - nativeOffset",
+      "overlappingEdgeTiles": 72,
+      "first": {
+        "fromLocal": [
+          103,
+          0
+        ],
+        "toLocal": [
+          0,
+          0
+        ],
+        "fromWorld": [
+          207,
+          0
+        ],
+        "toWorld": [
+          208,
+          0
+        ]
+      },
+      "last": {
+        "fromLocal": [
+          103,
+          71
+        ],
+        "toLocal": [
+          0,
+          71
+        ],
+        "fromWorld": [
+          207,
+          71
+        ],
+        "toWorld": [
+          208,
+          71
+        ]
+      }
+    },
+    {
+      "fromNativeKey": "43:22",
       "toNativeKey": "43:2",
+      "direction": "down",
+      "nativeOffset": 0,
+      "coordinateRule": "target transverse local = source transverse local - nativeOffset",
+      "overlappingEdgeTiles": 104,
+      "first": {
+        "fromLocal": [
+          0,
+          71
+        ],
+        "toLocal": [
+          0,
+          0
+        ],
+        "fromWorld": [
+          104,
+          71
+        ],
+        "toWorld": [
+          104,
+          72
+        ]
+      },
+      "last": {
+        "fromLocal": [
+          103,
+          71
+        ],
+        "toLocal": [
+          103,
+          0
+        ],
+        "fromWorld": [
+          207,
+          71
+        ],
+        "toWorld": [
+          207,
+          72
+        ]
+      }
+    },
+    {
+      "fromNativeKey": "43:23",
+      "toNativeKey": "43:22",
       "direction": "left",
       "nativeOffset": 0,
       "coordinateRule": "target transverse local = source transverse local - nativeOffset",
-      "overlappingEdgeTiles": 69,
+      "overlappingEdgeTiles": 72,
       "first": {
         "fromLocal": [
           0,
           0
         ],
         "toLocal": [
-          44,
+          103,
           0
         ],
         "fromWorld": [
-          45,
+          208,
           0
         ],
         "toWorld": [
-          44,
+          207,
           0
         ]
       },
       "last": {
         "fromLocal": [
           0,
-          68
+          71
         ],
         "toLocal": [
-          44,
-          68
+          103,
+          71
         ],
         "fromWorld": [
-          45,
-          68
+          208,
+          71
         ],
         "toWorld": [
-          44,
-          68
+          207,
+          71
         ]
       }
     },
     {
-      "fromNativeKey": "43:1",
-      "toNativeKey": "43:14",
-      "direction": "left",
-      "nativeOffset": 69,
-      "coordinateRule": "target transverse local = source transverse local - nativeOffset",
-      "overlappingEdgeTiles": 40,
-      "first": {
-        "fromLocal": [
-          0,
-          69
-        ],
-        "toLocal": [
-          44,
-          0
-        ],
-        "fromWorld": [
-          45,
-          69
-        ],
-        "toWorld": [
-          44,
-          69
-        ]
-      },
-      "last": {
-        "fromLocal": [
-          0,
-          108
-        ],
-        "toLocal": [
-          44,
-          39
-        ],
-        "fromWorld": [
-          45,
-          108
-        ],
-        "toWorld": [
-          44,
-          108
-        ]
-      }
-    },
-    {
-      "fromNativeKey": "43:1",
-      "toNativeKey": "43:15",
-      "direction": "down",
-      "nativeOffset": -45,
-      "coordinateRule": "target transverse local = source transverse local - nativeOffset",
-      "overlappingEdgeTiles": 40,
-      "first": {
-        "fromLocal": [
-          0,
-          108
-        ],
-        "toLocal": [
-          45,
-          0
-        ],
-        "fromWorld": [
-          45,
-          108
-        ],
-        "toWorld": [
-          45,
-          109
-        ]
-      },
-      "last": {
-        "fromLocal": [
-          39,
-          108
-        ],
-        "toLocal": [
-          84,
-          0
-        ],
-        "fromWorld": [
-          84,
-          108
-        ],
-        "toWorld": [
-          84,
-          109
-        ]
-      }
-    },
-    {
-      "fromNativeKey": "43:2",
-      "toNativeKey": "43:1",
+      "fromNativeKey": "43:23",
+      "toNativeKey": "43:18",
       "direction": "right",
       "nativeOffset": 0,
       "coordinateRule": "target transverse local = source transverse local - nativeOffset",
-      "overlappingEdgeTiles": 69,
+      "overlappingEdgeTiles": 72,
       "first": {
         "fromLocal": [
-          44,
+          71,
           0
         ],
         "toLocal": [
@@ -1287,382 +1431,118 @@
           0
         ],
         "fromWorld": [
-          44,
+          279,
           0
         ],
         "toWorld": [
-          45,
+          280,
           0
         ]
       },
       "last": {
         "fromLocal": [
-          44,
-          68
+          71,
+          71
         ],
         "toLocal": [
           0,
-          68
+          71
         ],
         "fromWorld": [
-          44,
-          68
+          279,
+          71
         ],
         "toWorld": [
-          45,
-          68
+          280,
+          71
         ]
       }
     },
     {
-      "fromNativeKey": "43:2",
-      "toNativeKey": "43:14",
+      "fromNativeKey": "43:23",
+      "toNativeKey": "43:1",
       "direction": "down",
       "nativeOffset": 0,
       "coordinateRule": "target transverse local = source transverse local - nativeOffset",
-      "overlappingEdgeTiles": 45,
+      "overlappingEdgeTiles": 72,
       "first": {
         "fromLocal": [
           0,
-          68
+          71
         ],
         "toLocal": [
           0,
           0
         ],
         "fromWorld": [
-          0,
-          68
+          208,
+          71
         ],
         "toWorld": [
-          0,
-          69
+          208,
+          72
         ]
       },
       "last": {
         "fromLocal": [
-          44,
-          68
+          71,
+          71
         ],
         "toLocal": [
-          44,
+          71,
           0
         ],
         "fromWorld": [
-          44,
-          68
+          279,
+          71
         ],
         "toWorld": [
-          44,
-          69
-        ]
-      }
-    },
-    {
-      "fromNativeKey": "43:14",
-      "toNativeKey": "43:2",
-      "direction": "up",
-      "nativeOffset": 0,
-      "coordinateRule": "target transverse local = source transverse local - nativeOffset",
-      "overlappingEdgeTiles": 45,
-      "first": {
-        "fromLocal": [
-          0,
-          0
-        ],
-        "toLocal": [
-          0,
-          68
-        ],
-        "fromWorld": [
-          0,
-          69
-        ],
-        "toWorld": [
-          0,
-          68
-        ]
-      },
-      "last": {
-        "fromLocal": [
-          44,
-          0
-        ],
-        "toLocal": [
-          44,
-          68
-        ],
-        "fromWorld": [
-          44,
-          69
-        ],
-        "toWorld": [
-          44,
-          68
-        ]
-      }
-    },
-    {
-      "fromNativeKey": "43:14",
-      "toNativeKey": "43:1",
-      "direction": "right",
-      "nativeOffset": -69,
-      "coordinateRule": "target transverse local = source transverse local - nativeOffset",
-      "overlappingEdgeTiles": 40,
-      "first": {
-        "fromLocal": [
-          44,
-          0
-        ],
-        "toLocal": [
-          0,
-          69
-        ],
-        "fromWorld": [
-          44,
-          69
-        ],
-        "toWorld": [
-          45,
-          69
-        ]
-      },
-      "last": {
-        "fromLocal": [
-          44,
-          39
-        ],
-        "toLocal": [
-          0,
-          108
-        ],
-        "fromWorld": [
-          44,
-          108
-        ],
-        "toWorld": [
-          45,
-          108
-        ]
-      }
-    },
-    {
-      "fromNativeKey": "43:14",
-      "toNativeKey": "43:15",
-      "direction": "down",
-      "nativeOffset": 0,
-      "coordinateRule": "target transverse local = source transverse local - nativeOffset",
-      "overlappingEdgeTiles": 45,
-      "first": {
-        "fromLocal": [
-          0,
-          39
-        ],
-        "toLocal": [
-          0,
-          0
-        ],
-        "fromWorld": [
-          0,
-          108
-        ],
-        "toWorld": [
-          0,
-          109
-        ]
-      },
-      "last": {
-        "fromLocal": [
-          44,
-          39
-        ],
-        "toLocal": [
-          44,
-          0
-        ],
-        "fromWorld": [
-          44,
-          108
-        ],
-        "toWorld": [
-          44,
-          109
-        ]
-      }
-    },
-    {
-      "fromNativeKey": "43:15",
-      "toNativeKey": "43:14",
-      "direction": "up",
-      "nativeOffset": 0,
-      "coordinateRule": "target transverse local = source transverse local - nativeOffset",
-      "overlappingEdgeTiles": 45,
-      "first": {
-        "fromLocal": [
-          0,
-          0
-        ],
-        "toLocal": [
-          0,
-          39
-        ],
-        "fromWorld": [
-          0,
-          109
-        ],
-        "toWorld": [
-          0,
-          108
-        ]
-      },
-      "last": {
-        "fromLocal": [
-          44,
-          0
-        ],
-        "toLocal": [
-          44,
-          39
-        ],
-        "fromWorld": [
-          44,
-          109
-        ],
-        "toWorld": [
-          44,
-          108
-        ]
-      }
-    },
-    {
-      "fromNativeKey": "43:15",
-      "toNativeKey": "43:1",
-      "direction": "up",
-      "nativeOffset": 45,
-      "coordinateRule": "target transverse local = source transverse local - nativeOffset",
-      "overlappingEdgeTiles": 40,
-      "first": {
-        "fromLocal": [
-          45,
-          0
-        ],
-        "toLocal": [
-          0,
-          108
-        ],
-        "fromWorld": [
-          45,
-          109
-        ],
-        "toWorld": [
-          45,
-          108
-        ]
-      },
-      "last": {
-        "fromLocal": [
-          84,
-          0
-        ],
-        "toLocal": [
-          39,
-          108
-        ],
-        "fromWorld": [
-          84,
-          109
-        ],
-        "toWorld": [
-          84,
-          108
-        ]
-      }
-    },
-    {
-      "fromNativeKey": "43:15",
-      "toNativeKey": "43:0",
-      "direction": "right",
-      "nativeOffset": -56,
-      "coordinateRule": "target transverse local = source transverse local - nativeOffset",
-      "overlappingEdgeTiles": 21,
-      "first": {
-        "fromLocal": [
-          84,
-          0
-        ],
-        "toLocal": [
-          0,
-          56
-        ],
-        "fromWorld": [
-          84,
-          109
-        ],
-        "toWorld": [
-          85,
-          109
-        ]
-      },
-      "last": {
-        "fromLocal": [
-          84,
-          20
-        ],
-        "toLocal": [
-          0,
-          76
-        ],
-        "fromWorld": [
-          84,
-          129
-        ],
-        "toWorld": [
-          85,
-          129
+          279,
+          72
         ]
       }
     },
     {
       "fromNativeKey": "43:18",
-      "toNativeKey": "43:1",
+      "toNativeKey": "43:23",
       "direction": "left",
       "nativeOffset": 0,
       "coordinateRule": "target transverse local = source transverse local - nativeOffset",
-      "overlappingEdgeTiles": 53,
+      "overlappingEdgeTiles": 72,
       "first": {
         "fromLocal": [
           0,
           0
         ],
         "toLocal": [
-          39,
+          71,
           0
         ],
         "fromWorld": [
-          85,
+          280,
           0
         ],
         "toWorld": [
-          84,
+          279,
           0
         ]
       },
       "last": {
         "fromLocal": [
           0,
-          52
+          71
         ],
         "toLocal": [
-          39,
-          52
+          71,
+          71
         ],
         "fromWorld": [
-          85,
-          52
+          280,
+          71
         ],
         "toWorld": [
-          84,
-          52
+          279,
+          71
         ]
       }
     },
@@ -1672,100 +1552,3611 @@
       "direction": "down",
       "nativeOffset": 0,
       "coordinateRule": "target transverse local = source transverse local - nativeOffset",
-      "overlappingEdgeTiles": 44,
+      "overlappingEdgeTiles": 72,
       "first": {
         "fromLocal": [
           0,
-          52
+          71
         ],
         "toLocal": [
           0,
           0
         ],
         "fromWorld": [
-          85,
-          52
+          280,
+          71
         ],
         "toWorld": [
-          85,
-          53
+          280,
+          72
         ]
       },
       "last": {
         "fromLocal": [
-          43,
-          52
+          71,
+          71
         ],
         "toLocal": [
-          43,
+          71,
           0
         ],
         "fromWorld": [
-          128,
-          52
+          351,
+          71
         ],
         "toWorld": [
-          128,
-          53
+          351,
+          72
+        ]
+      }
+    },
+    {
+      "fromNativeKey": "43:24",
+      "toNativeKey": "43:2",
+      "direction": "right",
+      "nativeOffset": 0,
+      "coordinateRule": "target transverse local = source transverse local - nativeOffset",
+      "overlappingEdgeTiles": 72,
+      "first": {
+        "fromLocal": [
+          103,
+          0
+        ],
+        "toLocal": [
+          0,
+          0
+        ],
+        "fromWorld": [
+          103,
+          72
+        ],
+        "toWorld": [
+          104,
+          72
+        ]
+      },
+      "last": {
+        "fromLocal": [
+          103,
+          71
+        ],
+        "toLocal": [
+          0,
+          71
+        ],
+        "fromWorld": [
+          103,
+          143
+        ],
+        "toWorld": [
+          104,
+          143
+        ]
+      }
+    },
+    {
+      "fromNativeKey": "43:24",
+      "toNativeKey": "43:21",
+      "direction": "up",
+      "nativeOffset": 0,
+      "coordinateRule": "target transverse local = source transverse local - nativeOffset",
+      "overlappingEdgeTiles": 104,
+      "first": {
+        "fromLocal": [
+          0,
+          0
+        ],
+        "toLocal": [
+          0,
+          71
+        ],
+        "fromWorld": [
+          0,
+          72
+        ],
+        "toWorld": [
+          0,
+          71
+        ]
+      },
+      "last": {
+        "fromLocal": [
+          103,
+          0
+        ],
+        "toLocal": [
+          103,
+          71
+        ],
+        "fromWorld": [
+          103,
+          72
+        ],
+        "toWorld": [
+          103,
+          71
+        ]
+      }
+    },
+    {
+      "fromNativeKey": "43:24",
+      "toNativeKey": "43:25",
+      "direction": "down",
+      "nativeOffset": 0,
+      "coordinateRule": "target transverse local = source transverse local - nativeOffset",
+      "overlappingEdgeTiles": 104,
+      "first": {
+        "fromLocal": [
+          0,
+          71
+        ],
+        "toLocal": [
+          0,
+          0
+        ],
+        "fromWorld": [
+          0,
+          143
+        ],
+        "toWorld": [
+          0,
+          144
+        ]
+      },
+      "last": {
+        "fromLocal": [
+          103,
+          71
+        ],
+        "toLocal": [
+          103,
+          0
+        ],
+        "fromWorld": [
+          103,
+          143
+        ],
+        "toWorld": [
+          103,
+          144
+        ]
+      }
+    },
+    {
+      "fromNativeKey": "43:2",
+      "toNativeKey": "43:24",
+      "direction": "left",
+      "nativeOffset": 0,
+      "coordinateRule": "target transverse local = source transverse local - nativeOffset",
+      "overlappingEdgeTiles": 72,
+      "first": {
+        "fromLocal": [
+          0,
+          0
+        ],
+        "toLocal": [
+          103,
+          0
+        ],
+        "fromWorld": [
+          104,
+          72
+        ],
+        "toWorld": [
+          103,
+          72
+        ]
+      },
+      "last": {
+        "fromLocal": [
+          0,
+          71
+        ],
+        "toLocal": [
+          103,
+          71
+        ],
+        "fromWorld": [
+          104,
+          143
+        ],
+        "toWorld": [
+          103,
+          143
+        ]
+      }
+    },
+    {
+      "fromNativeKey": "43:2",
+      "toNativeKey": "43:1",
+      "direction": "right",
+      "nativeOffset": 0,
+      "coordinateRule": "target transverse local = source transverse local - nativeOffset",
+      "overlappingEdgeTiles": 72,
+      "first": {
+        "fromLocal": [
+          103,
+          0
+        ],
+        "toLocal": [
+          0,
+          0
+        ],
+        "fromWorld": [
+          207,
+          72
+        ],
+        "toWorld": [
+          208,
+          72
+        ]
+      },
+      "last": {
+        "fromLocal": [
+          103,
+          71
+        ],
+        "toLocal": [
+          0,
+          71
+        ],
+        "fromWorld": [
+          207,
+          143
+        ],
+        "toWorld": [
+          208,
+          143
+        ]
+      }
+    },
+    {
+      "fromNativeKey": "43:2",
+      "toNativeKey": "43:22",
+      "direction": "up",
+      "nativeOffset": 0,
+      "coordinateRule": "target transverse local = source transverse local - nativeOffset",
+      "overlappingEdgeTiles": 104,
+      "first": {
+        "fromLocal": [
+          0,
+          0
+        ],
+        "toLocal": [
+          0,
+          71
+        ],
+        "fromWorld": [
+          104,
+          72
+        ],
+        "toWorld": [
+          104,
+          71
+        ]
+      },
+      "last": {
+        "fromLocal": [
+          103,
+          0
+        ],
+        "toLocal": [
+          103,
+          71
+        ],
+        "fromWorld": [
+          207,
+          72
+        ],
+        "toWorld": [
+          207,
+          71
+        ]
+      }
+    },
+    {
+      "fromNativeKey": "43:2",
+      "toNativeKey": "43:14",
+      "direction": "down",
+      "nativeOffset": 0,
+      "coordinateRule": "target transverse local = source transverse local - nativeOffset",
+      "overlappingEdgeTiles": 104,
+      "first": {
+        "fromLocal": [
+          0,
+          71
+        ],
+        "toLocal": [
+          0,
+          0
+        ],
+        "fromWorld": [
+          104,
+          143
+        ],
+        "toWorld": [
+          104,
+          144
+        ]
+      },
+      "last": {
+        "fromLocal": [
+          103,
+          71
+        ],
+        "toLocal": [
+          103,
+          0
+        ],
+        "fromWorld": [
+          207,
+          143
+        ],
+        "toWorld": [
+          207,
+          144
+        ]
+      }
+    },
+    {
+      "fromNativeKey": "43:1",
+      "toNativeKey": "43:2",
+      "direction": "left",
+      "nativeOffset": 0,
+      "coordinateRule": "target transverse local = source transverse local - nativeOffset",
+      "overlappingEdgeTiles": 72,
+      "first": {
+        "fromLocal": [
+          0,
+          0
+        ],
+        "toLocal": [
+          103,
+          0
+        ],
+        "fromWorld": [
+          208,
+          72
+        ],
+        "toWorld": [
+          207,
+          72
+        ]
+      },
+      "last": {
+        "fromLocal": [
+          0,
+          71
+        ],
+        "toLocal": [
+          103,
+          71
+        ],
+        "fromWorld": [
+          208,
+          143
+        ],
+        "toWorld": [
+          207,
+          143
+        ]
+      }
+    },
+    {
+      "fromNativeKey": "43:1",
+      "toNativeKey": "43:0",
+      "direction": "right",
+      "nativeOffset": 0,
+      "coordinateRule": "target transverse local = source transverse local - nativeOffset",
+      "overlappingEdgeTiles": 72,
+      "first": {
+        "fromLocal": [
+          71,
+          0
+        ],
+        "toLocal": [
+          0,
+          0
+        ],
+        "fromWorld": [
+          279,
+          72
+        ],
+        "toWorld": [
+          280,
+          72
+        ]
+      },
+      "last": {
+        "fromLocal": [
+          71,
+          71
+        ],
+        "toLocal": [
+          0,
+          71
+        ],
+        "fromWorld": [
+          279,
+          143
+        ],
+        "toWorld": [
+          280,
+          143
+        ]
+      }
+    },
+    {
+      "fromNativeKey": "43:1",
+      "toNativeKey": "43:23",
+      "direction": "up",
+      "nativeOffset": 0,
+      "coordinateRule": "target transverse local = source transverse local - nativeOffset",
+      "overlappingEdgeTiles": 72,
+      "first": {
+        "fromLocal": [
+          0,
+          0
+        ],
+        "toLocal": [
+          0,
+          71
+        ],
+        "fromWorld": [
+          208,
+          72
+        ],
+        "toWorld": [
+          208,
+          71
+        ]
+      },
+      "last": {
+        "fromLocal": [
+          71,
+          0
+        ],
+        "toLocal": [
+          71,
+          71
+        ],
+        "fromWorld": [
+          279,
+          72
+        ],
+        "toWorld": [
+          279,
+          71
+        ]
+      }
+    },
+    {
+      "fromNativeKey": "43:1",
+      "toNativeKey": "43:15",
+      "direction": "down",
+      "nativeOffset": 0,
+      "coordinateRule": "target transverse local = source transverse local - nativeOffset",
+      "overlappingEdgeTiles": 72,
+      "first": {
+        "fromLocal": [
+          0,
+          71
+        ],
+        "toLocal": [
+          0,
+          0
+        ],
+        "fromWorld": [
+          208,
+          143
+        ],
+        "toWorld": [
+          208,
+          144
+        ]
+      },
+      "last": {
+        "fromLocal": [
+          71,
+          71
+        ],
+        "toLocal": [
+          71,
+          0
+        ],
+        "fromWorld": [
+          279,
+          143
+        ],
+        "toWorld": [
+          279,
+          144
+        ]
+      }
+    },
+    {
+      "fromNativeKey": "43:0",
+      "toNativeKey": "43:1",
+      "direction": "left",
+      "nativeOffset": 0,
+      "coordinateRule": "target transverse local = source transverse local - nativeOffset",
+      "overlappingEdgeTiles": 72,
+      "first": {
+        "fromLocal": [
+          0,
+          0
+        ],
+        "toLocal": [
+          71,
+          0
+        ],
+        "fromWorld": [
+          280,
+          72
+        ],
+        "toWorld": [
+          279,
+          72
+        ]
+      },
+      "last": {
+        "fromLocal": [
+          0,
+          71
+        ],
+        "toLocal": [
+          71,
+          71
+        ],
+        "fromWorld": [
+          280,
+          143
+        ],
+        "toWorld": [
+          279,
+          143
+        ]
+      }
+    },
+    {
+      "fromNativeKey": "43:0",
+      "toNativeKey": "43:18",
+      "direction": "up",
+      "nativeOffset": 0,
+      "coordinateRule": "target transverse local = source transverse local - nativeOffset",
+      "overlappingEdgeTiles": 72,
+      "first": {
+        "fromLocal": [
+          0,
+          0
+        ],
+        "toLocal": [
+          0,
+          71
+        ],
+        "fromWorld": [
+          280,
+          72
+        ],
+        "toWorld": [
+          280,
+          71
+        ]
+      },
+      "last": {
+        "fromLocal": [
+          71,
+          0
+        ],
+        "toLocal": [
+          71,
+          71
+        ],
+        "fromWorld": [
+          351,
+          72
+        ],
+        "toWorld": [
+          351,
+          71
+        ]
+      }
+    },
+    {
+      "fromNativeKey": "43:0",
+      "toNativeKey": "43:26",
+      "direction": "down",
+      "nativeOffset": 0,
+      "coordinateRule": "target transverse local = source transverse local - nativeOffset",
+      "overlappingEdgeTiles": 72,
+      "first": {
+        "fromLocal": [
+          0,
+          71
+        ],
+        "toLocal": [
+          0,
+          0
+        ],
+        "fromWorld": [
+          280,
+          143
+        ],
+        "toWorld": [
+          280,
+          144
+        ]
+      },
+      "last": {
+        "fromLocal": [
+          71,
+          71
+        ],
+        "toLocal": [
+          71,
+          0
+        ],
+        "fromWorld": [
+          351,
+          143
+        ],
+        "toWorld": [
+          351,
+          144
+        ]
+      }
+    },
+    {
+      "fromNativeKey": "43:25",
+      "toNativeKey": "43:14",
+      "direction": "right",
+      "nativeOffset": 0,
+      "coordinateRule": "target transverse local = source transverse local - nativeOffset",
+      "overlappingEdgeTiles": 72,
+      "first": {
+        "fromLocal": [
+          103,
+          0
+        ],
+        "toLocal": [
+          0,
+          0
+        ],
+        "fromWorld": [
+          103,
+          144
+        ],
+        "toWorld": [
+          104,
+          144
+        ]
+      },
+      "last": {
+        "fromLocal": [
+          103,
+          71
+        ],
+        "toLocal": [
+          0,
+          71
+        ],
+        "fromWorld": [
+          103,
+          215
+        ],
+        "toWorld": [
+          104,
+          215
+        ]
+      }
+    },
+    {
+      "fromNativeKey": "43:25",
+      "toNativeKey": "43:24",
+      "direction": "up",
+      "nativeOffset": 0,
+      "coordinateRule": "target transverse local = source transverse local - nativeOffset",
+      "overlappingEdgeTiles": 104,
+      "first": {
+        "fromLocal": [
+          0,
+          0
+        ],
+        "toLocal": [
+          0,
+          71
+        ],
+        "fromWorld": [
+          0,
+          144
+        ],
+        "toWorld": [
+          0,
+          143
+        ]
+      },
+      "last": {
+        "fromLocal": [
+          103,
+          0
+        ],
+        "toLocal": [
+          103,
+          71
+        ],
+        "fromWorld": [
+          103,
+          144
+        ],
+        "toWorld": [
+          103,
+          143
+        ]
+      }
+    },
+    {
+      "fromNativeKey": "43:14",
+      "toNativeKey": "43:25",
+      "direction": "left",
+      "nativeOffset": 0,
+      "coordinateRule": "target transverse local = source transverse local - nativeOffset",
+      "overlappingEdgeTiles": 72,
+      "first": {
+        "fromLocal": [
+          0,
+          0
+        ],
+        "toLocal": [
+          103,
+          0
+        ],
+        "fromWorld": [
+          104,
+          144
+        ],
+        "toWorld": [
+          103,
+          144
+        ]
+      },
+      "last": {
+        "fromLocal": [
+          0,
+          71
+        ],
+        "toLocal": [
+          103,
+          71
+        ],
+        "fromWorld": [
+          104,
+          215
+        ],
+        "toWorld": [
+          103,
+          215
+        ]
+      }
+    },
+    {
+      "fromNativeKey": "43:14",
+      "toNativeKey": "43:15",
+      "direction": "right",
+      "nativeOffset": 0,
+      "coordinateRule": "target transverse local = source transverse local - nativeOffset",
+      "overlappingEdgeTiles": 72,
+      "first": {
+        "fromLocal": [
+          103,
+          0
+        ],
+        "toLocal": [
+          0,
+          0
+        ],
+        "fromWorld": [
+          207,
+          144
+        ],
+        "toWorld": [
+          208,
+          144
+        ]
+      },
+      "last": {
+        "fromLocal": [
+          103,
+          71
+        ],
+        "toLocal": [
+          0,
+          71
+        ],
+        "fromWorld": [
+          207,
+          215
+        ],
+        "toWorld": [
+          208,
+          215
+        ]
+      }
+    },
+    {
+      "fromNativeKey": "43:14",
+      "toNativeKey": "43:2",
+      "direction": "up",
+      "nativeOffset": 0,
+      "coordinateRule": "target transverse local = source transverse local - nativeOffset",
+      "overlappingEdgeTiles": 104,
+      "first": {
+        "fromLocal": [
+          0,
+          0
+        ],
+        "toLocal": [
+          0,
+          71
+        ],
+        "fromWorld": [
+          104,
+          144
+        ],
+        "toWorld": [
+          104,
+          143
+        ]
+      },
+      "last": {
+        "fromLocal": [
+          103,
+          0
+        ],
+        "toLocal": [
+          103,
+          71
+        ],
+        "fromWorld": [
+          207,
+          144
+        ],
+        "toWorld": [
+          207,
+          143
+        ]
+      }
+    },
+    {
+      "fromNativeKey": "43:15",
+      "toNativeKey": "43:14",
+      "direction": "left",
+      "nativeOffset": 0,
+      "coordinateRule": "target transverse local = source transverse local - nativeOffset",
+      "overlappingEdgeTiles": 72,
+      "first": {
+        "fromLocal": [
+          0,
+          0
+        ],
+        "toLocal": [
+          103,
+          0
+        ],
+        "fromWorld": [
+          208,
+          144
+        ],
+        "toWorld": [
+          207,
+          144
+        ]
+      },
+      "last": {
+        "fromLocal": [
+          0,
+          71
+        ],
+        "toLocal": [
+          103,
+          71
+        ],
+        "fromWorld": [
+          208,
+          215
+        ],
+        "toWorld": [
+          207,
+          215
+        ]
+      }
+    },
+    {
+      "fromNativeKey": "43:15",
+      "toNativeKey": "43:26",
+      "direction": "right",
+      "nativeOffset": 0,
+      "coordinateRule": "target transverse local = source transverse local - nativeOffset",
+      "overlappingEdgeTiles": 72,
+      "first": {
+        "fromLocal": [
+          71,
+          0
+        ],
+        "toLocal": [
+          0,
+          0
+        ],
+        "fromWorld": [
+          279,
+          144
+        ],
+        "toWorld": [
+          280,
+          144
+        ]
+      },
+      "last": {
+        "fromLocal": [
+          71,
+          71
+        ],
+        "toLocal": [
+          0,
+          71
+        ],
+        "fromWorld": [
+          279,
+          215
+        ],
+        "toWorld": [
+          280,
+          215
+        ]
+      }
+    },
+    {
+      "fromNativeKey": "43:15",
+      "toNativeKey": "43:1",
+      "direction": "up",
+      "nativeOffset": 0,
+      "coordinateRule": "target transverse local = source transverse local - nativeOffset",
+      "overlappingEdgeTiles": 72,
+      "first": {
+        "fromLocal": [
+          0,
+          0
+        ],
+        "toLocal": [
+          0,
+          71
+        ],
+        "fromWorld": [
+          208,
+          144
+        ],
+        "toWorld": [
+          208,
+          143
+        ]
+      },
+      "last": {
+        "fromLocal": [
+          71,
+          0
+        ],
+        "toLocal": [
+          71,
+          71
+        ],
+        "fromWorld": [
+          279,
+          144
+        ],
+        "toWorld": [
+          279,
+          143
+        ]
+      }
+    },
+    {
+      "fromNativeKey": "43:26",
+      "toNativeKey": "43:15",
+      "direction": "left",
+      "nativeOffset": 0,
+      "coordinateRule": "target transverse local = source transverse local - nativeOffset",
+      "overlappingEdgeTiles": 72,
+      "first": {
+        "fromLocal": [
+          0,
+          0
+        ],
+        "toLocal": [
+          71,
+          0
+        ],
+        "fromWorld": [
+          280,
+          144
+        ],
+        "toWorld": [
+          279,
+          144
+        ]
+      },
+      "last": {
+        "fromLocal": [
+          0,
+          71
+        ],
+        "toLocal": [
+          71,
+          71
+        ],
+        "fromWorld": [
+          280,
+          215
+        ],
+        "toWorld": [
+          279,
+          215
+        ]
+      }
+    },
+    {
+      "fromNativeKey": "43:26",
+      "toNativeKey": "43:0",
+      "direction": "up",
+      "nativeOffset": 0,
+      "coordinateRule": "target transverse local = source transverse local - nativeOffset",
+      "overlappingEdgeTiles": 72,
+      "first": {
+        "fromLocal": [
+          0,
+          0
+        ],
+        "toLocal": [
+          0,
+          71
+        ],
+        "fromWorld": [
+          280,
+          144
+        ],
+        "toWorld": [
+          280,
+          143
+        ]
+      },
+      "last": {
+        "fromLocal": [
+          71,
+          0
+        ],
+        "toLocal": [
+          71,
+          71
+        ],
+        "fromWorld": [
+          351,
+          144
+        ],
+        "toWorld": [
+          351,
+          143
         ]
       }
     }
   ],
   "plannedMaps": [],
-  "geometryFingerprintSha256": "48fe4ba5208d0a2b1285c1b6aa6f776377ef003d5501e5ae837ca45c6127e92a",
+  "roads": [
+    {
+      "id": "taiwan",
+      "name": {
+        "en": "Taiwan Boulevard",
+        "zh": "臺灣大道"
+      },
+      "points": [
+        [
+          8,
+          80
+        ],
+        [
+          343,
+          80
+        ]
+      ],
+      "width": 5,
+      "kind": "road",
+      "priority": 100,
+      "regions": [
+        {
+          "rect": [
+            5,
+            77,
+            347,
+            84
+          ]
+        }
+      ]
+    },
+    {
+      "id": "liming",
+      "name": {
+        "en": "Liming Road",
+        "zh": "黎明路"
+      },
+      "points": [
+        [
+          116,
+          80
+        ],
+        [
+          116,
+          205
+        ]
+      ],
+      "width": 3,
+      "kind": "road",
+      "priority": 50,
+      "regions": [
+        {
+          "rect": [
+            114,
+            78,
+            119,
+            208
+          ]
+        }
+      ]
+    },
+    {
+      "id": "henan",
+      "name": {
+        "en": "Henan Road",
+        "zh": "河南路"
+      },
+      "points": [
+        [
+          156,
+          56
+        ],
+        [
+          156,
+          134
+        ]
+      ],
+      "width": 3,
+      "kind": "road",
+      "priority": 50,
+      "regions": [
+        {
+          "rect": [
+            154,
+            54,
+            159,
+            137
+          ]
+        }
+      ]
+    },
+    {
+      "id": "huilai",
+      "name": {
+        "en": "Huilai Road",
+        "zh": "惠來路"
+      },
+      "points": [
+        [
+          184,
+          80
+        ],
+        [
+          184,
+          134
+        ]
+      ],
+      "width": 3,
+      "kind": "road",
+      "priority": 50,
+      "regions": [
+        {
+          "rect": [
+            182,
+            78,
+            187,
+            137
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wenxin",
+      "name": {
+        "en": "Wenxin / Wenxin South Road",
+        "zh": "文心路／文心南路"
+      },
+      "points": [
+        [
+          205,
+          24
+        ],
+        [
+          205,
+          205
+        ]
+      ],
+      "width": 3,
+      "kind": "road",
+      "priority": 50,
+      "regions": [
+        {
+          "rect": [
+            203,
+            22,
+            208,
+            208
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dadun",
+      "name": {
+        "en": "Dadun Road",
+        "zh": "大墩路"
+      },
+      "points": [
+        [
+          222,
+          80
+        ],
+        [
+          222,
+          116
+        ]
+      ],
+      "width": 3,
+      "kind": "road",
+      "priority": 50,
+      "regions": [
+        {
+          "rect": [
+            220,
+            78,
+            225,
+            119
+          ]
+        }
+      ]
+    },
+    {
+      "id": "meicun",
+      "name": {
+        "en": "Meicun Road",
+        "zh": "美村路"
+      },
+      "points": [
+        [
+          237,
+          80
+        ],
+        [
+          237,
+          138
+        ]
+      ],
+      "width": 3,
+      "kind": "road",
+      "priority": 50,
+      "regions": [
+        {
+          "rect": [
+            235,
+            78,
+            240,
+            141
+          ]
+        }
+      ]
+    },
+    {
+      "id": "guanqian",
+      "name": {
+        "en": "Guanqian Road",
+        "zh": "館前路"
+      },
+      "points": [
+        [
+          246,
+          24
+        ],
+        [
+          246,
+          80
+        ]
+      ],
+      "width": 3,
+      "kind": "road",
+      "priority": 50,
+      "regions": [
+        {
+          "rect": [
+            244,
+            22,
+            249,
+            83
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wuquan",
+      "name": {
+        "en": "Wuquan / Wuquan West Road",
+        "zh": "五權路／五權西路"
+      },
+      "points": [
+        [
+          288,
+          24
+        ],
+        [
+          288,
+          142
+        ],
+        [
+          116,
+          142
+        ]
+      ],
+      "width": 3,
+      "kind": "road",
+      "priority": 50,
+      "regions": [
+        {
+          "rect": [
+            286,
+            22,
+            291,
+            145
+          ]
+        },
+        {
+          "rect": [
+            114,
+            140,
+            291,
+            145
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sanmin",
+      "name": {
+        "en": "Sanmin Road",
+        "zh": "三民路"
+      },
+      "points": [
+        [
+          315,
+          24
+        ],
+        [
+          315,
+          142
+        ]
+      ],
+      "width": 3,
+      "kind": "road",
+      "priority": 50,
+      "regions": [
+        {
+          "rect": [
+            313,
+            22,
+            318,
+            145
+          ]
+        }
+      ]
+    },
+    {
+      "id": "xitun",
+      "name": {
+        "en": "Xitun Road",
+        "zh": "西屯路"
+      },
+      "points": [
+        [
+          130,
+          54
+        ],
+        [
+          288,
+          54
+        ]
+      ],
+      "width": 3,
+      "kind": "road",
+      "priority": 50,
+      "regions": [
+        {
+          "rect": [
+            128,
+            52,
+            291,
+            57
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fengjia",
+      "name": {
+        "en": "Fuxing Road (Fengjia)",
+        "zh": "福星路"
+      },
+      "points": [
+        [
+          147,
+          24
+        ],
+        [
+          147,
+          54
+        ]
+      ],
+      "width": 3,
+      "kind": "road",
+      "priority": 50,
+      "regions": [
+        {
+          "rect": [
+            145,
+            22,
+            150,
+            57
+          ]
+        }
+      ]
+    },
+    {
+      "id": "gongyi",
+      "name": {
+        "en": "Gongyi Road",
+        "zh": "公益路"
+      },
+      "points": [
+        [
+          116,
+          116
+        ],
+        [
+          237,
+          116
+        ]
+      ],
+      "width": 3,
+      "kind": "road",
+      "priority": 50,
+      "regions": [
+        {
+          "rect": [
+            114,
+            114,
+            240,
+            119
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nantun",
+      "name": {
+        "en": "Nantun old street",
+        "zh": "南屯老街"
+      },
+      "points": [
+        [
+          116,
+          191
+        ],
+        [
+          250,
+          191
+        ]
+      ],
+      "width": 3,
+      "kind": "road",
+      "priority": 50,
+      "regions": [
+        {
+          "rect": [
+            114,
+            189,
+            253,
+            194
+          ]
+        }
+      ]
+    },
+    {
+      "id": "shuangshi",
+      "name": {
+        "en": "Shuangshi Road",
+        "zh": "雙十路"
+      },
+      "points": [
+        [
+          348,
+          12
+        ],
+        [
+          348,
+          66
+        ],
+        [
+          315,
+          66
+        ]
+      ],
+      "width": 3,
+      "kind": "road",
+      "priority": 50,
+      "regions": [
+        {
+          "rect": [
+            346,
+            10,
+            351,
+            69
+          ]
+        },
+        {
+          "rect": [
+            313,
+            64,
+            351,
+            69
+          ]
+        }
+      ]
+    },
+    {
+      "id": "zhongshan",
+      "name": {
+        "en": "Zhongshan Road",
+        "zh": "中山路"
+      },
+      "points": [
+        [
+          315,
+          120
+        ],
+        [
+          343,
+          120
+        ],
+        [
+          343,
+          80
+        ]
+      ],
+      "width": 3,
+      "kind": "road",
+      "priority": 50,
+      "regions": [
+        {
+          "rect": [
+            313,
+            118,
+            346,
+            123
+          ]
+        },
+        {
+          "rect": [
+            341,
+            78,
+            346,
+            123
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fuxing",
+      "name": {
+        "en": "Fuxing Road (Station)",
+        "zh": "復興路"
+      },
+      "points": [
+        [
+          315,
+          151
+        ],
+        [
+          348,
+          151
+        ]
+      ],
+      "width": 3,
+      "kind": "road",
+      "priority": 50,
+      "regions": [
+        {
+          "rect": [
+            313,
+            149,
+            351,
+            154
+          ]
+        }
+      ]
+    },
+    {
+      "id": "greenway",
+      "name": {
+        "en": "Greenway promenade",
+        "zh": "草悟道步道"
+      },
+      "points": [
+        [
+          269,
+          84
+        ],
+        [
+          269,
+          118
+        ]
+      ],
+      "width": 1,
+      "kind": "walk",
+      "priority": 10,
+      "regions": [
+        {
+          "rect": [
+            268,
+            83,
+            271,
+            120
+          ]
+        }
+      ]
+    },
+    {
+      "id": "chunan",
+      "name": {
+        "en": "Chun’an / Lingdong approach",
+        "zh": "春安路／嶺東路"
+      },
+      "points": [
+        [
+          116,
+          198
+        ],
+        [
+          122,
+          198
+        ]
+      ],
+      "width": 1,
+      "kind": "approach",
+      "priority": 10,
+      "regions": [
+        {
+          "rect": [
+            115,
+            197,
+            124,
+            200
+          ]
+        }
+      ]
+    }
+  ],
+  "placesById": {
+    "old-taichung-station": {
+      "id": "old-taichung-station",
+      "origin": [
+        327,
+        89
+      ],
+      "size": [
+        12,
+        8
+      ],
+      "door": [
+        333,
+        96
+      ],
+      "approach": [
+        333,
+        97
+      ],
+      "arrival": [
+        333,
+        99
+      ],
+      "sign": [
+        326,
+        98
+      ],
+      "mapName": "TaichungOldCity",
+      "mapId": "MAP_TAICHUNG_OLD_CITY",
+      "sourceMap": "TaichungOldCity",
+      "sourceOrigin": [
+        26,
+        57
+      ],
+      "artStatus": "approved-baseline-source",
+      "signScript": "TaichungCity_Sign_OldStation",
+      "gym": true,
+      "nativeKey": "43:0",
+      "localApproach": [
+        53,
+        25
+      ],
+      "localArrival": [
+        53,
+        27
+      ],
+      "localSign": [
+        46,
+        26
+      ],
+      "worldAnchor": [
+        333,
+        96
+      ],
+      "name": {
+        "en": "Old Station",
+        "zh": "舊臺中車站"
+      },
+      "localDoor": [
+        53,
+        24
+      ],
+      "exteriorWarpId": 0,
+      "interiorMapId": "MAP_TAICHUNG_OLD_STATION_GYM",
+      "realPlace": {
+        "number": 1,
+        "name": "Old Station",
+        "zh": "舊臺中車站",
+        "coordinates": [
+          120.68501,
+          24.13678
+        ],
+        "source": "https://travel.taichung.gov.tw/en/attractions/intro/1942",
+        "kind": "gym",
+        "pokemon": null,
+        "level": null,
+        "speciesNumber": null
+      }
+    },
+    "taichung-park": {
+      "id": "taichung-park",
+      "origin": [
+        321,
+        41
+      ],
+      "size": [
+        17,
+        18
+      ],
+      "door": [
+        330,
+        58
+      ],
+      "approach": [
+        330,
+        59
+      ],
+      "arrival": [
+        330,
+        61
+      ],
+      "sign": [
+        320,
+        60
+      ],
+      "mapName": "TaichungOldCityNorth",
+      "mapId": "MAP_TAICHUNG_OLD_CITY_NORTH",
+      "sourceMap": "TaichungOldCity",
+      "sourceOrigin": [
+        23,
+        13
+      ],
+      "artStatus": "approved-baseline-source",
+      "signScript": "TaichungCity_Sign_Park",
+      "gym": true,
+      "nativeKey": "43:18",
+      "localApproach": [
+        50,
+        59
+      ],
+      "localArrival": [
+        50,
+        61
+      ],
+      "localSign": [
+        40,
+        60
+      ],
+      "worldAnchor": [
+        330,
+        58
+      ],
+      "name": {
+        "en": "Taichung Park",
+        "zh": "臺中公園"
+      },
+      "localDoor": [
+        50,
+        58
+      ],
+      "exteriorWarpId": 0,
+      "interiorMapId": "MAP_TAICHUNG_PARK_GYM",
+      "realPlace": {
+        "number": 2,
+        "name": "Taichung Park",
+        "zh": "臺中公園",
+        "coordinates": [
+          120.68571,
+          24.14431
+        ],
+        "source": "https://travel.taichung.gov.tw/en/attractions/intro/882",
+        "kind": "gym",
+        "pokemon": null,
+        "level": null,
+        "speciesNumber": null
+      }
+    },
+    "miyahara": {
+      "id": "miyahara",
+      "origin": [
+        319,
+        107
+      ],
+      "size": [
+        10,
+        8
+      ],
+      "door": [
+        324,
+        114
+      ],
+      "approach": [
+        324,
+        115
+      ],
+      "arrival": [
+        324,
+        117
+      ],
+      "sign": [
+        318,
+        116
+      ],
+      "mapName": "TaichungOldCity",
+      "mapId": "MAP_TAICHUNG_OLD_CITY",
+      "sourceMap": "TaichungOldCity",
+      "sourceOrigin": [
+        15,
+        44
+      ],
+      "artStatus": "approved-baseline-source",
+      "signScript": "TaichungCity_Sign_Miyahara",
+      "gym": true,
+      "nativeKey": "43:0",
+      "localApproach": [
+        44,
+        43
+      ],
+      "localArrival": [
+        44,
+        45
+      ],
+      "localSign": [
+        38,
+        44
+      ],
+      "worldAnchor": [
+        324,
+        114
+      ],
+      "name": {
+        "en": "Miyahara",
+        "zh": "宮原眼科"
+      },
+      "localDoor": [
+        44,
+        42
+      ],
+      "exteriorWarpId": 1,
+      "interiorMapId": "MAP_TAICHUNG_MIYAHARA_GYM",
+      "realPlace": {
+        "number": 3,
+        "name": "Miyahara",
+        "zh": "宮原眼科",
+        "coordinates": [
+          120.68356,
+          24.13784
+        ],
+        "source": "https://travel.taichung.gov.tw/en/Attractions/Intro/1239",
+        "kind": "gym",
+        "pokemon": null,
+        "level": null,
+        "speciesNumber": null
+      }
+    },
+    "natural-science-museum": {
+      "id": "natural-science-museum",
+      "origin": [
+        253,
+        58
+      ],
+      "size": [
+        11,
+        7
+      ],
+      "door": [
+        258,
+        64
+      ],
+      "approach": [
+        258,
+        65
+      ],
+      "arrival": [
+        258,
+        67
+      ],
+      "sign": [
+        252,
+        66
+      ],
+      "mapName": "TaichungMuseumQuarter",
+      "mapId": "MAP_TAICHUNG_MUSEUM_QUARTER",
+      "sourceMap": "TaichungGreenway",
+      "sourceOrigin": [
+        19,
+        51
+      ],
+      "artStatus": "approved-baseline-source",
+      "signScript": "TaichungCity_Sign_ScienceMuseum",
+      "gym": true,
+      "nativeKey": "43:23",
+      "localApproach": [
+        50,
+        65
+      ],
+      "localArrival": [
+        50,
+        67
+      ],
+      "localSign": [
+        44,
+        66
+      ],
+      "worldAnchor": [
+        258,
+        64
+      ],
+      "name": {
+        "en": "Science Museum",
+        "zh": "國立自然科學博物館"
+      },
+      "localDoor": [
+        50,
+        64
+      ],
+      "exteriorWarpId": 0,
+      "interiorMapId": "MAP_TAICHUNG_SCIENCE_MUSEUM_GYM",
+      "realPlace": {
+        "number": 4,
+        "name": "Science Museum",
+        "zh": "國立自然科學博物館",
+        "coordinates": [
+          120.66606,
+          24.157233
+        ],
+        "source": "https://www.nmns.edu.tw/en/",
+        "kind": "gym",
+        "pokemon": null,
+        "level": null,
+        "speciesNumber": null
+      }
+    },
+    "calligraphy-greenway": {
+      "id": "calligraphy-greenway",
+      "origin": [
+        254,
+        95
+      ],
+      "size": [
+        9,
+        10
+      ],
+      "door": [
+        258,
+        104
+      ],
+      "approach": [
+        258,
+        105
+      ],
+      "arrival": [
+        258,
+        107
+      ],
+      "sign": [
+        253,
+        106
+      ],
+      "mapName": "TaichungGreenway",
+      "mapId": "MAP_TAICHUNG_GREENWAY",
+      "sourceMap": "TaichungGreenway",
+      "sourceOrigin": [
+        18,
+        64
+      ],
+      "artStatus": "approved-baseline-source",
+      "signScript": "TaichungCity_Sign_Greenway",
+      "gym": true,
+      "nativeKey": "43:1",
+      "localApproach": [
+        50,
+        33
+      ],
+      "localArrival": [
+        50,
+        35
+      ],
+      "localSign": [
+        45,
+        34
+      ],
+      "worldAnchor": [
+        258,
+        104
+      ],
+      "name": {
+        "en": "Greenway & Civic Square",
+        "zh": "草悟道"
+      },
+      "localDoor": [
+        50,
+        32
+      ],
+      "exteriorWarpId": 0,
+      "interiorMapId": "MAP_TAICHUNG_GREENWAY_GYM",
+      "realPlace": {
+        "number": 5,
+        "name": "Greenway & Civic Square",
+        "zh": "草悟道",
+        "coordinates": [
+          120.66477,
+          24.1484
+        ],
+        "source": "https://travel.taichung.gov.tw/en/Attractions/Intro/1050",
+        "kind": "gym",
+        "pokemon": null,
+        "level": null,
+        "speciesNumber": null
+      }
+    },
+    "shen-ji-new-village": {
+      "id": "shen-ji-new-village",
+      "origin": [
+        243,
+        118
+      ],
+      "size": [
+        11,
+        6
+      ],
+      "door": [
+        246,
+        123
+      ],
+      "approach": [
+        246,
+        124
+      ],
+      "arrival": [
+        246,
+        126
+      ],
+      "sign": [
+        242,
+        125
+      ],
+      "mapName": "TaichungGreenway",
+      "mapId": "MAP_TAICHUNG_GREENWAY",
+      "sourceMap": "TaichungGreenway",
+      "sourceOrigin": [
+        8,
+        76
+      ],
+      "artStatus": "approved-baseline-source",
+      "signScript": "TaichungCity_Sign_ShenJi",
+      "gym": true,
+      "nativeKey": "43:1",
+      "localApproach": [
+        38,
+        52
+      ],
+      "localArrival": [
+        38,
+        54
+      ],
+      "localSign": [
+        34,
+        53
+      ],
+      "worldAnchor": [
+        246,
+        123
+      ],
+      "name": {
+        "en": "Shen Ji New Village",
+        "zh": "審計新村"
+      },
+      "localDoor": [
+        38,
+        51
+      ],
+      "exteriorWarpId": 1,
+      "interiorMapId": "MAP_TAICHUNG_SHEN_JI_GYM",
+      "realPlace": {
+        "number": 6,
+        "name": "Shen Ji New Village",
+        "zh": "審計新村",
+        "coordinates": [
+          120.66261,
+          24.14493
+        ],
+        "source": "https://travel.taichung.gov.tw/en/Attractions/Intro/1222",
+        "kind": "gym",
+        "pokemon": null,
+        "level": null,
+        "speciesNumber": null
+      }
+    },
+    "fine-arts-museum": {
+      "id": "fine-arts-museum",
+      "origin": [
+        260,
+        124
+      ],
+      "size": [
+        13,
+        11
+      ],
+      "door": [
+        265,
+        130
+      ],
+      "approach": [
+        265,
+        131
+      ],
+      "arrival": [
+        265,
+        133
+      ],
+      "sign": [
+        259,
+        136
+      ],
+      "mapName": "TaichungGreenway",
+      "mapId": "MAP_TAICHUNG_GREENWAY",
+      "sourceMap": "TaichungGreenway",
+      "sourceOrigin": [
+        8,
+        93
+      ],
+      "artStatus": "approved-baseline-source",
+      "signScript": "TaichungCity_Sign_FineArts",
+      "gym": true,
+      "nativeKey": "43:1",
+      "localApproach": [
+        57,
+        59
+      ],
+      "localArrival": [
+        57,
+        61
+      ],
+      "localSign": [
+        51,
+        64
+      ],
+      "worldAnchor": [
+        265,
+        130
+      ],
+      "name": {
+        "en": "Fine Arts Museum",
+        "zh": "國立臺灣美術館"
+      },
+      "localDoor": [
+        57,
+        58
+      ],
+      "exteriorWarpId": 2,
+      "interiorMapId": "MAP_TAICHUNG_FINE_ARTS_GYM",
+      "realPlace": {
+        "number": 7,
+        "name": "Fine Arts Museum",
+        "zh": "國立臺灣美術館",
+        "coordinates": [
+          120.66331,
+          24.141186
+        ],
+        "source": "https://www.ntmofa.gov.tw/en/cp.aspx?n=1579",
+        "kind": "gym",
+        "pokemon": null,
+        "level": null,
+        "speciesNumber": null
+      }
+    },
+    "fengjia-night-market": {
+      "id": "fengjia-night-market",
+      "origin": [
+        155,
+        35
+      ],
+      "size": [
+        10,
+        6
+      ],
+      "door": [
+        160,
+        40
+      ],
+      "approach": [
+        160,
+        41
+      ],
+      "arrival": [
+        160,
+        43
+      ],
+      "sign": [
+        154,
+        42
+      ],
+      "mapName": "TaichungFengjiaQuarter",
+      "mapId": "MAP_TAICHUNG_FENGJIA_QUARTER",
+      "sourceMap": "TaichungXitun",
+      "sourceOrigin": [
+        24,
+        12
+      ],
+      "artStatus": "approved-baseline-source",
+      "signScript": "TaichungCity_Sign_Fengjia",
+      "gym": true,
+      "nativeKey": "43:22",
+      "localApproach": [
+        56,
+        41
+      ],
+      "localArrival": [
+        56,
+        43
+      ],
+      "localSign": [
+        50,
+        42
+      ],
+      "worldAnchor": [
+        160,
+        40
+      ],
+      "name": {
+        "en": "Fengjia Night Market",
+        "zh": "逢甲夜市"
+      },
+      "localDoor": [
+        56,
+        40
+      ],
+      "exteriorWarpId": 0,
+      "interiorMapId": "MAP_TAICHUNG_FENGJIA_GYM",
+      "realPlace": {
+        "number": 8,
+        "name": "Fengjia Night Market",
+        "zh": "逢甲夜市",
+        "coordinates": [
+          120.64632,
+          24.17951
+        ],
+        "source": "https://travel.taichung.gov.tw/en/Attractions/Intro/850",
+        "kind": "gym",
+        "pokemon": null,
+        "level": null,
+        "speciesNumber": null
+      }
+    },
+    "maple-garden": {
+      "id": "maple-garden",
+      "origin": [
+        136,
+        95
+      ],
+      "size": [
+        10,
+        7
+      ],
+      "door": [
+        138,
+        100
+      ],
+      "approach": [
+        138,
+        101
+      ],
+      "arrival": [
+        138,
+        103
+      ],
+      "sign": [
+        135,
+        103
+      ],
+      "mapName": "TaichungXitun",
+      "mapId": "MAP_TAICHUNG_XITUN",
+      "sourceMap": "TaichungXitun",
+      "sourceOrigin": [
+        15,
+        32
+      ],
+      "artStatus": "approved-baseline-source",
+      "signScript": "TaichungCity_Sign_MapleGarden",
+      "gym": false,
+      "nativeKey": "43:2",
+      "localApproach": [
+        34,
+        29
+      ],
+      "localArrival": [
+        34,
+        31
+      ],
+      "localSign": [
+        31,
+        31
+      ],
+      "worldAnchor": [
+        138,
+        100
+      ],
+      "name": {
+        "en": "Maple Garden",
+        "zh": "秋紅谷"
+      },
+      "localDoor": [
+        34,
+        28
+      ],
+      "exteriorWarpId": 0,
+      "interiorMapId": "MAP_TAICHUNG_MAPLE_GARDEN_GYM",
+      "realPlace": {
+        "number": 11,
+        "name": "Maple Garden",
+        "zh": "秋紅谷",
+        "coordinates": [
+          120.63935,
+          24.16801
+        ],
+        "source": "https://travel.taichung.gov.tw/en/attractions/intro/851",
+        "kind": "encounter",
+        "pokemon": "Lapras",
+        "level": 65,
+        "speciesNumber": 131
+      }
+    },
+    "taichung-theater": {
+      "id": "taichung-theater",
+      "origin": [
+        160,
+        106
+      ],
+      "size": [
+        16,
+        7
+      ],
+      "door": [
+        168,
+        112
+      ],
+      "approach": [
+        168,
+        113
+      ],
+      "arrival": [
+        168,
+        115
+      ],
+      "sign": [
+        159,
+        114
+      ],
+      "mapName": "TaichungXitun",
+      "mapId": "MAP_TAICHUNG_XITUN",
+      "sourceMap": "TaichungXitun",
+      "sourceOrigin": [
+        9,
+        43
+      ],
+      "artStatus": "approved-baseline-source",
+      "signScript": "TaichungCity_Sign_Theater",
+      "gym": true,
+      "nativeKey": "43:2",
+      "localApproach": [
+        64,
+        41
+      ],
+      "localArrival": [
+        64,
+        43
+      ],
+      "localSign": [
+        55,
+        42
+      ],
+      "worldAnchor": [
+        168,
+        112
+      ],
+      "name": {
+        "en": "Taichung Theater",
+        "zh": "臺中國家歌劇院"
+      },
+      "localDoor": [
+        64,
+        40
+      ],
+      "exteriorWarpId": 1,
+      "interiorMapId": "MAP_TAICHUNG_THEATER_GYM",
+      "realPlace": {
+        "number": 10,
+        "name": "Taichung Theater",
+        "zh": "臺中國家歌劇院",
+        "coordinates": [
+          120.6403,
+          24.162649
+        ],
+        "source": "https://www.npac-ntt.org/en/about/architecture/design",
+        "kind": "gym",
+        "pokemon": null,
+        "level": null,
+        "speciesNumber": null
+      }
+    },
+    "prefectural-hall": {
+      "id": "prefectural-hall",
+      "origin": [
+        298,
+        123
+      ],
+      "size": [
+        10,
+        10
+      ],
+      "door": null,
+      "approach": [
+        303,
+        134
+      ],
+      "arrival": [
+        303,
+        136
+      ],
+      "sign": [
+        297,
+        134
+      ],
+      "mapName": "TaichungOldCity",
+      "mapId": "MAP_TAICHUNG_OLD_CITY",
+      "sourceMap": "TaichungOldCity",
+      "sourceOrigin": [
+        13,
+        36
+      ],
+      "artStatus": "approved-baseline-source",
+      "signScript": "TaichungCity_Sign_PrefecturalHall",
+      "gym": false,
+      "nativeKey": "43:0",
+      "localApproach": [
+        23,
+        62
+      ],
+      "localArrival": [
+        23,
+        64
+      ],
+      "localSign": [
+        17,
+        62
+      ],
+      "worldAnchor": [
+        303,
+        134
+      ],
+      "name": {
+        "en": "Prefectural Hall",
+        "zh": "臺中州廳"
+      },
+      "realPlace": {
+        "number": 16,
+        "name": "Prefectural Hall",
+        "zh": "臺中州廳",
+        "coordinates": [
+          120.67848,
+          24.13856
+        ],
+        "source": "https://travel.taichung.gov.tw/en/attractions/intro/1367",
+        "kind": "encounter",
+        "pokemon": "Arcanine",
+        "level": 65,
+        "speciesNumber": 59
+      }
+    },
+    "botanical-garden": {
+      "id": "botanical-garden",
+      "origin": [
+        252,
+        28
+      ],
+      "size": [
+        13,
+        9
+      ],
+      "door": null,
+      "approach": [
+        258,
+        38
+      ],
+      "arrival": [
+        258,
+        40
+      ],
+      "sign": [
+        251,
+        38
+      ],
+      "mapName": "TaichungMuseumQuarter",
+      "mapId": "MAP_TAICHUNG_MUSEUM_QUARTER",
+      "sourceMap": "TaichungGreenway",
+      "sourceOrigin": [
+        9,
+        25
+      ],
+      "artStatus": "approved-baseline-source",
+      "signScript": "TaichungCity_Sign_BotanicalGarden",
+      "gym": false,
+      "nativeKey": "43:23",
+      "localApproach": [
+        50,
+        38
+      ],
+      "localArrival": [
+        50,
+        40
+      ],
+      "localSign": [
+        43,
+        38
+      ],
+      "worldAnchor": [
+        258,
+        38
+      ],
+      "name": {
+        "en": "Botanical Garden",
+        "zh": "國立自然科學博物館植物園"
+      },
+      "realPlace": {
+        "number": 13,
+        "name": "Botanical Garden",
+        "zh": "國立自然科學博物館植物園",
+        "coordinates": [
+          120.668174028397,
+          24.1581193606499
+        ],
+        "source": "https://travel.taichung.gov.tw/en/attractions/intro/902",
+        "kind": "encounter",
+        "pokemon": "Exeggutor",
+        "level": 65,
+        "speciesNumber": 103
+      }
+    },
+    "wenxin-forest-park": {
+      "id": "wenxin-forest-park",
+      "origin": [
+        216,
+        124
+      ],
+      "size": [
+        12,
+        7
+      ],
+      "door": null,
+      "approach": [
+        222,
+        132
+      ],
+      "arrival": [
+        222,
+        134
+      ],
+      "sign": [
+        215,
+        132
+      ],
+      "mapName": "TaichungGreenway",
+      "mapId": "MAP_TAICHUNG_GREENWAY",
+      "sourceMap": "TaichungNantunNorth",
+      "sourceOrigin": [
+        20,
+        24
+      ],
+      "artStatus": "approved-baseline-source",
+      "signScript": "TaichungCity_Sign_WenxinForestPark",
+      "gym": false,
+      "nativeKey": "43:1",
+      "localApproach": [
+        14,
+        60
+      ],
+      "localArrival": [
+        14,
+        62
+      ],
+      "localSign": [
+        7,
+        60
+      ],
+      "worldAnchor": [
+        222,
+        132
+      ],
+      "name": {
+        "en": "Wenxin Park",
+        "zh": "文心森林公園"
+      },
+      "realPlace": {
+        "number": 20,
+        "name": "Wenxin Park",
+        "zh": "文心森林公園",
+        "coordinates": [
+          120.64586,
+          24.14616
+        ],
+        "source": "https://travel.taichung.gov.tw/zh-tw/attractions/intro/2026",
+        "kind": "encounter",
+        "pokemon": "Jynx",
+        "level": 60,
+        "speciesNumber": 124
+      }
+    },
+    "wanhe-temple": {
+      "id": "wanhe-temple",
+      "origin": [
+        228,
+        178
+      ],
+      "size": [
+        9,
+        7
+      ],
+      "door": [
+        232,
+        184
+      ],
+      "approach": [
+        232,
+        185
+      ],
+      "arrival": [
+        232,
+        187
+      ],
+      "sign": [
+        227,
+        186
+      ],
+      "mapName": "TaichungNantunWanhe",
+      "mapId": "MAP_TAICHUNG_NANTUN_WANHE",
+      "sourceMap": "TaichungNantunWanhe",
+      "sourceOrigin": [
+        27,
+        27
+      ],
+      "artStatus": "approved-baseline-source",
+      "signScript": "TaichungCity_Sign_WanheTemple",
+      "gym": true,
+      "nativeKey": "43:15",
+      "localApproach": [
+        24,
+        41
+      ],
+      "localArrival": [
+        24,
+        43
+      ],
+      "localSign": [
+        19,
+        42
+      ],
+      "worldAnchor": [
+        232,
+        184
+      ],
+      "name": {
+        "en": "Wanhe Temple",
+        "zh": "萬和宮"
+      },
+      "localDoor": [
+        24,
+        40
+      ],
+      "exteriorWarpId": 0,
+      "interiorMapId": "MAP_TAICHUNG_WANHE_TEMPLE_HALL",
+      "realPlace": {
+        "number": 9,
+        "name": "Wanhe Temple",
+        "zh": "萬和宮",
+        "coordinates": [
+          120.63911,
+          24.13781
+        ],
+        "source": "https://taiwangods.moi.gov.tw/html/landscape_en/1_0011.aspx?i=41",
+        "kind": "gym",
+        "pokemon": null,
+        "level": null,
+        "speciesNumber": null
+      }
+    },
+    "wenchang-temple": {
+      "id": "wenchang-temple",
+      "origin": [
+        217,
+        179
+      ],
+      "size": [
+        7,
+        6
+      ],
+      "door": [
+        220,
+        184
+      ],
+      "approach": [
+        220,
+        185
+      ],
+      "arrival": [
+        220,
+        187
+      ],
+      "sign": [
+        216,
+        186
+      ],
+      "mapName": "TaichungNantunWanhe",
+      "mapId": "MAP_TAICHUNG_NANTUN_WANHE",
+      "sourceMap": "TaichungNantunWanhe",
+      "sourceOrigin": [
+        18,
+        28
+      ],
+      "artStatus": "approved-baseline-source",
+      "signScript": "TaichungCity_Sign_WenchangTemple",
+      "gym": false,
+      "nativeKey": "43:15",
+      "localApproach": [
+        12,
+        41
+      ],
+      "localArrival": [
+        12,
+        43
+      ],
+      "localSign": [
+        8,
+        42
+      ],
+      "worldAnchor": [
+        220,
+        184
+      ],
+      "name": {
+        "en": "Wenchang Temple",
+        "zh": "文昌公廟"
+      },
+      "localDoor": [
+        12,
+        40
+      ],
+      "exteriorWarpId": 1,
+      "interiorMapId": "MAP_TAICHUNG_WENCHANG_TEMPLE_HALL",
+      "realPlace": {
+        "number": 12,
+        "name": "Wenchang Temple",
+        "zh": "文昌公廟",
+        "coordinates": [
+          120.63865,
+          24.13794
+        ],
+        "source": "https://taiwangods.moi.gov.tw/html/cultural_EN/3_0011.aspx?i=227",
+        "kind": "encounter",
+        "pokemon": "Gyarados",
+        "level": 70,
+        "speciesNumber": 130
+      }
+    },
+    "cultural-heritage-park": {
+      "id": "cultural-heritage-park",
+      "origin": [
+        335,
+        159
+      ],
+      "size": [
+        14,
+        13
+      ],
+      "door": null,
+      "approach": [
+        342,
+        173
+      ],
+      "arrival": [
+        342,
+        175
+      ],
+      "sign": [
+        334,
+        173
+      ],
+      "mapName": "TaichungHeritageQuarter",
+      "mapId": "MAP_TAICHUNG_HERITAGE_QUARTER",
+      "sourceMap": "TaichungNantunWanhe",
+      "sourceOrigin": [
+        62,
+        17
+      ],
+      "artStatus": "approved-baseline-source",
+      "signScript": "TaichungCity_Sign_CulturalHeritagePark",
+      "gym": false,
+      "nativeKey": "43:26",
+      "localApproach": [
+        62,
+        29
+      ],
+      "localArrival": [
+        62,
+        31
+      ],
+      "localSign": [
+        54,
+        29
+      ],
+      "worldAnchor": [
+        342,
+        173
+      ],
+      "name": {
+        "en": "Heritage Park",
+        "zh": "文化部文化資產園區"
+      },
+      "realPlace": {
+        "number": 18,
+        "name": "Heritage Park",
+        "zh": "文化部文化資產園區",
+        "coordinates": [
+          120.6816938,
+          24.1334778
+        ],
+        "source": "https://travel.taichung.gov.tw/en/attractions/intro/1053",
+        "kind": "encounter",
+        "pokemon": "Moltres",
+        "level": 75,
+        "speciesNumber": 146
+      }
+    },
+    "fengle-sculpture-park": {
+      "id": "fengle-sculpture-park",
+      "origin": [
+        237,
+        197
+      ],
+      "size": [
+        11,
+        9
+      ],
+      "door": null,
+      "approach": [
+        242,
+        207
+      ],
+      "arrival": [
+        242,
+        209
+      ],
+      "sign": [
+        236,
+        207
+      ],
+      "mapName": "TaichungNantunWanhe",
+      "mapId": "MAP_TAICHUNG_NANTUN_WANHE",
+      "sourceMap": "TaichungNantunWanhe",
+      "sourceOrigin": [
+        65,
+        55
+      ],
+      "artStatus": "approved-baseline-source",
+      "signScript": "TaichungCity_Sign_FengleSculpturePark",
+      "gym": false,
+      "nativeKey": "43:15",
+      "localApproach": [
+        34,
+        63
+      ],
+      "localArrival": [
+        34,
+        65
+      ],
+      "localSign": [
+        28,
+        63
+      ],
+      "worldAnchor": [
+        242,
+        207
+      ],
+      "name": {
+        "en": "Fengle Park",
+        "zh": "豐樂雕塑公園"
+      },
+      "realPlace": {
+        "number": 19,
+        "name": "Fengle Park",
+        "zh": "豐樂雕塑公園",
+        "coordinates": [
+          120.64334,
+          24.13151
+        ],
+        "source": "https://travel.taichung.gov.tw/en/attractions/intro/889",
+        "kind": "encounter",
+        "pokemon": "Onix",
+        "level": 65,
+        "speciesNumber": 95
+      }
+    },
+    "confucius-temple": {
+      "id": "confucius-temple",
+      "origin": [
+        334,
+        10
+      ],
+      "size": [
+        10,
+        9
+      ],
+      "door": null,
+      "approach": [
+        339,
+        20
+      ],
+      "arrival": [
+        339,
+        22
+      ],
+      "sign": [
+        333,
+        20
+      ],
+      "mapName": "TaichungOldCityNorth",
+      "mapId": "MAP_TAICHUNG_OLD_CITY_NORTH",
+      "sourceMap": "TaichungOldCityNorth",
+      "sourceOrigin": [
+        30,
+        25
+      ],
+      "artStatus": "approved-baseline-source",
+      "signScript": "TaichungCity_Sign_ConfuciusTemple",
+      "gym": false,
+      "nativeKey": "43:18",
+      "localApproach": [
+        59,
+        20
+      ],
+      "localArrival": [
+        59,
+        22
+      ],
+      "localSign": [
+        53,
+        20
+      ],
+      "worldAnchor": [
+        339,
+        20
+      ],
+      "name": {
+        "en": "Confucius Temple",
+        "zh": "臺中市孔廟"
+      },
+      "realPlace": {
+        "number": 14,
+        "name": "Confucius Temple",
+        "zh": "臺中市孔廟",
+        "coordinates": [
+          120.68997,
+          24.15432
+        ],
+        "source": "https://travel.taichung.gov.tw/en/attractions/intro/1371",
+        "kind": "encounter",
+        "pokemon": "Alakazam",
+        "level": 65,
+        "speciesNumber": 65
+      }
+    },
+    "yizhong-street": {
+      "id": "yizhong-street",
+      "origin": [
+        320,
+        29
+      ],
+      "size": [
+        10,
+        8
+      ],
+      "door": null,
+      "approach": [
+        325,
+        38
+      ],
+      "arrival": [
+        325,
+        40
+      ],
+      "sign": [
+        319,
+        38
+      ],
+      "mapName": "TaichungOldCityNorth",
+      "mapId": "MAP_TAICHUNG_OLD_CITY_NORTH",
+      "sourceMap": "TaichungOldCityNorth",
+      "sourceOrigin": [
+        30,
+        39
+      ],
+      "artStatus": "approved-baseline-source",
+      "signScript": "TaichungCity_Sign_YizhongStreet",
+      "gym": false,
+      "nativeKey": "43:18",
+      "localApproach": [
+        45,
+        38
+      ],
+      "localArrival": [
+        45,
+        40
+      ],
+      "localSign": [
+        39,
+        38
+      ],
+      "worldAnchor": [
+        325,
+        38
+      ],
+      "name": {
+        "en": "Yizhong Street",
+        "zh": "一中商圈"
+      },
+      "realPlace": {
+        "number": 15,
+        "name": "Yizhong Street",
+        "zh": "一中商圈",
+        "coordinates": [
+          120.68502,
+          24.14914
+        ],
+        "source": "https://travel.taichung.gov.tw/en/attractions/intro/1551",
+        "kind": "encounter",
+        "pokemon": "Electabuzz",
+        "level": 60,
+        "speciesNumber": 125
+      }
+    },
+    "second-market": {
+      "id": "second-market",
+      "origin": [
+        302,
+        86
+      ],
+      "size": [
+        7,
+        9
+      ],
+      "door": null,
+      "approach": [
+        305,
+        96
+      ],
+      "arrival": [
+        305,
+        98
+      ],
+      "sign": [
+        301,
+        96
+      ],
+      "mapName": "TaichungOldCity",
+      "mapId": "MAP_TAICHUNG_OLD_CITY",
+      "sourceMap": "TaichungOldCityNorth",
+      "sourceOrigin": [
+        18,
+        25
+      ],
+      "artStatus": "approved-baseline-source",
+      "signScript": "TaichungCity_Sign_SecondMarket",
+      "gym": false,
+      "nativeKey": "43:0",
+      "localApproach": [
+        25,
+        24
+      ],
+      "localArrival": [
+        25,
+        26
+      ],
+      "localSign": [
+        21,
+        24
+      ],
+      "worldAnchor": [
+        305,
+        96
+      ],
+      "name": {
+        "en": "Second Market",
+        "zh": "臺中第二市場"
+      },
+      "realPlace": {
+        "number": 17,
+        "name": "Second Market",
+        "zh": "臺中第二市場",
+        "coordinates": [
+          120.67882,
+          24.14236
+        ],
+        "source": "https://travel.taichung.gov.tw/en/attractions/intro/1366",
+        "kind": "encounter",
+        "pokemon": "Snorlax",
+        "level": 60,
+        "speciesNumber": 143
+      }
+    },
+    "luce-chapel": {
+      "id": "luce-chapel",
+      "anchor": [
+        24,
+        96
+      ],
+      "approach": [
+        24,
+        96
+      ],
+      "arrival": [
+        24,
+        97
+      ],
+      "origin": [
+        21,
+        93
+      ],
+      "size": [
+        7,
+        7
+      ],
+      "mapName": "TaichungTunghai",
+      "mapId": "MAP_TAICHUNG_TUNGHAI",
+      "artStatus": "reserved-no-facade",
+      "interactionStatus": "reserved-for-Gameplay-and-Story",
+      "gym": false,
+      "nativeKey": "43:24",
+      "name": {
+        "en": "Luce Chapel / Tunghai",
+        "zh": "路思義教堂／東海大學"
+      },
+      "realPlace": {
+        "number": 21,
+        "name": "Luce Chapel / Tunghai",
+        "zh": "路思義教堂／東海大學",
+        "coordinates": [
+          120.6005502,
+          24.1788952
+        ],
+        "source": "https://travel.taichung.gov.tw/en/attractions/intro/899",
+        "kind": "encounter",
+        "pokemon": "Dragonite",
+        "level": 75,
+        "speciesNumber": 149
+      },
+      "worldAnchor": [
+        24,
+        96
+      ],
+      "localApproach": [
+        24,
+        24
+      ],
+      "localArrival": [
+        24,
+        25
+      ]
+    },
+    "rainbow-village": {
+      "id": "rainbow-village",
+      "anchor": [
+        122,
+        198
+      ],
+      "approach": [
+        122,
+        198
+      ],
+      "arrival": [
+        122,
+        199
+      ],
+      "origin": [
+        119,
+        195
+      ],
+      "size": [
+        7,
+        7
+      ],
+      "mapName": "TaichungNantunNorth",
+      "mapId": "MAP_TAICHUNG_NANTUN_NORTH",
+      "artStatus": "reserved-no-facade",
+      "interactionStatus": "reserved-for-Gameplay-and-Story",
+      "gym": false,
+      "nativeKey": "43:14",
+      "name": {
+        "en": "Rainbow Village",
+        "zh": "彩虹村"
+      },
+      "realPlace": {
+        "number": 22,
+        "name": "Rainbow Village",
+        "zh": "彩虹村",
+        "coordinates": [
+          120.60983,
+          24.13368
+        ],
+        "source": "https://travel.taichung.gov.tw/vi/attractions/intro/1877",
+        "kind": "encounter",
+        "pokemon": "Mr. Mime",
+        "level": 60,
+        "speciesNumber": 122
+      },
+      "worldAnchor": [
+        122,
+        198
+      ],
+      "localApproach": [
+        18,
+        54
+      ],
+      "localArrival": [
+        18,
+        55
+      ]
+    },
+    "city-hall": {
+      "id": "city-hall",
+      "anchor": [
+        196,
+        100
+      ],
+      "approach": [
+        196,
+        100
+      ],
+      "arrival": [
+        196,
+        101
+      ],
+      "origin": [
+        193,
+        97
+      ],
+      "size": [
+        7,
+        7
+      ],
+      "mapName": "TaichungXitun",
+      "mapId": "MAP_TAICHUNG_XITUN",
+      "artStatus": "reserved-no-facade",
+      "interactionStatus": "reserved-for-Gameplay-and-Story",
+      "gym": false,
+      "nativeKey": "43:2",
+      "name": {
+        "en": "City Hall / Taichung Hub",
+        "zh": "市政府／願景館"
+      },
+      "realPlace": {
+        "number": 23,
+        "name": "City Hall / Taichung Hub",
+        "zh": "市政府／願景館",
+        "coordinates": [
+          120.64688,
+          24.16157
+        ],
+        "source": "https://travel.taichung.gov.tw/en/attractions/intro/1242",
+        "kind": "encounter",
+        "pokemon": "Porygon",
+        "level": 65,
+        "speciesNumber": 137
+      },
+      "worldAnchor": [
+        196,
+        100
+      ],
+      "localApproach": [
+        92,
+        28
+      ],
+      "localArrival": [
+        92,
+        29
+      ]
+    },
+    "jingming-street": {
+      "id": "jingming-street",
+      "anchor": [
+        233,
+        96
+      ],
+      "approach": [
+        233,
+        96
+      ],
+      "arrival": [
+        233,
+        97
+      ],
+      "origin": [
+        230,
+        93
+      ],
+      "size": [
+        7,
+        7
+      ],
+      "mapName": "TaichungGreenway",
+      "mapId": "MAP_TAICHUNG_GREENWAY",
+      "artStatus": "reserved-no-facade",
+      "interactionStatus": "reserved-for-Gameplay-and-Story",
+      "gym": false,
+      "nativeKey": "43:1",
+      "name": {
+        "en": "Jingming 1st Street",
+        "zh": "精明一街"
+      },
+      "realPlace": {
+        "number": 24,
+        "name": "Jingming 1st Street",
+        "zh": "精明一街",
+        "coordinates": [
+          120.65583,
+          24.15623
+        ],
+        "source": "https://travel.taichung.gov.tw/en/attractions/intro/1374",
+        "kind": "encounter",
+        "pokemon": "Persian",
+        "level": 60,
+        "speciesNumber": 53
+      },
+      "worldAnchor": [
+        233,
+        96
+      ],
+      "localApproach": [
+        25,
+        24
+      ],
+      "localArrival": [
+        25,
+        25
+      ]
+    }
+  },
+  "residence": {
+    "mapId": "MAP_TAICHUNG_OLD_CITY",
+    "mapName": "TaichungOldCity",
+    "door": [
+      312,
+      114
+    ],
+    "approach": [
+      312,
+      115
+    ],
+    "arrival": [
+      310,
+      117
+    ],
+    "sourceOrigin": [
+      17,
+      63
+    ],
+    "origin": [
+      309,
+      110
+    ],
+    "size": [
+      4,
+      5
+    ],
+    "guide": [
+      313,
+      116
+    ],
+    "interiorMapId": "MAP_TAICHUNG_GUEST_HOUSE_1F",
+    "nativeKey": "43:0",
+    "exteriorWarpId": 2,
+    "localDoor": [
+      32,
+      42
+    ],
+    "localApproach": [
+      32,
+      43
+    ],
+    "localArrival": [
+      30,
+      45
+    ],
+    "localGuide": [
+      33,
+      44
+    ]
+  },
+  "exteriorSourceSha256": {
+    "data/layouts/TaichungTunghaiNorth/map.bin": "543e8ee99c6bd080c317af3237c8f34a035cd09ddb1006fbb24680f1e16677f7",
+    "data/layouts/TaichungFengjiaQuarter/map.bin": "15c656b1e223a39c16f42310921e1b75cfaebb545331bf9666e75ac289603c4f",
+    "data/layouts/TaichungMuseumQuarter/map.bin": "afa3f4fd9350e8181ab531c03651c6bfd9f2d3e13fe4df4dc81d124d96fa661f",
+    "data/layouts/TaichungOldCityNorth/map.bin": "d8cf4e3f1ffbcbcf371bd436a7609b718407e7b345c1f4c301ab7787be0d4f9a",
+    "data/layouts/TaichungTunghai/map.bin": "ab95d48bc279f6a12b3a23a4cfc93f339be2d9fa10ece152f8a02c53ecb5d62b",
+    "data/layouts/TaichungXitun/map.bin": "67274195e5d0a3d94f44bfef51ac6f91ecdbf2cd83b003f545d2a4e84800336f",
+    "data/layouts/TaichungGreenway/map.bin": "d2466e06e91bb6b1321fd2428da2f900429cfe44795ab6cdae4861e6eb8224ac",
+    "data/layouts/TaichungOldCity/map.bin": "fe4e7a1f7c669e2a301cde32e262301701fa26aba38b317cb8aa53830ef9e9a9",
+    "data/layouts/TaichungRainbowQuarter/map.bin": "b5b1a22dfece1479223f0b33d420d13cc452bc6cb34f9a6d472e2b3c57aec359",
+    "data/layouts/TaichungNantunNorth/map.bin": "1b9b4322f25a59357eb0c08179d37d29347bc62067bd4aca8f9d7f5a29f10f47",
+    "data/layouts/TaichungNantunWanhe/map.bin": "b3dbc1350e61188b0a99d4ec11ccf820332ebe8d7e0d513ca0193433e7572b84",
+    "data/layouts/TaichungHeritageQuarter/map.bin": "7f3b934f058b45ca72059dea14eea4227825dd46316dc921d835d338db2bfd9a",
+    "data/tilesets/primary/taichung_horizontal_tunghainorth/metatiles.bin": "cfad2ef377fe6d841c3a657b4ce674fb1f320573d4c1607ac4f273299d3d23a3",
+    "data/tilesets/primary/taichung_horizontal_tunghainorth/metatile_attributes.bin": "e830d4ed09d6985a12910b7e94379b3a29695f5ca65822a9d3fb1108fab93987",
+    "data/tilesets/secondary/taichung_horizontal_tunghainorth/metatiles.bin": "0c8704c85f0c280e32ce1ab607bccab7f1907aedbd4f0502a1864abe8f796f78",
+    "data/tilesets/secondary/taichung_horizontal_tunghainorth/metatile_attributes.bin": "c8200d4d937072982020631a1fc989b095d2db845c794328ed04e10bde4670b7",
+    "data/tilesets/primary/taichung_horizontal_fengjiaquarter/metatiles.bin": "cfad2ef377fe6d841c3a657b4ce674fb1f320573d4c1607ac4f273299d3d23a3",
+    "data/tilesets/primary/taichung_horizontal_fengjiaquarter/metatile_attributes.bin": "e830d4ed09d6985a12910b7e94379b3a29695f5ca65822a9d3fb1108fab93987",
+    "data/tilesets/secondary/taichung_horizontal_fengjiaquarter/metatiles.bin": "62e427bee5104134ea83f63c99397697b5528ec742ecc24e7db18933d31ac444",
+    "data/tilesets/secondary/taichung_horizontal_fengjiaquarter/metatile_attributes.bin": "7813217d603435c6292627384123be70cd30912194d1b8355f3dcea9fcd4a291",
+    "data/tilesets/primary/taichung_horizontal_museumquarter/metatiles.bin": "cfad2ef377fe6d841c3a657b4ce674fb1f320573d4c1607ac4f273299d3d23a3",
+    "data/tilesets/primary/taichung_horizontal_museumquarter/metatile_attributes.bin": "e830d4ed09d6985a12910b7e94379b3a29695f5ca65822a9d3fb1108fab93987",
+    "data/tilesets/secondary/taichung_horizontal_museumquarter/metatiles.bin": "227058d5bdb14bc8c5295441b1b28d3127457b423c8e640f846b40e1af92bd00",
+    "data/tilesets/secondary/taichung_horizontal_museumquarter/metatile_attributes.bin": "b3f142426771af3c973b89c3280bb551955c62837ca213acb0a2d443754c6d48",
+    "data/tilesets/primary/taichung_horizontal_oldcitynorth/metatiles.bin": "cfad2ef377fe6d841c3a657b4ce674fb1f320573d4c1607ac4f273299d3d23a3",
+    "data/tilesets/primary/taichung_horizontal_oldcitynorth/metatile_attributes.bin": "e830d4ed09d6985a12910b7e94379b3a29695f5ca65822a9d3fb1108fab93987",
+    "data/tilesets/secondary/taichung_horizontal_oldcitynorth/metatiles.bin": "64712954c118cbb01d52edd7455bad0b79bce42747976240576ed38d20ffdb47",
+    "data/tilesets/secondary/taichung_horizontal_oldcitynorth/metatile_attributes.bin": "4ecf1e2f5f79e9957c4c48e3c969e51905daba590c64423ec37641bced476a4c",
+    "data/tilesets/primary/taichung_horizontal_tunghai/metatiles.bin": "cfad2ef377fe6d841c3a657b4ce674fb1f320573d4c1607ac4f273299d3d23a3",
+    "data/tilesets/primary/taichung_horizontal_tunghai/metatile_attributes.bin": "e830d4ed09d6985a12910b7e94379b3a29695f5ca65822a9d3fb1108fab93987",
+    "data/tilesets/secondary/taichung_horizontal_tunghai/metatiles.bin": "1227402b6b1821067e66cea070193548d21412a0ad499acf2b1e4489458363e2",
+    "data/tilesets/secondary/taichung_horizontal_tunghai/metatile_attributes.bin": "a110b71182122dfb8ca78c3cdca5e3fb7e655158d7010aae5d69ad28df859a6f",
+    "data/tilesets/primary/taichung_horizontal_xitun/metatiles.bin": "cfad2ef377fe6d841c3a657b4ce674fb1f320573d4c1607ac4f273299d3d23a3",
+    "data/tilesets/primary/taichung_horizontal_xitun/metatile_attributes.bin": "e830d4ed09d6985a12910b7e94379b3a29695f5ca65822a9d3fb1108fab93987",
+    "data/tilesets/secondary/taichung_horizontal_xitun/metatiles.bin": "7aaf4a2eec5b666eac0000e56fb233fd207567509d1f9c399dd19f50b9c57586",
+    "data/tilesets/secondary/taichung_horizontal_xitun/metatile_attributes.bin": "4f022c3f11121bb3b4a5bf59d60df63ef09ff65452771aa3a44e9d23e9a624ea",
+    "data/tilesets/primary/taichung_horizontal_greenway/metatiles.bin": "cfad2ef377fe6d841c3a657b4ce674fb1f320573d4c1607ac4f273299d3d23a3",
+    "data/tilesets/primary/taichung_horizontal_greenway/metatile_attributes.bin": "e830d4ed09d6985a12910b7e94379b3a29695f5ca65822a9d3fb1108fab93987",
+    "data/tilesets/secondary/taichung_horizontal_greenway/metatiles.bin": "28adee3e0bd104986ebea5710db0919d582368fa74a0a14db6b7bbb621c59c9f",
+    "data/tilesets/secondary/taichung_horizontal_greenway/metatile_attributes.bin": "29c08b99fd9f7f0bd8cc04850b0ff6a0c1e16328cd81af3480dbafb7bb74ac6a",
+    "data/tilesets/primary/taichung_horizontal_oldcity/metatiles.bin": "cfad2ef377fe6d841c3a657b4ce674fb1f320573d4c1607ac4f273299d3d23a3",
+    "data/tilesets/primary/taichung_horizontal_oldcity/metatile_attributes.bin": "e830d4ed09d6985a12910b7e94379b3a29695f5ca65822a9d3fb1108fab93987",
+    "data/tilesets/secondary/taichung_horizontal_oldcity/metatiles.bin": "4473900caa01e66de1fcb645170486b8f06db4d8a4ee0361bc8bd0f47dfa5051",
+    "data/tilesets/secondary/taichung_horizontal_oldcity/metatile_attributes.bin": "b8c2f6af7b62e357f1d259f1a5562fcbf6a347fad8bee18c5753fe42dfaca402",
+    "data/tilesets/primary/taichung_horizontal_rainbowquarter/metatiles.bin": "cfad2ef377fe6d841c3a657b4ce674fb1f320573d4c1607ac4f273299d3d23a3",
+    "data/tilesets/primary/taichung_horizontal_rainbowquarter/metatile_attributes.bin": "e830d4ed09d6985a12910b7e94379b3a29695f5ca65822a9d3fb1108fab93987",
+    "data/tilesets/secondary/taichung_horizontal_rainbowquarter/metatiles.bin": "0c8704c85f0c280e32ce1ab607bccab7f1907aedbd4f0502a1864abe8f796f78",
+    "data/tilesets/secondary/taichung_horizontal_rainbowquarter/metatile_attributes.bin": "c8200d4d937072982020631a1fc989b095d2db845c794328ed04e10bde4670b7",
+    "data/tilesets/primary/taichung_horizontal_nantunnorth/metatiles.bin": "cfad2ef377fe6d841c3a657b4ce674fb1f320573d4c1607ac4f273299d3d23a3",
+    "data/tilesets/primary/taichung_horizontal_nantunnorth/metatile_attributes.bin": "e830d4ed09d6985a12910b7e94379b3a29695f5ca65822a9d3fb1108fab93987",
+    "data/tilesets/secondary/taichung_horizontal_nantunnorth/metatiles.bin": "a63be9a6ad9f92fc60955a40874ae274272d562c3be01fa3c3664b656f4ed7b8",
+    "data/tilesets/secondary/taichung_horizontal_nantunnorth/metatile_attributes.bin": "4a410622ce54bf2de16bd628ba47ee747c2ed3b1b8a247552604e13511c318ed",
+    "data/tilesets/primary/taichung_horizontal_nantunwanhe/metatiles.bin": "cfad2ef377fe6d841c3a657b4ce674fb1f320573d4c1607ac4f273299d3d23a3",
+    "data/tilesets/primary/taichung_horizontal_nantunwanhe/metatile_attributes.bin": "e830d4ed09d6985a12910b7e94379b3a29695f5ca65822a9d3fb1108fab93987",
+    "data/tilesets/secondary/taichung_horizontal_nantunwanhe/metatiles.bin": "a988c6cf511157135c1ee094abc067d01771ee6846f516bf8dab6cf9f19b7e1a",
+    "data/tilesets/secondary/taichung_horizontal_nantunwanhe/metatile_attributes.bin": "9b8f923a5e4f087eb66d3a68fb08360a72f6d9398e40199828a372b4e3d4e2fe",
+    "data/tilesets/primary/taichung_horizontal_heritagequarter/metatiles.bin": "cfad2ef377fe6d841c3a657b4ce674fb1f320573d4c1607ac4f273299d3d23a3",
+    "data/tilesets/primary/taichung_horizontal_heritagequarter/metatile_attributes.bin": "e830d4ed09d6985a12910b7e94379b3a29695f5ca65822a9d3fb1108fab93987",
+    "data/tilesets/secondary/taichung_horizontal_heritagequarter/metatiles.bin": "18e80adf611b0f7f48aabecc650154543f2880028f6c63807101a2889e52c640",
+    "data/tilesets/secondary/taichung_horizontal_heritagequarter/metatile_attributes.bin": "95e66e0a7413f501931cc712790fcc11a99a34b650f9bd80700313b268e3d50d"
+  },
+  "geometryFingerprintSha256": "61734270b5b95656fff77fea5feb864c401c247fe658040c841d670a3ddc3e37",
   "sourceSha256": {
-    "docs/taichung-city-contract.json": "f1a0e6e3ca349b3c1a8b733e947399cdeaac512e92255efbc08ad7a88ffa1cc8",
-    "data/maps/map_groups.json": "8c4dab7982c14fa6e6aa31afad89569901975b51cfd6bfc992839b0cd8e1fef2",
-    "data/layouts/layouts.json": "42877701e986adea1f7de3d02c28f9fe297351d49b42fda8967d1abe6f23cc3e",
-    "data/maps/TaichungOldCity/map.json": "03ad90c3a562589a8ba5b5fc06aff5ca0d914eba598cd435284c04d49295a062",
-    "data/maps/TaichungGreenway/map.json": "63a60536ce04b30c24606783386ce1e0a5fa541d764a790501c39b673223d6da",
-    "data/maps/TaichungXitun/map.json": "f861cf0f3b038f445362ff2b8c305231a6471dffe4a7a51dadef89eeb16d68ca",
-    "data/maps/TaichungNantunNorth/map.json": "678cf731406e7287dacb5c473bb0fa1b63fe0dc13184dd7b69834d9bf1007b94",
-    "data/maps/TaichungNantunWanhe/map.json": "e5e2c18a095b26270b3143af747badde67b946fc16d31117eb6070b48104a3ee",
-    "data/maps/TaichungOldCityNorth/map.json": "ead3cf60c6690b9ce7049d924eece42815386a01db468a1b06b21ae8cbf64ec6",
+    "docs/taichung-city-contract.json": "68aeae3e76b083df4c710510b85a857f1bf433d9ab8d580df100afd9c7fea37a",
+    "data/maps/map_groups.json": "f6ae5bd6524432f1e250b37e3bc33618d7ef1855ec8a7d6ffcf367ecce9b2753",
+    "data/layouts/layouts.json": "c9750a279f7929dcaaae8c9bb1517bcc88ea6ee38735bd2ccc39e9a4887dccd9",
+    "data/maps/TaichungTunghaiNorth/map.json": "643beebb199a404422595339a51e6466865aaf37579cd84da53e1b2ca62299eb",
+    "data/maps/TaichungFengjiaQuarter/map.json": "c08e42a01a5cbd7e9260e0ed06c8952eae1efa54553708e81ea722c9f2c582bc",
+    "data/maps/TaichungMuseumQuarter/map.json": "49c53b50146bdf0745a0d5f66a79a1063c968a452a72e0ec86637b89f837697c",
+    "data/maps/TaichungOldCityNorth/map.json": "23ed15f024eef8fcc4e3dad8f575ce803c635d9bd6710554aabab759ed4995a4",
+    "data/maps/TaichungTunghai/map.json": "b9f9ebd97a2b1b55c1d3047abe564cb981f77dbf2acf1a1aa8683a9d8aba145e",
+    "data/maps/TaichungXitun/map.json": "449c9187465e9506b5d0b110ab31b15d7d1fdfdb16fdb03f8a8b91ad811120ab",
+    "data/maps/TaichungGreenway/map.json": "29a97060a28ecf5ef20ab10649513bdaa0cabc11383bb8d03a83fdc8216cdb58",
+    "data/maps/TaichungOldCity/map.json": "036f1518e59ea697449dc2ee332cab662d043575b9ec664891953122b2265205",
+    "data/maps/TaichungRainbowQuarter/map.json": "39e0c1685e297272145b5cdebb3a8ff69064c86c26c55e02ed7d7e0b3b89d201",
+    "data/maps/TaichungNantunNorth/map.json": "5dc8b7aefe7a6f0fc5c9f92084756e64591ddee4c34d40881bf16586ca437a17",
+    "data/maps/TaichungNantunWanhe/map.json": "8620121be4f7974495cc9a54fea52760c6fb1b969c0af92f834904827aa02eba",
+    "data/maps/TaichungHeritageQuarter/map.json": "0b7cc8fdc4bda4aa7edc51257230f5741e45bbee330932d3509596fbaad34e7a",
     "data/maps/TaichungOldStation_Gym/map.json": "1ceb93865cb7980c3bf51e0bebb5743d01e4d51edca8f41e93c58adbc2712de0",
-    "data/maps/TaichungPark_Gym/map.json": "9cf10e8bf2d7e53640b5ed97ee0e7fa3e124f94142b593a676de811e90b35996",
-    "data/maps/TaichungMiyahara_Gym/map.json": "692b344e1719b951a0040977712bd7679dbad89adad7fb79fd37138f27bd7f34",
-    "data/maps/TaichungScienceMuseum_Gym/map.json": "3e34d57a4bed0f0ca05d21ccfa4f4782c0bc00aecc9a81cf9f5f2b15f434dc4e",
-    "data/maps/TaichungGreenway_Gym/map.json": "6662f82b74ec24310bfb716a5c2c35853d2c1f2acd5017495bf1a65466084441",
-    "data/maps/TaichungShenJi_Gym/map.json": "77eef468b2bc1316a551248010c0e72362c659c013c59c071ef238f7f7427ee0",
-    "data/maps/TaichungFineArts_Gym/map.json": "0faf5640bf96bd3462c6514e72326431dc3e44c403df1e076e575967f35d5af2",
-    "data/maps/TaichungFengjia_Gym/map.json": "af10c32195571ce06338e8e8771c76ef06b5a4cc6580d9a9ac8e63a82140341e",
-    "data/maps/TaichungMapleGarden_Gym/map.json": "54e30080129716d6b8b14022254b18924cfbf6b457392b852a36898299b7e794",
-    "data/maps/TaichungTheater_Gym/map.json": "12692ba3927051972f05b2dcef311af31e9647516607df8b40e5acaf423870e0",
+    "data/maps/TaichungPark_Gym/map.json": "c181ed8684212f893cd7a98a54ac7c931a16f865e7d7725d98e8b0262ca876d2",
+    "data/maps/TaichungMiyahara_Gym/map.json": "7a6a7b78958c03c4e3ebd6463c2c8359db1bf43dc128f36d41765bd875fe639a",
+    "data/maps/TaichungScienceMuseum_Gym/map.json": "bf837604538eea50395c105aba99d57d366d5a8c3fed0a89e1697c15612e6f08",
+    "data/maps/TaichungGreenway_Gym/map.json": "13f53f8b8bab7ddc03f0e269d325c07fda008e5c60b149db90e61a4636c653a9",
+    "data/maps/TaichungShenJi_Gym/map.json": "f993a626b5cf739b577dc27fb6bf6f9e06cd4d3bb7ecbead3f2479cdb191f95d",
+    "data/maps/TaichungFineArts_Gym/map.json": "af67d31684e1226d75d96c8c9d5bf1f4b7f2ef21b255c768e14a29018988ce29",
+    "data/maps/TaichungFengjia_Gym/map.json": "125ef808886198badb2ace364f8cd5321e39dce285f84047b1f8b325a5a21073",
+    "data/maps/TaichungMapleGarden_Gym/map.json": "e1c4ad2301d7aa3e2a76fa824fb76ad9dbc1d0f075055639830b2121dbf1d27b",
+    "data/maps/TaichungTheater_Gym/map.json": "db3ad67a6660534d9f960b7f3d89eda847d7ae5c320af1512dd836dc1e096041",
     "data/maps/TaichungWanheTemple_Hall/map.json": "a21a679ceac39ac93dd6bff81b3a3fe5b38c0458d69d3fd203ae07b4a5011413",
     "data/maps/TaichungWenchangTemple_Hall/map.json": "f5762b261135ec2b1405399a77174d0e1d3efff2309787fea1c47ec89952d38b",
-    "docs/station-welcome-map-contract.json": "94fd4991b2a1e940748e96a77ddb4d3a7951468bb19d508300f0b5b71a636bc7",
+    "docs/station-welcome-map-contract.json": "95472239f35435ffa0eea9b82eef4e2b688f09ac9692084e0ab87d44ad7008a0",
     "data/maps/TaichungStationWelcome/map.json": "1b05a88ddf43386c64555f6dde84e5b2b3670dfa61e9d5a60101d84e65257d1f",
+    "data/maps/TaichungGuestHouse_1F/map.json": "0eb5741c2b0acb3f6d637b0478eb61647b7c8755b922f8740f4a09ef0397e6cd",
+    "data/maps/TaichungGuestHouse_2F/map.json": "299f891aee02aeeb81b9847dc3f9ebac5b7e927e162845a5262b0b407847a067",
     "include/fieldmap.h": "e7d93120d2695043c7d75067f3c768344622c198503b0671d47292d6aa708a43"
   },
   "validation": {
     "result": "pass",
-    "registeredExteriors": 6,
+    "registeredExteriors": 12,
     "registeredGymInteriors": 12,
-    "registeredOptionalInteriors": 1,
-    "nativeIdBijectionEntries": 19,
+    "registeredOptionalInteriors": 3,
+    "nativeIdBijectionEntries": 27,
     "markerGymBijectionEntries": 12,
-    "exteriorTilesRoundtripped": 21105,
-    "directedSeamsValidated": 18,
-    "seamEdgePairsValidated": 826,
+    "exteriorTilesRoundtripped": 76032,
+    "directedSeamsValidated": 34,
+    "seamEdgePairsValidated": 2704,
     "projectionExample": {
       "nativeKey": "43:0",
       "local": [
         30,
-        66
+        45
       ],
       "world": [
-        115,
-        119
+        310,
+        117
       ],
       "normalizedCellCenter": [
-        0.8953488372093024,
-        0.6602209944751382
+        0.8821022727272727,
+        0.5439814814814815
       ],
       "pixelCenterOn160x160": [
-        143.25581395348837,
-        105.6353591160221
+        141.13636363636363,
+        87.03703703703704
       ]
     }
   }

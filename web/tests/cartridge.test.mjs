@@ -91,3 +91,43 @@ test('legacy cartridges remain valid while optional onboarding metadata must mat
     }
   } finally { await rm(directory, { recursive: true, force: true }); }
 });
+
+test('horizontal-v1 hashes every native payload field and rejects unknown versions or incomplete exports', async () => {
+  const { directory, metadata, writeMetadata } = await fixture();
+  const geometryFile=path.join(directory,'geometry.json');
+  try {
+    await writeMetadata(metadata);
+    const invalid=[
+      g=>g.geometryVersion='horizontal-v99',
+      g=>delete g.geometryVersion,
+      ...['roads','placesById','residence','exteriorSourceSha256'].map(key=>g=>delete g[key]),
+      g=>g.roads[0].name.zh='改動',
+      g=>g.roads[0].regions[0].rect[0]++,
+      g=>g.placesById['botanical-garden'].worldAnchor[0]++,
+      g=>g.placesById['luce-chapel'].artStatus='approved-baseline-source',
+      g=>g.residence.localDoor[0]++,
+      g=>g.exteriorSourceSha256[Object.keys(g.exteriorSourceSha256)[0]]='0'.repeat(64),
+    ];
+    for(const edit of invalid) {
+      const g=structuredClone(geometry);edit(g);
+      await writeFile(geometryFile,JSON.stringify(g));
+      await assert.rejects(verifyCartridge(directory,{geometryFile}),/stale layout fingerprint/);
+    }
+    await writeFile(geometryFile,JSON.stringify(geometry));
+    assert.equal((await verifyCartridge(directory,{geometryFile})).minimap.geometryFingerprintSha256,'61734270b5b95656fff77fea5feb864c401c247fe658040c841d670a3ddc3e37');
+  } finally { await rm(directory,{recursive:true,force:true}); }
+});
+
+test('the released 48fe geometry retains its exact original six-field hash and rejects layout corruption', async () => {
+  const released=JSON.parse(await readFile(new URL('./fixtures/released48fe-minimap-contract.json',import.meta.url)));
+  const {directory,metadata,writeMetadata}=await fixture();
+  const geometryFile=path.join(directory,'geometry.json');
+  try {
+    await writeMetadata({...metadata,minimap:{schemaVersion:1,geometryFingerprintSha256:released.geometryFingerprintSha256}});
+    await writeFile(geometryFile,JSON.stringify(released));
+    assert.equal((await verifyCartridge(directory,{geometryFile})).minimap.geometryFingerprintSha256,'48fe4ba5208d0a2b1285c1b6aa6f776377ef003d5501e5ae837ca45c6127e92a');
+    released.markersById['old-taichung-station'].world[0]++;
+    await writeFile(geometryFile,JSON.stringify(released));
+    await assert.rejects(verifyCartridge(directory,{geometryFile}),/stale layout fingerprint/);
+  } finally { await rm(directory,{recursive:true,force:true}); }
+});

@@ -1,19 +1,24 @@
 import { isFieldSnapshot, NAVIGATION_FLAGS } from './navigation-bridge.ts';
 import type { NavigationSnapshot } from './navigation-bridge';
 import type { OnboardingSnapshot } from './onboarding-bridge';
+import { homeWorldInGeometry, placedAnchorsInGeometry, worldPointInExterior } from './city-geometry.ts';
 
 type Pair = number[];
 type LocalizedName = { en: string; zh: string };
 export type MinimapGeometry = {
   schemaVersion: number;
+  geometryVersion?: string;
   geometryFingerprintSha256: string;
   world: { width: number; height: number };
   mapsByNativeKey: Record<string, {
     kind: string; width: number; height: number; projection: string;
     worldOrigin?: Pair; worldRect?: Pair; parentNativeKey?: string;
-    parentMarkerId?: string; parentEntranceWorld?: Pair; indoorLabel?: LocalizedName;
+    parentMarkerId?: string | null; parentPlaceId?: string; parentEntranceWorld?: Pair; parentEntranceLocal?: Pair; indoorLabel?: LocalizedName;
   }>;
   markersById: Record<string, { id: string; world: Pair; exteriorNativeKey: string; name: LocalizedName }>;
+  placesById?: Record<string, { id: string; worldAnchor: Pair; nativeKey: string; name: LocalizedName; artStatus: string; interactionStatus?: string; realPlace?: { coordinates: Pair } }>;
+  residence?: { door: Pair; nativeKey: string; localDoor: Pair };
+  roads?: Array<{ id: string; name: LocalizedName; priority: number; regions: Array<{ rect: Pair }> }>;
 };
 export type MinimapPosition = {
   worldX: number; worldY: number; u: number; v: number; facing: number;
@@ -33,11 +38,25 @@ export function projectNavigation(packet: NavigationSnapshot, geometry: MinimapG
   if (indoor ? ![4, 8, 9].includes(packet.mapType) : ![1, 2, 3, 5, 6].includes(packet.mapType)) return;
   let world: Pair | undefined;
   let districtKey: string;
+  let entrance: { id: string; name: LocalizedName } | undefined;
   if (indoor) {
-    if (map.projection !== 'parent-entrance' || !map.parentNativeKey || !map.parentMarkerId) return;
+    if (map.projection !== 'parent-entrance' || !map.parentNativeKey) return;
     const parent = geometry.mapsByNativeKey[map.parentNativeKey];
-    const marker = geometry.markersById[map.parentMarkerId];
-    if (parent?.kind !== 'exterior' || !marker || marker.exteriorNativeKey !== map.parentNativeKey || !map.parentEntranceWorld || marker.world.some((v, i) => v !== map.parentEntranceWorld![i])) return;
+    if (parent?.kind !== 'exterior') return;
+    if (map.parentMarkerId) {
+      const marker = geometry.markersById[map.parentMarkerId];
+      if (!marker || marker.exteriorNativeKey !== map.parentNativeKey || !map.parentEntranceWorld || marker.world.some((v, i) => v !== map.parentEntranceWorld![i])) return;
+      entrance = marker;
+    } else {
+      // Both guest-house floors have an explicit residence parent, never a gym marker.
+      const home = homeWorldInGeometry(geometry);
+      const residence = geometry.residence;
+      if (map.parentMarkerId !== null || map.parentPlaceId !== 'guest-house' || !residence ||
+          residence.nativeKey !== map.parentNativeKey || !home || !map.parentEntranceWorld ||
+          home.some((v, i) => v !== map.parentEntranceWorld![i]) || !map.parentEntranceLocal ||
+          residence.localDoor.some((v, i) => v !== map.parentEntranceLocal![i]) || !map.indoorLabel) return;
+      entrance = { id: 'guest-house', name: map.indoorLabel };
+    }
     world = map.parentEntranceWorld;
     districtKey = map.parentNativeKey;
   } else {
@@ -45,19 +64,20 @@ export function projectNavigation(packet: NavigationSnapshot, geometry: MinimapG
     world = [map.worldOrigin[0] + packet.x, map.worldOrigin[1] + packet.y];
     districtKey = key;
   }
-  if (!world || world.length !== 2 || !world.every(Number.isInteger) || world[0] < 0 || world[1] < 0 || world[0] >= geometry.world.width || world[1] >= geometry.world.height) return;
-  // A district with no landmark of its own (Nantun North, Old City North) names the nearest landmark anywhere in the city.
-  const own = Object.values(geometry.markersById).filter((marker) => marker.exteriorNativeKey === districtKey);
-  const candidates = own.length ? own : Object.values(geometry.markersById);
+  if (!worldPointInExterior(world, districtKey, geometry)) return;
+  // All finished placed sights participate; a warp marker still means a real hall entrance.
+  const anchors = placedAnchorsInGeometry(geometry);
+  const own = anchors.filter((marker) => marker.exteriorNativeKey === districtKey);
+  const candidates = own.length ? own : anchors;
   const nearest = candidates.reduce<typeof candidates[number] | undefined>((best, marker) => {
     const distance = (m: typeof marker) => (m.world[0] - world![0]) ** 2 + (m.world[1] - world![1]) ** 2;
     return !best || distance(marker) < distance(best) ? marker : best;
   }, undefined);
-  if (!nearest) return;
+  if (!nearest && !entrance) return;
   return {
     worldX: world[0], worldY: world[1], u: (world[0] + .5) / geometry.world.width, v: (world[1] + .5) / geometry.world.height,
     facing: packet.facing, districtKey, indoor, indoorLabel: indoor ? map.indoorLabel : undefined,
-    landmarkId: nearest.id, landmarkName: nearest.name,
+    landmarkId: (entrance ?? nearest)!.id, landmarkName: (entrance ?? nearest)!.name,
   };
 }
 
@@ -78,9 +98,10 @@ export function projectTutorial(packet: OnboardingSnapshot, geometry: MinimapGeo
       !Number.isInteger(packet.x) || !Number.isInteger(packet.y) || packet.x < 0 || packet.y < 0 ||
       packet.x >= map.width || packet.y >= map.height) return;
   const [worldX, worldY] = [map.worldOrigin[0] + packet.x, map.worldOrigin[1] + packet.y];
-  if (worldX < 0 || worldY < 0 || worldX >= geometry.world.width || worldY >= geometry.world.height) return;
-  const own = Object.values(geometry.markersById).filter((marker) => marker.exteriorNativeKey === key);
-  const candidates = own.length ? own : Object.values(geometry.markersById);
+  if (!worldPointInExterior([worldX, worldY], key, geometry)) return;
+  const anchors = placedAnchorsInGeometry(geometry);
+  const own = anchors.filter((marker) => marker.exteriorNativeKey === key);
+  const candidates = own.length ? own : anchors;
   const nearest = candidates.reduce<typeof candidates[number] | undefined>((best, marker) => {
     const distance = (m: typeof marker) => (m.world[0] - worldX) ** 2 + (m.world[1] - worldY) ** 2;
     return !best || distance(marker) < distance(best) ? marker : best;
@@ -103,7 +124,7 @@ export const RADAR = { width: 60, height: 44, pinX: 27, pinY: 19 } as const;
 export const RADAR_ART = { tile: 1, margin: 2 } as const;
 /** Logical 64×48 drawing with a 2-unit frame; CSS renders it at 48×36 GBA-equivalent pixels. */
 export const RADAR_PANEL = { width: RADAR.width + 4, height: RADAR.height + 4, frame: 2 } as const;
-/** World tile of the door of the house the game starts in. */
+/** Released 48fe fixture only; live home placement uses homeWorldInGeometry. */
 export const HOME_WORLD: Pair = [105, 120];
 /** Native facing (1 south, 2 north, 3 west, 4 east) as a clockwise rotation from game-up. */
 export const FACING_DEGREES: Record<number, number> = { 1: 180, 2: 0, 3: 270, 4: 90 };

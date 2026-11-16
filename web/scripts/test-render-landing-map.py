@@ -38,6 +38,37 @@ class LosslessCityMap(unittest.TestCase):
 
 
 class AnimationSlotOwnership(unittest.TestCase):
+    def test_null_callback_preserves_every_packed_graphic_slot(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            source = Path(temporary)
+            headers = source / "src/data/tilesets/headers.h"
+            headers.parent.mkdir(parents=True)
+            headers.write_text("const struct Tileset gTileset_PackedFixture = { .callback = NULL };\n")
+            tiles = source / "tiles.png"
+            # A nonanimated secondary can be shorter than the General primary;
+            # no flower/water/sand frame or primary-slot assumption may touch it.
+            image = Image.frombytes("P", (128, 16), bytes(range(256)) * 8)
+            image.save(tiles)
+            original = tiles.read_bytes()
+            native = SimpleNamespace(tileset_paths=lambda _source, _label: {"tiles": tiles})
+            scratch = source / "scratch"
+            scratch.mkdir()
+            renderer.animated_tile_paths(native, source, scratch)
+            self.assertEqual(native.tileset_paths(source, "PackedFixture"), {"tiles": tiles})
+            self.assertEqual(tiles.read_bytes(), original)
+            self.assertEqual(list(scratch.iterdir()), [])
+
+    def test_unknown_callback_fails_before_overwriting_facade_graphics(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            source = Path(temporary)
+            headers = source / "src/data/tilesets/headers.h"
+            headers.parent.mkdir(parents=True)
+            headers.write_text("const struct Tileset gTileset_UnknownFixture = { .callback = InitTilesetAnim_Unreviewed };\n")
+            native = SimpleNamespace(tileset_paths=lambda _source, _label: {"tiles": source / "unused.png"})
+            renderer.animated_tile_paths(native, source, source / "scratch")
+            with self.assertRaisesRegex(ValueError, "teach this script its frames"):
+                native.tileset_paths(source, "UnknownFixture")
+
     def test_approved_callback_preserves_reclaimed_terrain_slots(self):
         with tempfile.TemporaryDirectory() as temporary:
             source = Path(temporary)

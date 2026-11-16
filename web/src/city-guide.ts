@@ -3,7 +3,7 @@ import sightCatalog from './data/sights.json';
 import cityContract from './data/minimap-contract.json';
 import { landingMedia, landmarkArt } from './landing-assets';
 import { cityPlaceSummary, districtLabelSpots, isGym, localizedPlace, markerPosition, orderPlaces, visitorMapUrl } from './landing-model';
-import { placeWorldInGeometry } from './city-geometry';
+import { placeWorldInGeometry, visitorLocationInGeometry } from './city-geometry';
 import type { LandingLandmark } from './landing-model';
 import type { MinimapGeometry } from './minimap-model';
 import './city-guide.css';
@@ -64,7 +64,7 @@ export function createCityGuide(host: GuideHost) {
             }).join('')}
           </div>
           <div class="map-legend"><span><i class="legend-gym"></i><span data-i18n="Gym">Gym</span></span><span><i class="legend-landmark"></i><span data-i18n="Landmark">Landmark</span></span><span><i class="legend-selected"></i><span data-i18n="Selected">Selected</span></span></div>
-          <p class="map-caveat" data-i18n="Drawn from the game’s own map, so the streets are the ones you walk. Only gyms have battles and badges.">Drawn from the game’s own map, so the streets are the ones you walk. Only gyms have battles and badges.</p>
+          <p class="map-caveat" data-i18n="Taiwan Boulevard runs left to right: Tunghai to Old Station. Gyms award badges; selected landmarks offer rare Pokémon captures.">Taiwan Boulevard runs left to right: Tunghai to Old Station. Gyms award badges; selected landmarks offer rare Pokémon captures.</p>
           <div class="landmark-tabs" aria-label="Choose a landmark">${landmarks.map((place, index) => `<button class="${isGym(place) ? 'is-gym' : 'is-landmark'}" data-guide-select="${escapeHtml(place.id)}" aria-pressed="false" aria-controls="landmark-detail"><span class="landmark-tab-number">${String(index + 1).padStart(2, '0')}</span><span class="landmark-tab-names"><b lang="en">${escapeHtml(place.shortNameEn)}</b><span lang="zh-Hant">${escapeHtml(place.shortNameZh)}</span></span></button>`).join('')}</div>
         </section>
         <section class="landmark-detail" id="landmark-detail" aria-label="Selected landmark information" aria-live="polite"></section>
@@ -88,13 +88,13 @@ export function createCityGuide(host: GuideHost) {
     });
     const chinese = getLocale() === 'zh-Hant';
     const info = localizedPlace(place, getLocale());
-    const realMap = visitorMapUrl(place.location);
+    const realMap = visitorMapUrl(visitorLocationInGeometry(place, cityGeometry));
     dialog.querySelector('#landmark-detail')!.classList.toggle('is-visit', !isGym(place));
     const gym = isGym(place);
     const outdoor = place.kind === 'sight';
     const areaLabel = !place.playable ? 'PLANNED AREA · NOT PLAYABLE' : place.phase === 'arrival' ? 'ARRIVAL AREA · EXPLORABLE' : 'EXPLORABLE GAME AREA';
     const areaNote = !place.playable ? 'This landmark is in the city plan; its game area is not playable in this build.' : outdoor ? 'Walk to it on the city streets and read its sign.' : 'Explore this landmark’s district and visitor hall.';
-    const gymNote = outdoor ? 'This landmark has no gym battle or badge.' : !gym ? 'Visit the hall and meet its host. This stop has no gym battle or badge.' : place.gymStatus === 'playable' ? 'A gym battle is playable here. Speak to the leader and win to earn a badge.' : place.gymStatus === 'pending-verification' ? 'This gym challenge is being verified. The district and visitor hall are explorable.' : 'This landmark’s fictional gym challenge is still in development.';
+    const gymNote = outdoor || place.id === 'maple-garden' ? 'The sign offers a rare Pokémon encounter. A successful capture unlocks that Pokémon in TEAM.' : !gym ? 'Meet the hall host to begin a rare Pokémon encounter. Successful captures unlock TEAM choices.' : place.gymStatus === 'playable' ? 'A gym battle is playable here. Speak to the leader and win to earn a badge.' : place.gymStatus === 'pending-verification' ? 'This gym challenge is being verified. The district and visitor hall are explorable.' : 'This landmark’s fictional gym challenge is still in development.';
     const artLabel = chinese ? `${place.nameZh}原創插圖` : `Original illustration of ${place.nameEn}`;
     const mapView = !gym && landmarkArt[place.id]?.mapView ? landmarkArt[place.id].facade : undefined;
     const art = gym ? `<div class="landmark-art">${landmarkSketch(place.id, artLabel)}<span>${t('ORIGINAL FIELD SKETCH')}</span></div>`

@@ -24,6 +24,8 @@ from PIL import Image, ImageChops
 WEB = Path(__file__).resolve().parent.parent
 TILE = 16
 city = Image.open(WEB / 'src/assets/landing/city-map.png').convert('RGBA')
+contract = json.loads((WEB / 'src/data/minimap-contract.json').read_text())
+assert city.size == (contract['world']['width'] * TILE, contract['world']['height'] * TILE), 'Stale city render dimensions'
 
 crops = WEB / 'src/assets/landmarks/map'
 crops.mkdir(parents=True, exist_ok=True)
@@ -33,6 +35,13 @@ for catalog in ('landmarks.json', 'sights.json'):
         if not rect:
             continue
         x0, y0, x1, y1 = rect
+        assert 0 <= x0 < x1 <= city.width // TILE and 0 <= y0 < y1 <= city.height // TILE, place['id']
+        if 'placesById' in contract:
+            native = contract['placesById'][place['id']]
+            assert native['artStatus'] == 'approved-baseline-source' and not native.get('interactionStatus', '').startswith('reserved'), place['id']
+            ox, oy = native['origin']
+            width, height = native['size']
+            assert rect == [ox, oy, ox + width, oy + height] and place['world'] == native['worldAnchor'], place['id']
         city.crop((x0 * TILE, y0 * TILE, x1 * TILE, y1 * TILE)).save(crops / f"{place['id']}.png", optimize=True)
         print(place['id'], f'{x1 - x0}x{y1 - y0} tiles')
 

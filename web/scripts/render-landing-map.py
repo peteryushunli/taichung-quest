@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Render the landing page's city map from the native map source.
 
-Pastes the three exterior districts at their City Map world origins, using the
+Pastes every exported exterior at its City Map world origin, using the
 game's own metatiles via tools/taichung/render_maps.py. Tile slots the game
 animates are drawn with their first animation frame, as the cartridge shows them
 (the still, flat water, for one). Outside the districts stays transparent.
@@ -106,7 +106,15 @@ def main():
     scratch = Path(tempfile.mkdtemp(prefix="city-map-"))
     animated_tile_paths(native, source, scratch)
 
-    contract = json.loads(args.contract.read_text())
+    # Rendering must consume one frozen export/source pair. This is a read-only
+    # check; never run the native city compiler to satisfy a browser render.
+    raw_contract = args.contract.read_bytes()
+    if raw_contract != (source / "data/taichung/minimap-contract.json").read_bytes():
+        raise ValueError("Browser contract differs from the frozen native source export")
+    contract = json.loads(raw_contract)
+    for relative, digest in contract.get("exteriorSourceSha256", {}).items():
+        if hashlib.sha256((source / relative).read_bytes()).hexdigest() != digest:
+            raise ValueError(f"Native source changed after export: {relative}")
     layouts = {layout["id"]: layout for layout in json.loads((source / "data/layouts/layouts.json").read_text())["layouts"] if "id" in layout}
     world = contract["world"]
     image = Image.new("RGBA", (world["width"] * 16, world["height"] * 16))

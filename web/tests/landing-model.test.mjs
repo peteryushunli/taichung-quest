@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import { readFileSync } from 'node:fs';
 import { existsSync } from 'node:fs';
+import { placeWorldInGeometry } from '../src/city-geometry.ts';
 import { cityPlaceSummary, districtCount, districtLabelSpots, gymStatusSummary, isGym, isGymOpen, localizedPlace, markerPosition, orderPlaces, placeStatus, placeWorld } from '../src/landing-model.ts';
 
 const landmarks = JSON.parse(readFileSync(new URL('../src/data/landmarks.json', import.meta.url), 'utf8'));
@@ -76,9 +77,9 @@ test('stats come from the landmark data', () => {
 
 test('map pins sit on each entrance tile of the rendered city, labels facing the middle', () => {
   for (const place of landmarks) assert.ok(city.markersById[place.id], place.id);
-  // The station sits at world (117,117); the city rework (save v10) grew the canvas to 129x181 behind a raised freeway.
-  assert.deepEqual(city.markersById['old-taichung-station'].world, [117, 117]);
-  assert.deepEqual(markerPosition([117, 117], city.world), { x: 117.5 / 129 * 100, y: 117.5 / 181 * 100, side: 'left' });
+  // The source door of the horizontal city Station is [333,96].
+  assert.deepEqual(city.markersById['old-taichung-station'].world, [333, 96]);
+  assert.deepEqual(markerPosition([333, 96], city.world), { x: 333.5 / 352 * 100, y: 96.5 / 216 * 100, side: 'left' });
   assert.deepEqual(markerPosition([59, 0], { width: 120, height: 120 }).side, 'right');
   assert.deepEqual(markerPosition([60, 0], { width: 120, height: 120 }).side, 'left');
 });
@@ -119,7 +120,7 @@ test('visit stops are source-anchored places with no badge or leader, linking on
     assert.equal(place.playable, true);
     assert.equal(place.gameAreaRef, city.mapsByNativeKey[marker.exteriorNativeKey].mapId, place.id);
     assert.equal(place.landmarkHallRef, marker.gymMapId, place.id);
-    assert.deepEqual([place.cityAnchor.x, place.cityAnchor.y], marker.localEntrance);
+    assert.deepEqual(place.world, marker.world);
     assert.equal(marker.kind, 'landmark');
     for (const locale of ['en', 'zh-Hant']) {
       assert.equal(localizedPlace(place, locale).leader, undefined);
@@ -183,14 +184,15 @@ test('the ten set-piece landmarks join the map as non-gym places, after the ten 
   }
 });
 
-test('every place has a map position inside the 129x181 world, and every non-gym a map-view crop around it', () => {
+test('every place uses its source anchor and exact facade envelope in the 352x216 world', () => {
   for (const place of [...landmarks, ...sights]) {
-    const [x, y] = placeWorld(place, city.markersById);
+    const [x, y] = placeWorldInGeometry(place, city);
     const pin = markerPosition([x, y], city.world);
     assert.ok(pin.x > 0 && pin.x < 100 && pin.y > 0 && pin.y < 100, place.id);
-    if (isGym(place)) continue;
+    const source = city.placesById[place.id];
+    assert.deepEqual([x, y], source.worldAnchor);
     const [left, top, right, bottom] = place.artRect;
-    assert.ok(left <= x && x <= right && top <= y && y <= bottom, `${place.id} crop misses its pin`);
+    assert.deepEqual(place.artRect, [source.origin[0], source.origin[1], source.origin[0] + source.size[0], source.origin[1] + source.size[1]]);
     assert.ok(right <= city.world.width && bottom <= city.world.height, place.id);
     assert.ok(existsSync(new URL(`../src/assets/landmarks/map/${place.id}.png`, import.meta.url)), `${place.id} map-view crop`);
   }
@@ -198,8 +200,10 @@ test('every place has a map position inside the 129x181 world, and every non-gym
   assert.throws(() => placeWorld({ id: 'nowhere' }, city.markersById), /No map position/);
 });
 
-test('district names sit on the freeway for the north and beside Wanhe for Nantun', () => {
-  const spots = districtLabelSpots(city);
+test('released district signs remain compatible, while the new source has no invented label anchors', () => {
+  assert.deepEqual(districtLabelSpots(city), []);
+  const released = JSON.parse(readFileSync(new URL('./fixtures/released48fe-minimap-contract.json', import.meta.url)));
+  const spots = districtLabelSpots(released);
   assert.deepEqual(spots.map((spot) => [spot.label, spot.sign]), [['XITUN 西屯', true], ['GREENWAY 草悟道', true], ['OLD CITY 舊城', true], ['NANTUN 南屯', false]]);
   for (const spot of spots) assert.ok(spot.x > 0 && spot.x < 100 && spot.y > 0 && spot.y < 100, spot.label);
   assert.equal(spots[0].y, 3 / 181 * 100);

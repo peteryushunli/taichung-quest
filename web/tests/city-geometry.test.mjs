@@ -62,8 +62,8 @@ test('new geometry uses only exported markers, home and labels, never old catalo
   delete g.presentation;assert.deepEqual(districtLabelSpots(g),[]);
 });
 test('released geometry retains its eight legacy outdoor sights and home until Maps replaces it', () => {
-  const g=JSON.parse(readFileSync(new URL('../src/data/minimap-contract.json',import.meta.url)));
-  const sights=JSON.parse(readFileSync(new URL('../src/data/sights.json',import.meta.url)));
+  const g=JSON.parse(readFileSync(new URL('./fixtures/released48fe-minimap-contract.json',import.meta.url)));
+  const sights=JSON.parse(readFileSync(new URL('./fixtures/released48fe-sights.json',import.meta.url)));
   for(const p of sights) assert.deepEqual(placeWorldInGeometry(p,g),p.world);
   assert.deepEqual(homeWorldInGeometry(g),[105,120]);
 });
