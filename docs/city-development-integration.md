@@ -1,6 +1,6 @@
-# Main integration contract — 16 November 2026
+# Main integration boundaries — 16 November 2026
 
-Main's clean worktrees are `.worktrees/city-development-main` (frontend8bdc3b3) and `.worktrees/game-city-development-main` (native6ae533a), both branch `codex/city-development-main` in separate repositories. No worker branch is edited by Main.
+The current independent release uses `.worktrees/landmark-capture-release` and `.worktrees/game-landmark-capture-build` on the released version12 map. Its implemented behavior and verification are recorded in [Landmark capture release](landmark-capture-release.md). The horizontal map worktrees and PR19 remain held for visual revision; their version13 migration is not part of this release. The protocol and ownership boundaries below were established during initial planning and remain applicable.
 
 ## Gameplay persistence boundary
 
@@ -20,6 +20,6 @@ Please provide committed machine-readable old/new mappings for explicit outdoor 
 
 Deliver small tested commits. Main verifies source/patch identity, builds/freeze-pairs exact ROM+ELF+metadata+geometry and owns the only integration PR/deployment. Independent encounter/bug-fix slices can ship on existing map geometry without waiting for the whole boulevard map. Historical source-profile guards are composed/rebound explicitly, never disabled to pass. Current state/dependencies are in status.json.
 
-## Current implementation slice
+## Initial persistence checkpoint (historical)
 
 The browser `capture-persistence.ts` module independently validates all14 native save sectors, exact native transaction counter, trainer identity and dedicated capture masks before a future durable ACK. Its boot-intent helpers force native Continue across interrupted encounters and reject unavailable or ambiguous storage. Eight tests cover rotated slots, counter wrap,70sector corruptions, identity/schema/mask mismatches, view bounds and stale asynchronous intents. This first commit is a tested persistence primitive; native packet orchestration and runtime wiring are still pending and no capture feature is published by it.
