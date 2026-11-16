@@ -79,6 +79,24 @@ export function verifyCaptureNativeSave(bytes: Uint8Array, expected: CaptureSave
   return matches.length === 1 ? matches[0] : undefined;
 }
 
+/** Reconcile a previous interrupted encounter after ordinary native Continue.
+ * A newer normal in-game save may have advanced the counter since the intent. */
+export function findLatestCaptureNativeSave(bytes: Uint8Array, expected: Omit<CaptureSaveProof, 'saveCounter'>): VerifiedCaptureSave | undefined {
+  if (bytes.byteLength !== SAVE_BYTES && bytes.byteLength !== SAVE_BYTES + 16) return;
+  const view = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength);
+  const counters = new Set<number>();
+  for (let i = 0; i < SLOT_SECTORS * 2; i++) {
+    const start = i * SECTOR_BYTES;
+    if (view.getUint32(start + 0xff8, true) === SIGNATURE) counters.add(view.getUint32(start + 0xffc, true));
+  }
+  let newest: VerifiedCaptureSave | undefined;
+  for (const saveCounter of counters) {
+    const proof = verifyCaptureNativeSave(bytes, { ...expected, saveCounter });
+    if (proof && (!newest || ((saveCounter - newest.saveCounter) >>> 0) < 0x80000000)) newest = proof;
+  }
+  return newest;
+}
+
 function parseIntent(raw: string): CaptureBootIntent | undefined {
   let value: unknown;
   try { value = JSON.parse(raw); } catch { return; }

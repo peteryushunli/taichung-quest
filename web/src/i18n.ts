@@ -119,6 +119,7 @@ const zh: Record<string, string> = {
   'New adventures begin at the old station. Use City Map to discover Taichung’s landmarks.': '新的冒險從舊車站展開，打開城市地圖，探索臺中的地標。',
   'The game stopped unexpectedly. Restart it to return to your saved progress.': '遊戲意外停止了，請重新啟動，返回已儲存的進度。',
   'Browser storage is unavailable. Download your save for a backup.': '瀏覽器儲存空間無法使用，請下載存檔備份。',
+  'Finish this encounter before saving a spot.': '請先完成這次遭遇，再儲存目前位置。',
   'Your spot could not be saved in this browser. Use the in-game Save menu and Download save for a backup.': '無法在這個瀏覽器儲存進度。請使用遊戲內的存檔功能，再下載存檔備份。',
   'The game could not capture your spot yet.': '暫時無法儲存目前的進度。',
   'This emulator needs an isolated browser tab. Open the game directly in a current browser; the server must send COOP and COEP headers.': '這個模擬器需要獨立的瀏覽器分頁。請使用新版瀏覽器直接開啟；網站伺服器也必須啟用 COOP 與 COEP。',
