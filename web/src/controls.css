@@ -4,6 +4,9 @@
 }
 .physical-controls[data-active="true"] { touch-action: none; }
 .physical-controls [data-gba] { -webkit-user-select: none; user-select: none; touch-action: none; }
+/* The console looks the same while the cartridge loads: disabled controls only ignore input,
+   rather than inheriting the site-wide faded disabled style. */
+.physical-controls button:disabled { opacity: 1; cursor: default; }
 /* While playing, nothing on the console is selectable text: a long press on or near a control
    must not open the copy/search callout, which takes the touch away mid-hold. Dialogs keep it. */
 .physical-controls, .physical-controls *,
