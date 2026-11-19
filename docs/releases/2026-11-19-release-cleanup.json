@@ -1,0 +1,51 @@
+{
+  "publishedAtUtc": "2026-11-19T04:01:57+00:00",
+  "url": "https://taichung-quest.vercel.app",
+  "pullRequest": "https://github.com/peteryushunli/taichung-quest/pull/21",
+  "previewDeployment": "dpl_8Hie6LG3uGz2xghYiePQgvYjNeZ8",
+  "productionDeployment": "dpl_GiAoLgdebxBWrST5e4Q3wAoZLcdQ",
+  "productionState": "READY",
+  "promotedFromPreview": true,
+  "frontendArtifactCommit": "92683c843d67cb1b222a9e23c2c84de52c926265",
+  "trackedSourceDirty": false,
+  "nativeCommit": "97db59801925a688e49b8207763b795dce033c43",
+  "cartridgeSHA256": "846ed055e30f9193e66a88b044266910c3be60e610784c48029238d51699682c",
+  "portablePatchSha256": "560a9ccdda9b273e7caa46d5844e5cffec087182499f2d99bc496342034383dd",
+  "saveVersion": 12,
+  "geometryFingerprint": "48fe4ba5208d0a2b1285c1b6aa6f776377ef003d5501e5ae837ca45c6127e92a",
+  "features": [
+    "New game's first settings screen starts wild and trainer encounters at Off; saved preferences kept",
+    "Language row reads 中文",
+    "Xiaoyu's greeting 9 to 4 pages, outdoor tips 11 to 8; nearest-gym wording, no gym count",
+    "Console buttons stay solid while the cartridge loads",
+    "Optional About / staff or local notes / Back reading at all 20 place signs, English and Traditional Chinese"
+  ],
+  "checks": {
+    "releasePair": "PASS",
+    "nativeGuardChain": "PASS (release cleanup layer, Story layer, seven older guard groups, capture host regressions)",
+    "storySourceTests": "20 places, 150 pages per locale, 4620 routes, max line 198 px",
+    "frontendTests": 92,
+    "typescriptAndBuild": true,
+    "previewFilesExact": "38/40; index.html and licenses/index.html differ only by Vercel's preview feedback script",
+    "productionFilesExact": "40/40",
+    "isolationHeaders": true,
+    "wasmMIME": true,
+    "romNoStore": true,
+    "browserPlay": [
+      "English new game to free play",
+      "Chinese new game to free play: Off defaults, 中文, 4 greeting pages, picker, 8 tips",
+      "Old Station story menu in Chinese and English, Back returns to walking",
+      "Live site: new game settings show Off/Off and 中文"
+    ]
+  },
+  "notVerified": [
+    "Other 19 place menus in play",
+    "Existing-save Continue on this build",
+    "Physical phone"
+  ],
+  "previousProduction": {
+    "deployment": "dpl_Fw3KcMiyc2vkLGAny1vV2q5dcizG",
+    "nativeCommit": "586b8a84089b338b6c3971cc90604daa57fadb76",
+    "cartridgeSHA256": "263574feea7a27f381277a32af72492f748224ad5ace98df0da2436b5256ce46"
+  }
+}

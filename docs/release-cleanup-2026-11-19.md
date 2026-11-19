@@ -52,3 +52,12 @@ bridges, 24 minimap source pins and a patch that recreates the committed tree.
 
 Not covered: the other 19 place menus in play (covered by Story's source tests),
 existing-save Continue on this build, and a physical phone.
+
+## Publication
+
+Promoted to https://taichung-quest.vercel.app from preview `dpl_8Hie6LG3uGz2xghYiePQgvYjNeZ8`
+as production `dpl_GiAoLgdebxBWrST5e4Q3wAoZLcdQ`. All 40 live files match the
+packaged build byte for byte, with COOP/COEP isolation, the Wasm MIME type and a
+no-store cartridge. A fresh new game on the live site opens on the settings
+screen with both encounter rows at Off and the language row reading 中文. The
+receipt is [releases/2026-11-19-release-cleanup.json](releases/2026-11-19-release-cleanup.json).
