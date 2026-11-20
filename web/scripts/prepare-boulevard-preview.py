@@ -63,6 +63,26 @@ def native_registry(root):
     return registry
 
 
+def street_bands(plan, fill, origin):
+    bands = []
+
+    def add(name, zh, rect, axis):
+        x0, y0, x1, y1 = rect
+        bounds = [x0 - origin[0], y0 - origin[1], x1 - origin[0], y1 - origin[1]]
+        bands.append({"name": {"en": name, "zh": zh}, "bounds": bounds, "axis": axis})
+
+    for street in plan["streets"]:
+        if street["kind"] not in ("boulevard", "street", "lane"):
+            continue
+        en = "Taiwan Boulevard" if street["name"] == "Taiwan Blvd" else street["name"]
+        for start, end, rect in zip(street["points"], street["points"][1:], street["rects"]):
+            add(en, street["zh"], rect, "h" if start[1] == end[1] else "v")
+    for lane in fill["newLanes"]:
+        if lane["zh"] and lane["direction"] in ("h", "v"):
+            add(lane["name"], lane["zh"], lane["rect"], lane["direction"])
+    return bands
+
+
 def terrain_images(fill, plan, candidate, width, height, origin):
     os.environ["FILL_RAW"] = "1"
     sys.path.insert(0, str(fill / "src"))
@@ -106,8 +126,9 @@ def main():
     parser.add_argument("plan", type=Path)
     parser.add_argument("rom_dir", type=Path)
     parser.add_argument("nm", type=Path)
+    parser.add_argument("--candidate", type=Path)
     args = parser.parse_args()
-    candidate = args.fill / "out/native-city-codex"
+    candidate = args.candidate or args.fill / "out/native-city-codex"
     report = read(candidate / "build-report.json")
     raw_path = args.fill / "out/fill-raw.json"
     require(digest(raw_path) == report["sourceSha256"]["fill"]
@@ -197,6 +218,7 @@ def main():
         "schemaVersion": 1, "contractId": "taichung-boulevard-preview",
         "coordinateSystem": {"units": "metatiles", "metatilePixels": 16, "northUp": False},
         "world": {"width": width, "height": height, "homeWorld": markers["guest-house"]["world"],
+                  "streetBands": street_bands(plan, raw, (x0, y0)),
                   "districtLabels": [{"label": label, "x": x - x0, "y": y - y0} for label, x, y in LABELS]},
         "mapsByNativeKey": {entry["nativeKey"]: entry for entry in exteriors.values()} | interiors,
         "markersById": markers, "seams": seams, "extraSights": extras,

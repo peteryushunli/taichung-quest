@@ -1,10 +1,22 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { readFileSync } from 'node:fs';
-import { projectNavigation, projectTutorial, secondaryAction, readMinimapPreference, radarPosition, radarViewBox, radarBlip, RADAR, RADAR_ART, RADAR_PANEL, HOME_WORLD, FACING_DEGREES } from '../src/minimap-model.ts';
+import { projectNavigation, projectTutorial, secondaryAction, readMinimapPreference, radarPosition, radarViewBox, radarBlip, RADAR, RADAR_ART, RADAR_PANEL, HOME_WORLD, FACING_DEGREES, streetAt } from '../src/minimap-model.ts';
 
 const geometry = JSON.parse(readFileSync(new URL('../src/data/minimap-contract.json', import.meta.url), 'utf8'));
 const packet = { sequence: 2, frame: 1, flags: 79, x: 30, y: 66, mapGroup: 43, mapNumber: 0, facing: 2, mapType: 1, width: 44, height: 77, contextFlags: 0 };
+
+test('the Boulevard label follows the mapped road and clears in the station plaza', () => {
+  const boulevard = JSON.parse(readFileSync(new URL('../src/data/boulevard-preview.json', import.meta.url), 'utf8'));
+  const station = Object.values(boulevard.mapsByNativeKey).find((entry) => entry.nativeMapName === 'TaichungBlvdOldStation');
+  const stationPacket = { ...packet, mapNumber: station.number, width: station.width, height: station.height, x: 14, y: 38, facing: 1 };
+  const plaza = projectNavigation(stationPacket, boulevard);
+  const road = projectNavigation({ ...stationPacket, y: 44 }, boulevard);
+  assert.equal(streetAt(plaza, boulevard), undefined);
+  assert.deepEqual(streetAt(road, boulevard), { en: 'Taiwan Boulevard', zh: '臺灣大道' });
+  assert.equal(streetAt({ ...road, indoor: true }, boulevard), undefined);
+  assert.equal(streetAt(road, geometry), undefined);
+});
 
 test('all exterior tiles project into their authored district, or to the nearest landmark anywhere when the district has none', () => {
   let checked = 0;

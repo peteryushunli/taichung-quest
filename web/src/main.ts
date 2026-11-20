@@ -11,7 +11,7 @@ import titlePikachu from './assets/pokemon/front/pikachu.png';
 import titleSquirtle from './assets/pokemon/front/squirtle.png';
 import type { mGBAEmulator } from '@thenick775/mgba-wasm';
 import { createCityGuide } from './city-guide';
-import { initializeLocalization, onLocaleChange, setLocale, t } from './i18n';
+import { getLocale, initializeLocalization, onLocaleChange, setLocale, t } from './i18n';
 import { createLanding } from './landing';
 import { NativeLanguageBridge, parseLanguageBridgeMetadata } from './language-bridge';
 import type { LanguageBridgeState } from './language-bridge';
@@ -21,7 +21,7 @@ import { protectGameDisplay } from './game-display';
 import { NativeNavigationBridge, parseNavigationMetadata } from './navigation-bridge';
 import type { NavigationState } from './navigation-bridge';
 import { createMinimap } from './minimap';
-import { projectNavigation, secondaryAction } from './minimap-model';
+import { projectNavigation, secondaryAction, streetAt } from './minimap-model';
 import { BOULEVARD_PREVIEW, cityGeometry as minimapGeometry } from './preview-world';
 import { createOnboarding } from './onboarding';
 import { parseOnboardingMetadata } from './onboarding-bridge';
@@ -80,6 +80,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
           <div class="screen-bezel">
             <div class="screen" id="screen">
               <canvas id="game-canvas" width="240" height="160" tabindex="0" aria-label="Taichung Quest game screen. Arrow keys move. F interacts or confirms. D goes back. M or Enter opens the menu."></canvas>
+              <div class="live-street" id="live-street" hidden></div>
               <div class="start-screen" id="start-screen">
                 <div class="title-scene" aria-hidden="true">
                   <i class="title-sun"></i><i class="title-cloud cloud-a"></i><i class="title-cloud cloud-b"></i><i class="title-cloud cloud-c"></i>
@@ -210,6 +211,11 @@ function renderNavigation() {
   minimap.update(state);
   const packet = state.phase === 'live' ? state.snapshot : undefined;
   const position = packet ? projectNavigation(packet, minimapGeometry) : undefined;
+  const street = streetAt(position, minimapGeometry);
+  const streetLabel = el('live-street');
+  const streetName = street ? street[getLocale() === 'zh-Hant' ? 'zh' : 'en'] : '';
+  if (streetLabel.textContent !== streetName) streetLabel.textContent = streetName;
+  streetLabel.hidden = !streetName;
   const action = secondaryAction(packet, position);
   const secondary = document.querySelector<HTMLButtonElement>('.physical-controls [data-gba="B"]')!;
   const label = secondary.querySelector<HTMLElement>('[data-i18n]')!;

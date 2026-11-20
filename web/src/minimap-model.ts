@@ -4,6 +4,7 @@ import type { OnboardingSnapshot } from './onboarding-bridge';
 
 type Pair = number[];
 type LocalizedName = { en: string; zh: string };
+type StreetBand = { name: LocalizedName; bounds: number[]; axis: string };
 export type MinimapGeometry = {
   schemaVersion: number;
   geometryFingerprintSha256: string;
@@ -12,6 +13,7 @@ export type MinimapGeometry = {
     width: number; height: number;
     homeWorld?: Pair;
     districtLabels?: { label: string; x: number; y: number }[];
+    streetBands?: StreetBand[];
   };
   mapsByNativeKey: Record<string, {
     kind: string; width: number; height: number; projection: string;
@@ -69,6 +71,25 @@ export function projectNavigation(packet: NavigationSnapshot, geometry: MinimapG
 /** The radar only follows the player outdoors; indoors (any interior) it hides like in menus and battles. */
 export function radarPosition(position?: MinimapPosition) {
   return position && !position.indoor ? position : undefined;
+}
+
+export function streetAt(position: MinimapPosition | undefined, geometry: MinimapGeometry) {
+  if (!position || position.indoor) return;
+  const { worldX: x, worldY: y, facing } = position;
+  const axis = facing >= 3 ? 'h' : 'v';
+  let street: LocalizedName | undefined;
+  let closest = Infinity;
+  for (const band of geometry.world.streetBands ?? []) {
+    const [left, top, right, bottom] = band.bounds;
+    if (x < left || x >= right || y < top || y >= bottom) continue;
+    const distance = band.axis === 'h'
+      ? Math.abs(y + .5 - (top + bottom) / 2) / (bottom - top)
+      : Math.abs(x + .5 - (left + right) / 2) / (right - left);
+    // At crossings, prefer the street the player is facing along.
+    const score = distance + Number(band.axis !== axis);
+    if (score < closest) { street = band.name; closest = score; }
+  }
+  return street;
 }
 
 /** The native tour publishes its real position even while dialogue hides navigation.

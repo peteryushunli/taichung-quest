@@ -25,3 +25,21 @@
 .minimap-setting { display: grid; grid-template-columns: 1fr auto; gap: 8px; margin-top: 16px; padding-top: 16px; border-top: 1px solid #c6d1ba; font-size: 13px; align-items: center; }
 .minimap-setting select { min-height: 44px; min-width: 100px; padding: 8px; border: 1px solid #b5c5a8; border-radius: 6px; background: #e8ecde; color: #244d3c; font-size: 14px; }
 .minimap-setting small { grid-column: 1 / -1; font-size: 11px; line-height: 1.5; color: #64735b; }
+.live-street {
+  position: absolute;
+  right: 2%;
+  bottom: 2%;
+  z-index: 3;
+  max-width: 65%;
+  padding: .2em .55em;
+  border: 1px solid rgba(40, 70, 55, .65);
+  border-radius: .3em;
+  background: rgba(247, 244, 223, .96);
+  color: #254638;
+  font-size: clamp(.62rem, 1.7cqw, .88rem);
+  font-weight: 650;
+  line-height: 1.25;
+  text-align: right;
+  pointer-events: none;
+  user-select: none;
+}

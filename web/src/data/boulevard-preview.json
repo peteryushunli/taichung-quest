@@ -13,6 +13,632 @@
       344,
       88
     ],
+    "streetBands": [
+      {
+        "name": {
+          "en": "Taiwan Boulevard",
+          "zh": "臺灣大道"
+        },
+        "bounds": [
+          0,
+          104,
+          350,
+          113
+        ],
+        "axis": "h"
+      },
+      {
+        "name": {
+          "en": "Xitun Rd",
+          "zh": "西屯路"
+        },
+        "bounds": [
+          6,
+          60,
+          170,
+          65
+        ],
+        "axis": "h"
+      },
+      {
+        "name": {
+          "en": "Jianxing Rd",
+          "zh": "健行路"
+        },
+        "bounds": [
+          165,
+          60,
+          284,
+          65
+        ],
+        "axis": "h"
+      },
+      {
+        "name": {
+          "en": "Jingwu Rd",
+          "zh": "精武路"
+        },
+        "bounds": [
+          279,
+          60,
+          322,
+          65
+        ],
+        "axis": "h"
+      },
+      {
+        "name": {
+          "en": "Wenxin Rd",
+          "zh": "文心路"
+        },
+        "bounds": [
+          112,
+          40,
+          257,
+          47
+        ],
+        "axis": "h"
+      },
+      {
+        "name": {
+          "en": "Wenxin Rd",
+          "zh": "文心路"
+        },
+        "bounds": [
+          112,
+          40,
+          119,
+          220
+        ],
+        "axis": "v"
+      },
+      {
+        "name": {
+          "en": "Lixing Rd",
+          "zh": "力行路"
+        },
+        "bounds": [
+          251,
+          41,
+          322,
+          46
+        ],
+        "axis": "h"
+      },
+      {
+        "name": {
+          "en": "Shizheng Rd",
+          "zh": "市政路"
+        },
+        "bounds": [
+          12,
+          144,
+          118,
+          149
+        ],
+        "axis": "h"
+      },
+      {
+        "name": {
+          "en": "Gongyi Rd",
+          "zh": "公益路"
+        },
+        "bounds": [
+          12,
+          162,
+          170,
+          167
+        ],
+        "axis": "h"
+      },
+      {
+        "name": {
+          "en": "Gongyi Rd",
+          "zh": "公益路"
+        },
+        "bounds": [
+          165,
+          142,
+          170,
+          167
+        ],
+        "axis": "v"
+      },
+      {
+        "name": {
+          "en": "Gongyi Rd",
+          "zh": "公益路"
+        },
+        "bounds": [
+          165,
+          142,
+          256,
+          147
+        ],
+        "axis": "h"
+      },
+      {
+        "name": {
+          "en": "Minquan Rd",
+          "zh": "民權路"
+        },
+        "bounds": [
+          251,
+          142,
+          347,
+          147
+        ],
+        "axis": "h"
+      },
+      {
+        "name": {
+          "en": "Zhongshan Rd",
+          "zh": "中山路"
+        },
+        "bounds": [
+          268,
+          125,
+          346,
+          128
+        ],
+        "axis": "h"
+      },
+      {
+        "name": {
+          "en": "Wuquan W Rd",
+          "zh": "五權西路"
+        },
+        "bounds": [
+          6,
+          188,
+          256,
+          193
+        ],
+        "axis": "h"
+      },
+      {
+        "name": {
+          "en": "Nantun Rd",
+          "zh": "南屯路"
+        },
+        "bounds": [
+          12,
+          214,
+          118,
+          219
+        ],
+        "axis": "h"
+      },
+      {
+        "name": {
+          "en": "Fuxing Rd",
+          "zh": "復興路"
+        },
+        "bounds": [
+          279,
+          170,
+          347,
+          175
+        ],
+        "axis": "h"
+      },
+      {
+        "name": {
+          "en": "Liming Rd",
+          "zh": "黎明路"
+        },
+        "bounds": [
+          12,
+          60,
+          17,
+          219
+        ],
+        "axis": "v"
+      },
+      {
+        "name": {
+          "en": "Fuxing Rd",
+          "zh": "福星路"
+        },
+        "bounds": [
+          25,
+          13,
+          28,
+          64
+        ],
+        "axis": "v"
+      },
+      {
+        "name": {
+          "en": "Henan Rd",
+          "zh": "河南路"
+        },
+        "bounds": [
+          39,
+          12,
+          44,
+          167
+        ],
+        "axis": "v"
+      },
+      {
+        "name": {
+          "en": "Wanhe Rd",
+          "zh": "萬和路"
+        },
+        "bounds": [
+          40,
+          163,
+          43,
+          218
+        ],
+        "axis": "v"
+      },
+      {
+        "name": {
+          "en": "Huizhong Rd",
+          "zh": "惠中路"
+        },
+        "bounds": [
+          88,
+          89,
+          93,
+          193
+        ],
+        "axis": "v"
+      },
+      {
+        "name": {
+          "en": "Dadun Rd",
+          "zh": "大墩路"
+        },
+        "bounds": [
+          135,
+          106,
+          140,
+          193
+        ],
+        "axis": "v"
+      },
+      {
+        "name": {
+          "en": "Zhongming Rd",
+          "zh": "忠明路"
+        },
+        "bounds": [
+          165,
+          41,
+          170,
+          193
+        ],
+        "axis": "v"
+      },
+      {
+        "name": {
+          "en": "Meicun Rd",
+          "zh": "美村路"
+        },
+        "bounds": [
+          185,
+          106,
+          190,
+          193
+        ],
+        "axis": "v"
+      },
+      {
+        "name": {
+          "en": "Yingcai Rd",
+          "zh": "英才路"
+        },
+        "bounds": [
+          235,
+          60,
+          240,
+          147
+        ],
+        "axis": "v"
+      },
+      {
+        "name": {
+          "en": "Wuquan Rd",
+          "zh": "五權路"
+        },
+        "bounds": [
+          251,
+          41,
+          256,
+          193
+        ],
+        "axis": "v"
+      },
+      {
+        "name": {
+          "en": "Sanmin Rd",
+          "zh": "三民路"
+        },
+        "bounds": [
+          279,
+          41,
+          284,
+          175
+        ],
+        "axis": "v"
+      },
+      {
+        "name": {
+          "en": "Shuangshi Rd",
+          "zh": "雙十路"
+        },
+        "bounds": [
+          317,
+          41,
+          322,
+          111
+        ],
+        "axis": "v"
+      },
+      {
+        "name": {
+          "en": "Jianguo Rd",
+          "zh": "建國路"
+        },
+        "bounds": [
+          343,
+          107,
+          346,
+          174
+        ],
+        "axis": "v"
+      },
+      {
+        "name": {
+          "en": "Qinghai Rd",
+          "zh": "青海路"
+        },
+        "bounds": [
+          13,
+          89,
+          117,
+          92
+        ],
+        "axis": "h"
+      },
+      {
+        "name": {
+          "en": "Shizheng N 7th Rd",
+          "zh": "市政北七路"
+        },
+        "bounds": [
+          13,
+          126,
+          92,
+          129
+        ],
+        "axis": "h"
+      },
+      {
+        "name": {
+          "en": "Huilai Rd",
+          "zh": "惠來路"
+        },
+        "bounds": [
+          64,
+          61,
+          67,
+          166
+        ],
+        "axis": "v"
+      },
+      {
+        "name": {
+          "en": "Ziyou Rd",
+          "zh": "自由路"
+        },
+        "bounds": [
+          303,
+          105,
+          306,
+          174
+        ],
+        "axis": "v"
+      },
+      {
+        "name": {
+          "en": "Minsheng Rd",
+          "zh": "民生路"
+        },
+        "bounds": [
+          280,
+          159,
+          345,
+          162
+        ],
+        "axis": "h"
+      },
+      {
+        "name": {
+          "en": "Jingwu Rd",
+          "zh": "精武路"
+        },
+        "bounds": [
+          318,
+          61,
+          347,
+          64
+        ],
+        "axis": "h"
+      },
+      {
+        "name": {
+          "en": "Nanjing Rd",
+          "zh": "南京路"
+        },
+        "bounds": [
+          318,
+          89,
+          347,
+          92
+        ],
+        "axis": "h"
+      },
+      {
+        "name": {
+          "en": "Gongzheng Rd",
+          "zh": "公正路"
+        },
+        "bounds": [
+          186,
+          125,
+          206,
+          128
+        ],
+        "axis": "h"
+      },
+      {
+        "name": {
+          "en": "Xiangshang Rd",
+          "zh": "向上路"
+        },
+        "bounds": [
+          186,
+          159,
+          255,
+          162
+        ],
+        "axis": "h"
+      },
+      {
+        "name": {
+          "en": "Zhongshan Rd",
+          "zh": "中山路"
+        },
+        "bounds": [
+          236,
+          125,
+          271,
+          128
+        ],
+        "axis": "h"
+      },
+      {
+        "name": {
+          "en": "Lixing Rd",
+          "zh": "力行路"
+        },
+        "bounds": [
+          318,
+          41,
+          347,
+          46
+        ],
+        "axis": "h"
+      },
+      {
+        "name": {
+          "en": "Dadun Rd",
+          "zh": "大墩路"
+        },
+        "bounds": [
+          135,
+          61,
+          140,
+          112
+        ],
+        "axis": "v"
+      },
+      {
+        "name": {
+          "en": "Qinghai Rd",
+          "zh": "青海路"
+        },
+        "bounds": [
+          113,
+          89,
+          169,
+          92
+        ],
+        "axis": "h"
+      },
+      {
+        "name": {
+          "en": "Huilai Rd",
+          "zh": "惠來路"
+        },
+        "bounds": [
+          64,
+          163,
+          67,
+          245
+        ],
+        "axis": "v"
+      },
+      {
+        "name": {
+          "en": "Huizhong Rd",
+          "zh": "惠中路"
+        },
+        "bounds": [
+          88,
+          189,
+          93,
+          218
+        ],
+        "axis": "v"
+      },
+      {
+        "name": {
+          "en": "Wanhe Rd",
+          "zh": "萬和路"
+        },
+        "bounds": [
+          40,
+          215,
+          43,
+          245
+        ],
+        "axis": "v"
+      },
+      {
+        "name": {
+          "en": "Fengjia Rd",
+          "zh": "逢甲路"
+        },
+        "bounds": [
+          8,
+          23,
+          43,
+          26
+        ],
+        "axis": "h"
+      },
+      {
+        "name": {
+          "en": "Dadun Rd",
+          "zh": "大墩路"
+        },
+        "bounds": [
+          135,
+          43,
+          140,
+          64
+        ],
+        "axis": "v"
+      },
+      {
+        "name": {
+          "en": "Yingcai Rd",
+          "zh": "英才路"
+        },
+        "bounds": [
+          235,
+          43,
+          240,
+          64
+        ],
+        "axis": "v"
+      }
+    ],
     "districtLabels": [
       {
         "label": "FENGJIA 逢甲",
@@ -3349,9 +3975,9 @@
     }
   ],
   "sourceSha256": {
-    "compiledMapReport": "3506c7b2664d2dd99af07a45057e6647a7e8ed6bad0cfa410b5fe49922151c2f",
+    "compiledMapReport": "4371aaebe121bd2c21e4979448d1497a3dddcdcc4cb3bb0f494ce0e1d3f6a0bf",
     "fill": "f21f9889000115e8995356b837dc6ff23f3d65460dac903ce1e16949138a8c2a",
     "mapBook": "3028c1cd02f81d84e3a27e43de7a8cbcbc4bca67e85dbf4d7417f2042da1aecb"
   },
-  "geometryFingerprintSha256": "568abb24029fbc9bbaa4a916f6a7339e539c98dc944c2cc1c4ab0779bad482e2"
+  "geometryFingerprintSha256": "213b39b1316ae86c04f82b65e8468ae4fbc3b2e7f9d820e7ca4a339c1c5f7ed0"
 }
