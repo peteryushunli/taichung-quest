@@ -2738,6 +2738,60 @@
       "exteriorMapId": "MAP_TAICHUNG_BLVD_CENTRAL_PARK_B_2",
       "exteriorNativeKey": "43:34"
     },
+    "green-museumbrary": {
+      "id": "green-museumbrary",
+      "name": {
+        "en": "Green Museumbrary",
+        "zh": "臺中綠美圖"
+      },
+      "kind": "landmark",
+      "world": [
+        56,
+        22
+      ],
+      "localEntrance": [
+        15,
+        14
+      ],
+      "exteriorMapId": "MAP_TAICHUNG_BLVD_GREEN_MUSEUMBRARY",
+      "exteriorNativeKey": "43:33"
+    },
+    "baseball-stadium": {
+      "id": "baseball-stadium",
+      "name": {
+        "en": "Intercontinental Ballpark",
+        "zh": "洲際棒球場"
+      },
+      "kind": "landmark",
+      "world": [
+        143,
+        38
+      ],
+      "localEntrance": [
+        6,
+        12
+      ],
+      "exteriorMapId": "MAP_TAICHUNG_BLVD_BEITUN_B_5",
+      "exteriorNativeKey": "43:53"
+    },
+    "folklore-park": {
+      "id": "folklore-park",
+      "name": {
+        "en": "Folk Museum at Folklore Park",
+        "zh": "臺灣民俗文物館"
+      },
+      "kind": "landmark",
+      "world": [
+        232,
+        37
+      ],
+      "localEntrance": [
+        23,
+        11
+      ],
+      "exteriorMapId": "MAP_TAICHUNG_BLVD_BEITUN_B_7",
+      "exteriorNativeKey": "43:61"
+    },
     "guest-house": {
       "id": "guest-house",
       "name": {
@@ -3901,6 +3955,8 @@
       "districtId": "xitun",
       "districtEn": "Xitun · 7th Zone",
       "districtZh": "西屯 · 七期",
+      "category": "Shopping centre",
+      "categoryZh": "購物中心",
       "kind": "sight",
       "gymStatus": "not-a-gym",
       "playable": false
@@ -3918,6 +3974,8 @@
       "districtId": "nantun",
       "districtEn": "Nantun",
       "districtZh": "南屯",
+      "category": "Painted village",
+      "categoryZh": "彩繪眷村",
       "kind": "sight",
       "gymStatus": "not-a-gym",
       "playable": false
@@ -3935,6 +3993,8 @@
       "districtId": "west",
       "districtEn": "West · Museum Quarter",
       "districtZh": "西區 · 草悟道",
+      "category": "Shopping street",
+      "categoryZh": "購物商圈",
       "kind": "sight",
       "gymStatus": "not-a-gym",
       "playable": false
@@ -3952,6 +4012,8 @@
       "districtId": "xitun",
       "districtEn": "Xitun · 7th Zone",
       "districtZh": "西屯 · 七期",
+      "category": "Civic plaza",
+      "categoryZh": "市政廣場",
       "kind": "sight",
       "gymStatus": "not-a-gym",
       "playable": false
@@ -3969,15 +4031,74 @@
       "districtId": "shuinan",
       "districtEn": "Central Park",
       "districtZh": "中央公園 · 水湳",
+      "category": "Park",
+      "categoryZh": "公園",
       "kind": "sight",
       "gymStatus": "not-a-gym",
       "playable": false
+    },
+    {
+      "id": "green-museumbrary",
+      "nameEn": "Green Museumbrary",
+      "nameZh": "臺中綠美圖",
+      "shortNameEn": "Green Museumbrary",
+      "shortNameZh": "臺中綠美圖",
+      "minimapNameEn": "Green Museumbrary",
+      "minimapNameZh": "臺中綠美圖",
+      "description": "An art museum and public library at the north end of Central Park.",
+      "descriptionZh": "位於中央公園北端，結合美術館與公共圖書館。",
+      "districtId": "shuinan",
+      "districtEn": "Central Park",
+      "districtZh": "中央公園 · 水湳",
+      "category": "Museum and library",
+      "categoryZh": "美術館與圖書館",
+      "kind": "sight",
+      "gymStatus": "not-a-gym",
+      "playable": true
+    },
+    {
+      "id": "baseball-stadium",
+      "nameEn": "Intercontinental Ballpark",
+      "nameZh": "洲際棒球場",
+      "shortNameEn": "Ballpark",
+      "shortNameZh": "洲際棒球場",
+      "minimapNameEn": "Ballpark",
+      "minimapNameZh": "洲際棒球場",
+      "description": "The roof of Beitun’s baseball stadium takes its shape from the stitches of a baseball.",
+      "descriptionZh": "北屯這座棒球場的屋頂造型以棒球縫線為靈感。",
+      "districtId": "beitun",
+      "districtEn": "Beitun",
+      "districtZh": "北屯",
+      "category": "Baseball stadium",
+      "categoryZh": "棒球場",
+      "kind": "sight",
+      "gymStatus": "not-a-gym",
+      "playable": true
+    },
+    {
+      "id": "folklore-park",
+      "nameEn": "Folk Museum at Folklore Park",
+      "nameZh": "臺灣民俗文物館",
+      "shortNameEn": "Folk Museum",
+      "shortNameZh": "民俗公園",
+      "minimapNameEn": "Folk Museum",
+      "minimapNameZh": "民俗公園",
+      "description": "Traditional courtyard architecture and exhibits about everyday life in Taiwan.",
+      "descriptionZh": "傳統的庭院建築，展示早期臺灣的日常生活。",
+      "districtId": "beitun",
+      "districtEn": "Beitun",
+      "districtZh": "北屯",
+      "category": "Folk museum",
+      "categoryZh": "民俗館",
+      "kind": "sight",
+      "gymStatus": "not-a-gym",
+      "playable": true
     }
   ],
   "sourceSha256": {
-    "compiledMapReport": "4371aaebe121bd2c21e4979448d1497a3dddcdcc4cb3bb0f494ce0e1d3f6a0bf",
+    "compiledMapReport": "cb47a0d22a2ba93ab3de5d3bff9836bb0852fbab60fa93d98482fa74f31d8e7f",
     "fill": "f21f9889000115e8995356b837dc6ff23f3d65460dac903ce1e16949138a8c2a",
     "mapBook": "3028c1cd02f81d84e3a27e43de7a8cbcbc4bca67e85dbf4d7417f2042da1aecb"
   },
-  "geometryFingerprintSha256": "213b39b1316ae86c04f82b65e8468ae4fbc3b2e7f9d820e7ca4a339c1c5f7ed0"
+  "geometryFingerprintSha256": "176b8d80bfcabcfd8aae9e6421319df3461a2688679e8c07c01b871a79969963"
 }
