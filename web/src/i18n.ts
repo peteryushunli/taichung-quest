@@ -17,6 +17,7 @@ const listeners = new Set<(change: LocaleChange) => void>();
 const boundControls = new WeakSet<HTMLSelectElement>();
 
 const zh: Record<string, string> = {
+  'Taichung Quest · Boulevard preview': '臺中小冒險 · 大道試玩版',
   'The opening connection is unavailable. Use Interact to continue, then pick your language on the game’s first settings screen.': '開場連線暫時無法使用。請按「互動／確認」繼續，再到遊戲的第一個設定畫面選擇語言。',
   'Pick your language on the game’s first settings screen.': '請在遊戲的第一個設定畫面選擇語言。',
   'After the tour: B / Bike to ride outdoors. Press again to get off.': '導覽後，戶外按B或「騎車」。再按一次下車。',

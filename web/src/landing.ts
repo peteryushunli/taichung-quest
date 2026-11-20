@@ -1,5 +1,5 @@
 import landmarkCatalog from './data/landmarks.json';
-import { cityGeometry as city, sightCatalog } from './preview-world';
+import { BOULEVARD_PREVIEW, cityGeometry as city, sightCatalog } from './preview-world';
 import './landing.css';
 import { escapeHtml } from './city-guide';
 import { getLocale, onLocaleChange, setLocale, t } from './i18n';
@@ -276,10 +276,10 @@ export function createLanding(root: HTMLElement, host: LandingHost) {
   root.querySelectorAll<HTMLButtonElement>('[data-locale-toggle]').forEach((button) => {
     button.addEventListener('click', () => setLocale(button.dataset.localeToggle as Locale));
   });
-  // With a game already open there is nothing to choose: Play goes straight back to it.
+  // The preview has a supplied save, so Play can open the game immediately.
   root.querySelectorAll<HTMLAnchorElement>('[data-play-link]').forEach((link) => {
     link.addEventListener('click', (event) => {
-      if (!host.getState().running) return;
+      if (!BOULEVARD_PREVIEW && !host.getState().running) return;
       event.preventDefault();
       host.continueGame();
     });
