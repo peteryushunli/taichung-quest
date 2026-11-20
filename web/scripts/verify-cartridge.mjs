@@ -4,7 +4,8 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const geometryFields = ['schemaVersion', 'coordinateSystem', 'world', 'mapsByNativeKey', 'markersById', 'seams'];
-const bundledGeometry = new URL('../src/data/minimap-contract.json', import.meta.url);
+const bundledGeometry = new URL(process.env.VITE_BOULEVARD_PREVIEW === '1'
+  ? '../src/data/boulevard-preview.json' : '../src/data/minimap-contract.json', import.meta.url);
 // Match the native exporter's sorted UTF-8 JSON fingerprint, excluding source provenance.
 const canonical = (value) => Array.isArray(value) ? value.map(canonical) : value && typeof value === 'object'
   ? Object.fromEntries(Object.keys(value).sort().map((key) => [key, canonical(value[key])])) : value;

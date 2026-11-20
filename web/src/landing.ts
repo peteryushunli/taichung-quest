@@ -1,6 +1,5 @@
 import landmarkCatalog from './data/landmarks.json';
-import sightCatalog from './data/sights.json';
-import cityGeometry from './data/minimap-contract.json';
+import { cityGeometry as city, sightCatalog } from './preview-world';
 import './landing.css';
 import { escapeHtml } from './city-guide';
 import { getLocale, onLocaleChange, setLocale, t } from './i18n';
@@ -11,7 +10,6 @@ import type { PokemonIcon } from './landing-assets';
 import { pixelFlag } from './landing-flag';
 import { cityPlaceSummary, districtCount, districtLabelSpots, gymStatusSummary, isGym, isGymOpen, localizedPlace, markerPosition, orderPlaces, placeStatus, placeWorld } from './landing-model';
 import type { LandingLandmark } from './landing-model';
-import type { MinimapGeometry } from './minimap-model';
 
 interface LandingHost {
   startNewGame(): void;
@@ -23,7 +21,6 @@ interface LandingHost {
 const landmarks = orderPlaces([...landmarkCatalog, ...sightCatalog] as LandingLandmark[]);
 const gyms = landmarks.filter(isGym);
 const sights = landmarks.filter((place) => !isGym(place));
-const city = cityGeometry as MinimapGeometry;
 const DEFAULT_LANDMARK = 'old-taichung-station';
 const GITHUB_URL = 'https://github.com/peteryushunli/taichung-quest';
 const starters = [

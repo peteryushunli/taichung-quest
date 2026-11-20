@@ -22,7 +22,7 @@ import { NativeNavigationBridge, parseNavigationMetadata } from './navigation-br
 import type { NavigationState } from './navigation-bridge';
 import { createMinimap } from './minimap';
 import { projectNavigation, secondaryAction } from './minimap-model';
-import minimapGeometry from './data/minimap-contract.json';
+import { BOULEVARD_PREVIEW, cityGeometry as minimapGeometry } from './preview-world';
 import { createOnboarding } from './onboarding';
 import { parseOnboardingMetadata } from './onboarding-bridge';
 import { NativeEncounterBridge, parseEncounterMetadata } from './encounter-bridge';
@@ -496,6 +496,15 @@ async function startGame() {
       if (/^taichung-firered(?:-[a-f0-9]{16})?\.gba$/.test(filename) && path !== gamePath) emulator.FS.unlink(path);
     }
     emulator.FS.writeFile(gamePath, rom);
+    if (BOULEVARD_PREVIEW && !emulator.FS.analyzePath(SAVE_PATH).exists) {
+      // A fresh preview opens with the supplied demo save. Existing progress on this origin wins.
+      const checkpoint = await fetch('/preview/old-station.sav');
+      const save = new Uint8Array(await checkpoint.arrayBuffer());
+      if (!checkpoint.ok || ![131072, 131088].includes(save.byteLength)) {
+        throw new Error('The Old Station preview save could not be loaded. Reload and try again.');
+      }
+      if (!emulator.FS.analyzePath(SAVE_PATH).exists) emulator.FS.writeFile(SAVE_PATH, save);
+    }
     const freshCartridgeBoot = bootFromCartridge;
     if (freshCartridgeBoot) {
       const snapshotName = gamePath.slice(gamePath.lastIndexOf('/') + 1).replace(/\.gba$/, '_auto.ss');

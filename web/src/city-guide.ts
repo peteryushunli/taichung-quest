@@ -1,10 +1,8 @@
 import landmarkCatalog from './data/landmarks.json';
-import sightCatalog from './data/sights.json';
-import cityContract from './data/minimap-contract.json';
+import { cityGeometry, sightCatalog } from './preview-world';
 import { landingMedia, landmarkArt } from './landing-assets';
 import { cityPlaceSummary, districtLabelSpots, isGym, localizedPlace, markerPosition, orderPlaces, placeWorld } from './landing-model';
 import type { LandingLandmark } from './landing-model';
-import type { MinimapGeometry } from './minimap-model';
 import './city-guide.css';
 import { getLocale, initializeLocalization, localizeTree, onLocaleChange, t } from './i18n';
 import { landmarkSketch } from './landmark-art';
@@ -28,7 +26,6 @@ interface GuideHost {
 }
 
 // The ten gyms first, then the ten landmarks without one, numbered the same way as the website map.
-const cityGeometry = cityContract as MinimapGeometry;
 const landmarks = orderPlaces([...landmarkCatalog, ...sightCatalog] as Landmark[]);
 
 export function escapeHtml(value: string) {
@@ -49,7 +46,7 @@ export function createCityGuide(host: GuideHost) {
       <p class="guide-intro" id="city-guide-intro"><span id="guide-place-count"></span> <span data-i18n="Choose a landmark to explore its game-world stop and find visitor information where available.">Choose a landmark to explore its game-world stop and find visitor information where available.</span></p>
       <div class="guide-body">
         <section class="guide-overview" aria-label="Taichung city map" data-i18n-label="Taichung city map">
-          <div class="overview-heading"><span>TAICHUNG <span lang="zh-Hant">臺中</span></span><span class="compass" aria-label="North points up">N ↑</span></div>
+          <div class="overview-heading"><span>TAICHUNG <span lang="zh-Hant">臺中</span></span>${cityGeometry.coordinateSystem?.northUp === false ? '' : '<span class="compass" aria-label="North points up">N ↑</span>'}</div>
           <div class="guide-map" style="--guide-map-aspect:${width} / ${height}">
             <img class="guide-map-drawing" src="${escapeHtml(landingMedia.cityMap)}" width="${width * 16}" height="${height * 16}" alt="">
             ${districtLabelSpots(cityGeometry).map(({ label, sign, x, y }) => `<span class="map-district${sign ? ' is-sign' : ''}" style="left:${x}%;top:${y}%">${label}</span>`).join('')}

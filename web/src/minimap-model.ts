@@ -7,7 +7,12 @@ type LocalizedName = { en: string; zh: string };
 export type MinimapGeometry = {
   schemaVersion: number;
   geometryFingerprintSha256: string;
-  world: { width: number; height: number };
+  coordinateSystem?: { northUp?: boolean };
+  world: {
+    width: number; height: number;
+    homeWorld?: Pair;
+    districtLabels?: { label: string; x: number; y: number }[];
+  };
   mapsByNativeKey: Record<string, {
     kind: string; width: number; height: number; projection: string;
     worldOrigin?: Pair; worldRect?: Pair; parentNativeKey?: string;

@@ -4,8 +4,9 @@ import type { MinimapGeometry, MinimapPosition } from './minimap-model';
 import type { NavigationState } from './navigation-bridge';
 import type { OnboardingState } from './onboarding-bridge';
 import landmarkCatalog from './data/landmarks.json';
-import sightCatalog from './data/sights.json';
+import { BOULEVARD_PREVIEW, sightCatalog } from './preview-world';
 import radarArt from './assets/minimap/city.png';
+import boulevardRadar from './assets/boulevard/radar.png';
 import { isGym, placeWorld } from './landing-model';
 import type { LandingLandmark } from './landing-model';
 
@@ -69,9 +70,9 @@ export function createMinimap(options: {
   button.innerHTML = `<svg aria-hidden="true" viewBox="0 0 ${panel.width} ${panel.height}" shape-rendering="geometricPrecision">`
     + `<svg class="minimap-map" x="${panel.frame}" y="${panel.frame}" width="${RADAR.width}" height="${RADAR.height}">`
     + `<rect class="minimap-outside" x="-9999" y="-9999" width="19998" height="19998"/>`
-    + `<image href="${radarArt}" x="${-margin}" y="${-margin}" width="${width + 2 * margin}" height="${height + 2 * margin}" preserveAspectRatio="none"/>`
+    + `<image href="${BOULEVARD_PREVIEW ? boulevardRadar : radarArt}" x="${-margin}" y="${-margin}" width="${width + 2 * margin}" height="${height + 2 * margin}" preserveAspectRatio="none"/>`
     + `${markers}${home}<g class="minimap-player">${MARKS.player}</g></svg>`
-    + `${frame(panel.width, panel.height)}${northTab(panel.width)}</svg>`;
+    + `${frame(panel.width, panel.height)}${geometry.coordinateSystem?.northUp === false ? '' : northTab(panel.width)}</svg>`;
   const drawing = button.querySelector<SVGSVGElement>('.minimap-map')!;
   options.screen.append(button);
   const player = button.querySelector<SVGGElement>('.minimap-player')!;
@@ -125,7 +126,7 @@ export function createMinimap(options: {
     // Quarter turns about the centre of the player's own pixel keep the arrow on the grid.
     player.setAttribute('transform', `translate(${tile.x} ${tile.y}) rotate(${FACING_DEGREES[position.facing] ?? 0} .5 .5)`);
     for (const entry of placeBlips) place(entry.element, radarBlip(tile, entry.world, entry.gym));
-    place(homeBlip, radarBlip(tile, HOME_WORLD, true));
+    place(homeBlip, radarBlip(tile, geometry.world.homeWorld ?? HOME_WORLD, true));
   }
   render();
   return {

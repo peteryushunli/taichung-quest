@@ -1,5 +1,7 @@
 import bikeShot from './assets/landing/bike-greenway.png';
 import cityMap from './assets/landing/city-map.png';
+import boulevardMap from './assets/boulevard/city.png';
+import { BOULEVARD_PREVIEW } from './preview-world';
 import heroPoster from './assets/landing/hero-poster.png';
 import heroReel from './assets/landing/hero-reel.mp4';
 import fengjia from './assets/landmarks/fengjia.png';
@@ -102,6 +104,13 @@ for (const [path, url] of Object.entries(mapViews)) {
   const id = path.slice(path.lastIndexOf('/') + 1, -'.png'.length);
   landmarkArt[id] ??= { facade: url, mapView: true, tint: park };
 }
+const boulevardViews = import.meta.glob<string>('./assets/boulevard/places/*.png', { eager: true, import: 'default' });
+if (BOULEVARD_PREVIEW) {
+  for (const [path, url] of Object.entries(boulevardViews)) {
+    const id = path.slice(path.lastIndexOf('/') + 1, -'.png'.length);
+    landmarkArt[id] = { facade: url, mapView: true, tint: park };
+  }
+}
 
 /** Page media. An empty slot renders a labelled placeholder. */
 export const landingMedia: {
@@ -118,7 +127,7 @@ export const landingMedia: {
   heroPoster,
   heroPartner: pikachuFront,
   bikeShot,
-  cityMap,
+  cityMap: BOULEVARD_PREVIEW ? boulevardMap : cityMap,
   starters: { charmander: charmanderFront, bulbasaur: bulbasaurFront, squirtle: squirtleFront, pikachu: pikachuFront },
   starterIcons: [mon('Charmander', charmanderIcon), mon('Bulbasaur', bulbasaurIcon), mon('Squirtle', squirtleIcon), mon('Pikachu', pikachuIcon)],
   party: [mon('Charizard', charizardIcon), mon('Gengar', gengarIcon), mon('Snorlax', snorlaxIcon), mon('Gyarados', gyaradosIcon), mon('Dragonite', dragoniteIcon), mon('Eevee', eeveeIcon)],
