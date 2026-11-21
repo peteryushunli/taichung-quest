@@ -3950,8 +3950,6 @@
       "shortNameZh": "老虎城",
       "minimapNameEn": "Tiger City",
       "minimapNameZh": "老虎城",
-      "description": "Across from Maple Garden in Xitun.",
-      "descriptionZh": "位於西屯，鄰近秋紅谷。",
       "districtId": "xitun",
       "districtEn": "Xitun · 7th Zone",
       "districtZh": "西屯 · 七期",
@@ -3959,7 +3957,12 @@
       "categoryZh": "購物中心",
       "kind": "sight",
       "gymStatus": "not-a-gym",
-      "playable": false
+      "playable": false,
+      "description": "Tiger City is a shopping and entertainment complex on Henan Road in Xitun’s Seventh Redevelopment Zone. Restaurants, shops and a cinema open off a broad outdoor plaza, and a glass elevator looks over the square. Maple Garden and the National Taichung Theater are both a short walk away. In a few blocks, the neighborhood goes from the mall and its cinema to the theater’s curved walls and the park’s sunken paths.",
+      "descriptionZh": "老虎城位於西屯七期重劃區的河南路上，聚集了商店、餐廳與影城。從寬闊的戶外廣場進入商場，還能搭乘透明景觀電梯俯瞰廣場。步行不遠，就是秋紅谷和臺中國家歌劇院。短短幾個街廓，從影城與商場的熱鬧、歌劇院的曲牆，到下沉公園的步道，就能看見七期不同的面貌。",
+      "officialUrl": "https://www.tigercity.com.tw/en/info/about/",
+      "officialUrlZh": "https://www.tigercity.com.tw/info/about/",
+      "officialSourceTitle": "Tiger City"
     },
     {
       "id": "rainbow-village",
@@ -3969,8 +3972,6 @@
       "shortNameZh": "彩虹眷村",
       "minimapNameEn": "Rainbow Village",
       "minimapNameZh": "彩虹眷村",
-      "description": "Painted houses in southwestern Nantun.",
-      "descriptionZh": "南屯西南側的彩繪眷村。",
       "districtId": "nantun",
       "districtEn": "Nantun",
       "districtZh": "南屯",
@@ -3978,7 +3979,12 @@
       "categoryZh": "彩繪眷村",
       "kind": "sight",
       "gymStatus": "not-a-gym",
-      "playable": false
+      "playable": false,
+      "description": "The low houses of Rainbow Village once housed military families in Nantun. When the neighborhood faced demolition, retired soldier and resident Huang Yong-Fu began painting his home and the walls around it. Bright figures and patterns spread down the lanes, and public support helped persuade the city to preserve the painted cluster. Huang became known as Rainbow Grandpa. The narrow lanes and single-story roofs still show how the old community was laid out.",
+      "descriptionZh": "彩虹眷村原是南屯的軍眷聚落。面對拆遷，住在這裡的退伍軍人黃永阜開始在自家和鄰近牆面畫畫。人物與鮮豔的圖案一路延伸到巷弄，引起民眾關注，市府最後保留了彩繪聚落。黃永阜也因此有了「彩虹爺爺」的暱稱。沿著窄巷看屋頂和一整排低矮房舍，仍可辨認老眷村的生活尺度。",
+      "officialUrl": "https://travel.taichung.gov.tw/en/attractions/intro/881",
+      "officialUrlZh": "https://travel.taichung.gov.tw/zh-tw/attractions/intro/574",
+      "officialSourceTitle": "Taichung Tourism and Travel Bureau"
     },
     {
       "id": "jingming-street",
@@ -3988,8 +3994,6 @@
       "shortNameZh": "精明一街",
       "minimapNameEn": "Jingming 1st Street",
       "minimapNameZh": "精明一街",
-      "description": "A pedestrian shopping street in the West District.",
-      "descriptionZh": "西區的行人商店街。",
       "districtId": "west",
       "districtEn": "West · Museum Quarter",
       "districtZh": "西區 · 草悟道",
@@ -3997,7 +4001,12 @@
       "categoryZh": "購物商圈",
       "kind": "sight",
       "gymStatus": "not-a-gym",
-      "playable": false
+      "playable": false,
+      "description": "Jingming 1st Street is a pedestrian lane about 100 meters long between Dadun 19th Street and Dalong Road. Cafés set tables out along the walkway, among boutiques, restaurants and galleries. It was the first street in Taichung picked as a model shopping street by Taiwan’s commerce authority. The shopping district also extends onto Dalong Road, while the original lane is still small enough to take in from one end.",
+      "descriptionZh": "精明一街位於西區大墩十九街與大隆路之間，是一條約百公尺長的徒步街。精品店、餐館與藝廊沿街排列，咖啡館則把桌椅擺到步道旁。這裡是臺中第一條獲經濟部商業司選為示範商店街的街道。商圈後來延伸到大隆路，原本的小街仍保有一眼就能望到另一端的尺度。",
+      "officialUrl": "https://travel.taichung.gov.tw/en/attractions/intro/1374",
+      "officialUrlZh": "https://travel.taichung.gov.tw/zh-tw/Attractions/Intro/24/",
+      "officialSourceTitle": "Taichung Tourism and Travel Bureau"
     },
     {
       "id": "city-hall",
@@ -4007,8 +4016,6 @@
       "shortNameZh": "臺中市政府",
       "minimapNameEn": "City Hall",
       "minimapNameZh": "臺中市政府",
-      "description": "The City Hall plaza on Taiwan Boulevard.",
-      "descriptionZh": "臺灣大道旁的市政府廣場。",
       "districtId": "xitun",
       "districtEn": "Xitun · 7th Zone",
       "districtZh": "西屯 · 七期",
@@ -4016,7 +4023,11 @@
       "categoryZh": "市政廣場",
       "kind": "sight",
       "gymStatus": "not-a-gym",
-      "playable": false
+      "playable": false,
+      "description": "Taichung’s City Hall faces Taiwan Boulevard across a wide public square. A tall central passage sits between the Huizhong and Wenxin wings. Near their side entrances, the red letters of Tower of Words form an open, curved sculpture. On the ground floor of the Huizhong wing, Taichung Vision Hall uses exhibits about the city’s history, neighborhoods and civic projects to explain how Taichung grew and what the city is planning next.",
+      "descriptionZh": "臺中市政府臺灣大道市政大樓前方有一座開闊的廣場，挑高的中央川堂連接惠中樓與文心樓。側門附近的公共藝術〈塔之語〉由紅色字母拼成半蛋形。惠中樓一樓的臺中願景館透過城市歷史、地方生活與市政建設等展覽，介紹臺中如何發展成今天的樣子，以及這座城市正在規劃的未來。",
+      "officialUrl": "https://www.news.taichung.gov.tw/14786/14864/2772021/2774566/2774758",
+      "officialSourceTitle": "Taichung City Government"
     },
     {
       "id": "central-park",
@@ -4026,8 +4037,6 @@
       "shortNameZh": "中央公園",
       "minimapNameEn": "Central Park",
       "minimapNameZh": "中央公園",
-      "description": "Follow the promenade through the park.",
-      "descriptionZh": "沿著園道探索中央公園。",
       "districtId": "shuinan",
       "districtEn": "Central Park",
       "districtZh": "中央公園 · 水湳",
@@ -4035,7 +4044,12 @@
       "categoryZh": "公園",
       "kind": "sight",
       "gymStatus": "not-a-gym",
-      "playable": false
+      "playable": false,
+      "description": "Taichung Central Park occupies the former grounds of Shuinan Airport. Part of the runway survives, a reminder of the airfield beneath today’s landscape. Paths and cycle routes cross about 67 hectares of groves, open lawns and ponds. The park’s twelve interactive installations explore senses and abilities such as touch and balance. At the northern edge, the Green Museumbrary’s shaded plazas open directly onto the park.",
+      "descriptionZh": "臺中中央公園位在水湳機場原址，園內保留了一部分跑道，讓人還能看出這裡曾是機場。約六十七公頃的園區裡，步道與自行車道穿過林地、草坪與水池，十二處感官互動設施則讓人透過觸覺、平衡感等方式體驗不同的地景。走到公園北側，就能看見臺中綠美圖向公園敞開的遮蔭廣場。",
+      "officialUrl": "https://travel.taichung.gov.tw/en/Attractions/Intro/1600",
+      "officialUrlZh": "https://travel.taichung.gov.tw/zh-tw/Attractions/Intro/1458/",
+      "officialSourceTitle": "Taichung Tourism and Travel Bureau"
     },
     {
       "id": "green-museumbrary",
@@ -4045,8 +4059,6 @@
       "shortNameZh": "臺中綠美圖",
       "minimapNameEn": "Green Museumbrary",
       "minimapNameZh": "臺中綠美圖",
-      "description": "An art museum and public library at the north end of Central Park.",
-      "descriptionZh": "位於中央公園北端，結合美術館與公共圖書館。",
       "districtId": "shuinan",
       "districtEn": "Central Park",
       "districtZh": "中央公園 · 水湳",
@@ -4054,7 +4066,12 @@
       "categoryZh": "美術館與圖書館",
       "kind": "sight",
       "gymStatus": "not-a-gym",
-      "playable": true
+      "playable": true,
+      "description": "The Green Museumbrary brings the Taichung Art Museum and the city’s public library together at the north end of Central Park. SANAA and Taiwan’s Ricky Liu & Associates designed eight linked volumes wrapped in silvery metal mesh. Parts of the complex rise above the ground to make shaded plazas where the park paths meet the building. The galleries, reading rooms and rooftop garden offer different views of the park.",
+      "descriptionZh": "臺中綠美圖位於中央公園北端，結合臺中市立美術館與臺中市立圖書館。日本 SANAA 與臺灣的劉培森建築師事務所共同設計了八座彼此相連的量體，外側覆以銀白色金屬網。部分空間抬高，讓公園步道接上底下的遮蔭廣場。從展廳、閱讀空間到屋頂花園，都能看到公園不同的面貌。",
+      "officialUrl": "https://www.tcam.museum/en/field-intro",
+      "officialUrlZh": "https://www.tcam.museum/zh/field-intro",
+      "officialSourceTitle": "Taichung Art Museum"
     },
     {
       "id": "baseball-stadium",
@@ -4064,8 +4081,6 @@
       "shortNameZh": "洲際棒球場",
       "minimapNameEn": "Ballpark",
       "minimapNameZh": "洲際棒球場",
-      "description": "The roof of Beitun’s baseball stadium takes its shape from the stitches of a baseball.",
-      "descriptionZh": "北屯這座棒球場的屋頂造型以棒球縫線為靈感。",
       "districtId": "beitun",
       "districtEn": "Beitun",
       "districtZh": "北屯",
@@ -4073,7 +4088,12 @@
       "categoryZh": "棒球場",
       "kind": "sight",
       "gymStatus": "not-a-gym",
-      "playable": true
+      "playable": true,
+      "description": "Taichung Intercontinental Ballpark opened in Beitun in 2006, and its first major event was the Intercontinental Cup. The stadium sits at the junction of Chongde and Huanzhong roads. Its broad stands look across the diamond, and the curved roof borrows its shape from the stitches on a baseball. The ballpark has hosted international games ever since and remains a fixture of Taiwan’s baseball scene.",
+      "descriptionZh": "臺中洲際棒球場位在北屯崇德路與環中路口，於二〇〇六年完工，首場大型賽事便是洲際盃棒球賽。寬敞的看台望向球場，弧形屋頂的設計則取自棒球的縫線。從啟用以來，這裡陸續迎來多場國際比賽，也是臺灣棒球迷熟悉的場地。",
+      "officialUrl": "https://travel.taichung.gov.tw/en/attractions/intro/1109",
+      "officialUrlZh": "https://travel.taichung.gov.tw/zh-tw/Attractions/Intro/149/",
+      "officialSourceTitle": "Taichung Tourism and Travel Bureau"
     },
     {
       "id": "folklore-park",
@@ -4083,8 +4103,6 @@
       "shortNameZh": "民俗公園",
       "minimapNameEn": "Folk Museum",
       "minimapNameZh": "民俗公園",
-      "description": "Traditional courtyard architecture and exhibits about everyday life in Taiwan.",
-      "descriptionZh": "傳統的庭院建築，展示早期臺灣的日常生活。",
       "districtId": "beitun",
       "districtEn": "Beitun",
       "districtZh": "北屯",
@@ -4092,7 +4110,12 @@
       "categoryZh": "民俗館",
       "kind": "sight",
       "gymStatus": "not-a-gym",
-      "playable": true
+      "playable": true,
+      "description": "Taiwan’s first folklore park opened in Beitun in 1990. Its tiled roofs and courtyards draw on the Minnan homes built around the end of the Qing dynasty. The museum displays objects from everyday life and shows how families arranged their rooms, while the park’s squares make room for folk crafts and performances. Covered walkways, arched bridges and a lotus pond carry the same attention to local traditions into the grounds.",
+      "descriptionZh": "北屯民俗公園於一九九〇年開放，是臺灣第一座民俗公園。瓦屋頂與四合院取材自清末民初的閩南建築。民俗館透過早期家庭的日常器物與室內陳設，呈現當時的居家生活，園內廣場也為民間工藝與表演留出空間。出了館舍，還能沿著迴廊走過拱橋、花圃與荷塘。",
+      "officialUrl": "https://travel.taichung.gov.tw/en/Attractions/Intro/884",
+      "officialUrlZh": "https://travel.taichung.gov.tw/zh-tw/Attractions/Intro/420/",
+      "officialSourceTitle": "Taichung Tourism and Travel Bureau"
     }
   ],
   "sourceSha256": {

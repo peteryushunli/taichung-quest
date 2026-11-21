@@ -183,6 +183,24 @@ test('the ten set-piece landmarks join the map as non-gym places, after the ten 
   }
 });
 
+test('Boulevard map cards use the complete bilingual visitor descriptions', () => {
+  const { extraSights } = JSON.parse(readFileSync(new URL('../src/data/boulevard-preview.json', import.meta.url), 'utf8'));
+  const visitorCopy = JSON.parse(readFileSync(new URL('../src/data/boulevard-sight-copy.json', import.meta.url), 'utf8'));
+  assert.ok(extraSights.length > 0);
+  for (const place of extraSights) {
+    const { description, descriptionZh, officialUrl, officialUrlZh } = visitorCopy[place.id];
+    assert.deepEqual(
+      [place.description, place.descriptionZh, place.officialUrl, place.officialUrlZh],
+      [description, descriptionZh, officialUrl, officialUrlZh],
+      place.id,
+    );
+    assert.ok(description.length > 200 && descriptionZh.length > 60, place.id);
+    for (const locale of ['en', 'zh-Hant']) {
+      assert.ok(localizedPlace(place, locale).url?.startsWith('https://'), place.id);
+    }
+  }
+});
+
 test('every place has a map position inside the 129x181 world, and every non-gym a map-view crop around it', () => {
   for (const place of [...landmarks, ...sights]) {
     const [x, y] = placeWorld(place, city.markersById);

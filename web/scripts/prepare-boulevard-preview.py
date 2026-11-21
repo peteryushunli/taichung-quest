@@ -17,27 +17,16 @@ DATA = WEB / "src/data"
 ART = WEB / "src/assets/boulevard"
 GEOMETRY_FIELDS = ("schemaVersion", "coordinateSystem", "world", "mapsByNativeKey", "markersById", "seams")
 EXTRA_SIGHTS = {
-    "tiger-city": ("Tiger City", "老虎城", "xitun", "Shopping centre", "購物中心",
-                   "Across from Maple Garden in Xitun.", "位於西屯，鄰近秋紅谷。"),
-    "rainbow-village": ("Rainbow Village", "彩虹眷村", "nantun", "Painted village", "彩繪眷村",
-                        "Painted houses in southwestern Nantun.", "南屯西南側的彩繪眷村。"),
-    "jingming-street": ("Jingming 1st Street", "精明一街", "west", "Shopping street", "購物商圈",
-                        "A pedestrian shopping street in the West District.", "西區的行人商店街。"),
-    "city-hall": ("City Hall", "臺中市政府", "xitun", "Civic plaza", "市政廣場",
-                  "The City Hall plaza on Taiwan Boulevard.", "臺灣大道旁的市政府廣場。"),
-    "central-park": ("Central Park", "中央公園", "shuinan", "Park", "公園",
-                     "Follow the promenade through the park.", "沿著園道探索中央公園。"),
+    "tiger-city": ("Tiger City", "老虎城", "xitun", "Shopping centre", "購物中心"),
+    "rainbow-village": ("Rainbow Village", "彩虹眷村", "nantun", "Painted village", "彩繪眷村"),
+    "jingming-street": ("Jingming 1st Street", "精明一街", "west", "Shopping street", "購物商圈"),
+    "city-hall": ("City Hall", "臺中市政府", "xitun", "Civic plaza", "市政廣場"),
+    "central-park": ("Central Park", "中央公園", "shuinan", "Park", "公園"),
 }
 INSTALLED_SIGHTS = {
-    "green-museumbrary": ("Green Museumbrary", "臺中綠美圖", "shuinan", "Museum and library", "美術館與圖書館",
-                          "An art museum and public library at the north end of Central Park.",
-                          "位於中央公園北端，結合美術館與公共圖書館。"),
-    "baseball-stadium": ("Intercontinental Ballpark", "洲際棒球場", "beitun", "Baseball stadium", "棒球場",
-                         "The roof of Beitun’s baseball stadium takes its shape from the stitches of a baseball.",
-                         "北屯這座棒球場的屋頂造型以棒球縫線為靈感。"),
-    "folklore-park": ("Folk Museum at Folklore Park", "臺灣民俗文物館", "beitun", "Folk museum", "民俗館",
-                      "Traditional courtyard architecture and exhibits about everyday life in Taiwan.",
-                      "傳統的庭院建築，展示早期臺灣的日常生活。"),
+    "green-museumbrary": ("Green Museumbrary", "臺中綠美圖", "shuinan", "Museum and library", "美術館與圖書館"),
+    "baseball-stadium": ("Intercontinental Ballpark", "洲際棒球場", "beitun", "Baseball stadium", "棒球場"),
+    "folklore-park": ("Folk Museum at Folklore Park", "臺灣民俗文物館", "beitun", "Folk museum", "民俗館"),
 }
 LABELS = [
     ("FENGJIA 逢甲", 40, 6), ("CENTRAL PARK 中央公園", 94, 6), ("BEITUN 北屯", 178, 23),
@@ -182,17 +171,18 @@ def main():
     plan_districts = {district["id"]: district for district in plan["districts"]}
     installed = {entry["id"]: entry for entry in report.get("installedLandmarks", [])}
     sight_specs = EXTRA_SIGHTS | {place: INSTALLED_SIGHTS[place] for place in installed}
+    sight_copy = read(DATA / "boulevard-sight-copy.json")
     short_names = {"baseball-stadium": ("Ballpark", "洲際棒球場"), "folklore-park": ("Folk Museum", "民俗公園")}
     extras = []
-    for place, (en, zh, district_id, category, category_zh, description, description_zh) in sight_specs.items():
+    for place, (en, zh, district_id, category, category_zh) in sight_specs.items():
         district = plan_districts[district_id]
         short_en, short_zh = short_names.get(place, (en, zh))
         row = {"id": place, "nameEn": en, "nameZh": zh, "shortNameEn": short_en, "shortNameZh": short_zh,
-               "minimapNameEn": short_en, "minimapNameZh": short_zh, "description": description,
-               "descriptionZh": description_zh, "districtId": district_id,
+               "minimapNameEn": short_en, "minimapNameZh": short_zh, "districtId": district_id,
                "districtEn": district["name"], "districtZh": district["zh"],
                "category": category, "categoryZh": category_zh,
-               "kind": "sight", "gymStatus": "not-a-gym", "playable": place in installed}
+               "kind": "sight", "gymStatus": "not-a-gym", "playable": place in installed,
+               **sight_copy[place]}
         extras.append(row)
         places[place] = row
     places["guest-house"] = {"nameEn": "Guest house", "nameZh": "旅宿", "kind": "visit"}
