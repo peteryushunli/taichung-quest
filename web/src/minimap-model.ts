@@ -21,6 +21,7 @@ export type MinimapGeometry = {
     worldOrigin?: Pair; worldRect?: Pair; parentNativeKey?: string;
     parentMarkerId?: string; parentEntranceWorld?: Pair; indoorLabel?: LocalizedName;
     districtName?: LocalizedName;
+    districtBefore?: { y: number; name: LocalizedName };
   }>;
   markersById: Record<string, { id: string; world: Pair; exteriorNativeKey: string; name: LocalizedName; captureBit?: number }>;
 };
@@ -73,6 +74,13 @@ export function projectNavigation(packet: NavigationSnapshot, geometry: MinimapG
 /** The radar only follows the player outdoors; indoors (any interior) it hides like in menus and battles. */
 export function radarPosition(position?: MinimapPosition) {
   return position && !position.indoor ? position : undefined;
+}
+
+export function districtAt(position: MinimapPosition | undefined, geometry: MinimapGeometry) {
+  if (!position || position.indoor) return;
+  const map = geometry.mapsByNativeKey[position.districtKey];
+  const split = map?.districtBefore;
+  return split && position.worldY < split.y ? split.name : map?.districtName;
 }
 
 export function streetAt(position: MinimapPosition | undefined, geometry: MinimapGeometry) {

@@ -11,7 +11,7 @@
     "height": 256,
     "homeWorld": [
       344,
-      88
+      87
     ],
     "streetBands": [
       {
@@ -936,7 +936,14 @@
         146,
         41,
         190
-      ]
+      ],
+      "districtBefore": {
+        "y": 167,
+        "name": {
+          "en": "Xitun",
+          "zh": "西屯"
+        }
+      }
     },
     "43:31": {
       "nativeKey": "43:31",
@@ -1160,7 +1167,14 @@
         146,
         90,
         190
-      ]
+      ],
+      "districtBefore": {
+        "y": 167,
+        "name": {
+          "en": "Xitun",
+          "zh": "西屯"
+        }
+      }
     },
     "43:39": {
       "nativeKey": "43:39",
@@ -1384,7 +1398,14 @@
         146,
         115,
         190
-      ]
+      ],
+      "districtBefore": {
+        "y": 167,
+        "name": {
+          "en": "Xitun",
+          "zh": "西屯"
+        }
+      }
     },
     "43:47": {
       "nativeKey": "43:47",
@@ -2587,7 +2608,7 @@
       "parentMarkerId": "guest-house",
       "parentEntranceWorld": [
         344,
-        88
+        87
       ],
       "indoorLabel": {
         "en": "Indoors",
@@ -2841,11 +2862,11 @@
       },
       "kind": "landmark",
       "world": [
-        301,
+        300,
         36
       ],
       "localEntrance": [
-        20,
+        19,
         10
       ],
       "exteriorMapId": "MAP_TAICHUNG_BLVD_CONFUCIUS_TEMPLE",
@@ -2898,11 +2919,11 @@
       },
       "kind": "landmark",
       "world": [
-        273,
+        270,
         123
       ],
       "localEntrance": [
-        20,
+        17,
         15
       ],
       "exteriorMapId": "MAP_TAICHUNG_BLVD_SECOND_MARKET",
@@ -2992,12 +3013,12 @@
       },
       "kind": "landmark",
       "world": [
-        23,
-        231
+        11,
+        230
       ],
       "localEntrance": [
-        15,
-        15
+        3,
+        14
       ],
       "exteriorMapId": "MAP_TAICHUNG_BLVD_RAINBOW_VILLAGE",
       "exteriorNativeKey": "43:32"
@@ -3119,11 +3140,11 @@
       "kind": "landmark-gym",
       "world": [
         344,
-        88
+        87
       ],
       "localEntrance": [
         25,
-        26
+        25
       ],
       "exteriorMapId": "MAP_TAICHUNG_BLVD_OLD_STATION",
       "exteriorNativeKey": "43:76"
@@ -4437,10 +4458,10 @@
     }
   ],
   "sourceSha256": {
-    "compiledMapReport": "22e1f035a36d8a10880ec9d30992503cfde196751281ce5bcf6f22b7ed6b9396",
-    "fill": "f21f9889000115e8995356b837dc6ff23f3d65460dac903ce1e16949138a8c2a",
-    "mapBook": "3028c1cd02f81d84e3a27e43de7a8cbcbc4bca67e85dbf4d7417f2042da1aecb",
-    "streetPeople": "ae03b5a4d5faebc98da12c6cdfd691c8d4a9c8bbfb659769dea8efcf2d22f8e5"
+    "compiledMapReport": "5271fd67ea0298aaf8a40c41eb1dbba61cf31b22be1e5345491d8e3d6f3c5eb5",
+    "fill": "0a73624ed3fb1d5669c061dbe5827fb4f4275c6aedbbb87f9c283ec934661fa3",
+    "mapBook": "265d64cf1b47a26d412626301a6f1e542f3a19bcd89ec0084e6f08022a713b4d",
+    "streetPeople": "55ab23c95679b0db7edd67023ce6630b6c06111598b7849cba32539d2973712a"
   },
-  "geometryFingerprintSha256": "caa3750d67c3d959488b4d752a9cfc5281ea87d0aefa76d12fd71c021598e91e"
+  "geometryFingerprintSha256": "5c942ea5b13ccb2103cb30b828eb3a7ed5b712d068c9523928449fa8b4499b10"
 }

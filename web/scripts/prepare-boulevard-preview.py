@@ -28,6 +28,7 @@ INSTALLED_SIGHTS = {
     "baseball-stadium": ("Intercontinental Ballpark", "洲際棒球場", "beitun", "Baseball stadium", "棒球場"),
     "folklore-park": ("Folk Museum at Folklore Park", "臺灣民俗文物館", "beitun", "Folk museum", "民俗館"),
 }
+RESTORED_FACADES = {"prefectural-hall", "second-market", "cultural-heritage-park"}
 LABELS = [
     ("FENGJIA 逢甲", 40, 6), ("CENTRAL PARK 中央公園", 94, 6), ("BEITUN 北屯", 178, 23),
     ("XITUN 西屯", 46, 103), ("GREENWAY 草悟道", 205, 116),
@@ -99,7 +100,7 @@ def street_bands(plan, fill, origin):
     return bands
 
 
-def terrain_images(fill, plan, candidate, width, height, origin, installed):
+def terrain_images(fill, plan, candidate, width, height, origin, installed, pavilion, placements):
     os.environ["FILL_RAW"] = "1"
     sys.path.insert(0, str(fill / "src"))
     import engine
@@ -112,11 +113,14 @@ def terrain_images(fill, plan, candidate, width, height, origin, installed):
                for x in range(edge["rect"][0], edge["rect"][2])
                for y in range(edge["rect"][1], edge["rect"][3])}
     colors = {key: ImageColor.getrgb(value) for key, value in ink.items()}
+    pavilion_tiles = {(x, y) for left, top, right, bottom in pavilion.values()
+                      for x in range(left, right) for y in range(top, bottom)}
     for row in range(height):
         for col in range(width):
             x, y = col + origin[0], row + origin[1]
             ch = world.at(x, y)
-            kind = ("outside" if ch in "HRX" or (x, y) in highway else "water" if ch == "~"
+            kind = ("road" if (x, y) in pavilion_tiles
+                    else "outside" if ch in "HRX" or (x, y) in highway else "water" if ch == "~"
                     else "road" if ch in engine.ROAD or ch in "bslaWyiq" else "land")
             image.putpixel((col + 2, row + 2), colors[kind])
     ART.mkdir(parents=True, exist_ok=True)
@@ -127,6 +131,11 @@ def terrain_images(fill, plan, candidate, width, height, origin, installed):
     art_rects = {place["id"]: place["artRect"] for place in plan["places"] if place["id"] in EXTRA_SIGHTS}
     art_rects["central-park"] = [78, 32, 102, 50]
     art_rects.update({place: entry["worldRect"] for place, entry in installed.items()})
+    for item in placements:
+        if item["sprite"] in RESTORED_FACADES:
+            x, y = item["x"], item["y"]
+            w, h = item["tiles"]
+            art_rects[item["sprite"]] = [x, y, x + w, y + h]
     scale = overview.width // width
     places_art = ART / "places"
     places_art.mkdir(exist_ok=True)
@@ -179,6 +188,11 @@ def main():
         exteriors[entry["mapId"]] = {**entry, "kind": "exterior", "projection": "local-plus-world-origin",
                                      "districtName": {"en": en, "zh": zh},
                                      "worldOrigin": origin, "worldRect": origin + normalize([right, bottom])}
+        if split := item.get("districtBefore"):
+            split_en, split_zh, _, _ = NEIGHBORHOODS[split["district"]]
+            exteriors[entry["mapId"]]["districtBefore"] = {
+                "y": split["y"] - y0, "name": {"en": split_en, "zh": split_zh},
+            }
 
     places = {place["id"]: place for place in read(DATA / "landmarks.json") + read(DATA / "sights.json")}
     plan_districts = {district["id"]: district for district in plan["districts"]}
@@ -261,7 +275,8 @@ def main():
                                      sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode()).hexdigest()
     geometry["geometryFingerprintSha256"] = fingerprint
     write(DATA / "boulevard-preview.json", geometry)
-    terrain_images(args.fill, plan, candidate, width, height, (x0, y0), installed)
+    terrain_images(args.fill, plan, candidate, width, height, (x0, y0), installed,
+                   report.get("pavilionDeck", {}), raw["placements"])
     source_rom = args.rom_dir / "taichung-firered.gba"
     metadata = read(args.rom_dir / "build.json")
     require(digest(source_rom) == metadata["sha256"] == digest(args.native / "pokefirered.gba"),

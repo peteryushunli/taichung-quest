@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { readFileSync } from 'node:fs';
-import { projectNavigation, projectTutorial, secondaryAction, readMinimapPreference, radarPosition, radarViewBox, radarContains, radarViewport, RADAR, RADAR_ART, RADAR_PANEL, HOME_WORLD, FACING_DEGREES, streetAt } from '../src/minimap-model.ts';
+import { districtAt, projectNavigation, projectTutorial, secondaryAction, readMinimapPreference, radarPosition, radarViewBox, radarContains, radarViewport, RADAR, RADAR_ART, RADAR_PANEL, HOME_WORLD, FACING_DEGREES, streetAt } from '../src/minimap-model.ts';
 
 const geometry = JSON.parse(readFileSync(new URL('../src/data/minimap-contract.json', import.meta.url), 'utf8'));
 const packet = { sequence: 2, frame: 1, flags: 79, x: 30, y: 66, mapGroup: 43, mapNumber: 0, facing: 2, mapType: 1, width: 44, height: 77, contextFlags: 0 };
@@ -16,6 +16,20 @@ test('the Boulevard label follows the mapped road and clears in the station plaz
   assert.deepEqual(streetAt(road, boulevard), { en: 'Taiwan Boulevard', zh: '臺灣大道' });
   assert.equal(streetAt({ ...road, indoor: true }, boulevard), undefined);
   assert.equal(streetAt(road, geometry), undefined);
+});
+
+test('the Boulevard district line uses Beitun and Dadun and changes at the native Nantun boundary', () => {
+  const boulevard = JSON.parse(readFileSync(new URL('../src/data/boulevard-preview.json', import.meta.url), 'utf8'));
+  const positionIn = (mapName, y) => {
+    const map = Object.values(boulevard.mapsByNativeKey).find((entry) => entry.nativeMapName === mapName);
+    return projectNavigation({ ...packet, mapNumber: map.number, width: map.width, height: map.height, x: 1, y }, boulevard);
+  };
+  assert.equal(districtAt(positionIn('TaichungBlvdBeitunB5', 35), boulevard).en, 'Beitun');
+  assert.equal(districtAt(positionIn('TaichungBlvdDadunC5', 0), boulevard).en, 'Dadun');
+  for (const map of ['TaichungBlvdNantunF1', 'TaichungBlvdNantunF2', 'TaichungBlvdWenxinForestPark']) {
+    assert.deepEqual(districtAt(positionIn(map, 20), boulevard), { en: 'Xitun', zh: '西屯' });
+    assert.deepEqual(districtAt(positionIn(map, 21), boulevard), { en: 'Nantun', zh: '南屯' });
+  }
 });
 
 test('all exterior tiles project into their authored district, or to the nearest landmark anywhere when the district has none', () => {

@@ -21,7 +21,7 @@ import { protectGameDisplay } from './game-display';
 import { NativeNavigationBridge, parseNavigationMetadata } from './navigation-bridge';
 import type { NavigationState } from './navigation-bridge';
 import { createMinimap } from './minimap';
-import { projectNavigation, secondaryAction, streetAt } from './minimap-model';
+import { districtAt, projectNavigation, secondaryAction, streetAt } from './minimap-model';
 import { BOULEVARD_PREVIEW, cityGeometry as minimapGeometry } from './preview-world';
 import { createOnboarding } from './onboarding';
 import { parseOnboardingMetadata } from './onboarding-bridge';
@@ -221,8 +221,7 @@ function renderNavigation() {
   const position = packet ? projectNavigation(packet, minimapGeometry) : undefined;
   const street = streetAt(position, minimapGeometry);
   const streetLabel = el('live-street');
-  const district = districtOnSign && position && !position.indoor
-    ? minimapGeometry.mapsByNativeKey[position.districtKey]?.districtName : undefined;
+  const district = districtOnSign ? districtAt(position, minimapGeometry) : undefined;
   const language = getLocale() === 'zh-Hant' ? 'zh' : 'en';
   const streetFields = [
     [el('live-street-name'), street?.[language] ?? ''],
