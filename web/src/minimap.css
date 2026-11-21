@@ -16,6 +16,7 @@
 .live-minimap.is-tutorial .minimap-player-dot { display: block; }
 .live-minimap image { image-rendering: auto; }
 .live-minimap .minimap-outside { fill: #384858; }
+.live-minimap .minimap-boulevard-outside { fill: #334945; }
 .live-minimap .minimap-outline { fill: #283038; }
 .live-minimap .minimap-light { fill: #f8f8f8; }
 .live-minimap .minimap-badge { fill: #df9956; }
@@ -53,4 +54,4 @@
 .live-street span { display: block; }
 .live-street span[hidden] { display: none; }
 .live-street #live-district { margin-top: .16em; padding-top: .14em; border-top: 1px solid #b7c6a7; font-size: .9em; }
-.live-street #live-street-name[hidden] + #live-district { margin-top: 0; padding-top: 0; border-top: 0; }
+.live-street #live-street-name[hidden] + #live-district { margin-top: 0; padding-top: 0; border-top: 0; font-size: 1em; }

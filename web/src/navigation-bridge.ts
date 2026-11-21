@@ -1,5 +1,4 @@
-/** TCNAV001 client. The GBA address identifies the native packet. Only the
- * version-2 display preference word is browser-owned. */
+/** Read-only TCNAV001 client. The GBA address identifies the native packet. */
 export const NAVIGATION_FLAGS = { READY: 1, FIELD: 2, POSITION_VALID: 4, OUTDOOR: 8, INDOOR: 16, CYCLING: 32, CAN_TOGGLE_BIKE: 64 } as const;
 export type NavigationMetadata = ({ version: 1; size: 48 } | { version: 2; size: 52 }) &
   { address: number; magicA: number; magicB: number };
@@ -97,7 +96,6 @@ type ClientOptions = {
   metadata: NavigationMetadata;
   getHeap(): Uint8Array | undefined;
   isActive(): boolean;
-  districtOnSign?(): boolean;
   onState(state: NavigationState): void;
 };
 
@@ -205,12 +203,6 @@ export class NativeNavigationBridge {
     this.invalidReads = 0;
     const now = performance.now();
     const fresh = this.freshness.observe(packet, now);
-    if (fresh && this.options.metadata.version === 2) {
-      const words = heapWords(heap)!;
-      const displayWord = this.offset / 4 + 12;
-      const preference = this.options.districtOnSign?.() ? 1 : 0;
-      if (Atomics.load(words, displayWord) !== preference) Atomics.store(words, displayWord, preference);
-    }
     this.publish(fresh && isFieldSnapshot(packet) ? { phase: 'live', snapshot: packet } : { phase: 'hidden' });
     // EWRAM can be reallocated inside the same Wasm heap after a core reset.
     // A coherent but frozen old allocation is not a reason to keep its offset.

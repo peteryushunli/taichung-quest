@@ -55,7 +55,7 @@ test('sequence changing during the copy cannot produce a mixed sample', () => {
   } finally { Atomics.load = original; }
 });
 
-test('v2 reads saved progress independently of the browser district preference', () => {
+test('v2 reads saved progress with the original packet size', () => {
   const v2 = { ...metadata, version: 2, size: 52 };
   const heap = initialize(new Uint8Array(new SharedArrayBuffer(512)));
   const words = new Uint32Array(heap.buffer, 64, 13);

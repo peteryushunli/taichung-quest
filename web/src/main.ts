@@ -140,11 +140,6 @@ let languageBridge: NativeLanguageBridge | undefined;
 let languageState: LanguageBridgeState | undefined;
 let navigationBridge: NativeNavigationBridge | undefined;
 let navigationState: NavigationState = { phase: 'unavailable' };
-const ROAD_SIGN_PREFERENCE = 'taichung-quest-road-sign';
-let districtOnSign = false;
-if (BOULEVARD_PREVIEW) {
-  try { districtOnSign = localStorage.getItem(ROAD_SIGN_PREFERENCE) === 'district'; } catch { /* Optional preference. */ }
-}
 let onboarding: ReturnType<typeof createOnboarding> | undefined;
 let encounterBridge: NativeEncounterBridge | undefined;
 let encounterMetadata: EncounterMetadata | undefined;
@@ -221,7 +216,7 @@ function renderNavigation() {
   const position = packet ? projectNavigation(packet, minimapGeometry) : undefined;
   const street = streetAt(position, minimapGeometry);
   const streetLabel = el('live-street');
-  const district = districtOnSign ? districtAt(position, minimapGeometry) : undefined;
+  const district = BOULEVARD_PREVIEW ? districtAt(position, minimapGeometry) : undefined;
   const language = getLocale() === 'zh-Hant' ? 'zh' : 'en';
   const streetFields = [
     [el('live-street-name'), street?.[language] ?? ''],
@@ -263,7 +258,6 @@ async function connectNativeNavigation(romSha256: string, romBytes: number) {
     if (restarting || !running) return;
     navigationBridge = new NativeNavigationBridge({
       metadata, getHeap: () => (emulator as LanguageRuntime | undefined)?.getTaichungHeapU8?.(), isActive: canPlayGame,
-      districtOnSign: () => districtOnSign,
       onState: (state) => { navigationState = state; renderNavigation(); },
     });
     void navigationBridge.start();
@@ -637,18 +631,8 @@ if (BOULEVARD_PREVIEW) {
   hud.innerHTML = `<label class="minimap-setting"><span data-i18n="Minimap view">Minimap view</span>
     <select id="minimap-view"><option value="nearby" data-i18n="Nearby">Nearby</option>
     <option value="districts" data-i18n="Districts">Districts</option>
-    <option value="citywide" data-i18n="Citywide">Citywide</option></select></label>
-    <label class="minimap-setting"><span data-i18n="Road sign">Road sign</span>
-    <select id="road-sign-layout"><option value="street" data-i18n="Street only">Street only</option>
-    <option value="district" data-i18n="Street and district">Street and district</option></select></label>`;
+    <option value="citywide" data-i18n="Citywide">Citywide</option></select></label>`;
   el('options-toolbar-slot').before(hud);
-  const selector = el<HTMLSelectElement>('road-sign-layout');
-  selector.value = districtOnSign ? 'district' : 'street';
-  selector.addEventListener('change', () => {
-    districtOnSign = selector.value === 'district';
-    try { localStorage.setItem(ROAD_SIGN_PREFERENCE, selector.value); } catch { /* The current choice still works. */ }
-    renderNavigation();
-  });
 }
 const minimap = createMinimap({
   screen: el('screen'), toggle: el<HTMLSelectElement>('minimap-visibility'), hint: el('minimap-hint'), geometry: minimapGeometry,

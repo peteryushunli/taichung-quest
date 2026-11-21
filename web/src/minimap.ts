@@ -1,5 +1,5 @@
 import { getLocale, t } from './i18n';
-import { FACING_DEGREES, HOME_WORLD, MINIMAP_PREFERENCE, projectNavigation, projectTutorial, RADAR, RADAR_ART, RADAR_PANEL, radarContains, radarPosition, radarViewport, readMinimapPreference } from './minimap-model';
+import { districtAt, FACING_DEGREES, HOME_WORLD, MINIMAP_PREFERENCE, projectNavigation, projectTutorial, RADAR, RADAR_ART, RADAR_PANEL, radarContains, radarPosition, radarViewport, readMinimapPreference } from './minimap-model';
 import type { MinimapGeometry, MinimapPosition, RadarMode } from './minimap-model';
 import type { NavigationState } from './navigation-bridge';
 import type { OnboardingState } from './onboarding-bridge';
@@ -72,7 +72,7 @@ export function createMinimap(options: {
   const home = `<g class="minimap-blip minimap-home">${MARKS.home}</g>`;
   button.innerHTML = `<svg aria-hidden="true" viewBox="0 0 ${panel.width} ${panel.height}" shape-rendering="geometricPrecision">`
     + `<svg class="minimap-map" x="${panel.frame}" y="${panel.frame}" width="${RADAR.width}" height="${RADAR.height}">`
-    + `<rect class="minimap-outside" x="-9999" y="-9999" width="19998" height="19998"/>`
+    + `<rect class="${BOULEVARD_PREVIEW ? 'minimap-boulevard-outside' : 'minimap-outside'}" x="-9999" y="-9999" width="19998" height="19998"/>`
     + `<image href="${BOULEVARD_PREVIEW ? boulevardRadar : radarArt}" x="${-margin}" y="${-margin}" width="${width + 2 * margin}" height="${height + 2 * margin}" preserveAspectRatio="none"/>`
     + `${markers}${home}<g class="minimap-district-labels"></g><g class="minimap-player">${MARKS.player}</g></svg>`
     + `${frame(panel.width, panel.height)}${geometry.coordinateSystem?.northUp === false ? '' : northTab(panel.width)}</svg>`;
@@ -153,15 +153,22 @@ export function createMinimap(options: {
     }
     const homeTile = geometry.world.homeWorld ?? HOME_WORLD;
     place(homeBlip, mode !== 'citywide' && radarContains(view, homeTile) ? homeTile : undefined, scale);
+    const language = getLocale() === 'zh-Hant' ? 'zh' : 'en';
+    const currentDistrict = districtAt(position, geometry);
     for (const entry of districts) {
-      const name = entry.name[getLocale() === 'zh-Hant' ? 'zh' : 'en'];
-      if (mode === 'nearby' || !radarContains(view, entry.tile)) {
+      const name = entry.name[language];
+      const [x, y] = entry.tile;
+      const halfWidth = (name.length * (language === 'zh' ? 2.1 : 1.25) + 1) * scale;
+      const inFrame = x - halfWidth >= view.x && x + halfWidth <= view.x + view.width
+        && y - 5 * scale >= view.y && y + 2 * scale <= view.y + view.height;
+      const nearPlayer = Math.abs(x - tile.x) < halfWidth + 4 * scale && Math.abs(y - tile.y) < 6 * scale;
+      if (mode === 'nearby' || !inFrame || nearPlayer || (mode === 'districts' && currentDistrict?.en === entry.name.en)) {
         entry.element.setAttribute('display', 'none');
         continue;
       }
       entry.element.removeAttribute('display');
       entry.element.textContent = name;
-      entry.element.setAttribute('transform', `translate(${entry.tile[0]} ${entry.tile[1]}) scale(${scale})`);
+      entry.element.setAttribute('transform', `translate(${x} ${y}) scale(${scale})`);
     }
   }
   render();

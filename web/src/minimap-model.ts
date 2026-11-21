@@ -77,7 +77,7 @@ export function radarPosition(position?: MinimapPosition) {
 }
 
 export function districtAt(position: MinimapPosition | undefined, geometry: MinimapGeometry) {
-  if (!position || position.indoor) return;
+  if (!position) return;
   const map = geometry.mapsByNativeKey[position.districtKey];
   const split = map?.districtBefore;
   return split && position.worldY < split.y ? split.name : map?.districtName;

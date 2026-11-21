@@ -104,28 +104,55 @@ def street_bands(plan, fill, origin):
     return bands
 
 
-def terrain_images(fill, plan, candidate, width, height, origin, installed, pavilion, placements):
+def terrain_images(fill, plan, candidate, geometry, report, raw):
     os.environ["FILL_RAW"] = "1"
     sys.path.insert(0, str(fill / "src"))
     import engine
     import events
 
     world = events.build()
-    ink = {"outside": "#304940", "road": "#c5caab", "land": "#829d78", "water": "#83adb5"}
+    width, height = geometry["world"]["width"], geometry["world"]["height"]
+    origin = plan["world"]["box"][:2]
+    ink = {
+        "outside": "#334945", "arterial": "#445b54", "street": "#636f63", "alley": "#879783",
+        "path": "#e7e6d0", "land": "#c7d1b9", "park": "#b1c6a1", "block": "#a4b595", "water": "#81abb9",
+    }
     image = Image.new("RGB", (width + 4, height + 4), ink["outside"])
     highway = {(x, y) for edge in plan["edges"] if edge["kind"] == "highway"
                for x in range(edge["rect"][0], edge["rect"][2])
                for y in range(edge["rect"][1], edge["rect"][3])}
+    named_streets = {(x + origin[0], y + origin[1]) for band in geometry["world"]["streetBands"]
+                     for x in range(band["bounds"][0], band["bounds"][2])
+                     for y in range(band["bounds"][1], band["bounds"][3])}
+    # The report applies the cartridge's collision and boundary corrections.
+    walkable_by_tile = {}
+    for entry in report["maps"]:
+        left, top, _, _ = entry["worldRect"]
+        for dy, row in enumerate(entry["localWalkable"]):
+            for dx, walkable in enumerate(row):
+                walkable_by_tile[left + dx, top + dy] = walkable == "1"
     colors = {key: ImageColor.getrgb(value) for key, value in ink.items()}
-    pavilion_tiles = {(x, y) for left, top, right, bottom in pavilion.values()
+    pavilion_tiles = {(x, y) for left, top, right, bottom in report.get("pavilionDeck", {}).values()
                       for x in range(left, right) for y in range(top, bottom)}
     for row in range(height):
         for col in range(width):
-            x, y = col + origin[0], row + origin[1]
-            ch = world.at(x, y)
-            kind = ("road" if (x, y) in pavilion_tiles
-                    else "outside" if ch in "HRX" or (x, y) in highway else "water" if ch == "~"
-                    else "road" if ch in engine.ROAD or ch in "bslaWyiq" else "land")
+            tile = col + origin[0], row + origin[1]
+            ground = world.at(*tile)
+            walkable = walkable_by_tile.get(tile)
+            if walkable and (tile in pavilion_tiles or ground in "aW=qkK"):
+                kind = "path"
+            elif ground == "~":
+                kind = "water"
+            elif walkable is None or ground in "HRX" or tile in highway:
+                kind = "outside"
+            elif walkable and ground in engine.ROAD:
+                kind = "arterial" if tile in named_streets else "street"
+            elif walkable and ground == "z":
+                kind = "alley"
+            elif ground in "PGoWwghvf":
+                kind = "park"
+            else:
+                kind = "land" if walkable else "block"
             image.putpixel((col + 2, row + 2), colors[kind])
     ART.mkdir(parents=True, exist_ok=True)
     image.save(ART / "radar.png", optimize=True)
@@ -134,8 +161,8 @@ def terrain_images(fill, plan, candidate, width, height, origin, installed, pavi
     shutil.copyfile(candidate / "city-overview.png", ART / "city.png")
     art_rects = {place["id"]: place["artRect"] for place in plan["places"] if place["id"] in EXTRA_SIGHTS}
     art_rects["central-park"] = [78, 32, 102, 50]
-    art_rects.update({place: entry["worldRect"] for place, entry in installed.items()})
-    for item in placements:
+    art_rects.update({entry["id"]: entry["worldRect"] for entry in report.get("installedLandmarks", [])})
+    for item in raw["placements"]:
         if item["sprite"] in LANDMARK_MAP_VIEWS:
             x, y = item["x"], item["y"]
             w, h = item["tiles"]
@@ -279,8 +306,7 @@ def main():
                                      sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode()).hexdigest()
     geometry["geometryFingerprintSha256"] = fingerprint
     write(DATA / "boulevard-preview.json", geometry)
-    terrain_images(args.fill, plan, candidate, width, height, (x0, y0), installed,
-                   report.get("pavilionDeck", {}), raw["placements"])
+    terrain_images(args.fill, plan, candidate, geometry, report, raw)
     source_rom = args.rom_dir / "taichung-firered.gba"
     metadata = read(args.rom_dir / "build.json")
     require(digest(source_rom) == metadata["sha256"] == digest(args.native / "pokefirered.gba"),
