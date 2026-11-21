@@ -78,7 +78,7 @@ const neutral = '#eee8dc';
 
 // Leader teams follow the native trainer parties (src/data/trainer_parties.h), in battle order.
 export const landmarkArt: Record<string, LandmarkArt> = {
-  'old-taichung-station': { facade: oldStation, tint: brick, leader: jun, team: [mon('Rattata', rattataIcon), mon('Pidgey', pidgeyIcon)] },
+  'old-taichung-station': { facade: oldStation, tint: brick, leader: jun, team: [mon('Rattata', rattataIcon), mon('Pidgey', pidgeyIcon), mon('Meowth', meowthIcon)] },
   'taichung-park': { facade: taichungPark, tint: park, leader: lian, team: [mon('Goldeen', goldeenIcon), mon('Psyduck', psyduckIcon), mon('Pidgeotto', pidgeottoIcon)] },
   miyahara: { facade: miyahara, tint: brick, leader: peiqi, team: [mon('Seel', seelIcon), mon('Cloyster', cloysterIcon), mon('Lapras', laprasIcon)] },
   'natural-science-museum': { facade: scienceMuseum, tint: modern, leader: yicheng, team: [mon('Magneton', magnetonIcon), mon('Porygon', porygonIcon), mon('Omastar', omastarIcon)] },

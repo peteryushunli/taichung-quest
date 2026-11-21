@@ -138,14 +138,18 @@ test('Muqing’s gym is the Wanhe Temple hall, and Maple Garden keeps its hall a
   assert.equal(city.markersById['maple-garden'].gymMapId, 'MAP_TAICHUNG_MAPLE_GARDEN_GYM');
 });
 
-test('every open gym has its leader portrait and team wired in', () => {
+test('every open gym has a leader portrait and three Pokémon', () => {
   for (const place of open) {
-    assert.match(assets, new RegExp(`'?${place.id}'?: \\{[^}]*leader: \\w+, team: \\[mon\\(`), place.id);
+    const entry = assets.split('\n').find((line) => line.includes(`'${place.id}':`) || line.trimStart().startsWith(`${place.id}:`));
+    assert.ok(entry, place.id);
+    assert.match(entry, /leader: \w+, team: \[/, place.id);
+    assert.equal([...entry.matchAll(/mon\('/g)].length, 3, place.id);
   }
 });
 
-test('the remaining seven team orders match native source b7b027d', () => {
+test('the listed team orders match the native gym rosters', () => {
   const expected = {
+    'old-taichung-station': ['Rattata', 'Pidgey', 'Meowth'],
     'natural-science-museum': ['Magneton', 'Porygon', 'Omastar'],
     'calligraphy-greenway': ['Bellsprout', 'Vileplume', 'Tangela'],
     'shen-ji-new-village': ['Meowth', 'Machoke', 'Ditto'],
