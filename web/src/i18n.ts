@@ -150,6 +150,7 @@ const zh: Record<string, string> = {
   'Save from the game’s own menu first, then download your backup here.': '請先在遊戲選單中存檔，再從這裡下載備份。',
   'Game save downloaded. Keep it somewhere safe for your next adventure.': '存檔已下載，請妥善保存，留給下一次冒險。',
   'Choose a compatible FireRed .sav file (64 KB or 128 KB, including mGBA backups).': '請選擇相容的 FireRed .sav 存檔（64 KB 或 128 KB，亦接受 mGBA 備份檔）。',
+  'Choose a readable FireRed backup with a completed in-game save.': '請選擇含有完整遊戲內存檔的 FireRed 備份檔。',
   'Import this save and restart the cartridge? It will replace the current in-game save in this browser.': '要匯入這份存檔並重新啟動遊戲嗎？它將取代這個瀏覽器裡目前的遊戲存檔。',
   'Save imported. Choose Continue from the game’s title screen.': '存檔已匯入，請從遊戲標題畫面選擇「繼續」。',
   'The save could not be imported. Restart the page to reload your last saved spot.': '無法匯入存檔，請重新整理頁面，載入上次儲存的進度。',

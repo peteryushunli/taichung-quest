@@ -1,16 +1,10 @@
 /** Durable landmark encounters use native SRAM, never a resumable battle snapshot.
  * FireRed's published save layout is fixed; this reader never writes game bytes. */
+import { isFullFireRedSaveSize, readFireRedSaveSlot } from './firered-save.ts';
+
 export const CAPTURE_BOOT_INTENT_KEY = 'taichung-quest-capture-boot-v1';
-const SAVE_BYTES = 0x20000;
-const SECTOR_BYTES = 0x1000;
-const SLOT_SECTORS = 14;
-const SIGNATURE = 0x08012025;
 const MASK = 0x3fff;
 const SCHEMA = 0xec01;
-// src/save.c sSaveSlotLayout, using sizeof(SaveBlock2)=0xf24,
-// sizeof(SaveBlock1)=0x3d68 and sizeof(PokemonStorage)=0x83d0.
-const PAYLOAD_BYTES = [0xf24, 0xf80, 0xf80, 0xf80, 0xee8,
-  0xf80, 0xf80, 0xf80, 0xf80, 0xf80, 0xf80, 0xf80, 0xf80, 0x7d0];
 
 export type CaptureSaveProof = {
   saveCounter: number;
@@ -36,38 +30,19 @@ function validProof(value: CaptureSaveProof) {
     && !(value.unlocks & ~value.attempts);
 }
 
-function checksum(view: DataView, start: number, length: number) {
-  let total = 0;
-  for (let offset = start; offset < start + length; offset += 4)
-    total = (total + view.getUint32(offset, true)) >>> 0;
-  return ((total >>> 16) + total) & 0xffff;
-}
-
 /** Require the complete exact native transaction, not just a dirty-save callback.
  * This also waits for mGBA to copy its flash contents into the actual FS save file. */
 export function verifyCaptureNativeSave(bytes: Uint8Array, expected: CaptureSaveProof): VerifiedCaptureSave | undefined {
-  if (!validProof(expected) || (bytes.byteLength !== SAVE_BYTES && bytes.byteLength !== SAVE_BYTES + 16)) return;
+  if (!validProof(expected) || !isFullFireRedSaveSize(bytes.byteLength)) return;
   const view = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength);
   const matches: VerifiedCaptureSave[] = [];
-  for (let slot = 0; slot < 2; slot++) {
-    const sections = new Map<number, number>();
-    for (let index = 0; index < SLOT_SECTORS; index++) {
-      const start = (slot * SLOT_SECTORS + index) * SECTOR_BYTES;
-      if (view.getUint32(start + 0xff8, true) !== SIGNATURE
-        || view.getUint32(start + 0xffc, true) !== expected.saveCounter) continue;
-      const id = view.getUint16(start + 0xff4, true);
-      if (id >= SLOT_SECTORS || sections.has(id)
-        || checksum(view, start, PAYLOAD_BYTES[id]) !== view.getUint16(start + 0xff6, true)) {
-        sections.clear();
-        break;
-      }
-      sections.set(id, start);
-    }
-    if (sections.size !== SLOT_SECTORS) continue;
-    const save2 = sections.get(0)!;
+  for (const slot of [0, 1] as const) {
+    const saved = readFireRedSaveSlot(view, slot);
+    if (!saved || saved.counter !== expected.saveCounter) continue;
+    const [save2, , save1SecondSector] = saved.sections;
     // SaveBlock1's vars start at0x1000, across sectors1/2. The three dedicated
     // fields are0x40f3/4/5; no party, inventory or Pokédex data is interpreted.
-    const variable = (id: number) => view.getUint16(sections.get(2)! + 0x1000 + (id - 0x4000) * 2 - 0xf80, true);
+    const variable = (id: number) => view.getUint16(save1SecondSector + 0x1000 + (id - 0x4000) * 2 - 0xf80, true);
     const attempts = variable(0x40f4) & MASK;
     const unlocks = variable(0x40f5) & MASK;
     if (variable(0x40f3) !== SCHEMA || attempts !== expected.attempts || unlocks !== expected.unlocks
@@ -82,12 +57,12 @@ export function verifyCaptureNativeSave(bytes: Uint8Array, expected: CaptureSave
 /** Reconcile a previous interrupted encounter after ordinary native Continue.
  * A newer normal in-game save may have advanced the counter since the intent. */
 export function findLatestCaptureNativeSave(bytes: Uint8Array, expected: Omit<CaptureSaveProof, 'saveCounter'>): VerifiedCaptureSave | undefined {
-  if (bytes.byteLength !== SAVE_BYTES && bytes.byteLength !== SAVE_BYTES + 16) return;
+  if (!isFullFireRedSaveSize(bytes.byteLength)) return;
   const view = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength);
   const counters = new Set<number>();
-  for (let i = 0; i < SLOT_SECTORS * 2; i++) {
-    const start = i * SECTOR_BYTES;
-    if (view.getUint32(start + 0xff8, true) === SIGNATURE) counters.add(view.getUint32(start + 0xffc, true));
+  for (const slot of [0, 1] as const) {
+    const saved = readFireRedSaveSlot(view, slot);
+    if (saved) counters.add(saved.counter);
   }
   let newest: VerifiedCaptureSave | undefined;
   for (const saveCounter of counters) {

@@ -29,6 +29,7 @@ import { NativeEncounterBridge, parseEncounterMetadata } from './encounter-bridg
 import type { EncounterMetadata } from './encounter-bridge';
 import { CaptureStorageController } from './capture-storage';
 import { CAPTURE_BOOT_INTENT_KEY, captureBlocksSnapshots, readCaptureBootPolicy } from './capture-persistence';
+import { hasReadableFireRedSave, isFireRedBackupSize } from './firered-save';
 
 type RuntimeFactory = (options: { canvas: HTMLCanvasElement }) => Promise<mGBAEmulator>;
 type RuntimeWindow = Window & { taichungCreateEmulator?: RuntimeFactory };
@@ -795,10 +796,17 @@ el<HTMLInputElement>('save-file').addEventListener('change', async (event) => {
   if (!file || !emulator || !gamePath) return;
   // The pinned mGBA core can append a 16-byte hardware trailer. Accept its
   // own exported backups unchanged, alongside ordinary raw cartridge saves.
-  if (![65536, 65552, 131072, 131088].includes(file.size)) { message('Choose a compatible FireRed .sav file (64 KB or 128 KB, including mGBA backups).', true); input.value = ''; return; }
-  if (!(await confirmAction('Import game save', 'Import this save and restart the cartridge? It will replace the current in-game save in this browser.', 'Import save'))) { input.value = ''; return; }
   try {
+    if (!isFireRedBackupSize(file.size)) {
+      message('Choose a compatible FireRed .sav file (64 KB or 128 KB, including mGBA backups).', true);
+      return;
+    }
     const bytes = new Uint8Array(await file.arrayBuffer());
+    if (!hasReadableFireRedSave(bytes)) {
+      message('Choose a readable FireRed backup with a completed in-game save.', true);
+      return;
+    }
+    if (!(await confirmAction('Import game save', 'Import this save and restart the cartridge? It will replace the current in-game save in this browser.', 'Import save'))) return;
     await restartCartridge(bytes);
   } catch (error) {
     console.error(error);
