@@ -34,15 +34,15 @@ export function createMinimap(options: {
   geometry: MinimapGeometry; openGuide(): void;
   storage?: Pick<Storage, 'getItem' | 'setItem'>;
 }) {
-  const { geometry } = options;
+  const { geometry, zoom } = options;
   let storage = options.storage;
   if (!storage) { try { storage = localStorage; } catch { /* Private mode still gets a working local toggle. */ } }
   let enabled = readMinimapPreference(storage);
-  let mode: RadarMode = 'nearby';
-  if (options.zoom) {
+  let mode: RadarMode = zoom ? 'districts' : 'nearby';
+  if (zoom) {
     try {
       const preference = storage?.getItem(VIEW_PREFERENCE);
-      if (preference === 'districts' || preference === 'citywide') mode = preference;
+      if (preference === 'nearby' || preference === 'districts' || preference === 'citywide') mode = preference;
     } catch { /* Private mode still gets a working local choice. */ }
   }
   let state: NavigationState = { phase: 'unavailable' };
@@ -95,11 +95,11 @@ export function createMinimap(options: {
     try { storage?.setItem(MINIMAP_PREFERENCE, enabled ? 'on' : 'off'); } catch { /* The choice works for this visit. */ }
     render();
   });
-  if (options.zoom) {
-    options.zoom.value = mode;
-    options.zoom.addEventListener('change', () => {
-      const value = options.zoom!.value;
-      mode = value === 'districts' || value === 'citywide' ? value : 'nearby';
+  if (zoom) {
+    zoom.value = mode;
+    zoom.addEventListener('change', () => {
+      const value = zoom.value;
+      mode = value === 'nearby' || value === 'citywide' ? value : 'districts';
       try { storage?.setItem(VIEW_PREFERENCE, mode); } catch { /* This visit still uses the choice. */ }
       render();
     });

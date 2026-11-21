@@ -52,6 +52,5 @@
 }
 .live-street span { display: block; }
 .live-street span[hidden] { display: none; }
-.live-street #live-street-zh { font-size: .95em; }
-.live-street #live-district { margin-top: .16em; padding-top: .14em; border-top: 1px solid #b7c6a7; font-size: .83em; }
-.live-street #live-street-zh[hidden] + #live-district { margin-top: 0; padding-top: 0; border-top: 0; }
+.live-street #live-district { margin-top: .16em; padding-top: .14em; border-top: 1px solid #b7c6a7; font-size: .9em; }
+.live-street #live-street-name[hidden] + #live-district { margin-top: 0; padding-top: 0; border-top: 0; }

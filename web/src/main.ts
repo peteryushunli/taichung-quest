@@ -11,7 +11,7 @@ import titlePikachu from './assets/pokemon/front/pikachu.png';
 import titleSquirtle from './assets/pokemon/front/squirtle.png';
 import type { mGBAEmulator } from '@thenick775/mgba-wasm';
 import { createCityGuide } from './city-guide';
-import { initializeLocalization, onLocaleChange, setLocale, t } from './i18n';
+import { getLocale, initializeLocalization, onLocaleChange, setLocale, t } from './i18n';
 import { createLanding } from './landing';
 import { NativeLanguageBridge, parseLanguageBridgeMetadata } from './language-bridge';
 import type { LanguageBridgeState } from './language-bridge';
@@ -81,7 +81,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
             <div class="screen" id="screen">
               <canvas id="game-canvas" width="240" height="160" tabindex="0" aria-label="Taichung Quest game screen. Arrow keys move. F interacts or confirms. D goes back. M or Enter opens the menu."></canvas>
               <div class="live-street" id="live-street" hidden>
-                <span id="live-street-en" lang="en"></span><span id="live-street-zh" lang="zh-Hant"></span>
+                <span id="live-street-name"></span>
                 <span id="live-district"></span>
               </div>
               <div class="start-screen" id="start-screen">
@@ -223,10 +223,10 @@ function renderNavigation() {
   const streetLabel = el('live-street');
   const district = districtOnSign && position && !position.indoor
     ? minimapGeometry.mapsByNativeKey[position.districtKey]?.districtName : undefined;
+  const language = getLocale() === 'zh-Hant' ? 'zh' : 'en';
   const streetFields = [
-    [el('live-street-en'), street?.en ?? ''],
-    [el('live-street-zh'), street?.zh ?? ''],
-    [el('live-district'), district ? `${district.en} · ${district.zh}` : ''],
+    [el('live-street-name'), street?.[language] ?? ''],
+    [el('live-district'), district?.[language] ?? ''],
   ] as const;
   for (const [element, name] of streetFields) {
     if (element.textContent !== name) element.textContent = name;
