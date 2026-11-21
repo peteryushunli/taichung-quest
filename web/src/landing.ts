@@ -101,7 +101,7 @@ function markup() {
       <section class="lp-map-section" id="map"><div class="lp-wrap">
         ${sectionHead('01 — THE MAP', cityPlaceSummary(landmarks, getLocale()), "Distances are compressed, but the city keeps its shape: the old city around the station, the Greenway's museums in the middle, Xitun's theater and night market to the northwest, and Nantun's temples and parks to the south. Green pins are gyms; gold pins are landmarks to find on foot.", 'lp-map-heading')}
         <div class="lp-map-body">
-          <div class="lp-map" id="lp-map" style="aspect-ratio:${city.world.width} / ${city.world.height};background-size:${800 / city.world.width}% ${800 / city.world.height}%" role="group" aria-label="${escapeHtml(t('Choose a landmark'))}" data-i18n-label="Choose a landmark">
+          <div class="lp-map${BOULEVARD_PREVIEW ? ' lp-map-boulevard' : ''}" id="lp-map" style="aspect-ratio:${city.world.width} / ${city.world.height};background-size:${800 / city.world.width}% ${800 / city.world.height}%" role="group" aria-label="${escapeHtml(t('Choose a landmark'))}" data-i18n-label="Choose a landmark">
             ${cityMap()}
             <div id="lp-markers"></div>
             <div class="lp-map-legend"><span><i class="lp-swatch-open"></i>${copy('Gym')}</span><span><i class="lp-swatch-landmark"></i>${copy('Landmark')}</span>${gyms.some((place) => !isGymOpen(place)) ? `<span><i class="lp-swatch-planned"></i>${copy('In development')}</span>` : ''}</div>
