@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { readFileSync } from 'node:fs';
-import { projectNavigation, projectTutorial, secondaryAction, readMinimapPreference, radarPosition, radarViewBox, radarBlip, RADAR, RADAR_ART, RADAR_PANEL, HOME_WORLD, FACING_DEGREES, streetAt } from '../src/minimap-model.ts';
+import { projectNavigation, projectTutorial, secondaryAction, readMinimapPreference, radarPosition, radarViewBox, radarContains, radarViewport, RADAR, RADAR_ART, RADAR_PANEL, HOME_WORLD, FACING_DEGREES, streetAt } from '../src/minimap-model.ts';
 
 const geometry = JSON.parse(readFileSync(new URL('../src/data/minimap-contract.json', import.meta.url), 'utf8'));
 const packet = { sequence: 2, frame: 1, flags: 79, x: 30, y: 66, mapGroup: 43, mapNumber: 0, facing: 2, mapType: 1, width: 44, height: 77, contextFlags: 0 };
@@ -68,7 +68,6 @@ test('the radar hides in every interior and follows every exterior position', ()
 
 test('the minimap is zoomed out and stays centred on the player even at the world edge', () => {
   assert.ok(RADAR.width >= 56 && RADAR.width <= 64 && RADAR.height >= 40 && RADAR.height <= 48);
-  assert.ok(RADAR.pinX <= RADAR.width / 2 - 3 && RADAR.pinY <= RADAR.height / 2 - 3, 'pinned sprites must sit fully inside the map');
   assert.deepEqual(RADAR_PANEL, { width: RADAR.width + 4, height: RADAR.height + 4, frame: 2 });
   assert.deepEqual(radarViewBox({ x: 115, y: 119 }), { x: 85, y: 97, width: RADAR.width, height: RADAR.height });
   assert.deepEqual(radarViewBox({ x: 0, y: 0 }), { x: -RADAR.width / 2, y: -RADAR.height / 2, width: RADAR.width, height: RADAR.height });
@@ -86,32 +85,28 @@ test('the minimap art covers the world plus its dark margin, one pixel per tile,
   assert.ok(png.length < 8192, 'the minimap art is a few flat colours, not a render');
 });
 
-test('an off-screen gym is pinned to the edge of the pin box along its bearing; other places hide out of range', () => {
-  const player = { x: 3, y: 40 };
+test('markers appear only at their real coordinates inside each selected viewport', () => {
+  const player = { x: 30, y: 40 };
   const station = geometry.markersById['old-taichung-station'].world;
-  const pinned = radarBlip(player, station, true);
-  assert.equal(pinned.onRim, true);
-  const dx = pinned.x - player.x, dy = pinned.y - player.y;
-  assert.ok(Number.isInteger(pinned.x) && Number.isInteger(pinned.y), 'whole tiles keep sprites on the pixel grid');
-  assert.ok(Math.abs(dx) === RADAR.pinX || Math.abs(dy) === RADAR.pinY, 'pinned on the edge');
-  assert.ok(Math.abs(dx) <= RADAR.pinX && Math.abs(dy) <= RADAR.pinY, 'inside the pin box');
-  assert.ok(Math.abs(Math.atan2(dy, dx) - Math.atan2(station[1] - player.y, station[0] - player.x)) < .08, 'bearing preserved');
-  assert.ok(dx > 0 && dy > 0, 'the Station is east-south-east of the west highway');
-  assert.equal(radarBlip(player, station, false), undefined);
-  // Due north, exactly at the edge: still in place.
-  assert.deepEqual(radarBlip(player, [3, 40 - RADAR.pinY], true), { x: 3, y: 40 - RADAR.pinY, onRim: false });
-  assert.deepEqual(radarBlip(player, [8, 37], false), { x: 8, y: 37, onRim: false });
-  assert.deepEqual(radarBlip({ x: 120, y: 40 }, [10, 40], true), { x: 120 - RADAR.pinX, y: 40, onRim: true });
-  assert.deepEqual(radarBlip({ x: 40, y: 120 }, [40, 10], true), { x: 40, y: 120 - RADAR.pinY, onRim: true });
+  const nearby = radarViewport(player, 'nearby', geometry.world);
+  assert.equal(radarContains(nearby, station), false);
+  assert.equal(radarContains(nearby, [59, 40]), true);
+  assert.equal(radarContains(nearby, [60, 40]), false);
+  const districts = radarViewport(player, 'districts', geometry.world);
+  assert.equal(radarContains(districts, [60, 40]), true);
+  const city = radarViewport(player, 'citywide', geometry.world);
+  assert.equal(radarContains(city, station), true);
+  assert.equal(radarContains(city, [0, 0]), true);
+  assert.equal(radarContains(city, [geometry.world.width - 1, geometry.world.height - 1]), true);
 });
 
-test('home is the starting house door, an outdoor tile of the Station district, pinned like a gym', () => {
+test('home is the starting house door and follows the same visibility bounds', () => {
   const district = geometry.mapsByNativeKey['43:0'];
   const [x, y] = [HOME_WORLD[0] - district.worldOrigin[0], HOME_WORLD[1] - district.worldOrigin[1]];
   const position = projectNavigation({ ...packet, x, y }, geometry);
   assert.deepEqual([position.worldX, position.worldY], HOME_WORLD);
-  assert.equal(radarBlip({ x: 115, y: 119 }, HOME_WORLD, true).onRim, false);
-  assert.equal(radarBlip({ x: 31, y: 143 }, HOME_WORLD, true).onRim, true);
+  assert.equal(radarContains(radarViewBox({ x: 115, y: 119 }), HOME_WORLD), true);
+  assert.equal(radarContains(radarViewBox({ x: 31, y: 143 }), HOME_WORLD), false);
 });
 
 test('invalid contexts, unknown maps, dimensions, scopes and bounds hide instead of inventing a position', () => {

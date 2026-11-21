@@ -33,6 +33,17 @@ LABELS = [
     ("XITUN 西屯", 46, 103), ("GREENWAY 草悟道", 205, 116),
     ("OLD CITY 舊城", 347, 22), ("NANTUN 南屯", 48, 215),
 ]
+NEIGHBORHOODS = {
+    "fengjia": ("Fengjia", "逢甲", 72, 41),
+    "centralpark": ("Shuinan", "水湳", 115, 19),
+    "beitun": ("Beitun", "北屯", 218, 38),
+    "north": ("North", "北區", 342, 40),
+    "xitun": ("Xitun", "西屯", 93, 114),
+    "dadun": ("Dadun", "大墩", 170, 85),
+    "west": ("West", "西區", 236, 139),
+    "oldcity": ("Old City", "舊城", 325, 134),
+    "nantun": ("Nantun", "南屯", 90, 203),
+}
 
 
 def read(path):
@@ -164,7 +175,9 @@ def main():
         require((entry["number"], entry["width"], entry["height"]) == (item["number"], right - left, bottom - top),
                 f"The current registration differs for {entry['mapId']}.")
         origin = normalize([left, top])
+        en, zh, _, _ = NEIGHBORHOODS[item["district"]]
         exteriors[entry["mapId"]] = {**entry, "kind": "exterior", "projection": "local-plus-world-origin",
+                                     "districtName": {"en": en, "zh": zh},
                                      "worldOrigin": origin, "worldRect": origin + normalize([right, bottom])}
 
     places = {place["id"]: place for place in read(DATA / "landmarks.json") + read(DATA / "sights.json")}
@@ -198,6 +211,9 @@ def main():
 
     markers = {}
     interiors = {}
+    captures = {site["siteSlug"]: site["stableSiteId"]
+                for site in read(args.native / "data/taichung/encounters/sites.json")["sites"]
+                if site["currentBinding"]}
     for place, special in places.items():
         require(place in events, f"Missing Boulevard map anchor for {place}.")
         event = events[place]
@@ -209,6 +225,8 @@ def main():
                   "world": point, "localEntrance": [point[0] - ox, point[1] - oy],
                   "exteriorMapId": parent["mapId"], "exteriorNativeKey": parent["nativeKey"]}
         markers[place] = marker
+        if place in captures:
+            marker["captureBit"] = captures[place]
         if event["type"] == "door":
             room = registry[event["destMap"]]
             interiors[room["nativeKey"]] = {**room, "kind": "interior", "projection": "parent-entrance",
@@ -232,6 +250,8 @@ def main():
         "coordinateSystem": {"units": "metatiles", "metatilePixels": 16, "northUp": False},
         "world": {"width": width, "height": height, "homeWorld": markers["guest-house"]["world"],
                   "streetBands": street_bands(plan, raw, (x0, y0)),
+                  "neighborhoods": [{"name": {"en": en, "zh": zh}, "tile": normalize([x, y])}
+                                    for en, zh, x, y in NEIGHBORHOODS.values()],
                   "districtLabels": [{"label": label, "x": x - x0, "y": y - y0} for label, x, y in LABELS]},
         "mapsByNativeKey": {entry["nativeKey"]: entry for entry in exteriors.values()} | interiors,
         "markersById": markers, "seams": seams, "extraSights": extras,

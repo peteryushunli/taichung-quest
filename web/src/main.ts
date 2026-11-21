@@ -11,7 +11,7 @@ import titlePikachu from './assets/pokemon/front/pikachu.png';
 import titleSquirtle from './assets/pokemon/front/squirtle.png';
 import type { mGBAEmulator } from '@thenick775/mgba-wasm';
 import { createCityGuide } from './city-guide';
-import { getLocale, initializeLocalization, onLocaleChange, setLocale, t } from './i18n';
+import { initializeLocalization, onLocaleChange, setLocale, t } from './i18n';
 import { createLanding } from './landing';
 import { NativeLanguageBridge, parseLanguageBridgeMetadata } from './language-bridge';
 import type { LanguageBridgeState } from './language-bridge';
@@ -80,7 +80,10 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
           <div class="screen-bezel">
             <div class="screen" id="screen">
               <canvas id="game-canvas" width="240" height="160" tabindex="0" aria-label="Taichung Quest game screen. Arrow keys move. F interacts or confirms. D goes back. M or Enter opens the menu."></canvas>
-              <div class="live-street" id="live-street" hidden></div>
+              <div class="live-street" id="live-street" hidden>
+                <span id="live-street-en" lang="en"></span><span id="live-street-zh" lang="zh-Hant"></span>
+                <span id="live-district"></span>
+              </div>
               <div class="start-screen" id="start-screen">
                 <div class="title-scene" aria-hidden="true">
                   <i class="title-sun"></i><i class="title-cloud cloud-a"></i><i class="title-cloud cloud-b"></i><i class="title-cloud cloud-c"></i>
@@ -137,6 +140,11 @@ let languageBridge: NativeLanguageBridge | undefined;
 let languageState: LanguageBridgeState | undefined;
 let navigationBridge: NativeNavigationBridge | undefined;
 let navigationState: NavigationState = { phase: 'unavailable' };
+const ROAD_SIGN_PREFERENCE = 'taichung-quest-road-sign';
+let districtOnSign = false;
+if (BOULEVARD_PREVIEW) {
+  try { districtOnSign = localStorage.getItem(ROAD_SIGN_PREFERENCE) === 'district'; } catch { /* Optional preference. */ }
+}
 let onboarding: ReturnType<typeof createOnboarding> | undefined;
 let encounterBridge: NativeEncounterBridge | undefined;
 let encounterMetadata: EncounterMetadata | undefined;
@@ -213,9 +221,18 @@ function renderNavigation() {
   const position = packet ? projectNavigation(packet, minimapGeometry) : undefined;
   const street = streetAt(position, minimapGeometry);
   const streetLabel = el('live-street');
-  const streetName = street ? street[getLocale() === 'zh-Hant' ? 'zh' : 'en'] : '';
-  if (streetLabel.textContent !== streetName) streetLabel.textContent = streetName;
-  streetLabel.hidden = !streetName;
+  const district = districtOnSign && position && !position.indoor
+    ? minimapGeometry.mapsByNativeKey[position.districtKey]?.districtName : undefined;
+  const streetFields = [
+    [el('live-street-en'), street?.en ?? ''],
+    [el('live-street-zh'), street?.zh ?? ''],
+    [el('live-district'), district ? `${district.en} · ${district.zh}` : ''],
+  ] as const;
+  for (const [element, name] of streetFields) {
+    if (element.textContent !== name) element.textContent = name;
+    element.hidden = !name;
+  }
+  streetLabel.hidden = !street && !district;
   const action = secondaryAction(packet, position);
   const secondary = document.querySelector<HTMLButtonElement>('.physical-controls [data-gba="B"]')!;
   const label = secondary.querySelector<HTMLElement>('[data-i18n]')!;
@@ -247,6 +264,7 @@ async function connectNativeNavigation(romSha256: string, romBytes: number) {
     if (restarting || !running) return;
     navigationBridge = new NativeNavigationBridge({
       metadata, getHeap: () => (emulator as LanguageRuntime | undefined)?.getTaichungHeapU8?.(), isActive: canPlayGame,
+      districtOnSign: () => districtOnSign,
       onState: (state) => { navigationState = state; renderNavigation(); },
     });
     void navigationBridge.start();
@@ -614,8 +632,28 @@ const minimapSetting = document.createElement('label');
 minimapSetting.className = 'minimap-setting';
 minimapSetting.innerHTML = '<span id="minimap-label" data-i18n="Minimap">Minimap</span><select id="minimap-visibility" aria-labelledby="minimap-label" aria-describedby="minimap-hint"><option value="on" data-i18n="On">On</option><option value="off" data-i18n="Off">Off</option></select><small id="minimap-hint"></small>';
 el('options-toolbar-slot').before(minimapSetting);
+if (BOULEVARD_PREVIEW) {
+  const hud = document.createElement('div');
+  hud.className = 'hud-layout-options';
+  hud.innerHTML = `<label class="minimap-setting"><span data-i18n="Minimap view">Minimap view</span>
+    <select id="minimap-view"><option value="nearby" data-i18n="Nearby">Nearby</option>
+    <option value="districts" data-i18n="Districts">Districts</option>
+    <option value="citywide" data-i18n="Citywide">Citywide</option></select></label>
+    <label class="minimap-setting"><span data-i18n="Road sign">Road sign</span>
+    <select id="road-sign-layout"><option value="street" data-i18n="Street only">Street only</option>
+    <option value="district" data-i18n="Street and district">Street and district</option></select></label>`;
+  el('options-toolbar-slot').before(hud);
+  const selector = el<HTMLSelectElement>('road-sign-layout');
+  selector.value = districtOnSign ? 'district' : 'street';
+  selector.addEventListener('change', () => {
+    districtOnSign = selector.value === 'district';
+    try { localStorage.setItem(ROAD_SIGN_PREFERENCE, selector.value); } catch { /* The current choice still works. */ }
+    renderNavigation();
+  });
+}
 const minimap = createMinimap({
   screen: el('screen'), toggle: el<HTMLSelectElement>('minimap-visibility'), hint: el('minimap-hint'), geometry: minimapGeometry,
+  zoom: BOULEVARD_PREVIEW ? el<HTMLSelectElement>('minimap-view') : undefined,
   openGuide: () => { if (!onboarding?.blocksCityMap) cityGuide.open(el('live-minimap')); },
 });
 onboarding = createOnboarding({

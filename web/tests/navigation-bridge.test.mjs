@@ -55,6 +55,21 @@ test('sequence changing during the copy cannot produce a mixed sample', () => {
   } finally { Atomics.load = original; }
 });
 
+test('v2 reads saved progress independently of the browser district preference', () => {
+  const v2 = { ...metadata, version: 2, size: 52 };
+  const heap = initialize(new Uint8Array(new SharedArrayBuffer(512)));
+  const words = new Uint32Array(heap.buffer, 64, 13);
+  words[2] = 0x00340002;
+  words[10] = 0x101 << 16;
+  words[11] = 0x8;
+  words[12] = 1;
+  const build = { sha256, bytes: 16, navigationBridge: v2, minimap: { schemaVersion: 1, geometryFingerprintSha256: fingerprint } };
+  assert.deepEqual(parseNavigationMetadata(build, sha256, 16, fingerprint), v2);
+  assert.deepEqual(readNavigationSnapshot(heap, 64, v2), { ...packet(), gymMask: 0x101, captureMask: 0x8 });
+  words[11] = 0x10008;
+  assert.equal(readNavigationSnapshot(heap, 64, v2), undefined);
+});
+
 test('freshness requires advancement, expires frozen frames and resets on rewind/wrap/pause', () => {
   const f = new NavigationFreshness();
   const p = packet();

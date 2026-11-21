@@ -639,6 +639,98 @@
         "axis": "v"
       }
     ],
+    "neighborhoods": [
+      {
+        "name": {
+          "en": "Fengjia",
+          "zh": "逢甲"
+        },
+        "tile": [
+          41,
+          41
+        ]
+      },
+      {
+        "name": {
+          "en": "Shuinan",
+          "zh": "水湳"
+        },
+        "tile": [
+          84,
+          19
+        ]
+      },
+      {
+        "name": {
+          "en": "Beitun",
+          "zh": "北屯"
+        },
+        "tile": [
+          187,
+          38
+        ]
+      },
+      {
+        "name": {
+          "en": "North",
+          "zh": "北區"
+        },
+        "tile": [
+          311,
+          40
+        ]
+      },
+      {
+        "name": {
+          "en": "Xitun",
+          "zh": "西屯"
+        },
+        "tile": [
+          62,
+          114
+        ]
+      },
+      {
+        "name": {
+          "en": "Dadun",
+          "zh": "大墩"
+        },
+        "tile": [
+          139,
+          85
+        ]
+      },
+      {
+        "name": {
+          "en": "West",
+          "zh": "西區"
+        },
+        "tile": [
+          205,
+          139
+        ]
+      },
+      {
+        "name": {
+          "en": "Old City",
+          "zh": "舊城"
+        },
+        "tile": [
+          294,
+          134
+        ]
+      },
+      {
+        "name": {
+          "en": "Nantun",
+          "zh": "南屯"
+        },
+        "tile": [
+          59,
+          203
+        ]
+      }
+    ],
     "districtLabels": [
       {
         "label": "FENGJIA 逢甲",
@@ -691,6 +783,10 @@
       "registration": "registered-source",
       "kind": "exterior",
       "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "Fengjia",
+        "zh": "逢甲"
+      },
       "worldOrigin": [
         8,
         8
@@ -715,6 +811,10 @@
       "registration": "registered-source",
       "kind": "exterior",
       "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "Fengjia",
+        "zh": "逢甲"
+      },
       "worldOrigin": [
         8,
         26
@@ -739,6 +839,10 @@
       "registration": "registered-source",
       "kind": "exterior",
       "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "Xitun",
+        "zh": "西屯"
+      },
       "worldOrigin": [
         8,
         62
@@ -763,6 +867,10 @@
       "registration": "registered-source",
       "kind": "exterior",
       "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "Xitun",
+        "zh": "西屯"
+      },
       "worldOrigin": [
         8,
         108
@@ -787,6 +895,10 @@
       "registration": "registered-source",
       "kind": "exterior",
       "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "Xitun",
+        "zh": "西屯"
+      },
       "worldOrigin": [
         8,
         127
@@ -811,6 +923,10 @@
       "registration": "registered-source",
       "kind": "exterior",
       "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "Nantun",
+        "zh": "南屯"
+      },
       "worldOrigin": [
         8,
         146
@@ -835,6 +951,10 @@
       "registration": "registered-source",
       "kind": "exterior",
       "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "Nantun",
+        "zh": "南屯"
+      },
       "worldOrigin": [
         8,
         190
@@ -859,6 +979,10 @@
       "registration": "registered-source",
       "kind": "exterior",
       "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "Nantun",
+        "zh": "南屯"
+      },
       "worldOrigin": [
         8,
         216
@@ -883,6 +1007,10 @@
       "registration": "registered-source",
       "kind": "exterior",
       "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "Shuinan",
+        "zh": "水湳"
+      },
       "worldOrigin": [
         41,
         8
@@ -907,6 +1035,10 @@
       "registration": "registered-source",
       "kind": "exterior",
       "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "Shuinan",
+        "zh": "水湳"
+      },
       "worldOrigin": [
         41,
         26
@@ -931,6 +1063,10 @@
       "registration": "registered-source",
       "kind": "exterior",
       "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "Xitun",
+        "zh": "西屯"
+      },
       "worldOrigin": [
         41,
         62
@@ -955,6 +1091,10 @@
       "registration": "registered-source",
       "kind": "exterior",
       "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "Xitun",
+        "zh": "西屯"
+      },
       "worldOrigin": [
         41,
         108
@@ -979,6 +1119,10 @@
       "registration": "registered-source",
       "kind": "exterior",
       "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "Xitun",
+        "zh": "西屯"
+      },
       "worldOrigin": [
         41,
         127
@@ -1003,6 +1147,10 @@
       "registration": "registered-source",
       "kind": "exterior",
       "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "Nantun",
+        "zh": "南屯"
+      },
       "worldOrigin": [
         41,
         146
@@ -1027,6 +1175,10 @@
       "registration": "registered-source",
       "kind": "exterior",
       "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "Nantun",
+        "zh": "南屯"
+      },
       "worldOrigin": [
         41,
         190
@@ -1051,6 +1203,10 @@
       "registration": "registered-source",
       "kind": "exterior",
       "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "Nantun",
+        "zh": "南屯"
+      },
       "worldOrigin": [
         41,
         216
@@ -1075,6 +1231,10 @@
       "registration": "registered-source",
       "kind": "exterior",
       "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "Shuinan",
+        "zh": "水湳"
+      },
       "worldOrigin": [
         90,
         8
@@ -1099,6 +1259,10 @@
       "registration": "registered-source",
       "kind": "exterior",
       "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "Shuinan",
+        "zh": "水湳"
+      },
       "worldOrigin": [
         90,
         26
@@ -1123,6 +1287,10 @@
       "registration": "registered-source",
       "kind": "exterior",
       "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "Xitun",
+        "zh": "西屯"
+      },
       "worldOrigin": [
         90,
         62
@@ -1147,6 +1315,10 @@
       "registration": "registered-source",
       "kind": "exterior",
       "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "Xitun",
+        "zh": "西屯"
+      },
       "worldOrigin": [
         90,
         108
@@ -1171,6 +1343,10 @@
       "registration": "registered-source",
       "kind": "exterior",
       "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "Xitun",
+        "zh": "西屯"
+      },
       "worldOrigin": [
         90,
         127
@@ -1195,6 +1371,10 @@
       "registration": "registered-source",
       "kind": "exterior",
       "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "Nantun",
+        "zh": "南屯"
+      },
       "worldOrigin": [
         90,
         146
@@ -1219,6 +1399,10 @@
       "registration": "registered-source",
       "kind": "exterior",
       "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "Nantun",
+        "zh": "南屯"
+      },
       "worldOrigin": [
         90,
         190
@@ -1243,6 +1427,10 @@
       "registration": "registered-source",
       "kind": "exterior",
       "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "Nantun",
+        "zh": "南屯"
+      },
       "worldOrigin": [
         90,
         216
@@ -1267,6 +1455,10 @@
       "registration": "registered-source",
       "kind": "exterior",
       "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "Beitun",
+        "zh": "北屯"
+      },
       "worldOrigin": [
         115,
         26
@@ -1291,6 +1483,10 @@
       "registration": "registered-source",
       "kind": "exterior",
       "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "Dadun",
+        "zh": "大墩"
+      },
       "worldOrigin": [
         115,
         62
@@ -1315,6 +1511,10 @@
       "registration": "registered-source",
       "kind": "exterior",
       "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "Dadun",
+        "zh": "大墩"
+      },
       "worldOrigin": [
         115,
         108
@@ -1339,6 +1539,10 @@
       "registration": "registered-source",
       "kind": "exterior",
       "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "Dadun",
+        "zh": "大墩"
+      },
       "worldOrigin": [
         115,
         146
@@ -1363,6 +1567,10 @@
       "registration": "registered-source",
       "kind": "exterior",
       "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "Beitun",
+        "zh": "北屯"
+      },
       "worldOrigin": [
         137,
         26
@@ -1387,6 +1595,10 @@
       "registration": "registered-source",
       "kind": "exterior",
       "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "Dadun",
+        "zh": "大墩"
+      },
       "worldOrigin": [
         137,
         62
@@ -1411,6 +1623,10 @@
       "registration": "registered-source",
       "kind": "exterior",
       "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "Dadun",
+        "zh": "大墩"
+      },
       "worldOrigin": [
         137,
         108
@@ -1435,6 +1651,10 @@
       "registration": "registered-source",
       "kind": "exterior",
       "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "Dadun",
+        "zh": "大墩"
+      },
       "worldOrigin": [
         137,
         146
@@ -1459,6 +1679,10 @@
       "registration": "registered-source",
       "kind": "exterior",
       "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "Beitun",
+        "zh": "北屯"
+      },
       "worldOrigin": [
         167,
         26
@@ -1483,6 +1707,10 @@
       "registration": "registered-source",
       "kind": "exterior",
       "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "West",
+        "zh": "西區"
+      },
       "worldOrigin": [
         167,
         62
@@ -1507,6 +1735,10 @@
       "registration": "registered-source",
       "kind": "exterior",
       "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "West",
+        "zh": "西區"
+      },
       "worldOrigin": [
         167,
         108
@@ -1531,6 +1763,10 @@
       "registration": "registered-source",
       "kind": "exterior",
       "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "West",
+        "zh": "西區"
+      },
       "worldOrigin": [
         167,
         146
@@ -1555,6 +1791,10 @@
       "registration": "registered-source",
       "kind": "exterior",
       "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "Beitun",
+        "zh": "北屯"
+      },
       "worldOrigin": [
         209,
         26
@@ -1579,6 +1819,10 @@
       "registration": "registered-source",
       "kind": "exterior",
       "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "West",
+        "zh": "西區"
+      },
       "worldOrigin": [
         209,
         62
@@ -1603,6 +1847,10 @@
       "registration": "registered-source",
       "kind": "exterior",
       "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "West",
+        "zh": "西區"
+      },
       "worldOrigin": [
         209,
         108
@@ -1627,6 +1875,10 @@
       "registration": "registered-source",
       "kind": "exterior",
       "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "West",
+        "zh": "西區"
+      },
       "worldOrigin": [
         209,
         146
@@ -1651,6 +1903,10 @@
       "registration": "registered-source",
       "kind": "exterior",
       "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "Beitun",
+        "zh": "北屯"
+      },
       "worldOrigin": [
         253,
         26
@@ -1675,6 +1931,10 @@
       "registration": "registered-source",
       "kind": "exterior",
       "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "Old City",
+        "zh": "舊城"
+      },
       "worldOrigin": [
         253,
         62
@@ -1699,6 +1959,10 @@
       "registration": "registered-source",
       "kind": "exterior",
       "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "Old City",
+        "zh": "舊城"
+      },
       "worldOrigin": [
         253,
         108
@@ -1723,6 +1987,10 @@
       "registration": "registered-source",
       "kind": "exterior",
       "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "Old City",
+        "zh": "舊城"
+      },
       "worldOrigin": [
         253,
         146
@@ -1747,6 +2015,10 @@
       "registration": "registered-source",
       "kind": "exterior",
       "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "North",
+        "zh": "北區"
+      },
       "worldOrigin": [
         281,
         26
@@ -1771,6 +2043,10 @@
       "registration": "registered-source",
       "kind": "exterior",
       "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "Old City",
+        "zh": "舊城"
+      },
       "worldOrigin": [
         281,
         62
@@ -1795,6 +2071,10 @@
       "registration": "registered-source",
       "kind": "exterior",
       "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "Old City",
+        "zh": "舊城"
+      },
       "worldOrigin": [
         281,
         108
@@ -1819,6 +2099,10 @@
       "registration": "registered-source",
       "kind": "exterior",
       "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "Old City",
+        "zh": "舊城"
+      },
       "worldOrigin": [
         304,
         108
@@ -1843,6 +2127,10 @@
       "registration": "registered-source",
       "kind": "exterior",
       "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "Old City",
+        "zh": "舊城"
+      },
       "worldOrigin": [
         281,
         146
@@ -1867,6 +2155,10 @@
       "registration": "registered-source",
       "kind": "exterior",
       "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "Old City",
+        "zh": "舊城"
+      },
       "worldOrigin": [
         304,
         146
@@ -1891,6 +2183,10 @@
       "registration": "registered-source",
       "kind": "exterior",
       "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "North",
+        "zh": "北區"
+      },
       "worldOrigin": [
         319,
         26
@@ -1915,6 +2211,10 @@
       "registration": "registered-source",
       "kind": "exterior",
       "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "Old City",
+        "zh": "舊城"
+      },
       "worldOrigin": [
         319,
         62
@@ -1939,6 +2239,10 @@
       "registration": "registered-source",
       "kind": "exterior",
       "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "Old City",
+        "zh": "舊城"
+      },
       "worldOrigin": [
         326,
         108
@@ -1963,6 +2267,10 @@
       "registration": "registered-source",
       "kind": "exterior",
       "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "Old City",
+        "zh": "舊城"
+      },
       "worldOrigin": [
         326,
         146
@@ -2484,7 +2792,8 @@
         15
       ],
       "exteriorMapId": "MAP_TAICHUNG_BLVD_MAPLE_GARDEN",
-      "exteriorNativeKey": "43:28"
+      "exteriorNativeKey": "43:28",
+      "captureBit": 0
     },
     "wenchang-temple": {
       "id": "wenchang-temple",
@@ -2502,7 +2811,8 @@
         16
       ],
       "exteriorMapId": "MAP_TAICHUNG_BLVD_WENCHANG_TEMPLE",
-      "exteriorNativeKey": "43:31"
+      "exteriorNativeKey": "43:31",
+      "captureBit": 1
     },
     "botanical-garden": {
       "id": "botanical-garden",
@@ -2520,7 +2830,8 @@
         12
       ],
       "exteriorMapId": "MAP_TAICHUNG_BLVD_BOTANICAL_GARDEN",
-      "exteriorNativeKey": "43:62"
+      "exteriorNativeKey": "43:62",
+      "captureBit": 2
     },
     "confucius-temple": {
       "id": "confucius-temple",
@@ -2538,7 +2849,8 @@
         10
       ],
       "exteriorMapId": "MAP_TAICHUNG_BLVD_CONFUCIUS_TEMPLE",
-      "exteriorNativeKey": "43:69"
+      "exteriorNativeKey": "43:69",
+      "captureBit": 3
     },
     "yizhong-street": {
       "id": "yizhong-street",
@@ -2556,7 +2868,8 @@
         33
       ],
       "exteriorMapId": "MAP_TAICHUNG_BLVD_CONFUCIUS_TEMPLE",
-      "exteriorNativeKey": "43:69"
+      "exteriorNativeKey": "43:69",
+      "captureBit": 4
     },
     "prefectural-hall": {
       "id": "prefectural-hall",
@@ -2574,7 +2887,8 @@
         32
       ],
       "exteriorMapId": "MAP_TAICHUNG_BLVD_PREFECTURAL_HALL",
-      "exteriorNativeKey": "43:71"
+      "exteriorNativeKey": "43:71",
+      "captureBit": 5
     },
     "second-market": {
       "id": "second-market",
@@ -2592,7 +2906,8 @@
         15
       ],
       "exteriorMapId": "MAP_TAICHUNG_BLVD_SECOND_MARKET",
-      "exteriorNativeKey": "43:67"
+      "exteriorNativeKey": "43:67",
+      "captureBit": 6
     },
     "cultural-heritage-park": {
       "id": "cultural-heritage-park",
@@ -2610,7 +2925,8 @@
         12
       ],
       "exteriorMapId": "MAP_TAICHUNG_BLVD_CULTURAL_HERITAGE_PARK",
-      "exteriorNativeKey": "43:78"
+      "exteriorNativeKey": "43:78",
+      "captureBit": 7
     },
     "fengle-sculpture-park": {
       "id": "fengle-sculpture-park",
@@ -2628,7 +2944,8 @@
         16
       ],
       "exteriorMapId": "MAP_TAICHUNG_BLVD_FENGLE_SCULPTURE_PARK",
-      "exteriorNativeKey": "43:40"
+      "exteriorNativeKey": "43:40",
+      "captureBit": 8
     },
     "wenxin-forest-park": {
       "id": "wenxin-forest-park",
@@ -2646,7 +2963,8 @@
         33
       ],
       "exteriorMapId": "MAP_TAICHUNG_BLVD_WENXIN_FOREST_PARK",
-      "exteriorNativeKey": "43:46"
+      "exteriorNativeKey": "43:46",
+      "captureBit": 9
     },
     "tiger-city": {
       "id": "tiger-city",
@@ -4119,9 +4437,10 @@
     }
   ],
   "sourceSha256": {
-    "compiledMapReport": "cb47a0d22a2ba93ab3de5d3bff9836bb0852fbab60fa93d98482fa74f31d8e7f",
+    "compiledMapReport": "22e1f035a36d8a10880ec9d30992503cfde196751281ce5bcf6f22b7ed6b9396",
     "fill": "f21f9889000115e8995356b837dc6ff23f3d65460dac903ce1e16949138a8c2a",
-    "mapBook": "3028c1cd02f81d84e3a27e43de7a8cbcbc4bca67e85dbf4d7417f2042da1aecb"
+    "mapBook": "3028c1cd02f81d84e3a27e43de7a8cbcbc4bca67e85dbf4d7417f2042da1aecb",
+    "streetPeople": "ae03b5a4d5faebc98da12c6cdfd691c8d4a9c8bbfb659769dea8efcf2d22f8e5"
   },
-  "geometryFingerprintSha256": "176b8d80bfcabcfd8aae9e6421319df3461a2688679e8c07c01b871a79969963"
+  "geometryFingerprintSha256": "caa3750d67c3d959488b4d752a9cfc5281ea87d0aefa76d12fd71c021598e91e"
 }
