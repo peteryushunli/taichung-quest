@@ -108,7 +108,8 @@ const boulevardViews = import.meta.glob<string>('./assets/boulevard/places/*.png
 if (BOULEVARD_PREVIEW) {
   for (const [path, url] of Object.entries(boulevardViews)) {
     const id = path.slice(path.lastIndexOf('/') + 1, -'.png'.length);
-    landmarkArt[id] = { facade: url, mapView: true, tint: park };
+    const art = landmarkArt[id];
+    landmarkArt[id] = { ...art, facade: url, mapView: true, tint: art?.tint ?? park };
   }
 }
 

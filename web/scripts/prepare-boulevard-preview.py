@@ -28,7 +28,11 @@ INSTALLED_SIGHTS = {
     "baseball-stadium": ("Intercontinental Ballpark", "洲際棒球場", "beitun", "Baseball stadium", "棒球場"),
     "folklore-park": ("Folk Museum at Folklore Park", "臺灣民俗文物館", "beitun", "Folk museum", "民俗館"),
 }
-RESTORED_FACADES = {"prefectural-hall", "second-market", "cultural-heritage-park"}
+LANDMARK_MAP_VIEWS = {
+    "prefectural-hall", "second-market", "cultural-heritage-park",
+    "botanical-garden", "confucius-temple", "wenchang-temple", "wanhe-temple",
+    "fengle-sculpture-park", "yizhong-street", "wenxin-forest-park",
+}
 LABELS = [
     ("FENGJIA 逢甲", 40, 6), ("CENTRAL PARK 中央公園", 94, 6), ("BEITUN 北屯", 178, 23),
     ("XITUN 西屯", 46, 103), ("GREENWAY 草悟道", 205, 116),
@@ -132,7 +136,7 @@ def terrain_images(fill, plan, candidate, width, height, origin, installed, pavi
     art_rects["central-park"] = [78, 32, 102, 50]
     art_rects.update({place: entry["worldRect"] for place, entry in installed.items()})
     for item in placements:
-        if item["sprite"] in RESTORED_FACADES:
+        if item["sprite"] in LANDMARK_MAP_VIEWS:
             x, y = item["x"], item["y"]
             w, h = item["tiles"]
             art_rects[item["sprite"]] = [x, y, x + w, y + h]
