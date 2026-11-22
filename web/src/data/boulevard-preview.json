@@ -2852,7 +2852,7 @@
       ],
       "exteriorMapId": "MAP_TAICHUNG_BLVD_BOTANICAL_GARDEN",
       "exteriorNativeKey": "43:62",
-      "captureBit": 2
+      "captureBit": 18
     },
     "confucius-temple": {
       "id": "confucius-temple",
@@ -2966,7 +2966,7 @@
       ],
       "exteriorMapId": "MAP_TAICHUNG_BLVD_FENGLE_SCULPTURE_PARK",
       "exteriorNativeKey": "43:40",
-      "captureBit": 8
+      "captureBit": 19
     },
     "wenxin-forest-park": {
       "id": "wenxin-forest-park",
@@ -2985,7 +2985,7 @@
       ],
       "exteriorMapId": "MAP_TAICHUNG_BLVD_WENXIN_FOREST_PARK",
       "exteriorNativeKey": "43:46",
-      "captureBit": 9
+      "captureBit": 20
     },
     "tiger-city": {
       "id": "tiger-city",
@@ -3003,7 +3003,8 @@
         13
       ],
       "exteriorMapId": "MAP_TAICHUNG_BLVD_TIGER_CITY",
-      "exteriorNativeKey": "43:29"
+      "exteriorNativeKey": "43:29",
+      "captureBit": 14
     },
     "rainbow-village": {
       "id": "rainbow-village",
@@ -3021,7 +3022,8 @@
         14
       ],
       "exteriorMapId": "MAP_TAICHUNG_BLVD_RAINBOW_VILLAGE",
-      "exteriorNativeKey": "43:32"
+      "exteriorNativeKey": "43:32",
+      "captureBit": 11
     },
     "jingming-street": {
       "id": "jingming-street",
@@ -3039,7 +3041,8 @@
         19
       ],
       "exteriorMapId": "MAP_TAICHUNG_BLVD_JINGMING_1ST_STREET",
-      "exteriorNativeKey": "43:55"
+      "exteriorNativeKey": "43:55",
+      "captureBit": 13
     },
     "city-hall": {
       "id": "city-hall",
@@ -3057,7 +3060,8 @@
         1
       ],
       "exteriorMapId": "MAP_TAICHUNG_BLVD_XITUN_E_3",
-      "exteriorNativeKey": "43:45"
+      "exteriorNativeKey": "43:45",
+      "captureBit": 12
     },
     "central-park": {
       "id": "central-park",
@@ -3067,15 +3071,16 @@
       },
       "kind": "landmark",
       "world": [
-        58,
-        42
+        57,
+        40
       ],
       "localEntrance": [
-        17,
-        16
+        16,
+        14
       ],
       "exteriorMapId": "MAP_TAICHUNG_BLVD_CENTRAL_PARK_B_2",
-      "exteriorNativeKey": "43:34"
+      "exteriorNativeKey": "43:34",
+      "captureBit": 10
     },
     "green-museumbrary": {
       "id": "green-museumbrary",
@@ -3093,7 +3098,8 @@
         14
       ],
       "exteriorMapId": "MAP_TAICHUNG_BLVD_GREEN_MUSEUMBRARY",
-      "exteriorNativeKey": "43:33"
+      "exteriorNativeKey": "43:33",
+      "captureBit": 15
     },
     "baseball-stadium": {
       "id": "baseball-stadium",
@@ -3111,7 +3117,8 @@
         12
       ],
       "exteriorMapId": "MAP_TAICHUNG_BLVD_BEITUN_B_5",
-      "exteriorNativeKey": "43:53"
+      "exteriorNativeKey": "43:53",
+      "captureBit": 16
     },
     "folklore-park": {
       "id": "folklore-park",
@@ -3129,7 +3136,8 @@
         11
       ],
       "exteriorMapId": "MAP_TAICHUNG_BLVD_BEITUN_B_7",
-      "exteriorNativeKey": "43:61"
+      "exteriorNativeKey": "43:61",
+      "captureBit": 17
     },
     "guest-house": {
       "id": "guest-house",
@@ -4296,7 +4304,7 @@
       "categoryZh": "購物中心",
       "kind": "sight",
       "gymStatus": "not-a-gym",
-      "playable": false,
+      "playable": true,
       "description": "Tiger City is a shopping and entertainment complex on Henan Road in Xitun’s Seventh Redevelopment Zone. Restaurants, shops and a cinema open off a broad outdoor plaza, and a glass elevator looks over the square. Maple Garden and the National Taichung Theater are both a short walk away. In a few blocks, the neighborhood goes from the mall and its cinema to the theater’s curved walls and the park’s sunken paths.",
       "descriptionZh": "老虎城位於西屯七期重劃區的河南路上，聚集了商店、餐廳與影城。從寬闊的戶外廣場進入商場，還能搭乘透明景觀電梯俯瞰廣場。步行不遠，就是秋紅谷和臺中國家歌劇院。短短幾個街廓，從影城與商場的熱鬧、歌劇院的曲牆，到下沉公園的步道，就能看見七期不同的面貌。",
       "officialUrl": "https://www.tigercity.com.tw/en/info/about/",
@@ -4318,7 +4326,7 @@
       "categoryZh": "彩繪眷村",
       "kind": "sight",
       "gymStatus": "not-a-gym",
-      "playable": false,
+      "playable": true,
       "description": "The low houses of Rainbow Village once housed military families in Nantun. When the neighborhood faced demolition, retired soldier and resident Huang Yong-Fu began painting his home and the walls around it. Bright figures and patterns spread down the lanes, and public support helped persuade the city to preserve the painted cluster. Huang became known as Rainbow Grandpa. The narrow lanes and single-story roofs still show how the old community was laid out.",
       "descriptionZh": "彩虹眷村原是南屯的軍眷聚落。面對拆遷，住在這裡的退伍軍人黃永阜開始在自家和鄰近牆面畫畫。人物與鮮豔的圖案一路延伸到巷弄，引起民眾關注，市府最後保留了彩繪聚落。黃永阜也因此有了「彩虹爺爺」的暱稱。沿著窄巷看屋頂和一整排低矮房舍，仍可辨認老眷村的生活尺度。",
       "officialUrl": "https://travel.taichung.gov.tw/en/attractions/intro/881",
@@ -4340,7 +4348,7 @@
       "categoryZh": "購物商圈",
       "kind": "sight",
       "gymStatus": "not-a-gym",
-      "playable": false,
+      "playable": true,
       "description": "Jingming 1st Street is a pedestrian lane about 100 meters long between Dadun 19th Street and Dalong Road. Cafés set tables out along the walkway, among boutiques, restaurants and galleries. It was the first street in Taichung picked as a model shopping street by Taiwan’s commerce authority. The shopping district also extends onto Dalong Road, while the original lane is still small enough to take in from one end.",
       "descriptionZh": "精明一街位於西區大墩十九街與大隆路之間，是一條約百公尺長的徒步街。精品店、餐館與藝廊沿街排列，咖啡館則把桌椅擺到步道旁。這裡是臺中第一條獲經濟部商業司選為示範商店街的街道。商圈後來延伸到大隆路，原本的小街仍保有一眼就能望到另一端的尺度。",
       "officialUrl": "https://travel.taichung.gov.tw/en/attractions/intro/1374",
@@ -4362,7 +4370,7 @@
       "categoryZh": "市政廣場",
       "kind": "sight",
       "gymStatus": "not-a-gym",
-      "playable": false,
+      "playable": true,
       "description": "Taichung’s City Hall faces Taiwan Boulevard across a wide public square. A tall central passage sits between the Huizhong and Wenxin wings. Near their side entrances, the red letters of Tower of Words form an open, curved sculpture. On the ground floor of the Huizhong wing, Taichung Vision Hall uses exhibits about the city’s history, neighborhoods and civic projects to explain how Taichung grew and what the city is planning next.",
       "descriptionZh": "臺中市政府臺灣大道市政大樓前方有一座開闊的廣場，挑高的中央川堂連接惠中樓與文心樓。側門附近的公共藝術〈塔之語〉由紅色字母拼成半蛋形。惠中樓一樓的臺中願景館透過城市歷史、地方生活與市政建設等展覽，介紹臺中如何發展成今天的樣子，以及這座城市正在規劃的未來。",
       "officialUrl": "https://www.news.taichung.gov.tw/14786/14864/2772021/2774566/2774758",
@@ -4383,7 +4391,7 @@
       "categoryZh": "公園",
       "kind": "sight",
       "gymStatus": "not-a-gym",
-      "playable": false,
+      "playable": true,
       "description": "Taichung Central Park occupies the former grounds of Shuinan Airport. Part of the runway survives, a reminder of the airfield beneath today’s landscape. Paths and cycle routes cross about 67 hectares of groves, open lawns and ponds. The park’s twelve interactive installations explore senses and abilities such as touch and balance. At the northern edge, the Green Museumbrary’s shaded plazas open directly onto the park.",
       "descriptionZh": "臺中中央公園位在水湳機場原址，園內保留了一部分跑道，讓人還能看出這裡曾是機場。約六十七公頃的園區裡，步道與自行車道穿過林地、草坪與水池，十二處感官互動設施則讓人透過觸覺、平衡感等方式體驗不同的地景。走到公園北側，就能看見臺中綠美圖向公園敞開的遮蔭廣場。",
       "officialUrl": "https://travel.taichung.gov.tw/en/Attractions/Intro/1600",
@@ -4458,10 +4466,10 @@
     }
   ],
   "sourceSha256": {
-    "compiledMapReport": "5205b2e0f6d2ad1fa52e59a8e7fb4ffdb88d168abbbdc1c915fb67c41bbda36a",
+    "compiledMapReport": "d63f2e03affab6dc7b0d870d1c9763f7f8e5e1b99ec0915c7544a0be1a9ca07b",
     "fill": "0a73624ed3fb1d5669c061dbe5827fb4f4275c6aedbbb87f9c283ec934661fa3",
     "mapBook": "265d64cf1b47a26d412626301a6f1e542f3a19bcd89ec0084e6f08022a713b4d",
     "streetPeople": "55ab23c95679b0db7edd67023ce6630b6c06111598b7849cba32539d2973712a"
   },
-  "geometryFingerprintSha256": "5c942ea5b13ccb2103cb30b828eb3a7ed5b712d068c9523928449fa8b4499b10"
+  "geometryFingerprintSha256": "fc0920830961046d618de030c960a087c989a390fbff98cc68776578910e396b"
 }

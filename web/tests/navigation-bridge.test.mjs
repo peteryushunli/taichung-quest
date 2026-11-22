@@ -67,6 +67,8 @@ test('v2 reads saved progress with the original packet size', () => {
   assert.deepEqual(parseNavigationMetadata(build, sha256, 16, fingerprint), v2);
   assert.deepEqual(readNavigationSnapshot(heap, 64, v2), { ...packet(), gymMask: 0x101, captureMask: 0x8 });
   words[11] = 0x10008;
+  assert.equal(readNavigationSnapshot(heap, 64, v2).captureMask, 0x10008);
+  words[11] = 1 << 21;
   assert.equal(readNavigationSnapshot(heap, 64, v2), undefined);
 });
 

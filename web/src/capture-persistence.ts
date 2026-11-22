@@ -3,8 +3,13 @@
 import { isFullFireRedSaveSize, readFireRedSaveSlot } from './firered-save.ts';
 
 export const CAPTURE_BOOT_INTENT_KEY = 'taichung-quest-capture-boot-v1';
-const MASK = 0x3fff;
-const SCHEMA = 0xec01;
+export const CAPTURE_SITE_COUNT = 21;
+export const CAPTURE_MASK = (1 << CAPTURE_SITE_COUNT) - 1;
+export const LEGACY_CAPTURE_MASK = 0x3fff;
+const SAVE_LOW_BITS = 10;
+const SAVE_LOW_MASK = (1 << SAVE_LOW_BITS) - 1;
+const LEGACY_SCHEMA = 0xec01;
+const SCHEMA = 0xec02;
 
 export type CaptureSaveProof = {
   saveCounter: number;
@@ -25,8 +30,8 @@ const isU32 = (value: unknown): value is number => typeof value === 'number'
 
 function validProof(value: CaptureSaveProof) {
   return isU32(value.saveCounter) && isU32(value.trainerId)
-    && Number.isInteger(value.attempts) && value.attempts >= 0 && value.attempts <= MASK
-    && Number.isInteger(value.unlocks) && value.unlocks >= 0 && value.unlocks <= MASK
+    && Number.isInteger(value.attempts) && value.attempts >= 0 && value.attempts <= CAPTURE_MASK
+    && Number.isInteger(value.unlocks) && value.unlocks >= 0 && value.unlocks <= CAPTURE_MASK
     && !(value.unlocks & ~value.attempts);
 }
 
@@ -40,12 +45,15 @@ export function verifyCaptureNativeSave(bytes: Uint8Array, expected: CaptureSave
     const saved = readFireRedSaveSlot(view, slot);
     if (!saved || saved.counter !== expected.saveCounter) continue;
     const [save2, , save1SecondSector] = saved.sections;
-    // SaveBlock1's vars start at0x1000, across sectors1/2. The three dedicated
-    // fields are0x40f3/4/5; no party, inventory or Pokédex data is interpreted.
+    // SaveBlock1's vars start at 0x1000, across sectors 1/2.
     const variable = (id: number) => view.getUint16(save1SecondSector + 0x1000 + (id - 0x4000) * 2 - 0xf80, true);
-    const attempts = variable(0x40f4) & MASK;
-    const unlocks = variable(0x40f5) & MASK;
-    if (variable(0x40f3) !== SCHEMA || attempts !== expected.attempts || unlocks !== expected.unlocks
+    const schema = variable(0x40f3);
+    if (schema !== SCHEMA && schema !== LEGACY_SCHEMA) continue;
+    const mask = (low: number, upper: number) => schema === LEGACY_SCHEMA ? variable(low) & LEGACY_CAPTURE_MASK
+      : (variable(low) & SAVE_LOW_MASK) | ((variable(upper) << SAVE_LOW_BITS) & CAPTURE_MASK);
+    const attempts = mask(0x40f4, 0x40f0);
+    const unlocks = mask(0x40f5, 0x40f2);
+    if (attempts !== expected.attempts || unlocks !== expected.unlocks
       || (unlocks & ~attempts) || view.getUint32(save2 + 0xa, true) !== expected.trainerId) continue;
     matches.push({ ...expected, slot });
   }

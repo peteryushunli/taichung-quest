@@ -1,3 +1,5 @@
+import { CAPTURE_MASK } from './capture-persistence.ts';
+
 /** Read-only TCNAV001 client. The GBA address identifies the native packet. */
 export const NAVIGATION_FLAGS = { READY: 1, FIELD: 2, POSITION_VALID: 4, OUTDOOR: 8, INDOOR: 16, CYCLING: 32, CAN_TOGGLE_BIKE: 64 } as const;
 export type NavigationMetadata = ({ version: 1; size: 48 } | { version: 2; size: 52 }) &
@@ -47,7 +49,7 @@ export function readNavigationSnapshot(heap: Uint8Array, offset: number, metadat
   const gymMask = copy[10] >>> 16;
   const captureMask = copy[11];
   if ((copy[6] & ~127) || (metadata.version === 1 ? gymMask !== 0 || captureMask !== 0
-    : gymMask > 0x03ff || captureMask > 0x3fff)) return;
+    : gymMask > 0x03ff || captureMask > CAPTURE_MASK)) return;
   return {
     sequence, frame: copy[5], flags: copy[6], x: (copy[7] << 16) >> 16, y: copy[7] >> 16,
     mapGroup: copy[8] & 255, mapNumber: copy[8] >>> 8 & 255, facing: copy[8] >>> 16 & 255, mapType: copy[8] >>> 24,

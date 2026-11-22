@@ -186,6 +186,7 @@ function renderDetail(id: string) {
   const index = landmarks.findIndex((place) => place.id === id);
   const place = landmarks[index];
   const info = localizedPlace(place, getLocale());
+  const hasEncounter = BOULEVARD_PREVIEW ? city.markersById[id]?.captureBit !== undefined : undefined;
   const art = landmarkArt[id];
   const facade = art?.facade
     ? `<div class="lp-facade${art.mapView ? ' lp-map-view' : ''}" role="img" aria-label="${escapeHtml(info.name)}" style="background-image:url('${escapeHtml(art.facade)}')"></div>`
@@ -204,7 +205,7 @@ function renderDetail(id: string) {
       <div class="lp-detail-names"><h3 class="lp-display">${escapeHtml(info.name)}</h3><span>${escapeHtml(info.otherName)}</span></div>
       <p class="lp-detail-text">${escapeHtml(info.description)}</p>
       <div class="lp-detail-foot">
-        ${isGym(place) ? `<div class="lp-leader">${portrait}<div class="lp-leader-name"><small>${copy('Gym leader')}</small><b>${info.leader ? escapeHtml(info.leader) : copy('To be revealed')}</b></div>${teamSprites}</div>` : `<p class="lp-landmark-note">${copy(landmarkCaptureCopy(place.id, 'landing') ?? 'Visit this landmark and learn its local history.')}</p>`}
+        ${isGym(place) ? `<div class="lp-leader">${portrait}<div class="lp-leader-name"><small>${copy('Gym leader')}</small><b>${info.leader ? escapeHtml(info.leader) : copy('To be revealed')}</b></div>${teamSprites}</div>` : `<p class="lp-landmark-note">${copy(landmarkCaptureCopy(place.id, 'landing', hasEncounter) ?? 'Visit this landmark and learn its local history.')}</p>`}
         ${info.url ? `<div class="lp-real-life"><span>${copy('In real life')}</span><a href="${escapeHtml(info.url)}" target="_blank" rel="noopener">${copy('Visitor info ↗')}</a></div>` : ''}
       </div>
     </div>`;

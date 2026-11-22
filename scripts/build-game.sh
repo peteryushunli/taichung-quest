@@ -158,10 +158,10 @@ if encounter_symbols:
     if len(encounter_symbols) != 1 or len(encounter_symbols[0]) != 4:
         raise SystemExit('Unexpected native encounter bridge symbol; refusing incompatible metadata.')
     address, size = (int(value, 16) for value in encounter_symbols[0][:2])
-    if size != 64 or address % 4 or not 0x02000000 <= address <= 0x02040000 - size:
+    if size not in (64, 72) or address % 4 or not 0x02000000 <= address <= 0x02040000 - size:
         raise SystemExit('Unexpected native encounter bridge layout; refusing incompatible metadata.')
     metadata['encounterBridge'] = {
-        'version': 1, 'size': size, 'address': address,
+        'version': {64: 1, 72: 2}[size], 'size': size, 'address': address,
         'magicA': 0x4E454354, 'magicB': 0x31525443,
     }
 (rom.parent / 'build.json').write_text(json.dumps(metadata, indent=2) + '\n')

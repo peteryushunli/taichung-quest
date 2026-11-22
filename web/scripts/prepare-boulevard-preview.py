@@ -228,6 +228,9 @@ def main():
     places = {place["id"]: place for place in read(DATA / "landmarks.json") + read(DATA / "sights.json")}
     plan_districts = {district["id"]: district for district in plan["districts"]}
     installed = {entry["id"]: entry for entry in report.get("installedLandmarks", [])}
+    captures = {site["siteSlug"]: site["stableSiteId"]
+                for site in read(args.native / "data/taichung/encounters/sites.json")["sites"]
+                if site["currentBinding"]}
     sight_specs = EXTRA_SIGHTS | {place: INSTALLED_SIGHTS[place] for place in installed}
     sight_copy = read(DATA / "boulevard-sight-copy.json")
     short_names = {"baseball-stadium": ("Ballpark", "洲際棒球場"), "folklore-park": ("Folk Museum", "民俗公園")}
@@ -239,7 +242,7 @@ def main():
                "minimapNameEn": short_en, "minimapNameZh": short_zh, "districtId": district_id,
                "districtEn": district["name"], "districtZh": district["zh"],
                "category": category, "categoryZh": category_zh,
-               "kind": "sight", "gymStatus": "not-a-gym", "playable": place in installed,
+               "kind": "sight", "gymStatus": "not-a-gym", "playable": place in installed or place in captures,
                **sight_copy[place]}
         extras.append(row)
         places[place] = row
@@ -253,12 +256,24 @@ def main():
             events[place] = event
     for place, entry in installed.items():
         events[place] = {"type": "sign", "tile": entry["signTile"]}
+    capture_bindings = candidate / "capture-bindings.json"
+    extra_capture_ids = captures.keys() & sight_specs.keys()
+    bindings = read(capture_bindings) if capture_bindings.is_file() else []
+    require(len(bindings) == len(extra_capture_ids) and {entry["id"] for entry in bindings} == extra_capture_ids,
+            "Installed Boulevard capture signs do not match the encounter catalog.")
+    for entry in bindings:
+        place = entry["id"]
+        require(captures[place] == entry["stableSiteId"], f"Capture binding differs for {place}.")
+        parent = map_at(normalize(entry["signTile"]))
+        require(parent["mapId"] == entry["nativeMap"], f"Wrong sign map for {place}.")
+        native = read(args.native / "data/maps" / parent["nativeMapName"] / "map.json")
+        require(any(event["type"] == "sign" and [event["x"], event["y"]] == entry["localTile"]
+                    and event["script"] == entry["script"] for event in native["bg_events"]),
+                f"Capture sign is missing from the cartridge source for {place}.")
+        events[place] = {"type": "sign", "tile": entry["signTile"]}
 
     markers = {}
     interiors = {}
-    captures = {site["siteSlug"]: site["stableSiteId"]
-                for site in read(args.native / "data/taichung/encounters/sites.json")["sites"]
-                if site["currentBinding"]}
     for place, special in places.items():
         require(place in events, f"Missing Boulevard map anchor for {place}.")
         event = events[place]
@@ -314,9 +329,9 @@ def main():
     symbols = subprocess.check_output([args.nm, "--defined-only", "--print-size", args.native / "pokefirered.elf"], text=True)
     [symbol] = [line.split() for line in symbols.splitlines() if line.endswith(" gTaichungEncounterBridge")]
     address, size = [int(value, 16) for value in symbol[:2]]
-    require(size == 64 and address % 4 == 0 and 0x02000000 <= address <= 0x02040000 - size,
+    require(size in (64, 72) and address % 4 == 0 and 0x02000000 <= address <= 0x02040000 - size,
             "The native encounter bridge has an unexpected layout.")
-    metadata["encounterBridge"] = {"version": 1, "size": size, "address": address,
+    metadata["encounterBridge"] = {"version": {64: 1, 72: 2}[size], "size": size, "address": address,
                                     "magicA": 0x4E454354, "magicB": 0x31525443}
     metadata["minimap"] = {"schemaVersion": 1, "geometryFingerprintSha256": fingerprint}
     dest = WEB / "public/roms"

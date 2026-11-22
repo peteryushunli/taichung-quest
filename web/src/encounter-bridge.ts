@@ -1,6 +1,8 @@
 import type { CaptureSaveProof } from './capture-persistence';
+import { CAPTURE_MASK, CAPTURE_SITE_COUNT, LEGACY_CAPTURE_MASK } from './capture-persistence.ts';
 
-export type EncounterMetadata = { version: 1; size: 64; address: number; magicA: number; magicB: number };
+export type EncounterMetadata = ({ version: 1; size: 64 } | { version: 2; size: 72 })
+  & { address: number; magicA: number; magicB: number };
 export type EncounterSnapshot = CaptureSaveProof & {
   publication: number; frame: number; request: number; acknowledgement: number;
   species: number; site: number; phase: number; balls: number; result: number;
@@ -20,9 +22,10 @@ export function parseEncounterMetadata(value: unknown, sha256: string, bytes: nu
   const build = value as Record<string, unknown>;
   const packet = build.encounterBridge as Partial<EncounterMetadata> | undefined;
   if (build.sha256 !== sha256 || build.bytes !== bytes || !packet
-    || packet.version !== 1 || packet.size !== 64 || packet.magicA !== MAGIC_A || packet.magicB !== MAGIC_B
+    || !(packet.version === 1 && packet.size === 64 || packet.version === 2 && packet.size === 72)
+    || packet.magicA !== MAGIC_A || packet.magicB !== MAGIC_B
     || typeof packet.address !== 'number' || !Number.isInteger(packet.address) || packet.address % 4
-    || packet.address < 0x02000000 || packet.address > 0x02040000 - 64) return;
+    || packet.address < 0x02000000 || packet.address > 0x02040000 - packet.size) return;
   return packet as EncounterMetadata;
 }
 
@@ -34,25 +37,29 @@ function words(heap: Uint8Array) {
 
 export function readEncounterSnapshot(heap: Uint8Array, offset: number, metadata: EncounterMetadata): EncounterSnapshot | undefined {
   const source = words(heap);
-  if (!source || !Number.isInteger(offset) || offset < 0 || offset % 4 || offset + 64 > heap.byteLength) return;
+  if (!source || !Number.isInteger(offset) || offset < 0 || offset % 4 || offset + metadata.size > heap.byteLength) return;
   const base = offset / 4;
   const publication = Atomics.load(source, base + 4);
   if (!publication || publication & 1) return;
-  const copy = Array.from({ length: 16 }, (_, i) => Atomics.load(source, base + i));
+  const copy = Array.from({ length: metadata.size / 4 }, (_, i) => Atomics.load(source, base + i));
   if (copy[4] !== publication || Atomics.load(source, base + 4) !== publication
     || !copy[5] || copy[0] !== metadata.magicA || copy[1] !== metadata.magicB
-    || copy[2] !== 0x00400001 || copy[3] !== metadata.address || copy[15] !== 0) return;
+    || copy[2] !== (metadata.size << 16 | metadata.version) || copy[3] !== metadata.address || copy.at(-1) !== 0) return;
+  const wide = metadata.version === 2;
+  const species = copy[wide ? 10 : 9];
+  const status = copy[wide ? 11 : 10];
   const snapshot: EncounterSnapshot = {
     publication, frame: copy[5], request: copy[6], acknowledgement: copy[7],
-    attempts: copy[8] & 0xffff, unlocks: copy[8] >>> 16,
-    species: copy[9] & 0xffff, site: copy[9] >>> 16 & 255, phase: copy[9] >>> 24,
-    balls: copy[10] & 255, result: copy[10] >>> 8 & 255, saveStatus: copy[10] >>> 16 & 255,
-    ackStatus: copy[10] >>> 24, saveCounter: copy[12], trainerId: copy[13],
+    attempts: wide ? copy[8] : copy[8] & 0xffff, unlocks: wide ? copy[9] : copy[8] >>> 16,
+    species: species & 0xffff, site: species >>> 16 & 255, phase: species >>> 24,
+    balls: status & 255, result: status >>> 8 & 255, saveStatus: status >>> 16 & 255,
+    ackStatus: status >>> 24, saveCounter: copy[wide ? 14 : 12], trainerId: copy[wide ? 15 : 13],
   };
-  if (snapshot.attempts > 0x3fff || snapshot.unlocks > 0x3fff || snapshot.unlocks & ~snapshot.attempts
+  const mask = wide ? CAPTURE_MASK : LEGACY_CAPTURE_MASK;
+  if (snapshot.attempts > mask || snapshot.unlocks > mask || snapshot.unlocks & ~snapshot.attempts
     || snapshot.phase > 6 || snapshot.balls > 3 || snapshot.result > 7 || snapshot.saveStatus > 1 || snapshot.ackStatus > 2) return;
   if (snapshot.phase === 0 ? snapshot.site !== 255 || snapshot.species !== 0
-    : snapshot.site >= 14 || snapshot.species < 1 || snapshot.species > 150
+    : snapshot.site >= (wide ? CAPTURE_SITE_COUNT : 14) || snapshot.species < 1 || snapshot.species > 150
       || !snapshot.request || !(snapshot.attempts & 1 << snapshot.site)) return;
   return snapshot;
 }
@@ -62,8 +69,7 @@ const sameRequest = (a: EncounterSnapshot, b: EncounterSnapshot) => a.request ==
   && a.saveCounter === b.saveCounter && a.trainerId === b.trainerId
   && a.attempts === b.attempts && a.unlocks === b.unlocks;
 
-/** The live client supplies allocation/freshness guarantees. Only the native
- * packet's five documented ACK fields are writable; sequence commits last. */
+/** Commit the acknowledgement sequence after all durable save fields. */
 export function writeEncounterAcknowledgement(heap: Uint8Array, offset: number, metadata: EncounterMetadata,
   expected: EncounterSnapshot, status: 1 | 2): boolean {
   if (status !== 1 && status !== 2) return false;
@@ -72,9 +78,16 @@ export function writeEncounterAcknowledgement(heap: Uint8Array, offset: number, 
     || current.acknowledgement === current.request) return false;
   const target = words(heap)!;
   const base = offset / 4;
-  Atomics.store(target, base + 11, current.attempts | current.unlocks << 16);
-  Atomics.store(target, base + 14, current.saveCounter);
-  Atomics.store(heap, offset + 43, status);
+  if (metadata.version === 2) {
+    Atomics.store(target, base + 12, current.attempts);
+    Atomics.store(target, base + 13, current.unlocks);
+    Atomics.store(target, base + 16, current.saveCounter);
+    Atomics.store(heap, offset + 47, status);
+  } else {
+    Atomics.store(target, base + 11, current.attempts | current.unlocks << 16);
+    Atomics.store(target, base + 14, current.saveCounter);
+    Atomics.store(heap, offset + 43, status);
+  }
   Atomics.store(target, base + 7, current.request);
   return true;
 }
@@ -133,16 +146,17 @@ export class NativeEncounterBridge {
         if (!heap || !source) throw new Error('Matching shared encounter heap unavailable.');
         const candidates: Array<{ offset: number; frame: number; publication: number }> = [];
         const chunk = 512 * 1024;
-        for (let start = 0; start <= source.length - 16; start += chunk) {
+        const stop = source.length - this.options.metadata.size / 4 + 1;
+        for (let start = 0; start < stop; start += chunk) {
           if (this.stopped || !this.options.isActive()) break;
-          const end = Math.min(source.length - 15, start + chunk);
+          const end = Math.min(stop, start + chunk);
           for (let index = start; index < end; index++) {
             if (Atomics.load(source, index) !== this.options.metadata.magicA) continue;
             const packet = readEncounterSnapshot(heap, index * 4, this.options.metadata);
             if (packet) candidates.push({ offset: index * 4, frame: packet.frame, publication: packet.publication });
             if (candidates.length > 64) throw new Error('Too many encounter packet candidates.');
           }
-          if (end < source.length - 15) await wait(0);
+          if (end < stop) await wait(0);
         }
         await wait(80);
         const current = this.options.getHeap();
