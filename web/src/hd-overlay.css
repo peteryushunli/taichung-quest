@@ -1,0 +1,6 @@
+/* Preview: the 4x high-resolution layer sits exactly over the game canvas. */
+.screen canvas.hd-overlay { position: absolute; inset: 0; pointer-events: none; image-rendering: auto; }
+.hd-toggle { position: fixed; right: 12px; bottom: 12px; z-index: 2147483000; border: 1px solid #2f5c46; background: #f4f1e4; color: #234a37; font: 600 12px/1 system-ui, sans-serif; padding: 9px 12px; border-radius: 999px; box-shadow: 0 2px 8px #0003; }
+.hd-toggle[aria-pressed='false'] { background: #2f5c46; color: #f4f1e4; }
+
+.screen canvas.hd-overlay.hd-crisp { image-rendering: pixelated; }

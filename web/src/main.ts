@@ -28,6 +28,8 @@ import { parseOnboardingMetadata } from './onboarding-bridge';
 import { NativeEncounterBridge, parseEncounterMetadata } from './encounter-bridge';
 import type { EncounterMetadata } from './encounter-bridge';
 import { CaptureStorageController } from './capture-storage';
+import { DETAILS, HdOverlay, keepCanvasReadable } from './hd-overlay';
+import './hd-overlay.css';
 import { CAPTURE_BOOT_INTENT_KEY, captureBlocksSnapshots, readCaptureBootPolicy } from './capture-persistence';
 
 type RuntimeFactory = (options: { canvas: HTMLCanvasElement }) => Promise<mGBAEmulator>;
@@ -128,6 +130,37 @@ const landing = createLanding(el('landing'), {
 });
 const canvas = el<HTMLCanvasElement>('game-canvas');
 protectGameDisplay(el('screen'));
+// Preview: high-resolution buildings and characters drawn over the game's own frame (H toggles).
+keepCanvasReadable(canvas);
+const hdOverlay = new HdOverlay(canvas, '/hd/world', '/hd/sprites', { getHeap: () => (emulator as LanguageRuntime | undefined)?.getTaichungHeapU8?.() });
+canvas.after(hdOverlay.element);
+if (location.hostname === '127.0.0.1' || location.hostname === 'localhost') (window as unknown as { __hd?: HdOverlay }).__hd = hdOverlay;
+const hdToggle = document.createElement('button');
+hdToggle.type = 'button';
+hdToggle.className = 'hd-toggle';
+const renderHdToggle = () => {
+  const mode = `HD ${hdOverlay.detail}×`;
+  const label = hdOverlay.enabled ? { locked: mode, searching: `${mode} (no HD map here)`, loading: 'HD: loading', error: 'HD: pack missing', off: mode }[hdOverlay.status] : 'HD: off';
+  hdToggle.textContent = `${label} · H`;
+  hdToggle.setAttribute('aria-pressed', String(hdOverlay.enabled));
+};
+hdOverlay.onChange(renderHdToggle);
+renderHdToggle();
+// Preview control: H steps through off, 2×, 3×, 4× detail.
+const stepHd = () => {
+  if (!hdOverlay.enabled) { hdOverlay.detail = DETAILS[0]; hdOverlay.enabled = true; }
+  else if (hdOverlay.detail === DETAILS[DETAILS.length - 1]) hdOverlay.enabled = false;
+  else hdOverlay.detail = DETAILS[DETAILS.indexOf(hdOverlay.detail) + 1];
+  renderHdToggle();
+};
+hdToggle.addEventListener('click', () => { stepHd(); canvas.focus({ preventScroll: true }); });
+document.body.append(hdToggle);
+window.addEventListener('keydown', (event) => {
+  if (event.key !== 'h' && event.key !== 'H') return;
+  const target = event.target as HTMLElement | null;
+  if (target && (target.isContentEditable || ['INPUT', 'TEXTAREA', 'SELECT'].includes(target.tagName))) return;
+  stepHd();
+}, { capture: true });
 const playButton = el<HTMLButtonElement>('play-button');
 const feedback = el('feedback');
 const status = el('game-status');
@@ -465,6 +498,7 @@ async function startGame() {
     if (!emulator) {
       const createEmulator = await getRuntimeFactory();
       emulator = await createEmulator({ canvas });
+      if (location.hostname === "127.0.0.1" || location.hostname === "localhost") (window as unknown as { __taichungEmulator?: mGBAEmulator }).__taichungEmulator = emulator;
       await emulator.FSInit();
       emulator.setCoreSettings({
         // The wrapper owns one guarded snapshot timer. Avoid the native loop's
@@ -532,6 +566,7 @@ async function startGame() {
     gameInput?.refresh();
     el('start-screen').hidden = true;
     canvas.classList.add('playing');
+    hdOverlay.start();
     document.querySelectorAll<HTMLButtonElement>('#pause-button, #sound-button, #game-sound-button, #save-button, #restart-button, #export-button, #import-button').forEach((button) => button.disabled = false);
     setStatus('OUT EXPLORING');
     message(freshCartridgeBoot && cartridgeBootIntent ? cartridgeBootIntent === 'import' ? 'Save imported. Choose Continue from the game’s title screen.' : 'Cartridge restarted. Continue your in-game save or begin a new adventure.' : !freshCartridgeBoot && emulator.getAutoSaveState() ? 'Welcome back. Your last saved spot is waiting for you.' : 'Wake up in the guest house near Old Station. Use City Map to discover Taichung’s landmarks.');
