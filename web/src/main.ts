@@ -135,36 +135,18 @@ const landing = createLanding(el('landing'), {
 });
 const canvas = el<HTMLCanvasElement>('game-canvas');
 protectGameDisplay(el('screen'));
-// Preview: high-resolution buildings and characters drawn over the game's own frame (H toggles).
+// High-resolution buildings and characters drawn over the game's own frame, at
+// the chosen 2× detail. H turns the layer off and on (keyboards only).
 keepCanvasReadable(canvas);
 const hdOverlay = new HdOverlay(canvas, '/hd/world', '/hd/sprites', { getHeap: () => (emulator as LanguageRuntime | undefined)?.getTaichungHeapU8?.() });
 canvas.after(hdOverlay.element);
+if (hdOverlay.detail !== DETAILS[0]) hdOverlay.detail = DETAILS[0];
 if (location.hostname === '127.0.0.1' || location.hostname === 'localhost') (window as unknown as { __hd?: HdOverlay }).__hd = hdOverlay;
-const hdToggle = document.createElement('button');
-hdToggle.type = 'button';
-hdToggle.className = 'hd-toggle';
-const renderHdToggle = () => {
-  const mode = `HD ${hdOverlay.detail}×`;
-  const label = hdOverlay.enabled ? { locked: mode, searching: `${mode} (no HD map here)`, loading: 'HD: loading', error: 'HD: pack missing', off: mode }[hdOverlay.status] : 'HD: off';
-  hdToggle.textContent = `${label} · H`;
-  hdToggle.setAttribute('aria-pressed', String(hdOverlay.enabled));
-};
-hdOverlay.onChange(renderHdToggle);
-renderHdToggle();
-// Preview control: H steps through off, 2×, 3×, 4× detail.
-const stepHd = () => {
-  if (!hdOverlay.enabled) { hdOverlay.detail = DETAILS[0]; hdOverlay.enabled = true; }
-  else if (hdOverlay.detail === DETAILS[DETAILS.length - 1]) hdOverlay.enabled = false;
-  else hdOverlay.detail = DETAILS[DETAILS.indexOf(hdOverlay.detail) + 1];
-  renderHdToggle();
-};
-hdToggle.addEventListener('click', () => { stepHd(); canvas.focus({ preventScroll: true }); });
-document.body.append(hdToggle);
 window.addEventListener('keydown', (event) => {
-  if (event.key !== 'h' && event.key !== 'H') return;
+  if (event.key !== 'h' && event.key !== 'H' || event.repeat || event.ctrlKey || event.metaKey || event.altKey) return;
   const target = event.target as HTMLElement | null;
   if (target && (target.isContentEditable || ['INPUT', 'TEXTAREA', 'SELECT'].includes(target.tagName))) return;
-  stepHd();
+  hdOverlay.enabled = !hdOverlay.enabled;
 }, { capture: true });
 const playButton = el<HTMLButtonElement>('play-button');
 const feedback = el('feedback');
