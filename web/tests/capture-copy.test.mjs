@@ -60,3 +60,15 @@ test('real sign/host copy keeps capture-before-TEAM-unlock and the correct entry
     else delete globalThis.document;
   }
 });
+
+test('the Boulevard guide includes encounters for every non-gym destination', () => {
+  const { extraSights, markersById } = JSON.parse(
+    readFileSync(new URL('../src/data/boulevard-preview.json', import.meta.url), 'utf8'),
+  );
+  const sights = [...places, ...extraSights].filter((place) => !isGym(place));
+  assert.equal(sights.length, 18);
+  for (const place of sights) {
+    assert.notEqual(markersById[place.id].captureBit, undefined, place.id);
+    assert.match(landmarkCaptureCopy(place.id, 'guide', true), /encounter.*capture.*unlock.*TEAM/i);
+  }
+});
