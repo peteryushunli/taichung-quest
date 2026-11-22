@@ -1,10 +1,8 @@
 import landmarkCatalog from './data/landmarks.json';
-import sightCatalog from './data/sights.json';
-import cityContract from './data/minimap-contract.json';
+import { BOULEVARD_PREVIEW, cityGeometry, sightCatalog } from './preview-world';
 import { landingMedia, landmarkArt } from './landing-assets';
 import { cityPlaceSummary, districtLabelSpots, isGym, localizedPlace, markerPosition, orderPlaces, placeWorld } from './landing-model';
 import type { LandingLandmark } from './landing-model';
-import type { MinimapGeometry } from './minimap-model';
 import './city-guide.css';
 import { getLocale, initializeLocalization, localizeTree, onLocaleChange, t } from './i18n';
 import { landmarkSketch } from './landmark-art';
@@ -28,7 +26,6 @@ interface GuideHost {
 }
 
 // The ten gyms first, then the ten landmarks without one, numbered the same way as the website map.
-const cityGeometry = cityContract as MinimapGeometry;
 const landmarks = orderPlaces([...landmarkCatalog, ...sightCatalog] as Landmark[]);
 
 export function escapeHtml(value: string) {
@@ -49,7 +46,7 @@ export function createCityGuide(host: GuideHost) {
       <p class="guide-intro" id="city-guide-intro"><span id="guide-place-count"></span> <span data-i18n="Choose a landmark to explore its game-world stop and find visitor information where available.">Choose a landmark to explore its game-world stop and find visitor information where available.</span></p>
       <div class="guide-body">
         <section class="guide-overview" aria-label="Taichung city map" data-i18n-label="Taichung city map">
-          <div class="overview-heading"><span>TAICHUNG <span lang="zh-Hant">臺中</span></span><span class="compass" aria-label="North points up">N ↑</span></div>
+          <div class="overview-heading"><span>TAICHUNG <span lang="zh-Hant">臺中</span></span>${cityGeometry.coordinateSystem?.northUp === false ? '' : '<span class="compass" aria-label="North points up">N ↑</span>'}</div>
           <div class="guide-map" style="--guide-map-aspect:${width} / ${height}">
             <img class="guide-map-drawing" src="${escapeHtml(landingMedia.cityMap)}" width="${width * 16}" height="${height * 16}" alt="">
             ${districtLabelSpots(cityGeometry).map(({ label, sign, x, y }) => `<span class="map-district${sign ? ' is-sign' : ''}" style="left:${x}%;top:${y}%">${label}</span>`).join('')}
@@ -91,7 +88,8 @@ export function createCityGuide(host: GuideHost) {
     const outdoor = place.kind === 'sight' || place.id === 'maple-garden';
     const areaLabel = !place.playable ? 'PLANNED AREA · NOT PLAYABLE' : place.phase === 'arrival' ? 'ARRIVAL AREA · EXPLORABLE' : 'EXPLORABLE GAME AREA';
     const areaNote = !place.playable ? 'This landmark is in the city plan; its game area is not playable in this build.' : outdoor ? 'Walk to it on the city streets and read its sign.' : 'Explore this landmark’s district and visitor hall.';
-    const gymNote = landmarkCaptureCopy(place.id, 'guide') ?? (!gym ? 'Visit this landmark and learn its local history.' : place.gymStatus === 'playable' ? 'A gym battle is playable here. Speak to the leader and win to earn a badge.' : place.gymStatus === 'pending-verification' ? 'This gym challenge is being verified. The district and visitor hall are explorable.' : 'This landmark’s fictional gym challenge is still in development.');
+    const hasEncounter = BOULEVARD_PREVIEW ? cityGeometry.markersById[place.id]?.captureBit !== undefined : undefined;
+    const gymNote = landmarkCaptureCopy(place.id, 'guide', hasEncounter) ?? (!gym ? 'Visit this landmark and learn its local history.' : place.gymStatus === 'playable' ? 'A gym battle is playable here. Speak to the leader and win to earn a badge.' : place.gymStatus === 'pending-verification' ? 'This gym challenge is being verified. The district and visitor hall are explorable.' : 'This landmark’s fictional gym challenge is still in development.');
     const artLabel = chinese ? `${place.nameZh}原創插圖` : `Original illustration of ${place.nameEn}`;
     const mapView = !gym && landmarkArt[place.id]?.mapView ? landmarkArt[place.id].facade : undefined;
     const art = gym ? `<div class="landmark-art">${landmarkSketch(place.id, artLabel)}<span>${t('ORIGINAL FIELD SKETCH')}</span></div>`

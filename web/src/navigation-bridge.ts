@@ -1,11 +1,14 @@
-/** Read-only TCNAV001 client. The GBA address is an identity check, never a
- * guessed WebAssembly heap offset. No navigation memory is written here. */
+import { CAPTURE_MASK } from './capture-persistence.ts';
+
+/** Read-only TCNAV001 client. The GBA address identifies the native packet. */
 export const NAVIGATION_FLAGS = { READY: 1, FIELD: 2, POSITION_VALID: 4, OUTDOOR: 8, INDOOR: 16, CYCLING: 32, CAN_TOGGLE_BIKE: 64 } as const;
-export type NavigationMetadata = { version: 1; size: 48; address: number; magicA: number; magicB: number };
+export type NavigationMetadata = ({ version: 1; size: 48 } | { version: 2; size: 52 }) &
+  { address: number; magicA: number; magicB: number };
 export type NavigationSnapshot = {
   sequence: number; frame: number; flags: number; x: number; y: number;
   mapGroup: number; mapNumber: number; facing: number; mapType: number;
   width: number; height: number; contextFlags: number;
+  gymMask?: number; captureMask?: number;
 };
 export type NavigationState = { phase: 'connecting' | 'hidden' | 'live' | 'unavailable'; snapshot?: NavigationSnapshot };
 const MAGIC_A = 0x414e4354;
@@ -20,9 +23,11 @@ export function parseNavigationMetadata(value: unknown, romSha256: string, romBy
   const binding = build.minimap as Record<string, unknown>;
   const packet = build.navigationBridge as Record<string, unknown>;
   if (binding.schemaVersion !== 1 || !/^[a-f\d]{64}$/.test(geometryFingerprint) || binding.geometryFingerprintSha256 !== geometryFingerprint) return;
-  if (packet.version !== 1 || packet.size !== 48 || packet.magicA !== MAGIC_A || packet.magicB !== MAGIC_B) return;
-  if (typeof packet.address !== 'number' || !Number.isInteger(packet.address) || packet.address % 4 || packet.address < 0x02000000 || packet.address > 0x02040000 - 48) return;
-  return { version: 1, size: 48, address: packet.address, magicA: MAGIC_A, magicB: MAGIC_B };
+  const format = packet.version === 1 && packet.size === 48 ? { version: 1, size: 48 } as const
+    : packet.version === 2 && packet.size === 52 ? { version: 2, size: 52 } as const : undefined;
+  if (!format || packet.magicA !== MAGIC_A || packet.magicB !== MAGIC_B) return;
+  if (typeof packet.address !== 'number' || !Number.isInteger(packet.address) || packet.address % 4 || packet.address < 0x02000000 || packet.address > 0x02040000 - format.size) return;
+  return { ...format, address: packet.address, magicA: MAGIC_A, magicB: MAGIC_B };
 }
 
 function heapWords(heap: Uint8Array) {
@@ -34,18 +39,22 @@ function heapWords(heap: Uint8Array) {
  * Keep those packets observable for liveness, but never display their position. */
 export function readNavigationSnapshot(heap: Uint8Array, offset: number, metadata: NavigationMetadata): NavigationSnapshot | undefined {
   const words = heapWords(heap);
-  if (!words || !Number.isInteger(offset) || offset < 0 || offset % 4 || offset + 48 > heap.byteLength) return;
+  if (!words || !Number.isInteger(offset) || offset < 0 || offset % 4 || offset + metadata.size > heap.byteLength) return;
   const base = offset / 4;
   const sequence = Atomics.load(words, base + 4);
   if (!sequence || sequence % 2) return;
   const copy = Array.from({ length: 12 }, (_, index) => Atomics.load(words, base + index));
   if (sequence !== copy[4] || sequence !== Atomics.load(words, base + 4)) return;
-  if (copy[0] !== metadata.magicA || copy[1] !== metadata.magicB || copy[2] !== 0x00300001 || copy[3] !== metadata.address || !copy[5]) return;
-  if ((copy[6] & ~127) || (copy[10] >>> 16) !== 0 || copy[11] !== 0) return;
+  if (copy[0] !== metadata.magicA || copy[1] !== metadata.magicB || copy[2] !== ((metadata.size << 16) | metadata.version) || copy[3] !== metadata.address || !copy[5]) return;
+  const gymMask = copy[10] >>> 16;
+  const captureMask = copy[11];
+  if ((copy[6] & ~127) || (metadata.version === 1 ? gymMask !== 0 || captureMask !== 0
+    : gymMask > 0x03ff || captureMask > CAPTURE_MASK)) return;
   return {
     sequence, frame: copy[5], flags: copy[6], x: (copy[7] << 16) >> 16, y: copy[7] >> 16,
     mapGroup: copy[8] & 255, mapNumber: copy[8] >>> 8 & 255, facing: copy[8] >>> 16 & 255, mapType: copy[8] >>> 24,
     width: copy[9] & 65535, height: copy[9] >>> 16, contextFlags: copy[10] & 65535,
+    ...(metadata.version === 2 ? { gymMask, captureMask } : {}),
   };
 }
 

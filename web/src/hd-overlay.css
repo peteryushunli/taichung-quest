@@ -1,0 +1,4 @@
+/* The high-resolution layer sits exactly over the game canvas. */
+.screen canvas.hd-overlay { position: absolute; inset: 0; pointer-events: none; image-rendering: auto; }
+
+.screen canvas.hd-overlay.hd-crisp { image-rendering: pixelated; }

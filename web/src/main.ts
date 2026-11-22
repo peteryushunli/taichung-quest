@@ -11,7 +11,7 @@ import titlePikachu from './assets/pokemon/front/pikachu.png';
 import titleSquirtle from './assets/pokemon/front/squirtle.png';
 import type { mGBAEmulator } from '@thenick775/mgba-wasm';
 import { createCityGuide } from './city-guide';
-import { initializeLocalization, onLocaleChange, setLocale, t } from './i18n';
+import { getLocale, initializeLocalization, onLocaleChange, setLocale, t } from './i18n';
 import { createLanding } from './landing';
 import { NativeLanguageBridge, parseLanguageBridgeMetadata } from './language-bridge';
 import type { LanguageBridgeState } from './language-bridge';
@@ -21,14 +21,17 @@ import { protectGameDisplay } from './game-display';
 import { NativeNavigationBridge, parseNavigationMetadata } from './navigation-bridge';
 import type { NavigationState } from './navigation-bridge';
 import { createMinimap } from './minimap';
-import { projectNavigation, secondaryAction } from './minimap-model';
-import minimapGeometry from './data/minimap-contract.json';
+import { districtAt, projectNavigation, secondaryAction, streetAt } from './minimap-model';
+import { BOULEVARD_PREVIEW, cityGeometry as minimapGeometry } from './preview-world';
 import { createOnboarding } from './onboarding';
 import { parseOnboardingMetadata } from './onboarding-bridge';
 import { NativeEncounterBridge, parseEncounterMetadata } from './encounter-bridge';
 import type { EncounterMetadata } from './encounter-bridge';
 import { CaptureStorageController } from './capture-storage';
+import { DETAILS, HdOverlay, keepCanvasReadable } from './hd-overlay';
+import './hd-overlay.css';
 import { CAPTURE_BOOT_INTENT_KEY, captureBlocksSnapshots, readCaptureBootPolicy } from './capture-persistence';
+import { hasReadableFireRedSave, isFireRedBackupSize } from './firered-save';
 
 type RuntimeFactory = (options: { canvas: HTMLCanvasElement }) => Promise<mGBAEmulator>;
 type RuntimeWindow = Window & { taichungCreateEmulator?: RuntimeFactory };
@@ -80,6 +83,10 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
           <div class="screen-bezel">
             <div class="screen" id="screen">
               <canvas id="game-canvas" width="240" height="160" tabindex="0" aria-label="Taichung Quest game screen. Arrow keys move. F interacts or confirms. D goes back. M or Enter opens the menu."></canvas>
+              <div class="live-street" id="live-street" hidden>
+                <span id="live-street-name"></span>
+                <span id="live-district"></span>
+              </div>
               <div class="start-screen" id="start-screen">
                 <div class="title-scene" aria-hidden="true">
                   <i class="title-sun"></i><i class="title-cloud cloud-a"></i><i class="title-cloud cloud-b"></i><i class="title-cloud cloud-c"></i>
@@ -128,6 +135,19 @@ const landing = createLanding(el('landing'), {
 });
 const canvas = el<HTMLCanvasElement>('game-canvas');
 protectGameDisplay(el('screen'));
+// High-resolution buildings and characters drawn over the game's own frame, at
+// the chosen 2× detail. H turns the layer off and on (keyboards only).
+keepCanvasReadable(canvas);
+const hdOverlay = new HdOverlay(canvas, '/hd/world', '/hd/sprites', { getHeap: () => (emulator as LanguageRuntime | undefined)?.getTaichungHeapU8?.() });
+canvas.after(hdOverlay.element);
+if (hdOverlay.detail !== DETAILS[0]) hdOverlay.detail = DETAILS[0];
+if (location.hostname === '127.0.0.1' || location.hostname === 'localhost') (window as unknown as { __hd?: HdOverlay }).__hd = hdOverlay;
+window.addEventListener('keydown', (event) => {
+  if (event.key !== 'h' && event.key !== 'H' || event.repeat || event.ctrlKey || event.metaKey || event.altKey) return;
+  const target = event.target as HTMLElement | null;
+  if (target && (target.isContentEditable || ['INPUT', 'TEXTAREA', 'SELECT'].includes(target.tagName))) return;
+  hdOverlay.enabled = !hdOverlay.enabled;
+}, { capture: true });
 const playButton = el<HTMLButtonElement>('play-button');
 const feedback = el('feedback');
 const status = el('game-status');
@@ -210,6 +230,19 @@ function renderNavigation() {
   minimap.update(state);
   const packet = state.phase === 'live' ? state.snapshot : undefined;
   const position = packet ? projectNavigation(packet, minimapGeometry) : undefined;
+  const street = streetAt(position, minimapGeometry);
+  const streetLabel = el('live-street');
+  const district = BOULEVARD_PREVIEW ? districtAt(position, minimapGeometry) : undefined;
+  const language = getLocale() === 'zh-Hant' ? 'zh' : 'en';
+  const streetFields = [
+    [el('live-street-name'), street?.[language] ?? ''],
+    [el('live-district'), district?.[language] ?? ''],
+  ] as const;
+  for (const [element, name] of streetFields) {
+    if (element.textContent !== name) element.textContent = name;
+    element.hidden = !name;
+  }
+  streetLabel.hidden = !street && !district;
   const action = secondaryAction(packet, position);
   const secondary = document.querySelector<HTMLButtonElement>('.physical-controls [data-gba="B"]')!;
   const label = secondary.querySelector<HTMLElement>('[data-i18n]')!;
@@ -465,6 +498,7 @@ async function startGame() {
     if (!emulator) {
       const createEmulator = await getRuntimeFactory();
       emulator = await createEmulator({ canvas });
+      if (location.hostname === "127.0.0.1" || location.hostname === "localhost") (window as unknown as { __taichungEmulator?: mGBAEmulator }).__taichungEmulator = emulator;
       await emulator.FSInit();
       emulator.setCoreSettings({
         // The wrapper owns one guarded snapshot timer. Avoid the native loop's
@@ -496,6 +530,15 @@ async function startGame() {
       if (/^taichung-firered(?:-[a-f0-9]{16})?\.gba$/.test(filename) && path !== gamePath) emulator.FS.unlink(path);
     }
     emulator.FS.writeFile(gamePath, rom);
+    if (BOULEVARD_PREVIEW && !emulator.FS.analyzePath(SAVE_PATH).exists) {
+      // A fresh preview opens with the supplied demo save. Existing progress on this origin wins.
+      const checkpoint = await fetch('/preview/old-station.sav');
+      const save = new Uint8Array(await checkpoint.arrayBuffer());
+      if (!checkpoint.ok || ![131072, 131088].includes(save.byteLength)) {
+        throw new Error('The Old Station preview save could not be loaded. Reload and try again.');
+      }
+      if (!emulator.FS.analyzePath(SAVE_PATH).exists) emulator.FS.writeFile(SAVE_PATH, save);
+    }
     const freshCartridgeBoot = bootFromCartridge;
     if (freshCartridgeBoot) {
       const snapshotName = gamePath.slice(gamePath.lastIndexOf('/') + 1).replace(/\.gba$/, '_auto.ss');
@@ -532,6 +575,7 @@ async function startGame() {
     gameInput?.refresh();
     el('start-screen').hidden = true;
     canvas.classList.add('playing');
+    hdOverlay.start();
     document.querySelectorAll<HTMLButtonElement>('#pause-button, #sound-button, #game-sound-button, #save-button, #restart-button, #export-button, #import-button').forEach((button) => button.disabled = false);
     setStatus('OUT EXPLORING');
     message(freshCartridgeBoot && cartridgeBootIntent ? cartridgeBootIntent === 'import' ? 'Save imported. Choose Continue from the game’s title screen.' : 'Cartridge restarted. Continue your in-game save or begin a new adventure.' : !freshCartridgeBoot && emulator.getAutoSaveState() ? 'Welcome back. Your last saved spot is waiting for you.' : 'Wake up in the guest house near Old Station. Use City Map to discover Taichung’s landmarks.');
@@ -599,8 +643,18 @@ const minimapSetting = document.createElement('label');
 minimapSetting.className = 'minimap-setting';
 minimapSetting.innerHTML = '<span id="minimap-label" data-i18n="Minimap">Minimap</span><select id="minimap-visibility" aria-labelledby="minimap-label" aria-describedby="minimap-hint"><option value="on" data-i18n="On">On</option><option value="off" data-i18n="Off">Off</option></select><small id="minimap-hint"></small>';
 el('options-toolbar-slot').before(minimapSetting);
+if (BOULEVARD_PREVIEW) {
+  const hud = document.createElement('div');
+  hud.className = 'hud-layout-options';
+  hud.innerHTML = `<label class="minimap-setting"><span data-i18n="Minimap view">Minimap view</span>
+    <select id="minimap-view"><option value="nearby" data-i18n="Nearby">Nearby</option>
+    <option value="districts" data-i18n="Districts">Districts</option>
+    <option value="citywide" data-i18n="Citywide">Citywide</option></select></label>`;
+  el('options-toolbar-slot').before(hud);
+}
 const minimap = createMinimap({
   screen: el('screen'), toggle: el<HTMLSelectElement>('minimap-visibility'), hint: el('minimap-hint'), geometry: minimapGeometry,
+  zoom: BOULEVARD_PREVIEW ? el<HTMLSelectElement>('minimap-view') : undefined,
   openGuide: () => { if (!onboarding?.blocksCityMap) cityGuide.open(el('live-minimap')); },
 });
 onboarding = createOnboarding({
@@ -759,10 +813,17 @@ el<HTMLInputElement>('save-file').addEventListener('change', async (event) => {
   if (!file || !emulator || !gamePath) return;
   // The pinned mGBA core can append a 16-byte hardware trailer. Accept its
   // own exported backups unchanged, alongside ordinary raw cartridge saves.
-  if (![65536, 65552, 131072, 131088].includes(file.size)) { message('Choose a compatible FireRed .sav file (64 KB or 128 KB, including mGBA backups).', true); input.value = ''; return; }
-  if (!(await confirmAction('Import game save', 'Import this save and restart the cartridge? It will replace the current in-game save in this browser.', 'Import save'))) { input.value = ''; return; }
   try {
+    if (!isFireRedBackupSize(file.size)) {
+      message('Choose a compatible FireRed .sav file (64 KB or 128 KB, including mGBA backups).', true);
+      return;
+    }
     const bytes = new Uint8Array(await file.arrayBuffer());
+    if (!hasReadableFireRedSave(bytes)) {
+      message('Choose a readable FireRed backup with a completed in-game save.', true);
+      return;
+    }
+    if (!(await confirmAction('Import game save', 'Import this save and restart the cartridge? It will replace the current in-game save in this browser.', 'Import save'))) return;
     await restartCartridge(bytes);
   } catch (error) {
     console.error(error);
@@ -793,7 +854,7 @@ function refreshRuntimeLabels() {
   landing.refresh();
   el('pause-button').innerHTML = `${icon(paused ? 'play' : 'pause')} <span>${t(paused ? 'Resume' : 'Pause')}</span>`;
   refreshSoundControls();
-  document.title = t('Taichung Quest · A little adventure');
+  document.title = t(BOULEVARD_PREVIEW ? 'Taichung Quest · Boulevard preview' : 'Taichung Quest · A little adventure');
   refreshNavigation();
 }
 onLocaleChange(refreshRuntimeLabels);

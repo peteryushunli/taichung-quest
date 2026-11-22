@@ -138,14 +138,18 @@ test('Muqing’s gym is the Wanhe Temple hall, and Maple Garden keeps its hall a
   assert.equal(city.markersById['maple-garden'].gymMapId, 'MAP_TAICHUNG_MAPLE_GARDEN_GYM');
 });
 
-test('every open gym has its leader portrait and team wired in', () => {
+test('every open gym has a leader portrait and three Pokémon', () => {
   for (const place of open) {
-    assert.match(assets, new RegExp(`'?${place.id}'?: \\{[^}]*leader: \\w+, team: \\[mon\\(`), place.id);
+    const entry = assets.split('\n').find((line) => line.includes(`'${place.id}':`) || line.trimStart().startsWith(`${place.id}:`));
+    assert.ok(entry, place.id);
+    assert.match(entry, /leader: \w+, team: \[/, place.id);
+    assert.equal([...entry.matchAll(/mon\('/g)].length, 3, place.id);
   }
 });
 
-test('the remaining seven team orders match native source b7b027d', () => {
+test('the listed team orders match the native gym rosters', () => {
   const expected = {
+    'old-taichung-station': ['Rattata', 'Pidgey', 'Meowth'],
     'natural-science-museum': ['Magneton', 'Porygon', 'Omastar'],
     'calligraphy-greenway': ['Bellsprout', 'Vileplume', 'Tangela'],
     'shen-ji-new-village': ['Meowth', 'Machoke', 'Ditto'],
@@ -180,6 +184,24 @@ test('the ten set-piece landmarks join the map as non-gym places, after the ten 
       assert.ok(info.url?.startsWith('https://'), place.id);
     }
     assert.ok(place.description.length > 200 && place.descriptionZh.length > 60, place.id);
+  }
+});
+
+test('Boulevard map cards use the complete bilingual visitor descriptions', () => {
+  const { extraSights } = JSON.parse(readFileSync(new URL('../src/data/boulevard-preview.json', import.meta.url), 'utf8'));
+  const visitorCopy = JSON.parse(readFileSync(new URL('../src/data/boulevard-sight-copy.json', import.meta.url), 'utf8'));
+  assert.ok(extraSights.length > 0);
+  for (const place of extraSights) {
+    const { description, descriptionZh, officialUrl, officialUrlZh } = visitorCopy[place.id];
+    assert.deepEqual(
+      [place.description, place.descriptionZh, place.officialUrl, place.officialUrlZh],
+      [description, descriptionZh, officialUrl, officialUrlZh],
+      place.id,
+    );
+    assert.ok(description.length > 200 && descriptionZh.length > 60, place.id);
+    for (const locale of ['en', 'zh-Hant']) {
+      assert.ok(localizedPlace(place, locale).url?.startsWith('https://'), place.id);
+    }
   }
 });
 

@@ -2,7 +2,8 @@
    preserving its aspect ratio and map coverage with smoothly rendered symbols. */
 .live-minimap { position: absolute; z-index: 3; top: calc(100% * 3 / 160); left: calc(100% * 3 / 240); width: calc(100% * 48 / 240); aspect-ratio: 64 / 48; padding: 0; border: 0; border-radius: 4%; background: #f8f8f8; box-shadow: none; cursor: pointer; }
 .live-minimap[hidden] { display: none; }
-.live-minimap svg { display: block; width: 100%; height: 100%; overflow: hidden; fill: none; stroke: none; }
+.live-minimap svg { display: block; overflow: hidden; fill: none; stroke: none; }
+.live-minimap > svg { width: 100%; height: 100%; }
 .live-minimap svg path, .live-minimap svg rect, .live-minimap svg circle { stroke: none; }
 .live-minimap .minimap-marker { stroke: #283038; stroke-width: .65; stroke-linejoin: round; }
 .live-minimap .minimap-frame-outer { fill: none; stroke: #283038; stroke-width: .9; }
@@ -15,13 +16,42 @@
 .live-minimap.is-tutorial .minimap-player-dot { display: block; }
 .live-minimap image { image-rendering: auto; }
 .live-minimap .minimap-outside { fill: #384858; }
+.live-minimap .minimap-boulevard-outside { fill: #334945; }
 .live-minimap .minimap-outline { fill: #283038; }
 .live-minimap .minimap-light { fill: #f8f8f8; }
-.live-minimap .minimap-gym-fill { fill: #e83820; }
-.live-minimap .minimap-sight-fill { fill: #f8d030; }
-.live-minimap .minimap-home-roof { fill: #4878e8; }
-.live-minimap .minimap-gym:not(.on-rim) .minimap-pinned, .live-minimap .minimap-gym.on-rim .minimap-full { display: none; }
+.live-minimap .minimap-badge { fill: #df9956; }
+.live-minimap .minimap-ball, .live-minimap .minimap-ball-button { fill: #f8edcf; }
+.live-minimap .minimap-ball-top { fill: #c86153; }
+.live-minimap .minimap-signpost { fill: #d7c18b; }
+.live-minimap .minimap-detail { stroke: #283038; stroke-width: .44; }
+.live-minimap .is-earned .minimap-marker { fill: none; stroke: #283038; stroke-width: .72; }
+.live-minimap .is-earned .minimap-ball-top { fill: none; }
+.live-minimap .minimap-district-labels { fill: #26392f; stroke: #eeeed3; stroke-width: 1.25; paint-order: stroke; stroke-linejoin: round; font: 700 4.1px Arial, sans-serif; }
+.live-minimap[data-view="citywide"] { width: calc(100% * 84 / 240); }
 .live-minimap:focus-visible { outline: 2px solid #db8b50; outline-offset: 2px; }
 .minimap-setting { display: grid; grid-template-columns: 1fr auto; gap: 8px; margin-top: 16px; padding-top: 16px; border-top: 1px solid #c6d1ba; font-size: 13px; align-items: center; }
 .minimap-setting select { min-height: 44px; min-width: 100px; padding: 8px; border: 1px solid #b5c5a8; border-radius: 6px; background: #e8ecde; color: #244d3c; font-size: 14px; }
 .minimap-setting small { grid-column: 1 / -1; font-size: 11px; line-height: 1.5; color: #64735b; }
+.hud-layout-options .minimap-setting { margin-top: 8px; padding-top: 0; border-top: 0; }
+.live-street {
+  position: absolute;
+  right: 2%;
+  bottom: 2%;
+  z-index: 3;
+  max-width: 65%;
+  padding: .2em .55em;
+  border: 1px solid rgba(40, 70, 55, .65);
+  border-radius: .3em;
+  background: rgba(247, 244, 223, .96);
+  color: #254638;
+  font-size: clamp(.62rem, 1.7cqw, .88rem);
+  font-weight: 650;
+  line-height: 1.25;
+  text-align: right;
+  pointer-events: none;
+  user-select: none;
+}
+.live-street span { display: block; }
+.live-street span[hidden] { display: none; }
+.live-street #live-district { margin-top: .16em; padding-top: .14em; border-top: 1px solid #b7c6a7; font-size: .9em; }
+.live-street #live-street-name[hidden] + #live-district { margin-top: 0; padding-top: 0; border-top: 0; font-size: 1em; }

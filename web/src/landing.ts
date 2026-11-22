@@ -1,6 +1,5 @@
 import landmarkCatalog from './data/landmarks.json';
-import sightCatalog from './data/sights.json';
-import cityGeometry from './data/minimap-contract.json';
+import { BOULEVARD_PREVIEW, cityGeometry as city, sightCatalog } from './preview-world';
 import './landing.css';
 import { escapeHtml } from './city-guide';
 import { getLocale, onLocaleChange, setLocale, t } from './i18n';
@@ -11,7 +10,6 @@ import type { PokemonIcon } from './landing-assets';
 import { pixelFlag } from './landing-flag';
 import { cityPlaceSummary, districtCount, districtLabelSpots, gymStatusSummary, isGym, isGymOpen, localizedPlace, markerPosition, orderPlaces, placeStatus, placeWorld } from './landing-model';
 import type { LandingLandmark } from './landing-model';
-import type { MinimapGeometry } from './minimap-model';
 
 interface LandingHost {
   startNewGame(): void;
@@ -23,7 +21,6 @@ interface LandingHost {
 const landmarks = orderPlaces([...landmarkCatalog, ...sightCatalog] as LandingLandmark[]);
 const gyms = landmarks.filter(isGym);
 const sights = landmarks.filter((place) => !isGym(place));
-const city = cityGeometry as MinimapGeometry;
 const DEFAULT_LANDMARK = 'old-taichung-station';
 const GITHUB_URL = 'https://github.com/peteryushunli/taichung-quest';
 const starters = [
@@ -87,7 +84,7 @@ function markup() {
         <div class="lp-hero-copy">
           <p class="lp-eyebrow lp-eyebrow-dot">${copy('A POKÉMON FIRERED ADVENTURE · 臺中')}</p>
           <h1 class="lp-h1 lp-display">${copy('Taichung, shrunk to fit a Game Boy.')}</h1>
-          <p class="lp-lede">${copy('Explore Taichung in the world of Pokémon. Challenge leaders at ten real landmark gyms, collect badges, and find ten more landmarks around town, from Taichung Prefectural Hall to Maple Garden. Pick a partner, hop on a bike, and play free in your browser.')}</p>
+          <p class="lp-lede">${copy('Explore Taichung in the world of Pokémon. Challenge ten landmark gyms, collect badges, and catch rare Pokémon at places like Taichung Prefectural Hall and Maple Garden. Pick a partner, hop on a bike, and play free in your browser.')}</p>
           <div class="lp-actions"><a class="lp-btn" id="hero-play" href="#play" data-play-link><span aria-hidden="true">▶</span> <span data-play-label="Play in your browser">${escapeHtml(t('Play in your browser'))}</span></a><a class="lp-text-link" href="#map">${copy('Explore the map ↓')}</a></div>
           <div class="lp-facts"><span>${gyms.length} ${copy('gyms')}</span><span>${landmarks.length} ${copy('landmarks')}</span><span>${districtCount(landmarks)} ${copy('districts')}</span><span>English · 繁體中文</span>${copy('No install')}</div>
         </div>
@@ -104,7 +101,7 @@ function markup() {
       <section class="lp-map-section" id="map"><div class="lp-wrap">
         ${sectionHead('01 — THE MAP', cityPlaceSummary(landmarks, getLocale()), "Distances are compressed, but the city keeps its shape: the old city around the station, the Greenway's museums in the middle, Xitun's theater and night market to the northwest, and Nantun's temples and parks to the south. Green pins are gyms; gold pins are landmarks to find on foot.", 'lp-map-heading')}
         <div class="lp-map-body">
-          <div class="lp-map" id="lp-map" style="aspect-ratio:${city.world.width} / ${city.world.height};background-size:${800 / city.world.width}% ${800 / city.world.height}%" role="group" aria-label="${escapeHtml(t('Choose a landmark'))}" data-i18n-label="Choose a landmark">
+          <div class="lp-map${BOULEVARD_PREVIEW ? ' lp-map-boulevard' : ''}" id="lp-map" style="aspect-ratio:${city.world.width} / ${city.world.height};background-size:${800 / city.world.width}% ${800 / city.world.height}%" role="group" aria-label="${escapeHtml(t('Choose a landmark'))}" data-i18n-label="Choose a landmark">
             ${cityMap()}
             <div id="lp-markers"></div>
             <div class="lp-map-legend"><span><i class="lp-swatch-open"></i>${copy('Gym')}</span><span><i class="lp-swatch-landmark"></i>${copy('Landmark')}</span>${gyms.some((place) => !isGymOpen(place)) ? `<span><i class="lp-swatch-planned"></i>${copy('In development')}</span>` : ''}</div>
@@ -114,7 +111,7 @@ function markup() {
       </div></section>
 
       <section class="lp-wrap" id="gyms">
-        ${sectionHead('02 — THE LANDMARKS', 'Ten gyms and ten more landmarks, all real places.', 'Each place is redrawn tile by tile. Gym leaders are fictional; the buildings are real.')}
+        ${sectionHead('02 — THE LANDMARKS', 'Ten landmark gyms. Rare Pokémon across the city.', 'Each place is redrawn tile by tile. Gym leaders are fictional; the buildings are real.')}
         <div class="lp-gallery" id="lp-gallery"></div>
       </section>
 
@@ -189,6 +186,7 @@ function renderDetail(id: string) {
   const index = landmarks.findIndex((place) => place.id === id);
   const place = landmarks[index];
   const info = localizedPlace(place, getLocale());
+  const hasEncounter = BOULEVARD_PREVIEW ? city.markersById[id]?.captureBit !== undefined : undefined;
   const art = landmarkArt[id];
   const facade = art?.facade
     ? `<div class="lp-facade${art.mapView ? ' lp-map-view' : ''}" role="img" aria-label="${escapeHtml(info.name)}" style="background-image:url('${escapeHtml(art.facade)}')"></div>`
@@ -207,7 +205,7 @@ function renderDetail(id: string) {
       <div class="lp-detail-names"><h3 class="lp-display">${escapeHtml(info.name)}</h3><span>${escapeHtml(info.otherName)}</span></div>
       <p class="lp-detail-text">${escapeHtml(info.description)}</p>
       <div class="lp-detail-foot">
-        ${isGym(place) ? `<div class="lp-leader">${portrait}<div class="lp-leader-name"><small>${copy('Gym leader')}</small><b>${info.leader ? escapeHtml(info.leader) : copy('To be revealed')}</b></div>${teamSprites}</div>` : `<p class="lp-landmark-note">${copy(landmarkCaptureCopy(place.id, 'landing') ?? 'Visit this landmark and learn its local history.')}</p>`}
+        ${isGym(place) ? `<div class="lp-leader">${portrait}<div class="lp-leader-name"><small>${copy('Gym leader')}</small><b>${info.leader ? escapeHtml(info.leader) : copy('To be revealed')}</b></div>${teamSprites}</div>` : `<p class="lp-landmark-note">${copy(landmarkCaptureCopy(place.id, 'landing', hasEncounter) ?? 'Visit this landmark and learn its local history.')}</p>`}
         ${info.url ? `<div class="lp-real-life"><span>${copy('In real life')}</span><a href="${escapeHtml(info.url)}" target="_blank" rel="noopener">${copy('Visitor info ↗')}</a></div>` : ''}
       </div>
     </div>`;
@@ -279,10 +277,10 @@ export function createLanding(root: HTMLElement, host: LandingHost) {
   root.querySelectorAll<HTMLButtonElement>('[data-locale-toggle]').forEach((button) => {
     button.addEventListener('click', () => setLocale(button.dataset.localeToggle as Locale));
   });
-  // With a game already open there is nothing to choose: Play goes straight back to it.
+  // The preview has a supplied save, so Play can open the game immediately.
   root.querySelectorAll<HTMLAnchorElement>('[data-play-link]').forEach((link) => {
     link.addEventListener('click', (event) => {
-      if (!host.getState().running) return;
+      if (!BOULEVARD_PREVIEW && !host.getState().running) return;
       event.preventDefault();
       host.continueGame();
     });

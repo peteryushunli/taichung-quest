@@ -1,0 +1,61 @@
+{
+ "publishedAtUtc": "2026-11-22T11:31:34+00:00",
+ "url": "https://taichung-quest.vercel.app",
+ "pullRequest": "https://github.com/peteryushunli/taichung-quest/pull/22",
+ "previewDeployment": "dpl_5YLrShLXzERB3dvLFTmqW2GUaMiy",
+ "productionDeployment": "dpl_AzRBKDzjWNaxjoeMBHV9QDebkg55",
+ "productionState": "READY",
+ "promotedFromPreview": true,
+ "frontendArtifactCommit": "ffbdd6ceb6320475d2fa408e12e205b790967713",
+ "trackedSourceDirty": false,
+ "buildMode": "VITE_BOULEVARD_PREVIEW=1",
+ "nativeCommit": "9620afe1e4a1bf5b43860daf7d4ba6c1973da9f1",
+ "nativeBranch": "claude/street-props-fixes (local), based on codex/landmark-travel-refresh b5bab264",
+ "nativeTree": "903ef019cd471c1e324f10b86a83448971bec64f",
+ "cartridgeSHA256": "89f8dc910b814a473a0664b7e54e3ec606defc2ce081ed076dddae49eefd122d",
+ "portablePatchSha256": "8310ba177c6d0fd8a0dfd7de2098dd9b24c7f52b3e16b9b241612353c88f9e09",
+ "geometryFingerprint": "625e4fb0f31227fe9dcbdd314fd4a79e1c19f2a6d3300127e8781183f58fd822",
+ "hdPack": {
+  "romSha256": "89f8dc910b814a473a0664b7e54e3ec606defc2ce081ed076dddae49eefd122d",
+  "maps": 75,
+  "originals": 51,
+  "placements": 1542,
+  "defaultDetail": 2
+ },
+ "features": [
+  "Player walks behind upper cells of carts, benches, tree crowns and lamps, and in front of their solid base",
+  "Shared street, tree and plant palettes refitted in CIELAB: mean colour error 10.9 to 5.3",
+  "Jingming tea cart, Old City F10 stools and Confucius corner stools moved to reopen narrow ways",
+  "Old pixel scooters: three removed, three replaced with the new designs",
+  "Three street people moved off props",
+  "HD layer: high-resolution buildings, trees, plants and characters over the game at 2x; H turns it off and on",
+  "Carries Codex's unmerged web branch up to d2b6a15 (Boulevard HUD, landmark encounters, Shuinan pin)"
+ ],
+ "checks": {
+  "releasePair": "NOT APPLICABLE: verify-release-pair.py rejects Boulevard releases (legacy minimap contract predates the Boulevard maps); portable patch recreates native tree 903ef019 exactly",
+  "cityReport": "build_city.py regenerates byte-identical native data from the committed source; 54/54 maps, 39,887/39,887 walkable cells reachable; worst 778 of 1,011 tiles, 13 of 13 palettes",
+  "mapWalk": "53 maps, 555/558 stops reached (3 harness routes stopped by sign/gate text), 240/240 prop pushes blocked",
+  "walkBehind": "81 spots, 5,832/5,832 player pixels covered as designed, 0 showing through, 0 covered wrongly",
+  "frontendTests": 101,
+  "typescriptAndBuild": true,
+  "productionFilesExact": "192/192",
+  "isolationHeaders": true,
+  "wasmMIME": true,
+  "romNoStore": true,
+  "browserPlay": [
+   "Local prebuilt output: demo save Continue to Old Station, HD locks on, H off/on, walking, no console errors",
+   "Live site: demo save Continue to Old Station overworld, HD overlay off/on with H, no console errors"
+  ]
+ },
+ "notVerified": [
+  "Physical phones and browsers other than Chrome",
+  "Real hardware",
+  "HD layer at every map"
+ ],
+ "previousProduction": {
+  "deployment": "dpl_AyCP5LtRbYARpp9QpMYe3DPWRZyT",
+  "frontendCommit": "a4e8001a89ca0749520971faed8d7784d0e481a8",
+  "nativeCommit": "3c6bf58293bce0d3f86de0e30990f7080ee83c29",
+  "cartridgeSHA256": "64cf99d19e53ce45dd552afca99f12e3ee415d43552d88b38172a8cca9bcbe02"
+ }
+}

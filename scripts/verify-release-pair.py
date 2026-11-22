@@ -26,6 +26,7 @@ BRIDGES = {
     'encounterBridge': ('gTaichungEncounterBridge', 64, 1, 0x4E454354, 0x31525443),
 }
 OPTIONAL_BRIDGES = {'encounterBridge'}  # Pre-encounter releases have neither symbol nor metadata.
+ADDITIONAL_BRIDGE_VERSIONS = {'navigationBridge': {52: 2}, 'encounterBridge': {72: 2}}
 
 
 class PairError(ValueError):
@@ -156,10 +157,12 @@ def verify_bridges(metadata, symbols):
             address, actual_size = (int(value, 16) for value in entries[0][:2])
         except ValueError as error:
             raise PairError(f'{key}: invalid ELF symbol') from error
-        require(actual_size == size and address % 4 == 0
-                and 0x02000000 <= address <= 0x02040000 - size
+        versions = {size: version, **ADDITIONAL_BRIDGE_VERSIONS.get(key, {})}
+        require(actual_size in versions and address % 4 == 0
+                and 0x02000000 <= address <= 0x02040000 - actual_size
                 and entries[0][2] in ('B', 'D'),
                 f'{key}: incompatible ELF EWRAM address, size, alignment, or storage')
+        size, version = actual_size, versions[actual_size]
         expected = dict(version=version, size=size, address=address,
                         magicA=magic_a, magicB=magic_b)
         packet = metadata.get(key)

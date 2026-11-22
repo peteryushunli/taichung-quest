@@ -1,0 +1,4434 @@
+{
+  "schemaVersion": 1,
+  "contractId": "taichung-boulevard-preview",
+  "coordinateSystem": {
+    "units": "metatiles",
+    "metatilePixels": 16,
+    "northUp": false
+  },
+  "world": {
+    "width": 353,
+    "height": 256,
+    "homeWorld": [
+      344,
+      87
+    ],
+    "streetBands": [
+      {
+        "name": {
+          "en": "Taiwan Boulevard",
+          "zh": "臺灣大道"
+        },
+        "bounds": [
+          0,
+          104,
+          350,
+          113
+        ],
+        "axis": "h"
+      },
+      {
+        "name": {
+          "en": "Xitun Rd",
+          "zh": "西屯路"
+        },
+        "bounds": [
+          6,
+          60,
+          170,
+          65
+        ],
+        "axis": "h"
+      },
+      {
+        "name": {
+          "en": "Jianxing Rd",
+          "zh": "健行路"
+        },
+        "bounds": [
+          165,
+          60,
+          284,
+          65
+        ],
+        "axis": "h"
+      },
+      {
+        "name": {
+          "en": "Jingwu Rd",
+          "zh": "精武路"
+        },
+        "bounds": [
+          279,
+          60,
+          322,
+          65
+        ],
+        "axis": "h"
+      },
+      {
+        "name": {
+          "en": "Wenxin Rd",
+          "zh": "文心路"
+        },
+        "bounds": [
+          112,
+          40,
+          257,
+          47
+        ],
+        "axis": "h"
+      },
+      {
+        "name": {
+          "en": "Wenxin Rd",
+          "zh": "文心路"
+        },
+        "bounds": [
+          112,
+          40,
+          119,
+          220
+        ],
+        "axis": "v"
+      },
+      {
+        "name": {
+          "en": "Lixing Rd",
+          "zh": "力行路"
+        },
+        "bounds": [
+          251,
+          41,
+          322,
+          46
+        ],
+        "axis": "h"
+      },
+      {
+        "name": {
+          "en": "Shizheng Rd",
+          "zh": "市政路"
+        },
+        "bounds": [
+          12,
+          144,
+          118,
+          149
+        ],
+        "axis": "h"
+      },
+      {
+        "name": {
+          "en": "Gongyi Rd",
+          "zh": "公益路"
+        },
+        "bounds": [
+          12,
+          162,
+          170,
+          167
+        ],
+        "axis": "h"
+      },
+      {
+        "name": {
+          "en": "Gongyi Rd",
+          "zh": "公益路"
+        },
+        "bounds": [
+          165,
+          142,
+          170,
+          167
+        ],
+        "axis": "v"
+      },
+      {
+        "name": {
+          "en": "Gongyi Rd",
+          "zh": "公益路"
+        },
+        "bounds": [
+          165,
+          142,
+          256,
+          147
+        ],
+        "axis": "h"
+      },
+      {
+        "name": {
+          "en": "Minquan Rd",
+          "zh": "民權路"
+        },
+        "bounds": [
+          251,
+          142,
+          347,
+          147
+        ],
+        "axis": "h"
+      },
+      {
+        "name": {
+          "en": "Zhongshan Rd",
+          "zh": "中山路"
+        },
+        "bounds": [
+          268,
+          125,
+          346,
+          128
+        ],
+        "axis": "h"
+      },
+      {
+        "name": {
+          "en": "Wuquan W Rd",
+          "zh": "五權西路"
+        },
+        "bounds": [
+          6,
+          188,
+          256,
+          193
+        ],
+        "axis": "h"
+      },
+      {
+        "name": {
+          "en": "Nantun Rd",
+          "zh": "南屯路"
+        },
+        "bounds": [
+          12,
+          214,
+          118,
+          219
+        ],
+        "axis": "h"
+      },
+      {
+        "name": {
+          "en": "Fuxing Rd",
+          "zh": "復興路"
+        },
+        "bounds": [
+          279,
+          170,
+          347,
+          175
+        ],
+        "axis": "h"
+      },
+      {
+        "name": {
+          "en": "Liming Rd",
+          "zh": "黎明路"
+        },
+        "bounds": [
+          12,
+          60,
+          17,
+          219
+        ],
+        "axis": "v"
+      },
+      {
+        "name": {
+          "en": "Fuxing Rd",
+          "zh": "福星路"
+        },
+        "bounds": [
+          25,
+          13,
+          28,
+          64
+        ],
+        "axis": "v"
+      },
+      {
+        "name": {
+          "en": "Henan Rd",
+          "zh": "河南路"
+        },
+        "bounds": [
+          39,
+          12,
+          44,
+          167
+        ],
+        "axis": "v"
+      },
+      {
+        "name": {
+          "en": "Wanhe Rd",
+          "zh": "萬和路"
+        },
+        "bounds": [
+          40,
+          163,
+          43,
+          218
+        ],
+        "axis": "v"
+      },
+      {
+        "name": {
+          "en": "Huizhong Rd",
+          "zh": "惠中路"
+        },
+        "bounds": [
+          88,
+          89,
+          93,
+          193
+        ],
+        "axis": "v"
+      },
+      {
+        "name": {
+          "en": "Dadun Rd",
+          "zh": "大墩路"
+        },
+        "bounds": [
+          135,
+          106,
+          140,
+          193
+        ],
+        "axis": "v"
+      },
+      {
+        "name": {
+          "en": "Zhongming Rd",
+          "zh": "忠明路"
+        },
+        "bounds": [
+          165,
+          41,
+          170,
+          193
+        ],
+        "axis": "v"
+      },
+      {
+        "name": {
+          "en": "Meicun Rd",
+          "zh": "美村路"
+        },
+        "bounds": [
+          185,
+          106,
+          190,
+          193
+        ],
+        "axis": "v"
+      },
+      {
+        "name": {
+          "en": "Yingcai Rd",
+          "zh": "英才路"
+        },
+        "bounds": [
+          235,
+          60,
+          240,
+          147
+        ],
+        "axis": "v"
+      },
+      {
+        "name": {
+          "en": "Wuquan Rd",
+          "zh": "五權路"
+        },
+        "bounds": [
+          251,
+          41,
+          256,
+          193
+        ],
+        "axis": "v"
+      },
+      {
+        "name": {
+          "en": "Sanmin Rd",
+          "zh": "三民路"
+        },
+        "bounds": [
+          279,
+          41,
+          284,
+          175
+        ],
+        "axis": "v"
+      },
+      {
+        "name": {
+          "en": "Shuangshi Rd",
+          "zh": "雙十路"
+        },
+        "bounds": [
+          317,
+          41,
+          322,
+          111
+        ],
+        "axis": "v"
+      },
+      {
+        "name": {
+          "en": "Jianguo Rd",
+          "zh": "建國路"
+        },
+        "bounds": [
+          343,
+          107,
+          346,
+          174
+        ],
+        "axis": "v"
+      },
+      {
+        "name": {
+          "en": "Qinghai Rd",
+          "zh": "青海路"
+        },
+        "bounds": [
+          13,
+          89,
+          117,
+          92
+        ],
+        "axis": "h"
+      },
+      {
+        "name": {
+          "en": "Shizheng N 7th Rd",
+          "zh": "市政北七路"
+        },
+        "bounds": [
+          13,
+          126,
+          92,
+          129
+        ],
+        "axis": "h"
+      },
+      {
+        "name": {
+          "en": "Huilai Rd",
+          "zh": "惠來路"
+        },
+        "bounds": [
+          64,
+          61,
+          67,
+          166
+        ],
+        "axis": "v"
+      },
+      {
+        "name": {
+          "en": "Ziyou Rd",
+          "zh": "自由路"
+        },
+        "bounds": [
+          303,
+          105,
+          306,
+          174
+        ],
+        "axis": "v"
+      },
+      {
+        "name": {
+          "en": "Minsheng Rd",
+          "zh": "民生路"
+        },
+        "bounds": [
+          280,
+          159,
+          345,
+          162
+        ],
+        "axis": "h"
+      },
+      {
+        "name": {
+          "en": "Jingwu Rd",
+          "zh": "精武路"
+        },
+        "bounds": [
+          318,
+          61,
+          347,
+          64
+        ],
+        "axis": "h"
+      },
+      {
+        "name": {
+          "en": "Nanjing Rd",
+          "zh": "南京路"
+        },
+        "bounds": [
+          318,
+          89,
+          347,
+          92
+        ],
+        "axis": "h"
+      },
+      {
+        "name": {
+          "en": "Gongzheng Rd",
+          "zh": "公正路"
+        },
+        "bounds": [
+          186,
+          125,
+          206,
+          128
+        ],
+        "axis": "h"
+      },
+      {
+        "name": {
+          "en": "Xiangshang Rd",
+          "zh": "向上路"
+        },
+        "bounds": [
+          186,
+          159,
+          255,
+          162
+        ],
+        "axis": "h"
+      },
+      {
+        "name": {
+          "en": "Zhongshan Rd",
+          "zh": "中山路"
+        },
+        "bounds": [
+          236,
+          125,
+          271,
+          128
+        ],
+        "axis": "h"
+      },
+      {
+        "name": {
+          "en": "Lixing Rd",
+          "zh": "力行路"
+        },
+        "bounds": [
+          318,
+          41,
+          347,
+          46
+        ],
+        "axis": "h"
+      },
+      {
+        "name": {
+          "en": "Dadun Rd",
+          "zh": "大墩路"
+        },
+        "bounds": [
+          135,
+          61,
+          140,
+          112
+        ],
+        "axis": "v"
+      },
+      {
+        "name": {
+          "en": "Qinghai Rd",
+          "zh": "青海路"
+        },
+        "bounds": [
+          113,
+          89,
+          169,
+          92
+        ],
+        "axis": "h"
+      },
+      {
+        "name": {
+          "en": "Huilai Rd",
+          "zh": "惠來路"
+        },
+        "bounds": [
+          64,
+          163,
+          67,
+          245
+        ],
+        "axis": "v"
+      },
+      {
+        "name": {
+          "en": "Huizhong Rd",
+          "zh": "惠中路"
+        },
+        "bounds": [
+          88,
+          189,
+          93,
+          218
+        ],
+        "axis": "v"
+      },
+      {
+        "name": {
+          "en": "Wanhe Rd",
+          "zh": "萬和路"
+        },
+        "bounds": [
+          40,
+          215,
+          43,
+          245
+        ],
+        "axis": "v"
+      },
+      {
+        "name": {
+          "en": "Fengjia Rd",
+          "zh": "逢甲路"
+        },
+        "bounds": [
+          8,
+          23,
+          43,
+          26
+        ],
+        "axis": "h"
+      },
+      {
+        "name": {
+          "en": "Dadun Rd",
+          "zh": "大墩路"
+        },
+        "bounds": [
+          135,
+          43,
+          140,
+          64
+        ],
+        "axis": "v"
+      },
+      {
+        "name": {
+          "en": "Yingcai Rd",
+          "zh": "英才路"
+        },
+        "bounds": [
+          235,
+          43,
+          240,
+          64
+        ],
+        "axis": "v"
+      }
+    ],
+    "neighborhoods": [
+      {
+        "name": {
+          "en": "Fengjia",
+          "zh": "逢甲"
+        },
+        "tile": [
+          41,
+          41
+        ]
+      },
+      {
+        "name": {
+          "en": "Shuinan",
+          "zh": "水湳"
+        },
+        "tile": [
+          84,
+          19
+        ]
+      },
+      {
+        "name": {
+          "en": "Beitun",
+          "zh": "北屯"
+        },
+        "tile": [
+          187,
+          38
+        ]
+      },
+      {
+        "name": {
+          "en": "North",
+          "zh": "北區"
+        },
+        "tile": [
+          311,
+          40
+        ]
+      },
+      {
+        "name": {
+          "en": "Xitun",
+          "zh": "西屯"
+        },
+        "tile": [
+          62,
+          114
+        ]
+      },
+      {
+        "name": {
+          "en": "Dadun",
+          "zh": "大墩"
+        },
+        "tile": [
+          139,
+          85
+        ]
+      },
+      {
+        "name": {
+          "en": "West",
+          "zh": "西區"
+        },
+        "tile": [
+          205,
+          139
+        ]
+      },
+      {
+        "name": {
+          "en": "Old City",
+          "zh": "舊城"
+        },
+        "tile": [
+          294,
+          134
+        ]
+      },
+      {
+        "name": {
+          "en": "Nantun",
+          "zh": "南屯"
+        },
+        "tile": [
+          59,
+          203
+        ]
+      }
+    ],
+    "districtLabels": [
+      {
+        "label": "FENGJIA 逢甲",
+        "x": 9,
+        "y": 6
+      },
+      {
+        "label": "SHUINAN 水湳",
+        "x": 63,
+        "y": 6
+      },
+      {
+        "label": "BEITUN 北屯",
+        "x": 147,
+        "y": 23
+      },
+      {
+        "label": "XITUN 西屯",
+        "x": 15,
+        "y": 103
+      },
+      {
+        "label": "GREENWAY 草悟道",
+        "x": 174,
+        "y": 116
+      },
+      {
+        "label": "OLD CITY 舊城",
+        "x": 316,
+        "y": 22
+      },
+      {
+        "label": "NANTUN 南屯",
+        "x": 17,
+        "y": 215
+      }
+    ]
+  },
+  "mapsByNativeKey": {
+    "43:25": {
+      "nativeKey": "43:25",
+      "group": 43,
+      "number": 25,
+      "packedMapId": 11033,
+      "mapId": "MAP_TAICHUNG_BLVD_FENGJIA_A_1",
+      "nativeMapName": "TaichungBlvdFengjiaA1",
+      "layoutId": "LAYOUT_TAICHUNG_BLVD_FENGJIA_A_1",
+      "width": 33,
+      "height": 18,
+      "registration": "registered-source",
+      "kind": "exterior",
+      "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "Fengjia",
+        "zh": "逢甲"
+      },
+      "worldOrigin": [
+        8,
+        8
+      ],
+      "worldRect": [
+        8,
+        8,
+        41,
+        26
+      ]
+    },
+    "43:26": {
+      "nativeKey": "43:26",
+      "group": 43,
+      "number": 26,
+      "packedMapId": 11034,
+      "mapId": "MAP_TAICHUNG_BLVD_FENGJIA_NIGHT_MARKET",
+      "nativeMapName": "TaichungBlvdFengjiaNightMarket",
+      "layoutId": "LAYOUT_TAICHUNG_BLVD_FENGJIA_NIGHT_MARKET",
+      "width": 33,
+      "height": 36,
+      "registration": "registered-source",
+      "kind": "exterior",
+      "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "Fengjia",
+        "zh": "逢甲"
+      },
+      "worldOrigin": [
+        8,
+        26
+      ],
+      "worldRect": [
+        8,
+        26,
+        41,
+        62
+      ]
+    },
+    "43:27": {
+      "nativeKey": "43:27",
+      "group": 43,
+      "number": 27,
+      "packedMapId": 11035,
+      "mapId": "MAP_TAICHUNG_BLVD_XITUN_C_1",
+      "nativeMapName": "TaichungBlvdXitunC1",
+      "layoutId": "LAYOUT_TAICHUNG_BLVD_XITUN_C_1",
+      "width": 33,
+      "height": 46,
+      "registration": "registered-source",
+      "kind": "exterior",
+      "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "Xitun",
+        "zh": "西屯"
+      },
+      "worldOrigin": [
+        8,
+        62
+      ],
+      "worldRect": [
+        8,
+        62,
+        41,
+        108
+      ]
+    },
+    "43:28": {
+      "nativeKey": "43:28",
+      "group": 43,
+      "number": 28,
+      "packedMapId": 11036,
+      "mapId": "MAP_TAICHUNG_BLVD_MAPLE_GARDEN",
+      "nativeMapName": "TaichungBlvdMapleGarden",
+      "layoutId": "LAYOUT_TAICHUNG_BLVD_MAPLE_GARDEN",
+      "width": 33,
+      "height": 19,
+      "registration": "registered-source",
+      "kind": "exterior",
+      "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "Xitun",
+        "zh": "西屯"
+      },
+      "worldOrigin": [
+        8,
+        108
+      ],
+      "worldRect": [
+        8,
+        108,
+        41,
+        127
+      ]
+    },
+    "43:29": {
+      "nativeKey": "43:29",
+      "group": 43,
+      "number": 29,
+      "packedMapId": 11037,
+      "mapId": "MAP_TAICHUNG_BLVD_TIGER_CITY",
+      "nativeMapName": "TaichungBlvdTigerCity",
+      "layoutId": "LAYOUT_TAICHUNG_BLVD_TIGER_CITY",
+      "width": 33,
+      "height": 19,
+      "registration": "registered-source",
+      "kind": "exterior",
+      "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "Xitun",
+        "zh": "西屯"
+      },
+      "worldOrigin": [
+        8,
+        127
+      ],
+      "worldRect": [
+        8,
+        127,
+        41,
+        146
+      ]
+    },
+    "43:30": {
+      "nativeKey": "43:30",
+      "group": 43,
+      "number": 30,
+      "packedMapId": 11038,
+      "mapId": "MAP_TAICHUNG_BLVD_NANTUN_F_1",
+      "nativeMapName": "TaichungBlvdNantunF1",
+      "layoutId": "LAYOUT_TAICHUNG_BLVD_NANTUN_F_1",
+      "width": 33,
+      "height": 44,
+      "registration": "registered-source",
+      "kind": "exterior",
+      "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "Nantun",
+        "zh": "南屯"
+      },
+      "worldOrigin": [
+        8,
+        146
+      ],
+      "worldRect": [
+        8,
+        146,
+        41,
+        190
+      ],
+      "districtBefore": {
+        "y": 167,
+        "name": {
+          "en": "Xitun",
+          "zh": "西屯"
+        }
+      }
+    },
+    "43:31": {
+      "nativeKey": "43:31",
+      "group": 43,
+      "number": 31,
+      "packedMapId": 11039,
+      "mapId": "MAP_TAICHUNG_BLVD_WENCHANG_TEMPLE",
+      "nativeMapName": "TaichungBlvdWenchangTemple",
+      "layoutId": "LAYOUT_TAICHUNG_BLVD_WENCHANG_TEMPLE",
+      "width": 33,
+      "height": 26,
+      "registration": "registered-source",
+      "kind": "exterior",
+      "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "Nantun",
+        "zh": "南屯"
+      },
+      "worldOrigin": [
+        8,
+        190
+      ],
+      "worldRect": [
+        8,
+        190,
+        41,
+        216
+      ]
+    },
+    "43:32": {
+      "nativeKey": "43:32",
+      "group": 43,
+      "number": 32,
+      "packedMapId": 11040,
+      "mapId": "MAP_TAICHUNG_BLVD_RAINBOW_VILLAGE",
+      "nativeMapName": "TaichungBlvdRainbowVillage",
+      "layoutId": "LAYOUT_TAICHUNG_BLVD_RAINBOW_VILLAGE",
+      "width": 33,
+      "height": 30,
+      "registration": "registered-source",
+      "kind": "exterior",
+      "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "Nantun",
+        "zh": "南屯"
+      },
+      "worldOrigin": [
+        8,
+        216
+      ],
+      "worldRect": [
+        8,
+        216,
+        41,
+        246
+      ]
+    },
+    "43:33": {
+      "nativeKey": "43:33",
+      "group": 43,
+      "number": 33,
+      "packedMapId": 11041,
+      "mapId": "MAP_TAICHUNG_BLVD_GREEN_MUSEUMBRARY",
+      "nativeMapName": "TaichungBlvdGreenMuseumbrary",
+      "layoutId": "LAYOUT_TAICHUNG_BLVD_GREEN_MUSEUMBRARY",
+      "width": 49,
+      "height": 18,
+      "registration": "registered-source",
+      "kind": "exterior",
+      "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "Shuinan",
+        "zh": "水湳"
+      },
+      "worldOrigin": [
+        41,
+        8
+      ],
+      "worldRect": [
+        41,
+        8,
+        90,
+        26
+      ]
+    },
+    "43:34": {
+      "nativeKey": "43:34",
+      "group": 43,
+      "number": 34,
+      "packedMapId": 11042,
+      "mapId": "MAP_TAICHUNG_BLVD_CENTRAL_PARK_B_2",
+      "nativeMapName": "TaichungBlvdCentralParkB2",
+      "layoutId": "LAYOUT_TAICHUNG_BLVD_CENTRAL_PARK_B_2",
+      "width": 49,
+      "height": 36,
+      "registration": "registered-source",
+      "kind": "exterior",
+      "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "Shuinan",
+        "zh": "水湳"
+      },
+      "worldOrigin": [
+        41,
+        26
+      ],
+      "worldRect": [
+        41,
+        26,
+        90,
+        62
+      ]
+    },
+    "43:35": {
+      "nativeKey": "43:35",
+      "group": 43,
+      "number": 35,
+      "packedMapId": 11043,
+      "mapId": "MAP_TAICHUNG_BLVD_XITUN_C_2",
+      "nativeMapName": "TaichungBlvdXitunC2",
+      "layoutId": "LAYOUT_TAICHUNG_BLVD_XITUN_C_2",
+      "width": 49,
+      "height": 46,
+      "registration": "registered-source",
+      "kind": "exterior",
+      "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "Xitun",
+        "zh": "西屯"
+      },
+      "worldOrigin": [
+        41,
+        62
+      ],
+      "worldRect": [
+        41,
+        62,
+        90,
+        108
+      ]
+    },
+    "43:36": {
+      "nativeKey": "43:36",
+      "group": 43,
+      "number": 36,
+      "packedMapId": 11044,
+      "mapId": "MAP_TAICHUNG_BLVD_XITUN_D_2",
+      "nativeMapName": "TaichungBlvdXitunD2",
+      "layoutId": "LAYOUT_TAICHUNG_BLVD_XITUN_D_2",
+      "width": 49,
+      "height": 19,
+      "registration": "registered-source",
+      "kind": "exterior",
+      "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "Xitun",
+        "zh": "西屯"
+      },
+      "worldOrigin": [
+        41,
+        108
+      ],
+      "worldRect": [
+        41,
+        108,
+        90,
+        127
+      ]
+    },
+    "43:37": {
+      "nativeKey": "43:37",
+      "group": 43,
+      "number": 37,
+      "packedMapId": 11045,
+      "mapId": "MAP_TAICHUNG_BLVD_THEATER",
+      "nativeMapName": "TaichungBlvdTheater",
+      "layoutId": "LAYOUT_TAICHUNG_BLVD_THEATER",
+      "width": 49,
+      "height": 19,
+      "registration": "registered-source",
+      "kind": "exterior",
+      "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "Xitun",
+        "zh": "西屯"
+      },
+      "worldOrigin": [
+        41,
+        127
+      ],
+      "worldRect": [
+        41,
+        127,
+        90,
+        146
+      ]
+    },
+    "43:38": {
+      "nativeKey": "43:38",
+      "group": 43,
+      "number": 38,
+      "packedMapId": 11046,
+      "mapId": "MAP_TAICHUNG_BLVD_NANTUN_F_2",
+      "nativeMapName": "TaichungBlvdNantunF2",
+      "layoutId": "LAYOUT_TAICHUNG_BLVD_NANTUN_F_2",
+      "width": 49,
+      "height": 44,
+      "registration": "registered-source",
+      "kind": "exterior",
+      "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "Nantun",
+        "zh": "南屯"
+      },
+      "worldOrigin": [
+        41,
+        146
+      ],
+      "worldRect": [
+        41,
+        146,
+        90,
+        190
+      ],
+      "districtBefore": {
+        "y": 167,
+        "name": {
+          "en": "Xitun",
+          "zh": "西屯"
+        }
+      }
+    },
+    "43:39": {
+      "nativeKey": "43:39",
+      "group": 43,
+      "number": 39,
+      "packedMapId": 11047,
+      "mapId": "MAP_TAICHUNG_BLVD_WANHE_TEMPLE",
+      "nativeMapName": "TaichungBlvdWanheTemple",
+      "layoutId": "LAYOUT_TAICHUNG_BLVD_WANHE_TEMPLE",
+      "width": 49,
+      "height": 26,
+      "registration": "registered-source",
+      "kind": "exterior",
+      "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "Nantun",
+        "zh": "南屯"
+      },
+      "worldOrigin": [
+        41,
+        190
+      ],
+      "worldRect": [
+        41,
+        190,
+        90,
+        216
+      ]
+    },
+    "43:40": {
+      "nativeKey": "43:40",
+      "group": 43,
+      "number": 40,
+      "packedMapId": 11048,
+      "mapId": "MAP_TAICHUNG_BLVD_FENGLE_SCULPTURE_PARK",
+      "nativeMapName": "TaichungBlvdFengleSculpturePark",
+      "layoutId": "LAYOUT_TAICHUNG_BLVD_FENGLE_SCULPTURE_PARK",
+      "width": 49,
+      "height": 30,
+      "registration": "registered-source",
+      "kind": "exterior",
+      "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "Nantun",
+        "zh": "南屯"
+      },
+      "worldOrigin": [
+        41,
+        216
+      ],
+      "worldRect": [
+        41,
+        216,
+        90,
+        246
+      ]
+    },
+    "43:41": {
+      "nativeKey": "43:41",
+      "group": 43,
+      "number": 41,
+      "packedMapId": 11049,
+      "mapId": "MAP_TAICHUNG_BLVD_CENTRAL_PARK_A_3",
+      "nativeMapName": "TaichungBlvdCentralParkA3",
+      "layoutId": "LAYOUT_TAICHUNG_BLVD_CENTRAL_PARK_A_3",
+      "width": 29,
+      "height": 18,
+      "registration": "registered-source",
+      "kind": "exterior",
+      "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "Shuinan",
+        "zh": "水湳"
+      },
+      "worldOrigin": [
+        90,
+        8
+      ],
+      "worldRect": [
+        90,
+        8,
+        119,
+        26
+      ]
+    },
+    "43:42": {
+      "nativeKey": "43:42",
+      "group": 43,
+      "number": 42,
+      "packedMapId": 11050,
+      "mapId": "MAP_TAICHUNG_BLVD_CENTRAL_PARK_B_3",
+      "nativeMapName": "TaichungBlvdCentralParkB3",
+      "layoutId": "LAYOUT_TAICHUNG_BLVD_CENTRAL_PARK_B_3",
+      "width": 25,
+      "height": 36,
+      "registration": "registered-source",
+      "kind": "exterior",
+      "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "Shuinan",
+        "zh": "水湳"
+      },
+      "worldOrigin": [
+        90,
+        26
+      ],
+      "worldRect": [
+        90,
+        26,
+        115,
+        62
+      ]
+    },
+    "43:43": {
+      "nativeKey": "43:43",
+      "group": 43,
+      "number": 43,
+      "packedMapId": 11051,
+      "mapId": "MAP_TAICHUNG_BLVD_XITUN_C_3",
+      "nativeMapName": "TaichungBlvdXitunC3",
+      "layoutId": "LAYOUT_TAICHUNG_BLVD_XITUN_C_3",
+      "width": 25,
+      "height": 46,
+      "registration": "registered-source",
+      "kind": "exterior",
+      "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "Xitun",
+        "zh": "西屯"
+      },
+      "worldOrigin": [
+        90,
+        62
+      ],
+      "worldRect": [
+        90,
+        62,
+        115,
+        108
+      ]
+    },
+    "43:44": {
+      "nativeKey": "43:44",
+      "group": 43,
+      "number": 44,
+      "packedMapId": 11052,
+      "mapId": "MAP_TAICHUNG_BLVD_CITY_HALL",
+      "nativeMapName": "TaichungBlvdCityHall",
+      "layoutId": "LAYOUT_TAICHUNG_BLVD_CITY_HALL",
+      "width": 25,
+      "height": 19,
+      "registration": "registered-source",
+      "kind": "exterior",
+      "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "Xitun",
+        "zh": "西屯"
+      },
+      "worldOrigin": [
+        90,
+        108
+      ],
+      "worldRect": [
+        90,
+        108,
+        115,
+        127
+      ]
+    },
+    "43:45": {
+      "nativeKey": "43:45",
+      "group": 43,
+      "number": 45,
+      "packedMapId": 11053,
+      "mapId": "MAP_TAICHUNG_BLVD_XITUN_E_3",
+      "nativeMapName": "TaichungBlvdXitunE3",
+      "layoutId": "LAYOUT_TAICHUNG_BLVD_XITUN_E_3",
+      "width": 25,
+      "height": 19,
+      "registration": "registered-source",
+      "kind": "exterior",
+      "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "Xitun",
+        "zh": "西屯"
+      },
+      "worldOrigin": [
+        90,
+        127
+      ],
+      "worldRect": [
+        90,
+        127,
+        115,
+        146
+      ]
+    },
+    "43:46": {
+      "nativeKey": "43:46",
+      "group": 43,
+      "number": 46,
+      "packedMapId": 11054,
+      "mapId": "MAP_TAICHUNG_BLVD_WENXIN_FOREST_PARK",
+      "nativeMapName": "TaichungBlvdWenxinForestPark",
+      "layoutId": "LAYOUT_TAICHUNG_BLVD_WENXIN_FOREST_PARK",
+      "width": 25,
+      "height": 44,
+      "registration": "registered-source",
+      "kind": "exterior",
+      "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "Nantun",
+        "zh": "南屯"
+      },
+      "worldOrigin": [
+        90,
+        146
+      ],
+      "worldRect": [
+        90,
+        146,
+        115,
+        190
+      ],
+      "districtBefore": {
+        "y": 167,
+        "name": {
+          "en": "Xitun",
+          "zh": "西屯"
+        }
+      }
+    },
+    "43:47": {
+      "nativeKey": "43:47",
+      "group": 43,
+      "number": 47,
+      "packedMapId": 11055,
+      "mapId": "MAP_TAICHUNG_BLVD_NANTUN_G_3",
+      "nativeMapName": "TaichungBlvdNantunG3",
+      "layoutId": "LAYOUT_TAICHUNG_BLVD_NANTUN_G_3",
+      "width": 25,
+      "height": 26,
+      "registration": "registered-source",
+      "kind": "exterior",
+      "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "Nantun",
+        "zh": "南屯"
+      },
+      "worldOrigin": [
+        90,
+        190
+      ],
+      "worldRect": [
+        90,
+        190,
+        115,
+        216
+      ]
+    },
+    "43:48": {
+      "nativeKey": "43:48",
+      "group": 43,
+      "number": 48,
+      "packedMapId": 11056,
+      "mapId": "MAP_TAICHUNG_BLVD_NANTUN_H_3",
+      "nativeMapName": "TaichungBlvdNantunH3",
+      "layoutId": "LAYOUT_TAICHUNG_BLVD_NANTUN_H_3",
+      "width": 25,
+      "height": 30,
+      "registration": "registered-source",
+      "kind": "exterior",
+      "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "Nantun",
+        "zh": "南屯"
+      },
+      "worldOrigin": [
+        90,
+        216
+      ],
+      "worldRect": [
+        90,
+        216,
+        115,
+        246
+      ]
+    },
+    "43:49": {
+      "nativeKey": "43:49",
+      "group": 43,
+      "number": 49,
+      "packedMapId": 11057,
+      "mapId": "MAP_TAICHUNG_BLVD_BEITUN_B_4",
+      "nativeMapName": "TaichungBlvdBeitunB4",
+      "layoutId": "LAYOUT_TAICHUNG_BLVD_BEITUN_B_4",
+      "width": 22,
+      "height": 36,
+      "registration": "registered-source",
+      "kind": "exterior",
+      "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "Beitun",
+        "zh": "北屯"
+      },
+      "worldOrigin": [
+        115,
+        26
+      ],
+      "worldRect": [
+        115,
+        26,
+        137,
+        62
+      ]
+    },
+    "43:50": {
+      "nativeKey": "43:50",
+      "group": 43,
+      "number": 50,
+      "packedMapId": 11058,
+      "mapId": "MAP_TAICHUNG_BLVD_DADUN_C_4",
+      "nativeMapName": "TaichungBlvdDadunC4",
+      "layoutId": "LAYOUT_TAICHUNG_BLVD_DADUN_C_4",
+      "width": 22,
+      "height": 46,
+      "registration": "registered-source",
+      "kind": "exterior",
+      "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "Dadun",
+        "zh": "大墩"
+      },
+      "worldOrigin": [
+        115,
+        62
+      ],
+      "worldRect": [
+        115,
+        62,
+        137,
+        108
+      ]
+    },
+    "43:51": {
+      "nativeKey": "43:51",
+      "group": 43,
+      "number": 51,
+      "packedMapId": 11059,
+      "mapId": "MAP_TAICHUNG_BLVD_DADUN_D_4",
+      "nativeMapName": "TaichungBlvdDadunD4",
+      "layoutId": "LAYOUT_TAICHUNG_BLVD_DADUN_D_4",
+      "width": 22,
+      "height": 38,
+      "registration": "registered-source",
+      "kind": "exterior",
+      "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "Dadun",
+        "zh": "大墩"
+      },
+      "worldOrigin": [
+        115,
+        108
+      ],
+      "worldRect": [
+        115,
+        108,
+        137,
+        146
+      ]
+    },
+    "43:52": {
+      "nativeKey": "43:52",
+      "group": 43,
+      "number": 52,
+      "packedMapId": 11060,
+      "mapId": "MAP_TAICHUNG_BLVD_DADUN_F_4",
+      "nativeMapName": "TaichungBlvdDadunF4",
+      "layoutId": "LAYOUT_TAICHUNG_BLVD_DADUN_F_4",
+      "width": 22,
+      "height": 70,
+      "registration": "registered-source",
+      "kind": "exterior",
+      "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "Dadun",
+        "zh": "大墩"
+      },
+      "worldOrigin": [
+        115,
+        146
+      ],
+      "worldRect": [
+        115,
+        146,
+        137,
+        216
+      ]
+    },
+    "43:53": {
+      "nativeKey": "43:53",
+      "group": 43,
+      "number": 53,
+      "packedMapId": 11061,
+      "mapId": "MAP_TAICHUNG_BLVD_BEITUN_B_5",
+      "nativeMapName": "TaichungBlvdBeitunB5",
+      "layoutId": "LAYOUT_TAICHUNG_BLVD_BEITUN_B_5",
+      "width": 30,
+      "height": 36,
+      "registration": "registered-source",
+      "kind": "exterior",
+      "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "Beitun",
+        "zh": "北屯"
+      },
+      "worldOrigin": [
+        137,
+        26
+      ],
+      "worldRect": [
+        137,
+        26,
+        167,
+        62
+      ]
+    },
+    "43:54": {
+      "nativeKey": "43:54",
+      "group": 43,
+      "number": 54,
+      "packedMapId": 11062,
+      "mapId": "MAP_TAICHUNG_BLVD_DADUN_C_5",
+      "nativeMapName": "TaichungBlvdDadunC5",
+      "layoutId": "LAYOUT_TAICHUNG_BLVD_DADUN_C_5",
+      "width": 30,
+      "height": 46,
+      "registration": "registered-source",
+      "kind": "exterior",
+      "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "Dadun",
+        "zh": "大墩"
+      },
+      "worldOrigin": [
+        137,
+        62
+      ],
+      "worldRect": [
+        137,
+        62,
+        167,
+        108
+      ]
+    },
+    "43:55": {
+      "nativeKey": "43:55",
+      "group": 43,
+      "number": 55,
+      "packedMapId": 11063,
+      "mapId": "MAP_TAICHUNG_BLVD_JINGMING_1ST_STREET",
+      "nativeMapName": "TaichungBlvdJingming1stStreet",
+      "layoutId": "LAYOUT_TAICHUNG_BLVD_JINGMING_1ST_STREET",
+      "width": 30,
+      "height": 38,
+      "registration": "registered-source",
+      "kind": "exterior",
+      "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "Dadun",
+        "zh": "大墩"
+      },
+      "worldOrigin": [
+        137,
+        108
+      ],
+      "worldRect": [
+        137,
+        108,
+        167,
+        146
+      ]
+    },
+    "43:56": {
+      "nativeKey": "43:56",
+      "group": 43,
+      "number": 56,
+      "packedMapId": 11064,
+      "mapId": "MAP_TAICHUNG_BLVD_DADUN_F_5",
+      "nativeMapName": "TaichungBlvdDadunF5",
+      "layoutId": "LAYOUT_TAICHUNG_BLVD_DADUN_F_5",
+      "width": 30,
+      "height": 70,
+      "registration": "registered-source",
+      "kind": "exterior",
+      "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "Dadun",
+        "zh": "大墩"
+      },
+      "worldOrigin": [
+        137,
+        146
+      ],
+      "worldRect": [
+        137,
+        146,
+        167,
+        216
+      ]
+    },
+    "43:57": {
+      "nativeKey": "43:57",
+      "group": 43,
+      "number": 57,
+      "packedMapId": 11065,
+      "mapId": "MAP_TAICHUNG_BLVD_BEITUN_B_6",
+      "nativeMapName": "TaichungBlvdBeitunB6",
+      "layoutId": "LAYOUT_TAICHUNG_BLVD_BEITUN_B_6",
+      "width": 42,
+      "height": 36,
+      "registration": "registered-source",
+      "kind": "exterior",
+      "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "Beitun",
+        "zh": "北屯"
+      },
+      "worldOrigin": [
+        167,
+        26
+      ],
+      "worldRect": [
+        167,
+        26,
+        209,
+        62
+      ]
+    },
+    "43:58": {
+      "nativeKey": "43:58",
+      "group": 43,
+      "number": 58,
+      "packedMapId": 11066,
+      "mapId": "MAP_TAICHUNG_BLVD_SCIENCE_MUSEUM",
+      "nativeMapName": "TaichungBlvdScienceMuseum",
+      "layoutId": "LAYOUT_TAICHUNG_BLVD_SCIENCE_MUSEUM",
+      "width": 42,
+      "height": 46,
+      "registration": "registered-source",
+      "kind": "exterior",
+      "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "West",
+        "zh": "西區"
+      },
+      "worldOrigin": [
+        167,
+        62
+      ],
+      "worldRect": [
+        167,
+        62,
+        209,
+        108
+      ]
+    },
+    "43:59": {
+      "nativeKey": "43:59",
+      "group": 43,
+      "number": 59,
+      "packedMapId": 11067,
+      "mapId": "MAP_TAICHUNG_BLVD_WEST_D_6",
+      "nativeMapName": "TaichungBlvdWestD6",
+      "layoutId": "LAYOUT_TAICHUNG_BLVD_WEST_D_6",
+      "width": 42,
+      "height": 38,
+      "registration": "registered-source",
+      "kind": "exterior",
+      "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "West",
+        "zh": "西區"
+      },
+      "worldOrigin": [
+        167,
+        108
+      ],
+      "worldRect": [
+        167,
+        108,
+        209,
+        146
+      ]
+    },
+    "43:60": {
+      "nativeKey": "43:60",
+      "group": 43,
+      "number": 60,
+      "packedMapId": 11068,
+      "mapId": "MAP_TAICHUNG_BLVD_SHEN_JI_NEW_VILLAGE",
+      "nativeMapName": "TaichungBlvdShenJiNewVillage",
+      "layoutId": "LAYOUT_TAICHUNG_BLVD_SHEN_JI_NEW_VILLAGE",
+      "width": 42,
+      "height": 70,
+      "registration": "registered-source",
+      "kind": "exterior",
+      "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "West",
+        "zh": "西區"
+      },
+      "worldOrigin": [
+        167,
+        146
+      ],
+      "worldRect": [
+        167,
+        146,
+        209,
+        216
+      ]
+    },
+    "43:61": {
+      "nativeKey": "43:61",
+      "group": 43,
+      "number": 61,
+      "packedMapId": 11069,
+      "mapId": "MAP_TAICHUNG_BLVD_BEITUN_B_7",
+      "nativeMapName": "TaichungBlvdBeitunB7",
+      "layoutId": "LAYOUT_TAICHUNG_BLVD_BEITUN_B_7",
+      "width": 44,
+      "height": 36,
+      "registration": "registered-source",
+      "kind": "exterior",
+      "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "Beitun",
+        "zh": "北屯"
+      },
+      "worldOrigin": [
+        209,
+        26
+      ],
+      "worldRect": [
+        209,
+        26,
+        253,
+        62
+      ]
+    },
+    "43:62": {
+      "nativeKey": "43:62",
+      "group": 43,
+      "number": 62,
+      "packedMapId": 11070,
+      "mapId": "MAP_TAICHUNG_BLVD_BOTANICAL_GARDEN",
+      "nativeMapName": "TaichungBlvdBotanicalGarden",
+      "layoutId": "LAYOUT_TAICHUNG_BLVD_BOTANICAL_GARDEN",
+      "width": 44,
+      "height": 46,
+      "registration": "registered-source",
+      "kind": "exterior",
+      "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "West",
+        "zh": "西區"
+      },
+      "worldOrigin": [
+        209,
+        62
+      ],
+      "worldRect": [
+        209,
+        62,
+        253,
+        108
+      ]
+    },
+    "43:63": {
+      "nativeKey": "43:63",
+      "group": 43,
+      "number": 63,
+      "packedMapId": 11071,
+      "mapId": "MAP_TAICHUNG_BLVD_GREENWAY_CIVIC_SQUARE",
+      "nativeMapName": "TaichungBlvdGreenwayCivicSquare",
+      "layoutId": "LAYOUT_TAICHUNG_BLVD_GREENWAY_CIVIC_SQUARE",
+      "width": 44,
+      "height": 38,
+      "registration": "registered-source",
+      "kind": "exterior",
+      "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "West",
+        "zh": "西區"
+      },
+      "worldOrigin": [
+        209,
+        108
+      ],
+      "worldRect": [
+        209,
+        108,
+        253,
+        146
+      ]
+    },
+    "43:64": {
+      "nativeKey": "43:64",
+      "group": 43,
+      "number": 64,
+      "packedMapId": 11072,
+      "mapId": "MAP_TAICHUNG_BLVD_FINE_ARTS_MUSEUM",
+      "nativeMapName": "TaichungBlvdFineArtsMuseum",
+      "layoutId": "LAYOUT_TAICHUNG_BLVD_FINE_ARTS_MUSEUM",
+      "width": 44,
+      "height": 70,
+      "registration": "registered-source",
+      "kind": "exterior",
+      "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "West",
+        "zh": "西區"
+      },
+      "worldOrigin": [
+        209,
+        146
+      ],
+      "worldRect": [
+        209,
+        146,
+        253,
+        216
+      ]
+    },
+    "43:65": {
+      "nativeKey": "43:65",
+      "group": 43,
+      "number": 65,
+      "packedMapId": 11073,
+      "mapId": "MAP_TAICHUNG_BLVD_BEITUN_B_8",
+      "nativeMapName": "TaichungBlvdBeitunB8",
+      "layoutId": "LAYOUT_TAICHUNG_BLVD_BEITUN_B_8",
+      "width": 28,
+      "height": 36,
+      "registration": "registered-source",
+      "kind": "exterior",
+      "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "Beitun",
+        "zh": "北屯"
+      },
+      "worldOrigin": [
+        253,
+        26
+      ],
+      "worldRect": [
+        253,
+        26,
+        281,
+        62
+      ]
+    },
+    "43:66": {
+      "nativeKey": "43:66",
+      "group": 43,
+      "number": 66,
+      "packedMapId": 11074,
+      "mapId": "MAP_TAICHUNG_BLVD_OLD_CITY_C_8",
+      "nativeMapName": "TaichungBlvdOldCityC8",
+      "layoutId": "LAYOUT_TAICHUNG_BLVD_OLD_CITY_C_8",
+      "width": 28,
+      "height": 46,
+      "registration": "registered-source",
+      "kind": "exterior",
+      "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "Old City",
+        "zh": "舊城"
+      },
+      "worldOrigin": [
+        253,
+        62
+      ],
+      "worldRect": [
+        253,
+        62,
+        281,
+        108
+      ]
+    },
+    "43:67": {
+      "nativeKey": "43:67",
+      "group": 43,
+      "number": 67,
+      "packedMapId": 11075,
+      "mapId": "MAP_TAICHUNG_BLVD_SECOND_MARKET",
+      "nativeMapName": "TaichungBlvdSecondMarket",
+      "layoutId": "LAYOUT_TAICHUNG_BLVD_SECOND_MARKET",
+      "width": 28,
+      "height": 38,
+      "registration": "registered-source",
+      "kind": "exterior",
+      "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "Old City",
+        "zh": "舊城"
+      },
+      "worldOrigin": [
+        253,
+        108
+      ],
+      "worldRect": [
+        253,
+        108,
+        281,
+        146
+      ]
+    },
+    "43:68": {
+      "nativeKey": "43:68",
+      "group": 43,
+      "number": 68,
+      "packedMapId": 11076,
+      "mapId": "MAP_TAICHUNG_BLVD_OLD_CITY_F_8",
+      "nativeMapName": "TaichungBlvdOldCityF8",
+      "layoutId": "LAYOUT_TAICHUNG_BLVD_OLD_CITY_F_8",
+      "width": 28,
+      "height": 70,
+      "registration": "registered-source",
+      "kind": "exterior",
+      "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "Old City",
+        "zh": "舊城"
+      },
+      "worldOrigin": [
+        253,
+        146
+      ],
+      "worldRect": [
+        253,
+        146,
+        281,
+        216
+      ]
+    },
+    "43:69": {
+      "nativeKey": "43:69",
+      "group": 43,
+      "number": 69,
+      "packedMapId": 11077,
+      "mapId": "MAP_TAICHUNG_BLVD_CONFUCIUS_TEMPLE",
+      "nativeMapName": "TaichungBlvdConfuciusTemple",
+      "layoutId": "LAYOUT_TAICHUNG_BLVD_CONFUCIUS_TEMPLE",
+      "width": 38,
+      "height": 36,
+      "registration": "registered-source",
+      "kind": "exterior",
+      "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "North",
+        "zh": "北區"
+      },
+      "worldOrigin": [
+        281,
+        26
+      ],
+      "worldRect": [
+        281,
+        26,
+        319,
+        62
+      ]
+    },
+    "43:70": {
+      "nativeKey": "43:70",
+      "group": 43,
+      "number": 70,
+      "packedMapId": 11078,
+      "mapId": "MAP_TAICHUNG_BLVD_PARK",
+      "nativeMapName": "TaichungBlvdPark",
+      "layoutId": "LAYOUT_TAICHUNG_BLVD_PARK",
+      "width": 38,
+      "height": 46,
+      "registration": "registered-source",
+      "kind": "exterior",
+      "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "Old City",
+        "zh": "舊城"
+      },
+      "worldOrigin": [
+        281,
+        62
+      ],
+      "worldRect": [
+        281,
+        62,
+        319,
+        108
+      ]
+    },
+    "43:71": {
+      "nativeKey": "43:71",
+      "group": 43,
+      "number": 71,
+      "packedMapId": 11079,
+      "mapId": "MAP_TAICHUNG_BLVD_PREFECTURAL_HALL",
+      "nativeMapName": "TaichungBlvdPrefecturalHall",
+      "layoutId": "LAYOUT_TAICHUNG_BLVD_PREFECTURAL_HALL",
+      "width": 23,
+      "height": 38,
+      "registration": "registered-source",
+      "kind": "exterior",
+      "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "Old City",
+        "zh": "舊城"
+      },
+      "worldOrigin": [
+        281,
+        108
+      ],
+      "worldRect": [
+        281,
+        108,
+        304,
+        146
+      ]
+    },
+    "43:72": {
+      "nativeKey": "43:72",
+      "group": 43,
+      "number": 72,
+      "packedMapId": 11080,
+      "mapId": "MAP_TAICHUNG_BLVD_MIYAHARA",
+      "nativeMapName": "TaichungBlvdMiyahara",
+      "layoutId": "LAYOUT_TAICHUNG_BLVD_MIYAHARA",
+      "width": 22,
+      "height": 38,
+      "registration": "registered-source",
+      "kind": "exterior",
+      "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "Old City",
+        "zh": "舊城"
+      },
+      "worldOrigin": [
+        304,
+        108
+      ],
+      "worldRect": [
+        304,
+        108,
+        326,
+        146
+      ]
+    },
+    "43:73": {
+      "nativeKey": "43:73",
+      "group": 43,
+      "number": 73,
+      "packedMapId": 11081,
+      "mapId": "MAP_TAICHUNG_BLVD_OLD_CITY_F_9",
+      "nativeMapName": "TaichungBlvdOldCityF9",
+      "layoutId": "LAYOUT_TAICHUNG_BLVD_OLD_CITY_F_9",
+      "width": 23,
+      "height": 70,
+      "registration": "registered-source",
+      "kind": "exterior",
+      "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "Old City",
+        "zh": "舊城"
+      },
+      "worldOrigin": [
+        281,
+        146
+      ],
+      "worldRect": [
+        281,
+        146,
+        304,
+        216
+      ]
+    },
+    "43:74": {
+      "nativeKey": "43:74",
+      "group": 43,
+      "number": 74,
+      "packedMapId": 11082,
+      "mapId": "MAP_TAICHUNG_BLVD_OLD_CITY_F_10",
+      "nativeMapName": "TaichungBlvdOldCityF10",
+      "layoutId": "LAYOUT_TAICHUNG_BLVD_OLD_CITY_F_10",
+      "width": 22,
+      "height": 70,
+      "registration": "registered-source",
+      "kind": "exterior",
+      "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "Old City",
+        "zh": "舊城"
+      },
+      "worldOrigin": [
+        304,
+        146
+      ],
+      "worldRect": [
+        304,
+        146,
+        326,
+        216
+      ]
+    },
+    "43:75": {
+      "nativeKey": "43:75",
+      "group": 43,
+      "number": 75,
+      "packedMapId": 11083,
+      "mapId": "MAP_TAICHUNG_BLVD_NORTH_B_11",
+      "nativeMapName": "TaichungBlvdNorthB11",
+      "layoutId": "LAYOUT_TAICHUNG_BLVD_NORTH_B_11",
+      "width": 28,
+      "height": 36,
+      "registration": "registered-source",
+      "kind": "exterior",
+      "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "North",
+        "zh": "北區"
+      },
+      "worldOrigin": [
+        319,
+        26
+      ],
+      "worldRect": [
+        319,
+        26,
+        347,
+        62
+      ]
+    },
+    "43:76": {
+      "nativeKey": "43:76",
+      "group": 43,
+      "number": 76,
+      "packedMapId": 11084,
+      "mapId": "MAP_TAICHUNG_BLVD_OLD_STATION",
+      "nativeMapName": "TaichungBlvdOldStation",
+      "layoutId": "LAYOUT_TAICHUNG_BLVD_OLD_STATION",
+      "width": 28,
+      "height": 46,
+      "registration": "registered-source",
+      "kind": "exterior",
+      "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "Old City",
+        "zh": "舊城"
+      },
+      "worldOrigin": [
+        319,
+        62
+      ],
+      "worldRect": [
+        319,
+        62,
+        347,
+        108
+      ]
+    },
+    "43:77": {
+      "nativeKey": "43:77",
+      "group": 43,
+      "number": 77,
+      "packedMapId": 11085,
+      "mapId": "MAP_TAICHUNG_BLVD_OLD_CITY_D_12",
+      "nativeMapName": "TaichungBlvdOldCityD12",
+      "layoutId": "LAYOUT_TAICHUNG_BLVD_OLD_CITY_D_12",
+      "width": 21,
+      "height": 38,
+      "registration": "registered-source",
+      "kind": "exterior",
+      "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "Old City",
+        "zh": "舊城"
+      },
+      "worldOrigin": [
+        326,
+        108
+      ],
+      "worldRect": [
+        326,
+        108,
+        347,
+        146
+      ]
+    },
+    "43:78": {
+      "nativeKey": "43:78",
+      "group": 43,
+      "number": 78,
+      "packedMapId": 11086,
+      "mapId": "MAP_TAICHUNG_BLVD_CULTURAL_HERITAGE_PARK",
+      "nativeMapName": "TaichungBlvdCulturalHeritagePark",
+      "layoutId": "LAYOUT_TAICHUNG_BLVD_CULTURAL_HERITAGE_PARK",
+      "width": 21,
+      "height": 70,
+      "registration": "registered-source",
+      "kind": "exterior",
+      "projection": "local-plus-world-origin",
+      "districtName": {
+        "en": "Old City",
+        "zh": "舊城"
+      },
+      "worldOrigin": [
+        326,
+        146
+      ],
+      "worldRect": [
+        326,
+        146,
+        347,
+        216
+      ]
+    },
+    "43:3": {
+      "nativeKey": "43:3",
+      "group": 43,
+      "number": 3,
+      "packedMapId": 11011,
+      "mapId": "MAP_TAICHUNG_OLD_STATION_GYM",
+      "nativeMapName": "TaichungOldStation_Gym",
+      "layoutId": "LAYOUT_TAICHUNG_GYM_OLD_STATION",
+      "width": 19,
+      "height": 15,
+      "registration": "registered-source",
+      "kind": "interior",
+      "projection": "parent-entrance",
+      "parentNativeKey": "43:76",
+      "parentMarkerId": "old-taichung-station",
+      "parentEntranceWorld": [
+        333,
+        99
+      ],
+      "indoorLabel": {
+        "en": "Indoors",
+        "zh": "室內"
+      }
+    },
+    "43:4": {
+      "nativeKey": "43:4",
+      "group": 43,
+      "number": 4,
+      "packedMapId": 11012,
+      "mapId": "MAP_TAICHUNG_PARK_GYM",
+      "nativeMapName": "TaichungPark_Gym",
+      "layoutId": "LAYOUT_TAICHUNG_GYM_PARK",
+      "width": 17,
+      "height": 11,
+      "registration": "registered-source",
+      "kind": "interior",
+      "projection": "parent-entrance",
+      "parentNativeKey": "43:70",
+      "parentMarkerId": "taichung-park",
+      "parentEntranceWorld": [
+        301,
+        81
+      ],
+      "indoorLabel": {
+        "en": "Indoors",
+        "zh": "室內"
+      }
+    },
+    "43:5": {
+      "nativeKey": "43:5",
+      "group": 43,
+      "number": 5,
+      "packedMapId": 11013,
+      "mapId": "MAP_TAICHUNG_MIYAHARA_GYM",
+      "nativeMapName": "TaichungMiyahara_Gym",
+      "layoutId": "LAYOUT_TAICHUNG_GYM_MIYAHARA",
+      "width": 15,
+      "height": 11,
+      "registration": "registered-source",
+      "kind": "interior",
+      "projection": "parent-entrance",
+      "parentNativeKey": "43:72",
+      "parentMarkerId": "miyahara",
+      "parentEntranceWorld": [
+        320,
+        124
+      ],
+      "indoorLabel": {
+        "en": "Indoors",
+        "zh": "室內"
+      }
+    },
+    "43:6": {
+      "nativeKey": "43:6",
+      "group": 43,
+      "number": 6,
+      "packedMapId": 11014,
+      "mapId": "MAP_TAICHUNG_SCIENCE_MUSEUM_GYM",
+      "nativeMapName": "TaichungScienceMuseum_Gym",
+      "layoutId": "LAYOUT_TAICHUNG_GYM_SCIENCE_MUSEUM",
+      "width": 15,
+      "height": 10,
+      "registration": "registered-source",
+      "kind": "interior",
+      "projection": "parent-entrance",
+      "parentNativeKey": "43:58",
+      "parentMarkerId": "natural-science-museum",
+      "parentEntranceWorld": [
+        206,
+        83
+      ],
+      "indoorLabel": {
+        "en": "Indoors",
+        "zh": "室內"
+      }
+    },
+    "43:7": {
+      "nativeKey": "43:7",
+      "group": 43,
+      "number": 7,
+      "packedMapId": 11015,
+      "mapId": "MAP_TAICHUNG_GREENWAY_GYM",
+      "nativeMapName": "TaichungGreenway_Gym",
+      "layoutId": "LAYOUT_TAICHUNG_GYM_GREENWAY",
+      "width": 13,
+      "height": 16,
+      "registration": "registered-source",
+      "kind": "interior",
+      "projection": "parent-entrance",
+      "parentNativeKey": "43:63",
+      "parentMarkerId": "calligraphy-greenway",
+      "parentEntranceWorld": [
+        218,
+        124
+      ],
+      "indoorLabel": {
+        "en": "Indoors",
+        "zh": "室內"
+      }
+    },
+    "43:8": {
+      "nativeKey": "43:8",
+      "group": 43,
+      "number": 8,
+      "packedMapId": 11016,
+      "mapId": "MAP_TAICHUNG_SHEN_JI_GYM",
+      "nativeMapName": "TaichungShenJi_Gym",
+      "layoutId": "LAYOUT_TAICHUNG_GYM_SHEN_JI",
+      "width": 16,
+      "height": 10,
+      "registration": "registered-source",
+      "kind": "interior",
+      "projection": "parent-entrance",
+      "parentNativeKey": "43:60",
+      "parentMarkerId": "shen-ji-new-village",
+      "parentEntranceWorld": [
+        196,
+        157
+      ],
+      "indoorLabel": {
+        "en": "Indoors",
+        "zh": "室內"
+      }
+    },
+    "43:9": {
+      "nativeKey": "43:9",
+      "group": 43,
+      "number": 9,
+      "packedMapId": 11017,
+      "mapId": "MAP_TAICHUNG_FINE_ARTS_GYM",
+      "nativeMapName": "TaichungFineArts_Gym",
+      "layoutId": "LAYOUT_TAICHUNG_GYM_FINE_ARTS",
+      "width": 19,
+      "height": 11,
+      "registration": "registered-source",
+      "kind": "interior",
+      "projection": "parent-entrance",
+      "parentNativeKey": "43:64",
+      "parentMarkerId": "fine-arts-museum",
+      "parentEntranceWorld": [
+        209,
+        179
+      ],
+      "indoorLabel": {
+        "en": "Indoors",
+        "zh": "室內"
+      }
+    },
+    "43:10": {
+      "nativeKey": "43:10",
+      "group": 43,
+      "number": 10,
+      "packedMapId": 11018,
+      "mapId": "MAP_TAICHUNG_FENGJIA_GYM",
+      "nativeMapName": "TaichungFengjia_Gym",
+      "layoutId": "LAYOUT_TAICHUNG_GYM_FENGJIA",
+      "width": 18,
+      "height": 12,
+      "registration": "registered-source",
+      "kind": "interior",
+      "projection": "parent-entrance",
+      "parentNativeKey": "43:26",
+      "parentMarkerId": "fengjia-night-market",
+      "parentEntranceWorld": [
+        16,
+        47
+      ],
+      "indoorLabel": {
+        "en": "Indoors",
+        "zh": "室內"
+      }
+    },
+    "43:16": {
+      "nativeKey": "43:16",
+      "group": 43,
+      "number": 16,
+      "packedMapId": 11024,
+      "mapId": "MAP_TAICHUNG_WANHE_TEMPLE_HALL",
+      "nativeMapName": "TaichungWanheTemple_Hall",
+      "layoutId": "LAYOUT_TAICHUNG_GYM_WANHE_TEMPLE",
+      "width": 13,
+      "height": 13,
+      "registration": "registered-source",
+      "kind": "interior",
+      "projection": "parent-entrance",
+      "parentNativeKey": "43:39",
+      "parentMarkerId": "wanhe-temple",
+      "parentEntranceWorld": [
+        49,
+        206
+      ],
+      "indoorLabel": {
+        "en": "Indoors",
+        "zh": "室內"
+      }
+    },
+    "43:12": {
+      "nativeKey": "43:12",
+      "group": 43,
+      "number": 12,
+      "packedMapId": 11020,
+      "mapId": "MAP_TAICHUNG_THEATER_GYM",
+      "nativeMapName": "TaichungTheater_Gym",
+      "layoutId": "LAYOUT_TAICHUNG_GYM_THEATER",
+      "width": 23,
+      "height": 12,
+      "registration": "registered-source",
+      "kind": "interior",
+      "projection": "parent-entrance",
+      "parentNativeKey": "43:37",
+      "parentMarkerId": "taichung-theater",
+      "parentEntranceWorld": [
+        53,
+        139
+      ],
+      "indoorLabel": {
+        "en": "Indoors",
+        "zh": "室內"
+      }
+    },
+    "43:11": {
+      "nativeKey": "43:11",
+      "group": 43,
+      "number": 11,
+      "packedMapId": 11019,
+      "mapId": "MAP_TAICHUNG_MAPLE_GARDEN_GYM",
+      "nativeMapName": "TaichungMapleGarden_Gym",
+      "layoutId": "LAYOUT_TAICHUNG_LANDMARK_GYM",
+      "width": 13,
+      "height": 16,
+      "registration": "registered-source",
+      "kind": "interior",
+      "projection": "parent-entrance",
+      "parentNativeKey": "43:28",
+      "parentMarkerId": "maple-garden",
+      "parentEntranceWorld": [
+        27,
+        123
+      ],
+      "indoorLabel": {
+        "en": "Indoors",
+        "zh": "室內"
+      }
+    },
+    "43:17": {
+      "nativeKey": "43:17",
+      "group": 43,
+      "number": 17,
+      "packedMapId": 11025,
+      "mapId": "MAP_TAICHUNG_WENCHANG_TEMPLE_HALL",
+      "nativeMapName": "TaichungWenchangTemple_Hall",
+      "layoutId": "LAYOUT_TAICHUNG_LANDMARK_GYM",
+      "width": 13,
+      "height": 16,
+      "registration": "registered-source",
+      "kind": "interior",
+      "projection": "parent-entrance",
+      "parentNativeKey": "43:31",
+      "parentMarkerId": "wenchang-temple",
+      "parentEntranceWorld": [
+        34,
+        206
+      ],
+      "indoorLabel": {
+        "en": "Indoors",
+        "zh": "室內"
+      }
+    },
+    "43:19": {
+      "nativeKey": "43:19",
+      "group": 43,
+      "number": 19,
+      "packedMapId": 11027,
+      "mapId": "MAP_TAICHUNG_GUEST_HOUSE_1F",
+      "nativeMapName": "TaichungGuestHouse_1F",
+      "layoutId": "LAYOUT_PALLET_TOWN_PLAYERS_HOUSE_1F",
+      "width": 13,
+      "height": 10,
+      "registration": "registered-source",
+      "kind": "interior",
+      "projection": "parent-entrance",
+      "parentNativeKey": "43:76",
+      "parentMarkerId": "guest-house",
+      "parentEntranceWorld": [
+        344,
+        87
+      ],
+      "indoorLabel": {
+        "en": "Indoors",
+        "zh": "室內"
+      }
+    }
+  },
+  "markersById": {
+    "old-taichung-station": {
+      "id": "old-taichung-station",
+      "name": {
+        "en": "Old Taichung Station",
+        "zh": "舊臺中車站"
+      },
+      "kind": "landmark-gym",
+      "world": [
+        333,
+        99
+      ],
+      "localEntrance": [
+        14,
+        37
+      ],
+      "exteriorMapId": "MAP_TAICHUNG_BLVD_OLD_STATION",
+      "exteriorNativeKey": "43:76"
+    },
+    "taichung-park": {
+      "id": "taichung-park",
+      "name": {
+        "en": "Taichung Park",
+        "zh": "臺中公園"
+      },
+      "kind": "landmark-gym",
+      "world": [
+        301,
+        81
+      ],
+      "localEntrance": [
+        20,
+        19
+      ],
+      "exteriorMapId": "MAP_TAICHUNG_BLVD_PARK",
+      "exteriorNativeKey": "43:70"
+    },
+    "miyahara": {
+      "id": "miyahara",
+      "name": {
+        "en": "Miyahara",
+        "zh": "宮原眼科"
+      },
+      "kind": "landmark-gym",
+      "world": [
+        320,
+        124
+      ],
+      "localEntrance": [
+        16,
+        16
+      ],
+      "exteriorMapId": "MAP_TAICHUNG_BLVD_MIYAHARA",
+      "exteriorNativeKey": "43:72"
+    },
+    "natural-science-museum": {
+      "id": "natural-science-museum",
+      "name": {
+        "en": "National Museum of Natural Science",
+        "zh": "國立自然科學博物館"
+      },
+      "kind": "landmark-gym",
+      "world": [
+        206,
+        83
+      ],
+      "localEntrance": [
+        39,
+        21
+      ],
+      "exteriorMapId": "MAP_TAICHUNG_BLVD_SCIENCE_MUSEUM",
+      "exteriorNativeKey": "43:58"
+    },
+    "calligraphy-greenway": {
+      "id": "calligraphy-greenway",
+      "name": {
+        "en": "Calligraphy Greenway",
+        "zh": "草悟道"
+      },
+      "kind": "landmark-gym",
+      "world": [
+        218,
+        124
+      ],
+      "localEntrance": [
+        9,
+        16
+      ],
+      "exteriorMapId": "MAP_TAICHUNG_BLVD_GREENWAY_CIVIC_SQUARE",
+      "exteriorNativeKey": "43:63"
+    },
+    "shen-ji-new-village": {
+      "id": "shen-ji-new-village",
+      "name": {
+        "en": "Shen Ji New Village",
+        "zh": "審計新村"
+      },
+      "kind": "landmark-gym",
+      "world": [
+        196,
+        157
+      ],
+      "localEntrance": [
+        29,
+        11
+      ],
+      "exteriorMapId": "MAP_TAICHUNG_BLVD_SHEN_JI_NEW_VILLAGE",
+      "exteriorNativeKey": "43:60"
+    },
+    "fine-arts-museum": {
+      "id": "fine-arts-museum",
+      "name": {
+        "en": "National Taiwan Museum of Fine Arts",
+        "zh": "國立臺灣美術館"
+      },
+      "kind": "landmark-gym",
+      "world": [
+        209,
+        179
+      ],
+      "localEntrance": [
+        0,
+        33
+      ],
+      "exteriorMapId": "MAP_TAICHUNG_BLVD_FINE_ARTS_MUSEUM",
+      "exteriorNativeKey": "43:64"
+    },
+    "fengjia-night-market": {
+      "id": "fengjia-night-market",
+      "name": {
+        "en": "Fengjia Night Market",
+        "zh": "逢甲夜市"
+      },
+      "kind": "landmark-gym",
+      "world": [
+        16,
+        47
+      ],
+      "localEntrance": [
+        8,
+        21
+      ],
+      "exteriorMapId": "MAP_TAICHUNG_BLVD_FENGJIA_NIGHT_MARKET",
+      "exteriorNativeKey": "43:26"
+    },
+    "wanhe-temple": {
+      "id": "wanhe-temple",
+      "name": {
+        "en": "Wanhe Temple",
+        "zh": "萬和宮"
+      },
+      "kind": "landmark-gym",
+      "world": [
+        49,
+        206
+      ],
+      "localEntrance": [
+        8,
+        16
+      ],
+      "exteriorMapId": "MAP_TAICHUNG_BLVD_WANHE_TEMPLE",
+      "exteriorNativeKey": "43:39"
+    },
+    "taichung-theater": {
+      "id": "taichung-theater",
+      "name": {
+        "en": "National Taichung Theater",
+        "zh": "臺中國家歌劇院"
+      },
+      "kind": "landmark-gym",
+      "world": [
+        53,
+        139
+      ],
+      "localEntrance": [
+        12,
+        12
+      ],
+      "exteriorMapId": "MAP_TAICHUNG_BLVD_THEATER",
+      "exteriorNativeKey": "43:37"
+    },
+    "maple-garden": {
+      "id": "maple-garden",
+      "name": {
+        "en": "Maple Garden",
+        "zh": "秋紅谷"
+      },
+      "kind": "landmark",
+      "world": [
+        27,
+        123
+      ],
+      "localEntrance": [
+        19,
+        15
+      ],
+      "exteriorMapId": "MAP_TAICHUNG_BLVD_MAPLE_GARDEN",
+      "exteriorNativeKey": "43:28",
+      "captureBit": 0
+    },
+    "wenchang-temple": {
+      "id": "wenchang-temple",
+      "name": {
+        "en": "Wenchang Temple",
+        "zh": "文昌公廟"
+      },
+      "kind": "landmark",
+      "world": [
+        34,
+        206
+      ],
+      "localEntrance": [
+        26,
+        16
+      ],
+      "exteriorMapId": "MAP_TAICHUNG_BLVD_WENCHANG_TEMPLE",
+      "exteriorNativeKey": "43:31",
+      "captureBit": 1
+    },
+    "botanical-garden": {
+      "id": "botanical-garden",
+      "name": {
+        "en": "National Museum of Natural Science Botanical Garden",
+        "zh": "國立自然科學博物館植物園"
+      },
+      "kind": "landmark",
+      "world": [
+        217,
+        74
+      ],
+      "localEntrance": [
+        8,
+        12
+      ],
+      "exteriorMapId": "MAP_TAICHUNG_BLVD_BOTANICAL_GARDEN",
+      "exteriorNativeKey": "43:62",
+      "captureBit": 18
+    },
+    "confucius-temple": {
+      "id": "confucius-temple",
+      "name": {
+        "en": "Taichung Confucius Temple",
+        "zh": "臺中市孔廟"
+      },
+      "kind": "landmark",
+      "world": [
+        300,
+        36
+      ],
+      "localEntrance": [
+        19,
+        10
+      ],
+      "exteriorMapId": "MAP_TAICHUNG_BLVD_CONFUCIUS_TEMPLE",
+      "exteriorNativeKey": "43:69",
+      "captureBit": 3
+    },
+    "yizhong-street": {
+      "id": "yizhong-street",
+      "name": {
+        "en": "Yizhong Shopping District",
+        "zh": "一中商圈"
+      },
+      "kind": "landmark",
+      "world": [
+        299,
+        59
+      ],
+      "localEntrance": [
+        18,
+        33
+      ],
+      "exteriorMapId": "MAP_TAICHUNG_BLVD_CONFUCIUS_TEMPLE",
+      "exteriorNativeKey": "43:69",
+      "captureBit": 4
+    },
+    "prefectural-hall": {
+      "id": "prefectural-hall",
+      "name": {
+        "en": "Taichung Prefectural Hall",
+        "zh": "臺中州廳"
+      },
+      "kind": "landmark",
+      "world": [
+        291,
+        140
+      ],
+      "localEntrance": [
+        10,
+        32
+      ],
+      "exteriorMapId": "MAP_TAICHUNG_BLVD_PREFECTURAL_HALL",
+      "exteriorNativeKey": "43:71",
+      "captureBit": 5
+    },
+    "second-market": {
+      "id": "second-market",
+      "name": {
+        "en": "Taichung Second Market",
+        "zh": "臺中第二市場"
+      },
+      "kind": "landmark",
+      "world": [
+        270,
+        123
+      ],
+      "localEntrance": [
+        17,
+        15
+      ],
+      "exteriorMapId": "MAP_TAICHUNG_BLVD_SECOND_MARKET",
+      "exteriorNativeKey": "43:67",
+      "captureBit": 6
+    },
+    "cultural-heritage-park": {
+      "id": "cultural-heritage-park",
+      "name": {
+        "en": "Cultural Heritage Park, Ministry of Culture",
+        "zh": "文化部文化資產園區"
+      },
+      "kind": "landmark",
+      "world": [
+        328,
+        158
+      ],
+      "localEntrance": [
+        2,
+        12
+      ],
+      "exteriorMapId": "MAP_TAICHUNG_BLVD_CULTURAL_HERITAGE_PARK",
+      "exteriorNativeKey": "43:78",
+      "captureBit": 7
+    },
+    "fengle-sculpture-park": {
+      "id": "fengle-sculpture-park",
+      "name": {
+        "en": "Fengle Sculpture Park",
+        "zh": "豐樂雕塑公園"
+      },
+      "kind": "landmark",
+      "world": [
+        80,
+        232
+      ],
+      "localEntrance": [
+        39,
+        16
+      ],
+      "exteriorMapId": "MAP_TAICHUNG_BLVD_FENGLE_SCULPTURE_PARK",
+      "exteriorNativeKey": "43:40",
+      "captureBit": 19
+    },
+    "wenxin-forest-park": {
+      "id": "wenxin-forest-park",
+      "name": {
+        "en": "Wenxin Forest Park",
+        "zh": "文心森林公園"
+      },
+      "kind": "landmark",
+      "world": [
+        99,
+        179
+      ],
+      "localEntrance": [
+        9,
+        33
+      ],
+      "exteriorMapId": "MAP_TAICHUNG_BLVD_WENXIN_FOREST_PARK",
+      "exteriorNativeKey": "43:46",
+      "captureBit": 20
+    },
+    "tiger-city": {
+      "id": "tiger-city",
+      "name": {
+        "en": "Tiger City",
+        "zh": "老虎城"
+      },
+      "kind": "landmark",
+      "world": [
+        29,
+        140
+      ],
+      "localEntrance": [
+        21,
+        13
+      ],
+      "exteriorMapId": "MAP_TAICHUNG_BLVD_TIGER_CITY",
+      "exteriorNativeKey": "43:29",
+      "captureBit": 14
+    },
+    "rainbow-village": {
+      "id": "rainbow-village",
+      "name": {
+        "en": "Rainbow Village",
+        "zh": "彩虹眷村"
+      },
+      "kind": "landmark",
+      "world": [
+        11,
+        230
+      ],
+      "localEntrance": [
+        3,
+        14
+      ],
+      "exteriorMapId": "MAP_TAICHUNG_BLVD_RAINBOW_VILLAGE",
+      "exteriorNativeKey": "43:32",
+      "captureBit": 11
+    },
+    "jingming-street": {
+      "id": "jingming-street",
+      "name": {
+        "en": "Jingming 1st Street",
+        "zh": "精明一街"
+      },
+      "kind": "landmark",
+      "world": [
+        149,
+        127
+      ],
+      "localEntrance": [
+        12,
+        19
+      ],
+      "exteriorMapId": "MAP_TAICHUNG_BLVD_JINGMING_1ST_STREET",
+      "exteriorNativeKey": "43:55",
+      "captureBit": 13
+    },
+    "city-hall": {
+      "id": "city-hall",
+      "name": {
+        "en": "City Hall",
+        "zh": "臺中市政府"
+      },
+      "kind": "landmark",
+      "world": [
+        99,
+        128
+      ],
+      "localEntrance": [
+        9,
+        1
+      ],
+      "exteriorMapId": "MAP_TAICHUNG_BLVD_XITUN_E_3",
+      "exteriorNativeKey": "43:45",
+      "captureBit": 12
+    },
+    "green-museumbrary": {
+      "id": "green-museumbrary",
+      "name": {
+        "en": "Green Museumbrary",
+        "zh": "臺中綠美圖"
+      },
+      "kind": "landmark",
+      "world": [
+        56,
+        22
+      ],
+      "localEntrance": [
+        15,
+        14
+      ],
+      "exteriorMapId": "MAP_TAICHUNG_BLVD_GREEN_MUSEUMBRARY",
+      "exteriorNativeKey": "43:33",
+      "captureBit": 10
+    },
+    "baseball-stadium": {
+      "id": "baseball-stadium",
+      "name": {
+        "en": "Intercontinental Ballpark",
+        "zh": "洲際棒球場"
+      },
+      "kind": "landmark",
+      "world": [
+        143,
+        38
+      ],
+      "localEntrance": [
+        6,
+        12
+      ],
+      "exteriorMapId": "MAP_TAICHUNG_BLVD_BEITUN_B_5",
+      "exteriorNativeKey": "43:53",
+      "captureBit": 16
+    },
+    "folklore-park": {
+      "id": "folklore-park",
+      "name": {
+        "en": "Folk Museum at Folklore Park",
+        "zh": "臺灣民俗文物館"
+      },
+      "kind": "landmark",
+      "world": [
+        232,
+        37
+      ],
+      "localEntrance": [
+        23,
+        11
+      ],
+      "exteriorMapId": "MAP_TAICHUNG_BLVD_BEITUN_B_7",
+      "exteriorNativeKey": "43:61",
+      "captureBit": 17
+    },
+    "guest-house": {
+      "id": "guest-house",
+      "name": {
+        "en": "Guest house",
+        "zh": "旅宿"
+      },
+      "kind": "landmark-gym",
+      "world": [
+        344,
+        87
+      ],
+      "localEntrance": [
+        25,
+        25
+      ],
+      "exteriorMapId": "MAP_TAICHUNG_BLVD_OLD_STATION",
+      "exteriorNativeKey": "43:76"
+    }
+  },
+  "seams": [
+    {
+      "fromNativeKey": "43:25",
+      "toNativeKey": "43:26",
+      "direction": "down",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:25",
+      "toNativeKey": "43:33",
+      "direction": "right",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:26",
+      "toNativeKey": "43:25",
+      "direction": "up",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:26",
+      "toNativeKey": "43:27",
+      "direction": "down",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:26",
+      "toNativeKey": "43:34",
+      "direction": "right",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:27",
+      "toNativeKey": "43:26",
+      "direction": "up",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:27",
+      "toNativeKey": "43:28",
+      "direction": "down",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:27",
+      "toNativeKey": "43:35",
+      "direction": "right",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:28",
+      "toNativeKey": "43:27",
+      "direction": "up",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:28",
+      "toNativeKey": "43:29",
+      "direction": "down",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:28",
+      "toNativeKey": "43:36",
+      "direction": "right",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:29",
+      "toNativeKey": "43:28",
+      "direction": "up",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:29",
+      "toNativeKey": "43:30",
+      "direction": "down",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:29",
+      "toNativeKey": "43:37",
+      "direction": "right",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:30",
+      "toNativeKey": "43:29",
+      "direction": "up",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:30",
+      "toNativeKey": "43:31",
+      "direction": "down",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:30",
+      "toNativeKey": "43:38",
+      "direction": "right",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:31",
+      "toNativeKey": "43:30",
+      "direction": "up",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:31",
+      "toNativeKey": "43:32",
+      "direction": "down",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:31",
+      "toNativeKey": "43:39",
+      "direction": "right",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:32",
+      "toNativeKey": "43:31",
+      "direction": "up",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:32",
+      "toNativeKey": "43:40",
+      "direction": "right",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:33",
+      "toNativeKey": "43:25",
+      "direction": "left",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:33",
+      "toNativeKey": "43:34",
+      "direction": "down",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:33",
+      "toNativeKey": "43:41",
+      "direction": "right",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:34",
+      "toNativeKey": "43:26",
+      "direction": "left",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:34",
+      "toNativeKey": "43:33",
+      "direction": "up",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:34",
+      "toNativeKey": "43:35",
+      "direction": "down",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:34",
+      "toNativeKey": "43:42",
+      "direction": "right",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:35",
+      "toNativeKey": "43:27",
+      "direction": "left",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:35",
+      "toNativeKey": "43:34",
+      "direction": "up",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:35",
+      "toNativeKey": "43:36",
+      "direction": "down",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:35",
+      "toNativeKey": "43:43",
+      "direction": "right",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:36",
+      "toNativeKey": "43:28",
+      "direction": "left",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:36",
+      "toNativeKey": "43:35",
+      "direction": "up",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:36",
+      "toNativeKey": "43:37",
+      "direction": "down",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:36",
+      "toNativeKey": "43:44",
+      "direction": "right",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:37",
+      "toNativeKey": "43:29",
+      "direction": "left",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:37",
+      "toNativeKey": "43:36",
+      "direction": "up",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:37",
+      "toNativeKey": "43:38",
+      "direction": "down",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:37",
+      "toNativeKey": "43:45",
+      "direction": "right",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:38",
+      "toNativeKey": "43:30",
+      "direction": "left",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:38",
+      "toNativeKey": "43:37",
+      "direction": "up",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:38",
+      "toNativeKey": "43:39",
+      "direction": "down",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:38",
+      "toNativeKey": "43:46",
+      "direction": "right",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:39",
+      "toNativeKey": "43:31",
+      "direction": "left",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:39",
+      "toNativeKey": "43:38",
+      "direction": "up",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:39",
+      "toNativeKey": "43:40",
+      "direction": "down",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:39",
+      "toNativeKey": "43:47",
+      "direction": "right",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:40",
+      "toNativeKey": "43:32",
+      "direction": "left",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:40",
+      "toNativeKey": "43:39",
+      "direction": "up",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:40",
+      "toNativeKey": "43:48",
+      "direction": "right",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:41",
+      "toNativeKey": "43:33",
+      "direction": "left",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:41",
+      "toNativeKey": "43:42",
+      "direction": "down",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:41",
+      "toNativeKey": "43:49",
+      "direction": "down",
+      "nativeOffset": 25
+    },
+    {
+      "fromNativeKey": "43:42",
+      "toNativeKey": "43:34",
+      "direction": "left",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:42",
+      "toNativeKey": "43:41",
+      "direction": "up",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:42",
+      "toNativeKey": "43:43",
+      "direction": "down",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:42",
+      "toNativeKey": "43:49",
+      "direction": "right",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:43",
+      "toNativeKey": "43:35",
+      "direction": "left",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:43",
+      "toNativeKey": "43:42",
+      "direction": "up",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:43",
+      "toNativeKey": "43:44",
+      "direction": "down",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:43",
+      "toNativeKey": "43:50",
+      "direction": "right",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:44",
+      "toNativeKey": "43:36",
+      "direction": "left",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:44",
+      "toNativeKey": "43:43",
+      "direction": "up",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:44",
+      "toNativeKey": "43:45",
+      "direction": "down",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:44",
+      "toNativeKey": "43:51",
+      "direction": "right",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:45",
+      "toNativeKey": "43:37",
+      "direction": "left",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:45",
+      "toNativeKey": "43:44",
+      "direction": "up",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:45",
+      "toNativeKey": "43:46",
+      "direction": "down",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:45",
+      "toNativeKey": "43:51",
+      "direction": "right",
+      "nativeOffset": -19
+    },
+    {
+      "fromNativeKey": "43:46",
+      "toNativeKey": "43:38",
+      "direction": "left",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:46",
+      "toNativeKey": "43:45",
+      "direction": "up",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:46",
+      "toNativeKey": "43:47",
+      "direction": "down",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:46",
+      "toNativeKey": "43:52",
+      "direction": "right",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:47",
+      "toNativeKey": "43:39",
+      "direction": "left",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:47",
+      "toNativeKey": "43:46",
+      "direction": "up",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:47",
+      "toNativeKey": "43:48",
+      "direction": "down",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:47",
+      "toNativeKey": "43:52",
+      "direction": "right",
+      "nativeOffset": -44
+    },
+    {
+      "fromNativeKey": "43:48",
+      "toNativeKey": "43:40",
+      "direction": "left",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:48",
+      "toNativeKey": "43:47",
+      "direction": "up",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:49",
+      "toNativeKey": "43:41",
+      "direction": "up",
+      "nativeOffset": -25
+    },
+    {
+      "fromNativeKey": "43:49",
+      "toNativeKey": "43:42",
+      "direction": "left",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:49",
+      "toNativeKey": "43:50",
+      "direction": "down",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:49",
+      "toNativeKey": "43:53",
+      "direction": "right",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:50",
+      "toNativeKey": "43:43",
+      "direction": "left",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:50",
+      "toNativeKey": "43:49",
+      "direction": "up",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:50",
+      "toNativeKey": "43:51",
+      "direction": "down",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:50",
+      "toNativeKey": "43:54",
+      "direction": "right",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:51",
+      "toNativeKey": "43:44",
+      "direction": "left",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:51",
+      "toNativeKey": "43:45",
+      "direction": "left",
+      "nativeOffset": 19
+    },
+    {
+      "fromNativeKey": "43:51",
+      "toNativeKey": "43:50",
+      "direction": "up",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:51",
+      "toNativeKey": "43:52",
+      "direction": "down",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:51",
+      "toNativeKey": "43:55",
+      "direction": "right",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:52",
+      "toNativeKey": "43:46",
+      "direction": "left",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:52",
+      "toNativeKey": "43:47",
+      "direction": "left",
+      "nativeOffset": 44
+    },
+    {
+      "fromNativeKey": "43:52",
+      "toNativeKey": "43:51",
+      "direction": "up",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:52",
+      "toNativeKey": "43:56",
+      "direction": "right",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:53",
+      "toNativeKey": "43:49",
+      "direction": "left",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:53",
+      "toNativeKey": "43:54",
+      "direction": "down",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:53",
+      "toNativeKey": "43:57",
+      "direction": "right",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:54",
+      "toNativeKey": "43:50",
+      "direction": "left",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:54",
+      "toNativeKey": "43:53",
+      "direction": "up",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:54",
+      "toNativeKey": "43:55",
+      "direction": "down",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:54",
+      "toNativeKey": "43:58",
+      "direction": "right",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:55",
+      "toNativeKey": "43:51",
+      "direction": "left",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:55",
+      "toNativeKey": "43:54",
+      "direction": "up",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:55",
+      "toNativeKey": "43:56",
+      "direction": "down",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:55",
+      "toNativeKey": "43:59",
+      "direction": "right",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:56",
+      "toNativeKey": "43:52",
+      "direction": "left",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:56",
+      "toNativeKey": "43:55",
+      "direction": "up",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:56",
+      "toNativeKey": "43:60",
+      "direction": "right",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:57",
+      "toNativeKey": "43:53",
+      "direction": "left",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:57",
+      "toNativeKey": "43:58",
+      "direction": "down",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:57",
+      "toNativeKey": "43:61",
+      "direction": "right",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:58",
+      "toNativeKey": "43:54",
+      "direction": "left",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:58",
+      "toNativeKey": "43:57",
+      "direction": "up",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:58",
+      "toNativeKey": "43:59",
+      "direction": "down",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:58",
+      "toNativeKey": "43:62",
+      "direction": "right",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:59",
+      "toNativeKey": "43:55",
+      "direction": "left",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:59",
+      "toNativeKey": "43:58",
+      "direction": "up",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:59",
+      "toNativeKey": "43:60",
+      "direction": "down",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:59",
+      "toNativeKey": "43:63",
+      "direction": "right",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:60",
+      "toNativeKey": "43:56",
+      "direction": "left",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:60",
+      "toNativeKey": "43:59",
+      "direction": "up",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:60",
+      "toNativeKey": "43:64",
+      "direction": "right",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:61",
+      "toNativeKey": "43:57",
+      "direction": "left",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:61",
+      "toNativeKey": "43:62",
+      "direction": "down",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:61",
+      "toNativeKey": "43:65",
+      "direction": "right",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:62",
+      "toNativeKey": "43:58",
+      "direction": "left",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:62",
+      "toNativeKey": "43:61",
+      "direction": "up",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:62",
+      "toNativeKey": "43:63",
+      "direction": "down",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:62",
+      "toNativeKey": "43:66",
+      "direction": "right",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:63",
+      "toNativeKey": "43:59",
+      "direction": "left",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:63",
+      "toNativeKey": "43:62",
+      "direction": "up",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:63",
+      "toNativeKey": "43:64",
+      "direction": "down",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:63",
+      "toNativeKey": "43:67",
+      "direction": "right",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:64",
+      "toNativeKey": "43:60",
+      "direction": "left",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:64",
+      "toNativeKey": "43:63",
+      "direction": "up",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:64",
+      "toNativeKey": "43:68",
+      "direction": "right",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:65",
+      "toNativeKey": "43:61",
+      "direction": "left",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:65",
+      "toNativeKey": "43:66",
+      "direction": "down",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:65",
+      "toNativeKey": "43:69",
+      "direction": "right",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:66",
+      "toNativeKey": "43:62",
+      "direction": "left",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:66",
+      "toNativeKey": "43:65",
+      "direction": "up",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:66",
+      "toNativeKey": "43:67",
+      "direction": "down",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:66",
+      "toNativeKey": "43:70",
+      "direction": "right",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:67",
+      "toNativeKey": "43:63",
+      "direction": "left",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:67",
+      "toNativeKey": "43:66",
+      "direction": "up",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:67",
+      "toNativeKey": "43:68",
+      "direction": "down",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:67",
+      "toNativeKey": "43:71",
+      "direction": "right",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:68",
+      "toNativeKey": "43:64",
+      "direction": "left",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:68",
+      "toNativeKey": "43:67",
+      "direction": "up",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:68",
+      "toNativeKey": "43:73",
+      "direction": "right",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:69",
+      "toNativeKey": "43:65",
+      "direction": "left",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:69",
+      "toNativeKey": "43:70",
+      "direction": "down",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:69",
+      "toNativeKey": "43:75",
+      "direction": "right",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:70",
+      "toNativeKey": "43:66",
+      "direction": "left",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:70",
+      "toNativeKey": "43:69",
+      "direction": "up",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:70",
+      "toNativeKey": "43:71",
+      "direction": "down",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:70",
+      "toNativeKey": "43:72",
+      "direction": "down",
+      "nativeOffset": 23
+    },
+    {
+      "fromNativeKey": "43:70",
+      "toNativeKey": "43:76",
+      "direction": "right",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:71",
+      "toNativeKey": "43:67",
+      "direction": "left",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:71",
+      "toNativeKey": "43:70",
+      "direction": "up",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:71",
+      "toNativeKey": "43:72",
+      "direction": "right",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:71",
+      "toNativeKey": "43:73",
+      "direction": "down",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:72",
+      "toNativeKey": "43:70",
+      "direction": "up",
+      "nativeOffset": -23
+    },
+    {
+      "fromNativeKey": "43:72",
+      "toNativeKey": "43:71",
+      "direction": "left",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:72",
+      "toNativeKey": "43:74",
+      "direction": "down",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:72",
+      "toNativeKey": "43:76",
+      "direction": "up",
+      "nativeOffset": 15
+    },
+    {
+      "fromNativeKey": "43:72",
+      "toNativeKey": "43:77",
+      "direction": "right",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:73",
+      "toNativeKey": "43:68",
+      "direction": "left",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:73",
+      "toNativeKey": "43:71",
+      "direction": "up",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:73",
+      "toNativeKey": "43:74",
+      "direction": "right",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:74",
+      "toNativeKey": "43:72",
+      "direction": "up",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:74",
+      "toNativeKey": "43:73",
+      "direction": "left",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:74",
+      "toNativeKey": "43:78",
+      "direction": "right",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:75",
+      "toNativeKey": "43:69",
+      "direction": "left",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:75",
+      "toNativeKey": "43:76",
+      "direction": "down",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:76",
+      "toNativeKey": "43:70",
+      "direction": "left",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:76",
+      "toNativeKey": "43:72",
+      "direction": "down",
+      "nativeOffset": -15
+    },
+    {
+      "fromNativeKey": "43:76",
+      "toNativeKey": "43:75",
+      "direction": "up",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:76",
+      "toNativeKey": "43:77",
+      "direction": "down",
+      "nativeOffset": 7
+    },
+    {
+      "fromNativeKey": "43:77",
+      "toNativeKey": "43:72",
+      "direction": "left",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:77",
+      "toNativeKey": "43:76",
+      "direction": "up",
+      "nativeOffset": -7
+    },
+    {
+      "fromNativeKey": "43:77",
+      "toNativeKey": "43:78",
+      "direction": "down",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:78",
+      "toNativeKey": "43:74",
+      "direction": "left",
+      "nativeOffset": 0
+    },
+    {
+      "fromNativeKey": "43:78",
+      "toNativeKey": "43:77",
+      "direction": "up",
+      "nativeOffset": 0
+    }
+  ],
+  "extraSights": [
+    {
+      "id": "tiger-city",
+      "nameEn": "Tiger City",
+      "nameZh": "老虎城",
+      "shortNameEn": "Tiger City",
+      "shortNameZh": "老虎城",
+      "minimapNameEn": "Tiger City",
+      "minimapNameZh": "老虎城",
+      "districtId": "xitun",
+      "districtEn": "Xitun · 7th Zone",
+      "districtZh": "西屯 · 七期",
+      "category": "Shopping centre",
+      "categoryZh": "購物中心",
+      "kind": "sight",
+      "gymStatus": "not-a-gym",
+      "playable": true,
+      "description": "Tiger City is a shopping and entertainment complex on Henan Road in Xitun’s Seventh Redevelopment Zone. Restaurants, shops and a cinema open off a broad outdoor plaza, and a glass elevator looks over the square. Maple Garden and the National Taichung Theater are both a short walk away. In a few blocks, the neighborhood goes from the mall and its cinema to the theater’s curved walls and the park’s sunken paths.",
+      "descriptionZh": "老虎城位於西屯七期重劃區的河南路上，聚集了商店、餐廳與影城。從寬闊的戶外廣場進入商場，還能搭乘透明景觀電梯俯瞰廣場。步行不遠，就是秋紅谷和臺中國家歌劇院。短短幾個街廓，從影城與商場的熱鬧、歌劇院的曲牆，到下沉公園的步道，就能看見七期不同的面貌。",
+      "officialUrl": "https://www.tigercity.com.tw/en/info/about/",
+      "officialUrlZh": "https://www.tigercity.com.tw/info/about/",
+      "officialSourceTitle": "Tiger City"
+    },
+    {
+      "id": "rainbow-village",
+      "nameEn": "Rainbow Village",
+      "nameZh": "彩虹眷村",
+      "shortNameEn": "Rainbow Village",
+      "shortNameZh": "彩虹眷村",
+      "minimapNameEn": "Rainbow Village",
+      "minimapNameZh": "彩虹眷村",
+      "districtId": "nantun",
+      "districtEn": "Nantun",
+      "districtZh": "南屯",
+      "category": "Painted village",
+      "categoryZh": "彩繪眷村",
+      "kind": "sight",
+      "gymStatus": "not-a-gym",
+      "playable": true,
+      "description": "The low houses of Rainbow Village once housed military families in Nantun. When the neighborhood faced demolition, retired soldier and resident Huang Yong-Fu began painting his home and the walls around it. Bright figures and patterns spread down the lanes, and public support helped persuade the city to preserve the painted cluster. Huang became known as Rainbow Grandpa. The narrow lanes and single-story roofs still show how the old community was laid out.",
+      "descriptionZh": "彩虹眷村原是南屯的軍眷聚落。面對拆遷，住在這裡的退伍軍人黃永阜開始在自家和鄰近牆面畫畫。人物與鮮豔的圖案一路延伸到巷弄，引起民眾關注，市府最後保留了彩繪聚落。黃永阜也因此有了「彩虹爺爺」的暱稱。沿著窄巷看屋頂和一整排低矮房舍，仍可辨認老眷村的生活尺度。",
+      "officialUrl": "https://travel.taichung.gov.tw/en/attractions/intro/881",
+      "officialUrlZh": "https://travel.taichung.gov.tw/zh-tw/attractions/intro/574",
+      "officialSourceTitle": "Taichung Tourism and Travel Bureau"
+    },
+    {
+      "id": "jingming-street",
+      "nameEn": "Jingming 1st Street",
+      "nameZh": "精明一街",
+      "shortNameEn": "Jingming 1st Street",
+      "shortNameZh": "精明一街",
+      "minimapNameEn": "Jingming 1st Street",
+      "minimapNameZh": "精明一街",
+      "districtId": "west",
+      "districtEn": "West · Museum Quarter",
+      "districtZh": "西區 · 草悟道",
+      "category": "Shopping street",
+      "categoryZh": "購物商圈",
+      "kind": "sight",
+      "gymStatus": "not-a-gym",
+      "playable": true,
+      "description": "Jingming 1st Street is a pedestrian lane about 100 meters long between Dadun 19th Street and Dalong Road. Cafés set tables out along the walkway, among boutiques, restaurants and galleries. It was the first street in Taichung picked as a model shopping street by Taiwan’s commerce authority. The shopping district also extends onto Dalong Road, while the original lane is still small enough to take in from one end.",
+      "descriptionZh": "精明一街位於西區大墩十九街與大隆路之間，是一條約百公尺長的徒步街。精品店、餐館與藝廊沿街排列，咖啡館則把桌椅擺到步道旁。這裡是臺中第一條獲經濟部商業司選為示範商店街的街道。商圈後來延伸到大隆路，原本的小街仍保有一眼就能望到另一端的尺度。",
+      "officialUrl": "https://travel.taichung.gov.tw/en/attractions/intro/1374",
+      "officialUrlZh": "https://travel.taichung.gov.tw/zh-tw/Attractions/Intro/24/",
+      "officialSourceTitle": "Taichung Tourism and Travel Bureau"
+    },
+    {
+      "id": "city-hall",
+      "nameEn": "City Hall",
+      "nameZh": "臺中市政府",
+      "shortNameEn": "City Hall",
+      "shortNameZh": "臺中市政府",
+      "minimapNameEn": "City Hall",
+      "minimapNameZh": "臺中市政府",
+      "districtId": "xitun",
+      "districtEn": "Xitun · 7th Zone",
+      "districtZh": "西屯 · 七期",
+      "category": "Civic plaza",
+      "categoryZh": "市政廣場",
+      "kind": "sight",
+      "gymStatus": "not-a-gym",
+      "playable": true,
+      "description": "Taichung’s City Hall faces Taiwan Boulevard across a wide public square. A tall central passage sits between the Huizhong and Wenxin wings. Near their side entrances, the red letters of Tower of Words form an open, curved sculpture. On the ground floor of the Huizhong wing, Taichung Vision Hall uses exhibits about the city’s history, neighborhoods and civic projects to explain how Taichung grew and what the city is planning next.",
+      "descriptionZh": "臺中市政府臺灣大道市政大樓前方有一座開闊的廣場，挑高的中央川堂連接惠中樓與文心樓。側門附近的公共藝術〈塔之語〉由紅色字母拼成半蛋形。惠中樓一樓的臺中願景館透過城市歷史、地方生活與市政建設等展覽，介紹臺中如何發展成今天的樣子，以及這座城市正在規劃的未來。",
+      "officialUrl": "https://www.news.taichung.gov.tw/14786/14864/2772021/2774566/2774758",
+      "officialSourceTitle": "Taichung City Government"
+    },
+    {
+      "id": "green-museumbrary",
+      "nameEn": "Green Museumbrary",
+      "nameZh": "臺中綠美圖",
+      "shortNameEn": "Green Museumbrary",
+      "shortNameZh": "臺中綠美圖",
+      "minimapNameEn": "Green Museumbrary",
+      "minimapNameZh": "臺中綠美圖",
+      "districtId": "shuinan",
+      "districtEn": "Central Park",
+      "districtZh": "中央公園 · 水湳",
+      "category": "Museum and library",
+      "categoryZh": "美術館與圖書館",
+      "kind": "sight",
+      "gymStatus": "not-a-gym",
+      "playable": true,
+      "description": "The Green Museumbrary brings the Taichung Art Museum and the city’s public library together at the north end of Central Park. SANAA and Taiwan’s Ricky Liu & Associates designed eight linked volumes wrapped in silvery metal mesh. Parts of the complex rise above the ground to make shaded plazas where the park paths meet the building. The galleries, reading rooms and rooftop garden offer different views of the park.",
+      "descriptionZh": "臺中綠美圖位於中央公園北端，結合臺中市立美術館與臺中市立圖書館。日本 SANAA 與臺灣的劉培森建築師事務所共同設計了八座彼此相連的量體，外側覆以銀白色金屬網。部分空間抬高，讓公園步道接上底下的遮蔭廣場。從展廳、閱讀空間到屋頂花園，都能看到公園不同的面貌。",
+      "officialUrl": "https://www.tcam.museum/en/field-intro",
+      "officialUrlZh": "https://www.tcam.museum/zh/field-intro",
+      "officialSourceTitle": "Taichung Art Museum"
+    },
+    {
+      "id": "baseball-stadium",
+      "nameEn": "Intercontinental Ballpark",
+      "nameZh": "洲際棒球場",
+      "shortNameEn": "Ballpark",
+      "shortNameZh": "洲際棒球場",
+      "minimapNameEn": "Ballpark",
+      "minimapNameZh": "洲際棒球場",
+      "districtId": "beitun",
+      "districtEn": "Beitun",
+      "districtZh": "北屯",
+      "category": "Baseball stadium",
+      "categoryZh": "棒球場",
+      "kind": "sight",
+      "gymStatus": "not-a-gym",
+      "playable": true,
+      "description": "Taichung Intercontinental Ballpark opened in Beitun in 2006, and its first major event was the Intercontinental Cup. The stadium sits at the junction of Chongde and Huanzhong roads. Its broad stands look across the diamond, and the curved roof borrows its shape from the stitches on a baseball. The ballpark has hosted international games ever since and remains a fixture of Taiwan’s baseball scene.",
+      "descriptionZh": "臺中洲際棒球場位在北屯崇德路與環中路口，於二〇〇六年完工，首場大型賽事便是洲際盃棒球賽。寬敞的看台望向球場，弧形屋頂的設計則取自棒球的縫線。從啟用以來，這裡陸續迎來多場國際比賽，也是臺灣棒球迷熟悉的場地。",
+      "officialUrl": "https://travel.taichung.gov.tw/en/attractions/intro/1109",
+      "officialUrlZh": "https://travel.taichung.gov.tw/zh-tw/Attractions/Intro/149/",
+      "officialSourceTitle": "Taichung Tourism and Travel Bureau"
+    },
+    {
+      "id": "folklore-park",
+      "nameEn": "Folk Museum at Folklore Park",
+      "nameZh": "臺灣民俗文物館",
+      "shortNameEn": "Folk Museum",
+      "shortNameZh": "民俗公園",
+      "minimapNameEn": "Folk Museum",
+      "minimapNameZh": "民俗公園",
+      "districtId": "beitun",
+      "districtEn": "Beitun",
+      "districtZh": "北屯",
+      "category": "Folk museum",
+      "categoryZh": "民俗館",
+      "kind": "sight",
+      "gymStatus": "not-a-gym",
+      "playable": true,
+      "description": "Taiwan’s first folklore park opened in Beitun in 1990. Its tiled roofs and courtyards draw on the Minnan homes built around the end of the Qing dynasty. The museum displays objects from everyday life and shows how families arranged their rooms, while the park’s squares make room for folk crafts and performances. Covered walkways, arched bridges and a lotus pond carry the same attention to local traditions into the grounds.",
+      "descriptionZh": "北屯民俗公園於一九九〇年開放，是臺灣第一座民俗公園。瓦屋頂與四合院取材自清末民初的閩南建築。民俗館透過早期家庭的日常器物與室內陳設，呈現當時的居家生活，園內廣場也為民間工藝與表演留出空間。出了館舍，還能沿著迴廊走過拱橋、花圃與荷塘。",
+      "officialUrl": "https://travel.taichung.gov.tw/en/Attractions/Intro/884",
+      "officialUrlZh": "https://travel.taichung.gov.tw/zh-tw/Attractions/Intro/420/",
+      "officialSourceTitle": "Taichung Tourism and Travel Bureau"
+    }
+  ],
+  "sourceSha256": {
+    "compiledMapReport": "7b48216d2f5eeace6192a9a62372aed83fa39f24b05dd5436a812a261b756ffe",
+    "fill": "22d9c6695e21ab7419ccafe55d86e4833df8a5e394aee84133d4a1cd6b5849f6",
+    "mapBook": "265d64cf1b47a26d412626301a6f1e542f3a19bcd89ec0084e6f08022a713b4d",
+    "streetPeople": "e43c3c4e9467f00454bc234ca2cad263028212eb6ac86d1868979cf2c3d7900b"
+  },
+  "geometryFingerprintSha256": "625e4fb0f31227fe9dcbdd314fd4a79e1c19f2a6d3300127e8781183f58fd822"
+}

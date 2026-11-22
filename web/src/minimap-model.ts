@@ -4,16 +4,26 @@ import type { OnboardingSnapshot } from './onboarding-bridge';
 
 type Pair = number[];
 type LocalizedName = { en: string; zh: string };
+type StreetBand = { name: LocalizedName; bounds: number[]; axis: string };
 export type MinimapGeometry = {
   schemaVersion: number;
   geometryFingerprintSha256: string;
-  world: { width: number; height: number };
+  coordinateSystem?: { northUp?: boolean };
+  world: {
+    width: number; height: number;
+    homeWorld?: Pair;
+    districtLabels?: { label: string; x: number; y: number }[];
+    streetBands?: StreetBand[];
+    neighborhoods?: { name: LocalizedName; tile: Pair }[];
+  };
   mapsByNativeKey: Record<string, {
     kind: string; width: number; height: number; projection: string;
     worldOrigin?: Pair; worldRect?: Pair; parentNativeKey?: string;
     parentMarkerId?: string; parentEntranceWorld?: Pair; indoorLabel?: LocalizedName;
+    districtName?: LocalizedName;
+    districtBefore?: { y: number; name: LocalizedName };
   }>;
-  markersById: Record<string, { id: string; world: Pair; exteriorNativeKey: string; name: LocalizedName }>;
+  markersById: Record<string, { id: string; world: Pair; exteriorNativeKey: string; name: LocalizedName; captureBit?: number }>;
 };
 export type MinimapPosition = {
   worldX: number; worldY: number; u: number; v: number; facing: number;
@@ -66,6 +76,32 @@ export function radarPosition(position?: MinimapPosition) {
   return position && !position.indoor ? position : undefined;
 }
 
+export function districtAt(position: MinimapPosition | undefined, geometry: MinimapGeometry) {
+  if (!position) return;
+  const map = geometry.mapsByNativeKey[position.districtKey];
+  const split = map?.districtBefore;
+  return split && position.worldY < split.y ? split.name : map?.districtName;
+}
+
+export function streetAt(position: MinimapPosition | undefined, geometry: MinimapGeometry) {
+  if (!position || position.indoor) return;
+  const { worldX: x, worldY: y, facing } = position;
+  const axis = facing >= 3 ? 'h' : 'v';
+  let street: LocalizedName | undefined;
+  let closest = Infinity;
+  for (const band of geometry.world.streetBands ?? []) {
+    const [left, top, right, bottom] = band.bounds;
+    if (x < left || x >= right || y < top || y >= bottom) continue;
+    const distance = band.axis === 'h'
+      ? Math.abs(y + .5 - (top + bottom) / 2) / (bottom - top)
+      : Math.abs(x + .5 - (left + right) / 2) / (right - left);
+    // At crossings, prefer the street the player is facing along.
+    const score = distance + Number(band.axis !== axis);
+    if (score < closest) { street = band.name; closest = score; }
+  }
+  return street;
+}
+
 /** The native tour publishes its real position even while dialogue hides navigation.
  * Only its minimap topic through farewell may use this separate, non-navigation view.
  */
@@ -91,14 +127,9 @@ export function projectTutorial(packet: OnboardingSnapshot, geometry: MinimapGeo
     facing: 0, districtKey: key, indoor: false, landmarkId: nearest.id, landmarkName: nearest.name };
 }
 
-/**
- * The minimap is a north-up rectangle `width` x `height` world tiles, one GBA pixel per tile,
- * always centred on the player (no clamping at the world edge, so the dark surround outlines
- * the city). Vector markers are centred on their exact tile. Places within `pinX`/`pinY` tiles
- * of the player show in place; pinned blips (gyms, home) further out sit on that inner box
- * along their bearing, so they always point the way without touching the frame.
- */
-export const RADAR = { width: 60, height: 44, pinX: 27, pinY: 19 } as const;
+export const RADAR = { width: 60, height: 44 } as const;
+export type RadarMode = 'nearby' | 'districts' | 'citywide';
+type RadarBounds = { width: number; height: number };
 /** src/assets/minimap/city.png: `tile` px per world tile plus a `margin`-tile dark border (scripts/derive-city-art.py). */
 export const RADAR_ART = { tile: 1, margin: 2 } as const;
 /** Logical 64×48 drawing with a 2-unit frame; CSS renders it at 48×36 GBA-equivalent pixels. */
@@ -109,21 +140,25 @@ export const HOME_WORLD: Pair = [105, 120];
 export const FACING_DEGREES: Record<number, number> = { 1: 180, 2: 0, 3: 270, 4: 90 };
 
 /** The map's viewBox in tiles: the player's tile sits at column width/2 and row height/2. */
-export function radarViewBox(tile: { x: number; y: number }, radar = RADAR) {
+export function radarViewBox(tile: { x: number; y: number }, radar: RadarBounds = RADAR) {
   return { x: tile.x - radar.width / 2, y: tile.y - radar.height / 2, width: radar.width, height: radar.height };
 }
 
-/**
- * Which tile a blip is drawn on: its own when within the pin box, otherwise (only when
- * `pinned`) the box edge along its bearing from the player, rounded to a whole tile.
- */
-export function radarBlip(player: { x: number; y: number }, target: Pair, pinned: boolean, radar = RADAR) {
-  const dx = target[0] - player.x;
-  const dy = target[1] - player.y;
-  if (Math.abs(dx) <= radar.pinX && Math.abs(dy) <= radar.pinY) return { x: target[0], y: target[1], onRim: false };
-  if (!pinned) return;
-  const scale = Math.min(dx ? radar.pinX / Math.abs(dx) : Infinity, dy ? radar.pinY / Math.abs(dy) : Infinity);
-  return { x: player.x + Math.round(dx * scale), y: player.y + Math.round(dy * scale), onRim: true };
+export function radarViewport(tile: { x: number; y: number }, mode: RadarMode, world: RadarBounds) {
+  if (mode === 'nearby') return radarViewBox(tile);
+  const scale = mode === 'citywide' ? Math.max((world.width + 4) / RADAR.width, (world.height + 4) / RADAR.height) : 2.1;
+  const size = { width: RADAR.width * scale, height: RADAR.height * scale };
+  const center = mode === 'citywide' ? { x: world.width / 2, y: world.height / 2 } : {
+    x: Math.max(size.width / 2, Math.min(world.width - size.width / 2, tile.x)),
+    y: Math.max(size.height / 2, Math.min(world.height - size.height / 2, tile.y)),
+  };
+  return radarViewBox(center, size);
+}
+
+export function radarContains(view: ReturnType<typeof radarViewBox>, tile: Pair) {
+  const x = tile[0] + .5;
+  const y = tile[1] + .5;
+  return x >= view.x && x < view.x + view.width && y >= view.y && y < view.y + view.height;
 }
 
 export function secondaryAction(packet?: NavigationSnapshot, position?: MinimapPosition): 'Back' | 'Bike' | 'Get off' {

@@ -7,7 +7,7 @@ Unchanged copies of the game's own sprites from `vendor/pokefirered/graphics/pok
 | `front/` | `front.png` | 64×64 | Starter cards (3×, 2× on phones) and the hero partner. |
 | `icon/` | `icon.png` | 32×64, two 32×32 frames | Header, example team and gym leader teams. The page alternates the two frames like the in-game party menu. |
 
-Gym leader teams follow the native trainer parties in `src/data/trainer_parties.h`: Jun has Rattata and Pidgey; Lian has Goldeen, Psyduck and Pidgeotto; Peiqi has Seel, Cloyster and Lapras. The example team of six is illustrative.
+Gym leader teams follow the native trainer parties in `src/data/trainer_parties.h`. Jun has Rattata, Pidgey and Meowth. Lian has Goldeen, Psyduck and Pidgeotto. Peiqi has Seel, Cloyster and Lapras. The example team of six is illustrative.
 
 SHA-256 of the exact source/copy bytes:
 

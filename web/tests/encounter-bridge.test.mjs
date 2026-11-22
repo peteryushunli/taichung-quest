@@ -66,6 +66,33 @@ test('ACK commits only its five fields and refuses stale, wrong-phase, already-A
   assert.equal(writeEncounterAcknowledgement(g.heap, offset, metadata, old, 1), false);
 });
 
+test('v2 preserves the highest site in both the capture and durable acknowledgement', () => {
+  const v2 = { ...metadata, version: 2, size: 72 };
+  assert.deepEqual(parseEncounterMetadata({ sha256: sha, bytes: 16, encounterBridge: v2 }, sha, 16), v2);
+  const { heap, u32, view } = fixture();
+  const captures = 1 << 20;
+  u32(8, 72 << 16 | 2);
+  u32(32, captures);
+  u32(36, captures);
+  u32(40, 144 | 20 << 16 | 4 << 24);
+  u32(44, 2 | 1 << 8 | 1 << 16);
+  u32(56, 12);
+  u32(60, 0x12345678);
+  const packet = readEncounterSnapshot(heap, offset, v2);
+  assert.equal(packet.site, 20);
+  assert.equal(packet.attempts, captures);
+  assert.equal(packet.unlocks, captures);
+  assert.equal(writeEncounterAcknowledgement(heap, offset, v2, { ...packet, attempts: 0 }, 1), false);
+  assert.equal(writeEncounterAcknowledgement(heap, offset, v2, packet, 1), true);
+  assert.equal(view.getUint32(offset + 28, true), packet.request);
+  assert.equal(view.getUint32(offset + 48, true), captures);
+  assert.equal(view.getUint32(offset + 52, true), captures);
+  assert.equal(view.getUint32(offset + 64, true), packet.saveCounter);
+  assert.equal(heap[offset + 47], 1);
+  u32(32, 1 << 21);
+  assert.equal(readEncounterSnapshot(heap, offset, v2), undefined);
+});
+
 test('live client ACK waits for the entire durable callback; storage failure emits only failure ACK', async () => {
   for (const fails of [false, true]) {
     const f = fixture(); let resolve, reject, entered = false;

@@ -58,6 +58,16 @@ test('reads exact typed-array view and rejects incompatible buffers/proofs', () 
   for (const bad of [NaN, -1, 1.5, 0x100000000]) assert.equal(verifyCaptureNativeSave(fixture().bytes, { ...proof, saveCounter: bad }), undefined);
 });
 
+test('expanded saves prove the highest attempt and unlock independently of legacy reserved bits', () => {
+  const expected = { ...proof, attempts: 0x180041, unlocks: 0x100041 };
+  const { bytes, view, positions, seal } = fixture(expected, 1, 5, 0xec02);
+  view.setUint16(positions[2] + 0x268, 0xfc41, true);
+  seal(2);
+  assert.deepEqual(verifyCaptureNativeSave(bytes, expected), { ...expected, slot: 1 });
+  assert.equal(verifyCaptureNativeSave(bytes, { ...expected, attempts: 0x100041 }), undefined);
+  assert.equal(verifyCaptureNativeSave(bytes, { ...expected, unlocks: 0x41 }), undefined);
+});
+
 function storage() {
   const values = new Map();
   return { getItem: key => values.get(key) ?? null, setItem: (key, value) => values.set(key, value), removeItem: key => values.delete(key) };

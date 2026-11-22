@@ -1,5 +1,7 @@
 import bikeShot from './assets/landing/bike-greenway.png';
 import cityMap from './assets/landing/city-map.png';
+import boulevardMap from './assets/boulevard/city.png';
+import { BOULEVARD_PREVIEW } from './preview-world';
 import heroPoster from './assets/landing/hero-poster.png';
 import heroReel from './assets/landing/hero-reel.mp4';
 import fengjia from './assets/landmarks/fengjia.png';
@@ -76,7 +78,7 @@ const neutral = '#eee8dc';
 
 // Leader teams follow the native trainer parties (src/data/trainer_parties.h), in battle order.
 export const landmarkArt: Record<string, LandmarkArt> = {
-  'old-taichung-station': { facade: oldStation, tint: brick, leader: jun, team: [mon('Rattata', rattataIcon), mon('Pidgey', pidgeyIcon)] },
+  'old-taichung-station': { facade: oldStation, tint: brick, leader: jun, team: [mon('Rattata', rattataIcon), mon('Pidgey', pidgeyIcon), mon('Meowth', meowthIcon)] },
   'taichung-park': { facade: taichungPark, tint: park, leader: lian, team: [mon('Goldeen', goldeenIcon), mon('Psyduck', psyduckIcon), mon('Pidgeotto', pidgeottoIcon)] },
   miyahara: { facade: miyahara, tint: brick, leader: peiqi, team: [mon('Seel', seelIcon), mon('Cloyster', cloysterIcon), mon('Lapras', laprasIcon)] },
   'natural-science-museum': { facade: scienceMuseum, tint: modern, leader: yicheng, team: [mon('Magneton', magnetonIcon), mon('Porygon', porygonIcon), mon('Omastar', omastarIcon)] },
@@ -102,6 +104,14 @@ for (const [path, url] of Object.entries(mapViews)) {
   const id = path.slice(path.lastIndexOf('/') + 1, -'.png'.length);
   landmarkArt[id] ??= { facade: url, mapView: true, tint: park };
 }
+const boulevardViews = import.meta.glob<string>('./assets/boulevard/places/*.png', { eager: true, import: 'default' });
+if (BOULEVARD_PREVIEW) {
+  for (const [path, url] of Object.entries(boulevardViews)) {
+    const id = path.slice(path.lastIndexOf('/') + 1, -'.png'.length);
+    const art = landmarkArt[id];
+    landmarkArt[id] = { ...art, facade: url, mapView: true, tint: art?.tint ?? park };
+  }
+}
 
 /** Page media. An empty slot renders a labelled placeholder. */
 export const landingMedia: {
@@ -118,7 +128,7 @@ export const landingMedia: {
   heroPoster,
   heroPartner: pikachuFront,
   bikeShot,
-  cityMap,
+  cityMap: BOULEVARD_PREVIEW ? boulevardMap : cityMap,
   starters: { charmander: charmanderFront, bulbasaur: bulbasaurFront, squirtle: squirtleFront, pikachu: pikachuFront },
   starterIcons: [mon('Charmander', charmanderIcon), mon('Bulbasaur', bulbasaurIcon), mon('Squirtle', squirtleIcon), mon('Pikachu', pikachuIcon)],
   party: [mon('Charizard', charizardIcon), mon('Gengar', gengarIcon), mon('Snorlax', snorlaxIcon), mon('Gyarados', gyaradosIcon), mon('Dragonite', dragoniteIcon), mon('Eevee', eeveeIcon)],

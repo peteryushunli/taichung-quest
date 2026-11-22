@@ -4,7 +4,8 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const geometryFields = ['schemaVersion', 'coordinateSystem', 'world', 'mapsByNativeKey', 'markersById', 'seams'];
-const bundledGeometry = new URL('../src/data/minimap-contract.json', import.meta.url);
+const bundledGeometry = new URL(process.env.VITE_BOULEVARD_PREVIEW === '1'
+  ? '../src/data/boulevard-preview.json' : '../src/data/minimap-contract.json', import.meta.url);
 // Match the native exporter's sorted UTF-8 JSON fingerprint, excluding source provenance.
 const canonical = (value) => Array.isArray(value) ? value.map(canonical) : value && typeof value === 'object'
   ? Object.fromEntries(Object.keys(value).sort().map((key) => [key, canonical(value[key])])) : value;
@@ -31,9 +32,10 @@ export async function verifyCartridge(directory, { geometryFile = bundledGeometr
     throw new Error('The release requires matching version-1 native language-bridge metadata.');
   }
   const navigation = metadata.navigationBridge;
-  if (!navigation || navigation.version !== 1 || navigation.size !== 48 || navigation.magicA !== 0x414e4354 || navigation.magicB !== 0x31303056 ||
-      !Number.isInteger(navigation.address) || navigation.address % 4 || navigation.address < 0x02000000 || navigation.address > 0x02040000 - 48) {
-    throw new Error('The release requires matching version-1 native navigation-bridge metadata.');
+  if (!navigation || !((navigation.version === 1 && navigation.size === 48) || (navigation.version === 2 && navigation.size === 52)) ||
+      navigation.magicA !== 0x414e4354 || navigation.magicB !== 0x31303056 ||
+      !Number.isInteger(navigation.address) || navigation.address % 4 || navigation.address < 0x02000000 || navigation.address > 0x02040000 - navigation.size) {
+    throw new Error('The release requires matching native navigation-bridge metadata.');
   }
   let geometry;
   try {
