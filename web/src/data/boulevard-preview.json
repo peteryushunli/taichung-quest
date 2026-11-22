@@ -738,7 +738,7 @@
         "y": 6
       },
       {
-        "label": "CENTRAL PARK 中央公園",
+        "label": "SHUINAN 水湳",
         "x": 63,
         "y": 6
       },
@@ -3063,25 +3063,6 @@
       "exteriorNativeKey": "43:45",
       "captureBit": 12
     },
-    "central-park": {
-      "id": "central-park",
-      "name": {
-        "en": "Central Park",
-        "zh": "中央公園"
-      },
-      "kind": "landmark",
-      "world": [
-        57,
-        40
-      ],
-      "localEntrance": [
-        16,
-        14
-      ],
-      "exteriorMapId": "MAP_TAICHUNG_BLVD_CENTRAL_PARK_B_2",
-      "exteriorNativeKey": "43:34",
-      "captureBit": 10
-    },
     "green-museumbrary": {
       "id": "green-museumbrary",
       "name": {
@@ -3099,7 +3080,7 @@
       ],
       "exteriorMapId": "MAP_TAICHUNG_BLVD_GREEN_MUSEUMBRARY",
       "exteriorNativeKey": "43:33",
-      "captureBit": 15
+      "captureBit": 10
     },
     "baseball-stadium": {
       "id": "baseball-stadium",
@@ -4377,28 +4358,6 @@
       "officialSourceTitle": "Taichung City Government"
     },
     {
-      "id": "central-park",
-      "nameEn": "Central Park",
-      "nameZh": "中央公園",
-      "shortNameEn": "Central Park",
-      "shortNameZh": "中央公園",
-      "minimapNameEn": "Central Park",
-      "minimapNameZh": "中央公園",
-      "districtId": "shuinan",
-      "districtEn": "Central Park",
-      "districtZh": "中央公園 · 水湳",
-      "category": "Park",
-      "categoryZh": "公園",
-      "kind": "sight",
-      "gymStatus": "not-a-gym",
-      "playable": true,
-      "description": "Taichung Central Park occupies the former grounds of Shuinan Airport. Part of the runway survives, a reminder of the airfield beneath today’s landscape. Paths and cycle routes cross about 67 hectares of groves, open lawns and ponds. The park’s twelve interactive installations explore senses and abilities such as touch and balance. At the northern edge, the Green Museumbrary’s shaded plazas open directly onto the park.",
-      "descriptionZh": "臺中中央公園位在水湳機場原址，園內保留了一部分跑道，讓人還能看出這裡曾是機場。約六十七公頃的園區裡，步道與自行車道穿過林地、草坪與水池，十二處感官互動設施則讓人透過觸覺、平衡感等方式體驗不同的地景。走到公園北側，就能看見臺中綠美圖向公園敞開的遮蔭廣場。",
-      "officialUrl": "https://travel.taichung.gov.tw/en/Attractions/Intro/1600",
-      "officialUrlZh": "https://travel.taichung.gov.tw/zh-tw/Attractions/Intro/1458/",
-      "officialSourceTitle": "Taichung Tourism and Travel Bureau"
-    },
-    {
       "id": "green-museumbrary",
       "nameEn": "Green Museumbrary",
       "nameZh": "臺中綠美圖",
@@ -4471,5 +4430,5 @@
     "mapBook": "265d64cf1b47a26d412626301a6f1e542f3a19bcd89ec0084e6f08022a713b4d",
     "streetPeople": "55ab23c95679b0db7edd67023ce6630b6c06111598b7849cba32539d2973712a"
   },
-  "geometryFingerprintSha256": "fc0920830961046d618de030c960a087c989a390fbff98cc68776578910e396b"
+  "geometryFingerprintSha256": "625e4fb0f31227fe9dcbdd314fd4a79e1c19f2a6d3300127e8781183f58fd822"
 }

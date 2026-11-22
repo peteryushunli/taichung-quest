@@ -62,11 +62,15 @@ test('real sign/host copy keeps capture-before-TEAM-unlock and the correct entry
 });
 
 test('the Boulevard guide includes encounters for every non-gym destination', () => {
-  const { extraSights, markersById } = JSON.parse(
+  const { extraSights, markersById, world } = JSON.parse(
     readFileSync(new URL('../src/data/boulevard-preview.json', import.meta.url), 'utf8'),
   );
   const sights = [...places, ...extraSights].filter((place) => !isGym(place));
-  assert.equal(sights.length, 18);
+  assert.equal(sights.length, 17);
+  assert.ok(!markersById['central-park']);
+  assert.equal(markersById['green-museumbrary'].captureBit, 10);
+  assert.ok(world.districtLabels.some(({ label }) => label === 'SHUINAN 水湳'));
+  assert.ok(world.districtLabels.some(({ label }) => label === 'FENGJIA 逢甲'));
   for (const place of sights) {
     assert.notEqual(markersById[place.id].captureBit, undefined, place.id);
     assert.match(landmarkCaptureCopy(place.id, 'guide', true), /encounter.*capture.*unlock.*TEAM/i);

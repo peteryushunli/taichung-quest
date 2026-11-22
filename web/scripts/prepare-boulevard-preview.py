@@ -21,7 +21,6 @@ EXTRA_SIGHTS = {
     "rainbow-village": ("Rainbow Village", "彩虹眷村", "nantun", "Painted village", "彩繪眷村"),
     "jingming-street": ("Jingming 1st Street", "精明一街", "west", "Shopping street", "購物商圈"),
     "city-hall": ("City Hall", "臺中市政府", "xitun", "Civic plaza", "市政廣場"),
-    "central-park": ("Central Park", "中央公園", "shuinan", "Park", "公園"),
 }
 INSTALLED_SIGHTS = {
     "green-museumbrary": ("Green Museumbrary", "臺中綠美圖", "shuinan", "Museum and library", "美術館與圖書館"),
@@ -34,7 +33,7 @@ LANDMARK_MAP_VIEWS = {
     "fengle-sculpture-park", "yizhong-street", "wenxin-forest-park",
 }
 LABELS = [
-    ("FENGJIA 逢甲", 40, 6), ("CENTRAL PARK 中央公園", 94, 6), ("BEITUN 北屯", 178, 23),
+    ("FENGJIA 逢甲", 40, 6), ("SHUINAN 水湳", 94, 6), ("BEITUN 北屯", 178, 23),
     ("XITUN 西屯", 46, 103), ("GREENWAY 草悟道", 205, 116),
     ("OLD CITY 舊城", 347, 22), ("NANTUN 南屯", 48, 215),
 ]
@@ -228,7 +227,7 @@ def main():
     places = {place["id"]: place for place in read(DATA / "landmarks.json") + read(DATA / "sights.json")}
     plan_districts = {district["id"]: district for district in plan["districts"]}
     installed = {entry["id"]: entry for entry in report.get("installedLandmarks", [])}
-    captures = {site["siteSlug"]: site["stableSiteId"]
+    captures = {site["siteSlug"]: site
                 for site in read(args.native / "data/taichung/encounters/sites.json")["sites"]
                 if site["currentBinding"]}
     sight_specs = EXTRA_SIGHTS | {place: INSTALLED_SIGHTS[place] for place in installed}
@@ -247,7 +246,7 @@ def main():
         extras.append(row)
         places[place] = row
     places["guest-house"] = {"nameEn": "Guest house", "nameZh": "旅宿", "kind": "visit"}
-    events = {"central-park": {"type": "sign", "tile": [89, 42]}}
+    events = {}
     for event in raw["events"]["list"]:
         place = event.get("place")
         if place in places and event["tile"] and (
@@ -256,21 +255,21 @@ def main():
             events[place] = event
     for place, entry in installed.items():
         events[place] = {"type": "sign", "tile": entry["signTile"]}
-    capture_bindings = candidate / "capture-bindings.json"
-    extra_capture_ids = captures.keys() & sight_specs.keys()
-    bindings = read(capture_bindings) if capture_bindings.is_file() else []
-    require(len(bindings) == len(extra_capture_ids) and {entry["id"] for entry in bindings} == extra_capture_ids,
-            "Installed Boulevard capture signs do not match the encounter catalog.")
-    for entry in bindings:
-        place = entry["id"]
-        require(captures[place] == entry["stableSiteId"], f"Capture binding differs for {place}.")
-        parent = map_at(normalize(entry["signTile"]))
-        require(parent["mapId"] == entry["nativeMap"], f"Wrong sign map for {place}.")
+    # The cartridge's sign registration determines the marker when a capture
+    # has been moved or installed after the original map design.
+    capture_signs = {captures[place]["currentBinding"]: place for place in captures.keys() & sight_specs.keys()}
+    located = set()
+    for parent in exteriors.values():
         native = read(args.native / "data/maps" / parent["nativeMapName"] / "map.json")
-        require(any(event["type"] == "sign" and [event["x"], event["y"]] == entry["localTile"]
-                    and event["script"] == entry["script"] for event in native["bg_events"]),
-                f"Capture sign is missing from the cartridge source for {place}.")
-        events[place] = {"type": "sign", "tile": entry["signTile"]}
+        ox, oy = parent["worldOrigin"]
+        for event in native["bg_events"]:
+            if event["type"] != "sign" or event["script"] not in capture_signs:
+                continue
+            place = capture_signs[event["script"]]
+            require(place not in located, f"Multiple native capture signs for {place}.")
+            located.add(place)
+            events[place] = {"type": "sign", "tile": [x0 + ox + event["x"], y0 + oy + event["y"]]}
+    require(located == set(capture_signs.values()), "Installed Boulevard capture signs do not match the encounter catalog.")
 
     markers = {}
     interiors = {}
@@ -286,7 +285,7 @@ def main():
                   "exteriorMapId": parent["mapId"], "exteriorNativeKey": parent["nativeKey"]}
         markers[place] = marker
         if place in captures:
-            marker["captureBit"] = captures[place]
+            marker["captureBit"] = captures[place]["stableSiteId"]
         if event["type"] == "door":
             room = registry[event["destMap"]]
             interiors[room["nativeKey"]] = {**room, "kind": "interior", "projection": "parent-entrance",
