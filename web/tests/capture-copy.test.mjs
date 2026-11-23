@@ -4,6 +4,7 @@ import test from 'node:test';
 import { landmarkCaptureCopy } from '../src/capture-copy.ts';
 import { setLocale, t } from '../src/i18n.ts';
 import { isGym } from '../src/landing-model.ts';
+import { bilingualNeighborhood, neighborhoodLabels } from '../src/neighborhood-labels.ts';
 
 const places = ['landmarks', 'sights'].flatMap((name) => JSON.parse(
   readFileSync(new URL(`../src/data/${name}.json`, import.meta.url), 'utf8'),
@@ -69,8 +70,12 @@ test('the Boulevard guide includes encounters for every non-gym destination', ()
   assert.equal(sights.length, 17);
   assert.ok(!markersById['central-park']);
   assert.equal(markersById['green-museumbrary'].captureBit, 10);
-  assert.ok(world.districtLabels.some(({ label }) => label === 'SHUINAN 水湳'));
-  assert.ok(world.districtLabels.some(({ label }) => label === 'FENGJIA 逢甲'));
+  // Match the current exporter even when testing an older paired artifact.
+  delete world.districtLabels;
+  const neighborhoods = neighborhoodLabels(world).map(({ name }) => bilingualNeighborhood(name));
+  assert.equal(neighborhoods.length, 9);
+  assert.ok(neighborhoods.includes('Shuinan 水湳'));
+  assert.ok(neighborhoods.includes('Fengjia 逢甲'));
   for (const place of sights) {
     assert.notEqual(markersById[place.id].captureBit, undefined, place.id);
     assert.match(landmarkCaptureCopy(place.id, 'guide', true), /encounter.*capture.*unlock.*TEAM/i);
