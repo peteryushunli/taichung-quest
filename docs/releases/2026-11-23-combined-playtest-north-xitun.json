@@ -51,13 +51,19 @@
     "nativeContinue": "16 emulator cases and21536 compiled helper cases passed",
     "pairedOldSave": "Actual browser imported unchanged ordinary production Save; repaired43:27local24,18\u219223,20; walk and nativeSave passed; HP7/PP1 and full inspected party retained",
     "play": "Actual canonical Chrome Play reaches native Settings; no warning/error logs",
-    "capture": "Actual paired browser Prepare\u2192Back Begin selected, Snorlax caught, immediate add, nativeSave/Continue and City Map caught marker passed"
+    "capture": "PASS actual final634 browser twoUltraBallbreakouts/opponentturn/thirdballcatch, automaticAddoffer, durableSave withoutmanualSave; actual final634 exhaustion andKO saves importedunchanged and correct paired\u00d7/notcaught markers afterContinue",
+    "gymHealing": "PASS actual final634 On/Off wins, damagedHP/spentPP/faint/status unchanged atentry, ordinary nativeSave and complete14sector proof; On healsall andOffpreservesbattleuse",
+    "lossRecovery": "PASS actuale16 loss/blackout bothmodes; ninegameplaysources byte-identical tofinal634",
+    "chineseOpening": "PASS actual freshfinal634 settings, upstairs greeting, partnerselection, every optionaltourpage and finalAdismiss; corrected\u2713/X explanation",
+    "chineseStation": "PASS actual freshfinal634 entryprompt, onehistoryfact\u2192nextAstartsBattle, Chinesebadgeaward beforebadgeScreen, oneAdismissreturnsdirectfreefield+walk",
+    "nativeScope": "Constructed isolated inputs used for damaged-party gym and unsuccessful capture native scenarios; freshChineseopening/Station followed ordinary in-game actions from a clean start. BrowserKO/exhaustion markers used unchanged actual native resultSave imports.",
+    "browserScope": "Actual desktopChrome. Existing responsive/model tests pass; no fresh physicaliPhone claim. StandardenginebattleUIremainsEnglish."
   },
-  "remainingAcceptance": [
-    "Off victory actual native emulator case finishing",
-    "Unsuccessful capture exhaustion/KO actual native emulator cases and paired browser markers pending",
-    "Fresh Chinese opening on final combined cartridge pending"
-  ],
+  "remainingAcceptance": [],
   "mainAtPromotion": "c25ce6b33c2ca02b5eff8400e27a9e8f8bc9dacb",
-  "note": "This source archive commit adds the exact verified portable native patch and receipt after deployment; deployed frontend stays79adb5b7. No frontend/runtime changes in archive commit."
+  "note": "This source archive commit adds the exact verified portable native patch and receipt after deployment; deployed frontend stays79adb5b7. No frontend/runtime changes in archive commit.",
+  "buildEnvironment": {
+    "VITE_BOULEVARD_PREVIEW": "1"
+  },
+  "sourcePullRequest": "https://github.com/peteryushunli/taichung-quest/pull/24"
 }
