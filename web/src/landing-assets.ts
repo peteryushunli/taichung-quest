@@ -1,30 +1,19 @@
 import bikeShot from './assets/landing/bike-greenway.png';
 import cityMap from './assets/landing/city-map.png';
-import boulevardMap from './assets/boulevard/city.png';
+import boulevardMap from './assets/boulevard/city.webp';
 import { BOULEVARD_PREVIEW } from './preview-world';
 import heroPoster from './assets/landing/hero-poster.png';
 import heroReel from './assets/landing/hero-reel.mp4';
-import fengjia from './assets/landmarks/fengjia.png';
-import fineArts from './assets/landmarks/fine-arts.png';
-import greenway from './assets/landmarks/greenway.png';
-import mapleGarden from './assets/landmarks/maple-garden.png';
-import miyahara from './assets/landmarks/miyahara.png';
-import oldStation from './assets/landmarks/old-station.png';
-import scienceMuseum from './assets/landmarks/science-museum.png';
-import shenJi from './assets/landmarks/shen-ji.png';
-import taichungPark from './assets/landmarks/taichung-park.png';
-import theater from './assets/landmarks/theater.png';
-import wanheTemple from './assets/landmarks/wanhe-temple.png';
-import jun from './assets/leaders/jun.png';
-import lian from './assets/leaders/lian.png';
-import yicheng from './assets/leaders/yicheng.png';
-import xingan from './assets/leaders/xingan.png';
-import axiu from './assets/leaders/axiu.png';
-import caining from './assets/leaders/caining.png';
-import jiahe from './assets/leaders/jiahe.png';
-import muqing from './assets/leaders/muqing.png';
-import ling from './assets/leaders/ling.png';
-import peiqi from './assets/leaders/peiqi.png';
+import jun from './assets/leaders/portraits/jun.webp';
+import lian from './assets/leaders/portraits/lian.webp';
+import yicheng from './assets/leaders/portraits/yicheng.webp';
+import xingan from './assets/leaders/portraits/xingan.webp';
+import axiu from './assets/leaders/portraits/axiu.webp';
+import caining from './assets/leaders/portraits/caining.webp';
+import jiahe from './assets/leaders/portraits/jiahe.webp';
+import muqing from './assets/leaders/portraits/muqing.webp';
+import ling from './assets/leaders/portraits/ling.webp';
+import peiqi from './assets/leaders/portraits/peiqi.webp';
 import bulbasaurFront from './assets/pokemon/front/bulbasaur.png';
 import charmanderFront from './assets/pokemon/front/charmander.png';
 import pikachuFront from './assets/pokemon/front/pikachu.png';
@@ -67,8 +56,7 @@ import squirtleIcon from './assets/pokemon/icon/squirtle.png';
 
 /** A two-frame party-menu icon: 32×64, frames stacked top to bottom. */
 export interface PokemonIcon { name: string; icon: string }
-/** `mapView` art is a cut of the rendered city map (scripts/crop-landmark-art.py), not a drawn facade. */
-export interface LandmarkArt { facade?: string; mapView?: boolean; tint: string; leader?: string; team?: PokemonIcon[] }
+export interface LandmarkArt { facade?: string; tint: string; leader?: string; team?: PokemonIcon[] }
 
 const mon = (name: string, icon: string): PokemonIcon => ({ name, icon });
 const brick = '#ede2d9';
@@ -78,19 +66,17 @@ const neutral = '#eee8dc';
 
 // Leader teams follow the native trainer parties (src/data/trainer_parties.h), in battle order.
 export const landmarkArt: Record<string, LandmarkArt> = {
-  'old-taichung-station': { facade: oldStation, tint: brick, leader: jun, team: [mon('Rattata', rattataIcon), mon('Pidgey', pidgeyIcon), mon('Meowth', meowthIcon)] },
-  'taichung-park': { facade: taichungPark, tint: park, leader: lian, team: [mon('Goldeen', goldeenIcon), mon('Psyduck', psyduckIcon), mon('Pidgeotto', pidgeottoIcon)] },
-  miyahara: { facade: miyahara, tint: brick, leader: peiqi, team: [mon('Seel', seelIcon), mon('Cloyster', cloysterIcon), mon('Lapras', laprasIcon)] },
-  'natural-science-museum': { facade: scienceMuseum, tint: modern, leader: yicheng, team: [mon('Magneton', magnetonIcon), mon('Porygon', porygonIcon), mon('Omastar', omastarIcon)] },
-  'calligraphy-greenway': { facade: greenway, tint: park, leader: xingan, team: [mon('Bellsprout', bellsproutIcon), mon('Vileplume', vileplumeIcon), mon('Tangela', tangelaIcon)] },
-  'shen-ji-new-village': { facade: shenJi, tint: neutral, leader: axiu, team: [mon('Meowth', meowthIcon), mon('Machoke', machokeIcon), mon('Ditto', dittoIcon)] },
-  'fine-arts-museum': { facade: fineArts, tint: neutral, leader: caining, team: [mon('Butterfree', butterfreeIcon), mon('Ditto', dittoIcon), mon('Porygon', porygonIcon)] },
-  'fengjia-night-market': { facade: fengjia, tint: brick, leader: jiahe, team: [mon('Farfetch’d', farfetchdIcon), mon('Magmar', magmarIcon), mon('Snorlax', snorlaxIcon)] },
-  'taichung-theater': { facade: theater, tint: modern, leader: ling, team: [mon('Jigglypuff', jigglypuffIcon), mon('Jynx', jynxIcon), mon('Mr. Mime', mrMimeIcon)] },
+  'old-taichung-station': { tint: brick, leader: jun, team: [mon('Rattata', rattataIcon), mon('Pidgey', pidgeyIcon), mon('Meowth', meowthIcon)] },
+  'taichung-park': { tint: park, leader: lian, team: [mon('Goldeen', goldeenIcon), mon('Psyduck', psyduckIcon), mon('Pidgeotto', pidgeottoIcon)] },
+  miyahara: { tint: brick, leader: peiqi, team: [mon('Seel', seelIcon), mon('Cloyster', cloysterIcon), mon('Lapras', laprasIcon)] },
+  'natural-science-museum': { tint: modern, leader: yicheng, team: [mon('Magneton', magnetonIcon), mon('Porygon', porygonIcon), mon('Omastar', omastarIcon)] },
+  'calligraphy-greenway': { tint: park, leader: xingan, team: [mon('Bellsprout', bellsproutIcon), mon('Vileplume', vileplumeIcon), mon('Tangela', tangelaIcon)] },
+  'shen-ji-new-village': { tint: neutral, leader: axiu, team: [mon('Meowth', meowthIcon), mon('Machoke', machokeIcon), mon('Ditto', dittoIcon)] },
+  'fine-arts-museum': { tint: neutral, leader: caining, team: [mon('Butterfree', butterfreeIcon), mon('Ditto', dittoIcon), mon('Porygon', porygonIcon)] },
+  'fengjia-night-market': { tint: brick, leader: jiahe, team: [mon('Farfetch’d', farfetchdIcon), mon('Magmar', magmarIcon), mon('Snorlax', snorlaxIcon)] },
+  'taichung-theater': { tint: modern, leader: ling, team: [mon('Jigglypuff', jigglypuffIcon), mon('Jynx', jynxIcon), mon('Mr. Mime', mrMimeIcon)] },
   // Muqing's gym moved into Wanhe Temple (save bit 8 keeps its maple-garden ID in the game).
-  'wanhe-temple': { facade: wanheTemple, tint: brick, leader: muqing, team: [mon('Poliwhirl', poliwhirlIcon), mon('Butterfree', butterfreeIcon), mon('Vaporeon', vaporeonIcon)] },
-  // Maple Garden is now a visit-only hall: its facade, no leader or team.
-  'maple-garden': { facade: mapleGarden, tint: park },
+  'wanhe-temple': { tint: brick, leader: muqing, team: [mon('Poliwhirl', poliwhirlIcon), mon('Butterfree', butterfreeIcon), mon('Vaporeon', vaporeonIcon)] },
 };
 
 // Each gym's City Pass badge, the game's own 32×32 award icon (graphics/taichung/badges), keyed by landmark id.
@@ -98,19 +84,12 @@ export const badgeArt: Record<string, string> = Object.fromEntries(Object.entrie
   import.meta.glob<string>('./assets/badges/*.png', { eager: true, import: 'default' }),
 ).map(([path, url]) => [path.slice(path.lastIndexOf('/') + 1, -'.png'.length), url]));
 
-// Landmarks without a gym show the way they appear on the in-game city map.
-const mapViews = import.meta.glob<string>('./assets/landmarks/map/*.png', { eager: true, import: 'default' });
-for (const [path, url] of Object.entries(mapViews)) {
+// The Boulevard export verifies these facades against the compiled sprite hashes.
+const isolatedFacades = import.meta.glob<string>('./assets/landmarks/isolated/*.png', { eager: true, import: 'default' });
+for (const [path, facade] of Object.entries(isolatedFacades)) {
   const id = path.slice(path.lastIndexOf('/') + 1, -'.png'.length);
-  landmarkArt[id] ??= { facade: url, mapView: true, tint: park };
-}
-const boulevardViews = import.meta.glob<string>('./assets/boulevard/places/*.png', { eager: true, import: 'default' });
-if (BOULEVARD_PREVIEW) {
-  for (const [path, url] of Object.entries(boulevardViews)) {
-    const id = path.slice(path.lastIndexOf('/') + 1, -'.png'.length);
-    const art = landmarkArt[id];
-    landmarkArt[id] = { ...art, facade: url, mapView: true, tint: art?.tint ?? park };
-  }
+  const art = landmarkArt[id] ?? { tint: park };
+  landmarkArt[id] = { ...art, facade };
 }
 
 /** Page media. An empty slot renders a labelled placeholder. */

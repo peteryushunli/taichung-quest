@@ -27,11 +27,6 @@ INSTALLED_SIGHTS = {
     "baseball-stadium": ("Intercontinental Ballpark", "洲際棒球場", "beitun", "Baseball stadium", "棒球場"),
     "folklore-park": ("Folk Museum at Folklore Park", "臺灣民俗文物館", "beitun", "Folk museum", "民俗館"),
 }
-LANDMARK_MAP_VIEWS = {
-    "prefectural-hall", "second-market", "cultural-heritage-park",
-    "botanical-garden", "confucius-temple", "wenchang-temple", "wanhe-temple",
-    "fengle-sculpture-park", "yizhong-street", "wenxin-forest-park",
-}
 LABELS = [
     ("FENGJIA 逢甲", 40, 6), ("SHUINAN 水湳", 94, 6), ("BEITUN 北屯", 178, 23),
     ("XITUN 西屯", 46, 103), ("GREENWAY 草悟道", 205, 116),
@@ -103,13 +98,15 @@ def street_bands(plan, fill, origin):
     return bands
 
 
-def terrain_images(fill, plan, candidate, geometry, report, raw):
+def terrain_images(fill, plan, candidate, geometry, report):
     os.environ["FILL_RAW"] = "1"
     sys.path.insert(0, str(fill / "src"))
     import engine
     import events
 
     world = events.build()
+    if tower_block := report.get("xitunTowerBlock"):
+        world.put(tower_block["paving"], "p")
     width, height = geometry["world"]["width"], geometry["world"]["height"]
     origin = plan["world"]["box"][:2]
     ink = {
@@ -157,22 +154,31 @@ def terrain_images(fill, plan, candidate, geometry, report, raw):
     image.save(ART / "radar.png", optimize=True)
     overview = Image.open(candidate / "city-overview.png")
     require(overview.width * height == overview.height * width, "The city image has the wrong geometry.")
-    shutil.copyfile(candidate / "city-overview.png", ART / "city.png")
-    art_rects = {place["id"]: place["artRect"] for place in plan["places"] if place["id"] in EXTRA_SIGHTS}
-    art_rects["central-park"] = [78, 32, 102, 50]
-    art_rects.update({entry["id"]: entry["worldRect"] for entry in report.get("installedLandmarks", [])})
-    for item in raw["placements"]:
-        if item["sprite"] in LANDMARK_MAP_VIEWS:
-            x, y = item["x"], item["y"]
-            w, h = item["tiles"]
-            art_rects[item["sprite"]] = [x, y, x + w, y + h]
-    scale = overview.width // width
-    places_art = ART / "places"
-    places_art.mkdir(exist_ok=True)
-    for place, (left, top, right, bottom) in art_rects.items():
-        bounds = ((left - origin[0] - 2) * scale, (top - origin[1] - 1) * scale,
-                  (right - origin[0] + 2) * scale, (bottom - origin[1] + 3) * scale)
-        overview.crop(bounds).save(places_art / f"{place}.png")
+    overview.save(ART / "city.webp", lossless=True, method=6, quality=100)
+
+
+def landmark_facades(native, fill, report, extras):
+    approved = native / "tools/taichung/boulevard_city/landmark-art"
+    kit = fill / "kit/sprites"
+    catalog = read(DATA / "landmarks.json") + read(DATA / "sights.json") + extras
+    facades = {}
+    for place in catalog:
+        landmark = place["id"]
+        filename = f"{landmark}.png"
+        source = approved / filename
+        if not source.is_file():
+            source = kit / filename
+        require(source.is_file() and digest(source) == report["spriteSha256"].get(landmark),
+                f"{landmark} art does not match the compiled Boulevard report.")
+        with Image.open(source) as sprite:
+            image = sprite.convert("RGBA")
+        bounds = image.getchannel("A").getbbox()
+        require(bounds, f"{landmark} facade has no visible pixels.")
+        facades[filename] = image.crop(bounds)
+    directory = WEB / "src/assets/landmarks/isolated"
+    directory.mkdir(parents=True, exist_ok=True)
+    for filename, image in facades.items():
+        image.save(directory / filename, optimize=True)
 
 
 def main():
@@ -320,7 +326,8 @@ def main():
                                      sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode()).hexdigest()
     geometry["geometryFingerprintSha256"] = fingerprint
     write(DATA / "boulevard-preview.json", geometry)
-    terrain_images(args.fill, plan, candidate, geometry, report, raw)
+    terrain_images(args.fill, plan, candidate, geometry, report)
+    landmark_facades(args.native, args.fill, report, extras)
     source_rom = args.rom_dir / "taichung-firered.gba"
     metadata = read(args.rom_dir / "build.json")
     require(digest(source_rom) == metadata["sha256"] == digest(args.native / "pokefirered.gba"),
