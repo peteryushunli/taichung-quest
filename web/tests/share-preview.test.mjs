@@ -3,16 +3,13 @@ import { readFile } from 'node:fs/promises';
 import test from 'node:test';
 
 const read = (path) => readFile(new URL(`../${path}`, import.meta.url));
-const json = async (path) => JSON.parse(await read(path));
 const html = String(await read('index.html'));
 const meta = (name) => html.match(new RegExp(`<meta (?:name|property)="${name}" content="([^"]*)"`))?.[1];
 
-test('a shared link has the released title and counts the places in the city', async () => {
-  const [landmarks, sights, boulevard] = await Promise.all(
-    ['landmarks', 'sights', 'boulevard-preview'].map((file) => json(`src/data/${file}.json`)));
-  const places = landmarks.length + sights.length + boulevard.extraSights.length;
-  for (const name of ['description', 'og:description']) assert.match(meta(name), new RegExp(`\\b${places} real places\\b`));
-  assert.match(String(await read('scripts/social-card.html')), new RegExp(`>${places} real places`));
+test('a shared link has the released title and makes no claim that a new landmark would outdate', async () => {
+  assert.equal(meta('og:description'), meta('description'));
+  assert.doesNotMatch(meta('description'), /\d|\b(ten|twelve|twenty)\b/i);
+  assert.doesNotMatch(String(await read('scripts/social-card.html')), /\d+ (real )?(places|landmarks|gyms)/i);
   assert.equal(meta('og:title'), html.match(/<title>([^<]+)<\/title>/)[1]);
   assert.doesNotMatch(html, /preview<\/title>/i);
 });
