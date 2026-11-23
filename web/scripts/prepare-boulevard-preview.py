@@ -100,6 +100,10 @@ def terrain_images(fill, plan, candidate, geometry, report):
     import events
 
     world = events.build()
+    for site in report.get("northXitun", {}).get("sites", []):
+        world.put(site["block"], site["ground"])
+        for ground_rect in site.get("groundRects", []):
+            world.put(ground_rect["rect"], ground_rect["ground"])
     if tower_block := report.get("xitunTowerBlock"):
         world.put(tower_block["paving"], "p")
     width, height = geometry["world"]["width"], geometry["world"]["height"]
