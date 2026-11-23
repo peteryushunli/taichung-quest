@@ -28,6 +28,7 @@ const files = {};
 async function fingerprint(directory, prefix = '') {
   for (const entry of (await readdir(directory, { withFileTypes: true })).sort((a, b) => a.name.localeCompare(b.name))) {
     const relative = `${prefix}${entry.name}`;
+    if (entry.name.endsWith('.sav')) throw new Error(`A game save must not be published: ${relative}. Remove it from web/public.`);
     if (entry.isDirectory()) await fingerprint(path.join(directory, entry.name), `${relative}/`);
     else if (entry.isFile()) files[relative] = sha256(await readFile(path.join(directory, entry.name)));
     else throw new Error(`Unexpected non-file in deployment output: ${relative}`);

@@ -15,7 +15,9 @@ Use the **repository root** as the Vercel Project Root Directory, leaving the ro
 | Global COOP | `same-origin` |
 | Global COEP | `require-corp` |
 | Wasm Content-Type | `application/wasm` |
-| ROM/metadata cache | `no-store` |
+| ROM/metadata cache | `public, max-age=0, must-revalidate` |
+
+The player fetches the ROM and `build.json` with `cache: 'no-cache'`. The browser keeps a copy but always revalidates it by ETag, so a returning player gets a bodiless 304 instead of re-downloading the 16 MiB cartridge. A new deployment changes the ETag, so the next load still fetches the new ROM and its matching metadata.
 
 Vercel's static header configuration is separate from the existing Cloudflare-style `_headers` file. See the official [Vite guide](https://vercel.com/docs/frameworks/frontend/vite) and [response-header configuration](https://vercel.com/docs/project-configuration/vercel-json#headers).
 

@@ -1,0 +1,14 @@
+/* Covers the site while a phone is held sideways; the game has no landscape view. */
+.upright-screen { display: none; }
+.upright-screen[data-open] {
+  position: fixed; inset: 0; z-index: 2147483647; box-sizing: border-box; width: 100vw; height: 100dvh; max-width: none; max-height: none; margin: 0; border: 0; overflow: auto;
+  padding: max(16px, env(safe-area-inset-top)) max(24px, env(safe-area-inset-right)) max(16px, env(safe-area-inset-bottom)) max(24px, env(safe-area-inset-left));
+  display: flex; align-items: center; justify-content: center; gap: 56px;
+  background: linear-gradient(110deg, #ebeade, #d8ddcd); color: #244d3c;
+}
+.upright-screen svg { flex: none; width: 91px; height: 140px; animation: upright-turn 2.4s steps(6) infinite; }
+.upright-screen h2 { margin: 0 0 8px; font: 400 30px/1.2 Georgia, serif; letter-spacing: -.5px; }
+.upright-screen p { margin: 0; max-width: 300px; font-size: 15px; line-height: 1.6; color: #526b4d; }
+html[lang="zh-Hant"] .upright-screen h2 { font-family: 'Songti TC', serif; letter-spacing: 1px; }
+@keyframes upright-turn { 0%, 20% { rotate: -90deg; } 55%, 100% { rotate: 0deg; } }
+@media (prefers-reduced-motion: reduce) { .upright-screen svg { animation: none; } }

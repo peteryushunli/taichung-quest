@@ -337,9 +337,6 @@ def main():
     dest.mkdir(parents=True, exist_ok=True)
     shutil.copyfile(source_rom, dest / source_rom.name)
     write(dest / "build.json", metadata)
-    save = WEB / "public/preview/old-station.sav"
-    save.parent.mkdir(parents=True, exist_ok=True)
-    shutil.copyfile(args.rom_dir / "taichung-firered.sav", save)
     print(f"Paired {len(exteriors)} Boulevard maps and {len(markers)} landmarks to the verified cartridge.")
 
 

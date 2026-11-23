@@ -17,7 +17,6 @@ const listeners = new Set<(change: LocaleChange) => void>();
 const boundControls = new WeakSet<HTMLSelectElement>();
 
 const zh: Record<string, string> = {
-  'Taichung Quest · Boulevard preview': '臺中小冒險 · 大道試玩版',
   'The opening connection is unavailable. Use Interact to continue, then pick your language on the game’s first settings screen.': '開場連線暫時無法使用。請按「互動／確認」繼續，再到遊戲的第一個設定畫面選擇語言。',
   'Pick your language on the game’s first settings screen.': '請在遊戲的第一個設定畫面選擇語言。',
   'After the tour: B / Bike to ride outdoors. Press again to get off.': '導覽後，戶外按B或「騎車」。再按一次下車。',
@@ -58,7 +57,13 @@ const zh: Record<string, string> = {
   'Return to game': '返回遊戲',
   'Your game is ready. Tap Play when you want to enter.': '遊戲已準備好，想進入時請按開始。',
   'Arrow keys move. F interacts or confirms. D goes back. M opens the game menu.': '方向鍵移動，F 互動或確認，D 返回，M 開啟遊戲選單。',
-  'This preview cannot start the game yet. Try the latest link in Safari or Chrome; the host may need an update.': '這個預覽目前無法啟動遊戲。請用 Safari 或 Chrome 開啟最新連結；主機可能需要更新。',
+  'The browser inside this app can’t run the game. Open this page in Chrome to play.': '這個 App 內建的瀏覽器無法執行遊戲。請改用 Chrome 開啟本頁。',
+  'This browser can’t run the game. Open this page in Safari to play.': '這個瀏覽器無法執行遊戲。請改用 Safari 開啟本頁。',
+  'This browser can’t run the game. Update it, or open this page in the latest Chrome, Edge, Firefox or Safari.': '這個瀏覽器無法執行遊戲。請更新瀏覽器，或改用最新版的 Chrome、Edge、Firefox 或 Safari 開啟本頁。',
+  'Turn your phone upright': '請將手機轉為直向',
+  'Taichung Quest is played upright, like a handheld.': '臺中小冒險採直式畫面，就像拿著掌機一樣。',
+  'Copy link': '複製連結',
+  'Link copied': '已複製連結',
   'Interface language': '介面語言',
   'Language': '語言',
   'Player & City Map': '玩家介面與城市導覽',
@@ -189,7 +194,7 @@ const zh: Record<string, string> = {
   'Landmarks': '地標',
   'How it plays': '玩法',
   'Play': '開始玩',
-  'Taichung Quest · A little adventure': 'Taichung Quest · 台中小冒險',
+  'Taichung Quest · A little adventure': 'Taichung Quest · 臺中小冒險',
   'A POKÉMON FIRERED ADVENTURE · 臺中': '寶可夢火紅版改編冒險 · 臺中',
   'Taichung, shrunk to fit a Game Boy.': '把臺中，縮進一台 Game Boy。',
   'A custom Pokémon adventure set in a pocket-sized Taichung. Ten real landmarks — from Old Taichung Station to the National Theater — each host a gym. Pick a partner, hop on a bike, and play it free in your browser.': '一段以口袋版臺中為舞台的自製寶可夢冒險。從舊臺中車站到國家歌劇院，十個真實地標各有一座道館。選好夥伴、跳上自行車，在瀏覽器裡免費開玩。',

@@ -277,7 +277,7 @@ export function createLanding(root: HTMLElement, host: LandingHost) {
   root.querySelectorAll<HTMLButtonElement>('[data-locale-toggle]').forEach((button) => {
     button.addEventListener('click', () => setLocale(button.dataset.localeToggle as Locale));
   });
-  // The preview has a supplied save, so Play can open the game immediately.
+  // Play goes straight to the game, where the title menu offers New Game or Continue.
   root.querySelectorAll<HTMLAnchorElement>('[data-play-link]').forEach((link) => {
     link.addEventListener('click', (event) => {
       if (!BOULEVARD_PREVIEW && !host.getState().running) return;
