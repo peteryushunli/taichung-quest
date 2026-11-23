@@ -298,3 +298,13 @@ html[lang="zh-Hant"] .lp-cta-zh { display: none; }
 .is-landmark.is-selected > .lp-marker { background: var(--lp-coral); border-color: var(--lp-pine); color: var(--lp-cream-dark); }
 .is-landmark > .lp-pin-label { background: #fbf1d6ee; color: var(--lp-gold-ink); }
 .lp-swatch-landmark { border: 1.5px solid var(--lp-gold-line); border-radius: 50% !important; background: var(--lp-gold); }
+
+.lp-district-name.is-neighborhood { display: grid; gap: 1px; padding: 1px 3px; border-radius: 3px; background: #f7f4e4e8; color: #254638; font: 650 11px/1 Arial, sans-serif; letter-spacing: 0; text-align: center; white-space: nowrap; pointer-events: none; transform: none; text-shadow: none; z-index: 1; }
+.lp-district-name.is-neighborhood [lang="zh-Hant"] { font-size: 10px; }
+.lp-district-name.is-neighborhood[hidden] { display: none; }
+@media(max-width:450px) { .lp-district-name.is-neighborhood { font-size: 9px; padding: 1px 3px; } .lp-district-name.is-neighborhood [lang="zh-Hant"] { font-size: 9px; } }
+
+.lp-district-name.is-neighborhood[data-neighborhood="North District"] { display: flex; align-items: center; gap: 4px; }
+.lp-district-name.is-neighborhood[hidden] { display: none; }
+
+@media(max-width:450px) { .lp-map-chip { display: none; } }

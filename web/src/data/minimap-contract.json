@@ -1715,9 +1715,9 @@
   "geometryFingerprintSha256": "48fe4ba5208d0a2b1285c1b6aa6f776377ef003d5501e5ae837ca45c6127e92a",
   "sourceSha256": {
     "docs/taichung-city-contract.json": "f1a0e6e3ca349b3c1a8b733e947399cdeaac512e92255efbc08ad7a88ffa1cc8",
-    "data/maps/map_groups.json": "8c4dab7982c14fa6e6aa31afad89569901975b51cfd6bfc992839b0cd8e1fef2",
-    "data/layouts/layouts.json": "42877701e986adea1f7de3d02c28f9fe297351d49b42fda8967d1abe6f23cc3e",
-    "data/maps/TaichungOldCity/map.json": "03ad90c3a562589a8ba5b5fc06aff5ca0d914eba598cd435284c04d49295a062",
+    "data/maps/map_groups.json": "e85443ae140c2df91ded0ad277b9788e578f70105ca2e33224f81be488a1b342",
+    "data/layouts/layouts.json": "2e7ba8f1593d36ea95b9c6f2f48778e9adf0fd30b9f69543a924389edb6e6f16",
+    "data/maps/TaichungOldCity/map.json": "bd4719aca0e6dacff38bd7d69abd5910e74237448f6e81daf2035a826277a0e4",
     "data/maps/TaichungGreenway/map.json": "63a60536ce04b30c24606783386ce1e0a5fa541d764a790501c39b673223d6da",
     "data/maps/TaichungXitun/map.json": "f861cf0f3b038f445362ff2b8c305231a6471dffe4a7a51dadef89eeb16d68ca",
     "data/maps/TaichungNantunNorth/map.json": "678cf731406e7287dacb5c473bb0fa1b63fe0dc13184dd7b69834d9bf1007b94",
@@ -1737,7 +1737,7 @@
     "data/maps/TaichungWenchangTemple_Hall/map.json": "f5762b261135ec2b1405399a77174d0e1d3efff2309787fea1c47ec89952d38b",
     "docs/station-welcome-map-contract.json": "94fd4991b2a1e940748e96a77ddb4d3a7951468bb19d508300f0b5b71a636bc7",
     "data/maps/TaichungStationWelcome/map.json": "1b05a88ddf43386c64555f6dde84e5b2b3670dfa61e9d5a60101d84e65257d1f",
-    "include/fieldmap.h": "e7d93120d2695043c7d75067f3c768344622c198503b0671d47292d6aa708a43"
+    "include/fieldmap.h": "808cfba9d815c219bbdd0ff11c149c72a2f3fc3eb4680b8fc11791bf4a5576fb"
   },
   "validation": {
     "result": "pass",

@@ -1,5 +1,9 @@
+import { neighborhoodLabels, placeNeighborhoodLabels } from './neighborhood-labels';
+import { encounterProgress, encounterOutcome, ENCOUNTER_LABELS } from './encounter-progress';
+import type { EncounterProgress } from './encounter-progress';
+import type { EncounterBridgeState } from './encounter-bridge';
 import { getLocale, t } from './i18n';
-import { districtAt, FACING_DEGREES, HOME_WORLD, MINIMAP_PREFERENCE, projectNavigation, projectTutorial, RADAR, RADAR_ART, RADAR_PANEL, radarContains, radarPosition, radarViewport, readMinimapPreference } from './minimap-model';
+import { FACING_DEGREES, HOME_WORLD, MINIMAP_PREFERENCE, projectNavigation, projectTutorial, RADAR, RADAR_ART, RADAR_PANEL, radarContains, radarPosition, radarViewport, readMinimapPreference } from './minimap-model';
 import type { MinimapGeometry, MinimapPosition, RadarMode } from './minimap-model';
 import type { NavigationState } from './navigation-bridge';
 import type { OnboardingState } from './onboarding-bridge';
@@ -12,7 +16,7 @@ import type { LandingLandmark } from './landing-model';
 
 const MARKS = {
   gym: '<path class="minimap-marker minimap-badge" d="M0,-3 2.5,-1.9 3,.5 1.6,2.6 0,3.3 -1.6,2.6 -3,.5 -2.5,-1.9Z"/><path class="minimap-detail" d="M0,-1.55 1.3,0 0,1.55 -1.3,0Z"/>',
-  capture: '<circle class="minimap-marker minimap-ball" r="2.7"/><path class="minimap-ball-top" d="M-2.4,0 A2.4,2.4 0 0,1 2.4,0Z"/><path class="minimap-detail" d="M-2.6,0H2.6"/><circle class="minimap-marker minimap-ball-button" r=".82"/>',
+  capture: '<circle class="minimap-marker minimap-ball" r="2.7"/><path class="minimap-ball-top" d="M-2.4,0 A2.4,2.4 0 0,1 2.4,0Z"/><path class="minimap-detail minimap-ball-seam" d="M-2.6,0H2.6"/><circle class="minimap-marker minimap-ball-button" r=".82"/><path class="minimap-outcome-check" d="M-1.35,0 -.35,1.05 1.5,-1.1"/><path class="minimap-outcome-cross" d="M-1.25,-1.25 1.25,1.25 M1.25,-1.25 -1.25,1.25"/>',
   sight: '<path class="minimap-marker minimap-signpost" d="M-.5,2.3V.5H-2V-1.6H1.2L2.5,-.55 1.2,.5H.5V2.3Z"/>',
   home: '<path class="minimap-marker minimap-home-mark" d="M-2,.1 0,-1.9 2,.1V2.4H-2Z"/><path class="minimap-home-door" d="M-.45,2.35V.9H.45V2.35Z"/>',
   player: '<path class="minimap-player-arrow minimap-marker" d="M0,-2.55 2.25,2.35 0,1.45 -2.25,2.35Z"/><circle class="minimap-player-dot minimap-marker" r="1.75"/>',
@@ -46,6 +50,7 @@ export function createMinimap(options: {
     } catch { /* Private mode still gets a working local choice. */ }
   }
   let state: NavigationState = { phase: 'unavailable' };
+  let encounters: EncounterProgress | undefined;
   let onboarding: OnboardingState | undefined;
   let lastTutorial: MinimapPosition | undefined;
   let handoff: { position: MinimapPosition; until: number } | undefined;
@@ -82,9 +87,10 @@ export function createMinimap(options: {
   const homeBlip = button.querySelector<SVGGElement>('.minimap-home')!;
   const placeBlips = places.map((place) => ({ ...place, element: button.querySelector<SVGElement>(`[data-landmark="${place.id}"]`)! }));
   const labelLayer = button.querySelector('.minimap-district-labels')!;
-  const districts = (geometry.world.neighborhoods ?? []).map((district) => {
+  const districts = neighborhoodLabels(geometry.world).map((district) => {
     const element = document.createElementNS('http://www.w3.org/2000/svg', 'text');
     element.setAttribute('text-anchor', 'middle');
+    element.innerHTML = `<tspan x="0" lang="en">${district.name.en}</tspan><tspan x="0" dy="4.6" lang="zh-Hant">${district.name.zh}</tspan>`;
     labelLayer.append(element);
     return { ...district, element };
   });
@@ -148,31 +154,44 @@ export function createMinimap(options: {
     for (const entry of placeBlips) {
       const earned = entry.gymBit >= 0 ? !!((progress?.gymMask ?? 0) & (1 << entry.gymBit))
         : entry.captureBit !== undefined && !!((progress?.captureMask ?? 0) & (1 << entry.captureBit));
-      entry.element.classList.toggle('is-earned', earned);
+      const outcome = entry.captureBit === undefined ? 'unknown' : encounterOutcome(entry.captureBit, encounters, progress?.captureMask);
+      entry.element.classList.toggle('is-earned', entry.gymBit >= 0 ? earned : outcome === 'caught');
+      for (const value of ['caught', 'spent', 'pending']) entry.element.classList.toggle(`is-${value}`, outcome === value);
+      entry.element.dataset.encounter = outcome;
+      if (entry.captureBit !== undefined) entry.element.setAttribute('aria-label', t(ENCOUNTER_LABELS[outcome]));
       place(entry.element, mode !== 'citywide' && radarContains(view, entry.world) ? entry.world : undefined, scale);
     }
     const homeTile = geometry.world.homeWorld ?? HOME_WORLD;
     place(homeBlip, mode !== 'citywide' && radarContains(view, homeTile) ? homeTile : undefined, scale);
-    const language = getLocale() === 'zh-Hant' ? 'zh' : 'en';
-    const currentDistrict = districtAt(position, geometry);
-    for (const entry of districts) {
-      const name = entry.name[language];
-      const [x, y] = entry.tile;
-      const halfWidth = (name.length * (language === 'zh' ? 2.1 : 1.25) + 1) * scale;
-      const inFrame = x - halfWidth >= view.x && x + halfWidth <= view.x + view.width
-        && y - 5 * scale >= view.y && y + 2 * scale <= view.y + view.height;
-      const nearPlayer = Math.abs(x - tile.x) < halfWidth + 4 * scale && Math.abs(y - tile.y) < 6 * scale;
-      if (mode === 'nearby' || !inFrame || nearPlayer || (mode === 'districts' && currentDistrict?.en === entry.name.en)) {
-        entry.element.setAttribute('display', 'none');
-        continue;
-      }
-      entry.element.removeAttribute('display');
-      entry.element.textContent = name;
-      entry.element.setAttribute('transform', `translate(${x} ${y}) scale(${scale})`);
+    const candidates = districts.filter(entry => radarContains(view, entry.tile));
+    for (const entry of districts) entry.element.setAttribute('display', 'none');
+    const toPanel = (world: number[]) => ({ x: (world[0] + .5 - view.x) / scale, y: (world[1] + .5 - view.y) / scale });
+    const obstacles = [tile, ...(mode === 'citywide' ? [] : placeBlips.filter(entry => radarContains(view, entry.world)).map(entry => ({ x: entry.world[0], y: entry.world[1] })))].map(point => {
+      const panel = toPanel([point.x, point.y]);
+      return { x: panel.x - 3.8, y: panel.y - 3.8, width: 7.6, height: 7.6 };
+    });
+    if (mode !== 'citywide' && radarContains(view, homeTile)) {
+      const home = toPanel(homeTile); obstacles.push({ x: home.x - 3, y: home.y - 3, width: 6, height: 6 });
     }
+    const font = mode === 'citywide' ? 3.2 : 4.4;
+    const boxes = candidates.map(entry => {
+      const panel = toPanel(entry.tile);
+      const width = Math.max(entry.name.en.length * font * .53, entry.name.zh.length * font) + 1;
+      return { x: panel.x - width / 2, y: panel.y - 4, width, height: font * 2.25 + .6 };
+    });
+    const positions = placeNeighborhoodLabels(RADAR.width, RADAR.height, boxes, obstacles, mode === 'citywide' ? 36 : 12, 1.5, .8);
+    candidates.forEach((entry, index) => {
+      const box = positions[index];
+      if (!box) return;
+      entry.element.removeAttribute('display');
+      entry.element.style.fontSize = `${font}px`;
+      entry.element.querySelectorAll('tspan')[1].setAttribute('dy', String(font * 1.1));
+      entry.element.setAttribute('transform', `translate(${view.x + (box.x + box.width / 2) * scale} ${view.y + (box.y + font * .8) * scale}) scale(${scale})`);
+    });
   }
   render();
   return {
+    updateEncounter(next: EncounterBridgeState) { const value = encounterProgress(next, encounters); if (value === encounters) return; encounters = value; render(); },
     update(next: NavigationState) { state = next; render(); },
     updateOnboarding(next: OnboardingState) {
       onboarding = next;

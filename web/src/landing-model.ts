@@ -1,3 +1,5 @@
+import { bilingualNeighborhood, neighborhoodLabels } from './neighborhood-labels.ts';
+import type { Neighborhood } from './neighborhood-labels';
 /** Pure landing-page rules. Gym claims always derive from landmarks.json. */
 export type LandingLocale = 'en' | 'zh-Hant';
 
@@ -63,9 +65,9 @@ export function placeWorld(place: Pick<LandingLandmark, 'id' | 'world'>, markers
 
 export function districtCount(places: Pick<LandingLandmark, 'districtId'>[]) { return new Set(places.map((place) => place.districtId)).size; }
 
-export function cityPlaceSummary(places: LandingLandmark[], locale: LandingLocale) {
-  const districts = districtCount(places);
-  return locale === 'zh-Hant' ? `${districts} 個街區，${places.length} 個真實地點。` : `${districts} districts. ${places.length} real places.`;
+export function cityPlaceSummary(places: LandingLandmark[], locale: LandingLocale, neighborhoods?: number) {
+  const districts = neighborhoods || districtCount(places);
+  return locale === 'zh-Hant' ? `${districts} 個街區，${places.length} 個真實地點。` : `${districts} ${neighborhoods ? 'neighborhoods' : 'districts'}. ${places.length} real places.`;
 }
 
 // The raised freeway along the top carries the three northern district names like road signs
@@ -81,17 +83,20 @@ const FREEWAY_ROWS = 6;
 
 /** Percent positions of the district names drawn over the city render (landing map and in-game City Map). */
 export function districtLabelSpots(city: {
-  world: { width: number; height: number; districtLabels?: { label: string; x: number; y: number }[] };
+  world: { width: number; height: number; neighborhoods?: Neighborhood[]; districtLabels?: { label: string; x: number; y: number }[] };
   mapsByNativeKey: Record<string, { worldRect?: readonly number[] }>;
 }) {
   const { width, height } = city.world;
+  if (city.world.neighborhoods?.length) {
+    return neighborhoodLabels(city.world).map(({ name, tile }) => ({ label: bilingualNeighborhood(name), name, sign: false, x: tile[0] / width * 100, y: tile[1] / height * 100 }));
+  }
   if (city.world.districtLabels) {
-    return city.world.districtLabels.map(({ label, x, y }) => ({ label, sign: true, x: x / width * 100, y: y / height * 100 }));
+    return city.world.districtLabels.map(({ label, x, y }) => ({ label, name: undefined, sign: true, x: x / width * 100, y: y / height * 100 }));
   }
   return DISTRICT_LABELS.map(({ key, label, sign, rows }) => {
     const [left, top, right] = city.mapsByNativeKey[key].worldRect!;
     const [x, y] = sign ? [Math.max(left, FREEWAY_ROWS) + 1, FREEWAY_ROWS / 2] : [right + 1, top + 1.5 + rows];
-    return { label, sign, x: x / width * 100, y: y / height * 100 };
+    return { label, name: undefined, sign, x: x / width * 100, y: y / height * 100 };
   });
 }
 

@@ -55,3 +55,16 @@
 .live-street span[hidden] { display: none; }
 .live-street #live-district { margin-top: .16em; padding-top: .14em; border-top: 1px solid #b7c6a7; font-size: .9em; }
 .live-street #live-street-name[hidden] + #live-district { margin-top: 0; padding-top: 0; border-top: 0; font-size: 1em; }
+
+/* Spent encounters fade for every terminal outcome; shape distinguishes them
+   from a caught Pokémon even on a small screen or without color. */
+.live-minimap .minimap-outcome-check, .live-minimap .minimap-outcome-cross { display: none; fill: none; stroke-width: .85; stroke-linecap: round; stroke-linejoin: round; }
+.live-minimap .is-caught .minimap-ball { fill: #e5eedb; stroke: #31543c; }
+.live-minimap .is-spent .minimap-ball { fill: #e0e0d3; stroke: #72776d; }
+.live-minimap .is-spent .minimap-outcome-cross { display: block; stroke: #666d64; }
+.live-minimap .is-caught .minimap-outcome-check { display: block; stroke: #31543c; }
+.live-minimap :is(.is-caught, .is-spent) :is(.minimap-ball-top, .minimap-ball-seam, .minimap-ball-button) { display: none; }
+.live-minimap .is-pending .minimap-ball { stroke: #805818; stroke-dasharray: 1.5 .7; }
+
+.live-street { overflow-wrap: anywhere; }
+.live-minimap .minimap-district-labels [lang="zh-Hant"] { font-family: system-ui, sans-serif; }

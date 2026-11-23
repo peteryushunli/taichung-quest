@@ -27,19 +27,14 @@ INSTALLED_SIGHTS = {
     "baseball-stadium": ("Intercontinental Ballpark", "洲際棒球場", "beitun", "Baseball stadium", "棒球場"),
     "folklore-park": ("Folk Museum at Folklore Park", "臺灣民俗文物館", "beitun", "Folk museum", "民俗館"),
 }
-LABELS = [
-    ("FENGJIA 逢甲", 40, 6), ("SHUINAN 水湳", 94, 6), ("BEITUN 北屯", 178, 23),
-    ("XITUN 西屯", 46, 103), ("GREENWAY 草悟道", 205, 116),
-    ("OLD CITY 舊城", 347, 22), ("NANTUN 南屯", 48, 215),
-]
 NEIGHBORHOODS = {
     "fengjia": ("Fengjia", "逢甲", 72, 41),
     "centralpark": ("Shuinan", "水湳", 115, 19),
     "beitun": ("Beitun", "北屯", 218, 38),
-    "north": ("North", "北區", 342, 40),
+    "north": ("North District", "北區", 342, 40),
     "xitun": ("Xitun", "西屯", 93, 114),
     "dadun": ("Dadun", "大墩", 170, 85),
-    "west": ("West", "西區", 236, 139),
+    "west": ("West District", "西區", 236, 139),
     "oldcity": ("Old City", "舊城", 325, 134),
     "nantun": ("Nantun", "南屯", 90, 203),
 }
@@ -105,6 +100,10 @@ def terrain_images(fill, plan, candidate, geometry, report):
     import events
 
     world = events.build()
+    for site in report.get("northXitun", {}).get("sites", []):
+        world.put(site["block"], site["ground"])
+        for ground_rect in site.get("groundRects", []):
+            world.put(ground_rect["rect"], ground_rect["ground"])
     if tower_block := report.get("xitunTowerBlock"):
         world.put(tower_block["paving"], "p")
     width, height = geometry["world"]["width"], geometry["world"]["height"]
@@ -130,12 +129,19 @@ def terrain_images(fill, plan, candidate, geometry, report):
     colors = {key: ImageColor.getrgb(value) for key, value in ink.items()}
     pavilion_tiles = {(x, y) for left, top, right, bottom in report.get("pavilionDeck", {}).values()
                       for x in range(left, right) for y in range(top, bottom)}
+    # Only Huimin's compiled path overlays use path ink; other paving stays land.
+    huimin_path_tiles = {(x, y) for site in report.get("northXitun", {}).get("sites", [])
+                         if site["id"] == "huimin-park"
+                         for ground_rect in site.get("groundRects", []) if ground_rect["ground"] == "p"
+                         for x in range(ground_rect["rect"][0], ground_rect["rect"][2])
+                         for y in range(ground_rect["rect"][1], ground_rect["rect"][3])}
     for row in range(height):
         for col in range(width):
             tile = col + origin[0], row + origin[1]
             ground = world.at(*tile)
             walkable = walkable_by_tile.get(tile)
-            if walkable and (tile in pavilion_tiles or ground in "aW=qkK"):
+            if walkable and (tile in pavilion_tiles or ground in "aW=qkK"
+                             or ground == "p" and tile in huimin_path_tiles):
                 kind = "path"
             elif ground == "~":
                 kind = "water"
@@ -316,8 +322,7 @@ def main():
         "world": {"width": width, "height": height, "homeWorld": markers["guest-house"]["world"],
                   "streetBands": street_bands(plan, raw, (x0, y0)),
                   "neighborhoods": [{"name": {"en": en, "zh": zh}, "tile": normalize([x, y])}
-                                    for en, zh, x, y in NEIGHBORHOODS.values()],
-                  "districtLabels": [{"label": label, "x": x - x0, "y": y - y0} for label, x, y in LABELS]},
+                                    for en, zh, x, y in NEIGHBORHOODS.values()]},
         "mapsByNativeKey": {entry["nativeKey"]: entry for entry in exteriors.values()} | interiors,
         "markersById": markers, "seams": seams, "extraSights": extras,
         "sourceSha256": {"compiledMapReport": digest(candidate / "build-report.json"), **report["sourceSha256"]},

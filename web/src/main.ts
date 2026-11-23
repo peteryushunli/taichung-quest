@@ -1,3 +1,4 @@
+import { bilingualNeighborhood } from './neighborhood-labels';
 import './style.css';
 import './confirm.css';
 import './controls.css';
@@ -30,6 +31,7 @@ import { NativeEncounterBridge, parseEncounterMetadata } from './encounter-bridg
 import type { EncounterMetadata } from './encounter-bridge';
 import { CaptureStorageController } from './capture-storage';
 import { DETAILS, HdOverlay, keepCanvasReadable } from './hd-overlay';
+import { HdSceneTracker } from './hd-scene';
 import './hd-overlay.css';
 import { CAPTURE_BOOT_INTENT_KEY, captureBlocksSnapshots, readCaptureBootPolicy } from './capture-persistence';
 import { hasReadableFireRedSave, isFireRedBackupSize } from './firered-save';
@@ -145,7 +147,13 @@ protectGameDisplay(el('screen'));
 // High-resolution buildings and characters drawn over the game's own frame, at
 // the chosen 2× detail. H turns the layer off and on (keyboards only).
 keepCanvasReadable(canvas);
-const hdOverlay = new HdOverlay(canvas, '/hd/world', '/hd/sprites', { getHeap: () => (emulator as LanguageRuntime | undefined)?.getTaichungHeapU8?.() });
+const hdScene = new HdSceneTracker();
+const hdOverlay = new HdOverlay(canvas, '/hd/world', '/hd/sprites', {
+  getScene: () => {
+    if (!running || restarting) { hdScene.reset(); return; }
+    return hdScene.observe(navigationState, onboarding?.currentState ?? { status: 'unavailable' });
+  },
+});
 canvas.after(hdOverlay.element);
 if (hdOverlay.detail !== DETAILS[0]) hdOverlay.detail = DETAILS[0];
 if (location.hostname === '127.0.0.1' || location.hostname === 'localhost') (window as unknown as { __hd?: HdOverlay }).__hd = hdOverlay;
@@ -251,7 +259,7 @@ function renderNavigation() {
   const language = getLocale() === 'zh-Hant' ? 'zh' : 'en';
   const streetFields = [
     [el('live-street-name'), street?.[language] ?? ''],
-    [el('live-district'), district?.[language] ?? ''],
+    [el('live-district'), district ? bilingualNeighborhood(district) : ''],
   ] as const;
   for (const [element, name] of streetFields) {
     if (element.textContent !== name) element.textContent = name;
@@ -380,6 +388,8 @@ function connectNativeEncounters() {
   encounterBridge?.stop();
   encounterBridge = undefined;
   captureStorage = undefined;
+  minimap.updateEncounter({ status: 'discovering' });
+  cityGuide.updateEncounter({ status: 'discovering' });
   if (!encounterMetadata || !activeRomSha256 || !emulator) return;
   let controller: CaptureStorageController | undefined;
   let nextReconcile = 0;
@@ -390,6 +400,9 @@ function connectNativeEncounters() {
     isActive: () => running && !paused && !restarting,
     onState: ({ status: connection, snapshot }) => {
       if (encounterBridge !== bridge || restarting) return;
+      const progress = { status: connection, snapshot };
+      minimap.updateEncounter(progress);
+      cityGuide.updateEncounter(progress);
       if ((connection === 'unavailable' || snapshot?.phase === 6) && !reportedFailure) {
         reportedFailure = true;
         message('Browser storage is unavailable. Download your save for a backup.', true);
@@ -533,6 +546,8 @@ async function startGame() {
           navigationBridge?.stop();
           onboarding?.stop();
           encounterBridge?.stop();
+          minimap.updateEncounter({ status: 'unavailable' });
+          cityGuide.updateEncounter({ status: 'unavailable' });
           setStatus('ADVENTURE INTERRUPTED');
           message('The game stopped unexpectedly. Restart it to return to your saved progress.', true);
         },
@@ -757,6 +772,8 @@ async function restartCartridge(importedSave?: Uint8Array) {
   const wasPaused = paused;
   restarting = true;
   encounterBridge?.stop();
+  minimap.updateEncounter({ status: 'discovering' });
+  cityGuide.updateEncounter({ status: 'discovering' });
   gameInput?.refresh();
   refreshNavigation();
   refreshLanguageConnection();

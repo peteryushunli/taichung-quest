@@ -1,3 +1,6 @@
+import { scoreHdCamera } from './hd-scene';
+import type { HdScene } from './hd-scene';
+
 // High-resolution preview: buildings and characters drawn from their originals.
 //
 // The game still renders its own 240x160 frame. Each animation frame this reads
@@ -17,8 +20,8 @@ type Loaded = { key: string; map: MapEntry; ref: Uint16Array; refW: number; refH
 export type Detail = 2 | 3 | 4;
 export const DETAILS: Detail[] = [2, 3, 4];
 const DETAIL_KEY = 'taichung-hd-detail';
-type Nav = { group: number; map: number; x: number; y: number; field: boolean };
-type Options = { getHeap: () => Uint8Array | undefined };
+type Nav = HdScene;
+type Options = { getScene: () => HdScene | undefined };
 
 const W = 240, H = 160;
 const RUN = 6;
@@ -111,10 +114,6 @@ export class HdOverlay {
   private pack?: WorldPack;
   private loadingMap?: string;
   private readonly pictures = new Map<string, HTMLImageElement | 'loading'>();
-  private navAddress?: number;
-  private navBases: number[] = [];
-  private navHeap?: ArrayBufferLike;
-  private navScanAt = 0;
   lastNav?: Nav;
   private sprites?: SpritePack;
   lastSprites: string[] = [];
@@ -192,12 +191,11 @@ export class HdOverlay {
       this.status = 'loading'; this.emit();
       Promise.all([
         fetch(`${this.packBase}/pack.json`, { cache: 'no-cache' }).then((r) => r.json() as Promise<WorldPack>),
-        fetch('/roms/build.json', { cache: 'no-cache' }).then((r) => r.json() as Promise<{ sha256: string; navigationBridge?: { address: number } }>),
+        fetch('/roms/build.json', { cache: 'no-cache' }).then((r) => r.json() as Promise<{ sha256: string }>),
       ]).then(([pack, build]) => {
         // A pack only fits the cartridge it was made from.
         if (pack.romSha256 && pack.romSha256 !== build.sha256) throw new Error('HD pack was made for a different cartridge');
         this.pack = pack;
-        this.navAddress = build.navigationBridge?.address;
         this.status = 'searching'; this.emit();
       }).catch((error) => { console.info('HD building pack unavailable:', error); this.status = 'error'; this.emit(); });
     }
@@ -214,35 +212,6 @@ export class HdOverlay {
     const rgba = this.rgba = this.grabCtx.getImageData(0, 0, W, H).data;
     const f = this.frame;
     for (let i = 0; i < f.length; i++) f[i] = to555(rgba[i * 4], rgba[i * 4 + 1], rgba[i * 4 + 2]);
-  }
-
-  /** Where the game says the player is, from the navigation packet it publishes in EWRAM. */
-  private readNav(): Nav | undefined {
-    const address = this.navAddress, heap = this.options.getHeap();
-    if (address === undefined || !heap) return undefined;
-    const words = new Uint32Array(heap.buffer, 0, heap.byteLength >> 2);
-    const valid = (base: number) => base >= 0 && base + 0x34 <= heap.byteLength && words[base >> 2] === 0x414e4354
-      && words[(base >> 2) + 1] === 0x31303056 && words[(base >> 2) + 3] === address;
-    // The emulator's memory holds stale copies of the packet too (a save-state
-    // buffer); remember every copy and trust the one the game is writing.
-    const now = performance.now();
-    if (this.navHeap !== heap.buffer || (!this.navBases.some(valid) && now - this.navScanAt > 2000)) {
-      this.navScanAt = now; this.navHeap = heap.buffer; this.navBases = [];
-      for (let i = 0; i + 4 < words.length; i++) {
-        if (words[i] === 0x414e4354 && words[i + 1] === 0x31303056 && words[i + 3] === address) this.navBases.push(i * 4);
-      }
-    }
-    let fallback: Nav | undefined;
-    for (const base of this.navBases) {
-      if (!valid(base)) continue;
-      const v = new DataView(heap.buffer, base, 0x34);
-      const flags = v.getUint32(0x18, true), context = v.getUint16(0x28, true);
-      const nav = { group: v.getUint8(0x20), map: v.getUint8(0x21), x: v.getInt16(0x1c, true), y: v.getInt16(0x1e, true),
-        field: (flags & 7) === 7 && context === 0 };
-      if (nav.field) return nav;
-      fallback ??= nav;
-    }
-    return fallback;
   }
 
   /** The current map's picture, fetched the first time the player is on it. */
@@ -272,13 +241,7 @@ export class HdOverlay {
   /** Share of sample points where the frame equals the map at this camera. */
   private score(cx: number, cy: number, step = 7) {
     const { ref, refW, refH } = this.loaded!;
-    if (cx < 0 || cy < 0 || cx + W > refW || cy + H > refH) return 0;
-    let hit = 0, all = 0;
-    for (let y = 3; y < H; y += step) {
-      const row = (cy + y) * refW + cx, frow = y * W;
-      for (let x = (y * 3) % step; x < W; x += step) { all++; if (ref[row + x] === this.frame[frow + x]) hit++; }
-    }
-    return hit / all;
+    return scoreHdCamera(this.frame, ref, refW, refH, cx, cy, step);
   }
 
   /** Narrow every camera position in the window down by successive sample points. */
@@ -383,8 +346,8 @@ export class HdOverlay {
   private draw() {
     if (!this.enabledValue || (!this.pack && !this.sprites)) return;
     this.readFrame();
-    const nav = this.lastNav = this.readNav();
-    const loaded = nav?.field ? this.currentMap(nav) : undefined;
+    const nav = this.lastNav = this.options.getScene();
+    const loaded = nav ? this.currentMap(nav) : undefined;
     const camera = loaded ? this.locate(nav!) : undefined;
     const sprites = this.findSprites();
     this.camera = camera;

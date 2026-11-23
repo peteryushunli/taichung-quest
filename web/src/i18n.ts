@@ -17,6 +17,13 @@ const listeners = new Set<(change: LocaleChange) => void>();
 const boundControls = new WeakSet<HTMLSelectElement>();
 
 const zh: Record<string, string> = {
+  'Caught': '已捕捉',
+  'Try used': '機會已用',
+  'Encounter status unavailable': '遭遇狀態暫無法讀取',
+  'Rare encounter available': '可挑戰稀有寶可夢',
+  'Encounter in progress': '遭遇進行中',
+  'Caught · TEAM unlocked': '已捕捉・隊伍已解鎖',
+  'Try used · not caught': '機會已用・未捕捉',
   'The opening connection is unavailable. Use Interact to continue, then pick your language on the game’s first settings screen.': '開場連線暫時無法使用。請按「互動／確認」繼續，再到遊戲的第一個設定畫面選擇語言。',
   'Pick your language on the game’s first settings screen.': '請在遊戲的第一個設定畫面選擇語言。',
   'After the tour: B / Bike to ride outdoors. Press again to get off.': '導覽後，戶外按B或「騎車」。再按一次下車。',
@@ -202,6 +209,7 @@ const zh: Record<string, string> = {
   'Explore the map ↓': '探索地圖 ↓',
   'landmarks': '個地標',
   'districts': '個街區',
+  'neighborhoods': '個街區',
   'No install': '免安裝',
   'OLD STATION PLAZA': '舊車站廣場',
   'Early access.': '搶先體驗。',

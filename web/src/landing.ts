@@ -1,3 +1,4 @@
+import { observeNeighborhoodLayout } from './neighborhood-layout';
 import landmarkCatalog from './data/landmarks.json';
 import { BOULEVARD_PREVIEW, cityGeometry as city, sightCatalog } from './preview-world';
 import './landing.css';
@@ -40,8 +41,8 @@ const monIcon = (mon: PokemonIcon, index: number, labelled = true) => `<span cla
 
 function cityMap() {
   const { width, height } = city.world;
-  const labels = districtLabelSpots(city).map(({ label, sign, x, y }) =>
-    `<span class="lp-district-name${sign ? ' lp-district-sign' : ''}" style="left:${x}%;top:${y}%">${label}</span>`).join('');
+  const labels = districtLabelSpots(city).map(({ label, name, sign, x, y }) =>
+    `<span class="lp-district-name${name ? ' is-neighborhood' : sign ? ' lp-district-sign' : ''}" ${name ? `data-neighborhood="${escapeHtml(name.en)}" data-anchor-x="${x}" data-anchor-y="${y}"` : ''} style="left:${x}%;top:${y}%">${name ? `<span lang="en">${escapeHtml(name.en)}</span><span lang="zh-Hant">${escapeHtml(name.zh)}</span>` : label}</span>`).join('');
   return `<img class="lp-map-art" src="${escapeHtml(landingMedia.cityMap)}" width="${width * 16}" height="${height * 16}" alt="" loading="lazy" decoding="async">${labels}<span class="lp-map-chip">${copy('IN-GAME MAP')}</span>`;
 }
 
@@ -86,7 +87,7 @@ function markup() {
           <h1 class="lp-h1 lp-display">${copy('Taichung, shrunk to fit a Game Boy.')}</h1>
           <p class="lp-lede">${copy('Explore Taichung in the world of Pokémon. Challenge ten landmark gyms, collect badges, and catch rare Pokémon at places like Taichung Prefectural Hall and Maple Garden. Pick a partner, hop on a bike, and play free in your browser.')}</p>
           <div class="lp-actions"><a class="lp-btn" id="hero-play" href="#play" data-play-link><span aria-hidden="true">▶</span> <span data-play-label="Play in your browser">${escapeHtml(t('Play in your browser'))}</span></a><a class="lp-text-link" href="#map">${copy('Explore the map ↓')}</a></div>
-          <div class="lp-facts"><span>${gyms.length} ${copy('gyms')}</span><span>${landmarks.length} ${copy('landmarks')}</span><span>${districtCount(landmarks)} ${copy('districts')}</span><span>English · 繁體中文</span>${copy('No install')}</div>
+          <div class="lp-facts"><span>${gyms.length} ${copy('gyms')}</span><span>${landmarks.length} ${copy('landmarks')}</span><span>${city.world.neighborhoods?.length || districtCount(landmarks)} ${copy(city.world.neighborhoods?.length ? 'neighborhoods' : 'districts')}</span><span>English · 繁體中文</span>${copy('No install')}</div>
         </div>
         <div class="lp-hero-frame">
           <div class="lp-casing">
@@ -99,7 +100,7 @@ function markup() {
       </section>
 
       <section class="lp-map-section" id="map"><div class="lp-wrap">
-        ${sectionHead('01 — THE MAP', cityPlaceSummary(landmarks, getLocale()), "Distances are compressed, but the city keeps its shape: the old city around the station, the Greenway's museums in the middle, Xitun's theater and night market to the northwest, and Nantun's temples and parks to the south. Green pins are gyms; gold pins are landmarks to find on foot.", 'lp-map-heading')}
+        ${sectionHead('01 — THE MAP', cityPlaceSummary(landmarks, getLocale(), city.world.neighborhoods?.length), "Distances are compressed, but the city keeps its shape: the old city around the station, the Greenway's museums in the middle, Xitun's theater and night market to the northwest, and Nantun's temples and parks to the south. Green pins are gyms; gold pins are landmarks to find on foot.", 'lp-map-heading')}
         <div class="lp-map-body">
           <div class="lp-map${BOULEVARD_PREVIEW ? ' lp-map-boulevard' : ''}" id="lp-map" style="aspect-ratio:${city.world.width} / ${city.world.height};background-size:${800 / city.world.width}% ${800 / city.world.height}%" role="group" aria-label="${escapeHtml(t('Choose a landmark'))}" data-i18n-label="Choose a landmark">
             ${cityMap()}
@@ -242,12 +243,14 @@ export function createLanding(root: HTMLElement, host: LandingHost) {
   const continueGame = root.querySelector<HTMLButtonElement>('#lp-continue')!;
   const reel = root.querySelector<HTMLVideoElement>('#lp-reel');
 
+  const layoutLabels = observeNeighborhoodLayout(root.querySelector('#lp-map')!, '.is-neighborhood', '.lp-marker, .lp-pin-label, .lp-map-chip, .lp-map-legend');
   function renderLocalized() {
     markers.innerHTML = renderMarkers(selected);
     detail.innerHTML = renderDetail(selected);
     gallery.innerHTML = renderGallery();
+    layoutLabels();
     root.querySelector('#lp-pass')!.innerHTML = renderPass();
-    root.querySelector('#lp-map-heading')!.textContent = cityPlaceSummary(landmarks, getLocale());
+    root.querySelector('#lp-map-heading')!.textContent = cityPlaceSummary(landmarks, getLocale(), city.world.neighborhoods?.length);
     root.querySelector('#lp-gym-status')!.textContent = gymStatusSummary(landmarks, getLocale());
     root.querySelectorAll<HTMLImageElement>('[data-i18n-alt]').forEach((image) => { image.alt = t(image.dataset.i18nAlt!); });
     root.querySelectorAll<HTMLButtonElement>('[data-locale-toggle]').forEach((button) => button.setAttribute('aria-pressed', String(button.dataset.localeToggle === getLocale())));
@@ -261,6 +264,7 @@ export function createLanding(root: HTMLElement, host: LandingHost) {
       pin.querySelector('button')!.setAttribute('aria-pressed', String(active));
     });
     detail.innerHTML = renderDetail(id);
+    layoutLabels();
   }
 
   markers.addEventListener('click', (event) => {
