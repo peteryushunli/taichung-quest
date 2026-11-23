@@ -100,3 +100,11 @@ html[lang="zh-Hant"] .landmark-tab-names b { font-size: 9px; color: #99a28b; }
 .map-legend .guide-encounter-mark { width: 13px; height: 13px; font-size: 11px; border: 0; }
 .map-legend .legend-caught { background: #dcebd3; color: #31543c; }
 .map-legend .legend-spent { background: #d6d8cc; color: #60685d; }
+
+.map-district.is-neighborhood { display: grid; gap: 1px; padding: 1px 3px; border-radius: 3px; background: #f7f4e4e8; color: #254638; font: 650 11px/1 Arial, sans-serif; letter-spacing: 0; text-align: center; white-space: nowrap; pointer-events: none; transform: none; text-shadow: none; z-index: 1; }
+.map-district.is-neighborhood [lang="zh-Hant"] { font-size: 10px; }
+.map-district.is-neighborhood[hidden] { display: none; }
+@media(max-width:450px) { .map-district.is-neighborhood { font-size: 9px; padding: 1px 3px; } .map-district.is-neighborhood [lang="zh-Hant"] { font-size: 9px; } }
+
+.map-district.is-neighborhood[data-neighborhood="North District"] { display: flex; align-items: center; gap: 4px; }
+.map-district.is-neighborhood[hidden] { display: none; }

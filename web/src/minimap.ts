@@ -1,8 +1,9 @@
+import { neighborhoodLabels, placeNeighborhoodLabels } from './neighborhood-labels';
 import { encounterProgress, encounterOutcome, ENCOUNTER_LABELS } from './encounter-progress';
 import type { EncounterProgress } from './encounter-progress';
 import type { EncounterBridgeState } from './encounter-bridge';
 import { getLocale, t } from './i18n';
-import { districtAt, FACING_DEGREES, HOME_WORLD, MINIMAP_PREFERENCE, projectNavigation, projectTutorial, RADAR, RADAR_ART, RADAR_PANEL, radarContains, radarPosition, radarViewport, readMinimapPreference } from './minimap-model';
+import { FACING_DEGREES, HOME_WORLD, MINIMAP_PREFERENCE, projectNavigation, projectTutorial, RADAR, RADAR_ART, RADAR_PANEL, radarContains, radarPosition, radarViewport, readMinimapPreference } from './minimap-model';
 import type { MinimapGeometry, MinimapPosition, RadarMode } from './minimap-model';
 import type { NavigationState } from './navigation-bridge';
 import type { OnboardingState } from './onboarding-bridge';
@@ -86,9 +87,10 @@ export function createMinimap(options: {
   const homeBlip = button.querySelector<SVGGElement>('.minimap-home')!;
   const placeBlips = places.map((place) => ({ ...place, element: button.querySelector<SVGElement>(`[data-landmark="${place.id}"]`)! }));
   const labelLayer = button.querySelector('.minimap-district-labels')!;
-  const districts = (geometry.world.neighborhoods ?? []).map((district) => {
+  const districts = neighborhoodLabels(geometry.world).map((district) => {
     const element = document.createElementNS('http://www.w3.org/2000/svg', 'text');
     element.setAttribute('text-anchor', 'middle');
+    element.innerHTML = `<tspan x="0" lang="en">${district.name.en}</tspan><tspan x="0" dy="4.6" lang="zh-Hant">${district.name.zh}</tspan>`;
     labelLayer.append(element);
     return { ...district, element };
   });
@@ -161,23 +163,31 @@ export function createMinimap(options: {
     }
     const homeTile = geometry.world.homeWorld ?? HOME_WORLD;
     place(homeBlip, mode !== 'citywide' && radarContains(view, homeTile) ? homeTile : undefined, scale);
-    const language = getLocale() === 'zh-Hant' ? 'zh' : 'en';
-    const currentDistrict = districtAt(position, geometry);
-    for (const entry of districts) {
-      const name = entry.name[language];
-      const [x, y] = entry.tile;
-      const halfWidth = (name.length * (language === 'zh' ? 2.1 : 1.25) + 1) * scale;
-      const inFrame = x - halfWidth >= view.x && x + halfWidth <= view.x + view.width
-        && y - 5 * scale >= view.y && y + 2 * scale <= view.y + view.height;
-      const nearPlayer = Math.abs(x - tile.x) < halfWidth + 4 * scale && Math.abs(y - tile.y) < 6 * scale;
-      if (mode === 'nearby' || !inFrame || nearPlayer || (mode === 'districts' && currentDistrict?.en === entry.name.en)) {
-        entry.element.setAttribute('display', 'none');
-        continue;
-      }
-      entry.element.removeAttribute('display');
-      entry.element.textContent = name;
-      entry.element.setAttribute('transform', `translate(${x} ${y}) scale(${scale})`);
+    const candidates = districts.filter(entry => radarContains(view, entry.tile));
+    for (const entry of districts) entry.element.setAttribute('display', 'none');
+    const toPanel = (world: number[]) => ({ x: (world[0] + .5 - view.x) / scale, y: (world[1] + .5 - view.y) / scale });
+    const obstacles = [tile, ...(mode === 'citywide' ? [] : placeBlips.filter(entry => radarContains(view, entry.world)).map(entry => ({ x: entry.world[0], y: entry.world[1] })))].map(point => {
+      const panel = toPanel([point.x, point.y]);
+      return { x: panel.x - 3.8, y: panel.y - 3.8, width: 7.6, height: 7.6 };
+    });
+    if (mode !== 'citywide' && radarContains(view, homeTile)) {
+      const home = toPanel(homeTile); obstacles.push({ x: home.x - 3, y: home.y - 3, width: 6, height: 6 });
     }
+    const font = mode === 'citywide' ? 3.2 : 4.4;
+    const boxes = candidates.map(entry => {
+      const panel = toPanel(entry.tile);
+      const width = Math.max(entry.name.en.length * font * .53, entry.name.zh.length * font) + 1;
+      return { x: panel.x - width / 2, y: panel.y - 4, width, height: font * 2.25 + .6 };
+    });
+    const positions = placeNeighborhoodLabels(RADAR.width, RADAR.height, boxes, obstacles, mode === 'citywide' ? 36 : 12, 1.5, .8);
+    candidates.forEach((entry, index) => {
+      const box = positions[index];
+      if (!box) return;
+      entry.element.removeAttribute('display');
+      entry.element.style.fontSize = `${font}px`;
+      entry.element.querySelectorAll('tspan')[1].setAttribute('dy', String(font * 1.1));
+      entry.element.setAttribute('transform', `translate(${view.x + (box.x + box.width / 2) * scale} ${view.y + (box.y + font * .8) * scale}) scale(${scale})`);
+    });
   }
   render();
   return {

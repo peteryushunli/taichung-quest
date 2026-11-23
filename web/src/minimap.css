@@ -65,3 +65,6 @@
 .live-minimap .is-caught .minimap-outcome-check { display: block; stroke: #31543c; }
 .live-minimap :is(.is-caught, .is-spent) :is(.minimap-ball-top, .minimap-ball-seam, .minimap-ball-button) { display: none; }
 .live-minimap .is-pending .minimap-ball { stroke: #805818; stroke-dasharray: 1.5 .7; }
+
+.live-street { overflow-wrap: anywhere; }
+.live-minimap .minimap-district-labels [lang="zh-Hant"] { font-family: system-ui, sans-serif; }

@@ -1,3 +1,4 @@
+import { bilingualNeighborhood } from './neighborhood-labels';
 import './style.css';
 import './confirm.css';
 import './controls.css';
@@ -258,7 +259,7 @@ function renderNavigation() {
   const language = getLocale() === 'zh-Hant' ? 'zh' : 'en';
   const streetFields = [
     [el('live-street-name'), street?.[language] ?? ''],
-    [el('live-district'), district?.[language] ?? ''],
+    [el('live-district'), district ? bilingualNeighborhood(district) : ''],
   ] as const;
   for (const [element, name] of streetFields) {
     if (element.textContent !== name) element.textContent = name;

@@ -27,19 +27,14 @@ INSTALLED_SIGHTS = {
     "baseball-stadium": ("Intercontinental Ballpark", "洲際棒球場", "beitun", "Baseball stadium", "棒球場"),
     "folklore-park": ("Folk Museum at Folklore Park", "臺灣民俗文物館", "beitun", "Folk museum", "民俗館"),
 }
-LABELS = [
-    ("FENGJIA 逢甲", 40, 6), ("SHUINAN 水湳", 94, 6), ("BEITUN 北屯", 178, 23),
-    ("XITUN 西屯", 46, 103), ("GREENWAY 草悟道", 205, 116),
-    ("OLD CITY 舊城", 347, 22), ("NANTUN 南屯", 48, 215),
-]
 NEIGHBORHOODS = {
     "fengjia": ("Fengjia", "逢甲", 72, 41),
     "centralpark": ("Shuinan", "水湳", 115, 19),
     "beitun": ("Beitun", "北屯", 218, 38),
-    "north": ("North", "北區", 342, 40),
+    "north": ("North District", "北區", 342, 40),
     "xitun": ("Xitun", "西屯", 93, 114),
     "dadun": ("Dadun", "大墩", 170, 85),
-    "west": ("West", "西區", 236, 139),
+    "west": ("West District", "西區", 236, 139),
     "oldcity": ("Old City", "舊城", 325, 134),
     "nantun": ("Nantun", "南屯", 90, 203),
 }
@@ -316,8 +311,7 @@ def main():
         "world": {"width": width, "height": height, "homeWorld": markers["guest-house"]["world"],
                   "streetBands": street_bands(plan, raw, (x0, y0)),
                   "neighborhoods": [{"name": {"en": en, "zh": zh}, "tile": normalize([x, y])}
-                                    for en, zh, x, y in NEIGHBORHOODS.values()],
-                  "districtLabels": [{"label": label, "x": x - x0, "y": y - y0} for label, x, y in LABELS]},
+                                    for en, zh, x, y in NEIGHBORHOODS.values()]},
         "mapsByNativeKey": {entry["nativeKey"]: entry for entry in exteriors.values()} | interiors,
         "markersById": markers, "seams": seams, "extraSights": extras,
         "sourceSha256": {"compiledMapReport": digest(candidate / "build-report.json"), **report["sourceSha256"]},

@@ -1,3 +1,4 @@
+import { observeNeighborhoodLayout } from './neighborhood-layout';
 import { encounterProgress, encounterOutcome, ENCOUNTER_LABELS } from './encounter-progress';
 import type { EncounterProgress } from './encounter-progress';
 import type { EncounterBridgeState } from './encounter-bridge';
@@ -52,7 +53,7 @@ export function createCityGuide(host: GuideHost) {
           <div class="overview-heading"><span>TAICHUNG <span lang="zh-Hant">臺中</span></span>${cityGeometry.coordinateSystem?.northUp === false ? '' : '<span class="compass" aria-label="North points up">N ↑</span>'}</div>
           <div class="guide-map" style="--guide-map-aspect:${width} / ${height}">
             <img class="guide-map-drawing" src="${escapeHtml(landingMedia.cityMap)}" width="${width * 16}" height="${height * 16}" alt="" loading="lazy" decoding="async">
-            ${districtLabelSpots(cityGeometry).map(({ label, sign, x, y }) => `<span class="map-district${sign ? ' is-sign' : ''}" style="left:${x}%;top:${y}%">${label}</span>`).join('')}
+            ${districtLabelSpots(cityGeometry).map(({ label, name, sign, x, y }) => `<span class="map-district${name ? ' is-neighborhood' : sign ? ' is-sign' : ''}" ${name ? `data-neighborhood="${escapeHtml(name.en)}" data-anchor-x="${x}" data-anchor-y="${y}"` : ''} style="left:${x}%;top:${y}%">${name ? `<span lang="en">${escapeHtml(name.en)}</span><span lang="zh-Hant">${escapeHtml(name.zh)}</span>` : label}</span>`).join('')}
             ${landmarks.map((place, index) => {
               const { x, y, side } = markerPosition(placeWorld(place, cityGeometry.markersById), cityGeometry.world);
               const kind = isGym(place) ? 'is-gym' : 'is-landmark';
@@ -71,6 +72,7 @@ export function createCityGuide(host: GuideHost) {
     </div>`;
   document.body.append(dialog);
 
+  const layoutLabels = observeNeighborhoodLayout(dialog.querySelector('.guide-map')!, '.is-neighborhood', '.marker-number, .guide-encounter-mark');
   let selected = landmarks.find((place) => place.playable)?.id ?? landmarks[0]?.id;
   let encounters: EncounterProgress | undefined;
   let resumeOnClose = false;
@@ -103,6 +105,7 @@ export function createCityGuide(host: GuideHost) {
       <div class="landmark-copy"><p class="landmark-category">${escapeHtml(chinese ? place.categoryZh : place.category)} <span>· ${escapeHtml(chinese ? place.districtZh : place.districtEn)}</span></p><h3>${escapeHtml(chinese ? place.nameZh : place.nameEn)}<span lang="${chinese ? 'en' : 'zh-Hant'}">${escapeHtml(chinese ? place.nameEn : place.nameZh)}</span></h3><p class="visitor-description">${escapeHtml(chinese ? place.descriptionZh : place.description)}</p>${place.location ? `<div class="visitor-address"><span>${t('Real-world address')}</span><address>${escapeHtml(chinese ? place.location.addressZh : place.location.address)}</address></div>` : ''}${info.url ? `<a class="official-link" href="${escapeHtml(info.url)}" target="_blank" rel="noopener noreferrer">${t('Official visitor information')} <span aria-hidden="true">↗</span></a>` : ''}${info.url && place.officialSourceTitle ? `<p class="visitor-source">${t('Source')}: ${escapeHtml(place.officialSourceTitle)}</p>` : ''}</div>
       <div class="landmark-game-note"><span class="area-status ${place.playable ? 'area-playable' : 'area-planned'}">${t(areaLabel)}</span><p>${t(areaNote)}</p><div class="gym-note"><span>${t(gym ? 'FICTIONAL GYM CHALLENGE' : 'LANDMARK')}</span><p>${t(gymNote)}</p><p class="guide-encounter-status" hidden></p></div></div>`;
     renderEncounterStatus();
+    layoutLabels();
     if (reveal && matchMedia('(max-width: 670px)').matches) dialog.querySelector('#landmark-detail')!.scrollIntoView({ block: 'nearest', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' });
   }
 
@@ -143,12 +146,12 @@ export function createCityGuide(host: GuideHost) {
     resumeOnClose = false;
     returnFocus?.focus({ preventScroll: true });
   });
-  dialog.querySelector('#guide-place-count')!.textContent = cityPlaceSummary(landmarks, getLocale());
+  dialog.querySelector('#guide-place-count')!.textContent = cityPlaceSummary(landmarks, getLocale(), cityGeometry.world.neighborhoods?.length);
   if (selected) select(selected);
   initializeLocalization(dialog);
   onLocaleChange(() => {
     localizeTree(dialog);
-    dialog.querySelector('#guide-place-count')!.textContent = cityPlaceSummary(landmarks, getLocale());
+    dialog.querySelector('#guide-place-count')!.textContent = cityPlaceSummary(landmarks, getLocale(), cityGeometry.world.neighborhoods?.length);
     if (selected) select(selected);
   });
 
@@ -164,6 +167,7 @@ export function createCityGuide(host: GuideHost) {
       if (resumeOnClose) host.pause();
       renderEncounterStatus();
       dialog.showModal();
+      layoutLabels();
       dialog.querySelector<HTMLButtonElement>('.guide-close')!.focus();
     },
     onGameStarted() {

@@ -209,6 +209,7 @@ const zh: Record<string, string> = {
   'Explore the map ↓': '探索地圖 ↓',
   'landmarks': '個地標',
   'districts': '個街區',
+  'neighborhoods': '個街區',
   'No install': '免安裝',
   'OLD STATION PLAZA': '舊車站廣場',
   'Early access.': '搶先體驗。',

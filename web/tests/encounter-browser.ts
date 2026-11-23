@@ -42,5 +42,24 @@ document.querySelector('#run')!.addEventListener('click', () => {
   setLocale('zh-Hant'); update('Spent');
   lines.push(`${document.querySelector('#city-guide [data-landmark="maple-garden"]')!.getAttribute('aria-label')!.includes('機會已用') ? 'PASS' : 'FAIL'} Chinese status labels`);
   setLocale('en'); update('Spent');
+  const zoom = document.querySelector<HTMLSelectElement>('#zoom')!;
+  const previousView = zoom.value;
+  const width = screenWidth();
+  zoom.value = 'citywide'; zoom.dispatchEvent(new Event('change'));
+  const labels = [...document.querySelectorAll<SVGTextElement>('.minimap-district-labels text')].filter(label => label.getAttribute('display') !== 'none');
+  lines.push(`${labels.length === 9 && labels.every(label => label.querySelectorAll('tspan').length === 2) ? 'PASS' : 'FAIL'} nine bilingual citywide labels`);
+  const overlap = (a: DOMRect, b: DOMRect) => a.left < b.right && a.right > b.left && a.top < b.bottom && a.bottom > b.top;
+  const player = document.querySelector('.minimap-player')!.getBoundingClientRect();
+  lines.push(`${labels.every((label, index) => !overlap(label.getBoundingClientRect(), player) && labels.slice(index + 1).every(other => !overlap(label.getBoundingClientRect(), other.getBoundingClientRect()))) ? 'PASS' : 'FAIL'} radar labels avoid player and each other`);
+  guide.open();
+  const map = document.querySelector('.guide-map')!.getBoundingClientRect();
+  const fullLabels = [...document.querySelectorAll<HTMLElement>('.map-district.is-neighborhood')].filter(label => !label.hidden);
+  const markers = [...document.querySelectorAll('.guide-map .marker-number,.guide-map .guide-encounter-mark')];
+  lines.push(`${fullLabels.length === 9 && fullLabels.every(label => { const box = label.getBoundingClientRect(); return box.left >= map.left && box.right <= map.right && box.top >= map.top && box.bottom <= map.bottom && markers.every(marker => !overlap(box, marker.getBoundingClientRect())); }) ? 'PASS' : 'FAIL'} nine full-map labels stay inside and clear of markers`);
+  document.querySelector<HTMLDialogElement>('#city-guide')!.close();
+  zoom.value = previousView; zoom.dispatchEvent(new Event('change'));
+  lines.push(`${screenWidth() === width ? 'PASS' : 'FAIL'} label updates preserve map container width`);
   document.querySelector('#results')!.textContent = lines.join('\n');
 });
+
+function screenWidth() { return document.querySelector('#fixture-screen')!.getBoundingClientRect().width; }
