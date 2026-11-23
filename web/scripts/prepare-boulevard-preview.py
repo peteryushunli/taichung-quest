@@ -110,6 +110,8 @@ def terrain_images(fill, plan, candidate, geometry, report, raw):
     import events
 
     world = events.build()
+    if tower_block := report.get("xitunTowerBlock"):
+        world.put(tower_block["paving"], "p")
     width, height = geometry["world"]["width"], geometry["world"]["height"]
     origin = plan["world"]["box"][:2]
     ink = {

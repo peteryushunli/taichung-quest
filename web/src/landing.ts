@@ -200,9 +200,9 @@ function renderDetail(id: string) {
     : '<div class="lp-team-sprites" aria-hidden="true"><i>?</i><i>?</i><i>?</i></div>';
   return `
     <div class="lp-detail-art">${facade}</div>
-    <div class="lp-detail-body">
+    <div class="lp-detail-body" role="region" aria-labelledby="lp-detail-name" tabindex="0">
       <div class="lp-detail-meta"><span>No. ${number(index)} · ${escapeHtml(info.district)}</span><span class="lp-chip ${!isGym(place) ? 'is-landmark' : isGymOpen(place) ? 'is-open' : ''}">${copy(!isGym(place) ? 'LANDMARK' : isGymOpen(place) ? 'GYM OPEN' : 'IN DEVELOPMENT')}</span></div>
-      <div class="lp-detail-names"><h3 class="lp-display">${escapeHtml(info.name)}</h3><span>${escapeHtml(info.otherName)}</span></div>
+      <div class="lp-detail-names"><h3 class="lp-display" id="lp-detail-name">${escapeHtml(info.name)}</h3><span>${escapeHtml(info.otherName)}</span></div>
       <p class="lp-detail-text">${escapeHtml(info.description)}</p>
       <div class="lp-detail-foot">
         ${isGym(place) ? `<div class="lp-leader">${portrait}<div class="lp-leader-name"><small>${copy('Gym leader')}</small><b>${info.leader ? escapeHtml(info.leader) : copy('To be revealed')}</b></div>${teamSprites}</div>` : `<p class="lp-landmark-note">${copy(landmarkCaptureCopy(place.id, 'landing', hasEncounter) ?? 'Visit this landmark and learn its local history.')}</p>`}

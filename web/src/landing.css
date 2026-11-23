@@ -88,9 +88,9 @@ html[lang="zh-Hant"] .lp-display { font-family: var(--lp-zh); font-weight: 500; 
 .lp-map-section .lp-eyebrow { color: var(--lp-map-eyebrow); }
 .lp-map-section .lp-h2 { color: inherit; }
 .lp-map-section .lp-section-side { color: var(--lp-map-text); }
-.lp-map-body { display: flex; flex-wrap: wrap; gap: 24px; align-items: stretch; }
+.lp-map-body { display: grid; grid-template-columns: minmax(0, 2fr) minmax(300px, 1fr); gap: 24px; align-items: start; }
 /* The map is the game's own tiles; its grid marks every 8 tiles of the world. */
-.lp-map { position: relative; flex: 2 1 520px; min-width: 0; aspect-ratio: 1; overflow: hidden; border-radius: 6px; background: var(--lp-meadow) linear-gradient(#c9d09a66 1px, transparent 1px) 0 0 / 6.6667% 6.6667%; box-shadow: inset 0 0 0 1px #ffffff30; }
+.lp-map { position: relative; min-width: 0; aspect-ratio: 1; overflow: hidden; border-radius: 6px; background: var(--lp-meadow) linear-gradient(#c9d09a66 1px, transparent 1px) 0 0 / 6.6667% 6.6667%; box-shadow: inset 0 0 0 1px #ffffff30; }
 .lp-map::before { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, #c9d09a66 1px, transparent 1px) 0 0 / 6.6667% 6.6667%; }
 .lp-map-art { position: absolute; inset: 0; width: 100%; height: 100%; filter: drop-shadow(0 5px 0 #24392d40); }
 .lp-district-name { position: absolute; font: 12px/1 var(--lp-pixel); letter-spacing: 1px; color: var(--lp-pine); white-space: nowrap; }
@@ -115,11 +115,14 @@ html[lang="zh-Hant"] .lp-display { font-family: var(--lp-zh); font-weight: 500; 
 .lp-side-above > .lp-pin-label { left: 0; top: -42px; transform: translateX(-50%); }
 /* Below, hanging left from the pin, for east-edge places whose side label would sit under a neighbour's pin. */
 .lp-side-below > .lp-pin-label { right: -13px; top: 20px; }
-.lp-detail { flex: 1 1 300px; min-width: 0; display: flex; flex-direction: column; align-self: flex-start; position: sticky; top: 88px; overflow: hidden; border-radius: 6px; background: var(--lp-cream); color: var(--lp-ink); }
+/* Keep the selected landmark's content out of map row sizing. */
+.lp-detail { min-width: 0; min-height: 28rem; contain: size; display: flex; flex-direction: column; align-self: stretch; overflow: hidden; border-radius: 6px; background: var(--lp-cream); color: var(--lp-ink); }
 .lp-detail-art { display: flex; align-items: flex-end; justify-content: center; flex: none; height: 190px; padding: 18px 18px 0; background: var(--lp-pale); border-bottom: 1px solid #d2ddc3; }
 .lp-facade, .lp-card-facade { display: block; width: 100%; height: 100%; object-fit: contain; object-position: center bottom; image-rendering: pixelated; }
 .lp-facade-pending { display: flex; align-items: center; justify-content: center; width: 100%; height: 150px; padding: 12px; border: 1px dashed var(--lp-dash); border-bottom: 0; background: repeating-linear-gradient(135deg, #dfe5d0 0 8px, #e8eddb 8px 16px); font: 11px var(--lp-mono-face); color: var(--lp-muted); text-align: center; }
-.lp-detail-body { flex: 1; display: flex; flex-direction: column; gap: 14px; padding: 24px; }
+.lp-detail-body { flex: 1 1 0; min-height: 0; display: flex; flex-direction: column; gap: 14px; padding: 24px; overflow: auto; scrollbar-gutter: stable; }
+.lp-detail-body > * { flex: none; }
+.lp-detail-body:focus-visible { outline: 2px solid var(--lp-pine); outline-offset: -3px; }
 .lp-detail-meta { display: flex; justify-content: space-between; align-items: center; gap: 10px; font: 11px var(--lp-mono-face); letter-spacing: 1px; color: var(--lp-muted); }
 .lp-chip { flex: none; padding: 3px 8px; border-radius: 2px; background: #eadfc9; color: #6e5238; }
 .lp-chip.is-open { background: var(--lp-pine); color: var(--lp-cream-dark); }
@@ -131,7 +134,7 @@ html[lang="zh-Hant"] .lp-detail-names span { font-family: inherit; font-size: 14
 .lp-detail-text { font-size: 14px; line-height: 1.65; color: var(--lp-body); text-wrap: pretty; }
 .lp-detail-foot { display: flex; flex-direction: column; gap: 10px; padding-top: 14px; border-top: 1px solid var(--lp-line); font-size: 13px; }
 .lp-landmark-note { line-height: 1.55; color: var(--lp-body); }
-.lp-leader { display: flex; align-items: center; gap: 12px; }
+.lp-leader { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
 .lp-portrait { display: flex; align-items: center; justify-content: center; flex: none; width: 56px; height: 56px; border: 1.5px dashed var(--lp-dash); border-radius: 4px; background: var(--lp-pale); font: 14px var(--lp-mono-face); color: var(--lp-muted); }
 .lp-portrait-art { border: 1px solid #c8d2bb; object-fit: contain; }
 .lp-leader-name { flex: 1; display: flex; flex-direction: column; gap: 2px; min-width: 0; }
@@ -248,6 +251,7 @@ html[lang="zh-Hant"] .lp-cta-zh { display: none; }
 @media (max-width: 900px) {
   .lp-nav { gap: 14px; }
   .lp-nav-link { display: none; }
+  .lp-map-body { grid-template-columns: minmax(0, 1fr); }
 }
 @media (max-width: 720px) {
   .landing { --lp-gutter: 20px; --lp-section: 64px; }
@@ -271,6 +275,8 @@ html[lang="zh-Hant"] .lp-cta-zh { display: none; }
   .lp-district-sign { padding: 1px 3px; font-size: 8px; letter-spacing: .5px; }
   .lp-map-chip { font-size: 8px; }
   .lp-map-legend { gap: 4px; padding: 5px 7px; font-size: 10px; }
+  .lp-detail-art { height: 150px; }
+  .lp-detail-body { padding: 18px; }
   .lp-status { padding-right: 76px; }
   .lp-partner { right: -8px; bottom: -28px; width: 96px; height: 96px; }
   .lp-starter-art img { width: 128px; height: 128px; }
