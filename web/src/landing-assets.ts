@@ -1,6 +1,6 @@
 import bikeShot from './assets/landing/bike-greenway.png';
 import cityMap from './assets/landing/city-map.png';
-import boulevardMap from './assets/boulevard/city.png';
+import boulevardMap from './assets/boulevard/city.webp';
 import { BOULEVARD_PREVIEW } from './preview-world';
 import heroPoster from './assets/landing/hero-poster.png';
 import heroReel from './assets/landing/hero-reel.mp4';
@@ -15,16 +15,16 @@ import shenJi from './assets/landmarks/shen-ji.png';
 import taichungPark from './assets/landmarks/taichung-park.png';
 import theater from './assets/landmarks/theater.png';
 import wanheTemple from './assets/landmarks/wanhe-temple.png';
-import jun from './assets/leaders/jun.png';
-import lian from './assets/leaders/lian.png';
-import yicheng from './assets/leaders/yicheng.png';
-import xingan from './assets/leaders/xingan.png';
-import axiu from './assets/leaders/axiu.png';
-import caining from './assets/leaders/caining.png';
-import jiahe from './assets/leaders/jiahe.png';
-import muqing from './assets/leaders/muqing.png';
-import ling from './assets/leaders/ling.png';
-import peiqi from './assets/leaders/peiqi.png';
+import jun from './assets/leaders/portraits/jun.webp';
+import lian from './assets/leaders/portraits/lian.webp';
+import yicheng from './assets/leaders/portraits/yicheng.webp';
+import xingan from './assets/leaders/portraits/xingan.webp';
+import axiu from './assets/leaders/portraits/axiu.webp';
+import caining from './assets/leaders/portraits/caining.webp';
+import jiahe from './assets/leaders/portraits/jiahe.webp';
+import muqing from './assets/leaders/portraits/muqing.webp';
+import ling from './assets/leaders/portraits/ling.webp';
+import peiqi from './assets/leaders/portraits/peiqi.webp';
 import bulbasaurFront from './assets/pokemon/front/bulbasaur.png';
 import charmanderFront from './assets/pokemon/front/charmander.png';
 import pikachuFront from './assets/pokemon/front/pikachu.png';
@@ -67,8 +67,7 @@ import squirtleIcon from './assets/pokemon/icon/squirtle.png';
 
 /** A two-frame party-menu icon: 32×64, frames stacked top to bottom. */
 export interface PokemonIcon { name: string; icon: string }
-/** `mapView` art is a cut of the rendered city map (scripts/crop-landmark-art.py), not a drawn facade. */
-export interface LandmarkArt { facade?: string; mapView?: boolean; tint: string; leader?: string; team?: PokemonIcon[] }
+export interface LandmarkArt { facade?: string; tint: string; leader?: string; team?: PokemonIcon[] }
 
 const mon = (name: string, icon: string): PokemonIcon => ({ name, icon });
 const brick = '#ede2d9';
@@ -98,19 +97,12 @@ export const badgeArt: Record<string, string> = Object.fromEntries(Object.entrie
   import.meta.glob<string>('./assets/badges/*.png', { eager: true, import: 'default' }),
 ).map(([path, url]) => [path.slice(path.lastIndexOf('/') + 1, -'.png'.length), url]));
 
-// Landmarks without a gym show the way they appear on the in-game city map.
-const mapViews = import.meta.glob<string>('./assets/landmarks/map/*.png', { eager: true, import: 'default' });
-for (const [path, url] of Object.entries(mapViews)) {
+// Use the original transparent landmark sprites at their full game resolution.
+const isolatedFacades = import.meta.glob<string>('./assets/landmarks/isolated/*.png', { eager: true, import: 'default' });
+for (const [path, facade] of Object.entries(isolatedFacades)) {
   const id = path.slice(path.lastIndexOf('/') + 1, -'.png'.length);
-  landmarkArt[id] ??= { facade: url, mapView: true, tint: park };
-}
-const boulevardViews = import.meta.glob<string>('./assets/boulevard/places/*.png', { eager: true, import: 'default' });
-if (BOULEVARD_PREVIEW) {
-  for (const [path, url] of Object.entries(boulevardViews)) {
-    const id = path.slice(path.lastIndexOf('/') + 1, -'.png'.length);
-    const art = landmarkArt[id];
-    landmarkArt[id] = { ...art, facade: url, mapView: true, tint: art?.tint ?? park };
-  }
+  const art = landmarkArt[id] ?? { tint: park };
+  landmarkArt[id] = { ...art, facade };
 }
 
 /** Page media. An empty slot renders a labelled placeholder. */

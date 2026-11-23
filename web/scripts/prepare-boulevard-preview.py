@@ -157,7 +157,7 @@ def terrain_images(fill, plan, candidate, geometry, report, raw):
     image.save(ART / "radar.png", optimize=True)
     overview = Image.open(candidate / "city-overview.png")
     require(overview.width * height == overview.height * width, "The city image has the wrong geometry.")
-    shutil.copyfile(candidate / "city-overview.png", ART / "city.png")
+    overview.save(ART / "city.webp", lossless=True, method=6, quality=100)
     art_rects = {place["id"]: place["artRect"] for place in plan["places"] if place["id"] in EXTRA_SIGHTS}
     art_rects["central-park"] = [78, 32, 102, 50]
     art_rects.update({entry["id"]: entry["worldRect"] for entry in report.get("installedLandmarks", [])})

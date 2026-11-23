@@ -117,10 +117,7 @@ html[lang="zh-Hant"] .lp-display { font-family: var(--lp-zh); font-weight: 500; 
 .lp-side-below > .lp-pin-label { right: -13px; top: 20px; }
 .lp-detail { flex: 1 1 300px; min-width: 0; display: flex; flex-direction: column; align-self: flex-start; position: sticky; top: 88px; overflow: hidden; border-radius: 6px; background: var(--lp-cream); color: var(--lp-ink); }
 .lp-detail-art { display: flex; align-items: flex-end; justify-content: center; flex: none; height: 190px; padding: 18px 18px 0; background: var(--lp-pale); border-bottom: 1px solid #d2ddc3; }
-.lp-facade { width: 100%; height: 100%; background: center bottom / contain no-repeat; image-rendering: pixelated; }
-/* Map-view art is a square-cornered piece of the city map, framed rather than standing on the ground line. */
-.lp-detail-art:has(.lp-map-view) { padding: 16px; }
-.lp-facade.lp-map-view, .lp-map-view .lp-card-facade { background-position: center; filter: drop-shadow(0 3px 0 #24392d30); }
+.lp-facade, .lp-card-facade { display: block; width: 100%; height: 100%; object-fit: contain; object-position: center bottom; image-rendering: pixelated; }
 .lp-facade-pending { display: flex; align-items: center; justify-content: center; width: 100%; height: 150px; padding: 12px; border: 1px dashed var(--lp-dash); border-bottom: 0; background: repeating-linear-gradient(135deg, #dfe5d0 0 8px, #e8eddb 8px 16px); font: 11px var(--lp-mono-face); color: var(--lp-muted); text-align: center; }
 .lp-detail-body { flex: 1; display: flex; flex-direction: column; gap: 14px; padding: 24px; }
 .lp-detail-meta { display: flex; justify-content: space-between; align-items: center; gap: 10px; font: 11px var(--lp-mono-face); letter-spacing: 1px; color: var(--lp-muted); }
@@ -136,7 +133,7 @@ html[lang="zh-Hant"] .lp-detail-names span { font-family: inherit; font-size: 14
 .lp-landmark-note { line-height: 1.55; color: var(--lp-body); }
 .lp-leader { display: flex; align-items: center; gap: 12px; }
 .lp-portrait { display: flex; align-items: center; justify-content: center; flex: none; width: 56px; height: 56px; border: 1.5px dashed var(--lp-dash); border-radius: 4px; background: var(--lp-pale); font: 14px var(--lp-mono-face); color: var(--lp-muted); }
-.lp-portrait-art { border: 1px solid #c8d2bb; background-position: center -6px; background-repeat: no-repeat; background-size: 128px 128px; image-rendering: pixelated; }
+.lp-portrait-art { border: 1px solid #c8d2bb; object-fit: contain; }
 .lp-leader-name { flex: 1; display: flex; flex-direction: column; gap: 2px; min-width: 0; }
 .lp-leader-name small { color: var(--lp-muted); font-size: 12px; }
 .lp-leader-name b { font-weight: 600; }
@@ -159,9 +156,7 @@ html[lang="zh-Hant"] .lp-gallery-head h3 { font-family: var(--lp-zh); font-weigh
 .lp-card { display: flex; flex-direction: column; min-width: 0; padding: 0; overflow: hidden; border: 1px solid var(--lp-card-line); border-radius: 6px; background: var(--lp-card); color: inherit; font: inherit; text-align: left; }
 .lp-card:hover { border-color: var(--lp-pine); }
 .lp-card.is-landmark:hover { border-color: var(--lp-gold-line); }
-.lp-card-art.lp-map-view { padding: 12px; }
 .lp-card-art { display: flex; align-items: flex-end; justify-content: center; height: 140px; padding: 14px 14px 0; border-bottom: 1px solid #a6b09b70; }
-.lp-card-facade { display: block; width: 100%; height: 100%; background: center bottom / contain no-repeat; image-rendering: pixelated; }
 .lp-card-pending { display: flex; align-items: center; justify-content: center; width: 100%; height: 110px; border: 1px dashed var(--lp-dash); border-bottom: 0; background: repeating-linear-gradient(135deg, #00000008 0 8px, transparent 8px 16px); font: 10px var(--lp-mono-face); color: var(--lp-eyebrow); }
 .lp-card-body { display: flex; flex-direction: column; gap: 6px; padding: 14px; }
 .lp-card-meta { display: flex; justify-content: space-between; align-items: center; gap: 8px; font: 10px var(--lp-mono-face); color: var(--lp-eyebrow); }

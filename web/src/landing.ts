@@ -42,7 +42,7 @@ function cityMap() {
   const { width, height } = city.world;
   const labels = districtLabelSpots(city).map(({ label, sign, x, y }) =>
     `<span class="lp-district-name${sign ? ' lp-district-sign' : ''}" style="left:${x}%;top:${y}%">${label}</span>`).join('');
-  return `<img class="lp-map-art" src="${escapeHtml(landingMedia.cityMap)}" width="${width * 16}" height="${height * 16}" alt="">${labels}<span class="lp-map-chip">${copy('IN-GAME MAP')}</span>`;
+  return `<img class="lp-map-art" src="${escapeHtml(landingMedia.cityMap)}" width="${width * 16}" height="${height * 16}" alt="" loading="lazy" decoding="async">${labels}<span class="lp-map-chip">${copy('IN-GAME MAP')}</span>`;
 }
 
 // Step 3's City Pass, stamped with every gym's badge as the game draws it.
@@ -189,10 +189,10 @@ function renderDetail(id: string) {
   const hasEncounter = BOULEVARD_PREVIEW ? city.markersById[id]?.captureBit !== undefined : undefined;
   const art = landmarkArt[id];
   const facade = art?.facade
-    ? `<div class="lp-facade${art.mapView ? ' lp-map-view' : ''}" role="img" aria-label="${escapeHtml(info.name)}" style="background-image:url('${escapeHtml(art.facade)}')"></div>`
+    ? `<img class="lp-facade" src="${escapeHtml(art.facade)}" alt="${escapeHtml(info.name)}" loading="lazy" decoding="async">`
     : `<div class="lp-facade-pending">${copy('Facade art pending')}</div>`;
   const portrait = art?.leader && info.leader
-    ? `<div class="lp-portrait lp-portrait-art" role="img" aria-label="${escapeHtml(info.leader)}" style="background-image:url('${escapeHtml(art.leader)}')"></div>`
+    ? `<img class="lp-portrait lp-portrait-art" src="${escapeHtml(art.leader)}" alt="" width="56" height="56" loading="lazy" decoding="async">`
     : '<div class="lp-portrait">?</div>';
   const team = info.leader ? art?.team : undefined;
   const teamSprites = team
@@ -216,7 +216,7 @@ function renderCard(place: LandingLandmark, locale: ReturnType<typeof getLocale>
   const info = localizedPlace(place, locale);
   const art = landmarkArt[place.id];
   return `<button type="button" class="lp-card${isGym(place) ? '' : ' is-landmark'}" data-card="${escapeHtml(place.id)}">
-      <span class="lp-card-art${art?.mapView ? ' lp-map-view' : ''}" style="background:${art?.tint ?? '#eee8dc'}">${art?.facade ? `<span class="lp-card-facade" style="background-image:url('${escapeHtml(art.facade)}')"></span>` : `<span class="lp-card-pending">${copy('facade art')}</span>`}</span>
+      <span class="lp-card-art" style="background:${art?.tint ?? '#eee8dc'}">${art?.facade ? `<img class="lp-card-facade" src="${escapeHtml(art.facade)}" alt="" loading="lazy" decoding="async">` : `<span class="lp-card-pending">${copy('facade art')}</span>`}</span>
       <span class="lp-card-body"><span class="lp-card-meta"><span>No. ${number(index)}</span><span class="${!isGym(place) ? 'is-landmark' : isGymOpen(place) ? 'is-open' : 'is-planned'}">● ${copy(placeStatus(place))}</span></span><span class="lp-card-name">${escapeHtml(info.shortName)}</span><span class="lp-card-other">${escapeHtml(info.otherName)}</span></span>
     </button>`;
 }
