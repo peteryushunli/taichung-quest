@@ -157,7 +157,9 @@ export class NativeNavigationBridge {
           const packet = readNavigationSnapshot(heap, offset, this.options.metadata);
           return packet && packet.frame > frame && packet.sequence !== sequence;
         });
-        if (live.length > 1) throw new Error('Ambiguous advancing navigation packets.');
+        // A snapshot mirror can advance during discovery when a save refreshes
+        // it. Stay hidden and retry until exactly one writer proves liveness;
+        // ambiguity must neither choose a copy nor permanently stop discovery.
         if (live.length === 1) {
           this.heap = heap;
           this.offset = live[0].offset;

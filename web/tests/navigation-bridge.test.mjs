@@ -134,11 +134,22 @@ test('a frozen allocation is rediscovered when EWRAM moves inside the same heap'
   await until(() => f.bridge.currentState.snapshot?.x === 20);
 });
 
-test('two advancing packets are ambiguous and never expose a location', async (t) => {
+test('ambiguous writers stay hidden across retries, then recover only when one remains live', async (t) => {
   const f = fixture(t, [64, 160]);
   void f.bridge.start();
-  await until(() => f.bridge.currentState.phase === 'unavailable');
+  // Keep both copies advancing across more than one discovery window.
+  await sleep(900);
   assert.equal(f.states.some((state) => state.snapshot), false);
+  assert.notEqual(f.bridge.currentState.phase, 'unavailable');
+  // A refreshed snapshot mirror freezes; the actual writer keeps advancing.
+  f.tickOffsets.delete(160);
+  await until(() => f.bridge.currentState.phase === 'live');
+  const mirror = new Uint32Array(f.heap.buffer, 160, 12);
+  const writer = new Uint32Array(f.heap.buffer, 64, 12);
+  writer[7] = 20 | 66 << 16;
+  mirror[7] = 10 | 66 << 16;
+  await until(() => f.bridge.currentState.snapshot?.x === 20);
+  assert.equal(f.states.some((state) => state.snapshot?.x === 10), false);
 });
 
 test('browser pause clears immediately; replaced shared heap must prove freshness again', async (t) => {
