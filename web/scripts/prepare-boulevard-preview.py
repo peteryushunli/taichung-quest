@@ -129,12 +129,19 @@ def terrain_images(fill, plan, candidate, geometry, report):
     colors = {key: ImageColor.getrgb(value) for key, value in ink.items()}
     pavilion_tiles = {(x, y) for left, top, right, bottom in report.get("pavilionDeck", {}).values()
                       for x in range(left, right) for y in range(top, bottom)}
+    # Only Huimin's compiled path overlays use path ink; other paving stays land.
+    huimin_path_tiles = {(x, y) for site in report.get("northXitun", {}).get("sites", [])
+                         if site["id"] == "huimin-park"
+                         for ground_rect in site.get("groundRects", []) if ground_rect["ground"] == "p"
+                         for x in range(ground_rect["rect"][0], ground_rect["rect"][2])
+                         for y in range(ground_rect["rect"][1], ground_rect["rect"][3])}
     for row in range(height):
         for col in range(width):
             tile = col + origin[0], row + origin[1]
             ground = world.at(*tile)
             walkable = walkable_by_tile.get(tile)
-            if walkable and (tile in pavilion_tiles or ground in "aW=qkK"):
+            if walkable and (tile in pavilion_tiles or ground in "aW=qkK"
+                             or ground == "p" and tile in huimin_path_tiles):
                 kind = "path"
             elif ground == "~":
                 kind = "water"
