@@ -6,6 +6,10 @@ declare module '*.mp4' {
   const url: string;
   export default url;
 }
+declare module '*.webp' {
+  const url: string;
+  export default url;
+}
 // Vite's eager glob import (the subset this project uses).
 interface ImportMeta {
   readonly env: { readonly VITE_BOULEVARD_PREVIEW?: string };

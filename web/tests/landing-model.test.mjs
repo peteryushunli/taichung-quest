@@ -7,6 +7,7 @@ import { cityPlaceSummary, districtCount, districtLabelSpots, gymStatusSummary, 
 const landmarks = JSON.parse(readFileSync(new URL('../src/data/landmarks.json', import.meta.url), 'utf8'));
 const sights = JSON.parse(readFileSync(new URL('../src/data/sights.json', import.meta.url), 'utf8'));
 const city = JSON.parse(readFileSync(new URL('../src/data/minimap-contract.json', import.meta.url), 'utf8'));
+const { extraSights } = JSON.parse(readFileSync(new URL('../src/data/boulevard-preview.json', import.meta.url), 'utf8'));
 const assets = readFileSync(new URL('../src/landing-assets.ts', import.meta.url), 'utf8');
 const open = landmarks.filter(isGymOpen);
 
@@ -101,9 +102,10 @@ test('map pins and gym cards use the short English names', () => {
   assert.equal(localizedPlace(landmarks[4], 'zh-Hant').mapLabel, '草悟道');
 });
 
-test('every gym landmark retains its existing facade art', () => {
-  for (const place of landmarks.filter(isGym)) {
-    assert.match(assets, new RegExp(`'?${place.id}'?: \\{ facade: \\w+`), place.id);
+test('every gym and landmark has an isolated facade in the website catalog', () => {
+  assert.ok(assets.includes("('./assets/landmarks/isolated/*.png'"));
+  for (const place of [...landmarks, ...sights, ...extraSights]) {
+    assert.ok(existsSync(new URL(`../src/assets/landmarks/isolated/${place.id}.png`, import.meta.url)), place.id);
   }
 });
 
@@ -188,7 +190,6 @@ test('the ten set-piece landmarks join the map as non-gym places, after the ten 
 });
 
 test('Boulevard map cards use the complete bilingual visitor descriptions', () => {
-  const { extraSights } = JSON.parse(readFileSync(new URL('../src/data/boulevard-preview.json', import.meta.url), 'utf8'));
   const visitorCopy = JSON.parse(readFileSync(new URL('../src/data/boulevard-sight-copy.json', import.meta.url), 'utf8'));
   assert.ok(extraSights.length > 0);
   for (const place of extraSights) {
@@ -205,7 +206,7 @@ test('Boulevard map cards use the complete bilingual visitor descriptions', () =
   }
 });
 
-test('every place has a map position inside the 129x181 world, and every non-gym a map-view crop around it', () => {
+test('every place has a map position inside the 129x181 world, with non-gym art bounds around its pin', () => {
   for (const place of [...landmarks, ...sights]) {
     const [x, y] = placeWorld(place, city.markersById);
     const pin = markerPosition([x, y], city.world);
@@ -214,7 +215,6 @@ test('every place has a map position inside the 129x181 world, and every non-gym
     const [left, top, right, bottom] = place.artRect;
     assert.ok(left <= x && x <= right && top <= y && y <= bottom, `${place.id} crop misses its pin`);
     assert.ok(right <= city.world.width && bottom <= city.world.height, place.id);
-    assert.ok(existsSync(new URL(`../src/assets/landmarks/map/${place.id}.png`, import.meta.url)), `${place.id} map-view crop`);
   }
   assert.deepEqual(placeWorld(landmarks[0], city.markersById), city.markersById[landmarks[0].id].world);
   assert.throws(() => placeWorld({ id: 'nowhere' }, city.markersById), /No map position/);

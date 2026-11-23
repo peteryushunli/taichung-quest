@@ -4,6 +4,7 @@ import './controls.css';
 import './immersive.css';
 import './minimap.css';
 import './title-screen.css';
+import './upright.css';
 import titleStation from './assets/landmarks/old-station.png';
 import titleBulbasaur from './assets/pokemon/front/bulbasaur.png';
 import titleCharmander from './assets/pokemon/front/charmander.png';
@@ -32,6 +33,11 @@ import { DETAILS, HdOverlay, keepCanvasReadable } from './hd-overlay';
 import './hd-overlay.css';
 import { CAPTURE_BOOT_INTENT_KEY, captureBlocksSnapshots, readCaptureBootPolicy } from './capture-persistence';
 import { hasReadableFireRedSave, isFireRedBackupSize } from './firered-save';
+import { isUntouchedDemoSave } from './demo-save';
+import { readWithProgress } from './download';
+import { copyText, unsupportedBrowserMessage } from './browser-support';
+import { startAnalytics, track } from './analytics';
+import { createUprightScreen } from './upright';
 
 type RuntimeFactory = (options: { canvas: HTMLCanvasElement }) => Promise<mGBAEmulator>;
 type RuntimeWindow = Window & { taichungCreateEmulator?: RuntimeFactory };
@@ -98,6 +104,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
                 <div class="title-ui">
                   <h2 class="title-logo" aria-label="Pokémon × Taichung"><span class="title-logo-top">POKÉMON ×</span><span class="title-logo-main">TAICHUNG</span><span class="title-logo-ribbon" lang="zh-Hant">臺中小冒險</span></h2>
                   <button class="title-start" id="play-button"><i aria-hidden="true">▶</i> <span>Start exploring</span></button>
+                  <button class="title-start" id="copy-link-button" data-i18n="Copy link" hidden>Copy link</button>
                   <p id="play-feedback" class="title-text-box" role="status" aria-live="polite" hidden></p>
                 </div>
               </div>
@@ -149,6 +156,7 @@ window.addEventListener('keydown', (event) => {
   hdOverlay.enabled = !hdOverlay.enabled;
 }, { capture: true });
 const playButton = el<HTMLButtonElement>('play-button');
+const copyLinkButton = el<HTMLButtonElement>('copy-link-button');
 const feedback = el('feedback');
 const status = el('game-status');
 let emulator: mGBAEmulator | undefined;
@@ -188,6 +196,13 @@ function message(text: string, error = false) {
   el('player-notice').hidden = !error || !running;
 }
 
+// The loading box doubles as the progress bar; without a percent it is plain again.
+function showDownload(percent?: number) {
+  const box = el('play-feedback');
+  box.toggleAttribute('data-download', percent !== undefined);
+  box.style.setProperty('--percent', String(percent ?? 0));
+}
+
 function setStatus(text: string) { statusText = text; status.textContent = t(text); }
 
 // The game's own settings screen is the only language control while playing; the
@@ -202,7 +217,7 @@ async function connectNativeLanguage(romSha256: string, romBytes: number) {
   languageState = { phase: 'discovering', activeLanguage: 0 };
   refreshLanguageConnection();
   try {
-    const response = await fetch('/roms/build.json', { cache: 'no-store' });
+    const response = await fetch('/roms/build.json', { cache: 'no-cache' });
     const metadata = response.ok ? parseLanguageBridgeMetadata(await response.json(), romSha256, romBytes) : undefined;
     if (!metadata || !(emulator as LanguageRuntime | undefined)?.getTaichungHeapU8) throw new Error('Matching language metadata/runtime is unavailable.');
     if (restarting || !running) return;
@@ -221,7 +236,7 @@ async function connectNativeLanguage(romSha256: string, romBytes: number) {
 }
 
 function canPlayGame() {
-  return running && !paused && !restarting && !confirmationOpen && !cityGuide.isOpen && gameView.immersive && !gameView.optionsOpen && !onboarding?.blocksInput && !document.hidden;
+  return running && !paused && !restarting && !confirmationOpen && !cityGuide.isOpen && gameView.immersive && !gameView.optionsOpen && !uprightScreen.open && !onboarding?.blocksInput && !document.hidden;
 }
 
 function renderNavigation() {
@@ -268,7 +283,7 @@ async function connectNativeNavigation(romSha256: string, romBytes: number) {
   navigationState = { phase: 'connecting' };
   renderNavigation();
   try {
-    const response = await fetch('/roms/build.json', { cache: 'no-store' });
+    const response = await fetch('/roms/build.json', { cache: 'no-cache' });
     const metadata = response.ok ? parseNavigationMetadata(await response.json(), romSha256, romBytes, minimapGeometry.geometryFingerprintSha256) : undefined;
     if (!metadata || !(emulator as LanguageRuntime | undefined)?.getTaichungHeapU8) throw new Error('Matching navigation metadata/runtime is unavailable.');
     if (restarting || !running) return;
@@ -476,19 +491,22 @@ async function startGame() {
   message('Getting your adventure ready…');
   try {
     if (!window.crossOriginIsolated || typeof SharedArrayBuffer === 'undefined') {
-      throw new Error('This preview cannot start the game yet. Try the latest link in Safari or Chrome; the host may need an update.');
+      playButton.hidden = true;
+      copyLinkButton.hidden = false;
+      throw new Error(unsupportedBrowserMessage(navigator.userAgent, navigator.maxTouchPoints));
     }
     const [response, metadataResponse] = await Promise.all([
-      fetch(ROM_URL, { cache: 'no-store' }),
-      fetch('/roms/build.json', { cache: 'no-store' }).catch(() => undefined),
+      fetch(ROM_URL, { cache: 'no-cache' }),
+      fetch('/roms/build.json', { cache: 'no-cache' }).catch(() => undefined),
     ]);
     if (!response.ok) throw new Error('The game cartridge is still being built. Try again once the Taichung build is ready.');
-    const rom = new Uint8Array(await response.arrayBuffer());
+    const metadata = metadataResponse?.ok ? await metadataResponse.json().catch(() => undefined) : undefined;
+    const rom = await readWithProgress(response, Number(metadata?.bytes) || undefined, showDownload);
+    showDownload();
     if (rom.length < 192 || rom[0xb2] !== 0x96) throw new Error('The game cartridge is not ready yet. Build the Taichung ROM, then try again.');
     const digest = new Uint8Array(await crypto.subtle.digest('SHA-256', rom));
     const romSha256 = [...digest].map((byte) => byte.toString(16).padStart(2, '0')).join('');
     const buildId = romSha256.slice(0, 16);
-    const metadata = metadataResponse?.ok ? await metadataResponse.json().catch(() => undefined) : undefined;
     const onboardingMetadata = parseOnboardingMetadata(metadata, romSha256, rom.length);
     encounterMetadata = parseEncounterMetadata(metadata, romSha256, rom.length);
     activeRomSha256 = romSha256;
@@ -530,19 +548,18 @@ async function startGame() {
       if (/^taichung-firered(?:-[a-f0-9]{16})?\.gba$/.test(filename) && path !== gamePath) emulator.FS.unlink(path);
     }
     emulator.FS.writeFile(gamePath, rom);
-    if (BOULEVARD_PREVIEW && !emulator.FS.analyzePath(SAVE_PATH).exists) {
-      // A fresh preview opens with the supplied demo save. Existing progress on this origin wins.
-      const checkpoint = await fetch('/preview/old-station.sav');
-      const save = new Uint8Array(await checkpoint.arrayBuffer());
-      if (!checkpoint.ok || ![131072, 131088].includes(save.byteLength)) {
-        throw new Error('The Old Station preview save could not be loaded. Reload and try again.');
-      }
-      if (!emulator.FS.analyzePath(SAVE_PATH).exists) emulator.FS.writeFile(SAVE_PATH, save);
-    }
     const freshCartridgeBoot = bootFromCartridge;
+    const snapshotPath = ownedSnapshotPath()!;
+    // A browser that only holds the old demo checkpoint starts a new game. A spot
+    // still waiting in a snapshot, or a save the player imported, is left alone.
+    if (cartridgeBootIntent !== 'import' && emulator.FS.analyzePath(SAVE_PATH).exists
+      && (freshCartridgeBoot || !emulator.FS.analyzePath(snapshotPath).exists)
+      && await isUntouchedDemoSave(emulator.FS.readFile(SAVE_PATH, { encoding: 'binary' }))) {
+      emulator.FS.unlink(SAVE_PATH);
+      await flushFilesystem();
+    }
     if (freshCartridgeBoot) {
-      const snapshotName = gamePath.slice(gamePath.lastIndexOf('/') + 1).replace(/\.gba$/, '_auto.ss');
-      discardOwnedSnapshot(`${emulator.filePaths().autosave}/${snapshotName}`);
+      discardOwnedSnapshot(snapshotPath);
       // This is a new runtime with no emulation thread running yet. Remove the
       // old CPU snapshot durably before loading the cartridge and its SRAM.
       await flushFilesystem();
@@ -583,15 +600,20 @@ async function startGame() {
     // The Play button may have scrolled the intro into view. Collapsing that
     // intro must not leave a phone looking below its newly positioned game.
     if (matchMedia('(max-width:800px), (max-width:1000px) and (max-height:540px) and (min-aspect-ratio:6/5)').matches) window.scrollTo({ top: 0, behavior: 'instant' });
+    track('Game started', { from: !freshCartridgeBoot && emulator.getAutoSaveState() ? 'saved spot' : 'title screen' });
     startSaveTimer();
     cityGuide.onGameStarted();
     // Metadata is already bound to the loaded ROM; don't start a fresh network
     // round trip while the initialized native startup gate is waiting.
     onboarding?.attach(onboardingMetadata);
+    // The phone may have been turned while the cartridge was still loading.
+    uprightScreen.hold();
     void connectNativeLanguage(romSha256, rom.length);
     void connectNativeNavigation(romSha256, rom.length);
   } catch (error) {
+    showDownload();
     const reason = error instanceof Error ? error.message : 'Something went wrong while loading the game.';
+    track('Game could not start', { reason });
     message(reason, true);
     setStatus('WAITING FOR YOUR ADVENTURE');
   } finally {
@@ -638,6 +660,11 @@ const gameView = createGameView({
   console: el('console'), dialog: el<HTMLDialogElement>('game-options'), returnTarget: el('hero-play'),
   getState: () => ({ running, paused }), pause: () => setPaused(true), resume: () => setPaused(false),
   release: releaseInputs, refresh: () => { gameInput?.refresh(); refreshRuntimeLabels(); },
+});
+const uprightScreen = createUprightScreen({
+  getState: () => ({ running, paused }),
+  pause: () => setPaused(true),
+  resume: () => { if (gameView.immersive && !gameView.optionsOpen && !cityGuide.isOpen) setPaused(false); },
 });
 const minimapSetting = document.createElement('label');
 minimapSetting.className = 'minimap-setting';
@@ -688,6 +715,11 @@ async function startNewGame() {
   openGame();
 }
 playButton.addEventListener('click', openGame);
+copyLinkButton.addEventListener('click', async () => {
+  const copied = await copyText(`${location.origin}/`, el('console'));
+  copyLinkButton.dataset.i18n = copied ? 'Link copied' : location.host;
+  copyLinkButton.textContent = t(copyLinkButton.dataset.i18n);
+});
 el('resume-button').addEventListener('click', openGame);
 el('exit-fullscreen-button').addEventListener('click', () => { onboarding?.beforeLeave(); gameView.leave(); });
 el('game-options-button').addEventListener('click', () => gameView.openOptions(el('game-options-button')));
@@ -854,7 +886,7 @@ function refreshRuntimeLabels() {
   landing.refresh();
   el('pause-button').innerHTML = `${icon(paused ? 'play' : 'pause')} <span>${t(paused ? 'Resume' : 'Pause')}</span>`;
   refreshSoundControls();
-  document.title = t(BOULEVARD_PREVIEW ? 'Taichung Quest · Boulevard preview' : 'Taichung Quest · A little adventure');
+  document.title = t('Taichung Quest · A little adventure');
   refreshNavigation();
 }
 onLocaleChange(refreshRuntimeLabels);
@@ -865,6 +897,7 @@ onLocaleChange(({ locale, source }) => {
   }
   refreshLanguageConnection();
 });
+startAnalytics();
 initializeLocalization();
 refreshRuntimeLabels();
 
@@ -879,9 +912,14 @@ async function hasStoredSave() {
     open.onsuccess = () => {
       const database = open.result;
       if (!database.objectStoreNames.contains(SAVE_STORE)) { database.close(); resolve(false); return; }
-      const count = database.transaction(SAVE_STORE).objectStore(SAVE_STORE).count(SAVE_PATH);
-      count.onerror = () => { database.close(); resolve(false); };
-      count.onsuccess = () => { database.close(); resolve(count.result > 0); };
+      const read = database.transaction(SAVE_STORE).objectStore(SAVE_STORE).get(SAVE_PATH);
+      read.onerror = () => { database.close(); resolve(false); };
+      read.onsuccess = () => {
+        database.close();
+        const bytes = read.result?.contents instanceof Uint8Array ? read.result.contents : undefined;
+        if (!bytes || !hasReadableFireRedSave(bytes)) { resolve(false); return; }
+        isUntouchedDemoSave(bytes).then((demo) => resolve(!demo), () => resolve(true));
+      };
     };
   });
 }

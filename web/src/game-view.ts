@@ -1,3 +1,5 @@
+import { lockPhoneUpright } from './upright';
+
 /** View changes never replace the canvas or restart the native game. */
 export function createGameView(options: {
   console: HTMLElement;
@@ -25,6 +27,7 @@ export function createGameView(options: {
       try {
         void options.console.requestFullscreen().then(() => {
           if (!immersive && document.fullscreenElement === options.console) void document.exitFullscreen().catch(() => undefined);
+          else if (document.fullscreenElement === options.console) lockPhoneUpright();
         }).catch(() => undefined);
       } catch { /* CSS mode is already active. */ }
     }
