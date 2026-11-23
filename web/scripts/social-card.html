@@ -12,7 +12,8 @@
     <style>
       * { box-sizing: border-box; }
       body { margin: 0; }
-      /* One art pixel is 2.5 card pixels (5 in the rendered image), the same for every building. */
+      /* One art pixel is 2.5 card pixels (5 in the rendered image) for the station and Miyahara. The park
+         pavilion is at 2 (4), which makes it as tall as Miyahara, with the same 16px gap on both sides of the station. */
       .card { position: relative; width: 1200px; height: 630px; overflow: hidden; image-rendering: pixelated;
         background: linear-gradient(#7dbbd3 0 15%, #93c8da 15% 28%, #a9d3df 28% 41%, #c1dfe0 41% 53%, #d8e9dc 53% 65%, #ecf0d3 65%); }
       .card > * { position: absolute; }
@@ -38,9 +39,9 @@
       <i class="skyline far"></i><i class="skyline near"></i>
       <i class="plaza"></i>
       <i class="shade"></i>
-      <img class="building" style="left:280px;width:640px" src="../src/assets/landmarks/theater.png" alt="">
-      <img class="building" style="left:3.5px;width:480px;bottom:119.5px" src="../src/assets/landmarks/old-station.png" alt="">
-      <img class="building" style="left:864px;width:400px" src="../src/assets/landmarks/miyahara.png" alt="">
+      <img class="building" style="left:-16px;width:384px" src="../src/assets/landmarks/taichung-park.png" alt="">
+      <img class="building" style="left:371.5px;width:480px;bottom:119.5px" src="../src/assets/landmarks/old-station.png" alt="">
+      <img class="building" style="left:855px;width:400px" src="../src/assets/landmarks/miyahara.png" alt="">
       <div class="logo">TAICHUNG QUEST</div>
       <div class="ribbon" lang="zh-Hant">臺中小冒險</div>
       <div class="line"><span>Explore Taichung<small>real neighborhoods, real landmarks</small></span></div>
