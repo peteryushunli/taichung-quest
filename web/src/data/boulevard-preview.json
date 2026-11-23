@@ -672,7 +672,7 @@
       },
       {
         "name": {
-          "en": "North",
+          "en": "North District",
           "zh": "北區"
         },
         "tile": [
@@ -702,7 +702,7 @@
       },
       {
         "name": {
-          "en": "West",
+          "en": "West District",
           "zh": "西區"
         },
         "tile": [
@@ -729,43 +729,6 @@
           59,
           203
         ]
-      }
-    ],
-    "districtLabels": [
-      {
-        "label": "FENGJIA 逢甲",
-        "x": 9,
-        "y": 6
-      },
-      {
-        "label": "SHUINAN 水湳",
-        "x": 63,
-        "y": 6
-      },
-      {
-        "label": "BEITUN 北屯",
-        "x": 147,
-        "y": 23
-      },
-      {
-        "label": "XITUN 西屯",
-        "x": 15,
-        "y": 103
-      },
-      {
-        "label": "GREENWAY 草悟道",
-        "x": 174,
-        "y": 116
-      },
-      {
-        "label": "OLD CITY 舊城",
-        "x": 316,
-        "y": 22
-      },
-      {
-        "label": "NANTUN 南屯",
-        "x": 17,
-        "y": 215
       }
     ]
   },
@@ -1729,7 +1692,7 @@
       "kind": "exterior",
       "projection": "local-plus-world-origin",
       "districtName": {
-        "en": "West",
+        "en": "West District",
         "zh": "西區"
       },
       "worldOrigin": [
@@ -1757,7 +1720,7 @@
       "kind": "exterior",
       "projection": "local-plus-world-origin",
       "districtName": {
-        "en": "West",
+        "en": "West District",
         "zh": "西區"
       },
       "worldOrigin": [
@@ -1785,7 +1748,7 @@
       "kind": "exterior",
       "projection": "local-plus-world-origin",
       "districtName": {
-        "en": "West",
+        "en": "West District",
         "zh": "西區"
       },
       "worldOrigin": [
@@ -1841,7 +1804,7 @@
       "kind": "exterior",
       "projection": "local-plus-world-origin",
       "districtName": {
-        "en": "West",
+        "en": "West District",
         "zh": "西區"
       },
       "worldOrigin": [
@@ -1869,7 +1832,7 @@
       "kind": "exterior",
       "projection": "local-plus-world-origin",
       "districtName": {
-        "en": "West",
+        "en": "West District",
         "zh": "西區"
       },
       "worldOrigin": [
@@ -1897,7 +1860,7 @@
       "kind": "exterior",
       "projection": "local-plus-world-origin",
       "districtName": {
-        "en": "West",
+        "en": "West District",
         "zh": "西區"
       },
       "worldOrigin": [
@@ -2037,7 +2000,7 @@
       "kind": "exterior",
       "projection": "local-plus-world-origin",
       "districtName": {
-        "en": "North",
+        "en": "North District",
         "zh": "北區"
       },
       "worldOrigin": [
@@ -2205,7 +2168,7 @@
       "kind": "exterior",
       "projection": "local-plus-world-origin",
       "districtName": {
-        "en": "North",
+        "en": "North District",
         "zh": "北區"
       },
       "worldOrigin": [
@@ -4425,10 +4388,12 @@
     }
   ],
   "sourceSha256": {
-    "compiledMapReport": "e6c3a3229a405022bba4cd844e44e8a07f535d42593b470e6e9349df9ed3639f",
+    "compiledMapReport": "b41449fc4acac1ae9545e228831c9525c92d499d6abb5c5a4411e409f99dfcfb",
     "fill": "22d9c6695e21ab7419ccafe55d86e4833df8a5e394aee84133d4a1cd6b5849f6",
     "mapBook": "265d64cf1b47a26d412626301a6f1e542f3a19bcd89ec0084e6f08022a713b4d",
+    "northXitunPlan": "89c555bbfa2a80d277b9729e6a2a9a1b6480dea9e4ffbf76ace332c7386f76e5",
+    "northXitunCompiler": "be903fd3d2d37b0dc6c581512e86b84054457a30a53ce90bc7f83fcd1b65fb34",
     "streetPeople": "e43c3c4e9467f00454bc234ca2cad263028212eb6ac86d1868979cf2c3d7900b"
   },
-  "geometryFingerprintSha256": "625e4fb0f31227fe9dcbdd314fd4a79e1c19f2a6d3300127e8781183f58fd822"
+  "geometryFingerprintSha256": "24a468909d0434be574fbd2e88c0145c1c4780c17245e51d057226623d6263c7"
 }
