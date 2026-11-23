@@ -17,18 +17,19 @@
         background: linear-gradient(#7dbbd3 0 15%, #93c8da 15% 28%, #a9d3df 28% 41%, #c1dfe0 41% 53%, #d8e9dc 53% 65%, #ecf0d3 65%); }
       .card > * { position: absolute; }
       .cloud { height: 15px; background: #f7f6e8; box-shadow: 15px -9px 0 -3px #f7f6e8, 33px 6px 0 0 #eef1e2; }
-      .skyline { left: 0; right: 0; bottom: 96px; }
+      .skyline { left: 0; right: 0; bottom: 139px; }
       .far { height: 210px; background: #b3d0cb; clip-path: polygon(0 52%, 4% 52%, 4% 34%, 9% 34%, 9% 48%, 15% 48%, 15% 18%, 17% 18%, 17% 8%, 19% 8%, 19% 18%, 22% 18%, 22% 44%, 29% 44%, 29% 30%, 34% 30%, 34% 56%, 64% 56%, 64% 26%, 67% 26%, 67% 6%, 71% 6%, 71% 26%, 75% 26%, 75% 44%, 81% 44%, 81% 20%, 88% 20%, 88% 40%, 94% 40%, 94% 28%, 100% 28%, 100% 100%, 0 100%); }
       .near { height: 140px; background: #94bdb5; clip-path: polygon(0 34%, 7% 34%, 7% 12%, 14% 12%, 14% 44%, 24% 44%, 24% 26%, 31% 26%, 31% 60%, 69% 60%, 69% 30%, 77% 30%, 77% 10%, 85% 10%, 85% 38%, 92% 38%, 92% 22%, 100% 22%, 100% 100%, 0 100%); }
-      .plaza { left: 0; right: 0; bottom: 0; height: 99px; border-top: 6px solid #b8aa7e; background: linear-gradient(90deg, #d8cca2 3px, transparent 0) 0 0 / 48px 24px, linear-gradient(#d8cca2 3px, transparent 0) 0 0 / 48px 24px, #e7ddb9; }
-      .building { bottom: 87px; }
-      .shade { bottom: 81px; height: 9px; background: #b8aa7e; }
+      .plaza { left: 0; right: 0; bottom: 0; height: 142px; border-top: 6px solid #b8aa7e; background: linear-gradient(90deg, #d8cca2 3px, transparent 0) 0 0 / 48px 24px, linear-gradient(#d8cca2 3px, transparent 0) 0 0 / 48px 24px, #e7ddb9; }
+      .building { bottom: 132px; }
+      .shade { left: 0; right: 0; bottom: 126px; height: 9px; background: #b8aa7e; }
       .logo { left: 0; right: 0; top: 22px; text-align: center; font: 400 102px/1 Silkscreen, monospace; letter-spacing: 3px; color: #ffd23e; white-space: nowrap;
         text-shadow: 6px 0 #2b4a7e, -6px 0 #2b4a7e, 0 6px #2b4a7e, 0 -6px #2b4a7e, 6px 6px #2b4a7e, -6px 6px #2b4a7e, 6px -6px #2b4a7e, -6px -6px #2b4a7e, 0 14px #1b3058, 6px 14px #1b3058, -6px 14px #1b3058; }
       .ribbon { left: 50%; top: 144px; transform: translateX(-50%); padding: 5px 33px; background: #c9503a; color: #fff6e2; font: 700 27px/1.25 'Noto Serif TC', 'Songti TC', serif; letter-spacing: 6px; white-space: nowrap;
         clip-path: polygon(0 0, 100% 0, calc(100% - 12px) 50%, 100% 100%, 0 100%, 12px 50%); }
-      .line { left: 0; right: 0; bottom: 18px; text-align: center; font: 400 33px/1 Silkscreen, monospace; color: #26384a; white-space: nowrap; }
-      .line span { display: inline-block; padding: 9px 24px; border: 3px solid #26384a; border-radius: 6px; background: #fffbea; box-shadow: 0 6px 0 #26384a; }
+      .line { left: 0; right: 0; bottom: 16px; text-align: center; font: 400 38px/1.1 Silkscreen, monospace; color: #26384a; white-space: nowrap; }
+      .line small { display: block; margin-top: 4px; font-size: 30px; color: #a83c2a; }
+      .line span { display: inline-block; padding: 7px 24px 9px; border: 3px solid #26384a; border-radius: 6px; background: #fffbea; box-shadow: 0 6px 0 #26384a; }
     </style>
   </head>
   <body>
@@ -36,13 +37,13 @@
       <i class="cloud" style="left:72px;top:150px;width:96px"></i><i class="cloud" style="left:1002px;top:186px;width:78px"></i>
       <i class="skyline far"></i><i class="skyline near"></i>
       <i class="plaza"></i>
-      <i class="shade" style="left:0;width:1200px"></i>
-      <img class="building" style="left:-166px;width:640px" src="../src/assets/landmarks/theater.png" alt="">
-      <img class="building" style="left:842px;width:400px" src="../src/assets/landmarks/miyahara.png" alt="">
-      <img class="building" style="left:360px;width:480px;bottom:74.5px" src="../src/assets/landmarks/old-station.png" alt="">
+      <i class="shade"></i>
+      <img class="building" style="left:280px;width:640px" src="../src/assets/landmarks/theater.png" alt="">
+      <img class="building" style="left:3.5px;width:480px;bottom:119.5px" src="../src/assets/landmarks/old-station.png" alt="">
+      <img class="building" style="left:864px;width:400px" src="../src/assets/landmarks/miyahara.png" alt="">
       <div class="logo">TAICHUNG QUEST</div>
       <div class="ribbon" lang="zh-Hant">臺中小冒險</div>
-      <div class="line"><span>Explore Taichung, pixel by pixel</span></div>
+      <div class="line"><span>Explore Taichung<small>real neighborhoods, real landmarks</small></span></div>
     </div>
   </body>
 </html>
