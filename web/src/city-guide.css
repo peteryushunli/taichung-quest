@@ -85,3 +85,18 @@ html[lang="zh-Hant"] .landmark-tab-names b { font-size: 9px; color: #99a28b; }
   .landmark-art.is-facade img { height: 112px; }
 }
 @media(max-width:450px) { .map-district { font-size: 7px; letter-spacing: .5px; } .map-district.is-sign { padding: 1px 3px; } }
+
+.guide-encounter-mark { display: inline-grid; place-items: center; width: 15px; height: 15px; flex-shrink: 0; border-radius: 50%; background: #f4e0b9; color: #8c412f; font: bold 12px/1 sans-serif; }
+.landmark-marker .guide-encounter-mark { position: absolute; right: -5px; top: -5px; z-index: 2; }
+[data-encounter="caught"] .guide-encounter-mark { background: #dcebd3; color: #31543c; }
+[data-encounter="spent"] .guide-encounter-mark { background: #d6d8cc; color: #60685d; }
+[data-encounter="spent"] .marker-number { background: #d6d8cc; color: #60685d; border-color: #7a8176; }
+[data-encounter="spent"] .marker-label { opacity: .65; }
+.guide-encounter-status { font-weight: 700; }
+.guide-encounter-status[data-encounter="caught"] { color: #a9d599; }
+.guide-encounter-status[data-encounter="spent"] { color: #b4b9ad; }
+
+.map-legend { flex-wrap: wrap; }
+.map-legend .guide-encounter-mark { width: 13px; height: 13px; font-size: 11px; border: 0; }
+.map-legend .legend-caught { background: #dcebd3; color: #31543c; }
+.map-legend .legend-spent { background: #d6d8cc; color: #60685d; }

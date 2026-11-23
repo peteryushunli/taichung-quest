@@ -1,3 +1,6 @@
+import { encounterProgress, encounterOutcome, ENCOUNTER_LABELS } from './encounter-progress';
+import type { EncounterProgress } from './encounter-progress';
+import type { EncounterBridgeState } from './encounter-bridge';
 import { getLocale, t } from './i18n';
 import { districtAt, FACING_DEGREES, HOME_WORLD, MINIMAP_PREFERENCE, projectNavigation, projectTutorial, RADAR, RADAR_ART, RADAR_PANEL, radarContains, radarPosition, radarViewport, readMinimapPreference } from './minimap-model';
 import type { MinimapGeometry, MinimapPosition, RadarMode } from './minimap-model';
@@ -12,7 +15,7 @@ import type { LandingLandmark } from './landing-model';
 
 const MARKS = {
   gym: '<path class="minimap-marker minimap-badge" d="M0,-3 2.5,-1.9 3,.5 1.6,2.6 0,3.3 -1.6,2.6 -3,.5 -2.5,-1.9Z"/><path class="minimap-detail" d="M0,-1.55 1.3,0 0,1.55 -1.3,0Z"/>',
-  capture: '<circle class="minimap-marker minimap-ball" r="2.7"/><path class="minimap-ball-top" d="M-2.4,0 A2.4,2.4 0 0,1 2.4,0Z"/><path class="minimap-detail" d="M-2.6,0H2.6"/><circle class="minimap-marker minimap-ball-button" r=".82"/>',
+  capture: '<circle class="minimap-marker minimap-ball" r="2.7"/><path class="minimap-ball-top" d="M-2.4,0 A2.4,2.4 0 0,1 2.4,0Z"/><path class="minimap-detail minimap-ball-seam" d="M-2.6,0H2.6"/><circle class="minimap-marker minimap-ball-button" r=".82"/><path class="minimap-outcome-check" d="M-1.35,0 -.35,1.05 1.5,-1.1"/><path class="minimap-outcome-cross" d="M-1.25,-1.25 1.25,1.25 M1.25,-1.25 -1.25,1.25"/>',
   sight: '<path class="minimap-marker minimap-signpost" d="M-.5,2.3V.5H-2V-1.6H1.2L2.5,-.55 1.2,.5H.5V2.3Z"/>',
   home: '<path class="minimap-marker minimap-home-mark" d="M-2,.1 0,-1.9 2,.1V2.4H-2Z"/><path class="minimap-home-door" d="M-.45,2.35V.9H.45V2.35Z"/>',
   player: '<path class="minimap-player-arrow minimap-marker" d="M0,-2.55 2.25,2.35 0,1.45 -2.25,2.35Z"/><circle class="minimap-player-dot minimap-marker" r="1.75"/>',
@@ -46,6 +49,7 @@ export function createMinimap(options: {
     } catch { /* Private mode still gets a working local choice. */ }
   }
   let state: NavigationState = { phase: 'unavailable' };
+  let encounters: EncounterProgress | undefined;
   let onboarding: OnboardingState | undefined;
   let lastTutorial: MinimapPosition | undefined;
   let handoff: { position: MinimapPosition; until: number } | undefined;
@@ -148,7 +152,11 @@ export function createMinimap(options: {
     for (const entry of placeBlips) {
       const earned = entry.gymBit >= 0 ? !!((progress?.gymMask ?? 0) & (1 << entry.gymBit))
         : entry.captureBit !== undefined && !!((progress?.captureMask ?? 0) & (1 << entry.captureBit));
-      entry.element.classList.toggle('is-earned', earned);
+      const outcome = entry.captureBit === undefined ? 'unknown' : encounterOutcome(entry.captureBit, encounters, progress?.captureMask);
+      entry.element.classList.toggle('is-earned', entry.gymBit >= 0 ? earned : outcome === 'caught');
+      for (const value of ['caught', 'spent', 'pending']) entry.element.classList.toggle(`is-${value}`, outcome === value);
+      entry.element.dataset.encounter = outcome;
+      if (entry.captureBit !== undefined) entry.element.setAttribute('aria-label', t(ENCOUNTER_LABELS[outcome]));
       place(entry.element, mode !== 'citywide' && radarContains(view, entry.world) ? entry.world : undefined, scale);
     }
     const homeTile = geometry.world.homeWorld ?? HOME_WORLD;
@@ -173,6 +181,7 @@ export function createMinimap(options: {
   }
   render();
   return {
+    updateEncounter(next: EncounterBridgeState) { const value = encounterProgress(next, encounters); if (value === encounters) return; encounters = value; render(); },
     update(next: NavigationState) { state = next; render(); },
     updateOnboarding(next: OnboardingState) {
       onboarding = next;

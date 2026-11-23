@@ -387,6 +387,8 @@ function connectNativeEncounters() {
   encounterBridge?.stop();
   encounterBridge = undefined;
   captureStorage = undefined;
+  minimap.updateEncounter({ status: 'discovering' });
+  cityGuide.updateEncounter({ status: 'discovering' });
   if (!encounterMetadata || !activeRomSha256 || !emulator) return;
   let controller: CaptureStorageController | undefined;
   let nextReconcile = 0;
@@ -397,6 +399,9 @@ function connectNativeEncounters() {
     isActive: () => running && !paused && !restarting,
     onState: ({ status: connection, snapshot }) => {
       if (encounterBridge !== bridge || restarting) return;
+      const progress = { status: connection, snapshot };
+      minimap.updateEncounter(progress);
+      cityGuide.updateEncounter(progress);
       if ((connection === 'unavailable' || snapshot?.phase === 6) && !reportedFailure) {
         reportedFailure = true;
         message('Browser storage is unavailable. Download your save for a backup.', true);
@@ -540,6 +545,8 @@ async function startGame() {
           navigationBridge?.stop();
           onboarding?.stop();
           encounterBridge?.stop();
+          minimap.updateEncounter({ status: 'unavailable' });
+          cityGuide.updateEncounter({ status: 'unavailable' });
           setStatus('ADVENTURE INTERRUPTED');
           message('The game stopped unexpectedly. Restart it to return to your saved progress.', true);
         },
@@ -764,6 +771,8 @@ async function restartCartridge(importedSave?: Uint8Array) {
   const wasPaused = paused;
   restarting = true;
   encounterBridge?.stop();
+  minimap.updateEncounter({ status: 'discovering' });
+  cityGuide.updateEncounter({ status: 'discovering' });
   gameInput?.refresh();
   refreshNavigation();
   refreshLanguageConnection();

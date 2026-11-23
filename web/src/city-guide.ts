@@ -1,3 +1,6 @@
+import { encounterProgress, encounterOutcome, ENCOUNTER_LABELS } from './encounter-progress';
+import type { EncounterProgress } from './encounter-progress';
+import type { EncounterBridgeState } from './encounter-bridge';
 import landmarkCatalog from './data/landmarks.json';
 import { BOULEVARD_PREVIEW, cityGeometry, sightCatalog } from './preview-world';
 import { landingMedia, landmarkArt } from './landing-assets';
@@ -58,7 +61,7 @@ export function createCityGuide(host: GuideHost) {
               return `<button class="landmark-marker ${kind} label-${labelSide}" data-landmark="${escapeHtml(place.id)}" style="--map-x:${x}%;--map-y:${y}%" aria-label="${index + 1}. ${escapeHtml(place.nameEn)} · ${escapeHtml(place.nameZh)}" aria-pressed="false" aria-controls="landmark-detail"><span class="marker-number">${String(index + 1).padStart(2, '0')}</span><span class="marker-label"><b lang="zh-Hant">${escapeHtml(place.shortNameZh)}</b><span lang="en">${escapeHtml(place.shortNameEn)}</span></span></button>`;
             }).join('')}
           </div>
-          <div class="map-legend"><span><i class="legend-gym"></i><span data-i18n="Gym">Gym</span></span><span><i class="legend-landmark"></i><span data-i18n="Landmark">Landmark</span></span><span><i class="legend-selected"></i><span data-i18n="Selected">Selected</span></span></div>
+          <div class="map-legend"><span><i class="legend-gym"></i><span data-i18n="Gym">Gym</span></span><span><i class="legend-landmark"></i><span data-i18n="Landmark">Landmark</span></span><span><i class="legend-selected"></i><span data-i18n="Selected">Selected</span></span><span><i class="guide-encounter-mark legend-caught">✓</i><span data-i18n="Caught">Caught</span></span><span><i class="guide-encounter-mark legend-spent">×</i><span data-i18n="Try used">Try used</span></span></div>
           <p class="map-caveat" data-i18n="Drawn from the game’s own map, so the streets are the ones you walk. Gyms award badges; selected landmarks offer rare Pokémon captures.">Drawn from the game’s own map, so the streets are the ones you walk. Gyms award badges; selected landmarks offer rare Pokémon captures.</p>
           <div class="landmark-tabs" aria-label="Choose a landmark">${landmarks.map((place, index) => `<button class="${isGym(place) ? 'is-gym' : 'is-landmark'}" data-guide-select="${escapeHtml(place.id)}" aria-pressed="false" aria-controls="landmark-detail"><span class="landmark-tab-number">${String(index + 1).padStart(2, '0')}</span><span class="landmark-tab-names"><b lang="en">${escapeHtml(place.shortNameEn)}</b><span lang="zh-Hant">${escapeHtml(place.shortNameZh)}</span></span></button>`).join('')}</div>
         </section>
@@ -69,6 +72,7 @@ export function createCityGuide(host: GuideHost) {
   document.body.append(dialog);
 
   let selected = landmarks.find((place) => place.playable)?.id ?? landmarks[0]?.id;
+  let encounters: EncounterProgress | undefined;
   let resumeOnClose = false;
   let returnFocus: HTMLElement | null = null;
 
@@ -97,8 +101,34 @@ export function createCityGuide(host: GuideHost) {
     dialog.querySelector('#landmark-detail')!.innerHTML = `
       ${art}
       <div class="landmark-copy"><p class="landmark-category">${escapeHtml(chinese ? place.categoryZh : place.category)} <span>· ${escapeHtml(chinese ? place.districtZh : place.districtEn)}</span></p><h3>${escapeHtml(chinese ? place.nameZh : place.nameEn)}<span lang="${chinese ? 'en' : 'zh-Hant'}">${escapeHtml(chinese ? place.nameEn : place.nameZh)}</span></h3><p class="visitor-description">${escapeHtml(chinese ? place.descriptionZh : place.description)}</p>${place.location ? `<div class="visitor-address"><span>${t('Real-world address')}</span><address>${escapeHtml(chinese ? place.location.addressZh : place.location.address)}</address></div>` : ''}${info.url ? `<a class="official-link" href="${escapeHtml(info.url)}" target="_blank" rel="noopener noreferrer">${t('Official visitor information')} <span aria-hidden="true">↗</span></a>` : ''}${info.url && place.officialSourceTitle ? `<p class="visitor-source">${t('Source')}: ${escapeHtml(place.officialSourceTitle)}</p>` : ''}</div>
-      <div class="landmark-game-note"><span class="area-status ${place.playable ? 'area-playable' : 'area-planned'}">${t(areaLabel)}</span><p>${t(areaNote)}</p><div class="gym-note"><span>${t(gym ? 'FICTIONAL GYM CHALLENGE' : 'LANDMARK')}</span><p>${t(gymNote)}</p></div></div>`;
+      <div class="landmark-game-note"><span class="area-status ${place.playable ? 'area-playable' : 'area-planned'}">${t(areaLabel)}</span><p>${t(areaNote)}</p><div class="gym-note"><span>${t(gym ? 'FICTIONAL GYM CHALLENGE' : 'LANDMARK')}</span><p>${t(gymNote)}</p><p class="guide-encounter-status" hidden></p></div></div>`;
+    renderEncounterStatus();
     if (reveal && matchMedia('(max-width: 670px)').matches) dialog.querySelector('#landmark-detail')!.scrollIntoView({ block: 'nearest', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' });
+  }
+
+  function renderEncounterStatus() {
+    dialog.querySelectorAll<HTMLButtonElement>('[data-landmark], [data-guide-select]').forEach((button) => {
+      const id = (button.dataset.landmark ?? button.dataset.guideSelect)!;
+      const bit = cityGeometry.markersById[id]?.captureBit;
+      const outcome = encounterOutcome(bit, encounters);
+      button.dataset.encounter = outcome;
+      const place = landmarks.find((entry) => entry.id === id)!;
+      const label = `${place.nameEn} · ${place.nameZh}`;
+      button.setAttribute('aria-label', bit === undefined ? label : `${label} · ${t(ENCOUNTER_LABELS[outcome])}`);
+      let mark = button.querySelector<HTMLElement>('.guide-encounter-mark');
+      if (bit !== undefined && !mark) {
+        mark = document.createElement('span'); mark.className = 'guide-encounter-mark'; mark.setAttribute('aria-hidden', 'true'); button.append(mark);
+      }
+      if (mark) { mark.textContent = outcome === 'caught' ? '✓' : outcome === 'spent' ? '×' : outcome === 'pending' ? '…' : '●'; mark.title = t(ENCOUNTER_LABELS[outcome]); }
+    });
+    const detail = dialog.querySelector<HTMLElement>('.guide-encounter-status');
+    if (detail) {
+      const bit = selected ? cityGeometry.markersById[selected]?.captureBit : undefined;
+      const outcome = encounterOutcome(bit, encounters);
+      detail.hidden = bit === undefined;
+      detail.dataset.encounter = outcome;
+      detail.textContent = t(ENCOUNTER_LABELS[outcome]);
+    }
   }
 
   dialog.querySelectorAll<HTMLButtonElement>('[data-landmark], [data-guide-select]').forEach((button) => {
@@ -123,6 +153,7 @@ export function createCityGuide(host: GuideHost) {
   });
 
   return {
+    updateEncounter(next: EncounterBridgeState) { const value = encounterProgress(next, encounters); if (value === encounters) return; encounters = value; renderEncounterStatus(); },
     get isOpen() { return dialog.open; },
     open(trigger?: HTMLElement) {
       if (dialog.open) return;
@@ -131,6 +162,7 @@ export function createCityGuide(host: GuideHost) {
       resumeOnClose = state.running && !state.paused;
       host.releaseInputs();
       if (resumeOnClose) host.pause();
+      renderEncounterStatus();
       dialog.showModal();
       dialog.querySelector<HTMLButtonElement>('.guide-close')!.focus();
     },
