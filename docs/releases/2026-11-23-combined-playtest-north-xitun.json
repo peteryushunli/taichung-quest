@@ -1,0 +1,63 @@
+{
+  "release": "2026-11-23-combined-playtest-north-xitun",
+  "production": "https://taichung-quest.vercel.app",
+  "productionDeployment": "dpl_6866rzQ7m2ts1fKLwKUESWSrp4VE",
+  "approvedPreview": "https://taichung-quest-qh4eg4i7l-peteryushunli-6635s-projects.vercel.app",
+  "approvedPreviewDeployment": "dpl_4eqRa6TAtd3tiEqGykRoZYTtffLg",
+  "deployedFrontendCommit": "79adb5b7b1cf615d4fc8c985cd8ba35eec88d37e",
+  "native": {
+    "clean": true,
+    "commit": "a701ed5109ffd5eddd6b0581ade46591146e9656",
+    "tree": "bb55b53abb4e748f5e8a680d46e8fb4b79c9ba71",
+    "upstreamCommit": "ce6406d8c2eaf46d543c8a2606de0c3cb1951982"
+  },
+  "cartridge": {
+    "bytes": 16777216,
+    "sha1": "2bda3d8e7ab485e24b8497fb9d52ac432ba40302",
+    "sha256": "634c0fcbfa35c31b0995014e8cbce41e975f1eb4ccbad1e9ce05928e95055648"
+  },
+  "activeGeometryFingerprint": "24a468909d0434be574fbd2e88c0145c1c4780c17245e51d057226623d6263c7",
+  "hd": {
+    "status": "PASS",
+    "romSha256": "634c0fcbfa35c31b0995014e8cbce41e975f1eb4ccbad1e9ce05928e95055648",
+    "hdMaps": 75,
+    "buildings": 1570,
+    "changedReferenceMaps": [
+      "43.27",
+      "43.34",
+      "43.35",
+      "43.36",
+      "43.42",
+      "43.43"
+    ],
+    "changedReferencePixels": 149992,
+    "scopedAutomaticOverlayChanges": 60,
+    "allPixelAndOverlayChangesWithinApprovedBlocks": true,
+    "automaticPicturesByteExact": true,
+    "manualTowersCoverageRecomputedExact": true
+  },
+  "portablePatchSha256": "732f94376bb8ad29b1fe662a73676108adf59f8502babf92353196d109809322",
+  "saveVersion": 12,
+  "captureBridgeVersion": 2,
+  "rollback": {
+    "deployment": "dpl_7m9WCjjqVGjf1fLG6mGU1a3BpfYR",
+    "url": "https://taichung-quest-7tkxr845s-peteryushunli-6635s-projects.vercel.app",
+    "cartridgeSha256": "66bb7f0e4c7e067298036b5f4353fd7eb582cb2f1cbbd73147f270a565110746"
+  },
+  "verification": {
+    "webTests": "120 passed",
+    "typeScript": "passed",
+    "canonicalFiles": "194 public HTTP files match approved prebuilt bytes; isolation headers passed",
+    "nativeContinue": "16 emulator cases and21536 compiled helper cases passed",
+    "pairedOldSave": "Actual browser imported unchanged ordinary production Save; repaired43:27local24,18\u219223,20; walk and nativeSave passed; HP7/PP1 and full inspected party retained",
+    "play": "Actual canonical Chrome Play reaches native Settings; no warning/error logs",
+    "capture": "Actual paired browser Prepare\u2192Back Begin selected, Snorlax caught, immediate add, nativeSave/Continue and City Map caught marker passed"
+  },
+  "remainingAcceptance": [
+    "Off victory actual native emulator case finishing",
+    "Unsuccessful capture exhaustion/KO actual native emulator cases and paired browser markers pending",
+    "Fresh Chinese opening on final combined cartridge pending"
+  ],
+  "mainAtPromotion": "c25ce6b33c2ca02b5eff8400e27a9e8f8bc9dacb",
+  "note": "This source archive commit adds the exact verified portable native patch and receipt after deployment; deployed frontend stays79adb5b7. No frontend/runtime changes in archive commit."
+}
