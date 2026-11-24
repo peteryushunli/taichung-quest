@@ -1,0 +1,62 @@
+{
+  "sourceWorktree": "/Users/peter/devday_hackathon/.worktrees/interface-player-crisp-2x-2026-11-24",
+  "classification": "Explicitly handed-over reviewed files copied read-only; local harness omitted",
+  "files": [
+    {
+      "path": "scripts/hd-player.py",
+      "sha256": "2904039689f534db10e361e38ea3f36c882cdd1c9b64fb2cd432ceae9a8bd91f"
+    },
+    {
+      "path": "web/src/hd-overlay.ts",
+      "sha256": "920d794fd3b24ff33c83c1ec6dda21949170669e62fa63f8d3b022243f05d2c7"
+    },
+    {
+      "path": "web/src/hd-player.ts",
+      "sha256": "378b5251d83beaffe8ea3e9a0dc538f94e636c5323d74e598011a20f572f92e9"
+    },
+    {
+      "path": "web/tests/hd-player-render.test.mjs",
+      "sha256": "ed1c806bdcb321188ba2556e70c950c9cd50bc579f932916e6ef35e580cc88d2"
+    },
+    {
+      "path": "web/tests/hd-player.test.mjs",
+      "sha256": "615d3c9b0299753f4100dd6a833411ab8f633891c8d45b4a39683cd151fd87ba"
+    },
+    {
+      "path": "web/src/assets/player-crisp-2x/source/running-native.png",
+      "sha256": "3865e79b23d5a5dd4937ede0f9cc342e44418e5239903d16599c4dd5cb8f1643"
+    },
+    {
+      "path": "web/src/assets/player-crisp-2x/source/running-crisp-2x.png",
+      "sha256": "fb0dd5a5ed45cac2b955de95cc54db366ae30eea27849d2155cd0da9aaacaf37"
+    },
+    {
+      "path": "web/src/assets/player-crisp-2x/source/cycling-native.png",
+      "sha256": "0d265fdd7c329cd667fa2715e955c7575683db1afbf900da846d6e72dc882d6d"
+    },
+    {
+      "path": "web/src/assets/player-crisp-2x/source/walking-native.png",
+      "sha256": "29a451251942c3115c492f1b0c134805ed902c2a759463ede19f34065bb2b761"
+    },
+    {
+      "path": "web/src/assets/player-crisp-2x/source/cycling-crisp-2x.png",
+      "sha256": "faea86c4a2959e8904cc8982360310c76ddf95ba01cedebe31392032c5589ea7"
+    },
+    {
+      "path": "web/src/assets/player-crisp-2x/source/walking-crisp-2x.png",
+      "sha256": "a3ad78f65471adc957f67c1f142426fbd59f53734ef23bd5a620244823ac8af7"
+    },
+    {
+      "path": "web/public/hd/player/provenance.json",
+      "sha256": "6868270b7977e2911ec91e432f064762c0bbc7445a2e4d8d1e8569dbe52e42a6"
+    },
+    {
+      "path": "web/public/hd/player/player.json",
+      "sha256": "37e2d6ced26fe1802aa346ac8d507eb8ef6f8ad248d8445d855132822f30cc60"
+    },
+    {
+      "path": "web/public/hd/player/atlas.png",
+      "sha256": "a0ad8eeb8307c2e6cafbcb1c6a35028782b5e559c887baa8e99194255a6ef257"
+    }
+  ]
+}

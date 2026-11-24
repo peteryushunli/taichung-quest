@@ -1,0 +1,96 @@
+{
+  "status": "PASS_CORRECTED_PRIVATE_PRIMARY_FINAL_NATIVE_ACCEPTANCE",
+  "integratedNativeCommit": "f7e7d04d03f22872dad17fbd6bff88d5e1dd4897",
+  "correctiveSourceCommit": "2a9540f2",
+  "romSha256": "3dcbe7747c057f6da995c9ce8fdc5a717f08473daa4510ee7b71a9205a0dc6d3",
+  "elfSha256": "990e30680a71cd025df193e8b41cc87e142a46ba3ada2502cca1d7d8e2290fd9",
+  "mainSourceClean": true,
+  "sourceEditsDuringRuntime": false,
+  "unchangedOldOrdinarySave": {
+    "sha256": "2eebd6baf8c7117d1e6cd84edb1a12cc9bf04fab2336ecc8ab5d249b939ab9d8",
+    "receipt": "resident-en-runtime.json",
+    "newResidentVisible": true,
+    "talkPatrolAndPlayerEscape": true,
+    "all600PartyBytesAndFlagsVarsRetained": true,
+    "hp": 7,
+    "firstMovePP": 1
+  },
+  "unchangedExactSpawnSaves": [
+    {
+      "sha256": "80823afe03f85030c0930e94043aa2b7ae46716b4321af559516748199d54c04",
+      "receipt": "walker-old-spawn-runtime.json",
+      "player": [
+        60,
+        29,
+        16
+      ],
+      "facing": 4,
+      "npc": {
+        "x": 29,
+        "y": 17,
+        "initialX": 29,
+        "initialY": 16,
+        "movement": 25,
+        "range": 17
+      },
+      "partyAndFlagsVarsExact": true,
+      "playerEscapeAndResumedPatrol": true
+    },
+    {
+      "sha256": "7bf58413efd3f7c97d95e68097173ebeb2b539ef247bb23e0d04be92ff34a4dc",
+      "receipt": "resident-old-spawn-runtime.json",
+      "player": [
+        25,
+        16,
+        7
+      ],
+      "facing": 2,
+      "npc": {
+        "x": 17,
+        "y": 7,
+        "initialX": 16,
+        "initialY": 7,
+        "movement": 27,
+        "range": 17
+      },
+      "partyAndFlagsVarsExact": true,
+      "playerEscapeAndResumedPatrol": true
+    }
+  ],
+  "flowersAndLegacy": {
+    "passed": true,
+    "romSha256": "3dcbe7747c057f6da995c9ce8fdc5a717f08473daa4510ee7b71a9205a0dc6d3",
+    "elfSha256": "990e30680a71cd025df193e8b41cc87e142a46ba3ada2502cca1d7d8e2290fd9",
+    "qualifiedFinalMainCommit": "f7e7d04d03f22872dad17fbd6bff88d5e1dd4897",
+    "flowers": {
+      "frames": 15,
+      "rearAnimatedPixels": 173,
+      "frontAnimatedPixels": 254,
+      "changedOpaqueTreePixels": 0,
+      "dynamicSlots": 1003,
+      "tileOverflow": 0,
+      "paletteOverflow": 0
+    },
+    "legacy": {
+      "frames": 15,
+      "map": "43:18",
+      "localCells": [
+        [
+          38,
+          41
+        ],
+        [
+          38,
+          42
+        ],
+        [
+          38,
+          43
+        ]
+      ],
+      "changedPixelsAfterAnimationTicks": 0
+    }
+  },
+  "sourceProof": "/Users/peter/devday_hackathon/artifacts/qa/2026-11-24-covered-flower-isolation/source-proof.json",
+  "pendingOwner": "Main: full HD reference scope and protected preview packaging; no production action by Maps"
+}

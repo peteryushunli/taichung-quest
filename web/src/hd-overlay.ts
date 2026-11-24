@@ -1,3 +1,5 @@
+import { PlayerMatcher, parsePlayerTemplates } from './hd-player';
+import type { PlayerMatch } from './hd-player';
 import { scoreHdCamera } from './hd-scene';
 import type { HdScene } from './hd-scene';
 
@@ -116,6 +118,9 @@ export class HdOverlay {
   private readonly pictures = new Map<string, HTMLImageElement | 'loading'>();
   lastNav?: Nav;
   private sprites?: SpritePack;
+  private player?: { atlas: HTMLImageElement; matcher: PlayerMatcher };
+  private playerLoading = false;
+  private readonly localPlayerDiagnostics = typeof location !== 'undefined' && ['127.0.0.1', 'localhost'].includes(location.hostname);
   lastSprites: string[] = [];
   private camera?: { x: number; y: number };
   private raf = 0;
@@ -185,6 +190,17 @@ export class HdOverlay {
 
   start() {
     if (!this.enabledValue || this.raf) return;
+    if (!this.player && !this.playerLoading) {
+      this.playerLoading = true;
+      Promise.all([fetch('/hd/player/player.json', { cache: 'no-cache' }).then(r => {
+        if (!r.ok) throw new Error('Player presentation is unavailable.');
+        return r.json();
+      }), loadImage('/hd/player/atlas.png')]).then(([pack, atlas]) => {
+        const templates = parsePlayerTemplates(pack, atlas.width, atlas.height);
+        if (!templates) throw new Error('Unpaired player presentation.');
+        this.player = { atlas, matcher: new PlayerMatcher(templates) };
+      }).catch(error => console.info('Using native player pixels:', error)).finally(() => { this.playerLoading = false; });
+    }
     if (!this.sprites) loadSprites(this.spriteBase).then((sprites) => { this.sprites = sprites; })
       .catch((error) => console.info('HD character pack unavailable:', error));
     if (!this.pack && this.status !== 'loading') {
@@ -205,7 +221,7 @@ export class HdOverlay {
 
   stop() { cancelAnimationFrame(this.raf); this.raf = 0; this.hide(); }
 
-  private hide() { this.element.classList.remove('playing'); this.camera = undefined; }
+  private hide() { this.element.classList.remove('playing'); this.camera = undefined; this.playerDiagnostic(); }
 
   private readFrame() {
     this.grabCtx.drawImage(this.source, 0, 0, W, H);
@@ -220,7 +236,7 @@ export class HdOverlay {
     const key = `${nav.group}.${nav.map}`;
     if (this.loaded?.key === key) return this.loaded;
     const map = this.pack.maps[key];
-    if (!map || !map.buildings.length) return undefined;
+    if (!map) return undefined;
     if (this.loadingMap !== key) {
       this.loadingMap = key;
       loadMap(this.packBase, key, map).then((loaded) => { if (this.loadingMap === key) { this.loaded = loaded; this.camera = undefined; } })
@@ -330,6 +346,13 @@ export class HdOverlay {
     return kept;
   }
 
+  /** Read-only rendering evidence; no game state or user controls. */
+  private playerDiagnostic(match?: PlayerMatch) {
+    if (!this.localPlayerDiagnostics) return;
+    const value = match ? `${match.t.kind}:${match.t.frame}:${match.t.east ? 'east' : 'native'}@${match.x},${match.y}` : '';
+    if (this.element.dataset.playerPose !== value) this.element.dataset.playerPose = value;
+  }
+
   /** Smooth only when shrinking an original; game pixels always stay hard-edged. */
   private smooth(on: boolean) {
     const resize = on && this.detailValue !== this.packScale;
@@ -350,6 +373,11 @@ export class HdOverlay {
     const loaded = nav ? this.currentMap(nav) : undefined;
     const camera = loaded ? this.locate(nav!) : undefined;
     const sprites = this.findSprites();
+    const player = nav && camera && loaded && this.player ? this.player.matcher.match(this.frame, {
+      x: (nav.x + loaded.map.margin) * 16 + 8 - camera.x,
+      y: (nav.y + loaded.map.margin) * 16 + 16 - camera.y,
+    }) : undefined;
+    this.playerDiagnostic(player);
     this.camera = camera;
     const next = camera ? 'locked' : 'searching';
     if (this.status !== next) { this.status = next; this.emit(); }
@@ -400,6 +428,23 @@ export class HdOverlay {
           const i = sy * W + sx;
           if (this.frame[i] !== v) { keep(i); patched = true; }
         }
+      }
+      if (patched) this.flushPatch();
+    }
+    if (player && this.player && loaded && camera) {
+      const { t, x, y } = player;
+      // The player atlas is genuinely2x; never apply the NPC pack's4x scale.
+      this.out.imageSmoothingEnabled = false;
+      out.drawImage(this.player.atlas, t.atlasX, t.atlasY, t.w * 2, t.h * 2, x * k, y * k, t.w * k, t.h * k);
+      let patched = false;
+      for (let ty = 0; ty < t.h; ty++) for (let tx = 0; tx < t.w; tx++) {
+        const i = (y + ty) * W + x + tx;
+        const expected = t.px[ty * t.w + tx];
+        // Preserve native occlusion, including foreground in the few clear
+        // native pixels where approved Scale2x reconstructs an edge subpixel.
+        if (expected === 0xffff && this.frame[i] === loaded.ref[(y + ty + camera.y) * loaded.refW + x + tx + camera.x]) continue;
+        if (expected !== 0xffff && this.frame[i] === expected) continue;
+        keep(i); patched = true;
       }
       if (patched) this.flushPatch();
     }

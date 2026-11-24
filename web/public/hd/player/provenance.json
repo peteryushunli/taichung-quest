@@ -1,0 +1,28 @@
+{
+  "style": "Option B: Crisp2x (Scale2x)",
+  "source": "Story player-sharpness-preview-20261124/sheets; approved unchanged prototypes",
+  "nativeSourceInputsSha256": {
+    "walking-native.png": "29a451251942c3115c492f1b0c134805ed902c2a759463ede19f34065bb2b761",
+    "walking-crisp-2x.png": "a3ad78f65471adc957f67c1f142426fbd59f53734ef23bd5a620244823ac8af7",
+    "running-native.png": "3865e79b23d5a5dd4937ede0f9cc342e44418e5239903d16599c4dd5cb8f1643",
+    "running-crisp-2x.png": "fb0dd5a5ed45cac2b955de95cc54db366ae30eea27849d2155cd0da9aaacaf37",
+    "cycling-native.png": "0d265fdd7c329cd667fa2715e955c7575683db1afbf900da846d6e72dc882d6d",
+    "cycling-crisp-2x.png": "faea86c4a2959e8904cc8982360310c76ddf95ba01cedebe31392032c5589ea7"
+  },
+  "counts": {
+    "walking": 9,
+    "running": 11,
+    "cycling": 9
+  },
+  "east": "Only native west poses are mirrored",
+  "templateCount": 38,
+  "atlasScale": 2,
+  "atlasSize": [
+    800,
+    128
+  ],
+  "opaquePaletteColors": 15,
+  "atlasSha256": "a0ad8eeb8307c2e6cafbcb1c6a35028782b5e559c887baa8e99194255a6ef257",
+  "packSha256": "37e2d6ced26fe1802aa346ac8d507eb8ef6f8ad248d8445d855132822f30cc60",
+  "nativeControl": "Framebuffer pose/time/position; no animation timer, ROM or save changes"
+}
