@@ -29102,12 +29102,12 @@ index 00000000..b6754046
 +	end
 diff --git a/data/scripts/taichung_landmark_gym.inc b/data/scripts/taichung_landmark_gym.inc
 new file mode 100644
-index 00000000..5cb9ccf7
+index 00000000..760908e5
 --- /dev/null
 +++ b/data/scripts/taichung_landmark_gym.inc
-@@ -0,0 +1,85 @@
+@@ -0,0 +1,79 @@
 +@ Shared shipped Miyahara flow: voluntary offer, native preparation, actual
-+@ matching win + saved-bit guard, one-shot loss notice, and no rematches.
++@ matching win + saved-bit guard, and no rematches after a win.
 +	.macro taichung_landmark_gym name, gym, trainer
 +	.global TaichungGym_EventScript_\name\()Challenge
 +TaichungGym_EventScript_\name\()Challenge:
@@ -29117,12 +29117,6 @@ index 00000000..5cb9ccf7
 +	setvar VAR_0x8004, \gym
 +	callnative TaichungGym_ScriptIsComplete
 +	goto_if_eq VAR_RESULT, TRUE, TaichungGym_\name\()AlreadyComplete
-+	callnative TaichungGym_ScriptConsumeLandmarkLossNotice
-+	goto_if_ne VAR_RESULT, TRUE, TaichungGym_\name\()Greeting
-+	setvar VAR_0x8005, TAICHUNG_GYM_MESSAGE_LOSS
-+	callnative TaichungGym_ScriptGet\name\()Message
-+	msgbox gStringVar4
-+
 +	.global TaichungGym_\name\()Greeting
 +TaichungGym_\name\()Greeting:
 +	setvar VAR_0x8004, \gym
@@ -29298,10 +29292,10 @@ index 00000000..3a7ed691
 +	taichung_landmark_gym MapleGarden, TAICHUNG_GYM_MAPLE_GARDEN, TRAINER_TAICHUNG_MAPLE_GARDEN_MUQING
 diff --git a/data/scripts/taichung_miyahara_gym.inc b/data/scripts/taichung_miyahara_gym.inc
 new file mode 100644
-index 00000000..5322f994
+index 00000000..d7aa294c
 --- /dev/null
 +++ b/data/scripts/taichung_miyahara_gym.inc
-@@ -0,0 +1,71 @@
+@@ -0,0 +1,65 @@
 +@ Miyahara-only voluntary challenge. Never write progress or trainer-fought flags.
 +TaichungGym_EventScript_MiyaharaChallenge::
 +	lock
@@ -29310,12 +29304,6 @@ index 00000000..5322f994
 +	setvar VAR_0x8004, TAICHUNG_GYM_MIYAHARA
 +	callnative TaichungGym_ScriptIsComplete
 +	goto_if_eq VAR_RESULT, TRUE, TaichungGym_MiyaharaAlreadyComplete
-+	callnative TaichungGym_ScriptConsumeMiyaharaLossNotice
-+	goto_if_ne VAR_RESULT, TRUE, TaichungGym_MiyaharaGreeting
-+	setvar VAR_0x8005, TAICHUNG_GYM_MESSAGE_LOSS
-+	callnative TaichungGym_ScriptGetMiyaharaMessage
-+	msgbox gStringVar4
-+
 +TaichungGym_MiyaharaGreeting::
 +	setvar VAR_0x8004, TAICHUNG_GYM_MIYAHARA
 +	setvar VAR_0x8005, TRAINER_TAICHUNG_MIYAHARA_PEIQI
@@ -29744,10 +29732,10 @@ index 00000000..c7bea628
 +	end
 diff --git a/data/scripts/taichung_park_gym.inc b/data/scripts/taichung_park_gym.inc
 new file mode 100644
-index 00000000..769c928d
+index 00000000..8e92e50c
 --- /dev/null
 +++ b/data/scripts/taichung_park_gym.inc
-@@ -0,0 +1,71 @@
+@@ -0,0 +1,65 @@
 +@ Park-only voluntary challenge. Never write progress or trainer-fought flags.
 +TaichungGym_EventScript_ParkChallenge::
 +	lock
@@ -29756,12 +29744,6 @@ index 00000000..769c928d
 +	setvar VAR_0x8004, TAICHUNG_GYM_PARK
 +	callnative TaichungGym_ScriptIsComplete
 +	goto_if_eq VAR_RESULT, TRUE, TaichungGym_ParkAlreadyComplete
-+	callnative TaichungGym_ScriptConsumeParkLossNotice
-+	goto_if_ne VAR_RESULT, TRUE, TaichungGym_ParkGreeting
-+	setvar VAR_0x8005, TAICHUNG_GYM_MESSAGE_LOSS
-+	callnative TaichungGym_ScriptGetParkMessage
-+	msgbox gStringVar4
-+
 +TaichungGym_ParkGreeting::
 +	setvar VAR_0x8004, TAICHUNG_GYM_PARK
 +	setvar VAR_0x8005, TRAINER_TAICHUNG_PARK_LIAN
@@ -632187,10 +632169,10 @@ index 00000000..7648a2fd
 +#endif
 diff --git a/include/taichung_gym_entry.h b/include/taichung_gym_entry.h
 new file mode 100644
-index 00000000..792dcbf0
+index 00000000..c866bf59
 --- /dev/null
 +++ b/include/taichung_gym_entry.h
-@@ -0,0 +1,19 @@
+@@ -0,0 +1,20 @@
 +#ifndef GUARD_TAICHUNG_GYM_ENTRY_H
 +#define GUARD_TAICHUNG_GYM_ENTRY_H
 +
@@ -632205,6 +632187,7 @@ index 00000000..792dcbf0
 +void TaichungGymEntry_ScriptPrepareBattle(void);
 +void TaichungGymEntry_ScriptRestoreCamera(void);
 +bool8 TaichungGymEntryConsumePreparedIntro(u16 trainerId);
++const u8 *TaichungGymGetRetryIntro(u16 trainerId);
 +void TaichungGymEntry_ScriptCheck(void);
 +void TaichungGymEntry_ScriptOpenTeam(void);
 +void TaichungGymEntry_ScriptFillRandom(void);
@@ -632224,10 +632207,10 @@ index 00000000..3cdeed6e
 +#endif
 diff --git a/include/taichung_gym_progress.h b/include/taichung_gym_progress.h
 new file mode 100644
-index 00000000..16b0e7d7
+index 00000000..41a03dba
 --- /dev/null
 +++ b/include/taichung_gym_progress.h
-@@ -0,0 +1,28 @@
+@@ -0,0 +1,29 @@
 +#ifndef GUARD_TAICHUNG_GYM_PROGRESS_H
 +#define GUARD_TAICHUNG_GYM_PROGRESS_H
 +
@@ -632240,6 +632223,7 @@ index 00000000..16b0e7d7
 +const char *TaichungGymGetLandmarkId(u16 gymId);
 +// Preparing does not stamp anything. Only the matching real battle callbacks do.
 +bool8 TaichungGymPrepareChallenge(u16 gymId, u16 trainerId);
++u16 TaichungGymGetPreparedRetryGym(u16 trainerId);
 +void TaichungGymCancelChallenge(void);
 +void TaichungGymOnTrainerBattleStart(u16 trainerId);
 +// Returns TRUE only for a newly recorded matching, started landmark leader win.
@@ -633560,7 +633544,7 @@ index 67f90a37..90a75658 100644
      {
          if (!ShouldShowBoxWasFullMessage())
 diff --git a/src/battle_setup.c b/src/battle_setup.c
-index 6d62084d..b94c1136 100644
+index 6d62084d..f41a8182 100644
 --- a/src/battle_setup.c
 +++ b/src/battle_setup.c
 @@ -24,6 +24,13 @@
@@ -633634,7 +633618,21 @@ index 6d62084d..b94c1136 100644
      if (sTrainerBattleMode == TRAINER_BATTLE_EARLY_RIVAL)
      {
          if (IsPlayerDefeated(gBattleOutcome) == TRUE)
-@@ -1060,7 +1081,10 @@ const u8 *GetTrainerALoseText(void)
+@@ -1047,6 +1068,13 @@ static const u8 *ReturnEmptyStringIfNull(const u8 *string)
+ 
+ static const u8 *GetIntroSpeechOfApproachingTrainer(void)
+ {
++    if (sTrainerBattleMode == TRAINER_BATTLE_CONTINUE_SCRIPT
++        || sTrainerBattleMode == TRAINER_BATTLE_CONTINUE_SCRIPT_NO_MUSIC)
++    {
++        const u8 *retry = TaichungGymGetRetryIntro(gTrainerBattleOpponent_A);
++        if (retry != NULL)
++            return retry;
++    }
+     return ReturnEmptyStringIfNull(sTrainerAIntroSpeech);
+ }
+ 
+@@ -1060,7 +1088,10 @@ const u8 *GetTrainerALoseText(void)
  
  const u8 *GetTrainerWonSpeech(void)
  {
@@ -644777,10 +644775,10 @@ index 00000000..ee79c687
 +void TaichungGuestHouse_BufferGuide(void) { Buffer(sGuideEn, sGuideZh); }
 diff --git a/src/taichung_gym_adapter.c b/src/taichung_gym_adapter.c
 new file mode 100644
-index 00000000..b1c02252
+index 00000000..11832b69
 --- /dev/null
 +++ b/src/taichung_gym_adapter.c
-@@ -0,0 +1,76 @@
+@@ -0,0 +1,78 @@
 +#include "global.h"
 +#include "event_data.h"
 +#include "pokemon.h"
@@ -644792,6 +644790,8 @@ index 00000000..b1c02252
 +
 +const u8 TaichungGym_Text_StationIntroEn[] = _("Welcome to Old Station!\nI'm Jun. I build model trains.\pMy team works just as well.\nThink you can stop us?");
 +const u8 TaichungGym_Text_StationIntroZh[] = _("歡迎來到舊臺中車站！\n我是俊，最愛組火車模型。\p我的隊伍也一樣有默契！\n來吧，看你能不能跟上！");
++const u8 TaichungGym_Text_StationRetryEn[] = _("Ready when you are!");
++const u8 TaichungGym_Text_StationRetryZh[] = _("準備好就出發吧！");
 +const u8 TaichungGym_Text_StationDefeatEn[] = _("You found a route I missed!");
 +const u8 TaichungGym_Text_StationDefeatZh[] = _("你找到新路線了！");
 +static const u8 sOfferEn[] = _("JUN: My model train is ready.\nCare for a Station challenge?\pA win earns your Departure Badge.\nReady when you are!");
@@ -644859,10 +644859,10 @@ index 00000000..b1c02252
 +}
 diff --git a/src/taichung_gym_entry.c b/src/taichung_gym_entry.c
 new file mode 100644
-index 00000000..e7446187
+index 00000000..57f46d08
 --- /dev/null
 +++ b/src/taichung_gym_entry.c
-@@ -0,0 +1,71 @@
+@@ -0,0 +1,75 @@
 +#include "global.h"
 +#include "event_data.h"
 +#include "field_message_box.h"
@@ -644913,15 +644913,19 @@ index 00000000..e7446187
 +{
 +    u8 gym = TaichungGymEntryCurrentGym();
 +    return gym != TAICHUNG_GYM_NONE
-+        && !TaichungGymIsComplete(gym);
++        && !TaichungGymIsComplete(gym)
++        && CalculatePlayerPartyCount() == 1
++        && !GetMonData(&gPlayerParty[0], MON_DATA_IS_EGG);
 +}
 +
 +void TaichungGymEntry_ScriptCheck(void)
 +{
-+    TaichungTeamSyncPresetMoves();
 +    gSpecialVar_Result = TaichungGymEntryShouldRemind();
 +    if (gSpecialVar_Result)
++    {
++        TaichungTeamSyncPresetMoves();
 +        StringCopy(gStringVar4, TaichungText(sReminderEn, sReminderZh));
++    }
 +}
 +
 +
@@ -644957,10 +644961,10 @@ index 00000000..ea01eaf4
 +}
 diff --git a/src/taichung_gym_preparation.c b/src/taichung_gym_preparation.c
 new file mode 100644
-index 00000000..146f0737
+index 00000000..178a6553
 --- /dev/null
 +++ b/src/taichung_gym_preparation.c
-@@ -0,0 +1,153 @@
+@@ -0,0 +1,173 @@
 +#include "global.h"
 +#include "event_data.h"
 +#include "event_object_movement.h"
@@ -644987,6 +644991,14 @@ index 00000000..146f0737
 +LEADER_INTRO(Confucius) LEADER_INTRO(FineArts) LEADER_INTRO(Fengjia) LEADER_INTRO(MapleGarden) LEADER_INTRO(Theater)
 +#define INTRO(name) {TaichungGym_Text_##name##IntroEn, TaichungGym_Text_##name##IntroZh}
 +static const u8 *const sIntros[TAICHUNG_GYM_COUNT][2] = {INTRO(Station), INTRO(Park), INTRO(Miyahara), INTRO(Science), INTRO(Greenway), INTRO(Confucius), INTRO(FineArts), INTRO(Fengjia), INTRO(MapleGarden), INTRO(Theater)};
++#define RETRY_TEXT(name) extern const u8 TaichungGym_Text_##name##En[], TaichungGym_Text_##name##Zh[];
++RETRY_TEXT(StationRetry) RETRY_TEXT(ParkLoss) RETRY_TEXT(MiyaharaLoss) RETRY_TEXT(ScienceLoss) RETRY_TEXT(GreenwayLoss)
++RETRY_TEXT(ConfuciusLoss) RETRY_TEXT(FineArtsLoss) RETRY_TEXT(FengjiaLoss) RETRY_TEXT(MapleGardenLoss) RETRY_TEXT(TheaterLoss)
++#define RETRY(name) {TaichungGym_Text_##name##En, TaichungGym_Text_##name##Zh}
++static const u8 *const sRetries[TAICHUNG_GYM_COUNT][2] = {
++    RETRY(StationRetry), RETRY(ParkLoss), RETRY(MiyaharaLoss), RETRY(ScienceLoss), RETRY(GreenwayLoss),
++    RETRY(ConfuciusLoss), RETRY(FineArtsLoss), RETRY(FengjiaLoss), RETRY(MapleGardenLoss), RETRY(TheaterLoss)
++};
 +static const u16 sTrainers[TAICHUNG_GYM_COUNT] = {TRAINER_TAICHUNG_STATION_JUN, TRAINER_TAICHUNG_PARK_LIAN, TRAINER_TAICHUNG_MIYAHARA_PEIQI, TRAINER_TAICHUNG_SCIENCE_YICHENG, TRAINER_TAICHUNG_GREENWAY_XINGAN, TRAINER_TAICHUNG_CONFUCIUS_WENYI, TRAINER_TAICHUNG_FINE_ARTS_CAINING, TRAINER_TAICHUNG_FENGJIA_JIAHE, TRAINER_TAICHUNG_MAPLE_GARDEN_MUQING, TRAINER_TAICHUNG_THEATER_LING};
 +static const u8 sUnavailableEn[] = _("A healthy team is needed.\nPrepare again when ready.");
 +static const u8 sUnavailableZh[] = _("需要能對戰的隊伍。\n準備好再來吧。");
@@ -645082,6 +645094,15 @@ index 00000000..146f0737
 +    ShowTaichungBattlePreparation(CB2_ReturnPreparation);
 +}
 +
++const u8 *TaichungGymGetRetryIntro(u16 trainerId)
++{
++    u16 gym = TaichungGymGetPreparedRetryGym(trainerId);
++    if (gym >= TAICHUNG_GYM_COUNT || gym != TaichungGymEntryCurrentGym()
++        || QL_IS_PLAYBACK_STATE || TaichungGymIsComplete(gym))
++        return NULL;
++    return TaichungText(sRetries[gym][0], sRetries[gym][1]);
++}
++
 +void TaichungGymEntry_ScriptPrepareBattle(void)
 +{
 +    u8 gym = sPreparingGym;
@@ -645096,9 +645117,12 @@ index 00000000..146f0737
 +        TaichungGym_ScriptPrepareChallenge();
 +        if (gSpecialVar_Result && FocusLeader())
 +        {
++            const u8 *intro = TaichungGymGetRetryIntro(sTrainers[gym]);
++            if (intro == NULL)
++                intro = TaichungText(sIntros[gym][0], sIntros[gym][1]);
 +            sSkipIntroGym = gym;
 +            gSpecialVar_LastTalked = GYM_LEADER_LOCAL_ID;
-+            StringExpandPlaceholders(gStringVar4, TaichungText(sIntros[gym][0], sIntros[gym][1]));
++            StringExpandPlaceholders(gStringVar4, intro);
 +            return;
 +        }
 +    }
@@ -645116,10 +645140,10 @@ index 00000000..146f0737
 +}
 diff --git a/src/taichung_gym_progress.c b/src/taichung_gym_progress.c
 new file mode 100644
-index 00000000..aaf91499
+index 00000000..47c273c9
 --- /dev/null
 +++ b/src/taichung_gym_progress.c
-@@ -0,0 +1,194 @@
+@@ -0,0 +1,204 @@
 +#include "global.h"
 +#include "event_data.h"
 +#include "taichung_gym_progress.h"
@@ -645133,9 +645157,10 @@ index 00000000..aaf91499
 +    u16 trainerId;
 +    bool8 started;
 +    u8 lastResult;
++    bool8 retry;
 +};
 +
-+static EWRAM_DATA struct TaichungGymChallenge sChallenge = {TAICHUNG_GYM_NONE, TRAINER_NONE, FALSE, TAICHUNG_GYM_RESULT_NONE};
++static EWRAM_DATA struct TaichungGymChallenge sChallenge = {TAICHUNG_GYM_NONE, TRAINER_NONE, FALSE, TAICHUNG_GYM_RESULT_NONE, FALSE};
 +static EWRAM_DATA u16 sLossNoticeGym = TAICHUNG_GYM_NONE;
 +static EWRAM_DATA u16 sNewBadgeGym = TAICHUNG_GYM_NONE;
 +
@@ -645159,6 +645184,7 @@ index 00000000..aaf91499
 +    sChallenge.gymId = TAICHUNG_GYM_NONE;
 +    sChallenge.trainerId = TRAINER_NONE;
 +    sChallenge.started = FALSE;
++    sChallenge.retry = FALSE;
 +}
 +
 +u16 TaichungGymGetCompletedMask(void)
@@ -645207,12 +645233,20 @@ index 00000000..aaf91499
 +        sChallenge.lastResult = TAICHUNG_GYM_RESULT_ALREADY_COMPLETE;
 +        return FALSE;
 +    }
++    sChallenge.retry = TaichungGymConsumeLossNotice(gymId);
 +    sLossNoticeGym = TAICHUNG_GYM_NONE;
 +    sNewBadgeGym = TAICHUNG_GYM_NONE;
 +    sChallenge.gymId = gymId;
 +    sChallenge.trainerId = trainerId;
 +    sChallenge.lastResult = TAICHUNG_GYM_RESULT_NONE;
 +    return TRUE;
++}
++
++u16 TaichungGymGetPreparedRetryGym(u16 trainerId)
++{
++    if (!sChallenge.started && sChallenge.retry && sChallenge.trainerId == trainerId)
++        return sChallenge.gymId;
++    return TAICHUNG_GYM_NONE;
 +}
 +
 +void TaichungGymCancelChallenge(void)
@@ -645383,20 +645417,15 @@ index 00000000..a90f5189
 +}
 diff --git a/src/taichung_landmark_gym.c b/src/taichung_landmark_gym.c
 new file mode 100644
-index 00000000..738e1894
+index 00000000..ccd3381e
 --- /dev/null
 +++ b/src/taichung_landmark_gym.c
-@@ -0,0 +1,25 @@
+@@ -0,0 +1,20 @@
 +#include "global.h"
 +#include "event_data.h"
 +#include "string_util.h"
 +#include "taichung_landmark_gym.h"
 +#include "taichung_language.h"
-+
-+void TaichungGym_ScriptConsumeLandmarkLossNotice(void)
-+{
-+    gSpecialVar_Result = TaichungGymConsumeLossNotice(gSpecialVar_0x8004);
-+}
 +
 +void TaichungGymCopyLandmarkMessage(u16 gymId, const u8 *const messages[][2])
 +{
@@ -646210,10 +646239,10 @@ index 00000000..32c694b3
 +}
 diff --git a/src/taichung_miyahara_gym.c b/src/taichung_miyahara_gym.c
 new file mode 100644
-index 00000000..5d21db1f
+index 00000000..bd3c97d9
 --- /dev/null
 +++ b/src/taichung_miyahara_gym.c
-@@ -0,0 +1,59 @@
+@@ -0,0 +1,55 @@
 +#include "global.h"
 +#include "event_data.h"
 +#include "string_util.h"
@@ -646236,8 +646265,8 @@ index 00000000..5d21db1f
 +static const u8 sAlreadyZh[] = _("宮原徽章記好了。\n我還在調整裝飾呢。");
 +static const u8 sDeclinedEn[] = _("Of course. A little time helps.\nI'm perfecting the garnish.");
 +static const u8 sDeclinedZh[] = _("當然，多點時間也好。\n我再修修裝飾。");
-+static const u8 sLossEn[] = _("Not every batch sets first try.\nRest. We can adjust the mix.");
-+static const u8 sLossZh[] = _("試作難免要重來。\n歇一下，再調配方。");
++const u8 TaichungGym_Text_MiyaharaLossEn[] = _("Not every batch sets first try.\nRest. We can adjust the mix.");
++const u8 TaichungGym_Text_MiyaharaLossZh[] = _("試作難免要重來。\n歇一下，再調配方。");
 +static const u8 sNotRecordedEn[] = _("No new badge was recorded.\nYou're welcome to try again.");
 +static const u8 sNotRecordedZh[] = _("沒有新增徽章。\n歡迎再挑戰！");
 +static const u8 sUnavailableEn[] = _("Bring a POKéMON partner\nwhen you're ready to battle.");
@@ -646251,13 +646280,9 @@ index 00000000..5d21db1f
 +    [TAICHUNG_GYM_MESSAGE_NOT_RECORDED] = {sNotRecordedEn, sNotRecordedZh},
 +    [TAICHUNG_GYM_MESSAGE_UNAVAILABLE] = {sUnavailableEn, sUnavailableZh},
 +    [TAICHUNG_GYM_MESSAGE_GREETING] = {sGreetingEn, sGreetingZh},
-+    [TAICHUNG_GYM_MESSAGE_LOSS] = {sLossEn, sLossZh},
++    [TAICHUNG_GYM_MESSAGE_LOSS] = {TaichungGym_Text_MiyaharaLossEn, TaichungGym_Text_MiyaharaLossZh},
 +};
 +
-+void TaichungGym_ScriptConsumeMiyaharaLossNotice(void)
-+{
-+    gSpecialVar_Result = TaichungGymConsumeLossNotice(TAICHUNG_GYM_MIYAHARA);
-+}
 +
 +void TaichungGym_ScriptGetMiyaharaMessage(void)
 +{
@@ -647445,10 +647470,10 @@ index 00000000..ec2f8541
 +const u16 gTaichungOptionalStoryCount = ARRAY_COUNT(gTaichungOptionalStories);
 diff --git a/src/taichung_park_gym.c b/src/taichung_park_gym.c
 new file mode 100644
-index 00000000..b2908448
+index 00000000..8bde8a8f
 --- /dev/null
 +++ b/src/taichung_park_gym.c
-@@ -0,0 +1,59 @@
+@@ -0,0 +1,55 @@
 +#include "global.h"
 +#include "event_data.h"
 +#include "string_util.h"
@@ -647471,8 +647496,8 @@ index 00000000..b2908448
 +static const u8 sAlreadyZh[] = _("公園徽章記好了。\n鳥兒還有好多要教我。");
 +static const u8 sDeclinedEn[] = _("Of course. Take your time.\nThe next ripple can wait.");
 +static const u8 sDeclinedZh[] = _("好啊，慢慢來。\n下一圈水波不急。");
-+static const u8 sLossEn[] = _("Even good watchers miss things.\nRest in the shade. Try later.");
-+static const u8 sLossZh[] = _("再細心也難免漏看。\n到樹蔭歇歇，再來吧。");
++const u8 TaichungGym_Text_ParkLossEn[] = _("Even good watchers miss things.\nRest in the shade. Try later.");
++const u8 TaichungGym_Text_ParkLossZh[] = _("再細心也難免漏看。\n到樹蔭歇歇，再來吧。");
 +static const u8 sNotRecordedEn[] = _("No new badge was recorded.\nYou're welcome to try again.");
 +static const u8 sNotRecordedZh[] = _("沒有新增徽章。\n歡迎再挑戰！");
 +static const u8 sUnavailableEn[] = _("Bring a POKéMON partner\nwhen you're ready to battle.");
@@ -647486,13 +647511,9 @@ index 00000000..b2908448
 +    [TAICHUNG_GYM_MESSAGE_NOT_RECORDED] = {sNotRecordedEn, sNotRecordedZh},
 +    [TAICHUNG_GYM_MESSAGE_UNAVAILABLE] = {sUnavailableEn, sUnavailableZh},
 +    [TAICHUNG_GYM_MESSAGE_GREETING] = {sGreetingEn, sGreetingZh},
-+    [TAICHUNG_GYM_MESSAGE_LOSS] = {sLossEn, sLossZh},
++    [TAICHUNG_GYM_MESSAGE_LOSS] = {TaichungGym_Text_ParkLossEn, TaichungGym_Text_ParkLossZh},
 +};
 +
-+void TaichungGym_ScriptConsumeParkLossNotice(void)
-+{
-+    gSpecialVar_Result = TaichungGymConsumeLossNotice(TAICHUNG_GYM_PARK);
-+}
 +
 +void TaichungGym_ScriptGetParkMessage(void)
 +{
@@ -657026,10 +657047,10 @@ index 00000000..9c7b3cdd
 +}
 diff --git a/tests/taichung_encounter_field_test.c b/tests/taichung_encounter_field_test.c
 new file mode 100644
-index 00000000..695bb683
+index 00000000..f1edf608
 --- /dev/null
 +++ b/tests/taichung_encounter_field_test.c
-@@ -0,0 +1,409 @@
+@@ -0,0 +1,412 @@
 +#include "global.h"
 +#include "battle.h"
 +#include "battle_setup.h"
@@ -657078,6 +657099,7 @@ index 00000000..695bb683
 +    [SPECIES_CHARIZARD] = "CHARIZARD", [SPECIES_BLASTOISE] = "BLASTOISE", [SPECIES_VENUSAUR] = "VENUSAUR"
 +};
 +static bool8 sChinese, sHealthy, sSaveFail;
++static bool8 sFirstIsEgg;
 +static unsigned sCreates, sBattles, sSaves, sTeams, sReturns, sHeals;
 +static u16 sEnemySpecies, sEnemyMoves[4];
 +static u8 sEnemyLevel;
@@ -657166,6 +657188,8 @@ index 00000000..695bb683
 +    if (mon == &gEnemyParty[0])
 +        return field == MON_DATA_SPECIES ? sEnemySpecies : field == MON_DATA_LEVEL ? sEnemyLevel : 0;
 +    assert(mon >= gPlayerParty && mon < gPlayerParty + PARTY_SIZE);
++    if (field == MON_DATA_IS_EGG)
++        return sFirstIsEgg && mon == &gPlayerParty[0];
 +    return field == MON_DATA_HP ? (sHealthy ? 100 : 0) : 0;
 +}
 +void ZeroEnemyPartyMons(void) { memset(gEnemyParty, 0, sizeof(gEnemyParty)); }
@@ -657231,7 +657255,7 @@ index 00000000..695bb683
 +    TaichungEncounterResetSession(); assert(TaichungEncounterInitSaveState());
 +    sCreates = sBattles = sSaves = sTeams = sReturns = sHeals = 0;
 +    sLiveMapGeneration = 1; sSavedMapGeneration = sMapRefreshes = 0;
-+    sHealthy = TRUE; sSaveFail = FALSE; gQuestLogState = 0; gSpecialVar_0x8007 = 0;
++    sHealthy = TRUE; sFirstIsEgg = FALSE; sSaveFail = FALSE; gQuestLogState = 0; gSpecialVar_0x8007 = 0;
 +    sLastScript = NULL; sMenuCallback = NULL; sFadeFinished = TRUE; sPreparedStart = FALSE;
 +}
 +static void TestRotatedFieldRoutes(void)
@@ -658623,10 +658647,10 @@ index 00000000..0652d764
 +puts("PASS: all ten gym loss selectors in EN/ZH use actual Story lines; exact started trainer/loss guards, protected save bytes, no award, stock/link/early-rival/capture routing retained.");}
 diff --git a/tests/taichung_gym_preparation_test.c b/tests/taichung_gym_preparation_test.c
 new file mode 100644
-index 00000000..0a884585
+index 00000000..009358ac
 --- /dev/null
 +++ b/tests/taichung_gym_preparation_test.c
-@@ -0,0 +1,75 @@
+@@ -0,0 +1,106 @@
 +#define main EncounterFieldTests
 +#include "taichung_encounter_field_test.c"
 +#undef main
@@ -658670,9 +658694,16 @@ index 00000000..0a884585
 +#include "native-intros.inc"
 +static const u16 rooms[]={MAP_TAICHUNG_OLD_STATION_GYM,MAP_TAICHUNG_PARK_GYM,MAP_TAICHUNG_MIYAHARA_GYM,MAP_TAICHUNG_SCIENCE_MUSEUM_GYM,MAP_TAICHUNG_GREENWAY_GYM,MAP_TAICHUNG_CONFUCIUS_GYM,MAP_TAICHUNG_FINE_ARTS_GYM,MAP_TAICHUNG_FENGJIA_GYM,MAP_TAICHUNG_WANHE_TEMPLE_HALL,MAP_TAICHUNG_THEATER_GYM};
 +static const u16 trainers[]={TRAINER_TAICHUNG_STATION_JUN,TRAINER_TAICHUNG_PARK_LIAN,TRAINER_TAICHUNG_MIYAHARA_PEIQI,TRAINER_TAICHUNG_SCIENCE_YICHENG,TRAINER_TAICHUNG_GREENWAY_XINGAN,TRAINER_TAICHUNG_CONFUCIUS_WENYI,TRAINER_TAICHUNG_FINE_ARTS_CAINING,TRAINER_TAICHUNG_FENGJIA_JIAHE,TRAINER_TAICHUNG_MAPLE_GARDEN_MUQING,TRAINER_TAICHUNG_THEATER_LING};
-+static void Room(unsigned gym){Reset();sCity=TRUE;sSave.vars[0xFA]=0;TaichungGymCancelChallenge();sSave.location.mapGroup=43;sSave.location.mapNum=MAP_NUM(rooms[gym]);gMapHeader.events=&sEvents;sLeaderActive=TRUE;sLeader.x=sPlayerX=sSave.pos.x=0;sLeader.y=sPlayerY=sSave.pos.y=0;}
++static void Room(unsigned gym){Reset();sPartyCount=1;sCity=TRUE;sSave.vars[0xFA]=0;TaichungGymCancelChallenge();sSave.location.mapGroup=43;sSave.location.mapNum=MAP_NUM(rooms[gym]);gMapHeader.events=&sEvents;sLeaderActive=TRUE;sLeader.x=sPlayerX=sSave.pos.x=0;sLeader.y=sPlayerY=sSave.pos.y=0;}
 +static void Return(bool8 start){TaichungGymEntry_ScriptOpenTeam();sPreparedStart=start;sMenuCallback();Frame();assert(!sLastScript);sFadeFinished=TRUE;Frame();assert(!sPreparedStart);}
-+int main(void){unsigned gym,choice;struct SaveBlock1 before;struct Pokemon party[PARTY_SIZE];
++static void Lose(unsigned gym)
++{
++    assert(TaichungGymPrepareChallenge(gym, trainers[gym]));
++    TaichungGymOnTrainerBattleStart(trainers[gym]);
++    assert(!TaichungGymOnTrainerBattleEnd(trainers[gym], B_OUTCOME_LOST));
++    assert(!TaichungGymGetCompletedMask());
++}
++int main(void){unsigned gym,choice;struct SaveBlock1 before;struct Pokemon party[PARTY_SIZE];u8 greeting[256];const u8 *retry;
 +for(sChinese=0;sChinese<=1;sChinese++)for(gym=0;gym<10;gym++){
 + Room(gym);before=sSave;memcpy(party,gPlayerParty,sizeof(party));assert(TaichungGymEntryShouldRemind());gStringVar4[0]=0;TaichungGymEntry_ScriptBeginPreparation();assert(gSpecialVar_Result&&!gStringVar4[0]);Return(TRUE);assert(sLastScript==TaichungGymPrepared_Start&&gSpecialVar_0x8004==gym);Frame();assert(sReturns==1);
 + TaichungGymEntry_ScriptPrepareBattle();assert(gSpecialVar_Result&&gStringVar4[0]&&gSpecialVar_0x8004==gym&&gSpecialVar_0x8005==trainers[gym]&&gSpecialVar_LastTalked==1);assert(!memcmp(&before,&sSave,sizeof(before))&&!memcmp(party,gPlayerParty,sizeof(party))&&!sSaves&&!sHeals);
@@ -658683,6 +658714,30 @@ index 00000000..0a884585
 + for(choice=1;choice<=3;choice++){Room(gym);TaichungGymEntry_ScriptBeginPreparation();gSpecialVar_Result=choice;TaichungGymEntry_ScriptFillRandom();assert(gSpecialVar_Result);TaichungGymEntry_ScriptPrepareBattle();assert(gSpecialVar_Result&&TaichungGymEntryConsumePreparedIntro(trainers[gym]));}
 + Room(gym);sSave.vars[0xFA]=1<<gym;assert(!TaichungGymEntryShouldRemind());TaichungGymEntry_ScriptBeginPreparation();assert(!gSpecialVar_Result);
 + Room(gym);gQuestLogState=QL_STATE_PLAYBACK;TaichungGymEntry_ScriptBeginPreparation();assert(!gSpecialVar_Result);
++ for(choice=0;choice<=PARTY_SIZE;choice++){
++  Room(gym);sPartyCount=choice;memcpy(party,gPlayerParty,sizeof(party));
++  TaichungGymEntry_ScriptCheck();assert(gSpecialVar_Result==(choice==1));
++  assert(!memcmp(party,gPlayerParty,sizeof(party)));
++  gSpecialVar_Result=1;TaichungGymEntry_ScriptFillRandom();assert(gSpecialVar_Result==(choice==1));
++ }
++ Room(gym);sHealthy=FALSE;assert(TaichungGymEntryShouldRemind());
++ Room(gym);sFirstIsEgg=TRUE;assert(!TaichungGymEntryShouldRemind());
++ Room(gym);TaichungGymEntry_ScriptBeginPreparation();TaichungGymEntry_ScriptPrepareBattle();
++ assert(gSpecialVar_Result&&TaichungGymGetRetryIntro(trainers[gym])==NULL);
++ StringCopy(greeting,gStringVar4);
++ Lose(gym);
++ assert(TaichungGymGetRetryIntro(trainers[gym])==NULL);
++ TaichungGymEntry_ScriptBeginPreparation();Return(FALSE);assert(sLastScript==TaichungGymPrepared_Leave);
++ TaichungGymEntry_ScriptBeginPreparation();TaichungGymEntry_ScriptPrepareBattle();
++ retry=TaichungGymGetRetryIntro(trainers[gym]);assert(retry&&retry[0]!=EOS);
++ assert(!memcmp(retry,gStringVar4,strlen((const char *)retry))&&memcmp(greeting,gStringVar4,strlen((const char *)retry)));
++ if(gym==TAICHUNG_GYM_CONFUCIUS_TEMPLE)
++  assert(retry==(sChinese?TaichungGym_Text_ConfuciusLossZh:TaichungGym_Text_ConfuciusLossEn));
++ assert(TaichungGymGetRetryIntro(trainers[(gym+1)%10])==NULL);
++ assert(TaichungGymEntryConsumePreparedIntro(trainers[gym]));
++ TaichungGymOnTrainerBattleStart(trainers[gym]);assert(TaichungGymGetRetryIntro(trainers[gym])==NULL);
++ assert(!TaichungGymOnTrainerBattleEnd(trainers[gym],B_OUTCOME_DREW));
++ assert(TaichungGymPrepareChallenge(gym,trainers[gym])&&TaichungGymGetRetryIntro(trainers[gym])==NULL);
 +}
 +Room(5);
 +sPlayerX=sSave.pos.x=6;
@@ -659156,10 +659211,10 @@ index 00000000..a6a6bf72
 +}
 diff --git a/tests/taichung_landmark_gyms_test.c b/tests/taichung_landmark_gyms_test.c
 new file mode 100644
-index 00000000..8dd9ad0c
+index 00000000..06389321
 --- /dev/null
 +++ b/tests/taichung_landmark_gyms_test.c
-@@ -0,0 +1,397 @@
+@@ -0,0 +1,393 @@
 +#include "global.h"
 +#include "event_data.h"
 +#include "taichung_landmark_gym.h"
@@ -659181,7 +659236,6 @@ index 00000000..8dd9ad0c
 +bool8 VarSet(u16 id, u16 value) { assert(id == TAICHUNG_GYM_COMPLETION_VAR); sSave.vars[id-0x4000] = value; sWrites++; return TRUE; }
 +u8 *StringCopy(u8 *dest, const u8 *src) { return (u8 *)strcpy((char *)dest, (const char *)src); }
 +const u8 *TaichungText(const u8 *en, const u8 *zh) { return sChinese ? zh : en; }
-+void TaichungGym_ScriptConsumeLandmarkLossNotice(void);
 +
 +#ifdef TRAINER_TAICHUNG_SCIENCE_YICHENG
 +void TaichungGym_ScriptGetScienceMessage(void);
@@ -659515,11 +659569,8 @@ index 00000000..8dd9ad0c
 +        for (other = 0; other < TAICHUNG_GYM_COUNT; other++)
 +            if (other != gym->gym) assert(!TaichungGymConsumeLossNotice(other));
 +        assert(!TaichungGymConsumeLossNotice(65535));
-+        gSpecialVar_0x8004 = gym->gym;
-+        TaichungGym_ScriptConsumeLandmarkLossNotice();
-+        assert(gSpecialVar_Result == (outcome == B_OUTCOME_LOST));
-+        TaichungGym_ScriptConsumeLandmarkLossNotice();
-+        assert(gSpecialVar_Result == FALSE);
++        assert(TaichungGymConsumeLossNotice(gym->gym) == (outcome == B_OUTCOME_LOST));
++        assert(!TaichungGymConsumeLossNotice(gym->gym));
 +        TaichungGymOnTrainerBattleEnd(gym->trainer, B_OUTCOME_LOST);
 +        assert(!TaichungGymConsumeLossNotice(gym->gym));
 +        assert(memcmp(&before, &sSave, sizeof(before)) == 0 && sWrites == 0);
@@ -750456,10 +750507,10 @@ index 00000000..83047c87
 +print('PASS: gym leader win speech goes straight to the single whiteout line. Regular trainers and rivals keep their stock routes.')
 diff --git a/tools/taichung_gameplay/test-gym-preparation.py b/tools/taichung_gameplay/test-gym-preparation.py
 new file mode 100644
-index 00000000..89540f0c
+index 00000000..cfe84de4
 --- /dev/null
 +++ b/tools/taichung_gameplay/test-gym-preparation.py
-@@ -0,0 +1,24 @@
+@@ -0,0 +1,28 @@
 +#!/usr/bin/env python3
 +"""Exercise actual ten-gym preparation guards, field return and intro routing."""
 +from pathlib import Path
@@ -750470,11 +750521,15 @@ index 00000000..89540f0c
 +(OUT/'native-gym-adapter.inc').write_text(m.definition((ROOT/'src/taichung_gym_adapter.c').read_text(),'TaichungGym_ScriptPrepareChallenge')[0]+'\n')
 +lines=[]
 +for f in ['taichung_gym_adapter','taichung_park_gym','taichung_miyahara_gym','taichung_science_gym','taichung_greenway_gym','taichung_confucius_gym','taichung_fine_arts_gym','taichung_fengjia_gym','taichung_maple_garden_gym','taichung_theater_gym']:
-+ lines.extend(re.findall(r'^const u8 TaichungGym_Text_\w+Intro(?:En|Zh)\[\] = .*?;$',(ROOT/'src'/f'{f}.c').read_text(),re.M))
-+assert len(lines)==20;(OUT/'native-intros.inc').write_text('\n'.join(lines)+'\n')
++ lines.extend(re.findall(r'^const u8 TaichungGym_Text_\w+(?:Intro|Loss|Retry)(?:En|Zh)\[\] = .*?;$',(ROOT/'src'/f'{f}.c').read_text(),re.M))
++assert len(lines)==40;(OUT/'native-intros.inc').write_text('\n'.join(lines)+'\n')
 +args=['cc','-std=gnu99','-Werror=implicit-function-declaration','-Wno-unknown-attributes','-Wno-unknown-escape-sequence','-Wno-pointer-to-int-cast','-Wno-int-to-pointer-cast','-I'+str(ROOT/'include'),'-I'+str(OUT),'-I'+str(ROOT/'build/taichung-tests/encounter-return'),str(ROOT/'src/taichung_encounter.c'),str(ROOT/'src/taichung_encounter_bridge.c'),str(ROOT/'src/taichung_encounter_field.c'),str(ROOT/'src/taichung_gym_progress.c'),str(ROOT/'src/taichung_gym_entry.c'),str(ROOT/'src/taichung_gym_preparation.c'),str(ROOT/'tests/taichung_gym_preparation_test.c'),'-o',str(OUT/'test')]
 +subprocess.run(args,check=True);subprocess.run([str(OUT/'test')],check=True)
 +setup=m.definition((ROOT/'src/battle_setup.c').read_text(),'BattleSetup_ConfigureTrainerBattle')[0];clause=setup.split('case TRAINER_BATTLE_CONTINUE_SCRIPT_NO_MUSIC:')[1].split('case TRAINER_BATTLE_CONTINUE_SCRIPT_DOUBLE:')[0];assert clause.index('TrainerBattleLoadArgs(sContinueScriptBattleParams, data)')<clause.index('TaichungGymEntryConsumePreparedIntro')<clause.index('return TaichungGymPrepared_TrainerBattle')
++intro=m.definition((ROOT/'src/battle_setup.c').read_text(),'GetIntroSpeechOfApproachingTrainer')[0]
++assert intro.index('TaichungGymGetRetryIntro')<intro.index('ReturnEmptyStringIfNull')
++for file in ('taichung_landmark_gym.inc','taichung_park_gym.inc','taichung_miyahara_gym.inc'):
++ assert 'Consume' not in (ROOT/'data/scripts'/file).read_text()
 +s=(ROOT/'data/scripts/taichung_gym_preparation.inc').read_text();assert len(re.findall(r'^\tprepared_gym_battle ',s,re.M))==10
 +entry=(ROOT/'data/scripts/taichung_gyms.inc').read_text().split('TaichungGymEntry_Check::',1)[1]
 +assert entry.count('callnative TaichungGymEntry_ScriptBeginPreparation')==2
