@@ -44,3 +44,16 @@ test('shipped draw keeps native foreground and falls back without a stale pose d
  const next=fixture();next.hideScene();next.overlay.draw();assert.equal(next.calls.some(c=>c[0]===next.playerAtlas),false);
  const missing=fixture();missing.overlay.player=undefined;missing.overlay.draw();assert.equal(missing.calls.some(c=>c[0]===missing.playerAtlas),false);
 });
+
+test('a transient player asset failure releases loading and retries on the next HD start, including an existing RAF',async()=>{
+ const f=fixture();f.overlay.player=undefined;f.overlay.raf=1;
+ const previousFetch=globalThis.fetch,previousImage=Object.getOwnPropertyDescriptor(globalThis,'Image');let requests=0;
+ globalThis.fetch=async()=>{if(++requests===1)throw new Error('transient expected denial');return{ok:true,json:async()=>pack};};
+ globalThis.Image=class{width=800;height=128;decode(){return Promise.resolve();}};
+ try{
+  f.overlay.start();assert.equal(f.overlay.playerLoading,true);
+  await new Promise(resolve=>setImmediate(resolve));assert.equal(f.overlay.playerLoading,false);assert.equal(f.overlay.player,undefined);
+  f.overlay.start();await new Promise(resolve=>setImmediate(resolve));
+  assert.equal(requests,2);assert.equal(f.overlay.playerLoading,false);assert.ok(f.overlay.player);
+ }finally{globalThis.fetch=previousFetch;if(previousImage)Object.defineProperty(globalThis,'Image',previousImage);else delete globalThis.Image;}
+});

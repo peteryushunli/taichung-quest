@@ -189,7 +189,7 @@ export class HdOverlay {
   private emit() { this.listeners.forEach((listener) => listener()); }
 
   start() {
-    if (!this.enabledValue || this.raf) return;
+    if (!this.enabledValue) return;
     if (!this.player && !this.playerLoading) {
       this.playerLoading = true;
       Promise.all([fetch('/hd/player/player.json', { cache: 'no-cache' }).then(r => {
@@ -201,6 +201,7 @@ export class HdOverlay {
         this.player = { atlas, matcher: new PlayerMatcher(templates) };
       }).catch(error => console.info('Using native player pixels:', error)).finally(() => { this.playerLoading = false; });
     }
+    if (this.raf) return;
     if (!this.sprites) loadSprites(this.spriteBase).then((sprites) => { this.sprites = sprites; })
       .catch((error) => console.info('HD character pack unavailable:', error));
     if (!this.pack && this.status !== 'loading') {
