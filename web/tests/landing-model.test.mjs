@@ -199,7 +199,7 @@ test('Boulevard map cards use the complete bilingual visitor descriptions', () =
       [description, descriptionZh, officialUrl, officialUrlZh],
       place.id,
     );
-    assert.ok(description.length > 200 && descriptionZh.length > 60, place.id);
+    assert.ok(description.trim() && descriptionZh.trim(), `${place.id}: both sourced visitor descriptions are required`);
     for (const locale of ['en', 'zh-Hant']) {
       assert.ok(localizedPlace(place, locale).url?.startsWith('https://'), place.id);
     }

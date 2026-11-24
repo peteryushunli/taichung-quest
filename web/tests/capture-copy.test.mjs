@@ -67,7 +67,14 @@ test('the Boulevard guide includes encounters for every non-gym destination', ()
     readFileSync(new URL('../src/data/boulevard-preview.json', import.meta.url), 'utf8'),
   );
   const sights = [...places, ...extraSights].filter((place) => !isGym(place));
-  assert.equal(sights.length, 17);
+  const newSites = [['national-trade-center', 21], ['ding-sheng-bhw', 22], ['the-lin', 23]];
+  const hasNewXitun = newSites.some(([id]) => extraSights.some(place => place.id === id));
+  assert.equal(sights.length, hasNewXitun ? 20 : 17);
+  if (hasNewXitun) {
+    for (const [id, bit] of newSites) assert.equal(markersById[id]?.captureBit, bit, id);
+    assert.equal(markersById['shen-ji-new-village'].captureBit, 3);
+    assert.equal(markersById['confucius-temple'].captureBit, undefined);
+  }
   assert.ok(!markersById['central-park']);
   assert.equal(markersById['green-museumbrary'].captureBit, 10);
   // Match the current exporter even when testing an older paired artifact.
@@ -79,7 +86,7 @@ test('the Boulevard guide includes encounters for every non-gym destination', ()
   for (const place of sights) {
     // Retained pre-combination geometry is a ROM-bound artifact. Main exports
     // the swapped ShenJi bit3 only from the combined native cartridge.
-    const bit = place.id === 'shen-ji-new-village' && markersById['confucius-temple']?.captureBit === 3
+    const bit = !hasNewXitun && place.id === 'shen-ji-new-village' && markersById['confucius-temple']?.captureBit === 3
       ? markersById['confucius-temple'].captureBit : markersById[place.id].captureBit;
     assert.notEqual(bit, undefined, place.id);
     assert.match(landmarkCaptureCopy(place.id, 'guide', true), /encounter.*capture.*unlock.*TEAM/i);
