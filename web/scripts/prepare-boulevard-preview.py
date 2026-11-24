@@ -110,6 +110,17 @@ def street_bands(plan, fill, origin, forecourt=None):
     return bands
 
 
+def apply_compiled_ground(world, areas):
+    for area in areas:
+        left, top, right, bottom = area["worldRect"]
+        rows = area["rows"]
+        require(len(rows) == bottom - top and all(len(row) == right - left for row in rows),
+                f"Unexpected terrain dimensions at {area['worldRect']}.")
+        for y, row in enumerate(rows, top):
+            for x, ground in enumerate(row, left):
+                world.put((x, y, x + 1, y + 1), ground)
+
+
 def terrain_images(fill, plan, candidate, geometry, report):
     os.environ["FILL_RAW"] = "1"
     sys.path.insert(0, str(fill / "src"))
@@ -128,16 +139,10 @@ def terrain_images(fill, plan, candidate, geometry, report):
         require(len(areas) == 3 and {tuple(area["worldRect"]) for area in areas} ==
                 {tuple(tower_block[key]) for key in ("oldLot", "towerLot", "forecourt")},
                 "The Xitun radar ground must cover both swapped blocks and the forecourt.")
-        for area in areas:
-            left, top, right, bottom = area["worldRect"]
-            rows = area["rows"]
-            require(len(rows) == bottom - top and all(len(row) == right - left for row in rows),
-                    f"Unexpected Xitun terrain dimensions at {area['worldRect']}.")
-            for y, row in enumerate(rows, top):
-                for x, ground in enumerate(row, left):
-                    world.put((x, y, x + 1, y + 1), ground)
+        apply_compiled_ground(world, areas)
     elif paving := tower_block.get("paving"):
         world.put(paving, "p")
+    apply_compiled_ground(world, report.get("xitunFrontageCleanup", {}).get("radarGround", []))
     width, height = geometry["world"]["width"], geometry["world"]["height"]
     origin = plan["world"]["box"][:2]
     ink = {
