@@ -635077,7 +635077,7 @@ index 00000000..57714ab7
 +}
 diff --git a/tests/taichung_badge_rewards_test.c b/tests/taichung_badge_rewards_test.c
 new file mode 100644
-index 00000000..27059c56
+index 00000000..3f694fbe
 --- /dev/null
 +++ b/tests/taichung_badge_rewards_test.c
 @@ -0,0 +1,199 @@
@@ -635097,7 +635097,7 @@ index 00000000..27059c56
 +static const u16 sTrainers[TAICHUNG_GYM_COUNT] = {
 +    TRAINER_TAICHUNG_STATION_JUN, TRAINER_TAICHUNG_PARK_LIAN,
 +    TRAINER_TAICHUNG_MIYAHARA_PEIQI, TRAINER_TAICHUNG_SCIENCE_YICHENG,
-+    TRAINER_TAICHUNG_GREENWAY_XINGAN, TRAINER_TAICHUNG_SHEN_JI_AXIU,
++    TRAINER_TAICHUNG_GREENWAY_XINGAN, TRAINER_TAICHUNG_CONFUCIUS_WENYI,
 +    TRAINER_TAICHUNG_FINE_ARTS_CAINING, TRAINER_TAICHUNG_FENGJIA_JIAHE,
 +    TRAINER_TAICHUNG_MAPLE_GARDEN_MUQING, TRAINER_TAICHUNG_THEATER_LING
 +};
@@ -635265,7 +635265,7 @@ index 00000000..27059c56
 +    Reset(0);
 +    // Preparing an unrelated trainer is not an explicit registered gym battle,
 +    // even if a caller pairs it with a valid gym ID.
-+    assert(TaichungGymPrepareChallenge(TAICHUNG_GYM_PARK, TRAINER_YOUNGSTER_BEN));
++    assert(!TaichungGymPrepareChallenge(TAICHUNG_GYM_PARK, TRAINER_YOUNGSTER_BEN));
 +    TaichungGymOnTrainerBattleStart(TRAINER_YOUNGSTER_BEN);
 +    assert(!TaichungGymIsBadgeChallenge(TRAINER_YOUNGSTER_BEN));
 +    TaichungGymOnTrainerBattleEnd(TRAINER_YOUNGSTER_BEN, B_OUTCOME_WON);
@@ -636349,14 +636349,15 @@ index 00000000..87655088
 +}
 diff --git a/tests/taichung_encounter_save_test.c b/tests/taichung_encounter_save_test.c
 new file mode 100644
-index 00000000..865a7da3
+index 00000000..bea341f8
 --- /dev/null
 +++ b/tests/taichung_encounter_save_test.c
-@@ -0,0 +1,277 @@
+@@ -0,0 +1,279 @@
 +#include <assert.h>
 +#include <stdio.h>
 +#include <string.h>
 +#include "global.h"
++#include "constants/flags.h"
 +#include "taichung_save.h"
 +#include "taichung_encounter.h"
 +#include "constants/battle.h"
@@ -636476,6 +636477,7 @@ index 00000000..865a7da3
 +    bool8 initialize = (virgin || legacy) && (fresh || Authenticated());
 +    if (fresh) BaselineTaichungSaveInitNewGame(); else BaselineTaichungSaveUpgradeOnContinue();
 +    expected = sSave;
++    if (fresh) expected.flags[FLAG_TAICHUNG_ENCOUNTER_RULES_SEEN / 8] &= ~(1 << (FLAG_TAICHUNG_ENCOUNTER_RULES_SEEN % 8));
 +    expectedPending = sPending; expectedWrites = sWrites;
 +    expectedWarps = sWarpRequests; expectedCancels = sCancels;
 +    sSave = input; sPending = pending;
