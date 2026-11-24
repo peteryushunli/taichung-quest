@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import { readFileSync } from 'node:fs';
 import { bilingualNeighborhood, neighborhoodLabels, boxesOverlap, placeNeighborhoodLabels } from '../src/neighborhood-labels.ts';
-import { districtLabelSpots, cityPlaceSummary } from '../src/landing-model.ts';
+import { districtLabelSpots } from '../src/landing-model.ts';
 
 const geometry = JSON.parse(readFileSync(new URL('../src/data/boulevard-preview.json', import.meta.url)));
 const expected = ['Fengjia 逢甲', 'Shuinan 水湳', 'Beitun 北屯', 'North District 北區', 'Xitun 西屯', 'Dadun 大墩', 'West District 西區', 'Old City 舊城', 'Nantun 南屯'];
@@ -19,7 +19,6 @@ test('both full maps and radar share the nine native neighborhood anchors and ex
   assert.equal(bilingualNeighborhood({ en: 'North District', zh: '北區' }), 'North District 北區');
   assert.equal(bilingualNeighborhood({ en: 'West', zh: '西區' }), 'West District 西區');
   assert.equal(JSON.stringify(geometry), before, 'Presentation must not change the paired native geometry');
-  assert.equal(cityPlaceSummary([], 'en', 9), '9 neighborhoods. 0 real places.');
   const exporter = readFileSync(new URL('../scripts/prepare-boulevard-preview.py', import.meta.url), 'utf8');
   assert.ok(exporter.includes('("North District", "北區"') && exporter.includes('("West District", "西區"'));
   assert.ok(!exporter.includes('LABELS =') && !exporter.includes('"districtLabels":'));

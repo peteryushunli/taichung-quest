@@ -5,7 +5,7 @@ import type { EncounterBridgeState } from './encounter-bridge';
 import landmarkCatalog from './data/landmarks.json';
 import { BOULEVARD_PREVIEW, cityGeometry, sightCatalog } from './preview-world';
 import { landingMedia, landmarkArt } from './landing-assets';
-import { cityPlaceSummary, districtLabelSpots, isGym, localizedPlace, markerPosition, orderPlaces, placeWorld } from './landing-model';
+import { districtLabelSpots, isGym, localizedPlace, markerPosition, orderPlaces, placeWorld } from './landing-model';
 import type { LandingLandmark } from './landing-model';
 import './city-guide.css';
 import { getLocale, initializeLocalization, localizeTree, onLocaleChange, t } from './i18n';
@@ -47,7 +47,7 @@ export function createCityGuide(host: GuideHost) {
   dialog.innerHTML = `
     <div class="guide-shell">
       <header class="guide-header"><div><p class="guide-eyebrow"><span data-i18n="TAICHUNG FIELD GUIDE">TAICHUNG FIELD GUIDE</span> <span class="guide-bilingual-heading" lang="zh-Hant">· 台中城市導覽</span></p><h2 id="city-guide-title" data-i18n="A small map. A bigger city.">A small map. A bigger city.</h2></div><button class="guide-close" aria-label="Close City Map" data-i18n-label="Close City Map" autofocus>×</button></header>
-      <p class="guide-intro" id="city-guide-intro"><span id="guide-place-count"></span> <span data-i18n="Choose a landmark to explore its game-world stop and find visitor information where available.">Choose a landmark to explore its game-world stop and find visitor information where available.</span></p>
+      <p class="guide-intro" id="city-guide-intro"><span data-i18n="Explore Taichung’s real neighborhoods and landmarks.">Explore Taichung’s real neighborhoods and landmarks.</span> <span data-i18n="Choose a landmark to explore its game-world stop and find visitor information where available.">Choose a landmark to explore its game-world stop and find visitor information where available.</span></p>
       <div class="guide-body">
         <section class="guide-overview" aria-label="Taichung city map" data-i18n-label="Taichung city map">
           <div class="overview-heading"><span>TAICHUNG <span lang="zh-Hant">臺中</span></span>${cityGeometry.coordinateSystem?.northUp === false ? '' : '<span class="compass" aria-label="North points up">N ↑</span>'}</div>
@@ -146,12 +146,10 @@ export function createCityGuide(host: GuideHost) {
     resumeOnClose = false;
     returnFocus?.focus({ preventScroll: true });
   });
-  dialog.querySelector('#guide-place-count')!.textContent = cityPlaceSummary(landmarks, getLocale(), cityGeometry.world.neighborhoods?.length);
   if (selected) select(selected);
   initializeLocalization(dialog);
   onLocaleChange(() => {
     localizeTree(dialog);
-    dialog.querySelector('#guide-place-count')!.textContent = cityPlaceSummary(landmarks, getLocale(), cityGeometry.world.neighborhoods?.length);
     if (selected) select(selected);
   });
 

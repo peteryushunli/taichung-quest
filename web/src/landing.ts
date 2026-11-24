@@ -10,7 +10,7 @@ import { badgeArt, landingMedia, landmarkArt } from './landing-assets';
 import { landmarkCaptureCopy } from './capture-copy';
 import type { PokemonIcon } from './landing-assets';
 import { pixelFlag } from './landing-flag';
-import { cityPlaceSummary, districtCount, districtLabelSpots, gymStatusSummary, isGym, isGymOpen, localizedPlace, markerPosition, orderPlaces, placeStatus, placeWorld } from './landing-model';
+import { districtCount, districtLabelSpots, gymStatusSummary, isGym, isGymOpen, localizedPlace, markerPosition, orderPlaces, placeStatus, placeWorld } from './landing-model';
 import type { LandingLandmark } from './landing-model';
 
 interface LandingHost {
@@ -71,7 +71,7 @@ function renderPass() {
 }
 
 function sectionHead(eyebrow: string, title: string, side?: string, titleId?: string) {
-  return `<div class="lp-section-head"><div class="lp-section-title"><p class="lp-eyebrow">${copy(eyebrow)}</p><h2 class="lp-h2 lp-display"${titleId ? ` id="${titleId}"` : ''}>${titleId ? escapeHtml(title) : copy(title)}</h2></div>${side ? `<p class="lp-section-side">${copy(side)}</p>` : ''}</div>`;
+  return `<div class="lp-section-head"><div class="lp-section-title"><p class="lp-eyebrow">${copy(eyebrow)}</p><h2 class="lp-h2 lp-display"${titleId ? ` id="${titleId}"` : ''}>${copy(title)}</h2></div>${side ? `<p class="lp-section-side">${copy(side)}</p>` : ''}</div>`;
 }
 
 function heroScreen() {
@@ -113,7 +113,7 @@ function markup() {
       </section>
 
       <section class="lp-map-section" id="map"><div class="lp-wrap">
-        ${sectionHead('01 — THE MAP', cityPlaceSummary(landmarks, getLocale(), city.world.neighborhoods?.length), "Distances are compressed, but the city keeps its shape: the old city around the station, the Greenway's museums in the middle, Xitun's theater and night market to the northwest, and Nantun's temples and parks to the south. Green pins are gyms; gold pins are landmarks to find on foot.", 'lp-map-heading')}
+        ${sectionHead('01 — THE MAP', 'Explore Taichung’s real neighborhoods and landmarks.', "Distances are compressed, but the city keeps its shape: the old city around the station, the Greenway's museums in the middle, Xitun's theater and night market to the northwest, and Nantun's temples and parks to the south. Green pins are gyms; gold pins are landmarks to find on foot.", 'lp-map-heading')}
         <fieldset class="lp-map-controls" id="lp-map-controls"><legend class="visually-hidden">${copy('Map layers')}</legend>${MAP_LAYERS.map(layer => `<label><input type="checkbox" data-map-toggle="${layer}" aria-controls="lp-${layer}-layer"${DEFAULT_MAP_LAYERS[layer] ? ' checked' : ''}><span data-map-layer-label="${layer}">${mapLayerLabel(layer, getLocale())}</span></label>`).join('')}</fieldset>
         <div class="lp-map-body">
           <div class="lp-map${BOULEVARD_PREVIEW ? ' lp-map-boulevard' : ''}" id="lp-map" style="aspect-ratio:${city.world.width} / ${city.world.height};background-size:${800 / city.world.width}% ${800 / city.world.height}%" role="group" aria-label="${escapeHtml(t('Choose a landmark'))}" data-i18n-label="Choose a landmark">
@@ -268,7 +268,6 @@ export function createLanding(root: HTMLElement, host: LandingHost) {
     root.querySelectorAll<HTMLElement>('[data-map-layer-label]').forEach(label => { label.textContent = mapLayerLabel(label.dataset.mapLayerLabel as typeof MAP_LAYERS[number], getLocale()); });
     layers.refresh();
     root.querySelector('#lp-pass')!.innerHTML = renderPass();
-    root.querySelector('#lp-map-heading')!.textContent = cityPlaceSummary(landmarks, getLocale(), city.world.neighborhoods?.length);
     root.querySelector('#lp-gym-status')!.textContent = gymStatusSummary(landmarks, getLocale());
     root.querySelectorAll<HTMLImageElement>('[data-i18n-alt]').forEach((image) => { image.alt = t(image.dataset.i18nAlt!); });
     root.querySelectorAll<HTMLButtonElement>('[data-locale-toggle]').forEach((button) => button.setAttribute('aria-pressed', String(button.dataset.localeToggle === getLocale())));

@@ -17,6 +17,7 @@ const listeners = new Set<(change: LocaleChange) => void>();
 const boundControls = new WeakSet<HTMLSelectElement>();
 
 const zh: Record<string, string> = {
+  'Explore Taichung’s real neighborhoods and landmarks.': '探索臺中的真實街區與地標。',
   'Map layers': '地圖圖層',
   'Named streets': '具名街道',
   'Caught': '已捕捉',

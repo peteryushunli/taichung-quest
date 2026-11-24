@@ -65,11 +65,6 @@ export function placeWorld(place: Pick<LandingLandmark, 'id' | 'world'>, markers
 
 export function districtCount(places: Pick<LandingLandmark, 'districtId'>[]) { return new Set(places.map((place) => place.districtId)).size; }
 
-export function cityPlaceSummary(places: LandingLandmark[], locale: LandingLocale, neighborhoods?: number) {
-  const districts = neighborhoods || districtCount(places);
-  return locale === 'zh-Hant' ? `${districts} 個街區，${places.length} 個真實地點。` : `${districts} ${neighborhoods ? 'neighborhoods' : 'districts'}. ${places.length} real places.`;
-}
-
 // The raised freeway along the top carries the three northern district names like road signs
 // (the Old City's sign stands over its north blocks); Nantun's name sits on the open canvas beside Wanhe, below the Old City.
 const DISTRICT_LABELS = [

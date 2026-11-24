@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import { readFileSync } from 'node:fs';
 import { existsSync } from 'node:fs';
-import { cityPlaceSummary, districtCount, districtLabelSpots, gymStatusSummary, isGym, isGymOpen, localizedPlace, markerPosition, orderPlaces, placeStatus, placeWorld } from '../src/landing-model.ts';
+import { districtCount, districtLabelSpots, gymStatusSummary, isGym, isGymOpen, localizedPlace, markerPosition, orderPlaces, placeStatus, placeWorld } from '../src/landing-model.ts';
 
 const landmarks = JSON.parse(readFileSync(new URL('../src/data/landmarks.json', import.meta.url), 'utf8'));
 const sights = JSON.parse(readFileSync(new URL('../src/data/sights.json', import.meta.url), 'utf8'));
@@ -72,8 +72,6 @@ test('stats come from the landmark data', () => {
   assert.equal(districtCount(landmarks), 5);
   assert.deepEqual(new Set(landmarks.map(place => place.districtId)), new Set(['old-city', 'greenway', 'xitun', 'nantun', 'north']));
   assert.equal(landmarks.filter(isGym).length, 10);
-  assert.equal(cityPlaceSummary(landmarks, 'en'), '5 districts. 12 real places.');
-  assert.equal(cityPlaceSummary(landmarks, 'zh-Hant'), '5 個街區，12 個真實地點。');
 });
 
 test('map pins sit on each entrance tile of the rendered city, labels facing the middle', () => {
@@ -174,7 +172,6 @@ test('the ten set-piece landmarks join the map as non-gym places, after the ten 
   assert.equal(new Set(places.map((place) => place.id)).size, 20);
   assert.deepEqual(places.slice(0, 10).map(isGym), Array(10).fill(true));
   assert.deepEqual(places.slice(10).map(isGym), Array(10).fill(false));
-  assert.equal(cityPlaceSummary(places, 'en'), '5 districts. 20 real places.');
   assert.equal(sights.length, 8);
   for (const place of sights) {
     assert.equal(place.kind, place.id === 'shen-ji-new-village' ? 'visit' : 'sight', place.id);
