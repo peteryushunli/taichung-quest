@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 256 256" role="img"><title>Palette Badge</title><g stroke="#283848" stroke-width="8" stroke-linejoin="round" stroke-linecap="round">
+<path d="M82 24C136 6 207 26 224 81C242 132 212 159 172 161C151 162 165 192 142 215C106 251 44 222 27 182C9 142 16 83 52 48Z" fill="#c88838"/>
+<path d="M82 35C136 20 194 42 207 87C220 128 200 143 163 146C133 149 143 184 122 200C93 222 50 198 38 171C20 124 39 68 82 35Z" fill="#f8c858" stroke="none"/>
+<circle cx="78" cy="77" r="17" fill="#e87858" stroke="none"/>
+<circle cx="139" cy="58" r="17" fill="#68a8d8" stroke="none"/>
+<circle cx="184" cy="108" r="17" fill="#609858" stroke="none"/>
+<circle cx="58" cy="143" r="17" fill="#8870b0" stroke="none"/>
+<ellipse cx="114" cy="168" rx="15" ry="23" fill="#283848" stroke="none"/>
+<path d="M110 151L115 148" fill="none" stroke="#f8f0d0" stroke-width="6"/>
+</g></svg>

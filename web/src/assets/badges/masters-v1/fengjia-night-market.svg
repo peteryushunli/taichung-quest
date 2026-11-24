@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 256 256" role="img"><title>Feast Badge</title><g stroke="#283848" stroke-width="8" stroke-linejoin="round" stroke-linecap="round">
+<path d="M35 237L225 16" fill="none" stroke="#283848" stroke-width="21"/>
+<path d="M35 237L225 16" fill="none" stroke="#c88838" stroke-width="10"/>
+<circle cx="87" cy="170" r="45" fill="#e87858"/>
+<path d="M66 151L78 145" fill="none" stroke="#f8c858" stroke-width="8"/>
+<path d="M71 186H101" fill="none" stroke="#a84850" stroke-width="8"/>
+<circle cx="137" cy="116" r="45" fill="#f8c858"/>
+<path d="M116 97L128 91" fill="none" stroke="#f8f0d0" stroke-width="8"/>
+<path d="M121 132H151" fill="none" stroke="#c88838" stroke-width="8"/>
+<circle cx="186" cy="62" r="45" fill="#e87858"/>
+<path d="M165 43L177 37" fill="none" stroke="#f8c858" stroke-width="8"/>
+<path d="M170 78H200" fill="none" stroke="#a84850" stroke-width="8"/>
+</g></svg>

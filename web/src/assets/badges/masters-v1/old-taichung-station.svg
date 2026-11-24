@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 256 256" role="img"><title>Departure Badge</title><g stroke="#283848" stroke-width="8" stroke-linejoin="round" stroke-linecap="round">
+<path d="M64 156H86V213H64ZM170 156H192V213H170Z" fill="#587088"/>
+<path d="M34 205H222M24 230H232" fill="none" stroke="#c88838" stroke-width="12"/>
+<circle cx="128" cy="101" r="82" fill="#c88838"/>
+<circle cx="128" cy="94" r="68" fill="#f8c858"/>
+<circle cx="128" cy="88" r="49" fill="#f8f0d0" stroke="none"/>
+<path d="M128 52V96H160" fill="none" stroke="#587088" stroke-width="11"/>
+<path d="M82 57L90 49" fill="none" stroke="#f8f0d0" stroke-width="7"/>
+</g></svg>

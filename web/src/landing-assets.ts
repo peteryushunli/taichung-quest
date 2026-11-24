@@ -1,3 +1,4 @@
+import { sharpBadgeArt } from './badge-art';
 import bikeShot from './assets/landing/bike-greenway.png';
 import cityMap from './assets/landing/city-map.png';
 import boulevardMap from './assets/boulevard/city.webp';
@@ -81,10 +82,10 @@ export const landmarkArt: Record<string, LandmarkArt> = {
   'wanhe-temple': { tint: brick, leader: muqing, team: [mon('Poliwhirl', poliwhirlIcon), mon('Butterfree', butterfreeIcon), mon('Vaporeon', vaporeonIcon)] },
 };
 
-// Each gym's City Pass badge, the game's own 32×32 award icon (graphics/taichung/badges), keyed by landmark id.
-export const badgeArt: Record<string, string> = Object.fromEntries(Object.entries(
+// Original-detail Story masters, with the native32 icon retained as fallback.
+export const badgeArt: Record<string, string> = { ...Object.fromEntries(Object.entries(
   import.meta.glob<string>('./assets/badges/*.png', { eager: true, import: 'default' }),
-).map(([path, url]) => [path.slice(path.lastIndexOf('/') + 1, -'.png'.length), url]));
+).map(([path, url]) => [path.slice(path.lastIndexOf('/') + 1, -'.png'.length), url])), ...sharpBadgeArt };
 
 // The Boulevard export verifies these facades against the compiled sprite hashes.
 const isolatedFacades = import.meta.glob<string>('./assets/landmarks/isolated/*.png', { eager: true, import: 'default' });

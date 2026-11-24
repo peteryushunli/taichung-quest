@@ -1,0 +1,159 @@
+{
+  "schemaVersion": 1,
+  "assetSetId": "taichung-badges-masters-v1",
+  "sourceCommit": "384e80bc",
+  "sourceManifestSha256": "fe6a3224012d2ff5e3d050f4e8c511a2201cdca9f927505a04229048f8cd47de",
+  "provenance": "Available approved review-v3 SVGs contain only16/32pixel rectangles. No independent high-resolution master was found in the original badge source set; all large versions are explicitly new faithful vector redraws, not claims of recovered detail.",
+  "badges": [
+    {
+      "gymIndex": 0,
+      "completionBit": 0,
+      "landmarkId": "old-taichung-station",
+      "badgeId": "badge.old-taichung-station",
+      "name": {
+        "en": "Departure Badge",
+        "zh": "啟程徽章"
+      },
+      "landmark": {
+        "en": "Old Station",
+        "zh": "舊車站"
+      },
+      "svgSha256": "e940754a6435fa55823a9d2f93f99ce10d99240772a9549e683edfa6d7f640c9"
+    },
+    {
+      "gymIndex": 1,
+      "completionBit": 1,
+      "landmarkId": "taichung-park",
+      "badgeId": "badge.taichung-park",
+      "name": {
+        "en": "Pavilion Badge",
+        "zh": "湖亭徽章"
+      },
+      "landmark": {
+        "en": "Taichung Park",
+        "zh": "臺中公園"
+      },
+      "svgSha256": "1467ff0909816c852ec7f4864722a41ecc58eec715afff22b9bc13eb90a2182c"
+    },
+    {
+      "gymIndex": 2,
+      "completionBit": 2,
+      "landmarkId": "miyahara",
+      "badgeId": "badge.miyahara",
+      "name": {
+        "en": "Chill Badge",
+        "zh": "沁涼徽章"
+      },
+      "landmark": {
+        "en": "Miyahara",
+        "zh": "宮原眼科"
+      },
+      "svgSha256": "20bd3cb250f81f7cd11fea86015ec3904d25f5d1bd5cc8078ea3d8549eab6911"
+    },
+    {
+      "gymIndex": 3,
+      "completionBit": 3,
+      "landmarkId": "natural-science-museum",
+      "badgeId": "badge.natural-science-museum",
+      "name": {
+        "en": "Discovery Badge",
+        "zh": "發現徽章"
+      },
+      "landmark": {
+        "en": "Science Museum",
+        "zh": "科博館"
+      },
+      "svgSha256": "0e2dda065f68b78f9bfb044ad74d97956162796d242982a5bee64affd6ae876c"
+    },
+    {
+      "gymIndex": 4,
+      "completionBit": 4,
+      "landmarkId": "calligraphy-greenway",
+      "badgeId": "badge.calligraphy-greenway",
+      "name": {
+        "en": "Brush Badge",
+        "zh": "筆意徽章"
+      },
+      "landmark": {
+        "en": "Greenway & Civic Square",
+        "zh": "草悟道・市民廣場"
+      },
+      "svgSha256": "541dd6b576994c024452da07e4898454976319f9d8d130fac839c7fb645a7ef4"
+    },
+    {
+      "gymIndex": 5,
+      "completionBit": 5,
+      "landmarkId": "confucius-temple",
+      "badgeId": "badge.confucius-temple",
+      "name": {
+        "en": "Rites Badge",
+        "zh": "禮儀徽章"
+      },
+      "landmark": {
+        "en": "Confucius Temple",
+        "zh": "孔廟"
+      },
+      "svgSha256": "a33cc18505ac9dea6dd73753ca08019a0da47c7e3e5f8c782afd9adeb354dfa3"
+    },
+    {
+      "gymIndex": 6,
+      "completionBit": 6,
+      "landmarkId": "fine-arts-museum",
+      "badgeId": "badge.fine-arts-museum",
+      "name": {
+        "en": "Palette Badge",
+        "zh": "調色徽章"
+      },
+      "landmark": {
+        "en": "Fine Arts Museum",
+        "zh": "國美館"
+      },
+      "svgSha256": "94b1c6c94e16e3c711af66cc5fb974048cb92c897c2d09ed53361f658c1d5656"
+    },
+    {
+      "gymIndex": 7,
+      "completionBit": 7,
+      "landmarkId": "fengjia-night-market",
+      "badgeId": "badge.fengjia-night-market",
+      "name": {
+        "en": "Feast Badge",
+        "zh": "豐味徽章"
+      },
+      "landmark": {
+        "en": "Fengjia Night Market",
+        "zh": "逢甲夜市"
+      },
+      "svgSha256": "4f0bc1e3e12ec313a4660be28a986f32759962ee2746780e1269ce717e1c8a44"
+    },
+    {
+      "gymIndex": 8,
+      "completionBit": 8,
+      "landmarkId": "wanhe-temple",
+      "badgeId": "badge.wanhe-temple",
+      "name": {
+        "en": "Tide Badge",
+        "zh": "潮汐徽章"
+      },
+      "landmark": {
+        "en": "Wanhe Temple",
+        "zh": "萬和宮"
+      },
+      "svgSha256": "1b01af0483df7f07c157fcc416beb8d6a317ece00b274ed6eafc667405e3ecc2"
+    },
+    {
+      "gymIndex": 9,
+      "completionBit": 9,
+      "landmarkId": "taichung-theater",
+      "badgeId": "badge.taichung-theater",
+      "name": {
+        "en": "Encore Badge",
+        "zh": "謝幕徽章"
+      },
+      "landmark": {
+        "en": "Taichung Theater",
+        "zh": "國家歌劇院"
+      },
+      "svgSha256": "46f44f6cf95dccd544a2bf89c8cfc97d506378e21670a66bfe8966a92a80635a"
+    }
+  ]
+}

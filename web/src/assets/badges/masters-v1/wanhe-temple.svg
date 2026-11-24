@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 256 256" role="img"><title>Tide Badge</title><g stroke="#283848" stroke-width="8" stroke-linejoin="round" stroke-linecap="round">
+<path d="M127 14C112 47 49 102 32 147C8 210 62 244 127 244C195 244 248 210 224 147C205 100 146 47 127 14Z" fill="#406898"/>
+<path d="M127 32C106 67 61 110 49 151C31 199 74 220 127 220C171 220 204 198 209 172C192 121 150 76 127 32Z" fill="#68a8d8" stroke="none"/>
+<path d="M66 146Q75 119 97 98" fill="none" stroke="#f8f0d0" stroke-width="10"/>
+<path d="M87 215H164" fill="none" stroke="#40a8a0" stroke-width="8"/>
+</g></svg>

@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 256 256" role="img"><title>Encore Badge</title><g stroke="#283848" stroke-width="8" stroke-linejoin="round" stroke-linecap="round">
+<path d="M25 64Q52 21 128 18Q204 21 231 64V225H25Z" fill="#c88838"/>
+<path d="M44 71Q69 39 128 37Q187 39 212 71" fill="none" stroke="#f8c858" stroke-width="9"/>
+<path d="M49 75H207V205H49Z" fill="#406898"/>
+<path d="M49 66H104C101 103 87 133 70 144V206H49Z" fill="#a84850"/>
+<path d="M49 67H83C81 104 66 124 49 137Z" fill="#e87858" stroke="none"/>
+<path d="M152 66H207V206H186V144C168 131 155 101 152 66Z" fill="#a84850"/>
+<path d="M176 67H207V137C191 123 178 104 176 67Z" fill="#e87858" stroke="none"/>
+<path d="M64 85V99M192 85V99" fill="none" stroke="#d8a0b0" stroke-width="6"/>
+<path d="M36 219H220" fill="none" stroke="#f8c858" stroke-width="8"/>
+<path d="M85 244H171" fill="none" stroke="#c88838" stroke-width="9"/>
+</g></svg>

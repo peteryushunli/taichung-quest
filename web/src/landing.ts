@@ -59,13 +59,13 @@ function renderStreets() {
     + names.map(({ name, bounds: [left, top, right, bottom], axis }) => `<span class="lp-street-label" data-axis="${axis}" data-bounds="${[left / width * 100, top / height * 100, right / width * 100, bottom / height * 100]}">${escapeHtml(name[language])}</span>`).join('');
 }
 
-// Step 3's City Pass, stamped with every gym's badge as the game draws it.
+// Step 3’s City Pass uses the same stable badge IDs and original-detail masters.
 function renderPass() {
   const chinese = getLocale() === 'zh-Hant';
   return gyms.map((place, index) => {
     const badge = (chinese ? place.badgeNameZh : place.badgeNameEn) ?? '';
     const label = `${number(index)} · ${badge} · ${chinese ? place.shortNameZh : place.shortNameEn}`;
-    const art = badgeArt[place.id] ? `<img class="lp-px" src="${escapeHtml(badgeArt[place.id])}" alt="" width="32" height="32">` : '';
+    const art = badgeArt[place.id] ? `<img src="${escapeHtml(badgeArt[place.id])}" alt="" width="256" height="256">` : '';
     return `<div class="lp-stamp ${isGymOpen(place) ? 'is-earned' : ''}" role="img" aria-label="${escapeHtml(label)}" title="${escapeHtml(label)}">${art}<span>${number(index)}</span></div>`;
   }).join('');
 }
