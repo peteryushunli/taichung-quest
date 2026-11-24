@@ -15,7 +15,7 @@ import type { HdScene } from './hd-scene';
 // fade) is put back from the frame, so whatever the game puts in front stays in
 // front. With nothing to replace, the overlay hides and the original canvas shows.
 
-type Building = { sprite: string; x: number; y: number; w: number; h: number; picture: string; covers: string; mask?: Uint8Array };
+type Building = { sprite: string; x: number; y: number; w: number; h: number; picture: string; covers: string; mask?: Uint8Array; kind?: 'sign' };
 type MapEntry = { name: string; ref: string; width: number; height: number; margin: number; cells: [number, number]; buildings: Building[] };
 type WorldPack = { version: 2; scale: number; group: number; romSha256: string | null; maps: Record<string, MapEntry> };
 type Loaded = { key: string; map: MapEntry; ref: Uint16Array; refW: number; refH: number };
@@ -399,11 +399,19 @@ export class HdOverlay {
     if (camera && loaded) {
       const { map, ref, refW } = loaded;
       let patched = false;
+      let drawingSigns = false;
       for (const b of map.buildings) {
         const x0 = b.x - camera.x, y0 = b.y - camera.y;
         if (x0 >= W || y0 >= H || x0 + b.w <= 0 || y0 + b.h <= 0) continue;
         const image = this.picture(b.picture);
         if (!image) continue;
+        if (b.kind === 'sign' && !drawingSigns) {
+          // Signs follow buildings in the pack. Restore the building pass
+          // first so a plaque can stay sharp in front of a facade.
+          if (patched) this.flushPatch();
+          patched = false;
+          drawingSigns = true;
+        }
         this.smooth(true);
         out.drawImage(image, x0 * k, y0 * k, b.w * k, b.h * k);
         this.smooth(false);

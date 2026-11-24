@@ -43,6 +43,31 @@ function fixture(detail=2) {
  return {overlay,t,frame,rgba,calls,restores,snapshots,clips,underlay,playerAtlas,npcAtlas,hideScene(){nav=undefined;}};
 }
 
+test('overlapping signs draw after facade restoration and preserve the live foreground', () => {
+ const f=fixture();
+ const facade={}, sign={};
+ const x=23, y=40, camera={x:48,y:528};
+ const exact=y*240+x, foreground=exact+1;
+ const map=f.overlay.currentMap();
+ map.map.buildings=[
+  {picture:'facade',x:x+camera.x,y:y+camera.y,w:2,h:1,mask:Uint8Array.of(0,0)},
+  {picture:'sign',kind:'sign',x:x+camera.x,y:y+camera.y,w:2,h:1,mask:Uint8Array.of(1,1)},
+ ];
+ f.overlay.currentMap=()=>map;
+ f.overlay.picture=(file)=>file==='facade'?facade:sign;
+ f.overlay.findSprites=()=>[];
+ f.frame[foreground]=0x4567;
+ f.overlay.draw();
+ const sources=f.calls.map(([source])=>source);
+ const facadeIndex=sources.indexOf(facade),signIndex=sources.indexOf(sign);
+ assert.ok(facadeIndex!==-1 && signIndex===facadeIndex+2);
+ assert.equal(sources[facadeIndex+1],f.overlay.patch);
+ assert.equal(sources[signIndex+1],f.overlay.patch);
+ assert.equal(f.restores[0][exact*4+3],255);
+ assert.equal(f.restores[1][exact*4+3],0,'the clean sign pixel survives the facade patch');
+ assert.equal(f.restores[1][foreground*4+3],255,'the live foreground survives the sign pass');
+});
+
 test('shipped draw uses genuine2x player coordinates alongside unchanged4x NPC coordinates at each display detail',()=>{
  for(const detail of [2,3,4]){
   const f=fixture(detail);f.overlay.draw();
