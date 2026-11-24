@@ -98,13 +98,20 @@ def main():
     game, out = sys.argv[1], sys.argv[2]
     os.makedirs(out, exist_ok=True)
     pictures, entries, report = [], [], []
-    for folder in sorted(glob.glob(os.path.join(game, 'graphics/taichung/*/'))):
+    folders = [(folder, False) for folder in sorted(glob.glob(os.path.join(game, 'graphics/taichung/*/')))]
+    # Wenyi's approved original/native pair uses the newer versioned character
+    # directory. Append her without repacking the existing character cells.
+    wenyi = os.path.join(game, 'graphics/taichung/characters/wenyi')
+    if os.path.isfile(os.path.join(wenyi, 'overworld-v1.png')):
+        folders.append((wenyi, True))
+    for folder, versioned in folders:
         name = os.path.basename(folder.rstrip('/'))
-        sources = sorted(glob.glob(os.path.join(STORY, name, 'source', '*.png')))
+        sources = sorted(glob.glob(os.path.join(folder if versioned else os.path.join(STORY, name), 'source', '*.png')))
         if not sources:
             continue
         for kind in ('overworld', 'battle'):
-            png, pal = os.path.join(folder, kind + '.png'), os.path.join(folder, kind + '.gbapal')
+            stem = kind + ('-v1' if versioned else '')
+            png, pal = os.path.join(folder, stem + '.png'), os.path.join(folder, stem + '.gbapal')
             if not os.path.exists(png) or not os.path.exists(pal):
                 continue
             palette = gbapal(pal)

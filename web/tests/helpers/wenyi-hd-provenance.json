@@ -1,0 +1,97 @@
+{
+  "nativeCommit": "9807adf4a3b0ebc3276d8de244e3d6baf108628b",
+  "wenyiSource": {
+    "graphics/taichung/characters/wenyi/source/overworld-generated-v1.png": "b57bdc7510f3f65efbd1083f742185d07ee42fd17d04dc41e8d3338fc6fec935",
+    "graphics/taichung/characters/wenyi/source/battle-generated-v1.png": "7d1c9dba19961fa2cf336605691caa8cd00242ed73c42a3c4fc8517af3400033",
+    "graphics/taichung/characters/wenyi/overworld-v1.png": "ce23d8b1d5f72cf42ff53a9771b11d0a038d90fcb4ab5e7f1515c4020c3358d6",
+    "graphics/taichung/characters/wenyi/overworld-v1.gbapal": "78f2092bf5cad7b668f2cfddbc16b9186f8201281a29fbc6ca4c7f3587346400",
+    "graphics/taichung/characters/wenyi/battle-v1.png": "5ed5d3f91c6239a4e78ff7d9963ee2329f2e574779e76ceaf4a4ae71b8467495",
+    "graphics/taichung/characters/wenyi/battle-v1.gbapal": "5e280d572d11b3a75ac476ba5d8bd401c1c9ac5319db73ad1544eafb0b4e7126"
+  },
+  "nativeTemplateSha256": [
+    {
+      "kind": "overworld",
+      "frame": 0,
+      "east": false,
+      "sha256": "7eecd85bc9c4b30f4709b8c960e95d14a4e2b78775ae0b4801319d346f7bc436"
+    },
+    {
+      "kind": "overworld",
+      "frame": 1,
+      "east": false,
+      "sha256": "ea9c5ab9b85f3d2776c3b7d991a17828d3ee1cf1e930d5377cf08e54d3f7dfb2"
+    },
+    {
+      "kind": "overworld",
+      "frame": 2,
+      "east": false,
+      "sha256": "b1c53688419f1a8529ec07a5f6426d396164a0d3e49e62c28c5c893e6218c828"
+    },
+    {
+      "kind": "overworld",
+      "frame": 2,
+      "east": true,
+      "sha256": "dcf21ca3dbf7d9b66641c66d1a27ad88cb87250fce18e305f7f8f520c2c9d38b"
+    },
+    {
+      "kind": "overworld",
+      "frame": 3,
+      "east": false,
+      "sha256": "b8f96b8934bb70c48a2e42bb847d7a2c91d08aa8bc5023a7e601499f85af5843"
+    },
+    {
+      "kind": "overworld",
+      "frame": 4,
+      "east": false,
+      "sha256": "96e599904dbccd1ea91afe9add0044c291342f00b623f6b2591c0e7673261fba"
+    },
+    {
+      "kind": "overworld",
+      "frame": 5,
+      "east": false,
+      "sha256": "8d4b0f9cb57a05139095525bab0dd68cecbc1be8fab4a70d2279d247348a7bed"
+    },
+    {
+      "kind": "overworld",
+      "frame": 6,
+      "east": false,
+      "sha256": "4d9ec63d27ed56a6953bb039f2a3d57553f9876d71581a8ec455e05409c94e0a"
+    },
+    {
+      "kind": "overworld",
+      "frame": 7,
+      "east": false,
+      "sha256": "49cadc1a7d0cd595f20139b726fc1de0f5c56b2db494ccbce00e150ef0ba0665"
+    },
+    {
+      "kind": "overworld",
+      "frame": 7,
+      "east": true,
+      "sha256": "7d2cdce0d155bc1fe99fbc3fbe0f2e5ecbd014770f93b4a29a1e446f8165a1c5"
+    },
+    {
+      "kind": "overworld",
+      "frame": 8,
+      "east": false,
+      "sha256": "4165be031b43e1b6e1cce39fe763c013d0b3f65da04922a8735c2c74ddd873f6"
+    },
+    {
+      "kind": "overworld",
+      "frame": 8,
+      "east": true,
+      "sha256": "4df886a946cc7fc8122e4258347284ef21063ffe67c69584f16699909ac137ae"
+    },
+    {
+      "kind": "overworld",
+      "frame": 9,
+      "east": false,
+      "sha256": "7eecd85bc9c4b30f4709b8c960e95d14a4e2b78775ae0b4801319d346f7bc436"
+    },
+    {
+      "kind": "battle",
+      "frame": 0,
+      "east": false,
+      "sha256": "6635e7e9835fef57555011e1b885cbf17bb89ec49251d0bd388528368bbea16a"
+    }
+  ]
+}

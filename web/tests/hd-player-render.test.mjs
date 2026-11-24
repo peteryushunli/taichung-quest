@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import { readFileSync } from 'node:fs';
 import { createRequire } from 'node:module';
+import { createHash } from 'node:crypto';
 import esbuild from 'esbuild';
 import { parsePlayerTemplates, PlayerMatcher } from '../src/hd-player.ts';
 const bundled=esbuild.buildSync({entryPoints:[new URL('../src/hd-overlay.ts',import.meta.url).pathname],bundle:true,platform:'node',format:'cjs',write:false,logLevel:'silent'});
@@ -9,6 +10,21 @@ const module={exports:{}};new Function('module','exports','require',bundled.outp
 const {HdOverlay}=module.exports;
 const pack=JSON.parse(readFileSync(new URL('../public/hd/player/player.json',import.meta.url)));
 const templates=parsePlayerTemplates(pack,800,128);
+
+test('all ten current gym leaders have HD field facings and portraits, including the exact native Wenyi templates',()=>{
+ const sprites=JSON.parse(readFileSync(new URL('../public/hd/sprites/sprites.json',import.meta.url))).sprites;
+ for(const character of ['jun','lian','peiqi','yicheng','xingan','wenyi','caining','jiahe','muqing','ling']){
+  for(const [frame,east] of [[0,false],[1,false],[2,false],[2,true]])
+   assert.ok(sprites.some(s=>s.character===character&&s.kind==='overworld'&&s.frame===frame&&s.east===east),`${character} needs field facing ${frame}/${east}`);
+  assert.ok(sprites.some(s=>s.character===character&&s.kind==='battle'),`${character} needs its battle portrait`);
+ }
+ const provenance=JSON.parse(readFileSync(new URL('./helpers/wenyi-hd-provenance.json',import.meta.url)));
+ for(const {kind,frame,east,sha256} of provenance.nativeTemplateSha256){
+  const sprite=sprites.find(s=>s.character==='wenyi'&&s.kind===kind&&s.frame===frame&&s.east===east);
+  assert.ok(sprite,`Wenyi ${kind}/${frame}/${east}`);
+  assert.equal(createHash('sha256').update(Buffer.from(sprite.pixels,'base64')).digest('hex'),sha256);
+ }
+});
 function fixture(detail=2) {
  const t=templates[0],frame=new Uint16Array(240*160).fill(0x1234),rgba=new Uint8ClampedArray(240*160*4);
  const calls=[],restores=[],snapshots=[],clips=[];const underlay={width:0,height:0};const playerAtlas={},npcAtlas={},grab={},patch={};let nav={group:43,map:63,x:2,y:29};
