@@ -102,10 +102,13 @@ test('map pins and gym cards use the short English names', () => {
   assert.equal(localizedPlace(landmarks[4], 'zh-Hant').mapLabel, '草悟道');
 });
 
-test('every gym and landmark has an isolated facade in the website catalog', () => {
+test('every gym and landmark has facade art in the website catalog', () => {
   assert.ok(assets.includes("('./assets/landmarks/isolated/*.png'"));
   for (const place of [...landmarks, ...sights, ...extraSights]) {
-    assert.ok(existsSync(new URL(`../src/assets/landmarks/isolated/${place.id}.png`, import.meta.url)), place.id);
+    const parentIcon = place.id === 'taichung-park-lakeshore';
+    if (parentIcon) assert.ok(assets.includes("landmarkArt['taichung-park-lakeshore'] = landmarkArt['taichung-park']"));
+    const facadeId = parentIcon ? 'taichung-park' : place.id;
+    assert.ok(existsSync(new URL(`../src/assets/landmarks/isolated/${facadeId}.png`, import.meta.url)), place.id);
   }
 });
 
