@@ -44,6 +44,7 @@ import './hd-overlay.css';
 import { CAPTURE_BOOT_INTENT_KEY, captureBlocksSnapshots, readCaptureBootPolicy } from './capture-persistence';
 import { hasReadableFireRedSave, isFireRedBackupSize } from './firered-save';
 import { isUntouchedDemoSave } from './demo-save';
+import { addPreviewSave, downloadPreviewSave, isTaichungSnapshot, PREVIEW_NEW_GAME_KEY } from './preview-save';
 import { readWithProgress } from './download';
 import { copyText, unsupportedBrowserMessage } from './browser-support';
 import { startAnalytics, track } from './analytics';
@@ -63,6 +64,7 @@ const SAVE_STORE = 'FILE_DATA';
 const SAVE_STAMP = 'taichung-quest-save-time';
 const CARTRIDGE_BOOT_PARAM = 'cartridge-boot';
 const cartridgeBootIntent = new URL(window.location.href).searchParams.get(CARTRIDGE_BOOT_PARAM);
+const previewSaveRequested = import.meta.env.VITE_PLAYTEST_PREVIEW_SAVE === '1';
 function captureBootRequired() {
   try { return readCaptureBootPolicy(localStorage).forceCartridge; } catch { return true; }
 }
@@ -71,6 +73,17 @@ let explicitCartridgeRestart = false;
 let savedAt: string | null = null;
 try { savedAt = localStorage.getItem(SAVE_STAMP); } catch { /* Storage can be disabled in private browser sessions. */ }
 let hasSave = savedAt !== null;
+let previewSeeded = false;
+
+function previewSaveWanted() {
+  if (!previewSaveRequested || bootFromCartridge || hasSave) return false;
+  try { return localStorage.getItem(PREVIEW_NEW_GAME_KEY) === null; } catch { return false; }
+}
+
+function skipPreviewSave() {
+  if (!previewSaveRequested) return;
+  try { localStorage.setItem(PREVIEW_NEW_GAME_KEY, '1'); } catch { /* Without storage, preview seeding is disabled. */ }
+}
 
 const icons = {
   play: '<path d="m9 5 11 7-11 7z"/>',
@@ -391,9 +404,7 @@ function flushFilesystem() {
 
 function discardOwnedSnapshot(path: string | undefined) {
   if (!emulator || !path) return;
-  const directory = `${emulator.filePaths().autosave}/`;
-  const filename = path.startsWith(directory) ? path.slice(directory.length) : '';
-  if (/^taichung-firered(?:-[a-f0-9]{16})?_auto\.ss$/.test(filename) && emulator.FS.analyzePath(path).exists) emulator.FS.unlink(path);
+  if (isTaichungSnapshot(path, emulator.filePaths().autosave) && emulator.FS.analyzePath(path).exists) emulator.FS.unlink(path);
 }
 
 function ownedSnapshotPath() {
@@ -520,6 +531,27 @@ async function persist(showFeedback = false) {
   }
 }
 
+async function installPreviewSave(runtime: mGBAEmulator, metadata: unknown, romSha256: string, romBytes: number) {
+  if (!previewSaveWanted() || runtime.FS.analyzePath(SAVE_PATH).exists) return;
+  const paths = runtime.filePaths();
+  if (runtime.FS.readdir(paths.autosave).some((name) => isTaichungSnapshot(`${paths.autosave}/${name}`, paths.autosave))) return;
+  try {
+    const seed = await downloadPreviewSave(metadata, romSha256, romBytes);
+    if (!seed || !previewSaveWanted()) return;
+    const added = await addPreviewSave(seed, {
+      database: SAVE_DATABASE, save: SAVE_PATH, saveDirectory: paths.savePath, snapshots: paths.autosave,
+    }, previewSaveWanted);
+    // Refresh the mounts before any cartridge or local writes. This also
+    // picks up progress that another tab persisted during the download.
+    await new Promise<void>((resolve, reject) => runtime.FS.syncfs(true, (error) => error ? reject(error) : resolve()));
+    for (const directory of Object.values(paths)) if (!runtime.FS.analyzePath(directory).exists) runtime.FS.mkdir(directory);
+    previewSeeded = added && runtime.FS.analyzePath(SAVE_PATH).exists;
+    if (previewSeeded) hasSave = true;
+  } catch (error) {
+    console.info('Preview save unavailable. Starting normally:', error);
+  }
+}
+
 async function startGame() {
   if (starting || running) return;
   starting = true;
@@ -559,6 +591,7 @@ async function startGame() {
       emulator = await createEmulator({ canvas });
       if (location.hostname === "127.0.0.1" || location.hostname === "localhost") (window as unknown as { __taichungEmulator?: mGBAEmulator }).__taichungEmulator = emulator;
       await emulator.FSInit();
+      await installPreviewSave(emulator, metadata, romSha256, rom.length);
       emulator.setCoreSettings({
         // The wrapper owns one guarded snapshot timer. Avoid the native loop's
         // duplicate timer and its unguardable thread-interrupt capture path.
@@ -640,7 +673,7 @@ async function startGame() {
     hdOverlay.start();
     document.querySelectorAll<HTMLButtonElement>('#pause-button, #sound-button, #game-sound-button, #save-button, #restart-button, #export-button, #import-button').forEach((button) => button.disabled = false);
     setStatus('OUT EXPLORING');
-    message(freshCartridgeBoot && cartridgeBootIntent ? cartridgeBootIntent === 'import' ? 'Save imported. Choose Continue from the game’s title screen.' : 'Cartridge restarted. Continue your in-game save or begin a new adventure.' : !freshCartridgeBoot && emulator.getAutoSaveState() ? 'Welcome back. Your last saved spot is waiting for you.' : 'Wake up in the guest house near Old Station. Use City Map to discover Taichung’s landmarks.');
+    message(freshCartridgeBoot && cartridgeBootIntent ? cartridgeBootIntent === 'import' ? 'Save imported. Choose Continue from the game’s title screen.' : 'Cartridge restarted. Continue your in-game save or begin a new adventure.' : !freshCartridgeBoot && emulator.getAutoSaveState() ? 'Welcome back. Your last saved spot is waiting for you.' : previewSeeded ? 'Choose Continue to open the playtest save.' : 'Wake up in the guest house near Old Station. Use City Map to discover Taichung’s landmarks.');
     canvas.focus({ preventScroll: true });
     // The Play button may have scrolled the intro into view. Collapsing that
     // intro must not leave a phone looking below its newly positioned game.
@@ -760,6 +793,7 @@ async function startNewGame() {
   if (starting || restarting) return;
   if (running) { void restartCartridge(); return; }
   if (savedAt && !bootFromCartridge && !(await confirmAction('Start a new game?', 'The cartridge restarts at its title screen, where you can choose New Game. Your in-game save is kept until you save over it; progress since that save will be lost.', 'Restart'))) return;
+  skipPreviewSave();
   bootFromCartridge = true;
   explicitCartridgeRestart = true;
   savedAt = null;
@@ -850,6 +884,7 @@ async function restartCartridge(importedSave?: Uint8Array) {
       ]);
     } finally { if (timeout) clearTimeout(timeout); }
     console.info('Cartridge reboot: save files flushed.');
+    skipPreviewSave();
     // The user confirmed this restart/import. The snapshot deletion and latest
     // SRAM are durable, so it is safe to clear the old encounter boot safeguard.
     try { localStorage.removeItem(CAPTURE_BOOT_INTENT_KEY); } catch { /* Conservative cartridge-only fallback remains. */ }

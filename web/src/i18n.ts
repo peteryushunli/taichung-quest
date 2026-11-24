@@ -342,6 +342,7 @@ const zh: Record<string, string> = {
   'Start a new game?': '要開始新遊戲嗎？',
   'The cartridge restarts at its title screen, where you can choose New Game. Your in-game save is kept until you save over it; progress since that save will be lost.': '遊戲會重新啟動並回到標題畫面，你可以在那裡選擇新遊戲。遊戲內存檔會保留到你覆寫為止，但上次存檔後的進度會遺失。',
   'Save imported. Choose Continue saved game, then Continue on the title screen.': '存檔已匯入。請按「繼續遊戲存檔」，再從標題畫面選擇「繼續」。',
+  'Choose Continue to open the playtest save.': '選擇「繼續」即可開啟試玩存檔。',
   'Cartridge restarted. Continue your saved game or start a new one.': '遊戲已重新啟動。可以繼續存檔，或開始新遊戲。',
   'Fan-made and non-commercial. Not affiliated with Nintendo, Game Freak or The Pokémon Company. Pokémon © its respective owners. Landmark info via Wikipedia and the Taichung Tourism and Travel Bureau.': '粉絲自製、非商業作品。與任天堂、Game Freak 及 The Pokémon Company 無關。Pokémon 版權歸各權利人所有。地標資訊來自維基百科與臺中觀光旅遊局。',
   'Licenses': '授權條款',
