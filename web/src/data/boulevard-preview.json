@@ -4801,12 +4801,13 @@
     }
   ],
   "sourceSha256": {
-    "compiledMapReport": "b5e131c544c56d17b4077f7c4719befdf090388465728174e28581d1f23da32e",
+    "compiledMapReport": "40a7c5978a65bfce9130a843af29e6193f319c5cda3c18e8c694f5b9f28fed90",
     "fill": "22d9c6695e21ab7419ccafe55d86e4833df8a5e394aee84133d4a1cd6b5849f6",
     "mapBook": "265d64cf1b47a26d412626301a6f1e542f3a19bcd89ec0084e6f08022a713b4d",
     "northXitunPlan": "89c555bbfa2a80d277b9729e6a2a9a1b6480dea9e4ffbf76ace332c7386f76e5",
     "northXitunCompiler": "be903fd3d2d37b0dc6c581512e86b84054457a30a53ce90bc7f83fcd1b65fb34",
     "xitunTowerSwap": "3c6d0e8c0deddd092f650297f58be5ee686d8a1f9c073c009ecc33ea04443ab3",
+    "scienceMuseumExterior": "d5498ab8795db850dfeb38174107e6b3f5aa0b0fe23e4d346df7b00513f23409",
     "streetPeople": "370ac784ff89540cc741402d14c495f5eefe7650c14feb2b51c076ffc8f6a07f",
     "landmarkSignPlan": "d7c2f2c749af3034e54877ee45b113e68f60809c9dc051ffc074191e85aaad56",
     "namedXitunBindings": "8dd6432e66f3e9b47e7eb3238f2e8788d29531b60c2f9fc96d5a13a7477d098d"
