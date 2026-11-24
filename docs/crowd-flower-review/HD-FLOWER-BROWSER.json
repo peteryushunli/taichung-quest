@@ -1,0 +1,39 @@
+{
+  "status": "PASS",
+  "classification": "Ten actual Chrome screenshots of the paired normal web game, JPEG range threshold24; native emulator pixel proofs recorded separately",
+  "hdCanvas": "hd-overlay hd-crisp playing",
+  "playerPose": "walking:0:native@112,56",
+  "regions": {
+    "rearFlowers": {
+      "screenRect": [
+        683,
+        294,
+        799,
+        352
+      ],
+      "pixelsWithChannelRangeOver24": 1872,
+      "maxChannelRange": 160
+    },
+    "frontFlowers": {
+      "screenRect": [
+        683,
+        468,
+        799,
+        526
+      ],
+      "pixelsWithChannelRangeOver24": 2590,
+      "maxChannelRange": 169
+    },
+    "treeInteriorControl": {
+      "screenRect": [
+        710,
+        370,
+        770,
+        453
+      ],
+      "pixelsWithChannelRangeOver24": 0,
+      "maxChannelRange": 0
+    }
+  },
+  "nativeRomSha256": "3dcbe7747c057f6da995c9ce8fdc5a717f08473daa4510ee7b71a9205a0dc6d3"
+}

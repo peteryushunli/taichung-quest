@@ -1,0 +1,21 @@
+{
+  "status": "PASS_READY_FOR_PROTECTED_REVIEW",
+  "preview": "https://taichung-quest-ct70x9yz4-peteryushunli-6635s-projects.vercel.app/",
+  "deploymentId": "dpl_4wnGhohFD3yot2d1GTx6X66YWSmk",
+  "frontendCommit": "b023500f43338feec7021d13d9fa1ebd6ede5635",
+  "nativeCommit": "f7e7d04d03f22872dad17fbd6bff88d5e1dd4897",
+  "romSha256": "3dcbe7747c057f6da995c9ce8fdc5a717f08473daa4510ee7b71a9205a0dc6d3",
+  "webTests": 140,
+  "hostedFilesVerified": 201,
+  "productionChanged": false,
+  "sourceCheckpoints": {
+    "crowdFlowers": "0c6f219",
+    "approvedPlayer": "f32bee9",
+    "playerRetry": "b023500"
+  },
+  "nativeOldOrdinaryAndExactSpawnCases": "PASS on final3dcbe774",
+  "hostedPlay": "PASS native settings screen",
+  "remainingLiveCases": [
+    "Exhaustive running and directional animation observations; all38 templates pass deterministic tests."
+  ]
+}
