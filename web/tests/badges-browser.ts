@@ -29,6 +29,14 @@ byId('run').addEventListener('click', () => {
   const lines: string[] = [];
   const root = view.element;
   const packet = root.dataset;
+  const scene = Number(byId<HTMLSelectElement>('scene').value);
+  if (scene !== 1) {
+    lines.push(`${root.hidden && !root.hasAttribute('aria-label') ? 'PASS' : 'FAIL'} native award/menu/battle scene is unobstructed`);
+    const native = byId<HTMLCanvasElement>('native-canvas');
+    lines.push(`${native.isConnected && native.tabIndex === 0 && getComputedStyle(native).visibility === 'visible' ? 'PASS' : 'FAIL'} native canvas and input target retained`);
+    lines.push(`${root.querySelectorAll('.badge-view-award').length === 0 ? 'PASS' : 'FAIL'} no browser award presentation`);
+    byId('results').textContent = lines.join('\n'); return;
+  }
   lines.push(`${!root.hidden ? 'PASS' : 'FAIL'} paired advancing native scene visible`);
   lines.push(`${root.querySelectorAll('.badge-view-slot').length === 10 ? 'PASS' : 'FAIL'} ten stable slots`);
   lines.push(`${root.querySelectorAll('.badge-view-slot.is-earned').length === Number(packet.completedMask).toString(2).replace(/0/g,'').length ? 'PASS' : 'FAIL'} exact native earned mask`);
