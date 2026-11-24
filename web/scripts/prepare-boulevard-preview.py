@@ -319,6 +319,19 @@ def main():
                 continue
             place = capture_bindings[event["script"]]
             require(place in places, f"The native encounter {place} has no website catalog entry.")
+            # The Lin keeps its original guide beside the new visible post.
+            # Only the explicitly registered companion is secondary; all other
+            # duplicate encounter bindings still fail below.
+            binding = next((site["game"] for site in (named_bindings or {}).get("sites", [])
+                            if site["id"] == place), {})
+            world = [x0 + ox + event["x"], y0 + oy + event["y"]]
+            if event in native["object_events"] and world == binding.get("existingGuideInteraction"):
+                require(binding.get("kind") == "sign" and any(
+                    sign.get("script") == event["script"] and
+                    [x0 + ox + sign["x"], y0 + oy + sign["y"]] == binding["authoredWorldInteraction"]
+                    for sign in native["bg_events"]),
+                    f"The preserved guide for {place} has no registered visible sign.")
+                continue
             require(place not in located, f"Multiple active exterior capture interactions for {place}.")
             located.add(place)
             tile = [x0 + ox + event["x"], y0 + oy + event["y"]]

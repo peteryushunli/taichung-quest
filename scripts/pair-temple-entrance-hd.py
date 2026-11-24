@@ -30,7 +30,7 @@ def main():
         p.add_argument(name, type=Path)
     for name in ('map-report', 'source-proof', 'receipt'):
         p.add_argument('--' + name, type=Path, required=True)
-    p.add_argument('--scope', choices=('painted-entrance', 'covered-flowers'), default='painted-entrance')
+    p.add_argument('--scope', choices=('painted-entrance', 'covered-flowers', 'playtest-followup'), default='painted-entrance')
     args = p.parse_args()
     proof = read(args.source_proof)
     if args.scope == 'painted-entrance':
@@ -40,7 +40,7 @@ def main():
                 'Unexpected painted-entrance source scope.')
         expected_maps = {'43.69'}
         baseline_rom = '8516a68407cf50d2f0b7039a977998d2793c162a6115dc393d501d3b972ada8f'
-    else:
+    elif args.scope == 'covered-flowers':
         cells = {tuple(v) for v in proof['targetWorldCells']}
         require(proof['passed'] and cells == {(242, 137), (243, 137)} and
                 proof['treeUpperLayerUnchanged'] and proof['collisionWarpsSignsActorsUnchanged'] and
@@ -50,8 +50,43 @@ def main():
         expected_maps = set(proof['changedReferences'])
         require(expected_maps == {'43.59', '43.60', '43.63', '43.64'}, 'Unexpected flower map scope.')
         baseline_rom = 'd05cdd78e0a615f9354021d14b359e5a00053f44a54cde9ee6a9fbda14257cc3'
+    else:
+        museum, hotel = proof['museumbrary'], proof['theLin']
+        require(proof['passed'] and museum['passed'] and hotel['passed'] and
+                museum['changedWorldCells'] == [[77, 22], [92, 22]] and
+                not museum['newlyBlockedCells'] and museum['old95ContinueTargetsPreserved'] and
+                hotel['changedWorldCells'] == [[53, 140]] and
+                hotel['exactRepair'] == [29, 14, 13, 14, 14] and
+                hotel['old95ContinueTargetsPreserved'] and hotel['approvedFacadeUnchanged'],
+                'Unexpected reviewed landmark-sign scope.')
+        cells = {(77, 22), (92, 22), (53, 140)}
+        if flowers := proof.get('coveredFlowerBeds'):
+            expected = {(x, y) for x in (237, 238, 242, 243)
+                        for y in (90, 96, 116, 122, 131, 137, 150, 156, 165)} - {(242, 137), (243, 137)}
+            targets = {tuple(v) for v in flowers['targetWorldCells']}
+            require(flowers['passed'] and targets == expected and flowers['treeUpperLayerUnchanged'] and
+                    flowers['collisionWarpsSignsActorsUnchanged'] and
+                    flowers['privateAndSharedPrimaryAndAnimationResourcesByteIdentical'] and
+                    flowers['newLowerAnimatedSlots'] == list(range(500, 504)),
+                    'Unexpected matching grove-flower scope.')
+            cells |= targets
+        expected_maps = None
+        baseline_rom = '3dcbe7747c057f6da995c9ce8fdc5a717f08473daa4510ee7b71a9205a0dc6d3'
+    interior_cells = {key: {tuple(cell) for cell in values}
+                      for key, values in proof.get('nativeInteriorPixelChanges', {}).items()}
+    require(not interior_cells or (args.scope == 'playtest-followup' and
+            set(interior_cells) == {'43.12'} and all(0 <= x < 23 and 0 <= y < 12
+            for x, y in interior_cells['43.12'])), 'Unreviewed interior scope.')
+    if interior_cells:
+        room = proof['theaterRoom']
+        require(room['passed'] and room['nativeMap'] == [43, 12] and room['dimensions'] == [23, 12]
+                and not room['newlyBlockedCells'] and room['allPriorSavePositionsRemainWalkable']
+                and room['warpsActorsScriptsGraphicsAndIdsUnchanged'] and room['sharedTilesetsUnchanged'],
+                'Unexpected Theater interior source scope.')
     report = read(args.map_report)
     maps = {f"43.{m['number']}": m for m in report['maps']}
+    if expected_maps is None:
+        expected_maps = set(maps) | set(interior_cells)
     before, after = read(args.previous / 'pack.json'), read(args.candidate / 'pack.json')
     require(before['romSha256'] == baseline_rom,
             'The follow-up must use the verified combined review baseline.')
@@ -61,6 +96,7 @@ def main():
     sites = {s['id']: s for s in read(args.native / 'data/taichung/named-xitun-bindings/anchors.json')['sites']
              if s['id'] != 'the-lin'}
     changed, pixels, coverage, changed_cells = [], 0, [], set()
+    changed_interiors = {}
     for key, old in before['maps'].items():
         new = after['maps'][key]
         require({k: v for k, v in old.items() if k != 'buildings'} ==
@@ -72,11 +108,18 @@ def main():
         if delta.any():
             require(key in expected_maps, f'Unapproved reference changes: {key}')
             ys, xs = np.where(delta)
-            ox, oy = maps[key]['worldRect'][:2]
-            actual = set(zip((ox + xs // 16 - new['margin']).tolist(),
-                             (oy + ys // 16 - new['margin']).tolist()))
-            require(actual <= cells, 'Reference changes extend beyond the reviewed world cells.')
-            changed_cells |= actual
+            if key in interior_cells:
+                actual = set(zip((xs // 16 - new['margin']).tolist(),
+                                 (ys // 16 - new['margin']).tolist()))
+                require(actual == interior_cells[key], 'Interior pixels differ beyond the exact source proof.')
+                changed_interiors[key] = actual
+            else:
+                require(key in maps, f'Unreviewed legacy reference changes: {key}')
+                ox, oy = maps[key]['worldRect'][:2]
+                actual = set(zip((ox + xs // 16 - new['margin']).tolist(),
+                                 (oy + ys // 16 - new['margin']).tolist()))
+                require(actual <= cells, 'Reference changes extend beyond the reviewed world cells.')
+                changed_cells |= actual
             changed.append(key)
             pixels += int(delta.sum())
         def identity(item):
@@ -88,6 +131,7 @@ def main():
             if old_auto.get(ident) == new_auto.get(ident):
                 continue
             require(key in expected_maps, f'Unapproved overlay changes: {key}')
+            require(key in maps, f'Unexpected automatic interior overlay change: {key}')
             v = new_auto.get(ident) or old_auto[ident]
             ox, oy = maps[key]['worldRect'][:2]
             left, top = ox + v['x'] / 16 - new['margin'], oy + v['y'] / 16 - new['margin']
@@ -106,8 +150,10 @@ def main():
             require([x, y, w, h] == [(l - ox + new['margin']) * 16, (t - oy + new['margin']) * 16,
                                      (r - l) * 16, (bottom - t) * 16], 'Stale tower envelope.')
             sprite = np.asarray(Image.open(art).convert('RGBA')).astype(np.int16)
-            require(sprite.shape[:2] == (h, w) and np.array_equal(a, b), 'Tower reference changed.')
+            require(sprite.shape[:2] == (h, w), 'Tower sprite dimensions changed.')
             left, top, right, lower = max(0, x), max(0, y), min(b.shape[1], x + w), min(b.shape[0], y + h)
+            require(np.array_equal(a[top:lower, left:right], b[top:lower, left:right]),
+                    'Tower reference envelope changed.')
             sx, sy = left - x, top - y
             opaque = sprite[..., 3] > 0
             own = np.zeros((h, w), dtype=bool)
@@ -128,6 +174,7 @@ def main():
     # a reviewed cell need not occur in every neighboring reference image.
     require(set(changed) <= expected_maps and changed_cells == cells and len(coverage) == 9,
             'Missing reviewed world-cell or tower coverage.')
+    require(changed_interiors == interior_cells, 'Missing reviewed interior pixels.')
     for picture in (args.candidate / 'pictures').glob('*.webp'):
         require(picture.read_bytes() == (args.previous / 'pictures' / picture.name).read_bytes(),
                 f'Approved HD picture changed: {picture.name}')
@@ -135,6 +182,7 @@ def main():
     (args.candidate / 'pack.json').write_text(json.dumps(after) + '\n')
     result = dict(status='PASS', scope=args.scope, romSha256=after['romSha256'], maps=len(after['maps']),
                   changedReferenceMaps=changed, changedPixels=pixels, changedWorldCells=sorted(cells),
+                  changedNativeInteriorCells={k: sorted(v) for k, v in changed_interiors.items()},
                   automaticPicturesByteExact=True, freshTowerMasksByteExact=True, coverage=coverage,
                   sourceProofSha256=digest(args.source_proof), compiledMapReportSha256=digest(args.map_report))
     args.receipt.write_text(json.dumps(result, indent=2) + '\n')

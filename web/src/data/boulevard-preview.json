@@ -3369,11 +3369,11 @@
       },
       "kind": "landmark",
       "world": [
-        26,
+        22,
         140
       ],
       "localEntrance": [
-        18,
+        14,
         13
       ],
       "exteriorMapId": "MAP_TAICHUNG_BLVD_TIGER_CITY",
@@ -3382,12 +3382,12 @@
       "captureInteraction": {
         "script": "TaichungLandmark_TheLin",
         "world": [
-          26,
+          22,
           140
         ],
         "nativeKey": "43:29",
         "local": [
-          18,
+          14,
           13
         ]
       }
@@ -4785,13 +4785,13 @@
     }
   ],
   "sourceSha256": {
-    "compiledMapReport": "4e4397f7e14dbe9fdf9e8877cd61b6438a19918612054a6dc78c6fe247b6056d",
+    "compiledMapReport": "349b5da3981fd565258780a9fa0ddedcf2972c3f3832f57dcf71dcf9d46f5e0c",
     "fill": "22d9c6695e21ab7419ccafe55d86e4833df8a5e394aee84133d4a1cd6b5849f6",
     "mapBook": "265d64cf1b47a26d412626301a6f1e542f3a19bcd89ec0084e6f08022a713b4d",
     "northXitunPlan": "89c555bbfa2a80d277b9729e6a2a9a1b6480dea9e4ffbf76ace332c7386f76e5",
     "northXitunCompiler": "be903fd3d2d37b0dc6c581512e86b84054457a30a53ce90bc7f83fcd1b65fb34",
-    "streetPeople": "28c1a9c03953184e979b127ddbc51ce510f1c4aeba94bff460f1a9d07b7b0248",
-    "namedXitunBindings": "f6570ca3d6952cfa247a2ea33f43816ac8adda944a9b9ab5334a9685816bb264"
+    "streetPeople": "7fa5553e2c8dae7b23b4831f873615b37c4a09129b972aac67212791b6e0164f",
+    "namedXitunBindings": "1138c1c0341508281bb3e5d02d516960c5e1dcb7494bdc68bb28c7432425f8b3"
   },
-  "geometryFingerprintSha256": "9b40d2e8cb824bfbf3f42a6382e5b1e7126c7d55e14da3839283bd3f19ad9460"
+  "geometryFingerprintSha256": "9264b2c250859f1606d58f0800bc6d84a2de93cb094766819f2d856b0454b7c4"
 }
