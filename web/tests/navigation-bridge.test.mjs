@@ -172,3 +172,23 @@ test('browser pause clears immediately; replaced shared heap must prove freshnes
   f.bridge.refresh();
   assert.equal(f.bridge.currentState.phase, 'hidden');
 });
+
+test('EWRAM anchor stays read-only and fresh in hidden native menus, and fails closed on pause/reset/stall', async (t) => {
+  const f = fixture(t);
+  assert.equal(f.bridge.ewramAnchor, undefined);
+  void f.bridge.start(); await until(() => f.bridge.currentState.phase === 'live');
+  assert.equal(f.bridge.ewramAnchor.offset, 64);
+  const words = new Uint32Array(f.heap.buffer, 64, 12);
+  words[6] = 0; words[7] = 0xffffffff; words[10] = 0x800;
+  await until(() => f.bridge.currentState.phase === 'hidden');
+  const before = f.heap.slice();
+  assert.equal(f.bridge.ewramAnchor.address, metadata.address);
+  assert.deepEqual(f.heap, before);
+  assert.equal(f.bridge.currentState.snapshot, undefined);
+  f.setActive(false); assert.equal(f.bridge.ewramAnchor, undefined);
+  f.setActive(true); assert.equal(f.bridge.ewramAnchor, undefined);
+  await until(() => !!f.bridge.ewramAnchor);
+  f.stopTicks(); await until(() => !f.bridge.ewramAnchor);
+  f.replaceHeap(); assert.equal(f.bridge.ewramAnchor, undefined);
+  f.bridge.stop(); assert.equal(f.bridge.ewramAnchor, undefined);
+});

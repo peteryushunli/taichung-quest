@@ -1,3 +1,8 @@
+import { NativeBadgeBridge, parseBadgeMetadata } from './badge-bridge';
+import type { BadgeMetadata } from './badge-bridge';
+import { pairedBadgePresentation } from './badge-view-model';
+import { badgeDesigns } from './badge-art';
+import { createBadgeView } from './badge-view';
 import { bilingualNeighborhood } from './neighborhood-labels';
 import './style.css';
 import './confirm.css';
@@ -144,6 +149,7 @@ const landing = createLanding(el('landing'), {
 });
 const canvas = el<HTMLCanvasElement>('game-canvas');
 protectGameDisplay(el('screen'));
+const badgeView = createBadgeView(el('screen'), badgeDesigns);
 // High-resolution buildings and characters drawn over the game's own frame, at
 // the chosen 2× detail. H turns the layer off and on (keyboards only).
 keepCanvasReadable(canvas);
@@ -171,6 +177,8 @@ let emulator: mGBAEmulator | undefined;
 let languageBridge: NativeLanguageBridge | undefined;
 let languageState: LanguageBridgeState | undefined;
 let navigationBridge: NativeNavigationBridge | undefined;
+let badgeBridge: NativeBadgeBridge | undefined;
+let badgeMetadata: BadgeMetadata | undefined;
 let navigationState: NavigationState = { phase: 'unavailable' };
 let onboarding: ReturnType<typeof createOnboarding> | undefined;
 let encounterBridge: NativeEncounterBridge | undefined;
@@ -283,7 +291,15 @@ function renderNavigation() {
   help.textContent = t(hint);
 }
 
-function refreshNavigation() { navigationBridge?.refresh(); renderNavigation(); }
+function refreshNavigation() { navigationBridge?.refresh(); renderNavigation(); badgeBridge?.refresh(); }
+
+function connectNativeBadges() {
+  badgeBridge?.stop(); badgeBridge = undefined; badgeView.update({});
+  if (!badgeMetadata) return;
+  badgeBridge = new NativeBadgeBridge({ metadata: badgeMetadata, getAnchor: () => navigationBridge?.ewramAnchor,
+    isActive: canPlayGame, onState: state => badgeView.update(state) });
+  badgeBridge.start();
+}
 
 async function connectNativeNavigation(romSha256: string, romBytes: number) {
   navigationBridge?.stop();
@@ -522,6 +538,8 @@ async function startGame() {
     const buildId = romSha256.slice(0, 16);
     const onboardingMetadata = parseOnboardingMetadata(metadata, romSha256, rom.length);
     encounterMetadata = parseEncounterMetadata(metadata, romSha256, rom.length);
+    badgeMetadata = parseBadgeMetadata(metadata, romSha256, rom.length);
+    badgeView.setPaired(pairedBadgePresentation(metadata, romSha256, rom.length));
     activeRomSha256 = romSha256;
     // The game's first settings screen shows this language (the website choice, else the
     // browser's), and the player can change it there. No web picker comes first.
@@ -544,6 +562,7 @@ async function startGame() {
         coreCrashedCallback: () => {
           if (restarting) return;
           navigationBridge?.stop();
+          badgeBridge?.stop();
           onboarding?.stop();
           encounterBridge?.stop();
           minimap.updateEncounter({ status: 'unavailable' });
@@ -625,6 +644,7 @@ async function startGame() {
     uprightScreen.hold();
     void connectNativeLanguage(romSha256, rom.length);
     void connectNativeNavigation(romSha256, rom.length);
+    connectNativeBadges();
   } catch (error) {
     showDownload();
     const reason = error instanceof Error ? error.message : 'Something went wrong while loading the game.';
@@ -828,6 +848,7 @@ async function restartCartridge(importedSave?: Uint8Array) {
     }
     restarting = false;
     connectNativeEncounters();
+    connectNativeBadges();
     refreshLanguageConnection();
     document.querySelectorAll<HTMLButtonElement>('#pause-button, #resume-button, #sound-button, #game-sound-button, #save-button, #restart-button, #import-button, #touch-city-map-button').forEach((button) => button.disabled = false);
     paused = wasPaused;
@@ -890,7 +911,7 @@ gameInput = createGameControls({
   release: (button) => emulator?.buttonUnpress(button),
 });
 document.addEventListener('visibilitychange', () => { if (!restarting && !confirmationOpen && document.hidden && running && !paused) setPaused(true); });
-window.addEventListener('pagehide', () => { languageBridge?.stop(); navigationBridge?.stop(); onboarding?.stop(); encounterBridge?.stop(); releaseInputs(); if (saveInterval) clearInterval(saveInterval); });
+window.addEventListener('pagehide', () => { languageBridge?.stop(); navigationBridge?.stop(); badgeBridge?.stop(); onboarding?.stop(); encounterBridge?.stop(); releaseInputs(); if (saveInterval) clearInterval(saveInterval); });
 
 // Locale refresh updates existing nodes, preserving the live emulator canvas.
 document.querySelectorAll<HTMLElement>('[aria-label]').forEach((element) => {
