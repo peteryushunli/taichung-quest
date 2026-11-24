@@ -111,13 +111,46 @@ test('a genuinely replaced native save reconciles only after its new identity an
 });
 
 test('new high-bit results retain the ordered native durability transaction', async () => {
-  for (const site of [21, 22, 23]) for (const caught of [false, true]) {
+  for (const site of [21, 22, 23, 24, 25, 26]) for (const caught of [false, true]) {
     const f = setup();
     f.current = { ...f.current, phase: 4, site, attempts: proof.attempts | 1 << site, unlocks: proof.unlocks | (caught ? 1 << site : 0) };
-    f.bytes = fixture(f.current, 1, 5, 0xec02).bytes;
+    f.bytes = fixture(f.current, 1, 5, site >= 24 ? 0xec03 : 0xec02).bytes;
     const controller = new CaptureStorageController(f.options);
     await controller.persist(f.current);
     assert.deepEqual(f.events, ['intent', 'flush', 'discard', 'flush', 'clear']);
     assert.equal(controller.blocksSnapshots, false);
   }
+});
+
+test('each starter Begin survives reload until its exact EC03 native Continue can reconcile', async () => {
+  for (const [site, species] of [[24, 6], [25, 9], [26, 3]]) {
+    const f = setup();
+    f.current = { ...f.current, site, species, attempts: proof.attempts | 1 << site };
+    f.bytes = fixture(f.current, 0, 13, 0xec03).bytes;
+    await new CaptureStorageController(f.options).persist(f.current);
+    assert.deepEqual(f.events, ['intent', 'flush', 'discard', 'flush']);
+    assert.equal(readCaptureBootPolicy(f.storage).forceCartridge, true);
+    assert.equal(readCaptureBootPolicy(f.storage).intent.attempts, f.current.attempts);
+    const resumed = new CaptureStorageController(f.options);
+    f.current = { ...f.current, phase: 0, site: 255, species: 0 };
+    const expected = f.current;
+    f.current = { ...expected, attempts: proof.attempts };
+    assert.equal(await resumed.reconcile(f.current), false, 'A refunded starter attempt cannot clear the fence.');
+    f.current = expected; f.events.length = 0;
+    assert.equal(await resumed.reconcile(f.current), true);
+    assert.deepEqual(f.events, ['flush', 'discard', 'flush', 'clear']);
+    assert.equal(resumed.blocksSnapshots, false);
+  }
+});
+
+test('malformed EC03 extra bits leave native Save unacknowledged and snapshots fenced', async () => {
+  const f = setup();
+  f.current = { ...f.current, site: 26, species: 3, attempts: proof.attempts | 1 << 26 };
+  const file = fixture(f.current, 1, 5, 0xec03);
+  file.view.setUint16(file.positions[2] + 0x25e, 3, true); file.seal(2);
+  f.bytes = file.bytes;
+  const controller = new CaptureStorageController(f.options);
+  await assert.rejects(controller.persist(f.current), /complete native landmark save/);
+  assert.deepEqual(f.events, ['intent']);
+  assert.equal(controller.blocksSnapshots, true);
 });

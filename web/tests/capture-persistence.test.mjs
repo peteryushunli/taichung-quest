@@ -87,6 +87,53 @@ test('EC02 keeps 24 stable bits in the original low-10/upper-16 layout', () => {
   for (const bit of [24, 25, 26]) assert.equal(verifyCaptureNativeSave(file, { ...proof, attempts: 1 << bit, unlocks: 0 }), undefined);
 });
 
+test('EC03 attests all 27 slots, including independent starter and retired history in rotated save sectors', () => {
+  for (const bit of Array.from({ length: 27 }, (_, bit) => bit)) for (const caught of [false, true])
+    for (const slot of [0, 1]) for (const rotation of [0, 5, 13]) {
+      const expected = { ...proof, attempts: proof.attempts | 1 << bit, unlocks: proof.unlocks | (caught ? 1 << bit : 0) };
+      const { bytes } = fixture(expected, slot, rotation, 0xec03);
+      const before = bytes.slice();
+      assert.deepEqual(verifyCaptureNativeSave(bytes, expected), { ...expected, slot });
+      assert.equal(verifyCaptureNativeSave(bytes, { ...expected, attempts: expected.attempts ^ 1 << bit }), undefined);
+      assert.deepEqual(bytes, before, 'The browser reader must never migrate or mutate SRAM.');
+    }
+  for (const saveCounter of [0, 0xffffffff]) {
+    const expected = { ...proof, saveCounter, attempts: 0x7ffffff, unlocks: 0x7ffffff };
+    assert.ok(verifyCaptureNativeSave(fixture(expected, 1, 13, 0xec03).bytes, expected));
+  }
+});
+
+test('EC03 rejects reserved extra bits, orphan caught26, unknown schemas and duplicate native transactions', () => {
+  const expected = { ...proof, attempts: proof.attempts | 1 << 26, unlocks: proof.unlocks | 1 << 26 };
+  for (let bit = 0; bit < 16; bit++) {
+    if (bit === 0 || bit === 8) continue;
+    const { bytes, view, positions, seal } = fixture(expected, 1, 5, 0xec03);
+    view.setUint16(positions[2] + 0x25e, 0x101 | 1 << bit, true); seal(2);
+    assert.equal(verifyCaptureNativeSave(bytes, expected), undefined, `reserved extra bit${bit}`);
+  }
+  const orphan = fixture(proof, 1, 5, 0xec03);
+  orphan.view.setUint16(orphan.positions[2] + 0x25e, 0x100, true); orphan.seal(2);
+  assert.equal(verifyCaptureNativeSave(orphan.bytes, proof), undefined);
+  for (const schema of [0, 0xec04, 0xffff]) assert.equal(verifyCaptureNativeSave(fixture(proof, 1, 5, schema).bytes, proof), undefined);
+  const duplicate = fixture(expected, 1, 5, 0xec03).bytes;
+  duplicate.set(fixture(expected, 0, 13, 0xec03).bytes.subarray(0, 14 * 0x1000), 0);
+  assert.equal(verifyCaptureNativeSave(duplicate, expected), undefined);
+});
+
+test('EC01/EC02 reserved upper and extra words cannot become fresh starter progress', () => {
+  for (const schema of [0xec01, 0xec02]) {
+    const { bytes, view, positions, seal } = fixture(proof, 1, 13, schema);
+    view.setUint16(positions[2] + 0x25e, 0xffff, true);
+    for (const at of [0x260, 0x264]) view.setUint16(positions[2] + at, view.getUint16(positions[2] + at, true) | 0xc000, true);
+    seal(2);
+    assert.ok(verifyCaptureNativeSave(bytes, proof));
+    for (const bit of [24, 25, 26]) {
+      assert.equal(verifyCaptureNativeSave(bytes, { ...proof, attempts: proof.attempts | 1 << bit }), undefined);
+      assert.equal(verifyCaptureNativeSave(bytes, { ...proof, attempts: proof.attempts | 1 << bit, unlocks: proof.unlocks | 1 << bit }), undefined);
+    }
+  }
+});
+
 function storage() {
   const values = new Map();
   return { getItem: key => values.get(key) ?? null, setItem: (key, value) => values.set(key, value), removeItem: key => values.delete(key) };
