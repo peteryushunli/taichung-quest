@@ -4558,11 +4558,15 @@
       "kind": "sight",
       "gymStatus": "not-a-gym",
       "playable": true,
-      "description": "Tiger City is a shopping and entertainment complex on Henan Road in Xitun’s Seventh Redevelopment Zone. Restaurants, shops and a cinema open off a broad outdoor plaza, and a glass elevator looks over the square. Maple Garden and the National Taichung Theater are both a short walk away. In a few blocks, the neighborhood goes from the mall and its cinema to the theater’s curved walls and the park’s sunken paths.",
-      "descriptionZh": "老虎城位於西屯七期重劃區的河南路上，聚集了商店、餐廳與影城。從寬闊的戶外廣場進入商場，還能搭乘透明景觀電梯俯瞰廣場。步行不遠，就是秋紅谷和臺中國家歌劇院。短短幾個街廓，從影城與商場的熱鬧、歌劇院的曲牆，到下沉公園的步道，就能看見七期不同的面貌。",
+      "description": "An evening at Tiger City can pair dinner and a film with the changing lineup of events on its outdoor plaza. This mix of moviegoing and an open-air gathering place gives the Xitun complex a distinctive place in Taichung’s evening scene. Take the glass elevator for a view over the square, then walk a few minutes to nearby Maple Garden.",
+      "descriptionZh": "在老虎城，可以把晚餐、看電影與戶外廣場不定期推出的活動排成一個晚上的行程。影城與開放式廣場相連，讓這個西屯去處在臺中的夜間生活裡別具特色。搭上玻璃景觀電梯俯瞰廣場，再走一小段路，就能到秋紅谷散步。",
       "officialUrl": "https://www.tigercity.com.tw/en/info/about/",
       "officialUrlZh": "https://www.tigercity.com.tw/info/about/",
-      "officialSourceTitle": "Tiger City"
+      "officialSourceTitle": "Tiger City",
+      "descriptionSources": [
+        "https://www.tigercity.com.tw/en/info/about/",
+        "https://www.tigercity.com.tw/news/"
+      ]
     },
     {
       "id": "rainbow-village",
@@ -4711,8 +4715,8 @@
       "kind": "sight",
       "gymStatus": "not-a-gym",
       "playable": true,
-      "description": "National Trade Center is an office tower in Xitun designed by Aedas around the silhouette of a bamboo shoot. Its rounded profile and layered rain covers stand out near the National Taichung Theater.",
-      "descriptionZh": "NTC國家商貿中心是西屯的商辦大樓，由Aedas以竹筍的輪廓為設計靈感。圓潤的量體與層層雨遮，讓它在國家歌劇院附近的天際線中格外醒目。",
+      "description": "Across from the National Taichung Theater, National Trade Center rises like a bamboo shoot, narrowing toward the top. Aedas shaped this Xitun office tower with an oval outline, folded glass curtain walls and layered horizontal rain shades. From street level, those stacked bands are a clear clue to its bamboo-inspired design.",
+      "descriptionZh": "國家歌劇院對面的NTC國家商貿中心，像竹筍般向上收尖。Aedas以橢圓輪廓、摺面玻璃帷幕與層層水平雨遮，塑造這棟西屯商辦大樓。從街道望去，一圈圈堆疊的線條，就是辨認竹筍造型的線索。",
       "officialUrl": "https://www.google.com/maps/search/?api=1&query=NTC%E5%9C%8B%E5%AE%B6%E5%95%86%E8%B2%BF%E4%B8%AD%E5%BF%83%20%E8%87%BA%E4%B8%AD%E5%B8%82%E8%A5%BF%E5%B1%AF%E5%8D%80%E5%B8%82%E6%94%BF%E5%8C%97%E4%BA%8C%E8%B7%AF282%E8%99%9F",
       "officialSourceTitle": "National Trade Center — place and address map",
       "location": {
@@ -4720,8 +4724,7 @@
         "addressZh": "臺中市西屯區市政北二路282號"
       },
       "descriptionSources": [
-        "https://www.aedas.com/en/project/national-trade-center/",
-        "https://green.epb.taichung.gov.tw/page/stronghold/p03.aspx?city=160&num=5952&pro_kind=2"
+        "https://www.aedas.com/en/project/national-trade-center/"
       ]
     },
     {
@@ -4740,8 +4743,8 @@
       "kind": "sight",
       "gymStatus": "not-a-gym",
       "playable": true,
-      "description": "Ding Sheng BHW stands on Shizheng North 2nd Road in Xitun. Look up at its tall facade while exploring the streets around Taichung’s modern business district.",
-      "descriptionZh": "鼎盛BHW位於西屯市政北二路。走在臺中現代商辦街區的街道上，可以抬頭欣賞這棟高樓的立面。",
+      "description": "Ding Sheng BHW rises 36 stories at the corner of Henan Road and Shizheng North 2nd Road in Xitun. Stone panels and glass curtain walls define its exterior, while a planted setback lines the frontage. Look for that green edge as you walk around the base of the tower.",
+      "descriptionZh": "鼎盛BHW位在西屯河南路與市政北二路轉角，是一棟地上三十六層的商辦大樓。外牆結合石材與玻璃帷幕，臨街退縮處則留有植栽綠帶。沿著人行道經過時，可以從大樓腳下的綠意認出這處街角。",
       "officialUrl": "https://www.google.com/maps/search/?api=1&query=%E9%BC%8E%E7%9B%9BBHW%20%E8%87%BA%E4%B8%AD%E5%B8%82%E8%A5%BF%E5%B1%AF%E5%8D%80%E5%B8%82%E6%94%BF%E5%8C%97%E4%BA%8C%E8%B7%AF230%E8%99%9F",
       "officialSourceTitle": "Ding Sheng BHW — place and address map",
       "location": {
@@ -4749,7 +4752,7 @@
         "addressZh": "臺中市西屯區市政北二路230號"
       },
       "descriptionSources": [
-        "https://www.highwealthgroup.com.tw/property/市政萬象廣場",
+        "https://www.taichung.gov.tw/8868/8872/9962/971521",
         "https://www.kaoarch.org.tw/Upload/20241223095800_40101.pdf"
       ]
     },
