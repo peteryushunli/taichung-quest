@@ -67,7 +67,15 @@ test('the Boulevard guide includes encounters for every non-gym destination', ()
     readFileSync(new URL('../src/data/boulevard-preview.json', import.meta.url), 'utf8'),
   );
   const sights = [...places, ...extraSights].filter((place) => !isGym(place));
-  const newSites = [['national-trade-center', 21], ['ding-sheng-bhw', 22], ['the-lin', 23]];
+  // The checked-in artifact remains paired to its cartridge until Main exports
+  // the combined ROM. Assert the entire rotation when it is present.
+  const rotated = markersById['maple-garden']?.captureBit === 26;
+  const newSites = [['national-trade-center', 21], ['ding-sheng-bhw', rotated ? 25 : 22], ['the-lin', 23]];
+  if (rotated) {
+    assert.equal(markersById['botanical-garden'].captureBit, 0);
+    assert.equal(markersById['jingming-street'].captureBit, 24);
+    assert.ok(!Object.values(markersById).some(marker => [13, 18, 22].includes(marker.captureBit)));
+  }
   const hasNewXitun = newSites.some(([id]) => extraSights.some(place => place.id === id));
   assert.equal(sights.length, hasNewXitun ? 20 : 17);
   if (hasNewXitun) {

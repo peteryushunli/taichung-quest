@@ -70,7 +70,7 @@ test('ACK commits only its five fields and refuses stale, wrong-phase, already-A
 test('v2/72 preserves each new site and writes only the existing ACK fields', () => {
   const v2 = { ...metadata, version: 2, size: 72 };
   assert.deepEqual(parseEncounterMetadata({ sha256: sha, bytes: 16, encounterBridge: v2 }, sha, 16), v2);
-  for (const [site, species] of [[3, 65], [20, 144], [21, 82], [22, 141], [23, 53]]) for (const caught of [false, true]) {
+  for (const [site, species] of [[0, 131], [3, 65], [20, 144], [21, 82], [22, 141], [23, 53], [24, 6], [25, 9], [26, 3]]) for (const caught of [false, true]) {
     const { heap, u32, view } = fixture();
     const attempts = (1 << site) | (1 << 3); // Alakazam keeps its stable historical bit.
     const unlocks = caught ? attempts : 0;
@@ -90,8 +90,8 @@ test('v2/72 preserves each new site and writes only the existing ACK fields', ()
     assert.equal(view.getUint32(offset + 52, true), unlocks);
     assert.equal(view.getUint32(offset + 64, true), packet.saveCounter);
     assert.equal(heap[offset + 47], 1);
-    u32(32, 1 << 24); assert.equal(readEncounterSnapshot(heap, offset, v2), undefined);
-    u32(32, attempts); u32(40, species | 24 << 16 | 4 << 24);
+    u32(32, 1 << 27); assert.equal(readEncounterSnapshot(heap, offset, v2), undefined);
+    u32(32, attempts); u32(40, species | 27 << 16 | 4 << 24);
     assert.equal(readEncounterSnapshot(heap, offset, v2), undefined);
   }
 });

@@ -125,10 +125,10 @@ test('pending, armed, active, settling and failed encounters exclude every CPU s
   for (const phase of [undefined, 0, 5]) assert.equal(captureBlocksSnapshots(phase), false);
 });
 
-test('24-bit boot intents survive reload while unsupported slots stay blocked', () => {
+test('27-bit boot intents survive reload while unsupported slots stay blocked', () => {
   const store = storage();
-  const expanded = { ...intent, attempts: 0xffffff, unlocks: 1 << 23 };
+  const expanded = { ...intent, attempts: 0x7ffffff, unlocks: 1 << 26 };
   writeCaptureBootIntent(store, expanded);
   assert.deepEqual(readCaptureBootPolicy(store).intent, expanded);
-  for (const bit of [24, 25, 26]) assert.throws(() => writeCaptureBootIntent(store, { ...expanded, attempts: 1 << bit, unlocks: 0 }), /Invalid/);
+  for (const bit of [27, 28, 31]) assert.throws(() => writeCaptureBootIntent(store, { ...expanded, attempts: 2 ** bit, unlocks: 0 }), /Invalid/);
 });

@@ -3,13 +3,16 @@
 import { isFullFireRedSaveSize, readFireRedSaveSlot } from './firered-save.ts';
 
 export const CAPTURE_BOOT_INTENT_KEY = 'taichung-quest-capture-boot-v1';
-export const CAPTURE_SITE_COUNT = 24;
+export const CAPTURE_SITE_COUNT = 27;
 export const CAPTURE_MASK = (1 << CAPTURE_SITE_COUNT) - 1;
 export const LEGACY_CAPTURE_MASK = 0x3fff;
 const SAVE_LOW_BITS = 10;
 const SAVE_LOW_MASK = (1 << SAVE_LOW_BITS) - 1;
 const LEGACY_SCHEMA = 0xec01;
 const SCHEMA = 0xec02;
+// EC02 predates the starter rotation. Its reserved bits must not become new
+// starter history merely because the live bridge supports more stable slots.
+const EC02_CAPTURE_MASK = 0xffffff;
 
 export type CaptureSaveProof = {
   saveCounter: number;
@@ -50,7 +53,7 @@ export function verifyCaptureNativeSave(bytes: Uint8Array, expected: CaptureSave
     const schema = variable(0x40f3);
     if (schema !== SCHEMA && schema !== LEGACY_SCHEMA) continue;
     const mask = (low: number, upper: number) => schema === LEGACY_SCHEMA ? variable(low) & LEGACY_CAPTURE_MASK
-      : (variable(low) & SAVE_LOW_MASK) | ((variable(upper) << SAVE_LOW_BITS) & CAPTURE_MASK);
+      : (variable(low) & SAVE_LOW_MASK) | ((variable(upper) << SAVE_LOW_BITS) & EC02_CAPTURE_MASK);
     const attempts = mask(0x40f4, 0x40f0);
     const unlocks = mask(0x40f5, 0x40f2);
     if (attempts !== expected.attempts || unlocks !== expected.unlocks

@@ -10,6 +10,7 @@ import subprocess
 import sys
 
 from PIL import Image, ImageColor
+from capture_sites import captures_from_registry, validate_named_bindings
 
 
 WEB = Path(__file__).resolve().parents[1]
@@ -242,19 +243,15 @@ def main():
     places = {place["id"]: place for place in read(DATA / "landmarks.json") + read(DATA / "sights.json")}
     plan_districts = {district["id"]: district for district in plan["districts"]}
     installed = {entry["id"]: entry for entry in report.get("installedLandmarks", [])}
+    captures = captures_from_registry(read(args.native / "data/taichung/encounters/sites.json"))
     named_bindings_path = args.native / "data/taichung/named-xitun-bindings/anchors.json"
     named_bindings = read(named_bindings_path) if named_bindings_path.is_file() else None
     if named_bindings:
-        require([(site["id"], site["captureSiteId"]) for site in named_bindings["sites"]] == [
-            ("national-trade-center", 21), ("ding-sheng-bhw", 22), ("the-lin", 23)],
-            "The named Xitun bindings differ from the approved three-site contract.")
+        validate_named_bindings(named_bindings, captures)
         for site in named_bindings["sites"]:
             installed[site["id"]] = {"id": site["id"],
                                      "worldRect": site["game"]["authoredWorldRect"],
                                      "signTile": site["game"]["authoredWorldInteraction"]}
-    captures = {site["siteSlug"]: site
-                for site in read(args.native / "data/taichung/encounters/sites.json")["sites"]
-                if site["currentBinding"]}
     sight_specs = EXTRA_SIGHTS | {place: INSTALLED_SIGHTS[place] for place in installed if place in INSTALLED_SIGHTS}
     require(set(installed) <= places.keys() | sight_specs.keys(),
             "An installed landmark has no website catalog entry.")
@@ -306,8 +303,8 @@ def main():
         events[place] = doors[0]
 
     # A capture can be read from either a sign or a local guide. Derive these
-    # anchors from current native objects, including relocated Alakazam and the
-    # three Xitun sites, instead of reusing design-era marker coordinates.
+    # anchors from current native objects, including relocated Lapras/Alakazam,
+    # the starters and Xitun sites, instead of design-era marker coordinates.
     capture_bindings = {site["currentBinding"]: place for place, site in captures.items()}
     located = set()
     capture_anchors = {}
@@ -342,7 +339,7 @@ def main():
             if events.get(place, {}).get("type") != "door":
                 events[place] = {"type": "sign", "tile": tile}
     required_exterior_captures = (captures.keys() & sight_specs.keys()) | {
-        place for place, site in captures.items() if site["stableSiteId"] in (3, 21, 22, 23)
+        place for place, site in captures.items() if site["stableSiteId"] in (0, 3, 21, 22, 23, 24, 25, 26)
     }
     require(required_exterior_captures <= located,
             "Moved/new Boulevard captures lack their current exterior sign or guide.")

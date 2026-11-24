@@ -1,0 +1,177 @@
+{
+  "provenance": "Native 3349d1f175c5a352653f4b7687618b6585721d57 sites.json; identity fields only. Unit fixture, not runtime acceptance.",
+  "sites": [
+    {
+      "stableSiteId": 0,
+      "siteSlug": "maple-garden",
+      "speciesDex": 131,
+      "level": 65,
+      "currentBinding": "TaichungCity_Sign_MapleGarden"
+    },
+    {
+      "stableSiteId": 1,
+      "siteSlug": "wenchang-temple",
+      "speciesDex": 130,
+      "level": 70,
+      "currentBinding": "TaichungCity_Host_WenchangTemple"
+    },
+    {
+      "stableSiteId": 2,
+      "siteSlug": "botanical-garden-legacy",
+      "speciesDex": 103,
+      "level": 65,
+      "currentBinding": null,
+      "retired": true
+    },
+    {
+      "stableSiteId": 3,
+      "siteSlug": "shen-ji-new-village",
+      "speciesDex": 65,
+      "level": 65,
+      "currentBinding": "TaichungLandmark_ShenJi"
+    },
+    {
+      "stableSiteId": 4,
+      "siteSlug": "yizhong-street",
+      "speciesDex": 125,
+      "level": 60,
+      "currentBinding": "TaichungCity_Sign_YizhongStreet"
+    },
+    {
+      "stableSiteId": 5,
+      "siteSlug": "prefectural-hall",
+      "speciesDex": 59,
+      "level": 65,
+      "currentBinding": "TaichungCity_Sign_PrefecturalHall"
+    },
+    {
+      "stableSiteId": 6,
+      "siteSlug": "second-market",
+      "speciesDex": 143,
+      "level": 60,
+      "currentBinding": "TaichungCity_Sign_SecondMarket"
+    },
+    {
+      "stableSiteId": 7,
+      "siteSlug": "cultural-heritage-park",
+      "speciesDex": 146,
+      "level": 75,
+      "currentBinding": "TaichungCity_Sign_CulturalHeritagePark"
+    },
+    {
+      "stableSiteId": 8,
+      "siteSlug": "fengle-sculpture-park-legacy",
+      "speciesDex": 95,
+      "level": 65,
+      "currentBinding": null,
+      "retired": true
+    },
+    {
+      "stableSiteId": 9,
+      "siteSlug": "wenxin-forest-park-legacy",
+      "speciesDex": 124,
+      "level": 60,
+      "currentBinding": null,
+      "retired": true
+    },
+    {
+      "stableSiteId": 10,
+      "siteSlug": "green-museumbrary",
+      "speciesDex": 149,
+      "level": 72,
+      "currentBinding": "TaichungBoulevard_Sign_GreenMuseumbrary"
+    },
+    {
+      "stableSiteId": 11,
+      "siteSlug": "rainbow-village",
+      "speciesDex": 36,
+      "level": 67,
+      "currentBinding": "TaichungBoulevard_Sign_RainbowVillage"
+    },
+    {
+      "stableSiteId": 12,
+      "siteSlug": "city-hall",
+      "speciesDex": 150,
+      "level": 75,
+      "currentBinding": "TaichungBoulevard_Sign_CityHall"
+    },
+    {
+      "stableSiteId": 13,
+      "siteSlug": "jingming-street",
+      "speciesDex": 38,
+      "level": 65,
+      "currentBinding": "TaichungBoulevard_Sign_JingmingStreet"
+    },
+    {
+      "stableSiteId": 14,
+      "siteSlug": "tiger-city",
+      "speciesDex": 145,
+      "level": 75,
+      "currentBinding": "TaichungBoulevard_Sign_TigerCity"
+    },
+    {
+      "stableSiteId": 15,
+      "siteSlug": "green-museumbrary-legacy",
+      "speciesDex": 137,
+      "level": 65,
+      "currentBinding": null,
+      "retired": true
+    },
+    {
+      "stableSiteId": 16,
+      "siteSlug": "baseball-stadium",
+      "speciesDex": 142,
+      "level": 72,
+      "currentBinding": "TaichungBoulevard_Sign_Ballpark"
+    },
+    {
+      "stableSiteId": 17,
+      "siteSlug": "folklore-park",
+      "speciesDex": 94,
+      "level": 68,
+      "currentBinding": "TaichungBoulevard_Sign_FolklorePark"
+    },
+    {
+      "stableSiteId": 18,
+      "siteSlug": "botanical-garden",
+      "speciesDex": 71,
+      "level": 65,
+      "currentBinding": "TaichungCity_Sign_BotanicalGarden"
+    },
+    {
+      "stableSiteId": 19,
+      "siteSlug": "fengle-sculpture-park",
+      "speciesDex": 112,
+      "level": 68,
+      "currentBinding": "TaichungCity_Sign_FengleSculpturePark"
+    },
+    {
+      "stableSiteId": 20,
+      "siteSlug": "wenxin-forest-park",
+      "speciesDex": 144,
+      "level": 75,
+      "currentBinding": "TaichungCity_Sign_WenxinForestPark"
+    },
+    {
+      "stableSiteId": 21,
+      "siteSlug": "national-trade-center",
+      "speciesDex": 82,
+      "level": 65,
+      "currentBinding": "TaichungLandmark_NationalTradeCenter"
+    },
+    {
+      "stableSiteId": 22,
+      "siteSlug": "ding-sheng-bhw",
+      "speciesDex": 141,
+      "level": 65,
+      "currentBinding": "TaichungLandmark_DingShengBHW"
+    },
+    {
+      "stableSiteId": 23,
+      "siteSlug": "the-lin",
+      "speciesDex": 53,
+      "level": 65,
+      "currentBinding": "TaichungLandmark_TheLin"
+    }
+  ]
+}
