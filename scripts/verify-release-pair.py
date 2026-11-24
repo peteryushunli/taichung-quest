@@ -177,6 +177,30 @@ def verify_bridges(metadata, symbols):
     return result
 
 
+def verify_badge_presentation(source, state, metadata):
+    presentation = metadata.get('badgePresentation')
+    if presentation is None:
+        return None  # Older cartridges retain the functional native screen.
+    require('badgeBridge' in metadata, 'Badge presentation requires a paired native badge packet')
+    path = 'data/taichung/story-confucius/badge-display-manifest-v1.json'
+    raw = git(source, 'show', f'{state["commit"]}:{path}')
+    manifest = read_json(raw, 'Committed badge display manifest')
+    badges = manifest.get('badges')
+    require(manifest.get('schemaVersion') == 1 and type(manifest.get('assetSetId')) is str
+            and type(badges) is list and len(badges) == 10 and all(type(item) is dict for item in badges)
+            and [item.get('gymIndex') for item in badges] == list(range(10))
+            and [item.get('completionBit') for item in badges] == list(range(10)),
+            'Badge manifest must preserve all ten native completion slots')
+    expected = dict(schemaVersion=1, assetSetId=manifest.get('assetSetId'),
+                    gymIds=[item.get('landmarkId') for item in badges])
+    require(all(type(item) is str and item for item in expected['gymIds']) and len(set(expected['gymIds'])) == 10,
+            'Badge manifest must identify ten distinct places')
+    require(type(presentation) is dict and set(presentation) == set(expected)
+            and type(presentation.get('schemaVersion')) is int
+            and presentation == expected, 'Badge presentation differs from the committed native artwork layout')
+    return dict(**expected, sourceManifestSha256=sha256(raw))
+
+
 def verify_contract(source, state, native_raw, web_raw, metadata):
     native = read_json(native_raw, 'Native minimap contract')
     web = read_json(web_raw, 'Web minimap contract')
@@ -247,6 +271,7 @@ def verify_pair(*, native, rom, metadata, elf, web_contract, patch, binutils,
         require(build['elfSha256'] == sha256(elf_data), 'Metadata ELF digest mismatch')
     minimap = verify_contract(source, state, payload['minimap-contract.native.json'],
                               payload['minimap-contract.web.json'], build)
+    badge_presentation = verify_badge_presentation(source, state, build)
     directory = Path(binutils).resolve()
     nm, objcopy = (directory / f'arm-none-eabi-{name}' for name in ('nm', 'objcopy'))
     versions = {tool.name: run([tool, '--version']).decode().splitlines()[0] for tool in (nm, objcopy)}
@@ -272,7 +297,7 @@ def verify_pair(*, native, rom, metadata, elf, web_contract, patch, binutils,
     receipt = dict(schemaVersion=1, status='PASS', native=dict(**state, upstreamCommit=upstream_commit, clean=True),
                    rom=dict(bytes=len(data), sha1=hashlib.sha1(data).hexdigest(), sha256=sha256(data)),
                    elf=dict(sha256=sha256(elf_data), independentObjcopyByteExact=True, objcopyOptions=options),
-                   bridges=bridges, minimap=minimap,
+                   bridges=bridges, minimap=minimap, badgePresentation=badge_presentation,
                    portablePatch=dict(recreatedTree=tree, realIndexUnchanged=True, privateObjectStore=True),
                    binutils=versions,
                    inputs={name: dict(bytes=len(raw), sha256=sha256(raw))
