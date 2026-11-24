@@ -1,0 +1,45 @@
+{
+  "status": "PASS",
+  "baseline": "bc5f8b9b",
+  "candidate": "da308778",
+  "changedSourcePaths": [
+    "src/bike.c",
+    "src/data/tilesets/taichung_boulevard_headers.h",
+    "src/event_object_movement.c"
+  ],
+  "unchangedCoreFiles": [
+    {
+      "path": "src/taichung_encounter.c",
+      "sha256": "aeaad527b33441a7706f2653314c4b0ab5b184a92a2ae4ac58b638a6b13559b9"
+    },
+    {
+      "path": "src/taichung_gym_adapter.c",
+      "sha256": "e6bea2cd3aa9ceb483072c87e4246839f4e1c18987d8912dd18bf9425c73f1c6"
+    },
+    {
+      "path": "src/taichung_save.c",
+      "sha256": "11cecf5b9e8c81933f0d1d6322442a1122c5e7be6cafc9fc5341575a290ccaba"
+    },
+    {
+      "path": "src/taichung_gym_entry.c",
+      "sha256": "6fa082ee8f3035ee39fb987dc21a3150c3bb6f47cc065195be869f800c45590c"
+    },
+    {
+      "path": "src/taichung_gym_progress.c",
+      "sha256": "adbf72f9f8c6313c466001451025207b969d347f431003aca4b090fa2529d8c4"
+    },
+    {
+      "path": "src/taichung_badges.c",
+      "sha256": "a7f9a36ccf529dc325113972bc3e640d66ca6d7b66caf967d737ef4e070e7df0"
+    },
+    {
+      "path": "src/taichung_badge_bridge.c",
+      "sha256": "eb105eba44dee7537458c3e412678b53f499c985a3b1fb1babf657b00d8ea937"
+    },
+    {
+      "path": "src/battle_ai_script_commands.c",
+      "sha256": "cc0c55831518c84a061b2c02d41d5844f5078c08574fb7b34731b31913d90508"
+    }
+  ],
+  "scope": "Carry prior8516 gym/capture/badge/AI runtime acceptance; dedicated bike and temple paths separately exercised"
+}

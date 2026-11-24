@@ -1,0 +1,16 @@
+{
+  "status": "PASS_READY_FOR_INDEPENDENT_REVIEW",
+  "preview": "https://taichung-quest-81hr5nal1-peteryushunli-6635s-projects.vercel.app",
+  "deploymentId": "dpl_DxGDf21tmUQbaoRRG3Br5qKptX8v",
+  "frontendCommit": "a94e78095e05614199a08a869a118bd84f3b1678",
+  "nativeCommit": "da308778406fd03762ce000cdd59848f298f8700",
+  "romSha256": "d05cdd78e0a615f9354021d14b359e5a00053f44a54cde9ee6a9fbda14257cc3",
+  "scope": [
+    "Bilingual map copy",
+    "Painted temple door and central stairs",
+    "City bike75% speed"
+  ],
+  "hostedFilesVerified": 198,
+  "productionChanged": false,
+  "npcFlowerChangesIncluded": false
+}
