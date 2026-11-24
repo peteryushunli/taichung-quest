@@ -301,7 +301,7 @@ def main():
         require(doors, f"No active exterior door enters the registered hall for {place}.")
         # Adjacent paired entrance mats have one deterministic western anchor.
         doors.sort(key=lambda door: (door["tile"][1], door["tile"][0]))
-        require(len({map_at(door["tile"])["nativeKey"] for door in doors}) == 1,
+        require(len({map_at(normalize(door["tile"]))["nativeKey"] for door in doors}) == 1,
                 f"Multiple exteriors enter the hall for {place}.")
         events[place] = doors[0]
 

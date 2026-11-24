@@ -69,10 +69,11 @@ test('the gym status line follows the data in both languages', () => {
 
 test('stats come from the landmark data', () => {
   assert.equal(landmarks.length, 12);
-  assert.equal(districtCount(landmarks), 4);
+  assert.equal(districtCount(landmarks), 5);
+  assert.deepEqual(new Set(landmarks.map(place => place.districtId)), new Set(['old-city', 'greenway', 'xitun', 'nantun', 'north']));
   assert.equal(landmarks.filter(isGym).length, 10);
-  assert.equal(cityPlaceSummary(landmarks, 'en'), '4 districts. 12 real places.');
-  assert.equal(cityPlaceSummary(landmarks, 'zh-Hant'), '4 個街區，12 個真實地點。');
+  assert.equal(cityPlaceSummary(landmarks, 'en'), '5 districts. 12 real places.');
+  assert.equal(cityPlaceSummary(landmarks, 'zh-Hant'), '5 個街區，12 個真實地點。');
 });
 
 test('map pins sit on each entrance tile of the rendered city, labels facing the middle', () => {
@@ -173,7 +174,7 @@ test('the ten set-piece landmarks join the map as non-gym places, after the ten 
   assert.equal(new Set(places.map((place) => place.id)).size, 20);
   assert.deepEqual(places.slice(0, 10).map(isGym), Array(10).fill(true));
   assert.deepEqual(places.slice(10).map(isGym), Array(10).fill(false));
-  assert.equal(cityPlaceSummary(places, 'en'), '4 districts. 20 real places.');
+  assert.equal(cityPlaceSummary(places, 'en'), '5 districts. 20 real places.');
   assert.equal(sights.length, 8);
   for (const place of sights) {
     assert.equal(place.kind, place.id === 'shen-ji-new-village' ? 'visit' : 'sight', place.id);

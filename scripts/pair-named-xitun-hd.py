@@ -34,6 +34,10 @@ def main():
     args = parser.parse_args()
     proof = read(args.native / 'docs/named-xitun-bindings/tower-hd-handoff.json')
     anchors = read(args.native / 'data/taichung/named-xitun-bindings/anchors.json')
+    temple = read(args.native / 'data/taichung/confucius-map-bindings/anchors.json')['gym']['exterior']
+    door_key = temple['nativeKey'].replace(':','.')
+    door_cells = {tuple(point) for point in temple['doors']}
+    allowed_rects = [(75,113,95,126), *[(x,y,x+1,y+1) for x,y in door_cells]]
     sites = {site['id']: site for site in anchors['sites'] if site['id'] != 'the-lin'}
     compiled_maps = {f"43.{entry['number']}": entry for entry in read(args.map_report)['maps']}
     before = read(args.previous / 'pack.json')
@@ -46,6 +50,7 @@ def main():
             'Only the appended Confucius room may change the HD map registry.')
     expected = {item['nativeKey']: item for item in proof['changedReferences']}
     changed = []
+    temple_door_pixels = 0
     overlay_changes = 0
     for key, old in before['maps'].items():
         new = after['maps'][key]
@@ -56,14 +61,21 @@ def main():
         require(a.shape == b.shape, f'Reference dimensions changed: {key}')
         delta = np.any(a != b, axis=2)
         if delta.any():
-            require(key in expected, f'Unapproved reference pixel changes: {key}')
-            item = expected[key]
             ys, xs = np.where(delta)
             bounds = [int(xs.min()), int(ys.min()), int(xs.max()+1), int(ys.max()+1)]
-            require(int(delta.sum()) == item['changedPixels'] and bounds == item['changedReferencePixelBounds'],
-                    f'Reference delta differs from Maps proof: {key}')
-            require(digest(args.candidate / new['ref']) == item['freshReferenceSha256'],
-                    f'Fresh reference differs from Maps output: {key}')
+            if key in expected:
+                item = expected[key]
+                require(int(delta.sum()) == item['changedPixels'] and bounds == item['changedReferencePixelBounds'],
+                        f'Reference delta differs from Maps proof: {key}')
+                require(digest(args.candidate / new['ref']) == item['freshReferenceSha256'],
+                        f'Fresh reference differs from Maps output: {key}')
+            else:
+                require(key == door_key, f'Unapproved reference pixel changes: {key}')
+                ox,oy = compiled_maps[key]['worldRect'][:2]
+                cells = set(zip((ox+xs//16-new['margin']).tolist(),(oy+ys//16-new['margin']).tolist()))
+                require(cells == door_cells and int(delta.sum()) == len(door_cells)*256,
+                        'Temple reference changes extend beyond the two authored door tiles.')
+                temple_door_pixels = int(delta.sum())
             changed.append(key)
         def identity(item):
             return tuple(item[field] for field in ('sprite','mirrored','x','y','w','h','picture'))
@@ -77,10 +89,11 @@ def main():
             ox, oy = compiled_maps[key]['worldRect'][:2]
             left = ox + item['x']/16 - new['margin']
             top = oy + item['y']/16 - new['margin']
-            require(left < 95 and left+item['w']/16 > 75 and top < 126 and top+item['h']/16 > 113,
-                    f'Automatic overlay changed outside the tower lot: {key}/{ident}')
+            require(any(left < r and left+item['w']/16 > l and top < b and top+item['h']/16 > t
+                        for l,t,r,b in allowed_rects),
+                    f'Automatic overlay changed outside the tower lot or temple doors: {key}/{ident}')
             overlay_changes += 1
-    require(set(changed) == set(expected), 'A Maps reference change is missing.')
+    require(set(changed) == set(expected) | {door_key}, 'A Maps reference change is missing.')
     # Existing automatic artwork must remain the approved bytes. Replacing a
     # cartridge does not authorize silently replacing its source pictures.
     for picture in (args.candidate / 'pictures').glob('*.webp'):
@@ -144,6 +157,7 @@ def main():
     (args.candidate / 'pack.json').write_text(json.dumps(after)+'\n')
     result = dict(status='PASS',romSha256=after['romSha256'],maps=len(after['maps']),
                   changedReferenceMaps=changed,automaticPicturesByteExact=True,
+                  templeDoorChangedPixels=temple_door_pixels,templeChangesOnlyAtAuthoredDoorTiles=True,
                   scopedAutomaticOverlayChanges=overlay_changes,
                   towerCoordinatesAndMasksFresh=True,coverage=coverage,
                   compiledMapReportSha256=digest(args.map_report),

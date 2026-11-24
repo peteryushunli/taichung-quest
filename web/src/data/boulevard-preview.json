@@ -2386,24 +2386,24 @@
         "zh": "室內"
       }
     },
-    "43:8": {
-      "nativeKey": "43:8",
+    "43:79": {
+      "nativeKey": "43:79",
       "group": 43,
-      "number": 8,
-      "packedMapId": 11016,
-      "mapId": "MAP_TAICHUNG_SHEN_JI_GYM",
-      "nativeMapName": "TaichungShenJi_Gym",
-      "layoutId": "LAYOUT_TAICHUNG_GYM_SHEN_JI",
-      "width": 16,
-      "height": 10,
+      "number": 79,
+      "packedMapId": 11087,
+      "mapId": "MAP_TAICHUNG_CONFUCIUS_GYM",
+      "nativeMapName": "TaichungConfucius_Gym",
+      "layoutId": "LAYOUT_TAICHUNG_GYM_CONFUCIUS",
+      "width": 13,
+      "height": 13,
       "registration": "registered-source",
       "kind": "interior",
       "projection": "parent-entrance",
-      "parentNativeKey": "43:60",
-      "parentMarkerId": "shen-ji-new-village",
+      "parentNativeKey": "43:69",
+      "parentMarkerId": "confucius-temple",
       "parentEntranceWorld": [
-        196,
-        157
+        303,
+        35
       ],
       "indoorLabel": {
         "en": "Indoors",
@@ -2554,6 +2554,30 @@
         "zh": "室內"
       }
     },
+    "43:8": {
+      "nativeKey": "43:8",
+      "group": 43,
+      "number": 8,
+      "packedMapId": 11016,
+      "mapId": "MAP_TAICHUNG_SHEN_JI_GYM",
+      "nativeMapName": "TaichungShenJi_Gym",
+      "layoutId": "LAYOUT_TAICHUNG_GYM_SHEN_JI",
+      "width": 16,
+      "height": 10,
+      "registration": "registered-source",
+      "kind": "interior",
+      "projection": "parent-entrance",
+      "parentNativeKey": "43:60",
+      "parentMarkerId": "shen-ji-new-village",
+      "parentEntranceWorld": [
+        196,
+        157
+      ],
+      "indoorLabel": {
+        "en": "Indoors",
+        "zh": "室內"
+      }
+    },
     "43:19": {
       "nativeKey": "43:19",
       "group": 43,
@@ -2670,23 +2694,23 @@
       "exteriorMapId": "MAP_TAICHUNG_BLVD_GREENWAY_CIVIC_SQUARE",
       "exteriorNativeKey": "43:63"
     },
-    "shen-ji-new-village": {
-      "id": "shen-ji-new-village",
+    "confucius-temple": {
+      "id": "confucius-temple",
       "name": {
-        "en": "Shen Ji New Village",
-        "zh": "審計新村"
+        "en": "Taichung Confucius Temple",
+        "zh": "臺中市孔廟"
       },
       "kind": "landmark-gym",
       "world": [
-        196,
-        157
+        303,
+        35
       ],
       "localEntrance": [
-        29,
-        11
+        22,
+        9
       ],
-      "exteriorMapId": "MAP_TAICHUNG_BLVD_SHEN_JI_NEW_VILLAGE",
-      "exteriorNativeKey": "43:60"
+      "exteriorMapId": "MAP_TAICHUNG_BLVD_CONFUCIUS_TEMPLE",
+      "exteriorNativeKey": "43:69"
     },
     "fine-arts-museum": {
       "id": "fine-arts-museum",
@@ -2777,7 +2801,19 @@
       ],
       "exteriorMapId": "MAP_TAICHUNG_BLVD_MAPLE_GARDEN",
       "exteriorNativeKey": "43:28",
-      "captureBit": 0
+      "captureBit": 0,
+      "captureInteraction": {
+        "script": "TaichungCity_Sign_MapleGarden",
+        "world": [
+          25,
+          124
+        ],
+        "nativeKey": "43:28",
+        "local": [
+          17,
+          16
+        ]
+      }
     },
     "wenchang-temple": {
       "id": "wenchang-temple",
@@ -2815,26 +2851,50 @@
       ],
       "exteriorMapId": "MAP_TAICHUNG_BLVD_BOTANICAL_GARDEN",
       "exteriorNativeKey": "43:62",
-      "captureBit": 18
+      "captureBit": 18,
+      "captureInteraction": {
+        "script": "TaichungCity_Sign_BotanicalGarden",
+        "world": [
+          217,
+          74
+        ],
+        "nativeKey": "43:62",
+        "local": [
+          8,
+          12
+        ]
+      }
     },
-    "confucius-temple": {
-      "id": "confucius-temple",
+    "shen-ji-new-village": {
+      "id": "shen-ji-new-village",
       "name": {
-        "en": "Taichung Confucius Temple",
-        "zh": "臺中市孔廟"
+        "en": "Shen Ji New Village",
+        "zh": "審計新村"
       },
       "kind": "landmark",
       "world": [
-        300,
-        36
+        196,
+        157
       ],
       "localEntrance": [
-        19,
-        10
+        29,
+        11
       ],
-      "exteriorMapId": "MAP_TAICHUNG_BLVD_CONFUCIUS_TEMPLE",
-      "exteriorNativeKey": "43:69",
-      "captureBit": 3
+      "exteriorMapId": "MAP_TAICHUNG_BLVD_SHEN_JI_NEW_VILLAGE",
+      "exteriorNativeKey": "43:60",
+      "captureBit": 3,
+      "captureInteraction": {
+        "script": "TaichungLandmark_ShenJi",
+        "world": [
+          194,
+          158
+        ],
+        "nativeKey": "43:60",
+        "local": [
+          27,
+          12
+        ]
+      }
     },
     "yizhong-street": {
       "id": "yizhong-street",
@@ -2853,7 +2913,19 @@
       ],
       "exteriorMapId": "MAP_TAICHUNG_BLVD_CONFUCIUS_TEMPLE",
       "exteriorNativeKey": "43:69",
-      "captureBit": 4
+      "captureBit": 4,
+      "captureInteraction": {
+        "script": "TaichungCity_Sign_YizhongStreet",
+        "world": [
+          299,
+          59
+        ],
+        "nativeKey": "43:69",
+        "local": [
+          18,
+          33
+        ]
+      }
     },
     "prefectural-hall": {
       "id": "prefectural-hall",
@@ -2872,7 +2944,19 @@
       ],
       "exteriorMapId": "MAP_TAICHUNG_BLVD_PREFECTURAL_HALL",
       "exteriorNativeKey": "43:71",
-      "captureBit": 5
+      "captureBit": 5,
+      "captureInteraction": {
+        "script": "TaichungCity_Sign_PrefecturalHall",
+        "world": [
+          291,
+          140
+        ],
+        "nativeKey": "43:71",
+        "local": [
+          10,
+          32
+        ]
+      }
     },
     "second-market": {
       "id": "second-market",
@@ -2891,7 +2975,19 @@
       ],
       "exteriorMapId": "MAP_TAICHUNG_BLVD_SECOND_MARKET",
       "exteriorNativeKey": "43:67",
-      "captureBit": 6
+      "captureBit": 6,
+      "captureInteraction": {
+        "script": "TaichungCity_Sign_SecondMarket",
+        "world": [
+          270,
+          123
+        ],
+        "nativeKey": "43:67",
+        "local": [
+          17,
+          15
+        ]
+      }
     },
     "cultural-heritage-park": {
       "id": "cultural-heritage-park",
@@ -2910,7 +3006,19 @@
       ],
       "exteriorMapId": "MAP_TAICHUNG_BLVD_CULTURAL_HERITAGE_PARK",
       "exteriorNativeKey": "43:78",
-      "captureBit": 7
+      "captureBit": 7,
+      "captureInteraction": {
+        "script": "TaichungCity_Sign_CulturalHeritagePark",
+        "world": [
+          328,
+          158
+        ],
+        "nativeKey": "43:78",
+        "local": [
+          2,
+          12
+        ]
+      }
     },
     "fengle-sculpture-park": {
       "id": "fengle-sculpture-park",
@@ -2929,7 +3037,19 @@
       ],
       "exteriorMapId": "MAP_TAICHUNG_BLVD_FENGLE_SCULPTURE_PARK",
       "exteriorNativeKey": "43:40",
-      "captureBit": 19
+      "captureBit": 19,
+      "captureInteraction": {
+        "script": "TaichungCity_Sign_FengleSculpturePark",
+        "world": [
+          80,
+          232
+        ],
+        "nativeKey": "43:40",
+        "local": [
+          39,
+          16
+        ]
+      }
     },
     "wenxin-forest-park": {
       "id": "wenxin-forest-park",
@@ -2948,7 +3068,19 @@
       ],
       "exteriorMapId": "MAP_TAICHUNG_BLVD_WENXIN_FOREST_PARK",
       "exteriorNativeKey": "43:46",
-      "captureBit": 20
+      "captureBit": 20,
+      "captureInteraction": {
+        "script": "TaichungCity_Sign_WenxinForestPark",
+        "world": [
+          99,
+          179
+        ],
+        "nativeKey": "43:46",
+        "local": [
+          9,
+          33
+        ]
+      }
     },
     "tiger-city": {
       "id": "tiger-city",
@@ -2967,7 +3099,19 @@
       ],
       "exteriorMapId": "MAP_TAICHUNG_BLVD_TIGER_CITY",
       "exteriorNativeKey": "43:29",
-      "captureBit": 14
+      "captureBit": 14,
+      "captureInteraction": {
+        "script": "TaichungBoulevard_Sign_TigerCity",
+        "world": [
+          29,
+          140
+        ],
+        "nativeKey": "43:29",
+        "local": [
+          21,
+          13
+        ]
+      }
     },
     "rainbow-village": {
       "id": "rainbow-village",
@@ -2986,7 +3130,19 @@
       ],
       "exteriorMapId": "MAP_TAICHUNG_BLVD_RAINBOW_VILLAGE",
       "exteriorNativeKey": "43:32",
-      "captureBit": 11
+      "captureBit": 11,
+      "captureInteraction": {
+        "script": "TaichungBoulevard_Sign_RainbowVillage",
+        "world": [
+          11,
+          230
+        ],
+        "nativeKey": "43:32",
+        "local": [
+          3,
+          14
+        ]
+      }
     },
     "jingming-street": {
       "id": "jingming-street",
@@ -3005,7 +3161,19 @@
       ],
       "exteriorMapId": "MAP_TAICHUNG_BLVD_JINGMING_1ST_STREET",
       "exteriorNativeKey": "43:55",
-      "captureBit": 13
+      "captureBit": 13,
+      "captureInteraction": {
+        "script": "TaichungBoulevard_Sign_JingmingStreet",
+        "world": [
+          149,
+          127
+        ],
+        "nativeKey": "43:55",
+        "local": [
+          12,
+          19
+        ]
+      }
     },
     "city-hall": {
       "id": "city-hall",
@@ -3024,7 +3192,19 @@
       ],
       "exteriorMapId": "MAP_TAICHUNG_BLVD_XITUN_E_3",
       "exteriorNativeKey": "43:45",
-      "captureBit": 12
+      "captureBit": 12,
+      "captureInteraction": {
+        "script": "TaichungBoulevard_Sign_CityHall",
+        "world": [
+          99,
+          128
+        ],
+        "nativeKey": "43:45",
+        "local": [
+          9,
+          1
+        ]
+      }
     },
     "green-museumbrary": {
       "id": "green-museumbrary",
@@ -3043,7 +3223,19 @@
       ],
       "exteriorMapId": "MAP_TAICHUNG_BLVD_GREEN_MUSEUMBRARY",
       "exteriorNativeKey": "43:33",
-      "captureBit": 10
+      "captureBit": 10,
+      "captureInteraction": {
+        "script": "TaichungBoulevard_Sign_GreenMuseumbrary",
+        "world": [
+          56,
+          22
+        ],
+        "nativeKey": "43:33",
+        "local": [
+          15,
+          14
+        ]
+      }
     },
     "baseball-stadium": {
       "id": "baseball-stadium",
@@ -3062,7 +3254,19 @@
       ],
       "exteriorMapId": "MAP_TAICHUNG_BLVD_BEITUN_B_5",
       "exteriorNativeKey": "43:53",
-      "captureBit": 16
+      "captureBit": 16,
+      "captureInteraction": {
+        "script": "TaichungBoulevard_Sign_Ballpark",
+        "world": [
+          143,
+          38
+        ],
+        "nativeKey": "43:53",
+        "local": [
+          6,
+          12
+        ]
+      }
     },
     "folklore-park": {
       "id": "folklore-park",
@@ -3081,7 +3285,112 @@
       ],
       "exteriorMapId": "MAP_TAICHUNG_BLVD_BEITUN_B_7",
       "exteriorNativeKey": "43:61",
-      "captureBit": 17
+      "captureBit": 17,
+      "captureInteraction": {
+        "script": "TaichungBoulevard_Sign_FolklorePark",
+        "world": [
+          232,
+          37
+        ],
+        "nativeKey": "43:61",
+        "local": [
+          23,
+          11
+        ]
+      }
+    },
+    "national-trade-center": {
+      "id": "national-trade-center",
+      "name": {
+        "en": "National Trade Center",
+        "zh": "NTC國家商貿中心"
+      },
+      "kind": "landmark",
+      "world": [
+        55,
+        124
+      ],
+      "localEntrance": [
+        14,
+        16
+      ],
+      "exteriorMapId": "MAP_TAICHUNG_BLVD_XITUN_D_2",
+      "exteriorNativeKey": "43:36",
+      "captureBit": 21,
+      "captureInteraction": {
+        "script": "TaichungLandmark_NationalTradeCenter",
+        "world": [
+          55,
+          124
+        ],
+        "nativeKey": "43:36",
+        "local": [
+          14,
+          16
+        ]
+      }
+    },
+    "ding-sheng-bhw": {
+      "id": "ding-sheng-bhw",
+      "name": {
+        "en": "Ding Sheng BHW",
+        "zh": "鼎盛BHW"
+      },
+      "kind": "landmark",
+      "world": [
+        52,
+        124
+      ],
+      "localEntrance": [
+        11,
+        16
+      ],
+      "exteriorMapId": "MAP_TAICHUNG_BLVD_XITUN_D_2",
+      "exteriorNativeKey": "43:36",
+      "captureBit": 22,
+      "captureInteraction": {
+        "script": "TaichungLandmark_DingShengBHW",
+        "world": [
+          52,
+          124
+        ],
+        "nativeKey": "43:36",
+        "local": [
+          11,
+          16
+        ]
+      }
+    },
+    "the-lin": {
+      "id": "the-lin",
+      "name": {
+        "en": "The Lin",
+        "zh": "林酒店"
+      },
+      "kind": "landmark",
+      "world": [
+        26,
+        140
+      ],
+      "localEntrance": [
+        18,
+        13
+      ],
+      "exteriorMapId": "MAP_TAICHUNG_BLVD_TIGER_CITY",
+      "exteriorNativeKey": "43:29",
+      "captureBit": 23,
+      "captureInteraction": {
+        "script": "TaichungLandmark_TheLin",
+        "world": [
+          26,
+          140
+        ],
+        "nativeKey": "43:29",
+        "local": [
+          18,
+          13
+        ]
+      }
     },
     "guest-house": {
       "id": "guest-house",
@@ -3089,7 +3398,7 @@
         "en": "Guest house",
         "zh": "旅宿"
       },
-      "kind": "landmark-gym",
+      "kind": "home",
       "world": [
         344,
         87
@@ -4385,15 +4694,104 @@
       "officialUrl": "https://travel.taichung.gov.tw/en/Attractions/Intro/884",
       "officialUrlZh": "https://travel.taichung.gov.tw/zh-tw/Attractions/Intro/420/",
       "officialSourceTitle": "Taichung Tourism and Travel Bureau"
+    },
+    {
+      "id": "national-trade-center",
+      "nameEn": "National Trade Center",
+      "nameZh": "NTC國家商貿中心",
+      "shortNameEn": "National Trade Center",
+      "shortNameZh": "NTC國家商貿中心",
+      "minimapNameEn": "National Trade Center",
+      "minimapNameZh": "NTC國家商貿中心",
+      "districtId": "xitun",
+      "districtEn": "Xitun · 7th Zone",
+      "districtZh": "西屯 · 七期",
+      "category": "Office tower",
+      "categoryZh": "商辦大樓",
+      "kind": "sight",
+      "gymStatus": "not-a-gym",
+      "playable": true,
+      "description": "National Trade Center is an office tower in Xitun designed by Aedas around the silhouette of a bamboo shoot. Its rounded profile and layered rain covers stand out near the National Taichung Theater.",
+      "descriptionZh": "NTC國家商貿中心是西屯的商辦大樓，由Aedas以竹筍的輪廓為設計靈感。圓潤的量體與層層雨遮，讓它在國家歌劇院附近的天際線中格外醒目。",
+      "officialUrl": "https://www.google.com/maps/search/?api=1&query=NTC%E5%9C%8B%E5%AE%B6%E5%95%86%E8%B2%BF%E4%B8%AD%E5%BF%83%20%E8%87%BA%E4%B8%AD%E5%B8%82%E8%A5%BF%E5%B1%AF%E5%8D%80%E5%B8%82%E6%94%BF%E5%8C%97%E4%BA%8C%E8%B7%AF282%E8%99%9F",
+      "officialSourceTitle": "National Trade Center — place and address map",
+      "location": {
+        "address": "No. 282, Shizheng N. 2nd Rd., Xitun District, Taichung City",
+        "addressZh": "臺中市西屯區市政北二路282號"
+      },
+      "descriptionSources": [
+        "https://www.aedas.com/en/project/national-trade-center/",
+        "https://green.epb.taichung.gov.tw/page/stronghold/p03.aspx?city=160&num=5952&pro_kind=2"
+      ]
+    },
+    {
+      "id": "ding-sheng-bhw",
+      "nameEn": "Ding Sheng BHW",
+      "nameZh": "鼎盛BHW",
+      "shortNameEn": "Ding Sheng BHW",
+      "shortNameZh": "鼎盛BHW",
+      "minimapNameEn": "Ding Sheng BHW",
+      "minimapNameZh": "鼎盛BHW",
+      "districtId": "xitun",
+      "districtEn": "Xitun · 7th Zone",
+      "districtZh": "西屯 · 七期",
+      "category": "Office tower",
+      "categoryZh": "商辦大樓",
+      "kind": "sight",
+      "gymStatus": "not-a-gym",
+      "playable": true,
+      "description": "Ding Sheng BHW stands on Shizheng North 2nd Road in Xitun. Look up at its tall facade while exploring the streets around Taichung’s modern business district.",
+      "descriptionZh": "鼎盛BHW位於西屯市政北二路。走在臺中現代商辦街區的街道上，可以抬頭欣賞這棟高樓的立面。",
+      "officialUrl": "https://www.google.com/maps/search/?api=1&query=%E9%BC%8E%E7%9B%9BBHW%20%E8%87%BA%E4%B8%AD%E5%B8%82%E8%A5%BF%E5%B1%AF%E5%8D%80%E5%B8%82%E6%94%BF%E5%8C%97%E4%BA%8C%E8%B7%AF230%E8%99%9F",
+      "officialSourceTitle": "Ding Sheng BHW — place and address map",
+      "location": {
+        "address": "No. 230, Shizheng N. 2nd Rd., Xitun District, Taichung City",
+        "addressZh": "臺中市西屯區市政北二路230號"
+      },
+      "descriptionSources": [
+        "https://www.highwealthgroup.com.tw/property/市政萬象廣場",
+        "https://www.kaoarch.org.tw/Upload/20241223095800_40101.pdf"
+      ]
+    },
+    {
+      "id": "the-lin",
+      "nameEn": "The Lin",
+      "nameZh": "林酒店",
+      "shortNameEn": "The Lin",
+      "shortNameZh": "林酒店",
+      "minimapNameEn": "The Lin",
+      "minimapNameZh": "林酒店",
+      "districtId": "xitun",
+      "districtEn": "Xitun · 7th Zone",
+      "districtZh": "西屯 · 七期",
+      "category": "Hotel",
+      "categoryZh": "飯店",
+      "kind": "sight",
+      "gymStatus": "not-a-gym",
+      "playable": true,
+      "description": "THE LIN Hotel stands on Chaofu Road in Xitun, near the National Taichung Theater and Maple Garden. Its design combines modern forms with castle-inspired details. The real building is a working hotel.",
+      "descriptionZh": "林酒店位於西屯朝富路，鄰近國家歌劇院與秋紅谷。建築融合現代造型與古堡式細節；現實中的這棟建築是一間營運中的飯店。",
+      "officialUrl": "https://www.thelin.com.tw/en",
+      "officialUrlZh": "https://www.thelin.com.tw/",
+      "officialSourceTitle": "THE LIN Hotel official website",
+      "location": {
+        "address": "No. 99, Chaofu Rd., Xitun District, Taichung City",
+        "addressZh": "臺中市西屯區朝富路99號"
+      },
+      "descriptionSources": [
+        "https://www.thelin.com.tw/en",
+        "https://travel.taichung.gov.tw/zh-tw/shop/accommodation/595"
+      ]
     }
   ],
   "sourceSha256": {
-    "compiledMapReport": "b41449fc4acac1ae9545e228831c9525c92d499d6abb5c5a4411e409f99dfcfb",
+    "compiledMapReport": "fbfbe596976f1f45efda1b207db22cca2b5c8afe6290ae2d565b18b10a58e43a",
     "fill": "22d9c6695e21ab7419ccafe55d86e4833df8a5e394aee84133d4a1cd6b5849f6",
     "mapBook": "265d64cf1b47a26d412626301a6f1e542f3a19bcd89ec0084e6f08022a713b4d",
     "northXitunPlan": "89c555bbfa2a80d277b9729e6a2a9a1b6480dea9e4ffbf76ace332c7386f76e5",
     "northXitunCompiler": "be903fd3d2d37b0dc6c581512e86b84054457a30a53ce90bc7f83fcd1b65fb34",
-    "streetPeople": "e43c3c4e9467f00454bc234ca2cad263028212eb6ac86d1868979cf2c3d7900b"
+    "streetPeople": "968e443e5853a7eb933c66e73a6533f357d1f6fb85ddbc99f970861d8869ea50",
+    "namedXitunBindings": "f6570ca3d6952cfa247a2ea33f43816ac8adda944a9b9ab5334a9685816bb264"
   },
-  "geometryFingerprintSha256": "24a468909d0434be574fbd2e88c0145c1c4780c17245e51d057226623d6263c7"
+  "geometryFingerprintSha256": "5a1420d5ceb112f55fa42723538427586321613b4cd264564904f46514cc1073"
 }

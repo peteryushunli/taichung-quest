@@ -247,9 +247,9 @@
     "categoryZh": "廟宇",
     "description": "Completed in 1976, Taichung's Confucius Temple is one of the few in Taiwan built in Song dynasty palace style, a choice made partly to set it apart from the Qing-style Martyrs' Shrine next door. Its layout is a scaled-down version of the great Confucius Temple in Qufu, China. Visitors can stroll the calm courtyards around Dacheng Hall, and during exam season the temple holds blessing ceremonies for students. Every Teachers' Day, September 28, it stages a formal rite honouring Confucius with ritual music and the eight-row yi dance.",
     "descriptionZh": "臺中市孔廟於1976年落成，採用臺灣少見的宋代宮殿式建築，部分原因是要與隔壁清代風格的忠烈祠有所區別；整體配置則仿照山東曲阜孔廟並依比例縮小。遊客可在大成殿周邊的庭院靜靜漫步，考季時廟方也會舉辦考生祈福活動。每年9月28日教師節，這裡會舉行祭孔釋奠典禮，以古樂與八佾舞向孔子致敬。",
-    "districtId": "old-city",
-    "districtEn": "Old city",
-    "districtZh": "舊城區",
+    "districtId": "north",
+    "districtEn": "North District",
+    "districtZh": "北區",
     "gymStatus": "playable",
     "world": [
       119,
@@ -281,7 +281,8 @@
     "badgeNameEn": "Rites Badge",
     "badgeNameZh": "禮儀徽章",
     "gameAreaRef": "MAP_TAICHUNG_BLVD_CONFUCIUS_TEMPLE",
-    "officialUrlZh": "https://travel.taichung.gov.tw/zh-tw/attractions/intro/41"
+    "officialUrlZh": "https://travel.taichung.gov.tw/zh-tw/attractions/intro/41",
+    "landmarkHallRef": "MAP_TAICHUNG_CONFUCIUS_GYM"
   },
   {
     "id": "fine-arts-museum",

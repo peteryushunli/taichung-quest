@@ -1,0 +1,240 @@
+{
+  "status": "PASS",
+  "source": "Approved released city overview retained; only authorised tower lot and temple door rectangles refreshed from exact new native cores. Unchanged native references independently verified by HD-PAIR.",
+  "maps": [
+    {
+      "nativeMap": 25,
+      "referenceSha256": "cb419381bd1fd139fdafe9ec7b47c04d32527f96e766cb752d6e91c678dbfcb6"
+    },
+    {
+      "nativeMap": 26,
+      "referenceSha256": "865b8fcbdc94a263827ae2d1fc3253891b1ce9219a5690931c96df962fb844f3"
+    },
+    {
+      "nativeMap": 27,
+      "referenceSha256": "cff43ab37975e92a8e1ce953e91c4529f56d19edd3367e7b8b1965f2472a742d"
+    },
+    {
+      "nativeMap": 28,
+      "referenceSha256": "aa427be8052ecaf2653d34c1bd3aab6bf9ada9b7f166d1666b270d0440f5697f"
+    },
+    {
+      "nativeMap": 29,
+      "referenceSha256": "4c0d2ed0209451f5a2eabec67e5cefb09510970b918b332eeee2cbd1b7714f9b"
+    },
+    {
+      "nativeMap": 30,
+      "referenceSha256": "bdc144cf3eaffa50b1e076b70c3d9f64598a1a2bea11b2e0feaf7192c2029ae2"
+    },
+    {
+      "nativeMap": 31,
+      "referenceSha256": "3d11b1268ef70e595b4e5eab125b345544ada9e3eae61df0165cadbaf9bdc181"
+    },
+    {
+      "nativeMap": 32,
+      "referenceSha256": "6481c5b8b7370390447c386a3ada941315ffdc947501796dbd50a327fb400f54"
+    },
+    {
+      "nativeMap": 33,
+      "referenceSha256": "6521d23288f7428c51201eb7a8150c2cf83adb2a4db760aa0b5e7eb4ca7f3420"
+    },
+    {
+      "nativeMap": 34,
+      "referenceSha256": "6b85d219997919adb76b63a5caa51a77e22f81951e214e585b406072fb4e099d"
+    },
+    {
+      "nativeMap": 35,
+      "referenceSha256": "3c647798e35721ea36d1492547f59521cf227ad4b24006db23409acd3accd52f"
+    },
+    {
+      "nativeMap": 36,
+      "referenceSha256": "6d529d1c3b1ef22a4258aebed4604fe151c3630adc239fcb4426ce219f6e267b"
+    },
+    {
+      "nativeMap": 37,
+      "referenceSha256": "52a7800d5f1a838a15771d564786ed480a36a6d0d6aab6e7807722a8bcffbba0"
+    },
+    {
+      "nativeMap": 38,
+      "referenceSha256": "78378c77d40cba6ccac435f20dde3e793dad15b374bd51b609d7b336751c2211"
+    },
+    {
+      "nativeMap": 39,
+      "referenceSha256": "88f6f0478bbfee28d41a82639d852d135cb88cec729d4a95e9aa73774150a84e"
+    },
+    {
+      "nativeMap": 40,
+      "referenceSha256": "ea602c9abe35bcda0c44b853c49537b4216ad5f7318f4ee4ae36dbdb7458593a"
+    },
+    {
+      "nativeMap": 41,
+      "referenceSha256": "b1bf9266ce78e5b3c98439c78ff040d4f2ca9046e51c1d63ed4b64178ece13f8"
+    },
+    {
+      "nativeMap": 42,
+      "referenceSha256": "112bba02caaae4ccf056c1fac6d9f31444652f2b02ff1131ae287ed239ec1ef0"
+    },
+    {
+      "nativeMap": 43,
+      "referenceSha256": "778c845a30c06d97f0789de3e3b4dab413cc73cefceb0e3551d0d22fba4de50e"
+    },
+    {
+      "nativeMap": 44,
+      "referenceSha256": "c458bfb7f40ccb4c12d596288094cde145d1966b1a24612f16b2cc6519bcf031"
+    },
+    {
+      "nativeMap": 45,
+      "referenceSha256": "a4edcf3a47b507578cd1d88ae1b9d24969fe7a5ec8e8e464ee46ca150a55e832"
+    },
+    {
+      "nativeMap": 46,
+      "referenceSha256": "cfc044a84fd5e9daf4b9418c55c3590aaf0c63eb34dce16aabf943e2d3ca7451"
+    },
+    {
+      "nativeMap": 47,
+      "referenceSha256": "a7e3079944b56991a14c4722f57120190005625d06043507d176f5d698e81dbf"
+    },
+    {
+      "nativeMap": 48,
+      "referenceSha256": "9f0095f0dc0522ac8890f746fdff599a9dab0c69994cf662f5d8a56a113e05fb"
+    },
+    {
+      "nativeMap": 49,
+      "referenceSha256": "9598b18b5e0e4d6ce5fa802262c1059a48fef2426b5516b878ecd381472bea3e"
+    },
+    {
+      "nativeMap": 50,
+      "referenceSha256": "0379df8f158080fe458bd6ad66aff7430377ce395adb9588d90602157fd74942"
+    },
+    {
+      "nativeMap": 51,
+      "referenceSha256": "bda8ecd2d290975f1d51abb03c57198850c89874952f1872ccc449199b55037b"
+    },
+    {
+      "nativeMap": 52,
+      "referenceSha256": "49ec7be1db58e7b11c4486b5e3d95b77a6dd0ab6f2c6e5b8a4b5a881c755ed48"
+    },
+    {
+      "nativeMap": 53,
+      "referenceSha256": "832c3367c5096dea437f7d85fd8549debc3b7a584882bc7e4f46b7a1dd39ea29"
+    },
+    {
+      "nativeMap": 54,
+      "referenceSha256": "c54137acd645d8dd1cc60effe9a63b6d108b729a903c96834a002c44d3e6cd08"
+    },
+    {
+      "nativeMap": 55,
+      "referenceSha256": "8840e17b220a5fc05058b9b5dec3c2e9922752eea17d6a84afdc9314842b645a"
+    },
+    {
+      "nativeMap": 56,
+      "referenceSha256": "873754d712095035debfbde7fcb90e3656b038feb909022b2e7f3f953ce61ea9"
+    },
+    {
+      "nativeMap": 57,
+      "referenceSha256": "9db4bf29301911ee968434b6dac1c08282457adf6287c36c7f961fd2a9ce9dae"
+    },
+    {
+      "nativeMap": 58,
+      "referenceSha256": "8790695134e883c8300460048eb4cbf1b6baa439d69879acc4b1497cfeac6d05"
+    },
+    {
+      "nativeMap": 59,
+      "referenceSha256": "252df4d3080e2eb9f81ef7a3b9337b0a497ed8ba64169c6c5e5cf8bb91db270b"
+    },
+    {
+      "nativeMap": 60,
+      "referenceSha256": "b0054c3c5057f9408bf689aa0bb16d676d2612ace6c63a510af10d3911ed0b11"
+    },
+    {
+      "nativeMap": 61,
+      "referenceSha256": "e2d86120dcbe6e47aae98d6b674286fffae89e726d2e2777a7c605b8756be592"
+    },
+    {
+      "nativeMap": 62,
+      "referenceSha256": "cf9e4bfeba0708e30ea808e60d0aab86191f7a89c214c8fbb7bbe3aebbfbc3f9"
+    },
+    {
+      "nativeMap": 63,
+      "referenceSha256": "2bc127b6d7c82838acecc5c21bce704e1695aac015f76bd744b8503adcf0c011"
+    },
+    {
+      "nativeMap": 64,
+      "referenceSha256": "005ede9998a80fde6ac3c5db880bf87fc05155cd948facbf02058f8289e07a23"
+    },
+    {
+      "nativeMap": 65,
+      "referenceSha256": "dfc159c651daf8088ffcd1faae1b9e4bbf0d65ab7140c4b9764df1304366230d"
+    },
+    {
+      "nativeMap": 66,
+      "referenceSha256": "a613ff55ee7eb1acd3a85754912494ded41b28323869ef16be27a0027ecb6c34"
+    },
+    {
+      "nativeMap": 67,
+      "referenceSha256": "b6b8056eac4445830cb87b666e05f7e368685504cc64a09faf8d7b0c16603567"
+    },
+    {
+      "nativeMap": 68,
+      "referenceSha256": "c9a382e99eab8f100938218485f81adf81d133aafeaa2eb4b63b6bc9c31edda7"
+    },
+    {
+      "nativeMap": 69,
+      "referenceSha256": "58e745da0cc2b88ba651915ed3d0a4b7aed057ab3afa3c4a9606648adff555c9"
+    },
+    {
+      "nativeMap": 70,
+      "referenceSha256": "4c1ccccf5c1bb5e28896d0241582209f0348c78e5f42dbee4fbcf8510526b91a"
+    },
+    {
+      "nativeMap": 71,
+      "referenceSha256": "1f9ed91605349e3167e65231947ab9b90f74214d455618c19c55dbe2e5c5bd0f"
+    },
+    {
+      "nativeMap": 72,
+      "referenceSha256": "d55b0ca68eba4531d9723da9f58bddb255b98f02b068f0c3bc92c4fbc1c3ebba"
+    },
+    {
+      "nativeMap": 73,
+      "referenceSha256": "5241fd2304ec4418559dce43216d7110a1bbbf8900ed637bd2790cfd2b8886c9"
+    },
+    {
+      "nativeMap": 74,
+      "referenceSha256": "805f45b045319bbd811cc88bbc5e8c9f2841a340701754f9faec9eed55cc46e1"
+    },
+    {
+      "nativeMap": 75,
+      "referenceSha256": "c068f166d7335ee992511b337b850dadbcf28c4dd41981a635188254b12249bc"
+    },
+    {
+      "nativeMap": 76,
+      "referenceSha256": "b29b292d74a2ccbbc623adcec966f329e956cb7ec5a0d684cf6c230cae299a32"
+    },
+    {
+      "nativeMap": 77,
+      "referenceSha256": "7d942bf42a54b42bc18fb4d8272b89bcbdd949d84337de8a3968d298230c27de"
+    },
+    {
+      "nativeMap": 78,
+      "referenceSha256": "d2157e91097eb076b6580acf5ecbea171f4208d4303d5ccc42540c3a46b4fa05"
+    }
+  ],
+  "compiledReportSha256": "fbfbe596976f1f45efda1b207db22cca2b5c8afe6290ae2d565b18b10a58e43a",
+  "overviewSha256": "3b43c27b37521c07f23de4bed0e56ef6f9c8836bc7ec731a29c1bba87a856b4f",
+  "replacementAuthoredRects": [
+    [
+      75,
+      113,
+      95,
+      126
+    ],
+    [
+      334,
+      35,
+      336,
+      36
+    ]
+  ],
+  "changedPixels": 9275,
+  "allChangesWithinAuthorisedRects": true
+}
