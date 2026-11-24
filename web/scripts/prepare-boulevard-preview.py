@@ -239,10 +239,22 @@ def main():
     places = {place["id"]: place for place in read(DATA / "landmarks.json") + read(DATA / "sights.json")}
     plan_districts = {district["id"]: district for district in plan["districts"]}
     installed = {entry["id"]: entry for entry in report.get("installedLandmarks", [])}
+    named_bindings_path = args.native / "data/taichung/named-xitun-bindings/anchors.json"
+    named_bindings = read(named_bindings_path) if named_bindings_path.is_file() else None
+    if named_bindings:
+        require([(site["id"], site["captureSiteId"]) for site in named_bindings["sites"]] == [
+            ("national-trade-center", 21), ("ding-sheng-bhw", 22), ("the-lin", 23)],
+            "The named Xitun bindings differ from the approved three-site contract.")
+        for site in named_bindings["sites"]:
+            installed[site["id"]] = {"id": site["id"],
+                                     "worldRect": site["game"]["authoredWorldRect"],
+                                     "signTile": site["game"]["authoredWorldInteraction"]}
     captures = {site["siteSlug"]: site
                 for site in read(args.native / "data/taichung/encounters/sites.json")["sites"]
                 if site["currentBinding"]}
-    sight_specs = EXTRA_SIGHTS | {place: INSTALLED_SIGHTS[place] for place in installed}
+    sight_specs = EXTRA_SIGHTS | {place: INSTALLED_SIGHTS[place] for place in installed if place in INSTALLED_SIGHTS}
+    require(set(installed) <= places.keys() | sight_specs.keys(),
+            "An installed landmark has no website catalog entry.")
     sight_copy = read(DATA / "boulevard-sight-copy.json")
     short_names = {"baseball-stadium": ("Ballpark", "洲際棒球場"), "folklore-park": ("Folk Museum", "民俗公園")}
     extras = []
@@ -267,21 +279,57 @@ def main():
             events[place] = event
     for place, entry in installed.items():
         events[place] = {"type": "sign", "tile": entry["signTile"]}
-    # The cartridge's sign registration determines the marker when a capture
-    # has been moved or installed after the original map design.
-    capture_signs = {captures[place]["currentBinding"]: place for place in captures.keys() & sight_specs.keys()}
+    # Current registered doors own hall locations. The original design's events
+    # predate the Confucius room and must not keep its old outdoor-only anchor.
+    native_exteriors = {parent["nativeKey"]: read(args.native / "data/maps" / parent["nativeMapName"] / "map.json")
+                        for parent in exteriors.values()}
+    for place, special in places.items():
+        hall = special.get("landmarkHallRef")
+        if not hall:
+            continue
+        require(hall in registry, f"The website hall for {place} is not registered.")
+        doors = []
+        for parent in exteriors.values():
+            ox, oy = parent["worldOrigin"]
+            for warp in native_exteriors[parent["nativeKey"]]["warp_events"]:
+                if warp["dest_map"] == hall:
+                    doors.append({"type": "door", "destMap": hall,
+                                  "tile": [x0 + ox + warp["x"], y0 + oy + warp["y"]]})
+        require(doors, f"No active exterior door enters the registered hall for {place}.")
+        # Adjacent paired entrance mats have one deterministic western anchor.
+        doors.sort(key=lambda door: (door["tile"][1], door["tile"][0]))
+        require(len({map_at(door["tile"])["nativeKey"] for door in doors}) == 1,
+                f"Multiple exteriors enter the hall for {place}.")
+        events[place] = doors[0]
+
+    # A capture can be read from either a sign or a local guide. Derive these
+    # anchors from current native objects, including relocated Alakazam and the
+    # three Xitun sites, instead of reusing design-era marker coordinates.
+    capture_bindings = {site["currentBinding"]: place for place, site in captures.items()}
     located = set()
+    capture_anchors = {}
     for parent in exteriors.values():
-        native = read(args.native / "data/maps" / parent["nativeMapName"] / "map.json")
+        native = native_exteriors[parent["nativeKey"]]
         ox, oy = parent["worldOrigin"]
-        for event in native["bg_events"]:
-            if event["type"] != "sign" or event["script"] not in capture_signs:
+        for event in [*native["bg_events"], *native["object_events"]]:
+            if event.get("script") not in capture_bindings:
                 continue
-            place = capture_signs[event["script"]]
-            require(place not in located, f"Multiple native capture signs for {place}.")
+            place = capture_bindings[event["script"]]
+            require(place in places, f"The native encounter {place} has no website catalog entry.")
+            require(place not in located, f"Multiple active exterior capture interactions for {place}.")
             located.add(place)
-            events[place] = {"type": "sign", "tile": [x0 + ox + event["x"], y0 + oy + event["y"]]}
-    require(located == set(capture_signs.values()), "Installed Boulevard capture signs do not match the encounter catalog.")
+            tile = [x0 + ox + event["x"], y0 + oy + event["y"]]
+            capture_anchors[place] = {"script": event["script"], "world": normalize(tile),
+                                      "nativeKey": parent["nativeKey"], "local": [event["x"], event["y"]]}
+            # Preserve a visitor hall's actual door projection when its outdoor
+            # encounter stands nearby. Both anchors remain in the export.
+            if events.get(place, {}).get("type") != "door":
+                events[place] = {"type": "sign", "tile": tile}
+    required_exterior_captures = (captures.keys() & sight_specs.keys()) | {
+        place for place, site in captures.items() if site["stableSiteId"] in (3, 21, 22, 23)
+    }
+    require(required_exterior_captures <= located,
+            "Moved/new Boulevard captures lack their current exterior sign or guide.")
 
     markers = {}
     interiors = {}
@@ -292,12 +340,14 @@ def main():
         parent = map_at(point)
         ox, oy = parent["worldOrigin"]
         marker = {"id": place, "name": {"en": special["nameEn"], "zh": special["nameZh"]},
-                  "kind": "landmark" if special.get("gymStatus") == "not-a-gym" else "landmark-gym",
+                  "kind": "home" if place == "guest-house" else "landmark" if special.get("gymStatus") == "not-a-gym" else "landmark-gym",
                   "world": point, "localEntrance": [point[0] - ox, point[1] - oy],
                   "exteriorMapId": parent["mapId"], "exteriorNativeKey": parent["nativeKey"]}
         markers[place] = marker
         if place in captures:
             marker["captureBit"] = captures[place]["stableSiteId"]
+            if place in capture_anchors:
+                marker["captureInteraction"] = capture_anchors[place]
         if event["type"] == "door":
             room = registry[event["destMap"]]
             interiors[room["nativeKey"]] = {**room, "kind": "interior", "projection": "parent-entrance",
@@ -325,7 +375,8 @@ def main():
                                     for en, zh, x, y in NEIGHBORHOODS.values()]},
         "mapsByNativeKey": {entry["nativeKey"]: entry for entry in exteriors.values()} | interiors,
         "markersById": markers, "seams": seams, "extraSights": extras,
-        "sourceSha256": {"compiledMapReport": digest(candidate / "build-report.json"), **report["sourceSha256"]},
+        "sourceSha256": {"compiledMapReport": digest(candidate / "build-report.json"), **report["sourceSha256"],
+                         **({"namedXitunBindings": digest(named_bindings_path)} if named_bindings else {})},
     }
     fingerprint = sha256(json.dumps({key: geometry[key] for key in GEOMETRY_FIELDS},
                                      sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode()).hexdigest()
