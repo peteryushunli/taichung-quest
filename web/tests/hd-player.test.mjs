@@ -15,13 +15,16 @@ function draw(frame, t, x, y) { for (let ty = 0; ty < t.h; ty++) for (let tx = 0
 } }
 const background = () => new Uint16Array(240 * 160).fill(0x1234);
 
-test('approved29 source poses plus native east mirrors stay genuinely2x, original palette and byte-exact', () => {
+test('the approved Source Detail 2× pack authenticates its atlas, native templates and artwork sheets', () => {
   assert.equal(templates.length, 38); assert.equal(pack.scale, 2); assert.deepEqual(provenance.counts, {walking:9,running:11,cycling:9});
+  assert.equal(pack.style, 'approved-source-detail-2x'); assert.equal(provenance.style, 'Source Detail 2×');
   assert.deepEqual([width,height], provenance.atlasSize); assert.equal(provenance.opaquePaletteColors, 15);
   assert.equal(createHash('sha256').update(atlas).digest('hex'), provenance.atlasSha256);
   assert.equal(createHash('sha256').update(read('player.json')).digest('hex'), provenance.packSha256);
-  for (const [file,sha] of Object.entries(provenance.nativeSourceInputsSha256)) assert.equal(createHash('sha256').update(readFileSync(new URL(`../src/assets/player-crisp-2x/source/${file}`,import.meta.url))).digest('hex'),sha);
-  for (const change of [{scale:4},{sprites:pack.sprites.slice(1)},{style:'source-detail'},
+  const inputs = {...provenance.nativeSourceInputsSha256, ...provenance.artworkSourceInputsSha256};
+  assert.equal(Object.keys(inputs).length, 6);
+  for (const [file,sha] of Object.entries(inputs)) assert.equal(createHash('sha256').update(readFileSync(new URL(`../src/assets/player/source/${file}`,import.meta.url))).digest('hex'),sha);
+  for (const change of [{scale:4},{sprites:pack.sprites.slice(1)},{style:'approved-crisp-2x'},
     {sprites:pack.sprites.map((s,i)=>i===0?{...s,atlasX:width}:s)},
     {sprites:pack.sprites.map((s,i)=>i===0?{...s,pixels:''}:s)}]) assert.equal(parsePlayerTemplates({...pack,...change},width,height),undefined);
 });

@@ -1,14 +1,18 @@
 {
-  "style": "Option B: Crisp2x (Scale2x)",
-  "source": "Story player-sharpness-preview-20261124/sheets; approved unchanged prototypes",
+  "style": "Source Detail 2\u00d7",
+  "source": "Story Source Detail sheets, approved in the right panel of the 2026-11-24 gameplay comparison",
   "nativeSourceInputsSha256": {
     "walking-native.png": "29a451251942c3115c492f1b0c134805ed902c2a759463ede19f34065bb2b761",
-    "walking-crisp-2x.png": "a3ad78f65471adc957f67c1f142426fbd59f53734ef23bd5a620244823ac8af7",
     "running-native.png": "3865e79b23d5a5dd4937ede0f9cc342e44418e5239903d16599c4dd5cb8f1643",
-    "running-crisp-2x.png": "fb0dd5a5ed45cac2b955de95cc54db366ae30eea27849d2155cd0da9aaacaf37",
-    "cycling-native.png": "0d265fdd7c329cd667fa2715e955c7575683db1afbf900da846d6e72dc882d6d",
-    "cycling-crisp-2x.png": "faea86c4a2959e8904cc8982360310c76ddf95ba01cedebe31392032c5589ea7"
+    "cycling-native.png": "0d265fdd7c329cd667fa2715e955c7575683db1afbf900da846d6e72dc882d6d"
   },
+  "artworkSourceInputsSha256": {
+    "walking-source-2x.png": "8309b3188c483e1bb2d6166bd4c99661615b211125747cf67f146e8b0bcc84e0",
+    "running-source-2x.png": "54270729b88040a019c01cd65352e978c3527310774c98d2b556ae4222a7e5b6",
+    "cycling-source-2x.png": "853a69ebb731dbc93f3a617c7daf7fefef64c19c0e52617aa2e7338bac5f7068"
+  },
+  "approvedComparisonAtlasSha256": "602947f0aa1a40f77f1eca1256dc15b283cd39857650adadcd3e6052a6571346",
+  "approvedComparisonRgbaSha256": "363533c80c282e12046f4f0aa74fa1a02a4e8d299a94ccac23fdd8833cd83361",
   "counts": {
     "walking": 9,
     "running": 11,
@@ -22,7 +26,7 @@
     128
   ],
   "opaquePaletteColors": 15,
-  "atlasSha256": "a0ad8eeb8307c2e6cafbcb1c6a35028782b5e559c887baa8e99194255a6ef257",
-  "packSha256": "37e2d6ced26fe1802aa346ac8d507eb8ef6f8ad248d8445d855132822f30cc60",
-  "nativeControl": "Framebuffer pose/time/position; no animation timer, ROM or save changes"
+  "atlasSha256": "602947f0aa1a40f77f1eca1256dc15b283cd39857650adadcd3e6052a6571346",
+  "packSha256": "10ae3d70a1aedb930e612c4f4db2eb650008c02aa395a6b1c73a91e60e87030c",
+  "nativeControl": "Framebuffer pose/time/position"
 }

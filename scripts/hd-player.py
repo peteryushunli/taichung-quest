@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Package the approved Crisp2x prototype byte-exact; no redraw/resampling.
+"""Package the approved Source Detail 2× artwork without resampling.
 
   python3 scripts/hd-player.py [--check]
 Native templates use the installed field palette after RGB555 quantization.
@@ -10,9 +10,11 @@ import base64,hashlib,json,sys
 from PIL import Image
 
 ROOT=Path(__file__).resolve().parents[1]
-SOURCE=ROOT/'web/src/assets/player-crisp-2x/source'
+SOURCE=ROOT/'web/src/assets/player/source'
 OUT=ROOT/'web/public/hd/player'
 SPECS={'walking':(16,9,{2,7,8}), 'running':(16,11,{6,7,8}), 'cycling':(32,9,{2,7,8})}
+REVIEW_ATLAS_SHA256='602947f0aa1a40f77f1eca1256dc15b283cd39857650adadcd3e6052a6571346'
+REVIEW_RGBA_SHA256='363533c80c282e12046f4f0aa74fa1a02a4e8d299a94ccac23fdd8833cd83361'
 
 def digest(data):return hashlib.sha256(data).hexdigest()
 def template(image):
@@ -20,16 +22,21 @@ def template(image):
  for r,g,b,a in image.get_flattened_data():values.extend((0xffff if not a else (r>>3)<<10|(g>>3)<<5|b>>3).to_bytes(2,'little'))
  return base64.b64encode(bytes(values)).decode()
 def package():
- entries=[];pictures=[];inputs={};allowed=set()
+ entries=[];pictures=[];native_inputs={};art_inputs={};allowed=set()
  for mode,(w,count,west) in SPECS.items():
-  paths={v:SOURCE/f'{mode}-{v}.png' for v in ['native','crisp-2x']}
-  for p in paths.values():inputs[p.name]=digest(p.read_bytes())
-  native=Image.open(paths['native']).convert('RGBA');crisp=Image.open(paths['crisp-2x']).convert('RGBA')
-  assert native.size==(w*count,32) and crisp.size==(w*count*2,64)
+  native_path=SOURCE/f'{mode}-native.png'
+  art_path=SOURCE/f'{mode}-source-2x.png'
+  native_inputs[native_path.name]=digest(native_path.read_bytes())
+  art_inputs[art_path.name]=digest(art_path.read_bytes())
+  native=Image.open(native_path).convert('RGBA')
+  detail=Image.open(art_path).convert('RGBA')
+  assert native.size==(w*count,32) and detail.size==(w*count*2,64)
   palette={p[:3] for p in native.get_flattened_data() if p[3]};allowed.update(palette)
-  assert {p[:3] for p in crisp.get_flattened_data() if p[3]} <= palette
+  assert {p[:3] for p in detail.get_flattened_data() if p[3]} <= palette
   for frame in range(count):
-   small=native.crop((frame*w,0,(frame+1)*w,32));big=crisp.crop((frame*w*2,0,(frame+1)*w*2,64))
+   small=native.crop((frame*w,0,(frame+1)*w,32))
+   big=detail.crop((frame*w*2,0,(frame+1)*w*2,64))
+   assert big.getbbox()==tuple(bound*2 for bound in small.getbbox()), (mode, frame)
    for east in ([False,True] if frame in west else [False]):
     n=small.transpose(Image.Transpose.FLIP_LEFT_RIGHT) if east else small
     p=big.transpose(Image.Transpose.FLIP_LEFT_RIGHT) if east else big
@@ -41,18 +48,36 @@ def package():
   if x+pic.width>800:x=0;y+=64
   entry['atlasX'],entry['atlasY']=x,y;x+=pic.width
  atlas=Image.new('RGBA',(800,y+64))
- for entry,pic in zip(entries,pictures):atlas.alpha_composite(pic,(entry['atlasX'],entry['atlasY']))
- pack=dict(version=1,scale=2,style='approved-crisp-2x',atlas='atlas.png',sprites=entries)
+ for entry,pic in zip(entries,pictures):atlas.paste(pic,(entry['atlasX'],entry['atlasY']))
+ if digest(atlas.tobytes()) != REVIEW_RGBA_SHA256:
+  raise ValueError('Packaged player pixels differ from the approved Source Detail 2× gameplay comparison.')
+ pack=dict(version=1,scale=2,style='approved-source-detail-2x',atlas='atlas.png',sprites=entries)
  import io
- f=io.BytesIO();atlas.save(f,format='PNG',optimize=True);png=f.getvalue();payload=(json.dumps(pack,separators=(',',':'))+'\n').encode()
- provenance=dict(style='Option B: Crisp2x (Scale2x)',source='Story player-sharpness-preview-20261124/sheets; approved unchanged prototypes',nativeSourceInputsSha256=inputs,counts={k:v[1] for k,v in SPECS.items()},east='Only native west poses are mirrored',templateCount=len(entries),atlasScale=2,atlasSize=list(atlas.size),opaquePaletteColors=len(allowed),atlasSha256=digest(png),packSha256=digest(payload),nativeControl='Framebuffer pose/time/position; no animation timer, ROM or save changes')
+ f=io.BytesIO();atlas.save(f,format='PNG');png=f.getvalue();payload=(json.dumps(pack,separators=(',',':'))+'\n').encode()
+ provenance=dict(
+  style='Source Detail 2×',
+  source='Story Source Detail sheets, approved in the right panel of the 2026-11-24 gameplay comparison',
+  nativeSourceInputsSha256=native_inputs,
+  artworkSourceInputsSha256=art_inputs,
+  approvedComparisonAtlasSha256=REVIEW_ATLAS_SHA256,
+  approvedComparisonRgbaSha256=REVIEW_RGBA_SHA256,
+  counts={k:v[1] for k,v in SPECS.items()},
+  east='Only native west poses are mirrored',
+  templateCount=len(entries),
+  atlasScale=2,
+  atlasSize=list(atlas.size),
+  opaquePaletteColors=len(allowed),
+  atlasSha256=digest(png),
+  packSha256=digest(payload),
+  nativeControl='Framebuffer pose/time/position',
+ )
  return {'atlas.png':png,'player.json':payload,'provenance.json':(json.dumps(provenance,indent=2)+'\n').encode()}
 
 if __name__=='__main__':
  data=package()
  if '--check' in sys.argv:
   for name,payload in data.items():assert (OUT/name).read_bytes()==payload,name
-  print('Approved2x player atlas, templates and provenance reproduce byte-exact')
+  print('Approved Source Detail 2× atlas, templates and provenance reproduce byte for byte')
  else:
   OUT.mkdir(parents=True,exist_ok=True)
   for name,payload in data.items():(OUT/name).write_bytes(payload)

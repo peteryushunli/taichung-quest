@@ -14,7 +14,7 @@ const COUNTS = { walking: 9, running: 11, cycling: 9 };
 export function parsePlayerTemplates(value: unknown, atlasWidth: number, atlasHeight: number): PlayerTemplate[] | undefined {
   if (!value || typeof value !== 'object') return;
   const pack = value as Record<string, unknown>;
-  if (pack.version !== 1 || pack.scale !== 2 || pack.style !== 'approved-crisp-2x' || pack.atlas !== 'atlas.png'
+  if (pack.version !== 1 || pack.scale !== 2 || pack.style !== 'approved-source-detail-2x' || pack.atlas !== 'atlas.png'
     || !Array.isArray(pack.sprites) || pack.sprites.length !== 38) return;
   const templates: PlayerTemplate[] = [], seen = new Set<string>();
   for (const raw of pack.sprites) {
@@ -49,7 +49,7 @@ export class PlayerMatcher {
   readonly templates: PlayerTemplate[];
   scannedPixels = 0;
   constructor(templates: PlayerTemplate[]) {
-    // Equal native poses also have identical approved Scale2x pixels. Do not
+    // Equal native poses also have identical approved 2× pixels. Do not
     // turn aliases into false ambiguity or invent a distinction native lacks.
     this.templates = templates.filter((t, i) => templates.findIndex(other => other.w === t.w && other.h === t.h
       && other.px.every((v, n) => v === t.px[n])) === i);
