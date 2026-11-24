@@ -110,6 +110,8 @@ export class HdOverlay {
   private readonly patch = document.createElement('canvas');
   private readonly patchCtx: CanvasRenderingContext2D;
   private readonly patchData: ImageData;
+  private readonly playerUnderlay = document.createElement('canvas');
+  private readonly playerUnderlayCtx = this.playerUnderlay.getContext('2d')!;
   private readonly frame = new Uint16Array(W * H);
   private rgba = new Uint8ClampedArray(W * H * 4);
   private loaded?: Loaded;
@@ -434,20 +436,37 @@ export class HdOverlay {
     }
     if (player && this.player && loaded && camera) {
       const { t, x, y } = player;
+      // Save the already composited scene wherever native foreground covers
+      // the player. Restoring raw game pixels here would erase HD characters
+      // visible through the player's transparent head/shoulder area.
+      const foreground: [number, number, number][] = [];
+      for (let ty = 0; ty < t.h; ty++) {
+        let start = -1;
+        for (let tx = 0; tx <= t.w; tx++) {
+          const i = (y + ty) * W + x + tx;
+          const expected = t.px[ty * t.w + tx];
+          const covered = tx < t.w && (expected === 0xffff
+            ? this.frame[i] !== loaded.ref[(y + ty + camera.y) * loaded.refW + x + tx + camera.x]
+            : this.frame[i] !== expected);
+          if (covered && start < 0) start = tx;
+          if (!covered && start >= 0) { foreground.push([start, ty, tx - start]); start = -1; }
+        }
+      }
+      if (foreground.length) {
+        const buffer = this.playerUnderlay;
+        if (buffer.width !== t.w * k || buffer.height !== t.h * k) {
+          buffer.width = t.w * k; buffer.height = t.h * k;
+        }
+        this.playerUnderlayCtx.drawImage(this.element, x * k, y * k, t.w * k, t.h * k, 0, 0, t.w * k, t.h * k);
+      }
       // The player atlas is genuinely2x; never apply the NPC pack's4x scale.
       this.out.imageSmoothingEnabled = false;
       out.drawImage(this.player.atlas, t.atlasX, t.atlasY, t.w * 2, t.h * 2, x * k, y * k, t.w * k, t.h * k);
-      let patched = false;
-      for (let ty = 0; ty < t.h; ty++) for (let tx = 0; tx < t.w; tx++) {
-        const i = (y + ty) * W + x + tx;
-        const expected = t.px[ty * t.w + tx];
-        // Preserve native occlusion, including foreground in the few clear
-        // native pixels where approved Scale2x reconstructs an edge subpixel.
-        if (expected === 0xffff && this.frame[i] === loaded.ref[(y + ty + camera.y) * loaded.refW + x + tx + camera.x]) continue;
-        if (expected !== 0xffff && this.frame[i] === expected) continue;
-        keep(i); patched = true;
+      if (foreground.length) {
+        out.save(); out.beginPath();
+        for (const [tx, ty, width] of foreground) out.rect((x + tx) * k, (y + ty) * k, width * k, k);
+        out.clip(); out.drawImage(this.playerUnderlay, x * k, y * k); out.restore();
       }
-      if (patched) this.flushPatch();
     }
     this.lastSprites = sprites.map(({ t, x, y }) => `${t.character}:${t.kind}:${t.frame}@${x},${y}`);
     this.element.classList.add('playing');
