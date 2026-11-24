@@ -1,5 +1,5 @@
 import { PlayerMatcher, parsePlayerTemplates } from './hd-player';
-import type { PlayerMatch } from './hd-player';
+import type { PlayerForeground, PlayerMatch } from './hd-player';
 import { scoreHdCamera } from './hd-scene';
 import type { HdScene } from './hd-scene';
 
@@ -376,10 +376,16 @@ export class HdOverlay {
     const loaded = nav ? this.currentMap(nav) : undefined;
     const camera = loaded ? this.locate(nav!) : undefined;
     const sprites = this.findSprites();
+    // Trust only a complete native overworld match with its feet below the
+    // player. A partial NPC match may be behind the player or other scenery.
+    const foregroundSprites = sprites.filter(({ t, hits }) => t.kind === 'overworld' && hits === t.opaque);
+    const coversPlayer: PlayerForeground | undefined = foregroundSprites.length ? (x, y, playerBottom) =>
+      foregroundSprites.some(({ t, x: sx, y: sy }) => sy + t.h > playerBottom &&
+        x >= sx && x < sx + t.w && y >= sy && y < sy + t.h && t.px[(y - sy) * t.w + x - sx] !== 0xffff) : undefined;
     const player = nav && camera && loaded && this.player ? this.player.matcher.match(this.frame, {
       x: (nav.x + loaded.map.margin) * 16 + 8 - camera.x,
       y: (nav.y + loaded.map.margin) * 16 + 16 - camera.y,
-    }) : undefined;
+    }, coversPlayer) : undefined;
     this.playerDiagnostic(player);
     this.camera = camera;
     const next = camera ? 'locked' : 'searching';
@@ -447,7 +453,7 @@ export class HdOverlay {
           const expected = t.px[ty * t.w + tx];
           const covered = tx < t.w && (expected === 0xffff
             ? this.frame[i] !== loaded.ref[(y + ty + camera.y) * loaded.refW + x + tx + camera.x]
-            : this.frame[i] !== expected);
+            : this.frame[i] !== expected || (player.obscured > 0 && coversPlayer?.(x + tx, y + ty, y + t.h)));
           if (covered && start < 0) start = tx;
           if (!covered && start >= 0) { foreground.push([start, ty, tx - start]); start = -1; }
         }

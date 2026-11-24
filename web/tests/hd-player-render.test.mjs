@@ -64,6 +64,41 @@ test('shipped draw keeps native foreground and falls back without a stale pose d
  const missing=fixture();missing.overlay.player=undefined;missing.overlay.draw();assert.equal(missing.calls.some(c=>c[0]===missing.playerAtlas),false);
 });
 
+test('Xiaoyu can cover the player at the greeting without losing player detail or repainting the foreground', () => {
+ const sprites = JSON.parse(readFileSync(new URL('../public/hd/sprites/sprites.json', import.meta.url))).sprites;
+ const native = sprites.find(s => s.character === 'xiaoyu' && s.kind === 'overworld' && s.frame === 1 && !s.east);
+ const px = new Uint16Array(Uint8Array.from(Buffer.from(native.pixels, 'base64')).buffer);
+ const t = { ...native, px, opaque: px.filter(value => value !== 0xffff).length };
+ const guest = { t, x: 112, y: 64, hits: t.opaque };
+ const f = fixture();
+ const overlap = [];
+ for (let y = 0; y < t.h; y++) for (let x = 0; x < t.w; x++) {
+  const value = px[y * t.w + x];
+  if (value === 0xffff) continue;
+  f.frame[(guest.y + y) * 240 + guest.x + x] = value;
+  if (y < 16 && f.t.px[(y + 16) * f.t.w + x] !== 0xffff) overlap.push([guest.x + x, guest.y + y]);
+ }
+ assert.equal(f.overlay.player.matcher.match(f.frame, { x: 120, y: 80 }), undefined);
+ f.overlay.findSprites = () => [guest];
+ f.overlay.draw();
+ assert.equal(f.overlay.element.dataset.playerPose, 'walking:0:native@112,48');
+ const playerDraw = f.calls.findIndex(call => call[0] === f.playerAtlas);
+ assert.ok(playerDraw >= 0 && playerDraw < f.calls.findIndex(call => call[0] === f.underlay));
+ for (const [x, y] of overlap) {
+  assert.ok(f.clips.some(([left, top, width, height]) =>
+   x * 2 >= left && x * 2 < left + width && y * 2 >= top && y * 2 < top + height), 'native foreground stays on top');
+ }
+
+ guest.hits--;
+ f.overlay.draw();
+ assert.equal(f.overlay.element.dataset.playerPose, '', 'an incomplete NPC match cannot certify coverage');
+ guest.hits++;
+ const head = f.t.px.findIndex(value => value !== 0xffff);
+ f.frame[(48 + Math.floor(head / f.t.w)) * 240 + 112 + head % f.t.w] = 0x1234;
+ f.overlay.draw();
+ assert.equal(f.overlay.element.dataset.playerPose, '', 'an unexplained player pixel rejects even verified coverage');
+});
+
 test('a transient player asset failure releases loading and retries on the next HD start, including an existing RAF',async()=>{
  const f=fixture();f.overlay.player=undefined;f.overlay.raf=1;
  const previousFetch=globalThis.fetch,previousImage=Object.getOwnPropertyDescriptor(globalThis,'Image');let requests=0;

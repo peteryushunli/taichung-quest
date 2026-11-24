@@ -1,8 +1,9 @@
 /** Native framebuffer recognition only: no animation clock or game writes. */
 export type PlayerTemplate = { kind: 'walking' | 'running' | 'cycling'; frame: number; east: boolean;
   w: number; h: number; atlasX: number; atlasY: number; px: Uint16Array; opaque: number };
-export type PlayerMatch = { t: PlayerTemplate; x: number; y: number };
+export type PlayerMatch = { t: PlayerTemplate; x: number; y: number; obscured: number };
 export type PlayerFootprint = { x: number; y: number };
+export type PlayerForeground = (x: number, y: number, playerBottom: number) => boolean;
 const RUN = 6;
 const RADIUS = 24;
 const W = 240, H = 160;
@@ -74,10 +75,10 @@ export class PlayerMatcher {
     }
   }
 
-  /** Exactly one fully visible native pose in one bounded player footprint.
-   * Occluded, faded, foreign-palette and ambiguous frames use native pixels.
-   * Every frame is revalidated; no cached pose is painted after a transition. */
-  match(frame: Uint16Array, foot: PlayerFootprint): PlayerMatch | undefined {
+  /** Exactly one native pose in a bounded footprint. A verified foreground
+   * character can cover up to a quarter of a walking pose's opaque pixels.
+   * Every other opaque pixel must still match the native palette exactly. */
+  match(frame: Uint16Array, foot: PlayerFootprint, foreground?: PlayerForeground): PlayerMatch | undefined {
     this.scannedPixels = 0;
     if (frame.length !== W * H || !Number.isFinite(foot.x) || !Number.isFinite(foot.y)) return;
     const x0 = Math.max(0, Math.floor(foot.x - 16 - RADIUS)), x1 = Math.min(W - RUN, Math.ceil(foot.x + 16 + RADIUS));
@@ -96,14 +97,18 @@ export class PlayerMatcher {
         const key = `${this.templates.indexOf(t)}:${ox}:${oy}`;
         if (checked.has(key)) continue;
         checked.add(key);
-        let exact = true;
-        for (let ty = 0; ty < t.h && exact; ty++) for (let tx = 0; tx < t.w; tx++) {
+        let obscured = 0, valid = true;
+        for (let ty = 0; ty < t.h && valid; ty++) for (let tx = 0; tx < t.w; tx++) {
           const expected = t.px[ty * t.w + tx];
-          if (expected !== 0xffff && frame[(oy + ty) * W + ox + tx] !== expected) { exact = false; break; }
+          if (expected === 0xffff || frame[(oy + ty) * W + ox + tx] === expected) continue;
+          obscured++;
+          if (t.kind !== 'walking' || obscured > t.opaque / 4 || !foreground?.(ox + tx, oy + ty, oy + t.h)) {
+            valid = false; break;
+          }
         }
-        if (!exact) continue;
+        if (!valid) continue;
         if (match && (match.x !== ox || match.y !== oy || match.t !== t)) return;
-        match = { t, x: ox, y: oy };
+        match = { t, x: ox, y: oy, obscured };
       }
     }
     return match;
