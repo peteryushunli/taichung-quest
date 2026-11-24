@@ -14,7 +14,7 @@ Final controller acceptance passes on this exact ROM/ELF. Landmark unedited B ca
 
 Shared runtime receipts are `artifacts/qa/2026-11-24-main-gameplay-acceptance/{preparation,loss}/FINAL-ACCEPTANCE.json` and `artifacts/qa/2026-11-24-gameplay-pair-award-full-party/FINAL-ACCEPTANCE.json`. These use isolated preexisting fixtures and real native controls, with no ROM/RAM/RNG changes. The first lead-only battle stop remains accurately recorded as unfinished; the full-party replay supplies the genuine win. Main assembly evidence is retained under `artifacts/playtest-followup-2026-11-24/`, including `GAMEPLAY-CHECKPOINT-PAIR.json`, `GAMEPLAY-COMPILED-LEADER-TEXT.json` and both frozen native pairs.
 
-The three optional trainers retain their previously qualified modes. Their paused variants and starter encounter rotation are separate work. No new save schema, capture ID or species rotation is included. PR25 remains draft and production is unchanged.
+The three optional trainers retain their previously qualified modes. Their paused variants passed functional checks but remain short straight routes and are held as a separate visual option; see `paused-trainer-option-2026-11-24.md`. Starter rotation awaits its actual native handoff and saved-move/legacy compatibility proof. No new save schema, capture ID or species rotation is included in this ready review. PR25 remains draft and production is unchanged.
 
 ## Checked-in regression-fixture follow-up
 
