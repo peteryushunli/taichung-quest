@@ -629800,6 +629800,21 @@ Sx=}s=0000<MNUMnLSTaMB98F@
 literal 0
 HcmV?d00001
 
+diff --git a/include/battle.h b/include/battle.h
+index ea91a3a8..abf78452 100644
+--- a/include/battle.h
++++ b/include/battle.h
+@@ -466,7 +466,9 @@ struct BattleStruct
+         struct LinkBattlerHeader linkBattlerHeader;
+         struct MultiBattlePokemonTx multiBattleMons[3];
+     } multiBuffer;
+-    u8 padding_1E4[0x1C];
++    u8 opponentStatusStreak[PARTY_SIZE];
++    bool8 opponentStatusCounted;
++    u8 padding_1EB[0x1C - PARTY_SIZE - 1];
+ }; // size == 0x200 bytes
+ 
+ extern struct BattleStruct *gBattleStruct;
 diff --git a/include/battle_scripts.h b/include/battle_scripts.h
 index ed2af35f..6b923a7b 100644
 --- a/include/battle_scripts.h
@@ -630468,15 +630483,20 @@ index 00000000..c5b393e6
 +#endif
 diff --git a/include/taichung_battle_ai.h b/include/taichung_battle_ai.h
 new file mode 100644
-index 00000000..01763184
+index 00000000..53b3a743
 --- /dev/null
 +++ b/include/taichung_battle_ai.h
-@@ -0,0 +1,7 @@
+@@ -0,0 +1,12 @@
 +#ifndef GUARD_TAICHUNG_BATTLE_AI_H
 +#define GUARD_TAICHUNG_BATTLE_AI_H
 +
 +// Apply after the normal AI scripts, before their ordinary random tie-break.
 +void TaichungBattleAI_AdjustScores(s8 scores[4], u8 battler);
++bool8 TaichungBattleAI_IsDamagingMove(u16 move);
++bool8 TaichungBattleAI_StatusLimitReached(u8 battler);
++u8 TaichungBattleAI_StatusMoveMask(u8 battler);
++u8 TaichungBattleAI_ChooseLegalMove(u8 battler, const s8 *scores);
++void TaichungBattleAI_RecordMoveUse(u8 battler, u16 move);
 +
 +#endif
 diff --git a/include/taichung_characters.h b/include/taichung_characters.h
@@ -631658,7 +631678,7 @@ index 50cfd497..2490ea30 100644
 +graphics/taichung/boxun/overworld.4bpp: graphics/taichung/boxun/overworld.png
 +	$(GFX) $< $@ -mwidth 2 -mheight 4
 diff --git a/src/battle_ai_script_commands.c b/src/battle_ai_script_commands.c
-index 74a30773..6ae24c6a 100644
+index 74a30773..c0b3bb1f 100644
 --- a/src/battle_ai_script_commands.c
 +++ b/src/battle_ai_script_commands.c
 @@ -5,6 +5,7 @@
@@ -631669,15 +631689,59 @@ index 74a30773..6ae24c6a 100644
  #include "constants/abilities.h"
  #include "constants/battle_ai.h"
  #include "constants/battle_move_effects.h"
-@@ -390,6 +391,8 @@ u8 BattleAI_ChooseMoveOrAction(void)
+@@ -390,6 +391,15 @@ u8 BattleAI_ChooseMoveOrAction(void)
      if (AI_THINKING_STRUCT->aiAction & AI_ACTION_WATCH)
          return AI_CHOICE_WATCH;
  
 +    TaichungBattleAI_AdjustScores(AI_THINKING_STRUCT->score, gBattlerAttacker);
 +
++    if (TaichungBattleAI_StatusMoveMask(gBattlerAttacker) != 0)
++    {
++        u8 choice = TaichungBattleAI_ChooseLegalMove(gBattlerAttacker, AI_THINKING_STRUCT->score);
++        // Action preflight handles Struggle when there are no legal attacks.
++        return choice < MAX_MON_MOVES ? choice : 0;
++    }
++
      numOfBestMoves = 1;
      currentMoveArray[0] = AI_THINKING_STRUCT->score[0];
      consideredMoveArray[0] = 0;
+diff --git a/src/battle_controller_opponent.c b/src/battle_controller_opponent.c
+index b4b6ebbd..e7f57963 100644
+--- a/src/battle_controller_opponent.c
++++ b/src/battle_controller_opponent.c
+@@ -1,4 +1,5 @@
+ #include "global.h"
++#include "taichung_battle_ai.h"
+ #include "gflib.h"
+ #include "data.h"
+ #include "m4a.h"
+@@ -1384,12 +1385,23 @@ static void OpponentHandleChooseMove(void)
+     {
+         u16 move;
+ 
+-        do
++        if (TaichungBattleAI_StatusMoveMask(gActiveBattler) != 0)
+         {
+-            chosenMoveId = Random() & 3;
++            chosenMoveId = TaichungBattleAI_ChooseLegalMove(gActiveBattler, NULL);
++            // Action preflight handles Struggle when there are no legal attacks.
++            if (chosenMoveId == MAX_MON_MOVES)
++                chosenMoveId = 0;
+             move = moveInfo->moves[chosenMoveId];
+         }
+-        while (move == MOVE_NONE);
++        else
++        {
++            do
++            {
++                chosenMoveId = Random() & 3;
++                move = moveInfo->moves[chosenMoveId];
++            }
++            while (move == MOVE_NONE);
++        }
+         if (gBattleMoves[move].target & (MOVE_TARGET_USER_OR_SELECTED | MOVE_TARGET_USER))
+             BtlController_EmitTwoReturnValues(1, 10, (chosenMoveId) | (gActiveBattler << 8));
+         else if (gBattleTypeFlags & BATTLE_TYPE_DOUBLE)
 diff --git a/src/battle_controller_player.c b/src/battle_controller_player.c
 index d8e1fe71..dc0bfe70 100644
 --- a/src/battle_controller_player.c
@@ -631713,17 +631777,18 @@ index d8e1fe71..dc0bfe70 100644
      gBattlerControllerFuncs[gActiveBattler] = OpenBagAndChooseItem;
      gBattlerInMenuId = gActiveBattler;
 diff --git a/src/battle_main.c b/src/battle_main.c
-index 64c9e59b..fd14cc5a 100644
+index 64c9e59b..71201b7b 100644
 --- a/src/battle_main.c
 +++ b/src/battle_main.c
-@@ -1,4 +1,6 @@
+@@ -1,4 +1,7 @@
  #include "global.h"
 +#include "taichung_encounter.h"
++#include "taichung_battle_ai.h"
 +#include "taichung_gym_loss.h"
  #include "gflib.h"
  #include "battle.h"
  #include "battle_anim.h"
-@@ -22,6 +24,7 @@
+@@ -22,6 +25,7 @@
  #include "load_save.h"
  #include "m4a.h"
  #include "party_menu.h"
@@ -631731,7 +631796,7 @@ index 64c9e59b..fd14cc5a 100644
  #include "pokeball.h"
  #include "pokedex.h"
  #include "quest_log.h"
-@@ -1631,6 +1634,11 @@ static u8 CreateNPCTrainerParty(struct Pokemon *party, u16 trainerNum)
+@@ -1631,6 +1635,11 @@ static u8 CreateNPCTrainerParty(struct Pokemon *party, u16 trainerNum)
              }
          }
  
@@ -631743,7 +631808,7 @@ index 64c9e59b..fd14cc5a 100644
          gBattleTypeFlags |= gTrainers[trainerNum].doubleBattle;
      }
  
-@@ -3769,6 +3777,13 @@ static void HandleEndTurn_BattleWon(void)
+@@ -3769,6 +3778,13 @@ static void HandleEndTurn_BattleWon(void)
  static void HandleEndTurn_BattleLost(void)
  {
      gCurrentActionFuncId = 0;
@@ -631757,7 +631822,7 @@ index 64c9e59b..fd14cc5a 100644
      if (gBattleTypeFlags & BATTLE_TYPE_LINK)
      {
          gBattleTextBuff1[0] = gBattleOutcome;
-@@ -3778,7 +3793,14 @@ static void HandleEndTurn_BattleLost(void)
+@@ -3778,7 +3794,14 @@ static void HandleEndTurn_BattleLost(void)
      }
      else
      {
@@ -631773,19 +631838,65 @@ index 64c9e59b..fd14cc5a 100644
          {
              if (GetRivalBattleFlags() & RIVAL_BATTLE_HEAL_AFTER)
                  gBattleCommunication[MULTISTRING_CHOOSER] = 1; // Dont do white out text
-@@ -3982,7 +4004,10 @@ static void HandleAction_UseMove(void)
+@@ -3960,6 +3983,15 @@ void RunBattleScriptCommands(void)
+         gBattleScriptingCommandsTable[gBattlescriptCurrInstr[0]]();
+ }
+ 
++static void SetNoLegalMoveFallback(void)
++{
++    // Preserve the recoil-free fallback for a landmark capture target.
++    gCurrentMove = gChosenMove = TaichungEncounterIsActive() && GetBattlerSide(gBattlerAttacker) == B_SIDE_OPPONENT
++        ? MOVE_TACKLE : MOVE_STRUGGLE;
++    gHitMarker |= HITMARKER_ALLOW_NO_PP | HITMARKER_NO_PPDEDUCT;
++    gBattleStruct->moveTarget[gBattlerAttacker] = GetMoveTarget(gCurrentMove, NO_TARGET_OVERRIDE);
++}
++
+ static void HandleAction_UseMove(void)
+ {
+     u8 side;
+@@ -3974,6 +4006,7 @@ static void HandleAction_UseMove(void)
+     gCritMultiplier = 1;
+     gBattleScripting.dmgMultiplier = 1;
+     gBattleStruct->atkCancellerTracker = 0;
++    gBattleStruct->opponentStatusCounted = FALSE;
+     gMoveResultFlags = 0;
+     gMultiHitCounter = 0;
+     gBattleCommunication[MISS_TYPE] = 0;
+@@ -3982,9 +4015,7 @@ static void HandleAction_UseMove(void)
      if (gProtectStructs[gBattlerAttacker].noValidMoves)
      {
          gProtectStructs[gBattlerAttacker].noValidMoves = 0;
 -        gCurrentMove = gChosenMove = MOVE_STRUGGLE;
-+        // Scripted capture targets must not knock themselves out with recoil
-+        // after an unusually long stall or move restriction.
-+        gCurrentMove = gChosenMove = TaichungEncounterIsActive() && GetBattlerSide(gBattlerAttacker) == B_SIDE_OPPONENT
-+            ? MOVE_TACKLE : MOVE_STRUGGLE;
-         gHitMarker |= HITMARKER_NO_PPDEDUCT;
-         *(gBattleStruct->moveTarget + gBattlerAttacker) = GetMoveTarget(MOVE_STRUGGLE, NO_TARGET_OVERRIDE);
+-        gHitMarker |= HITMARKER_NO_PPDEDUCT;
+-        *(gBattleStruct->moveTarget + gBattlerAttacker) = GetMoveTarget(MOVE_STRUGGLE, NO_TARGET_OVERRIDE);
++        SetNoLegalMoveFallback();
      }
-@@ -4154,6 +4179,13 @@ static void HandleAction_UseItem(void)
+     else if (gBattleMons[gBattlerAttacker].status2 & STATUS2_MULTIPLETURNS || gBattleMons[gBattlerAttacker].status2 & STATUS2_RECHARGE)
+     {
+@@ -4018,6 +4049,22 @@ static void HandleAction_UseMove(void)
+     {
+         gCurrentMove = gChosenMove = gBattleMons[gBattlerAttacker].moves[gCurrMovePos];
+     }
++    // Encore can arrive after selection. Respect the live legality mask and
++    // leave an in-progress multi-turn attack or recharge to the native engine.
++    if (!(gBattleMons[gBattlerAttacker].status2 & (STATUS2_MULTIPLETURNS | STATUS2_RECHARGE))
++        && !TaichungBattleAI_IsDamagingMove(gCurrentMove)
++        && TaichungBattleAI_StatusLimitReached(gBattlerAttacker))
++    {
++        u8 slot = TaichungBattleAI_ChooseLegalMove(gBattlerAttacker, NULL);
++        if (slot == MAX_MON_MOVES)
++            SetNoLegalMoveFallback();
++        else
++        {
++            gCurrMovePos = gChosenMovePos = slot;
++            gCurrentMove = gChosenMove = gBattleMons[gBattlerAttacker].moves[slot];
++            gBattleStruct->moveTarget[gBattlerAttacker] = GetMoveTarget(gCurrentMove, NO_TARGET_OVERRIDE);
++        }
++    }
+     if (GetBattlerSide(gBattlerAttacker) == B_SIDE_PLAYER)
+         gBattleResults.lastUsedMovePlayer = gCurrentMove;
+     else
+@@ -4154,6 +4201,13 @@ static void HandleAction_UseItem(void)
      gBattle_BG0_Y = 0;
      ClearFuryCutterDestinyBondGrudge(gBattlerAttacker);
      gLastUsedItem = gBattleBufferB[gBattlerAttacker][1] | (gBattleBufferB[gBattlerAttacker][2] << 8);
@@ -631799,7 +631910,7 @@ index 64c9e59b..fd14cc5a 100644
      if (gLastUsedItem <= ITEM_PREMIER_BALL) // is ball
      {
          gBattlescriptCurrInstr = gBattlescriptsForBallThrow[gLastUsedItem];
-@@ -4232,6 +4264,12 @@ bool8 TryRunFromBattle(u8 battler)
+@@ -4232,6 +4286,12 @@ bool8 TryRunFromBattle(u8 battler)
      u8 holdEffect;
      u8 speedVar;
  
@@ -631881,20 +631992,34 @@ index a6392be9..d83e7cd7 100644
  
      while (*src != EOS)
 diff --git a/src/battle_script_commands.c b/src/battle_script_commands.c
-index 67f90a37..e50f7406 100644
+index 67f90a37..90a75658 100644
 --- a/src/battle_script_commands.c
 +++ b/src/battle_script_commands.c
-@@ -16,6 +16,9 @@
+@@ -16,6 +16,10 @@
  #include "naming_screen.h"
  #include "overworld.h"
  #include "party_menu.h"
 +#include "taichung_team.h"
 +#include "taichung_encounter.h"
 +#include "taichung_gym_progress.h"
++#include "taichung_battle_ai.h"
  #include "trainer_pokemon_sprites.h"
  #include "field_specials.h"
  #include "battle.h"
-@@ -3125,7 +3128,7 @@ static void Cmd_getexp(void)
+@@ -1112,6 +1116,12 @@ static void Cmd_attackstring(void)
+ 
+     if (!(gHitMarker & (HITMARKER_NO_ATTACKSTRING | HITMARKER_ATTACKSTRING_PRINTED)))
+     {
++        // The announcement follows native sleep, flinch, paralysis, PP and
++        // other cancellation checks. A miss or immunity still spends the use.
++        if (!(gHitMarker & HITMARKER_UNABLE_TO_USE_MOVE)
++            && gCurrentTurnActionNumber < gBattlersCount
++            && gBattlerAttacker == gBattlerByTurnOrder[gCurrentTurnActionNumber])
++            TaichungBattleAI_RecordMoveUse(gBattlerAttacker, gCurrentMove);
+         PrepareStringBattle(STRINGID_USEDMOVE, gBattlerAttacker);
+         gHitMarker |= HITMARKER_ATTACKSTRING_PRINTED;
+     }
+@@ -3125,7 +3135,7 @@ static void Cmd_getexp(void)
      switch (gBattleScripting.getexpState)
      {
      case 0: // check if should receive exp at all
@@ -631903,7 +632028,7 @@ index 67f90a37..e50f7406 100644
               (BATTLE_TYPE_LINK
                | BATTLE_TYPE_TRAINER_TOWER
                | BATTLE_TYPE_BATTLE_TOWER
-@@ -5325,6 +5328,15 @@ static void Cmd_getmoneyreward(void)
+@@ -5325,6 +5335,15 @@ static void Cmd_getmoneyreward(void)
  
      const struct TrainerMonItemCustomMoves *party4; //This needs to be out here
  
@@ -631919,7 +632044,7 @@ index 67f90a37..e50f7406 100644
      if (gBattleOutcome == B_OUTCOME_WON)
      {
          if (gTrainerBattleOpponent_A == TRAINER_SECRET_BASE)
-@@ -9497,6 +9509,8 @@ static void Cmd_handleballthrow(void)
+@@ -9497,6 +9516,8 @@ static void Cmd_handleballthrow(void)
              catchRate = gBattleStruct->safariCatchFactor * 1275 / 100;
          else
              catchRate = gSpeciesInfo[gBattleMons[gBattlerTarget].species].catchRate;
@@ -631928,7 +632053,7 @@ index 67f90a37..e50f7406 100644
  
          if (gLastUsedItem > ITEM_SAFARI_BALL)
          {
-@@ -9572,7 +9586,7 @@ static void Cmd_handleballthrow(void)
+@@ -9572,7 +9593,7 @@ static void Cmd_handleballthrow(void)
          {
              BtlController_EmitBallThrowAnim(BUFFER_A, BALL_3_SHAKES_SUCCESS);
              MarkBattlerForControllerExec(gActiveBattler);
@@ -631937,7 +632062,7 @@ index 67f90a37..e50f7406 100644
              SetMonData(&gEnemyParty[gBattlerPartyIndexes[gBattlerTarget]], MON_DATA_POKEBALL, &gLastUsedItem);
  
              if (CalculatePlayerPartyCount() == PARTY_SIZE)
-@@ -9597,7 +9611,7 @@ static void Cmd_handleballthrow(void)
+@@ -9597,7 +9618,7 @@ static void Cmd_handleballthrow(void)
  
              if (shakes == BALL_3_SHAKES_SUCCESS) // mon caught, copy of the code above
              {
@@ -631946,7 +632071,7 @@ index 67f90a37..e50f7406 100644
                  SetMonData(&gEnemyParty[gBattlerPartyIndexes[gBattlerTarget]], MON_DATA_POKEBALL, &gLastUsedItem);
  
                  if (CalculatePlayerPartyCount() == PARTY_SIZE)
-@@ -9608,7 +9622,8 @@ static void Cmd_handleballthrow(void)
+@@ -9608,7 +9629,8 @@ static void Cmd_handleballthrow(void)
              else // not caught
              {
                  gBattleCommunication[MULTISTRING_CHOOSER] = shakes;
@@ -631956,7 +632081,7 @@ index 67f90a37..e50f7406 100644
              }
          }
      }
-@@ -9616,6 +9631,19 @@ static void Cmd_handleballthrow(void)
+@@ -9616,6 +9638,19 @@ static void Cmd_handleballthrow(void)
  
  static void Cmd_givecaughtmon(void)
  {
@@ -632064,16 +632189,26 @@ index 6d62084d..b94c1136 100644
  }
  
 diff --git a/src/battle_util.c b/src/battle_util.c
-index bb66a014..e1045e0b 100644
+index bb66a014..2c46f84b 100644
 --- a/src/battle_util.c
 +++ b/src/battle_util.c
-@@ -1,4 +1,5 @@
+@@ -1,4 +1,6 @@
  #include "global.h"
 +#include "taichung_team.h"
++#include "taichung_battle_ai.h"
  #include "item.h"
  #include "text.h"
  #include "util.h"
-@@ -3146,7 +3147,7 @@ u8 IsMonDisobedient(void)
+@@ -404,7 +406,7 @@ u8 CheckMoveLimitations(u8 battlerId, u8 unusableMoves, u8 check)
+ #define ALL_MOVES_MASK ((1 << MAX_MON_MOVES) - 1)
+ bool8 AreAllMovesUnusable(void)
+ {
+-    u8 unusable = CheckMoveLimitations(gActiveBattler, 0, MOVE_LIMITATIONS_ALL);
++    u8 unusable = CheckMoveLimitations(gActiveBattler, TaichungBattleAI_StatusMoveMask(gActiveBattler), MOVE_LIMITATIONS_ALL);
+ 
+     if (unusable == ALL_MOVES_MASK) // All moves are unusable.
+     {
+@@ -3146,7 +3148,7 @@ u8 IsMonDisobedient(void)
      s32 calc;
      u8 obedienceLevel = 0;
  
@@ -640684,17 +640819,95 @@ index 00000000..c1fc13ac
 +}
 diff --git a/src/taichung_battle_ai.c b/src/taichung_battle_ai.c
 new file mode 100644
-index 00000000..f6ecf256
+index 00000000..9d41361f
 --- /dev/null
 +++ b/src/taichung_battle_ai.c
-@@ -0,0 +1,48 @@
+@@ -0,0 +1,126 @@
 +#include "global.h"
 +#include "battle.h"
++#include "battle_anim.h"
++#include "battle_util.h"
 +#include "pokemon.h"
++#include "random.h"
 +#include "taichung_battle_ai.h"
 +#include "taichung_encounter.h"
 +#include "taichung_gym_progress.h"
 +#include "constants/battle_move_effects.h"
++#include "constants/moves.h"
++
++#define OPPONENT_STATUS_LIMIT 2
++
++static u8 *OpponentStatusStreak(u8 battler)
++{
++    if (battler >= gBattlersCount || (gBattleTypeFlags & BATTLE_TYPE_LINK)
++        || GetBattlerSide(battler) != B_SIDE_OPPONENT
++        || gBattlerPartyIndexes[battler] >= PARTY_SIZE)
++        return NULL;
++    return &gBattleStruct->opponentStatusStreak[gBattlerPartyIndexes[battler]];
++}
++
++bool8 TaichungBattleAI_IsDamagingMove(u16 move)
++{
++    // Fixed and variable damage use power 1 in the native move table.
++    // Pain Split has power 0 but can directly reduce the target's HP.
++    return move < MOVES_COUNT && (gBattleMoves[move].power != 0 || move == MOVE_PAIN_SPLIT);
++}
++
++bool8 TaichungBattleAI_StatusLimitReached(u8 battler)
++{
++    const u8 *streak = OpponentStatusStreak(battler);
++    return streak != NULL && *streak >= OPPONENT_STATUS_LIMIT;
++}
++
++u8 TaichungBattleAI_StatusMoveMask(u8 battler)
++{
++    u8 slot;
++    u8 mask = 0;
++    if (TaichungBattleAI_StatusLimitReached(battler))
++        for (slot = 0; slot < MAX_MON_MOVES; slot++)
++            if (!TaichungBattleAI_IsDamagingMove(gBattleMons[battler].moves[slot]))
++                mask |= 1 << slot;
++    return mask;
++}
++
++u8 TaichungBattleAI_ChooseLegalMove(u8 battler, const s8 *scores)
++{
++    u8 blocked = CheckMoveLimitations(battler, TaichungBattleAI_StatusMoveMask(battler), MOVE_LIMITATIONS_ALL);
++    u8 choices[MAX_MON_MOVES], count = 0;
++    u8 slot;
++
++    for (slot = 0; slot < MAX_MON_MOVES; slot++)
++    {
++        if (blocked & (1 << slot))
++            continue;
++        if (count && scores != NULL)
++        {
++            if (scores[slot] < scores[choices[0]])
++                continue;
++            if (scores[slot] > scores[choices[0]])
++                count = 0;
++        }
++        choices[count++] = slot;
++    }
++    return count ? choices[Random() % count] : MAX_MON_MOVES;
++}
++
++void TaichungBattleAI_RecordMoveUse(u8 battler, u16 move)
++{
++    u8 *streak = OpponentStatusStreak(battler);
++    if (streak == NULL || move == MOVE_NONE || move >= MOVES_COUNT)
++        return;
++    if (TaichungBattleAI_IsDamagingMove(move))
++        *streak = 0;
++    else if (!gBattleStruct->opponentStatusCounted)
++    {
++        // A move caller such as Sleep Talk can announce a second move in the
++        // same action. Charge one status use, or reset if it attempts damage.
++        gBattleStruct->opponentStatusCounted = TRUE;
++        if (*streak < OPPONENT_STATUS_LIMIT)
++            (*streak)++;
++    }
++}
 +
 +void TaichungBattleAI_AdjustScores(s8 scores[4], u8 battler)
 +{
@@ -653883,17 +654096,24 @@ index 00000000..1bd4ad97
 +#endif
 diff --git a/tests/taichung_ai_test.c b/tests/taichung_ai_test.c
 new file mode 100644
-index 00000000..40b831b0
+index 00000000..cd0eba51
 --- /dev/null
 +++ b/tests/taichung_ai_test.c
-@@ -0,0 +1,110 @@
+@@ -0,0 +1,267 @@
 +#include "global.h"
 +#include "battle.h"
++#include "battle_ai_script_commands.h"
++#include "battle_anim.h"
++#include "battle_controllers.h"
++#include "battle_message.h"
++#include "battle_util.h"
 +#include "pokemon.h"
 +#include "random.h"
 +#include "taichung_battle_ai.h"
 +#include "constants/battle_ai.h"
 +#include "constants/battle_move_effects.h"
++#include "constants/hold_effects.h"
++#include "constants/items.h"
 +#include "constants/moves.h"
 +#include <assert.h>
 +#include <stdio.h>
@@ -653902,19 +654122,54 @@ index 00000000..40b831b0
 +#include "data/battle_moves.h"
 +
 +struct BattlePokemon gBattleMons[MAX_BATTLERS_COUNT];
-+u32 gBattleTypeFlags, gRngValue;
-+u16 gTrainerBattleOpponent_A;
-+u8 gBattlerAttacker;
++static struct BattleStruct sBattle;
++struct BattleStruct *gBattleStruct = &sBattle;
++struct DisableStruct gDisableStructs[MAX_BATTLERS_COUNT];
++struct ProtectStruct gProtectStructs[MAX_BATTLERS_COUNT];
++struct BattleEnigmaBerry gEnigmaBerries[MAX_BATTLERS_COUNT];
++u32 gBattleTypeFlags, gRngValue, gHitMarker, gBattleControllerExecFlags;
++u32 gStatuses3[MAX_BATTLERS_COUNT];
++u16 gTrainerBattleOpponent_A, gCurrentMove, gChosenMove, gLastMoves[MAX_BATTLERS_COUNT];
++u8 gBattlerAttacker, gBattlerTarget, gActiveBattler, gBattlersCount = 2, gCurrentTurnActionNumber;
++u8 gAbsentBattlerFlags, gPotentialItemEffectBattler;
++u16 gBattlerPartyIndexes[MAX_BATTLERS_COUNT];
++u8 gBattlerByTurnOrder[MAX_BATTLERS_COUNT];
++u8 gBattleCommunication[BATTLE_COMMUNICATION_ENTRIES_COUNT];
++u8 gBattleBufferA[MAX_BATTLERS_COUNT][0x200], gBattleBufferB[MAX_BATTLERS_COUNT][0x200];
++const u8 *gBattlescriptCurrInstr, *gSelectionBattleScripts[MAX_BATTLERS_COUNT];
++const u8 BattleScript_NoMovesLeft[] = {0};
++const u32 gBitTable[] = {1, 2, 4, 8};
++static const u8 sAnnouncement[] = {0, 0};
++static u16 sReturnValue;
 +static bool8 sGym, sCapture;
 +static struct AI_ThinkingStruct sThinking;
 +#define AI_THINKING_STRUCT (&sThinking)
 +#define AI_ACTION_FLEE 2
 +#define AI_ACTION_WATCH 4
-+#define AI_CHOICE_FLEE 4
-+#define AI_CHOICE_WATCH 5
 +#define AIState_SettingUp 0
 +bool8 TaichungGymIsBadgeChallenge(u16 trainer) { (void)trainer; return sGym; }
 +bool8 TaichungEncounterIsActive(void) { return sCapture; }
++u8 GetBattlerSide(u8 battler) { return battler & BIT_SIDE; }
++u8 GetBattlerPosition(u8 battler) { return battler; }
++u8 GetBattlerAtPosition(u8 position) { return position; }
++u8 GetMoveTarget(u16 move, u8 override)
++{
++    assert(move == MOVE_TACKLE || move == MOVE_STRUGGLE);
++    assert(override == NO_TARGET_OVERRIDE);
++    return GetBattlerSide(gBattlerAttacker) ^ BIT_SIDE;
++}
++u8 ItemId_GetHoldEffect(u16 item) { return item == ITEM_CHOICE_BAND ? HOLD_EFFECT_CHOICE_BAND : 0; }
++void PrepareStringBattle(u16 stringId, u8 battler)
++{
++    assert(stringId == STRINGID_USEDMOVE && battler == gBattlerAttacker);
++}
++void BtlController_EmitTwoReturnValues(u8 buffer, u8 action, u16 value)
++{
++    assert(buffer == 1 && action == 10);
++    sReturnValue = value;
++}
++void BattleAI_SetupAIData(void) { gBattlerAttacker = gActiveBattler; }
++void OpponentBufferExecCompleted(void) {}
 +static void RecordLastUsedMoveByTarget(void) {}
 +// This test supplies the scored turn boundary. It executes the actual selector
 +// and policy, not the entire native scoring VM/damage engine.
@@ -653938,6 +654193,120 @@ index 00000000..40b831b0
 +        gBattleMons[1].pp[i] = 10;
 +        sThinking.score[i] = 100;
 +    }
++}
++
++static void Announce(u16 move, u32 hitMarker, bool8 newAction)
++{
++    gCurrentMove = move;
++    gHitMarker = hitMarker;
++    gBattlescriptCurrInstr = sAnnouncement;
++    if (newAction)
++        gBattleStruct->opponentStatusCounted = FALSE;
++    Cmd_attackstring();
++}
++
++static void TestOpponentStatusLimit(void)
++{
++    const u16 damaging[] = {MOVE_FALSE_SWIPE, MOVE_SEISMIC_TOSS, MOVE_SONIC_BOOM,
++                            MOVE_DRAGON_RAGE, MOVE_NIGHT_SHADE, MOVE_ENDEAVOR,
++                            MOVE_COUNTER, MOVE_PAIN_SPLIT};
++    const u32 battleTypes[] = {BATTLE_TYPE_TRAINER, BATTLE_TYPE_WILD_SCRIPTED, 0};
++    struct ChooseMoveStruct moveInfo = {0};
++    unsigned i, seed;
++
++    sGym = TRUE;
++    gBattleTypeFlags = BATTLE_TYPE_TRAINER;
++    Turn(6, 6);
++    gActiveBattler = 1;
++    gBattlerByTurnOrder[0] = 1;
++    gBattleMons[1].moves[0] = MOVE_SURF;
++    gBattleMons[1].moves[1] = MOVE_PSYCHIC;
++    gBattleMons[1].moves[2] = MOVE_CALM_MIND;
++    gBattleMons[1].moves[3] = MOVE_REST;
++    memcpy(moveInfo.moves, gBattleMons[1].moves, sizeof(moveInfo.moves));
++    memcpy(&gBattleBufferA[1][4], &moveInfo, sizeof(moveInfo));
++
++    Announce(MOVE_CALM_MIND, 0, TRUE);
++    Announce(MOVE_REST, HITMARKER_ATTACKSTRING_PRINTED, FALSE);
++    assert(gBattleStruct->opponentStatusStreak[0] == 1);
++    Announce(MOVE_REST, 0, TRUE);
++    Announce(MOVE_SURF, HITMARKER_UNABLE_TO_USE_MOVE, TRUE);
++    Announce(MOVE_PSYCHIC, HITMARKER_NO_ATTACKSTRING, TRUE);
++    assert(TaichungBattleAI_StatusMoveMask(1) == 0xC);
++    assert(!TaichungBattleAI_StatusLimitReached(0));
++    gBattlerPartyIndexes[1] = 1;
++    assert(!TaichungBattleAI_StatusLimitReached(1));
++    gBattlerPartyIndexes[1] = 0;
++    assert(TaichungBattleAI_StatusLimitReached(1));
++
++    for (i = 0; i < ARRAY_COUNT(battleTypes); i++)
++    {
++        gBattleTypeFlags = battleTypes[i];
++        for (seed = 0; seed < 512; seed++)
++        {
++            gRngValue = seed;
++            sThinking.score[0] = sThinking.score[1] = 0;
++            sThinking.score[2] = sThinking.score[3] = 100;
++            assert(!AreAllMovesUnusable());
++            OpponentHandleChooseMove();
++            assert((sReturnValue & 0xff) < 2);
++        }
++    }
++
++    gDisableStructs[1].disabledMove = MOVE_SURF;
++    gBattleMons[1].status2 = STATUS2_TORMENT;
++    gLastMoves[1] = MOVE_PSYCHIC;
++    assert(AreAllMovesUnusable() && gProtectStructs[1].noValidMoves);
++    SetNoLegalMoveFallback();
++    assert(gCurrentMove == MOVE_STRUGGLE && gBattleStruct->moveTarget[1] == 0);
++    sCapture = TRUE;
++    SetNoLegalMoveFallback();
++    assert(gCurrentMove == MOVE_TACKLE && (gHitMarker & HITMARKER_ALLOW_NO_PP));
++    sCapture = FALSE;
++    gBattleMons[1].status2 = 0;
++    assert(!AreAllMovesUnusable() && TaichungBattleAI_ChooseLegalMove(1, NULL) == 1);
++    gDisableStructs[1].disabledMove = MOVE_NONE;
++    gDisableStructs[1].encoreTimer = 2;
++    gDisableStructs[1].encoredMove = MOVE_REST;
++    assert(AreAllMovesUnusable());
++    gDisableStructs[1].encoredMove = MOVE_PSYCHIC;
++    assert(!AreAllMovesUnusable() && TaichungBattleAI_ChooseLegalMove(1, NULL) == 1);
++    gDisableStructs[1].encoreTimer = 0;
++    gBattleMons[1].item = ITEM_CHOICE_BAND;
++    gBattleStruct->choicedMove[1] = MOVE_REST;
++    assert(AreAllMovesUnusable());
++    gBattleMons[1].item = ITEM_NONE;
++    gStatuses3[0] = STATUS3_IMPRISONED_OTHERS;
++    gBattleMons[0].moves[0] = MOVE_SURF;
++    gBattleMons[1].pp[1] = 0;
++    gDisableStructs[1].tauntTimer = 2;
++    assert(AreAllMovesUnusable());
++    gBattleMons[1].moves[0] = MOVE_DEFENSE_CURL;
++    gBattleMons[1].moves[1] = MOVE_AMNESIA;
++    assert(AreAllMovesUnusable());
++
++    for (i = 0; i < ARRAY_COUNT(damaging); i++)
++    {
++        gBattleStruct->opponentStatusStreak[0] = 2;
++        assert(TaichungBattleAI_IsDamagingMove(damaging[i]));
++        Announce(damaging[i], 0, TRUE);
++        assert(gBattleStruct->opponentStatusStreak[0] == 0);
++    }
++    assert(!TaichungBattleAI_IsDamagingMove(MOVE_NONE));
++    assert(!TaichungBattleAI_IsDamagingMove(MOVE_UNAVAILABLE));
++    Announce(MOVE_SLEEP_TALK, 0, TRUE);
++    Announce(MOVE_CALM_MIND, 0, FALSE);
++    assert(gBattleStruct->opponentStatusStreak[0] == 1);
++    Announce(MOVE_PSYCHIC, 0, FALSE);
++    assert(gBattleStruct->opponentStatusStreak[0] == 0);
++    gBattlerByTurnOrder[0] = 0;
++    Announce(MOVE_REST, 0, TRUE);
++    assert(gBattleStruct->opponentStatusStreak[0] == 0);
++    gBattlerByTurnOrder[0] = 1;
++    gBattleTypeFlags = BATTLE_TYPE_LINK;
++    Announce(MOVE_REST, 0, TRUE);
++    assert(gBattleStruct->opponentStatusStreak[0] == 0);
++    puts("PASS: native move-use boundary, per-party slot streak, all-zero attack scores, 1536 scored/wild selections, legality, fallback and damage classes");
 +}
 +
 +int main(void)
@@ -653995,6 +654364,7 @@ index 00000000..40b831b0
 +    Turn(8, 8); sThinking.aiAction = AI_ACTION_WATCH;
 +    assert(BattleAI_ChooseMoveOrAction() == AI_CHOICE_WATCH && sThinking.score[2] == 100);
 +    puts("PASS:meaningful setup, clear finishing attack, spent setup, mixed boosts, unsuitable attacks, invalid moves, normal wild/untracked trainers and safari action bypass");
++    TestOpponentStatusLimit();
 +    return 0;
 +}
 diff --git a/tests/taichung_ambient_test.c b/tests/taichung_ambient_test.c
@@ -746277,12 +746647,12 @@ index 00000000..d0ca9a44
 +python3 "$GAME_ROOT/tools/taichung_gameplay/audit-badge-scenes.py"
 diff --git a/tools/taichung_gameplay/test-battle-ai.py b/tools/taichung_gameplay/test-battle-ai.py
 new file mode 100644
-index 00000000..cdedca1d
+index 00000000..17012945
 --- /dev/null
 +++ b/tools/taichung_gameplay/test-battle-ai.py
-@@ -0,0 +1,47 @@
+@@ -0,0 +1,59 @@
 +#!/usr/bin/env python3
-+"""Real scoring policy, move data, RNG and native tie selector at scored-turn boundary."""
++"""Exercise native AI selection, move announcement and fallback at battle boundaries."""
 +import importlib.util
 +from pathlib import Path
 +import re
@@ -746300,7 +746670,19 @@ index 00000000..cdedca1d
 +assert selector.count(hook) == 1
 +baseline = selector.replace(hook, "").replace("BattleAI_ChooseMoveOrAction", "BaselineChoose", 1)
 +rng = extract.definition((ROOT / "src/random.c").read_text(), "Random")[0]
-+(OUT / "native-selector.inc").write_text(rng + "\n" + baseline + "\n" + selector)
++def native(file, *names):
++    source = (ROOT / "src" / file).read_text()
++    return [extract.definition(source, name)[0] for name in names]
++
++(OUT / "native-selector.inc").write_text("\n".join([
++    rng, baseline, selector,
++    *native("battle_util.c", "GetImprisonedMovesCount", "CheckMoveLimitations"),
++    "#define ALL_MOVES_MASK ((1 << MAX_MON_MOVES) - 1)",
++    *native("battle_util.c", "AreAllMovesUnusable"),
++    *native("battle_controller_opponent.c", "OpponentHandleChooseMove"),
++    *native("battle_script_commands.c", "Cmd_attackstring"),
++    *native("battle_main.c", "SetNoLegalMoveFallback"),
++]))
 +subprocess.run(["cc", "-std=gnu99", "-Wall", "-Wextra", "-Werror", "-Wno-unknown-attributes", "-Wno-pointer-to-int-cast", "-Wno-int-to-pointer-cast",
 +    "-I"+str(ROOT/"include"), "-I"+str(ROOT/"src"), "-I"+str(OUT), str(ROOT/"src/taichung_battle_ai.c"),
 +    str(ROOT/"tests/taichung_ai_test.c"), "-o", str(OUT/"battle-ai")], check=True)
