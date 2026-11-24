@@ -1,0 +1,30 @@
+{
+  "status": "PASS_INDEPENDENT_COPY_CHECKPOINT",
+  "source": "e5a37c5e0ee4e495a56dc28c02c3ecf0e80a1a40",
+  "integrated": "aff1bed",
+  "english": "Explore Taichung’s real neighborhoods and landmarks.",
+  "traditionalChinese": "探索臺中的真實街區與地標。",
+  "entryPoints": [
+    "Landing map heading",
+    "Native game City Map introduction"
+  ],
+  "tests": {
+    "pass": 134,
+    "fail": 0,
+    "typescript": "PASS"
+  },
+  "nativeChanged": false,
+  "deployment": "Await combined native stair/bike handoffs for the next protected preview",
+  "browser": {
+    "status": "PASS_LOCAL_NORMAL_ENTRY_POINTS",
+    "origin": "http://127.0.0.1:4216",
+    "landingEnglish": "Explore Taichung’s real neighborhoods and landmarks.",
+    "landingTraditionalChinese": "探索臺中的真實街區與地標。",
+    "cityMapEnglish": "Explore Taichung’s real neighborhoods and landmarks. Choose a landmark to explore its game-world stop and find visitor information where available.",
+    "cityMapTraditionalChinese": "探索臺中的真實街區與地標。 點選地標，探索遊戲中的地點；提供官方參觀資訊的地標也可直接查閱。",
+    "saveImportRequired": false,
+    "screenshots": [
+      "local-city-map-zh.jpg"
+    ]
+  }
+}

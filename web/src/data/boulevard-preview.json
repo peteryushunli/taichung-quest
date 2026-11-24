@@ -2403,7 +2403,7 @@
       "parentMarkerId": "confucius-temple",
       "parentEntranceWorld": [
         303,
-        35
+        34
       ],
       "indoorLabel": {
         "en": "Indoors",
@@ -2703,11 +2703,11 @@
       "kind": "landmark-gym",
       "world": [
         303,
-        35
+        34
       ],
       "localEntrance": [
         22,
-        9
+        8
       ],
       "exteriorMapId": "MAP_TAICHUNG_BLVD_CONFUCIUS_TEMPLE",
       "exteriorNativeKey": "43:69"
@@ -4785,7 +4785,7 @@
     }
   ],
   "sourceSha256": {
-    "compiledMapReport": "fbfbe596976f1f45efda1b207db22cca2b5c8afe6290ae2d565b18b10a58e43a",
+    "compiledMapReport": "f5ee63e9f3a670c6a472ddb934f2f470835df2a58bf0ed185b7d056c8939820f",
     "fill": "22d9c6695e21ab7419ccafe55d86e4833df8a5e394aee84133d4a1cd6b5849f6",
     "mapBook": "265d64cf1b47a26d412626301a6f1e542f3a19bcd89ec0084e6f08022a713b4d",
     "northXitunPlan": "89c555bbfa2a80d277b9729e6a2a9a1b6480dea9e4ffbf76ace332c7386f76e5",
@@ -4793,5 +4793,5 @@
     "streetPeople": "968e443e5853a7eb933c66e73a6533f357d1f6fb85ddbc99f970861d8869ea50",
     "namedXitunBindings": "f6570ca3d6952cfa247a2ea33f43816ac8adda944a9b9ab5334a9685816bb264"
   },
-  "geometryFingerprintSha256": "5a1420d5ceb112f55fa42723538427586321613b4cd264564904f46514cc1073"
+  "geometryFingerprintSha256": "9b40d2e8cb824bfbf3f42a6382e5b1e7126c7d55e14da3839283bd3f19ad9460"
 }

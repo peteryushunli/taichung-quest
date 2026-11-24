@@ -1,0 +1,67 @@
+{
+  "passed": true,
+  "checkedResolvedCells": 227652,
+  "changedWorldCells": [
+    [
+      334,
+      34
+    ],
+    [
+      334,
+      35
+    ],
+    [
+      335,
+      34
+    ],
+    [
+      335,
+      35
+    ]
+  ],
+  "visualChangesOnlyFormerWoodenDoorTiles": [
+    [
+      334,
+      35
+    ],
+    [
+      335,
+      35
+    ]
+  ],
+  "newWalkableCells": [
+    [
+      334,
+      35
+    ],
+    [
+      335,
+      35
+    ]
+  ],
+  "newlyBlockedPreviouslyWalkableCells": [],
+  "priorContinueTargetsRetained": 95,
+  "outerStairsRailsWallsSolid": true,
+  "allOtherMapArtGeometryAndEventsUnchanged": true,
+  "budget": {
+    "tileSlots": 1011,
+    "paletteSlots": 13,
+    "worstTiles": [
+      778,
+      [
+        323,
+        161
+      ]
+    ],
+    "worstPalettes": [
+      13,
+      [
+        359,
+        123
+      ]
+    ],
+    "positions": 40041,
+    "graphicsPool": 14967,
+    "metatileIdsUsed": 1552
+  }
+}

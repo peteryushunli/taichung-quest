@@ -1,0 +1,18 @@
+{
+  "status": "PASS",
+  "baseline": "Approved8516 city overview retained outside restored native stair cells",
+  "replacementAuthoredCells": [
+    [
+      334,
+      35
+    ],
+    [
+      335,
+      35
+    ]
+  ],
+  "changedPixels": 72,
+  "allChangesWithinAuthorisedCells": true,
+  "overviewSha256": "56a97e7c55778e13a0ae4c4af325eb29a27a429854a5efa8a30196d5e767d32d",
+  "sourceReportSha256": "f5ee63e9f3a670c6a472ddb934f2f470835df2a58bf0ed185b7d056c8939820f"
+}
