@@ -31,23 +31,39 @@ def main():
     parser.add_argument('previous', type=Path)
     parser.add_argument('--map-report', type=Path, required=True)
     parser.add_argument('--receipt', type=Path, required=True)
+    parser.add_argument('--swap-proof', type=Path)
+    parser.add_argument('--previous-rom', type=Path)
+    parser.add_argument('--swap-pictures', type=Path)
     args = parser.parse_args()
-    proof = read(args.native / 'docs/named-xitun-bindings/tower-hd-handoff.json')
+    require(bool(args.swap_proof) == bool(args.previous_rom), 'A tower swap needs its proof and previous cartridge.')
+    require(not args.swap_pictures or args.swap_proof, 'Replacement pictures require a tower swap proof.')
+    proof_path = args.swap_proof or args.native / 'docs/named-xitun-bindings/tower-hd-handoff.json'
+    proof = read(proof_path)
     anchors = read(args.native / 'data/taichung/named-xitun-bindings/anchors.json')
-    temple = read(args.native / 'data/taichung/confucius-map-bindings/anchors.json')['gym']['exterior']
-    door_key = temple['nativeKey'].replace(':','.')
-    door_cells = {tuple(point) for point in temple['doors']}
-    allowed_rects = [(75,113,95,126), *[(x,y,x+1,y+1) for x,y in door_cells]]
+    report = read(args.map_report)
+    door_key = None
+    if args.swap_proof:
+        swap = report['xitunTowerBlock']
+        allowed_rects = [swap[key] for key in ('oldLot', 'towerLot', 'forecourt')]
+        require(allowed_rects == proof['scopedWorldRects'], 'Tower swap proof scope differs from the compiled report.')
+        baseline_sha = digest(args.previous_rom)
+        appended_maps = set()
+    else:
+        temple = read(args.native / 'data/taichung/confucius-map-bindings/anchors.json')['gym']['exterior']
+        door_key = temple['nativeKey'].replace(':','.')
+        door_cells = {tuple(point) for point in temple['doors']}
+        allowed_rects = [(75,113,95,126), *[(x,y,x+1,y+1) for x,y in door_cells]]
+        baseline_sha = '634c0fcbfa35c31b0995014e8cbce41e975f1eb4ccbad1e9ce05928e95055648'
+        appended_maps = {'43.79'}
     sites = {site['id']: site for site in anchors['sites'] if site['id'] != 'the-lin'}
-    compiled_maps = {f"43.{entry['number']}": entry for entry in read(args.map_report)['maps']}
+    compiled_maps = {f"43.{entry['number']}": entry for entry in report['maps']}
     before = read(args.previous / 'pack.json')
     after = read(args.candidate / 'pack.json')
-    require(before['romSha256'] == '634c0fcbfa35c31b0995014e8cbce41e975f1eb4ccbad1e9ce05928e95055648',
-            'Previous HD pack is not the verified live baseline.')
+    require(before['romSha256'] == baseline_sha, 'Previous HD pack does not match its baseline cartridge.')
     require(after['romSha256'] == digest(args.native / 'pokefirered.gba'), 'HD pack is paired to another cartridge.')
     require((after['version'], after['group'], after['scale']) == (2, 43, 4), 'Unexpected HD pack contract.')
-    require(set(after['maps']) - set(before['maps']) == {'43.79'} and set(before['maps']) <= set(after['maps']),
-            'Only the appended Confucius room may change the HD map registry.')
+    require(set(after['maps']) == set(before['maps']) | appended_maps,
+            'Unexpected change in the HD map registry.')
     expected = {item['nativeKey']: item for item in proof['changedReferences']}
     changed = []
     temple_door_pixels = 0
@@ -69,6 +85,12 @@ def main():
                         f'Reference delta differs from Maps proof: {key}')
                 require(digest(args.candidate / new['ref']) == item['freshReferenceSha256'],
                         f'Fresh reference differs from Maps output: {key}')
+                if args.swap_proof:
+                    ox, oy = compiled_maps[key]['worldRect'][:2]
+                    cells = set(zip((ox + xs // 16 - new['margin']).tolist(),
+                                    (oy + ys // 16 - new['margin']).tolist()))
+                    require(all(any(l <= x < r and t <= y < b for l, t, r, b in allowed_rects) for x, y in cells),
+                            f'Tower swap reference changes exceed the compiled scope: {key}')
             else:
                 require(key == door_key, f'Unapproved reference pixel changes: {key}')
                 ox,oy = compiled_maps[key]['worldRect'][:2]
@@ -93,7 +115,8 @@ def main():
                         for l,t,r,b in allowed_rects),
                     f'Automatic overlay changed outside the tower lot or temple doors: {key}/{ident}')
             overlay_changes += 1
-    require(set(changed) == set(expected) | {door_key}, 'A Maps reference change is missing.')
+    require(set(changed) == set(expected) | ({door_key} if door_key else set()),
+            'A Maps reference change is missing.')
     # Existing automatic artwork must remain the approved bytes. Replacing a
     # cartridge does not authorize silently replacing its source pictures.
     for picture in (args.candidate / 'pictures').glob('*.webp'):
@@ -105,9 +128,12 @@ def main():
     # zero, so the renderer's existing native foreground restoration still owns
     # every character, dialogue box and unrelated tile.
     coverage = []
+    picture_sources = args.swap_pictures or args.previous / 'pictures'
+    selected_pictures = {}
     require(not any(b['sprite'] in sites for entry in after['maps'].values() for b in entry['buildings']),
             'Fresh automatic pack already contains a manual tower.')
-    require(len({(item['nativeKey'],item['sprite']) for item in proof['perReferenceTowerCoverage']}) == 9,
+    expected_coverage = len(proof['perReferenceTowerCoverage']) if args.swap_proof else 9
+    require(len({(item['nativeKey'],item['sprite']) for item in proof['perReferenceTowerCoverage']}) == expected_coverage,
             'Missing or duplicate tower seam coverage records.')
     for item in proof['perReferenceTowerCoverage']:
         key, sprite_id = item['nativeKey'], item['sprite']
@@ -143,26 +169,30 @@ def main():
         mask = (own | (ring & ~opaque)) & valid
         require(own.any(), f'Tower does not match the fresh native reference: {key}/{sprite_id}')
         picture = f'pictures/{sprite_id}.webp'
-        old_picture = args.previous / picture
-        require(digest(old_picture) == site['art']['approvedHdPictureSha256'], f'Approved HD picture mismatch: {sprite_id}')
-        with Image.open(old_picture) as art:
+        source_picture = picture_sources / f'{sprite_id}.webp'
+        source_sha = digest(source_picture)
+        require(source_sha == site['art']['approvedHdPictureSha256'], f'Approved HD picture mismatch: {sprite_id}')
+        with Image.open(source_picture) as art:
             require(art.size == (w*4,h*4), f'HD tower scale changed: {sprite_id}')
-        shutil.copyfile(old_picture, args.candidate / picture)
+        shutil.copyfile(source_picture, args.candidate / picture)
+        selected_pictures[sprite_id] = source_sha
         entry['buildings'].append(dict(sprite=sprite_id, mirrored=False, x=x, y=y, w=w, h=h, error=0,
             picture=picture, covers=base64.b64encode(np.packbits(mask.ravel(),bitorder='little').tobytes()).decode()))
         coverage.append(dict(nativeKey=key,sprite=sprite_id,envelope=[x,y,w,h],coveredPixels=int(mask.sum()),
                              clipped=not item['fullSpriteFitsReference']))
-    require(len(coverage) == 9, 'Missing tower seam coverage proof.')
+    require(len(coverage) == expected_coverage and
+            {item['sprite'] for item in coverage if not item['clipped']} == set(sites),
+            'Missing full tower or seam coverage.')
     after['originals'] = sorted(set(after['originals']) | sites.keys())
     (args.candidate / 'pack.json').write_text(json.dumps(after)+'\n')
     result = dict(status='PASS',romSha256=after['romSha256'],maps=len(after['maps']),
                   changedReferenceMaps=changed,automaticPicturesByteExact=True,
                   templeDoorChangedPixels=temple_door_pixels,templeChangesOnlyAtAuthoredDoorTiles=True,
                   scopedAutomaticOverlayChanges=overlay_changes,
-                  towerCoordinatesAndMasksFresh=True,coverage=coverage,
+                  towerCoordinatesAndMasksFresh=True,coverage=coverage,towerPictureSha256=selected_pictures,
                   compiledMapReportSha256=digest(args.map_report),
                   anchorsSha256=digest(args.native / 'data/taichung/named-xitun-bindings/anchors.json'),
-                  proofSha256=digest(args.native / 'docs/named-xitun-bindings/tower-hd-handoff.json'))
+                  proofSha256=digest(proof_path))
     args.receipt.parent.mkdir(parents=True,exist_ok=True)
     args.receipt.write_text(json.dumps(result,indent=2)+'\n')
     print(json.dumps(result,indent=2))

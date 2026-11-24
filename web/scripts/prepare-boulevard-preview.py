@@ -77,8 +77,9 @@ def native_registry(root):
     return registry
 
 
-def street_bands(plan, fill, origin):
+def street_bands(plan, fill, origin, forecourt=None):
     bands = []
+    forecourt_applied = False
 
     def add(name, zh, rect, axis):
         x0, y0, x1, y1 = rect
@@ -90,10 +91,22 @@ def street_bands(plan, fill, origin):
             continue
         en = "Taiwan Boulevard" if street["name"] == "Taiwan Blvd" else street["name"]
         for start, end, rect in zip(street["points"], street["points"][1:], street["rects"]):
-            add(en, street["zh"], rect, "h" if start[1] == end[1] else "v")
+            axis = "h" if start[1] == end[1] else "v"
+            if street["id"] == "shizheng" and forecourt:
+                left, top, right, bottom = rect
+                cut_left, cut_top, cut_right, cut_bottom = forecourt
+                require(not forecourt_applied and axis == "h" and
+                        top == cut_top and bottom == cut_bottom and left < cut_left < cut_right < right,
+                        "The compiled forecourt must cut the full width of a single Shizheng Road band.")
+                add(en, street["zh"], (left, top, cut_left, bottom), axis)
+                add(en, street["zh"], (cut_right, top, right, bottom), axis)
+                forecourt_applied = True
+            else:
+                add(en, street["zh"], rect, axis)
     for lane in fill["newLanes"]:
         if lane["zh"] and lane["direction"] in ("h", "v"):
             add(lane["name"], lane["zh"], lane["rect"], lane["direction"])
+    require(not forecourt or forecourt_applied, "Missing Shizheng Road band for the compiled forecourt.")
     return bands
 
 
@@ -108,8 +121,23 @@ def terrain_images(fill, plan, candidate, geometry, report):
         world.put(site["block"], site["ground"])
         for ground_rect in site.get("groundRects", []):
             world.put(ground_rect["rect"], ground_rect["ground"])
-    if tower_block := report.get("xitunTowerBlock"):
-        world.put(tower_block["paving"], "p")
+    tower_block = report.get("xitunTowerBlock", {})
+    forecourt = tower_block.get("forecourt")
+    if forecourt:
+        areas = tower_block.get("radarGround", [])
+        require(len(areas) == 3 and {tuple(area["worldRect"]) for area in areas} ==
+                {tuple(tower_block[key]) for key in ("oldLot", "towerLot", "forecourt")},
+                "The Xitun radar ground must cover both swapped blocks and the forecourt.")
+        for area in areas:
+            left, top, right, bottom = area["worldRect"]
+            rows = area["rows"]
+            require(len(rows) == bottom - top and all(len(row) == right - left for row in rows),
+                    f"Unexpected Xitun terrain dimensions at {area['worldRect']}.")
+            for y, row in enumerate(rows, top):
+                for x, ground in enumerate(row, left):
+                    world.put((x, y, x + 1, y + 1), ground)
+    elif paving := tower_block.get("paving"):
+        world.put(paving, "p")
     width, height = geometry["world"]["width"], geometry["world"]["height"]
     origin = plan["world"]["box"][:2]
     ink = {
@@ -133,7 +161,7 @@ def terrain_images(fill, plan, candidate, geometry, report):
     colors = {key: ImageColor.getrgb(value) for key, value in ink.items()}
     pavilion_tiles = {(x, y) for left, top, right, bottom in report.get("pavilionDeck", {}).values()
                       for x in range(left, right) for y in range(top, bottom)}
-    # Only Huimin's compiled path overlays use path ink; other paving stays land.
+    # Huimin's paths and the forecourt use path ink; other paving stays land.
     huimin_path_tiles = {(x, y) for site in report.get("northXitun", {}).get("sites", [])
                          if site["id"] == "huimin-park"
                          for ground_rect in site.get("groundRects", []) if ground_rect["ground"] == "p"
@@ -144,8 +172,10 @@ def terrain_images(fill, plan, candidate, geometry, report):
             tile = col + origin[0], row + origin[1]
             ground = world.at(*tile)
             walkable = walkable_by_tile.get(tile)
+            on_forecourt = (forecourt and forecourt[0] <= tile[0] < forecourt[2]
+                            and forecourt[1] <= tile[1] < forecourt[3])
             if walkable and (tile in pavilion_tiles or ground in "aW=qkK"
-                             or ground == "p" and tile in huimin_path_tiles):
+                             or ground == "p" and (tile in huimin_path_tiles or on_forecourt)):
                 kind = "path"
             elif ground == "~":
                 kind = "water"
@@ -330,8 +360,13 @@ def main():
                     f"The preserved guide for {place} has no registered visible sign.")
                 continue
             require(place not in located, f"Multiple active exterior capture interactions for {place}.")
+            if binding:
+                require(world == binding["authoredWorldInteraction"] and
+                        parent["nativeKey"] == binding["nativeKey"] and
+                        [event["x"], event["y"]] == binding["localInteraction"],
+                        f"The compiled interaction disagrees with the named anchor for {place}.")
             located.add(place)
-            tile = [x0 + ox + event["x"], y0 + oy + event["y"]]
+            tile = world
             capture_anchors[place] = {"script": event["script"], "world": normalize(tile),
                                       "nativeKey": parent["nativeKey"], "local": [event["x"], event["y"]]}
             # Preserve a visitor hall's actual door projection when its outdoor
@@ -383,7 +418,7 @@ def main():
         "schemaVersion": 1, "contractId": "taichung-boulevard-preview",
         "coordinateSystem": {"units": "metatiles", "metatilePixels": 16, "northUp": False},
         "world": {"width": width, "height": height, "homeWorld": markers["guest-house"]["world"],
-                  "streetBands": street_bands(plan, raw, (x0, y0)),
+                  "streetBands": street_bands(plan, raw, (x0, y0), report.get("xitunTowerBlock", {}).get("forecourt")),
                   "neighborhoods": [{"name": {"en": en, "zh": zh}, "tile": normalize([x, y])}
                                     for en, zh, x, y in NEIGHBORHOODS.values()]},
         "mapsByNativeKey": {entry["nativeKey"]: entry for entry in exteriors.values()} | interiors,

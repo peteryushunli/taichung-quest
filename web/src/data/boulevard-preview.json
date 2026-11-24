@@ -113,6 +113,19 @@
         "bounds": [
           12,
           144,
+          17,
+          149
+        ],
+        "axis": "h"
+      },
+      {
+        "name": {
+          "en": "Shizheng Rd",
+          "zh": "市政路"
+        },
+        "bounds": [
+          39,
+          144,
           118,
           149
         ],
@@ -3307,26 +3320,26 @@
       },
       "kind": "landmark",
       "world": [
-        55,
-        124
+        26,
+        158
       ],
       "localEntrance": [
-        14,
-        16
+        18,
+        12
       ],
-      "exteriorMapId": "MAP_TAICHUNG_BLVD_XITUN_D_2",
-      "exteriorNativeKey": "43:36",
+      "exteriorMapId": "MAP_TAICHUNG_BLVD_NANTUN_F_1",
+      "exteriorNativeKey": "43:30",
       "captureBit": 21,
       "captureInteraction": {
         "script": "TaichungLandmark_NationalTradeCenter",
         "world": [
-          55,
-          124
+          26,
+          158
         ],
-        "nativeKey": "43:36",
+        "nativeKey": "43:30",
         "local": [
-          14,
-          16
+          18,
+          12
         ]
       }
     },
@@ -3338,26 +3351,26 @@
       },
       "kind": "landmark",
       "world": [
-        52,
-        124
+        29,
+        158
       ],
       "localEntrance": [
-        11,
-        16
+        21,
+        12
       ],
-      "exteriorMapId": "MAP_TAICHUNG_BLVD_XITUN_D_2",
-      "exteriorNativeKey": "43:36",
+      "exteriorMapId": "MAP_TAICHUNG_BLVD_NANTUN_F_1",
+      "exteriorNativeKey": "43:30",
       "captureBit": 25,
       "captureInteraction": {
         "script": "TaichungLandmark_DingShengBHW",
         "world": [
-          52,
-          124
+          29,
+          158
         ],
-        "nativeKey": "43:36",
+        "nativeKey": "43:30",
         "local": [
-          11,
-          16
+          21,
+          12
         ]
       }
     },
@@ -4788,13 +4801,14 @@
     }
   ],
   "sourceSha256": {
-    "compiledMapReport": "3aa177a7035c66bb7cb47e2fbac1a2f48cbd44bda825d8dfe5fb6bc8d3b39e49",
+    "compiledMapReport": "6b0adcc5461581b3c451d2e902d5209b12697f2bc57c319eead4e62658160bcc",
     "fill": "22d9c6695e21ab7419ccafe55d86e4833df8a5e394aee84133d4a1cd6b5849f6",
     "mapBook": "265d64cf1b47a26d412626301a6f1e542f3a19bcd89ec0084e6f08022a713b4d",
     "northXitunPlan": "89c555bbfa2a80d277b9729e6a2a9a1b6480dea9e4ffbf76ace332c7386f76e5",
     "northXitunCompiler": "be903fd3d2d37b0dc6c581512e86b84054457a30a53ce90bc7f83fcd1b65fb34",
-    "streetPeople": "7f028a1f19c452eb4dc73ec18a9c373d9606d5d145b7d1ac32b59b7a2735d46c",
-    "namedXitunBindings": "ad216e4c9c22fbc6eca70f1e7d7be2779edc2f37b491580818abc7f06b51c1dc"
+    "xitunTowerSwap": "e9dac8abeecb5f43404167e334dc98c5e1fbb6172374e1aee7510ddadab67b3d",
+    "streetPeople": "370ac784ff89540cc741402d14c495f5eefe7650c14feb2b51c076ffc8f6a07f",
+    "namedXitunBindings": "8dd6432e66f3e9b47e7eb3238f2e8788d29531b60c2f9fc96d5a13a7477d098d"
   },
-  "geometryFingerprintSha256": "afda7f68a55a4dcd20468e0842f640c61c2e592f2a4e72f0a71312d037ca28d5"
+  "geometryFingerprintSha256": "f9e758206ea6e7b03d30b0ed8a51e88040f9421abb03daf2b3908c7baf71303b"
 }
