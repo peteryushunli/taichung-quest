@@ -2,6 +2,7 @@ import '../src/controls.css';
 import { createGameControls } from '../src/game-controls';
 import { createGameView } from '../src/game-view';
 import { protectGameDisplay } from '../src/game-display';
+import { KEY_BINDINGS } from '../src/input-state';
 
 const root = document.querySelector<HTMLElement>('.physical-controls')!;
 const canvas = document.querySelector('canvas')!;
@@ -14,6 +15,21 @@ const events: string[] = [];
 let enabled = true;
 let guideAvailable = false;
 let guideAdvances = 0;
+let pauseResumes = 0;
+const pause = document.createElement('section');
+const continueButton = document.createElement('button');
+continueButton.textContent = 'Continue';
+pause.hidden = true;
+pause.append(continueButton);
+document.body.append(pause);
+function resumeGame() {
+  pauseResumes++;
+  pause.hidden = true;
+  enabled = true;
+  controls.releaseAll();
+  canvas.focus();
+}
+continueButton.addEventListener('click', resumeGame);
 const captured = new Set<number>();
 // Synthetic PointerEvents have no OS pointer to capture. Keep all other DOM
 // listeners unchanged and make this boundary explicit in the fixture's UI.
@@ -22,9 +38,16 @@ root.hasPointerCapture = (id) => captured.has(id);
 root.releasePointerCapture = (id) => { captured.delete(id); };
 const controls = createGameControls({
   root, canvas, canPlay: () => enabled, focus: () => canvas.focus(),
+  pauseResume: { available: () => !pause.hidden && !guideAvailable && !document.querySelector('dialog[open]'), resume: resumeGame },
   tutorialInteract: { available: () => guideAvailable, advance() { guideAdvances++; guideAvailable = false; } },
   press: (button) => events.push(`+${button}`), release: (button) => events.push(`-${button}`),
 });
+function showPause() {
+  enabled = false;
+  pause.hidden = false;
+  controls.releaseAll();
+  continueButton.focus();
+}
 function key(type: string, code: string, target: Element = canvas, repeat = false) {
   const event = new KeyboardEvent(type, { code, bubbles: true, cancelable: true, repeat });
   target.dispatchEvent(event);
@@ -54,7 +77,7 @@ run.addEventListener('click', async () => {
   run.disabled = true;
   const lines: string[] = [];
   async function check(name: string, test: () => void | Promise<void>) {
-    enabled = true; guideAvailable = false; guideAdvances = 0;
+    enabled = true; guideAvailable = false; guideAdvances = 0; pauseResumes = 0; pause.hidden = true;
     controls.releaseAll();
     events.length = 0;
     canvas.focus();
@@ -65,6 +88,73 @@ run.addEventListener('click', async () => {
   await check('F confirms, D only goes back, arrows move', () => {
     for (const code of ['KeyF', 'KeyD', 'ArrowRight']) { key('keydown', code); key('keyup', code); }
     equal(events, ['+A', '-A', '+B', '-B', '+Right', '-Right']);
+  });
+  await check('F resumes the page pause and stays consumed until release', () => {
+    key('keydown', 'ArrowLeft');
+    showPause();
+    equal(document.activeElement, continueButton);
+    equal(events, ['+Left', '-Left']);
+    equal(key('keydown', 'KeyF', continueButton, true).defaultPrevented, true);
+    equal(pauseResumes, 0);
+    equal(key('keydown', 'KeyD', continueButton).defaultPrevented, false);
+    equal(key('keydown', 'KeyF', continueButton).defaultPrevented, true);
+    equal(pauseResumes, 1);
+    equal(document.activeElement, canvas);
+    held('');
+    equal(key('keydown', 'KeyF', canvas, true).defaultPrevented, true);
+    equal(key('keydown', 'KeyF', document.querySelector('input')!, true).defaultPrevented, true);
+    equal(key('keyup', 'KeyF', canvas).defaultPrevented, true);
+    equal(events, ['+Left', '-Left']);
+    key('keydown', 'KeyF');
+    key('keyup', 'KeyF');
+    equal(events, ['+Left', '-Left', '+A', '-A']);
+  });
+  await check('pause and native input both use a remapped A key', () => {
+    const original = KEY_BINDINGS.KeyF;
+    delete KEY_BINDINGS.KeyF;
+    KEY_BINDINGS.KeyK = 'A';
+    try {
+      showPause();
+      equal(key('keydown', 'KeyF', continueButton).defaultPrevented, false);
+      equal(pauseResumes, 0);
+      equal(key('keydown', 'KeyK', continueButton).defaultPrevented, true);
+      equal(pauseResumes, 1);
+      equal(key('keydown', 'KeyK', canvas, true).defaultPrevented, true);
+      equal(events, []);
+      // A fresh event after lost focus works even if the old keyup was missed.
+      key('keydown', 'KeyK');
+      key('keyup', 'KeyK');
+      equal(events, ['+A', '-A']);
+    } finally {
+      KEY_BINDINGS.KeyF = original;
+      delete KEY_BINDINGS.KeyK;
+    }
+  });
+  await check('modal and editable focus keep their keys, and Continue keeps native activation', () => {
+    showPause();
+    const dialog = document.querySelector('dialog')!;
+    dialog.showModal();
+    try {
+      equal(key('keydown', 'KeyF', dialog.querySelector('button')!).defaultPrevented, false);
+      equal(pauseResumes, 0);
+    } finally {
+      dialog.close();
+    }
+    equal(key('keydown', 'KeyF', document.querySelector('input')!).defaultPrevented, false);
+    equal(key('keydown', 'KeyF', document.querySelector('[contenteditable]')!).defaultPrevented, false);
+    equal(pauseResumes, 0);
+    for (const code of ['Enter', 'Space']) {
+      equal(key('keydown', code, continueButton).defaultPrevented, false);
+      equal(key('keyup', code, continueButton).defaultPrevented, false);
+    }
+    continueButton.click();
+    equal(pauseResumes, 1);
+    equal(document.activeElement, canvas);
+    for (const code of ['KeyM', 'KeyF']) {
+      key('keydown', code);
+      key('keyup', code);
+    }
+    equal(events, ['+Start', '-Start', '+A', '-A']);
   });
   await check('game display blocks selection, callouts and dragging without consuming clicks or keys', () => {
     const display = document.createElement('div');

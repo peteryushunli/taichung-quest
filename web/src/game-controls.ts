@@ -13,6 +13,7 @@ export function createGameControls(options: {
   focus(): void;
   press(button: GameButton): void;
   release(button: GameButton): void;
+  pauseResume?: { available(): boolean; resume(): void };
   tutorialInteract?: { available(): boolean; advance(): void };
 }) {
   const { root } = options;
@@ -161,6 +162,25 @@ export function createGameControls(options: {
       setTimeout(() => state.set(`assistive:${binding}`), 100);
     });
   }
+  const resumeKeys = new Set<string>();
+  window.addEventListener('keydown', (event) => {
+    if (event.repeat && resumeKeys.has(event.code)) {
+      event.preventDefault();
+      event.stopPropagation();
+      return;
+    }
+    // A fresh keydown can follow a keyup that happened outside the window.
+    if (!event.repeat) resumeKeys.delete(event.code);
+    if (event.defaultPrevented || event.ctrlKey || event.metaKey || event.altKey || event.isComposing ||
+      KEY_BINDINGS[event.code] !== 'A' || !options.pauseResume?.available()) return;
+    const target = event.target;
+    if (target instanceof HTMLElement && (target.isContentEditable || target.matches('input, textarea, select'))) return;
+    event.preventDefault();
+    event.stopPropagation();
+    if (event.repeat) return;
+    resumeKeys.add(event.code);
+    options.pauseResume.resume();
+  }, { capture: true });
   window.addEventListener('keydown', (event) => {
     if (event.ctrlKey || event.metaKey || event.altKey) return;
     if (event.defaultPrevented || !receivesKeys(event.target)) return;
@@ -180,6 +200,9 @@ export function createGameControls(options: {
   });
   window.addEventListener('keyup', (event) => {
     state.set(`key:${event.code}`);
+    if (!resumeKeys.delete(event.code)) return;
+    event.preventDefault();
+    event.stopPropagation();
   }, { capture: true });
   document.addEventListener('focusin', (event) => { if (!receivesKeys(event.target)) clear(); });
   document.addEventListener('visibilitychange', () => { if (document.hidden) clear(); });

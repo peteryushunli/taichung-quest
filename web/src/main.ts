@@ -24,6 +24,7 @@ import { createLanding } from './landing';
 import { NativeLanguageBridge, parseLanguageBridgeMetadata } from './language-bridge';
 import type { LanguageBridgeState } from './language-bridge';
 import { createGameControls } from './game-controls';
+import { KEY_BINDINGS } from './input-state';
 import { createGameView } from './game-view';
 import { protectGameDisplay } from './game-display';
 import { NativeNavigationBridge, parseNavigationMetadata } from './navigation-bridge';
@@ -167,6 +168,7 @@ if (hdOverlay.detail !== DETAILS[0]) hdOverlay.detail = DETAILS[0];
 if (location.hostname === '127.0.0.1' || location.hostname === 'localhost') (window as unknown as { __hd?: HdOverlay }).__hd = hdOverlay;
 window.addEventListener('keydown', (event) => {
   if (event.key !== 'h' && event.key !== 'H' || event.repeat || event.ctrlKey || event.metaKey || event.altKey) return;
+  if (KEY_BINDINGS[event.code] === 'A') return;
   const target = event.target as HTMLElement | null;
   if (target && (target.isContentEditable || ['INPUT', 'TEXTAREA', 'SELECT'].includes(target.tagName))) return;
   hdOverlay.enabled = !hdOverlay.enabled;
@@ -253,8 +255,12 @@ async function connectNativeLanguage(romSha256: string, romBytes: number) {
   }
 }
 
+function gameInputAvailable() {
+  return running && !restarting && !confirmationOpen && !cityGuide.isOpen && gameView.immersive && !gameView.optionsOpen && !uprightScreen.open && !onboarding?.blocksInput && !document.hidden;
+}
+
 function canPlayGame() {
-  return running && !paused && !restarting && !confirmationOpen && !cityGuide.isOpen && gameView.immersive && !gameView.optionsOpen && !uprightScreen.open && !onboarding?.blocksInput && !document.hidden;
+  return !paused && gameInputAvailable();
 }
 
 function renderNavigation() {
@@ -919,6 +925,10 @@ gameInput = createGameControls({
   root: document.querySelector<HTMLElement>('.physical-controls')!,
   canvas,
   canPlay: canPlayGame,
+  pauseResume: {
+    available: () => paused && !starting && gameInputAvailable() && !el('pause-screen').hidden,
+    resume: () => setPaused(false),
+  },
   tutorialInteract: { available: () => !!onboarding?.canAdvanceGuide, advance: () => onboarding?.advanceGuide() },
   focus: focusGame,
   press: (button) => emulator?.buttonPress(button),
