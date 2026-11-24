@@ -164,6 +164,21 @@ if encounter_symbols:
         'version': {64: 1, 72: 2}[size], 'size': size, 'address': address,
         'magicA': 0x4E454354, 'magicB': 0x31525443,
     }
+badge_symbols = [columns for line in symbols.splitlines()
+                 if (columns := line.split()) and columns[-1] == 'gTaichungBadgeBridge']
+if badge_symbols:
+    if len(badge_symbols) != 1 or len(badge_symbols[0]) != 4:
+        raise SystemExit('Unexpected native badge bridge symbol; refusing incompatible metadata.')
+    try:
+        address, size = (int(value, 16) for value in badge_symbols[0][:2])
+    except ValueError:
+        raise SystemExit('Unexpected native badge bridge layout; refusing incompatible metadata.')
+    if size != 32 or address % 4 or not 0x02000000 <= address <= 0x02040000 - size or badge_symbols[0][2] not in ('B', 'D'):
+        raise SystemExit('Unexpected native badge bridge layout; refusing incompatible metadata.')
+    metadata['badgeBridge'] = {
+        'version': 1, 'size': size, 'address': address,
+        'magicA': 0x44424354, 'magicB': 0x31303047,
+    }
 (rom.parent / 'build.json').write_text(json.dumps(metadata, indent=2) + '\n')
 print(f"ROM ready: {rom} ({len(data):,} bytes)")
 PY

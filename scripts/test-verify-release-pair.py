@@ -287,6 +287,27 @@ class ReleasePairTests(unittest.TestCase):
         with self.assertRaisesRegex(PAIR.PairError, 'encounterBridge: metadata does not match ELF'):
             self.verify()
 
+    def test_badge_absence_mismatch_and_overlap_are_rejected(self):
+        without_badge = [row for row in self.symbols if row[0] != 'gTaichungBadgeBridge']
+        self.elf.write_bytes(synthetic_elf(self.text, without_badge))
+        with self.assertRaisesRegex(PAIR.PairError, 'badgeBridge: expected one sized ELF'):
+            self.verify()
+        packet = self.build.pop('badgeBridge')
+        self.save_metadata()
+        receipt, _ = self.verify()
+        self.assertNotIn('badgeBridge', receipt['bridges'])
+        self.elf.write_bytes(synthetic_elf(self.text, self.symbols))
+        with self.assertRaisesRegex(PAIR.PairError, 'badgeBridge: metadata does not match ELF'):
+            self.verify()
+        # Matching metadata cannot bless overlapping native packet storage.
+        address = self.build['languageBridge']['address']
+        self.build['badgeBridge'] = dict(packet, address=address)
+        self.save_metadata()
+        symbols = without_badge + [('gTaichungBadgeBridge', address, 32)]
+        self.elf.write_bytes(synthetic_elf(self.text, symbols))
+        with self.assertRaisesRegex(PAIR.PairError, 'badgeBridge: bridge storage overlaps'):
+            self.verify()
+
     def test_web_contract_differs_even_with_identical_fingerprint(self):
         other = copy.deepcopy(self.contract)
         other['policy'] = {'wrong': 'not part of the geometry fingerprint'}

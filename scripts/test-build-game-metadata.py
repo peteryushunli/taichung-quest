@@ -18,6 +18,7 @@ METADATA_CODE = SCRIPT.read_text().split("<<'PY'\n", 1)[1].rsplit('\nPY', 1)[0]
 LANGUAGE = '0203e000 00000020 B gTaichungLanguageBridge'
 NAVIGATION = '0203d080 00000030 B gTaichungNavigationBridge'
 ONBOARDING = '0203d100 00000030 B gTaichungOnboardingBridge'
+BADGE = '0203d140 00000020 B gTaichungBadgeBridge'
 BASELINE = '1' * 40
 SOURCE_COMMIT = '2' * 40
 FINGERPRINT = 'a' * 64
@@ -104,11 +105,14 @@ class MetadataTests(unittest.TestCase):
         self.assertEqual(metadata['minimap']['geometryFingerprintSha256'], 'b' * 64)
         metadata = self.run_metadata('0203ffd0 00000030 B gTaichungNavigationBridge')
         self.assertEqual(metadata['navigationBridge']['address'], 0x02040000 - 48)
+        metadata = self.run_metadata('0203d080 00000034 B gTaichungNavigationBridge')
+        self.assertEqual(metadata['navigationBridge']['version'], 2)
+        self.assertEqual(metadata['navigationBridge']['size'], 52)
 
     def test_incompatible_symbols_do_not_write_metadata(self):
         for symbol in [
             '0203d080 00000020 B gTaichungNavigationBridge',
-            '0203d080 00000034 B gTaichungNavigationBridge',
+            '0203d080 00000038 B gTaichungNavigationBridge',
             '0203d081 00000030 B gTaichungNavigationBridge',
             '01fffffc 00000030 B gTaichungNavigationBridge',
             '0203ffd4 00000030 B gTaichungNavigationBridge',
@@ -178,6 +182,32 @@ class MetadataTests(unittest.TestCase):
                 self.assertEqual(metadata['onboardingBridge']['address'], address)
                 self.assertNotIn('navigationBridge', metadata)
                 self.assertNotIn('minimap', metadata)
+
+    def test_badge_binds_exact_optional_symbol_and_preserves_other_packets(self):
+        legacy = self.run_metadata('\n'.join([LANGUAGE, NAVIGATION, ONBOARDING]))
+        for symbols in [BADGE, BADGE.replace('0203d140', '02000000'), BADGE.replace('0203d140', '0203ffe0')]:
+            with self.subTest(symbols=symbols):
+                metadata = self.run_metadata('\n'.join([symbols, ONBOARDING, NAVIGATION, LANGUAGE]))
+                self.assertEqual(metadata.pop('badgeBridge'), {
+                    'version': 1, 'size': 32, 'address': int(symbols.split()[0], 16),
+                    'magicA': 0x44424354, 'magicB': 0x31303047,
+                })
+                self.assertEqual(metadata, legacy)
+        self.assertNotIn('badgeBridge', legacy)
+
+    def test_incompatible_badge_never_replaces_previous_metadata(self):
+        for symbol in [
+            BADGE.replace('00000020', '00000024'),
+            BADGE.replace('0203d140', '0203d141'),
+            BADGE.replace('0203d140', '0203ffe4'),
+            BADGE.replace('0203d140', '01fffffc'),
+            BADGE.replace('0203d140', 'nothex'),
+            BADGE.replace(' B ', ' R '),
+            BADGE.replace('00000020 ', ''),
+            BADGE + '\n' + BADGE,
+        ]:
+            with self.subTest(symbol=symbol):
+                self.assert_rejected(LANGUAGE + '\n' + symbol)
 
     def test_incompatible_onboarding_never_replaces_previous_metadata(self):
         for symbol in [

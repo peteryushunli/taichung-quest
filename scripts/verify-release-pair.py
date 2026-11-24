@@ -24,8 +24,9 @@ BRIDGES = {
     'navigationBridge': ('gTaichungNavigationBridge', 48, 1, 0x414E4354, 0x31303056),
     'onboardingBridge': ('gTaichungOnboardingBridge', 48, 1, 0x4E494354, 0x314F5254),
     'encounterBridge': ('gTaichungEncounterBridge', 64, 1, 0x4E454354, 0x31525443),
+    'badgeBridge': ('gTaichungBadgeBridge', 32, 1, 0x44424354, 0x31303047),
 }
-OPTIONAL_BRIDGES = {'encounterBridge'}  # Pre-encounter releases have neither symbol nor metadata.
+OPTIONAL_BRIDGES = {'encounterBridge', 'badgeBridge'}  # Older releases have neither symbol nor metadata.
 ADDITIONAL_BRIDGE_VERSIONS = {'navigationBridge': {52: 2}, 'encounterBridge': {72: 2}}
 
 
