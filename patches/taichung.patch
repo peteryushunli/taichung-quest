@@ -15886,42 +15886,42 @@ HcmV?d00001
 
 diff --git a/data/layouts/TaichungBlvdOldCityC8/border.bin b/data/layouts/TaichungBlvdOldCityC8/border.bin
 new file mode 100644
-index 0000000000000000000000000000000000000000..4a31190513a251ff3f23a479917f28d67e53ed7d
+index 0000000000000000000000000000000000000000..f16f1679fb472385ae71f90e482441d4bc0525a8
 GIT binary patch
 literal 5888
-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
-GmwyBG)dg$-
+zcmd6rca#)G5XL!R$xDWloO6&cQy*v{=B${N4CWl39%3RMcfgSm5fHfJjvN#akoa7c
+zoCJxAsGwjLP;zp5o3?vrdtiOfKYab(%-u}YZ+g0GzN)QEC)3GsCjG0C<N1hjF+Xi1
+zZ4*5v;wNmfy^-SD#~eot+dbhG>?b|4oh*-^;+~+B^dtR5Yp@o%IS)tNRO&|uoc+#0
+zC+v-gn+u0Xj*3WeGcWjs96d5<3T>gS^aZV?RitfB(P{dbexVK6hyq;DV+*3mevdL}
+zJWcS9Qw+b5ljIb2ibaq8>0R1J+i3@_rZtAm89Gb9(r>g0n-S)s7WN<-OhafW34)%J
+zV3&20qsIX>hIY~}+D&U|ondp1&eQMo2W`Pt6z38a_AnYwBWNTELM&Unp%?>cEPY8|
+z(H>e)8w{Hy<i=q-Lffz%Ex4tH{WguFcW5*Tf}K5%vZyGE;cMDNn++R(^u@3D=TsaM
+zDU$@j&ldY0jz+xZXq&rmH}1i`h`15=VLalU{d+0ysG<GDdaE_rfdy!aW@wJmC}YIZ
+zeYhVF;6eOJf6-q0hJx60km5bp&R&QqaNvSa7Rd(tA+$w1v_}aXrElpw3;P*7i|6n>
+z>Y%RSXU=;9MgwSpmbeV%44V$<h)(E?k~l{DXupNs4X>g*UPEhKZTOk&X_$^1a3gL)
+zc~mfL%5XA2fhSQ4$LV|e!NPtEJ<t=qa1E|C{7m)?%*1ev!z;KMw-`2uaU{BrOR*CN
+z=%9t2ihf8#I<CX@hM&o<#D}miN)dZ5_9RwwPUDQ{nd05^$4LgpU=Rjl9_9zI{hF5T
+zi%J!r@oW`;YEDw)<h*V1tw{bS+UBjISe$J!*qHqkrIlJ6CF4@_R{Cwe%_?t~B5reb
+z*yYv6x@m0`iYfHkzuqP##kH~5P+v~vew@bbIKTH6YTjBKg<{&+y{NaR8R4i}Yd<qi
+z)=@h5=K(yBJ8=<%t+i3Di9hf3p}tYJc($Frfiidy59T4<nTr{0t&NK9Uz4%OL>8t-
+z<JZpKOhb7X59blwg-aT26*1}@zut@R5q9G!j^VhmPv)8^UwPKgmpdg@PGr}3_6eNC
+zDU{;UT+x`58Q+2-^jW^SW}7N!XIJKGT%BuhO|BKkmNcc$ezvJ{c6M#9!*#hH*XKq7
+zY^BdKiuJrrm9w*B<6Fh9x!y{jWfW_+sd9F9Q0=30n$l<gnkbd4!d2PM&Y{UPhZfWO
+z^l@A+mb3=kkcB>LcA^?Pm8Q`Lw1nnTB!JzsRhw3(UL~%v(`g3Hqop*TJ_%sQ#<%*<
+ze46|_KE7wtEc%d^(E|E3jxF`uPf`0VHAo$8TD6cC(Q^8XR?tQtdoNGqOctvwqtCBr
+z;b_H}PUDg6q*IzDUk1nEZqDLKoXu$@qEC3o>RIgfYMXa(4Ce5aJefywE!4j7y^D9y
+z@vXjBUE7QMX8j#<ZpCf59e3bPpH}VR={$q4;CiSJn~nNjgKPVclLvVbLO$g8v1L4m
+zod#$Kn~nNjgKPVcQvd}~2!&C^$4>I<O)(mwF>E&Kd)2kQKktN`N~nw~sETR<?90&v
+zHk-Mq5dB_7Z9fUwUUrFJ@9L<5n&`@heLAS-JrT<wZF+D|!-mo3pK43iZ+>=A432^t
+z+Tt-h9(}i1J&FCcW;<fUUX%Z+8p3u@U6XpEe&;F;xYSwMtFz5s-MiTDa@#NcMEtak
+z?a9H{67kbEA|E6^67kbE!E?0TNyJav*j6?8S|Wbh#x}d)Yl-*?n~TNwf73rv+N$~}
+z{%>Asoj9AnU0dNQyo}fJ2Hu3|el+2x+>FoSoS`{NTU8&$&z9A<JeurB@f3Qa5Bj1%
+zMEB!7a&Z!`#43ZWv{m&{{A^i$%cIGD8ZTe~24V<?LUcd!a)|TsI;=O?N?TPQ#m^2}
+zlNa$4W@81)ad{TqkM`VwJ8~f|Z0MlQm$Dx4v*rIP*XmptcEr1g{2O*eA3|!OsFbyh
+z%9m<>@oeek??dSP7;!}(BH}8NW~+Ru`zYcmW-c}>bnU0}V>XFCM8s7jZKLv~>Z8QZ
+zyPLHSq4VQx5`Bn>t4Nxy@}=sd#P<iy3SIl@{J0pR4-s({N!y&~Wzl@8`Y7@9HY;@P
+zr}N_yh(1KbRh<lNGYiYT>k+pLx<d3(;@PS~kL^Rq9Txd<SJXe^cIUQUm(JGXP`OT?
+I|IhjIZ=UuAl>h($
 
 literal 0
 HcmV?d00001
@@ -16279,74 +16279,74 @@ HcmV?d00001
 
 diff --git a/data/layouts/TaichungBlvdPark/border.bin b/data/layouts/TaichungBlvdPark/border.bin
 new file mode 100644
-index 0000000000000000000000000000000000000000..33d14e2d4c8cace36310cd710ea6bcf84b492cdb
+index 0000000000000000000000000000000000000000..d827205de0d5e7e3b028fcacf95ca1836d141d81
 GIT binary patch
 literal 7168
-zcmb`M1(Y1e5r(~z&Zw1)l9@SiVwkBvv1=XX#15FkF-YOWbY_s`m}OhGBwJ+bq&u;6
-zV#X1}iNO{#Gnlb!di%O(W@qnC&a3x!X1c5E>#pY7GOx_5@Vb9#sZe&3618h|%rmK9
-z`xIlN)ORIXUUbTpxEhE5E|$dB2lOFrqwVxd{0ebv<z6?%EcHvg;u82G#dJ#jvb?R2
-z=wsSJJLx9ejKDtv`$)@~if(jDyo}e#Yh3U*qf#|5sgn&$WmRphtxxDv+C{tRHvCrc
-zy3mXCCcUM8dy>@=UK6ir!C#jb*U5&ZqP)-ObJ|0D=@0m$;<cui=w*6^o}&&iUe?nh
-z_TysO7f&~3-1cQq5Buo={ROuxUK@IqUZb}3JatUrY1_5?EyQ!jWZ<`>_VhZvK`&6J
-z1n+<JG-Xv^<#+*Vmg_n2b&04yFT%yR4430xys6r^fR0C3Dx=QSEy2^Z4gA-zxEAud
-zvX=E)P)k)u*PnxV2oL39Je*ro)JxIvVtgaKwrE!)QS(~SQ!(BM9?7G4G>_pn)x1iS
-zs@kRVYTrIxOSgSvc^r@D2|SV8Dc(QvFZ>(-!6mpfHvioAeHq>)4tO%RK?f{Qya(_g
-z9>T-;7QX#|;mIly?LXaT5A!3;%7>5R2|S4w_zu2XBX0)HR5C04mA9ERJN%tP(!aX@
-zWChSXvwpg3rW(O`8qeTad=KBRkyl0YXg)2ZMd~TCn3m8|^;|~cZ_RW2&z*VtJ@8*d
-zN3_OE7=ob*o|%7UK2*`$^bRej6||C8(Q0ah#<&rGh2=%(pD^6km4>Ulof9>U&no&G
-zx}zM!F&5)712ZuTRhaAW3a!`DVm&Km?J%QIp2E|6maT)l+4jxDd@RHwEWuK|jr}-)
-z&+vJKXZz3WHDX!MO5wRu>YF}xQ(fK>oZ)(0pBr!qAIV4Y(R>Ua%hsQ!_U`<<ADuA_
-zH}Tzkk6Q6u5uVv^GpbfvT%H~$^XNEksKk6(p4l&4-o1Pu-_ND|06(aB#<MbSYU;mi
-zH9=^W*NDydEW~TUEx8r9<M!M^@r-B1?=|rn^YNja5Yig*iF`^ZO&y*-6}au|$-THY
-z_v8LNK=C@E4BgO6&HUQ0pJ(Lz;jEBj);gJg=2YPFDtRCe;?=yCH>z?YF$&A^F5biY
-zHO@a{xfoA-)a7mB&Af%T@;2VCcpu<He1wzuWImJA{Tbbl>c-o_J9!uH<~_Vu@y_P+
-z_<X*AFXW4g@J!3}GtSes(f&-f?*Jd<kMRi(aY-)lFXl`5Qof8Y=PM4Ir)wcRD|Rls
-zE1JzOHeT-FJ0o&Ve!QF;Nxdtds%=W&B&FDS*UtB7t%`j`=U<`qx`KL8C5@(mG%5AG
-zRE!YK({;>5&P%4=@(lc5)SCv;7#d7L3Qy`hji!_N&3Mi7o@>S?P3N06FwT=TOz-=F
-z--r6r5E@HEX>x+6cQfN7{k#^}p?RLyT=6oVq!=Aj!kvG5chLJr;P<2cG>pd4aGDb1
-zt>La*##v=iuTk1&cgia3+KX<AyuS)lBFeKK4g3)_lE%|inm}`7yye`DyK}i}gVfEm
-zAmcSqqIvRW(=*<>>Jm|&>rc18qw7lrU&lSTZRj)CYC3Oyb%`iX_5|b4^!wi`?!$fg
-zT8F25st`|md_#4KD9`n0iT6|d3_r&&a6@9f)_S&Wy6@!M?LYZ89ycXio_h<HJ8^w9
-zKnae-Q8Aw7xFb-fTAn+W3eN|($Aot@j=`}w4h>Uzwq2U$&Og&Kol~fNfv<Z&Y9_q1
-za5m1txi~MCXIrY@qVq4FE8ng^4Nqz&yz_AZF2wD;Ke9ixN4nVlOVf$+q8_zhG9UE$
-z)7?W3_uZT=i<K`A_Ye~sO717olwx`&&pe|g^_R)3ZTw8@M`L2<t2VZ*PNCW)(~N#H
-zM`C`_HWb%!=V<!7wplpe@(Slms?{k}n`D~NPv+FMeWn+RKQ*tgj;Twrv0!xy)i{}E
-z^piQYOOf(*n}6~9Yx-QP^eSU_UC}l7u^g_)eRu?q;xSx_ufW7ib>B<m^w;=Jxc-&;
-zQ+O&*<LTUyXK*HWW$vonC>8f`<BoxUqrb)5>fI2z-MaUcyYP3kL@PXn=kNo36((k?
-zcM6G|-hx~6yqP?UXY(BH#8q4`cXjTX+(gB5<Bpc6Z-4sN<^2Qy#q)RpFXI*b5Ldv&
-zO!ZD7k<;Jd_j%r2p2zcf0e9wwTtDaKe06G%#vLtB-~RNk%ex!*U;rlIG(Mewgs;KG
-zOl9qF#u7RG6aJj%E#k$zgqLy`Ud9b_ltajK<BpbRcX~OC+VhJ(!#zvSsMuRlr2aNl
-zYAc$0ztOAzMCa_KW4@x%O8HsJiKcv8o;_pO-6Q(up3ASo)wl*H<COf3<sp95+1sSt
-z9k??bbH+wIK4{Mv<@9yDfi8GU+3Jc4^gz$hs(UW?;DgWvP4m3R_;H7KkPgurT1ztK
-z(&B^mj4^<EqYwI`9|mF&MqnH!hF0BkIq(g96Q|-doXXp<JIuGfIsxy}I$BRM=F;MW
-z_KYzalMrAsreG?jVLE1GPH4|PmoLK#ti<U!11tDuz9l^ETi%Iyk2cUok};PSAJk`z
-zC-_MogH>3KHCT&vSdR_Zh)p5SJ(q9B7Hq|j@e{1%Tluya?<BlWn`kphoIWi+sQa}U
-zn&Ta8#}4eoF6_Zx?88AE!lxn8^nKtHgE@bPF{!qFgVBVy&{owpk$8NtZtG`qz3h*D
-hYOLtBQQI;#kY`-KZs(U`yFf*_^2h)Cik6W5;R_I}xmN%H
+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
 
 literal 0
 HcmV?d00001
 
 diff --git a/data/layouts/TaichungBlvdPark/map.bin b/data/layouts/TaichungBlvdPark/map.bin
 new file mode 100644
-index 0000000000000000000000000000000000000000..12149ea6a3657676d254a83a8e7729242ec519c4
+index 0000000000000000000000000000000000000000..ab07a663b0b409973cb32562958038e11e6de37f
 GIT binary patch
 literal 3496
-zcmb`KOKuZE5I`BQ`FavSf-De%Bg|N%s#a2P1?~VOZ~^c69smMtacr}IJuAe*3rGSc
-zAwNPOAm9dY0HE9DqGx)(AyG;FsqT7RT~pmN(+=7}FX-%AdYWTIYVQ4CX&7BCt#B`-
-z8_a25E38Mw(hrRk&1r@0e=IK=i^ij@($iXIrAPh1SouLcO0rHz6WS_W##!#D9~e!V
-z<p(Ur))n!~)r*bmm+0B9S}8VZ)}7|vrXTdf3-lh#<s$V%w#eUOKfI4?732~2LqE6y
-zH=&p{iw{a^%(?})OIX$Y;)tc=#rmD?aW7ffxhl`s`ZW&=S{8?;X)VB;VfhwJJUL!A
-zSM7Q9boRP?9KaGR!wRhG+Q=HL!-lRufQcuw^7bhCB{?yGP51~~@CiP{Hhh6G9LGy|
-z4K1sBehuI{cCd@j@ddubd0fCn9N@bcD|xp0{z{%0>(>%4;|i|gI&R=5{={GS8~-F&
-zHePZU=CSsXNBijj)u>Jf=@1>JBXpGP9wo-*`K4puWI09+)lky2EV(zzSw4xiAz9WK
-z$#bmE8mHq!IWhFAp-$4Np-jYBd>fbhC8zR?zFmx*9Wq2~@=NaFG|SB|u_|KmF4HWV
-z_sKhFcP#OUYnR0<@gB?lDrWJhVOeQ~*=PGQT}jBfQS8qrv{y%3<|W^clEZeb@>Y3%
-zl`~`pukYzEh-|;iTCd<WNa;n>quorC=y+W2yet;ym-x-~Bu?SXh&7{GUSu>fM=V^w
-zzN*Knt^7c~KzM!!d~L~lifc^!9*Tv_+ER0>qq<7Yg{)nRY9p3uiPqHLNGx1dPfe*O
-zYF4w7lF#~1V&Ss3)l+(=CSxp)Ocsl8haV&sE=%&udd0Ca{dl}gpTEQMpQB~OpA>5?
-zi#?LLdHE&dUS$1YT|B?UBOWPdSt_@Z`Q?t9ellJUF<)%F^5!sWFTd}1^50SPe<EX5
-V|A%;f_P>*5Rr?2$`B}5g*kA1LQw{(C
+zcmb`K&2H2%5P%76`Q5aD1U(=GPk@qDG-I^`ufRJ1Exf?q`F#K=aAmvO9^lRiao7WN
+z3#FxhltMwk8^8kqc4h}B&fk`<MzWo;=gW9JcH&mh3g&|Lo@GvRj7ZH-|5qADM@ust
+zhIE2i&1;4uQMq(OBV}WnVe22ui$<fdD6jOimRZ?eKQLB)FcPI%r=xLgl`WGjx7QDh
+zCd={z7Gvv*_~q)w#`R0|Y&TdbHd)r)#=V9gbi<4E9;@XNbwjo&o?|zBfa?RuW9){0
+za1(ApIco+VR??Vt8}3xF2KS32mW>zdcQ?mjvhs6P*4O&A06i^>acNpTcoUaz!Nil}
+zWpmZ;M^9(3JI5thh80+aHC-E7hYi@&^#?HVWLD7}CBGymmS77$!Zv(@&#(huU=+vj
+zGG0f^D$lPAIs+~12DY(-&+!Gm#0Bi(A}-;(1S`F_`TR=n7|UA56<ozN+`vuT!k_pH
+zf8(DN%f?I2!Xnl_@@PLDpc;+PK{`Z-=?EPqJ4cCeb$;pCH&~8QUDcI5S(cm|)hwUH
+z+K?=3lw=(TXN}SESWd)V)zwKl70Y;n#iwz#U$QID=(RO+HfD&{<d>YoS(ck$VpYcC
+zS!P)_@6%__-dN%h*Dj0S#B;3ntDMEXhGnH0=I`w*bTuXC`msNs(q8LpnV0@PN)Fq1
+zRky11tC}Gr`2C*#gUI*Gyz3Rb1}VL0sy~}45*_!;nU}}n{1U&pp1?_*?z5&f%ZrRg
+z#)yUM*H`sKwUi&o9|(_cgRd=lPDzbv-$$`<S=(w>wN*#SzL0m<qFSG2TB0@eHxdh%
+zHK!)kyqeLhv=p<xlUTT{9rcu+sfh%OBa_GC)8Pk+h0BusvR-kl%yTkc=9&M)ir3LH
+zk}Jhp%VLjYY*BtmzZY45SeMK%@rZk>S(eJJbbh(L<~bd&M_4R2UPWV=HO&9}-P}9M
+a?kCbW=zWOC=ii+yYp^?zjL#cw`u+lKol`pi
 
 literal 0
 HcmV?d00001
@@ -23711,10 +23711,10 @@ index 00000000..ba3cc3cb
 +}
 diff --git a/data/maps/TaichungBlvdPark/map.json b/data/maps/TaichungBlvdPark/map.json
 new file mode 100644
-index 00000000..4f0124c5
+index 00000000..2990d41c
 --- /dev/null
 +++ b/data/maps/TaichungBlvdPark/map.json
-@@ -0,0 +1,79 @@
+@@ -0,0 +1,87 @@
 +{
 +  "id": "MAP_TAICHUNG_BLVD_PARK",
 +  "name": "TaichungBlvdPark",
@@ -23791,6 +23791,14 @@ index 00000000..4f0124c5
 +      "elevation": 0,
 +      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
 +      "script": "TaichungCity_Sign_Park"
++    },
++    {
++      "type": "sign",
++      "x": 8,
++      "y": 17,
++      "elevation": 0,
++      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
++      "script": "TaichungEncounter_TaichungParkLakeshore"
 +    }
 +  ]
 +}
@@ -28785,10 +28793,10 @@ index 00000000..9f61a703
 +	end
 diff --git a/data/scripts/taichung_encounters.inc b/data/scripts/taichung_encounters.inc
 new file mode 100644
-index 00000000..f1293a94
+index 00000000..66c977ba
 --- /dev/null
 +++ b/data/scripts/taichung_encounters.inc
-@@ -0,0 +1,104 @@
+@@ -0,0 +1,105 @@
 +@ Stable interaction API: VAR_0x8004 = site ID. Maps can bind the wrappers below
 +@ at new positions without changing state IDs, species, persistence or battles.
 +TaichungEncounter_Interact::
@@ -28869,7 +28877,8 @@ index 00000000..f1293a94
 +	.endm
 +	taichung_encounter_entry MapleGarden, TAICHUNG_ENCOUNTER_VENUSAUR
 +	taichung_encounter_entry WenchangTemple, TAICHUNG_ENCOUNTER_WENCHANG_TEMPLE
-+	taichung_encounter_entry BotanicalGarden, TAICHUNG_ENCOUNTER_LAPRAS
++	taichung_encounter_entry BotanicalGarden, TAICHUNG_ENCOUNTER_BOTANICAL_GARDEN
++	taichung_encounter_entry TaichungParkLakeshore, TAICHUNG_ENCOUNTER_LAPRAS
 +	taichung_encounter_entry ShenJi, TAICHUNG_ENCOUNTER_SHEN_JI
 +	taichung_encounter_entry YizhongStreet, TAICHUNG_ENCOUNTER_YIZHONG_STREET
 +	taichung_encounter_entry PrefecturalHall, TAICHUNG_ENCOUNTER_PREFECTURAL_HALL
@@ -114081,7 +114090,7 @@ index 00000000..83f5389d
 +}
 diff --git a/data/taichung/encounters/sites.json b/data/taichung/encounters/sites.json
 new file mode 100644
-index 00000000..2dfa1ea3
+index 00000000..03d8f1a2
 --- /dev/null
 +++ b/data/taichung/encounters/sites.json
 @@ -0,0 +1,481 @@
@@ -114110,7 +114119,7 @@ index 00000000..2dfa1ea3
 +  "sites": [
 +    {
 +      "stableSiteId": 0,
-+      "siteSlug": "botanical-garden",
++      "siteSlug": "taichung-park-lakeshore",
 +      "speciesDex": 131,
 +      "species": "LAPRAS",
 +      "level": 65,
@@ -114120,10 +114129,10 @@ index 00000000..2dfa1ea3
 +        "MOVE_BODY_SLAM",
 +        "MOVE_SING"
 +      ],
-+      "entryScript": "TaichungEncounter_BotanicalGarden",
++      "entryScript": "TaichungEncounter_TaichungParkLakeshore",
 +      "existingPlace": true,
-+      "currentBinding": "TaichungCity_Sign_BotanicalGarden",
-+      "history": "Lapras keeps savedID0 when moving from Maple Garden; no new attempt."
++      "currentBinding": "TaichungEncounter_TaichungParkLakeshore",
++      "history": "Lapras keeps saved ID 0 and its attempt and unlock history at the park lakeshore."
 +    },
 +    {
 +      "stableSiteId": 1,
@@ -114405,7 +114414,7 @@ index 00000000..2dfa1ea3
 +    },
 +    {
 +      "stableSiteId": 18,
-+      "siteSlug": "botanical-garden-victreebel-legacy",
++      "siteSlug": "botanical-garden",
 +      "speciesDex": 71,
 +      "species": "VICTREEBEL",
 +      "level": 65,
@@ -114415,10 +114424,10 @@ index 00000000..2dfa1ea3
 +        "MOVE_STUN_SPORE",
 +        "MOVE_SWEET_SCENT"
 +      ],
-+      "entryScript": null,
++      "entryScript": "TaichungEncounter_BotanicalGarden",
 +      "existingPlace": true,
-+      "currentBinding": null,
-+      "retired": true
++      "currentBinding": "TaichungCity_Sign_BotanicalGarden",
++      "history": "Victreebel is active again on saved ID 18 with its original attempt and unlock history."
 +    },
 +    {
 +      "stableSiteId": 19,
@@ -114565,6 +114574,21 @@ index 00000000..2dfa1ea3
 +    "size": 72,
 +    "change": "27-slot bounds and EC03 save history; v2/72-byte packet shape unchanged"
 +  }
++}
+diff --git a/data/taichung/encounters/taichung-park-lakeshore.json b/data/taichung/encounters/taichung-park-lakeshore.json
+new file mode 100644
+index 00000000..f5f268f8
+--- /dev/null
++++ b/data/taichung/encounters/taichung-park-lakeshore.json
+@@ -0,0 +1,9 @@
++{
++  "id": "taichung-park-lakeshore",
++  "parentLandmark": "taichung-park",
++  "nativeMap": "MAP_TAICHUNG_BLVD_PARK",
++  "script": "TaichungEncounter_TaichungParkLakeshore",
++  "captureId": 0,
++  "worldSign": [320, 79],
++  "worldApproach": [320, 80]
 +}
 diff --git a/data/taichung/greenway-grove-flower-beds/audit-before.json b/data/taichung/greenway-grove-flower-beds/audit-before.json
 new file mode 100644
@@ -378164,10 +378188,10 @@ index 00000000..7195609b
 +}
 diff --git a/data/taichung/north-xitun-continue/baseline.json b/data/taichung/north-xitun-continue/baseline.json
 new file mode 100644
-index 00000000..2b2909d3
+index 00000000..d9e3989b
 --- /dev/null
 +++ b/data/taichung/north-xitun-continue/baseline.json
-@@ -0,0 +1,85 @@
+@@ -0,0 +1,97 @@
 +{
 +  "baselineNativeCommit": "0e9363298301c83f0db7e7b1bf3d44d918be5b20",
 +  "targetNativeBase": "a701ed5109ffd5eddd6b0581ade46591146e9656",
@@ -378250,6 +378274,18 @@ index 00000000..2b2909d3
 +      "baselineSha256": "20704efca6c2efa7df4fed12ef152e8158ff083037b47dccd54ee9801080a9e3",
 +      "baselineNativeCommit": "f3ae5304fbf04b5e147d3bcabfaa131f8cf06212",
 +      "avoidPatrols": true
++    },
++    {
++      "name": "TaichungBlvdPark",
++      "constant": "MAP_TAICHUNG_BLVD_PARK",
++      "layout": "LAYOUT_TAICHUNG_BLVD_PARK",
++      "width": 38,
++      "height": 46,
++      "path": "data/layouts/TaichungBlvdPark/map.bin",
++      "baselineFile": "baseline/TaichungBlvdPark-pre-lakeshore.bin",
++      "baselineSha256": "45be97f915c58e004bc8cb2eb18ff1aad8d82b6ce55b91ebfa2b4215a0708a6e",
++      "baselineNativeCommit": "6956e7b8660e2401dffa3383ad847be27c99f10b",
++      "avoidPatrols": true
 +    }
 +  ]
 +}
@@ -378316,6 +378352,30 @@ zn21T3j}tiQd@{L>M{nF3R8_1@o<jo~ks+CK3a4=fXYmET#8>zlCX@Y;fZK38?!cXh
 zMaYs#@}N8<lO<kyOCRYg36dgdlHQ(M3&}`9D$<~067pn<OqCqTm0C4h#>se@AdkqS
 zGEsJ`J<84T9LW}76dsnj;#FXDUCiq+AF!U2X~9SZ);sSu&E(ttcj`9NoA`hA_5ObV
 D7kTt-
+
+literal 0
+HcmV?d00001
+
+diff --git a/data/taichung/north-xitun-continue/baseline/TaichungBlvdPark-pre-lakeshore.bin b/data/taichung/north-xitun-continue/baseline/TaichungBlvdPark-pre-lakeshore.bin
+new file mode 100644
+index 0000000000000000000000000000000000000000..12149ea6a3657676d254a83a8e7729242ec519c4
+GIT binary patch
+literal 3496
+zcmb`KOKuZE5I`BQ`FavSf-De%Bg|N%s#a2P1?~VOZ~^c69smMtacr}IJuAe*3rGSc
+zAwNPOAm9dY0HE9DqGx)(AyG;FsqT7RT~pmN(+=7}FX-%AdYWTIYVQ4CX&7BCt#B`-
+z8_a25E38Mw(hrRk&1r@0e=IK=i^ij@($iXIrAPh1SouLcO0rHz6WS_W##!#D9~e!V
+z<p(Ur))n!~)r*bmm+0B9S}8VZ)}7|vrXTdf3-lh#<s$V%w#eUOKfI4?732~2LqE6y
+zH=&p{iw{a^%(?})OIX$Y;)tc=#rmD?aW7ffxhl`s`ZW&=S{8?;X)VB;VfhwJJUL!A
+zSM7Q9boRP?9KaGR!wRhG+Q=HL!-lRufQcuw^7bhCB{?yGP51~~@CiP{Hhh6G9LGy|
+z4K1sBehuI{cCd@j@ddubd0fCn9N@bcD|xp0{z{%0>(>%4;|i|gI&R=5{={GS8~-F&
+zHePZU=CSsXNBijj)u>Jf=@1>JBXpGP9wo-*`K4puWI09+)lky2EV(zzSw4xiAz9WK
+z$#bmE8mHq!IWhFAp-$4Np-jYBd>fbhC8zR?zFmx*9Wq2~@=NaFG|SB|u_|KmF4HWV
+z_sKhFcP#OUYnR0<@gB?lDrWJhVOeQ~*=PGQT}jBfQS8qrv{y%3<|W^clEZeb@>Y3%
+zl`~`pukYzEh-|;iTCd<WNa;n>quorC=y+W2yet;ym-x-~Bu?SXh&7{GUSu>fM=V^w
+zzN*Knt^7c~KzM!!d~L~lifc^!9*Tv_+ER0>qq<7Yg{)nRY9p3uiPqHLNGx1dPfe*O
+zYF4w7lF#~1V&Ss3)l+(=CSxp)Ocsl8haV&sE=%&udd0Ca{dl}gpTEQMpQB~OpA>5?
+zi#?LLdHE&dUS$1YT|B?UBOWPdSt_@Z`Q?t9ellJUF<)%F^5!sWFTd}1^50SPe<EX5
+V|A%;f_P>*5Rr?2$`B}5g*kA1LQw{(C
 
 literal 0
 HcmV?d00001
@@ -379117,10 +379177,10 @@ index 00000000..cb0b8494
 +}
 diff --git a/data/taichung/north-xitun-continue/repairs.json b/data/taichung/north-xitun-continue/repairs.json
 new file mode 100644
-index 00000000..73b2751a
+index 00000000..bac15522
 --- /dev/null
 +++ b/data/taichung/north-xitun-continue/repairs.json
-@@ -0,0 +1,1856 @@
+@@ -0,0 +1,1873 @@
 +{
 +  "schemaVersion": 1,
 +  "saveVersion": 12,
@@ -380972,6 +381032,23 @@ index 00000000..73b2751a
 +          23,
 +          4,
 +          24
++        ]
++      ]
++    },
++    {
++      "name": "TaichungBlvdPark",
++      "constant": "MAP_TAICHUNG_BLVD_PARK",
++      "nativeKey": "43:70",
++      "width": 38,
++      "height": 46,
++      "beforeSha256": "45be97f915c58e004bc8cb2eb18ff1aad8d82b6ce55b91ebfa2b4215a0708a6e",
++      "afterSha256": "c9e178123412dcbb35bd876458a41fc11d38399c8a0d8832886683ae95279112",
++      "repairs": [
++        [
++          8,
++          17,
++          8,
++          18
 +        ]
 +      ]
 +    }
@@ -415333,13 +415410,13 @@ HcmV?d00001
 
 diff --git a/data/tilesets/secondary/taichung_boulevard/map_66_attributes.bin b/data/tilesets/secondary/taichung_boulevard/map_66_attributes.bin
 new file mode 100644
-index 0000000000000000000000000000000000000000..2a840993729ebfecaef9cb24ad53ec2d00f70ba2
+index 0000000000000000000000000000000000000000..d40575e23f7595e400d3ddc127f0df4456c341a9
 GIT binary patch
 literal 3072
-zcmeHJK@P(p3}d{+`~N2wOZAk|C}T)~S}l?l#|hxlLtATk)&!*#EP@>~<*aPqtcOW{
-z?y&C_?~R@rxG8o$8_#V6hu|}LRD0b<-T`CZpkY5p&DWl{J=Rgc#9nZ{W<96Izyb0s
-zkTsJY*9jU^y(`OyvV5=>XI8*S5B$96(b|u`ed8X4#Kk%C*J`sY@tod(4G!bi`_(&%
-ivNvpf{-f-Acizen_uj>ohc-Mf!ddz&3vS@*_l_5LUo!Ln
+zcmeHJ(GG+#2;1#TdjEPKel%wnq7!w=wrGx|p+I3cA2jFm&H++N7z8_}%URLfsD@7a
+zJYnt~?~Oat@KDTpHlDjSED7()Yq8Ipq!^4HL1M3C&c~jwYm93KOP&S$rS+US8Wxa8
+zhNu|S*e6J)c$U{5^4f#3IK2!;&Y<W&KRx5UzM`eZzHu)?$-y4n;Q&_dVz@As+Gbq6
+mU%iu>_d8pi|0uKGonNJi``yLmn+9&1uuc6l18(5%_l_^wOf#4O
 
 literal 0
 HcmV?d00001
@@ -415367,84 +415444,84 @@ HcmV?d00001
 
 diff --git a/data/tilesets/secondary/taichung_boulevard/map_66_metatiles.bin b/data/tilesets/secondary/taichung_boulevard/map_66_metatiles.bin
 new file mode 100644
-index 0000000000000000000000000000000000000000..8d5533952d7025b4eb839478eebb3f2cd2e319cf
+index 0000000000000000000000000000000000000000..d23a500b96a83d63d39de2231b876a17a3056e8f
 GIT binary patch
 literal 12288
-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
-Ptp2OYE>u<9YwG_K#6z?(
+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
 
 literal 0
 HcmV?d00001
@@ -415851,13 +415928,13 @@ HcmV?d00001
 
 diff --git a/data/tilesets/secondary/taichung_boulevard/map_70_attributes.bin b/data/tilesets/secondary/taichung_boulevard/map_70_attributes.bin
 new file mode 100644
-index 0000000000000000000000000000000000000000..b378793a677216434e7a11c2b0cf9a2d7552321a
+index 0000000000000000000000000000000000000000..8ca74ed67c982ad70bc88ace390e2da382aecd93
 GIT binary patch
 literal 2784
-zcmeHJTMmRE46K}FJl@`85AF=Ho5lcw@k7i`GSIiJXf!2TQ-fxP$;tMopJDbh`1k+b
-zXHf5#fC^i_TFx8n$GN2o=%C^vKqXSXs1M2CliW|mzvqo!do;c^i)snTYkN_Qn89z{
-zB2qzM_T9Xwz5^7*Gk^h+ikIF4Fz5=scFc9#rTuV!y+*9>a`yR|ly(MqEa=xi$`Wmp
-j$ZXSW?_Hv1$#eKFV*n`M!BDbGEM2oJ@c}`l-hZ|Ya5_YV
+zcmeHJiw=S?3@rPS^Yi=<KinR!=EQAoL=#77a;&{R)-njBWS7){nPGBx`_s=b`x%`5
+zANLvL`$a(oEnh9?2>f<#+7xtvaVl^_L7&<~`t3vRwc^itqkE6Ww`O523Z$0@^L_>6
+zg7$CRLS&9S@e6?zrLMNPUR1^?=%n2v@Sr`2+L{~Ou61*NqlVTGef7nelvWRjSh%16
+nD2sBF=-#GT?wu-US?7qAqzGL92Bc({TH3QK@ehJZy+64-8K*@l
 
 literal 0
 HcmV?d00001
@@ -415888,105 +415965,105 @@ HcmV?d00001
 
 diff --git a/data/tilesets/secondary/taichung_boulevard/map_70_metatiles.bin b/data/tilesets/secondary/taichung_boulevard/map_70_metatiles.bin
 new file mode 100644
-index 0000000000000000000000000000000000000000..44dce91c2712a42ddfabc6f3e0cae433f3ca12cc
+index 0000000000000000000000000000000000000000..a759666b5e95e12d23e74201e03d0d69817cbe4a
 GIT binary patch
 literal 11136
-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
+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
 
 literal 0
 HcmV?d00001
@@ -631930,10 +632007,10 @@ index 00000000..a486066c
 +#endif
 diff --git a/include/constants/taichung_encounters.h b/include/constants/taichung_encounters.h
 new file mode 100644
-index 00000000..580733f7
+index 00000000..2a1f74dd
 --- /dev/null
 +++ b/include/constants/taichung_encounters.h
-@@ -0,0 +1,90 @@
+@@ -0,0 +1,89 @@
 +#ifndef GUARD_CONSTANTS_TAICHUNG_ENCOUNTERS_H
 +#define GUARD_CONSTANTS_TAICHUNG_ENCOUNTERS_H
 +
@@ -631996,14 +632073,13 @@ index 00000000..580733f7
 +#define TAICHUNG_ENCOUNTER_BLASTOISE 25
 +#define TAICHUNG_ENCOUNTER_VENUSAUR 26
 +// Historic location-named constants above retain their original saved IDs.
-+// Current location wrappers below the registry choose these new species IDs.
++// Lapras keeps its original saved ID at the park lakeshore.
 +#define TAICHUNG_ENCOUNTER_LAPRAS TAICHUNG_ENCOUNTER_MAPLE_GARDEN
 +#define TAICHUNG_ENCOUNTER_RETIRED_MASK ((1u << TAICHUNG_ENCOUNTER_LEGACY_BOTANICAL_GARDEN) \
 +    | (1u << TAICHUNG_ENCOUNTER_LEGACY_FENGLE_SCULPTURE_PARK) \
 +    | (1u << TAICHUNG_ENCOUNTER_LEGACY_WENXIN_FOREST_PARK) \
 +    | (1u << TAICHUNG_ENCOUNTER_LEGACY_GREEN_MUSEUMBRARY) \
 +    | (1u << TAICHUNG_ENCOUNTER_JINGMING_STREET) \
-+    | (1u << TAICHUNG_ENCOUNTER_BOTANICAL_GARDEN) \
 +    | (1u << TAICHUNG_ENCOUNTER_DING_SHENG_BHW))
 +
 +#define TAICHUNG_ENCOUNTER_PHASE_IDLE 0
@@ -635565,10 +635641,10 @@ index 00000000..078837e6
 +};
 diff --git a/src/data/taichung/north_xitun_continue.h b/src/data/taichung/north_xitun_continue.h
 new file mode 100644
-index 00000000..e89184a2
+index 00000000..c8f71299
 --- /dev/null
 +++ b/src/data/taichung/north_xitun_continue.h
-@@ -0,0 +1,336 @@
+@@ -0,0 +1,342 @@
 +// Generated by tools/taichung/boulevard_city/north_xitun_continue.py. Do not edit.
 +// Exact pre-infill open -> current blocked cells only. No save-version bump.
 +
@@ -635895,6 +635971,11 @@ index 00000000..e89184a2
 +    {4, 23, 4, 24},
 +};
 +
++static const struct NorthXitunRelocation sNorthXitunRepairs7[] =
++{
++    {8, 17, 8, 18},
++};
++
 +static const struct NorthXitunRepairMap sNorthXitunRepairMaps[] =
 +{
 +    {MAP_GROUP(MAP_TAICHUNG_BLVD_XITUN_C_1), MAP_NUM(MAP_TAICHUNG_BLVD_XITUN_C_1), sNorthXitunRepairs0, ARRAY_COUNT(sNorthXitunRepairs0)},
@@ -635904,6 +635985,7 @@ index 00000000..e89184a2
 +    {MAP_GROUP(MAP_TAICHUNG_BLVD_NANTUN_F_1), MAP_NUM(MAP_TAICHUNG_BLVD_NANTUN_F_1), sNorthXitunRepairs4, ARRAY_COUNT(sNorthXitunRepairs4)},
 +    {MAP_GROUP(MAP_TAICHUNG_BLVD_SCIENCE_MUSEUM), MAP_NUM(MAP_TAICHUNG_BLVD_SCIENCE_MUSEUM), sNorthXitunRepairs5, ARRAY_COUNT(sNorthXitunRepairs5)},
 +    {MAP_GROUP(MAP_TAICHUNG_BLVD_BOTANICAL_GARDEN), MAP_NUM(MAP_TAICHUNG_BLVD_BOTANICAL_GARDEN), sNorthXitunRepairs6, ARRAY_COUNT(sNorthXitunRepairs6)},
++    {MAP_GROUP(MAP_TAICHUNG_BLVD_PARK), MAP_NUM(MAP_TAICHUNG_BLVD_PARK), sNorthXitunRepairs7, ARRAY_COUNT(sNorthXitunRepairs7)},
 +};
 diff --git a/src/data/taichung_boulevard_wild.h b/src/data/taichung_boulevard_wild.h
 new file mode 100644
@@ -643871,7 +643953,7 @@ index 00000000..47759efa
 +}
 diff --git a/src/taichung_encounter.c b/src/taichung_encounter.c
 new file mode 100644
-index 00000000..8ccaf100
+index 00000000..baba9665
 --- /dev/null
 +++ b/src/taichung_encounter.c
 @@ -0,0 +1,281 @@
@@ -643884,7 +643966,7 @@ index 00000000..8ccaf100
 +#include "constants/vars.h"
 +
 +static const struct TaichungEncounterSite sSites[TAICHUNG_ENCOUNTER_COUNT] = {
-+    {"botanical-garden", SPECIES_LAPRAS, 65, {MOVE_SURF, MOVE_ICE_BEAM, MOVE_BODY_SLAM, MOVE_SING}},
++    {"taichung-park-lakeshore", SPECIES_LAPRAS, 65, {MOVE_SURF, MOVE_ICE_BEAM, MOVE_BODY_SLAM, MOVE_SING}},
 +    {"wenchang-temple", SPECIES_GYARADOS, 70, {MOVE_BITE, MOVE_WATERFALL, MOVE_LEER, MOVE_TWISTER}},
 +    {"botanical-garden-legacy", SPECIES_EXEGGUTOR, 65, {MOVE_CONFUSION, MOVE_STOMP, MOVE_LEECH_SEED, MOVE_REFLECT}},
 +    {"shen-ji-new-village", SPECIES_ALAKAZAM, 65, {MOVE_CONFUSION, MOVE_PSYBEAM, MOVE_KINESIS, MOVE_REFLECT}},
@@ -643902,7 +643984,7 @@ index 00000000..8ccaf100
 +    {"green-museumbrary-legacy", SPECIES_PORYGON, 65, {MOVE_TRI_ATTACK, MOVE_PSYBEAM, MOVE_AGILITY, MOVE_CONVERSION}},
 +    {"baseball-stadium", SPECIES_AERODACTYL, 72, {MOVE_WING_ATTACK, MOVE_ANCIENT_POWER, MOVE_SCARY_FACE, MOVE_SUPERSONIC}},
 +    {"folklore-park", SPECIES_GENGAR, 68, {MOVE_SHADOW_BALL, MOVE_NIGHT_SHADE, MOVE_CONFUSE_RAY, MOVE_LICK}},
-+    {"botanical-garden-victreebel-legacy", SPECIES_VICTREEBEL, 65, {MOVE_RAZOR_LEAF, MOVE_ACID, MOVE_STUN_SPORE, MOVE_SWEET_SCENT}},
++    {"botanical-garden", SPECIES_VICTREEBEL, 65, {MOVE_RAZOR_LEAF, MOVE_ACID, MOVE_STUN_SPORE, MOVE_SWEET_SCENT}},
 +    {"fengle-sculpture-park", SPECIES_RHYDON, 68, {MOVE_ROCK_SLIDE, MOVE_STOMP, MOVE_SCARY_FACE, MOVE_TAIL_WHIP}},
 +    {"wenxin-forest-park", SPECIES_ARTICUNO, 75, {MOVE_ICE_BEAM, MOVE_GUST, MOVE_MIST, MOVE_AGILITY}},
 +    {"national-trade-center", SPECIES_MAGNETON, 65, {MOVE_THUNDER_SHOCK, MOVE_SONIC_BOOM, MOVE_METAL_SOUND, MOVE_THUNDER_WAVE}},
@@ -644232,10 +644314,10 @@ index 00000000..503d796e
 +}
 diff --git a/src/taichung_encounter_field.c b/src/taichung_encounter_field.c
 new file mode 100644
-index 00000000..1db09b1e
+index 00000000..341a5f13
 --- /dev/null
 +++ b/src/taichung_encounter_field.c
-@@ -0,0 +1,453 @@
+@@ -0,0 +1,455 @@
 +#include "global.h"
 +#include "battle.h"
 +#include "battle_setup.h"
@@ -644373,6 +644455,8 @@ index 00000000..1db09b1e
 +
 +static const u8 sMapleEn[] = _("Maple Garden");
 +static const u8 sMapleZh[] = _("秋紅谷");
++static const u8 sParkLakeshoreEn[] = _("Taichung Park Lakeshore");
++static const u8 sParkLakeshoreZh[] = _("臺中公園湖邊");
 +static const u8 sWenchangEn[] = _("Wenchang Temple");
 +static const u8 sWenchangZh[] = _("文昌廟");
 +static const u8 sBotanicalEn[] = _("Botanical Garden");
@@ -644412,7 +644496,7 @@ index 00000000..1db09b1e
 +static const u8 sTheLinEn[] = _("The Lin");
 +static const u8 sTheLinZh[] = _("林酒店");
 +static const u8 *const sPlaces[][2] = {
-+    {sBotanicalEn, sBotanicalZh}, {sWenchangEn, sWenchangZh}, {sBotanicalEn, sBotanicalZh},
++    {sParkLakeshoreEn, sParkLakeshoreZh}, {sWenchangEn, sWenchangZh}, {sBotanicalEn, sBotanicalZh},
 +    {sShenJiEn, sShenJiZh}, {sYizhongEn, sYizhongZh}, {sPrefecturalEn, sPrefecturalZh},
 +    {sSecondMarketEn, sSecondMarketZh}, {sHeritageEn, sHeritageZh}, {sFengleEn, sFengleZh},
 +    {sWenxinEn, sWenxinZh}, {sMuseumbraryEn, sMuseumbraryZh}, {sRainbowEn, sRainbowZh},
@@ -657551,10 +657635,10 @@ index 00000000..9c7b3cdd
 +}
 diff --git a/tests/taichung_encounter_field_test.c b/tests/taichung_encounter_field_test.c
 new file mode 100644
-index 00000000..f1edf608
+index 00000000..32682900
 --- /dev/null
 +++ b/tests/taichung_encounter_field_test.c
-@@ -0,0 +1,412 @@
+@@ -0,0 +1,418 @@
 +#include "global.h"
 +#include "battle.h"
 +#include "battle_setup.h"
@@ -657599,7 +657683,7 @@ index 00000000..f1edf608
 +u32 gSaveCounter;
 +u8 gStringVar1[32], gStringVar2[20], gStringVar3[20], gStringVar4[1000];
 +const u8 gSpeciesNames[NUM_SPECIES][POKEMON_NAME_LENGTH + 1] = {
-+    [SPECIES_LAPRAS] = "LAPRAS", [SPECIES_GYARADOS] = "GYARADOS",
++    [SPECIES_LAPRAS] = "LAPRAS", [SPECIES_GYARADOS] = "GYARADOS", [SPECIES_VICTREEBEL] = "VICTREEBEL",
 +    [SPECIES_CHARIZARD] = "CHARIZARD", [SPECIES_BLASTOISE] = "BLASTOISE", [SPECIES_VENUSAUR] = "VENUSAUR"
 +};
 +static bool8 sChinese, sHealthy, sSaveFail;
@@ -657793,7 +657877,10 @@ index 00000000..f1edf608
 +    u16 site;
 +    for (site = 0; site < TAICHUNG_ENCOUNTER_COUNT; site++)
 +        assert(TaichungEncounterGetPlaceName(site) != NULL && TaichungEncounterGetPlaceName(site)[0]);
-+    assert(!strcmp((const char *)TaichungEncounterGetPlaceName(0), sChinese ? "植物園" : "Botanical Garden"));
++    assert(!strcmp((const char *)TaichungEncounterGetPlaceName(TAICHUNG_ENCOUNTER_LAPRAS),
++                   sChinese ? "臺中公園湖邊" : "Taichung Park Lakeshore"));
++    assert(!strcmp((const char *)TaichungEncounterGetPlaceName(TAICHUNG_ENCOUNTER_BOTANICAL_GARDEN),
++                   sChinese ? "植物園" : "Botanical Garden"));
 +    assert(!strcmp((const char *)TaichungEncounterGetPlaceName(24), sChinese ? "精明一街" : "Jingming 1st Street"));
 +    assert(!strcmp((const char *)TaichungEncounterGetPlaceName(25), sChinese ? "鼎盛BHW" : "Ding Sheng BHW"));
 +    assert(!strcmp((const char *)TaichungEncounterGetPlaceName(26), sChinese ? "秋紅谷" : "Maple Garden"));
@@ -657864,6 +657951,9 @@ index 00000000..f1edf608
 +            assert(strstr((char *)gStringVar4, textSite ? "70" : "65"));
 +            StringExpandPlaceholders(gStringVar4, gStringVar4);
 +        }
++        Reset(); gSpecialVar_0x8007 = TAICHUNG_ENCOUNTER_BOTANICAL_GARDEN;
++        TaichungEncounter_ScriptOffer();
++        assert(!gSpecialVar_Result && strstr((char *)gStringVar4, "VICTREEBEL") && strstr((char *)gStringVar4, "65"));
 +        Reset(); memcpy(original, gPlayerParty, sizeof(original));
 +        TaichungEncounter_ScriptOffer(); assert(!gSpecialVar_Result && !sSaves);
 +        TaichungEncounter_ScriptOpenTeam(); assert(sTeams == 1 && !TaichungEncounterGetAttemptMask());
@@ -658310,10 +658400,10 @@ index 00000000..c7af07c7
 +}
 diff --git a/tests/taichung_encounter_team_test.c b/tests/taichung_encounter_team_test.c
 new file mode 100644
-index 00000000..543f7552
+index 00000000..e4a97d6a
 --- /dev/null
 +++ b/tests/taichung_encounter_team_test.c
-@@ -0,0 +1,149 @@
+@@ -0,0 +1,151 @@
 +// Reuse modeled mon/stat services, but link the real encounter state and team C
 +// together so saved unlocks, all current site levels, and refresh are exercised.
 +#define main ExistingTeamTestMain
@@ -658439,7 +658529,9 @@ index 00000000..543f7552
 +        assert(TaichungEncounterSpeciesSelectable(site->species));
 +        assert(!TaichungTeamSetSlot(1, site->species)); // Capture cannot clone an existing legacy partner.
 +        TaichungTeamEnsurePartyLevel();
-+        assert(gPlayerParty[0].level == (id == 0 || id >= 21 ? partner.level : site->level) && gPlayerParty[0].hp == partner.hp);
++        assert(gPlayerParty[0].level == (id == TAICHUNG_ENCOUNTER_LAPRAS || id == TAICHUNG_ENCOUNTER_BOTANICAL_GARDEN
++                                        || id >= 21 ? partner.level : site->level));
++        assert(gPlayerParty[0].hp == partner.hp);
 +        assert(gPlayerParty[0].status == partner.status && !memcmp(gPlayerParty[0].pp, partner.pp, 4));
 +        assert(!memcmp(&gPlayerParty[0].identity, &partner.identity, sizeof(partner.identity)));
 +        assert(TaichungTeamSetSlot(0, SPECIES_RATICATE));
@@ -658465,10 +658557,10 @@ index 00000000..543f7552
 +}
 diff --git a/tests/taichung_encounter_test.c b/tests/taichung_encounter_test.c
 new file mode 100644
-index 00000000..1c02633e
+index 00000000..d57a4fa7
 --- /dev/null
 +++ b/tests/taichung_encounter_test.c
-@@ -0,0 +1,272 @@
+@@ -0,0 +1,311 @@
 +#include "global.h"
 +#include "event_data.h"
 +#include "taichung_encounter.h"
@@ -658584,12 +658676,51 @@ index 00000000..1c02633e
 +    puts("PASS: EC02 available/spent/caught at all4rotated sites, all historical bits, upper24/25 noise and arbitrary oldEF sanitized; all other variables protected; current27-bit history/idempotence and reserved-bit rejection.");
 +}
 +
++static void TestLakeshoreAndBotanicalHistory(void)
++{
++    const u8 lapras = TAICHUNG_ENCOUNTER_LAPRAS;
++    const u8 victreebel = TAICHUNG_ENCOUNTER_BOTANICAL_GARDEN;
++    const u32 laprasBit = 1u << lapras;
++    const u32 victreebelBit = 1u << victreebel;
++    const u32 retiredGardenBit = 1u << TAICHUNG_ENCOUNTER_LEGACY_BOTANICAL_GARDEN;
++    u16 schema;
++    u8 laprasState, victreebelState;
++
++    assert(lapras == 0 && victreebel == 18);
++    assert(TaichungEncounterSiteAvailable(lapras) && TaichungEncounterSiteAvailable(victreebel));
++    assert(TaichungEncounterGetSite(lapras)->species == SPECIES_LAPRAS && TaichungEncounterGetSite(lapras)->level == 65);
++    assert(TaichungEncounterGetSite(victreebel)->species == SPECIES_VICTREEBEL && TaichungEncounterGetSite(victreebel)->level == 65);
++    assert(!TaichungEncounterSiteAvailable(TAICHUNG_ENCOUNTER_LEGACY_BOTANICAL_GARDEN));
++    for (schema = TAICHUNG_ENCOUNTER_SCHEMA_V2; schema <= TAICHUNG_ENCOUNTER_SCHEMA; schema++)
++        for (laprasState = 0; laprasState < 3; laprasState++)
++            for (victreebelState = 0; victreebelState < 3; victreebelState++)
++            {
++                u32 attempts = retiredGardenBit | (laprasState ? laprasBit : 0) | (victreebelState ? victreebelBit : 0);
++                u32 unlocks = retiredGardenBit | (laprasState == 2 ? laprasBit : 0) | (victreebelState == 2 ? victreebelBit : 0);
++                Fixture(attempts, unlocks);
++                V(TAICHUNG_ENCOUNTER_SCHEMA_VAR) = schema;
++                assert(TaichungEncounterInitSaveState());
++                assert(TaichungEncounterGetAttemptMask() == attempts && TaichungEncounterGetUnlockMask() == unlocks);
++                assert(TaichungEncounterWasAttempted(lapras) == (laprasState != 0));
++                assert(TaichungEncounterWasAttempted(victreebel) == (victreebelState != 0));
++                assert(TaichungEncounterSpeciesSelectable(SPECIES_LAPRAS) == (laprasState == 2));
++                assert(TaichungEncounterSpeciesSelectable(SPECIES_VICTREEBEL) == (victreebelState == 2));
++                if (laprasState)
++                    assert(!TaichungEncounterBegin(lapras));
++                if (victreebelState)
++                    assert(!TaichungEncounterBegin(victreebel));
++                Protected();
++            }
++    puts("PASS: Lapras bit 0 and reactivated Victreebel bit 18 keep independent available, spent and caught progress in EC02 and EC03.");
++}
++
 +int main(void)
 +{
 +    u16 site, species;
 +    u32 bits, mask;
 +    u8 outcome;
 +    TestEc03Migration();
++    TestLakeshoreAndBotanicalHistory();
 +    // A failed Snorlax throw, including the misleading near-catch line, is not
 +    // capture provenance. Even a bogus caught outcome cannot grant its unlock.
 +    for (outcome = 0; outcome < 4; outcome++)
@@ -658712,8 +658843,8 @@ index 00000000..1c02633e
 +    assert(TaichungEncounterGetAttemptMask() == 0x104 && TaichungEncounterGetUnlockMask() == 4);
 +    assert(V(TAICHUNG_ENCOUNTER_ATTEMPT_VAR) == 0xE104 && V(TAICHUNG_ENCOUNTER_UNLOCK_VAR) == 0xE004);
 +    assert(TaichungEncounterSpeciesSelectable(SPECIES_EXEGGUTOR));
-+    assert(TaichungEncounterSpeciesSelectable(SPECIES_VICTREEBEL)); // Retired, as with the other legacy targets.
-+    assert(!TaichungEncounterBegin(TAICHUNG_ENCOUNTER_BOTANICAL_GARDEN));
++    assert(!TaichungEncounterSpeciesSelectable(SPECIES_VICTREEBEL)); // EC01 has no valid bit 18 history.
++    assert(TaichungEncounterSiteAvailable(TAICHUNG_ENCOUNTER_BOTANICAL_GARDEN));
 +    assert(!TaichungEncounterSpeciesSelectable(SPECIES_VENUSAUR));
 +    assert(TaichungEncounterBegin(TAICHUNG_ENCOUNTER_VENUSAUR));
 +    {
@@ -658738,7 +658869,7 @@ index 00000000..1c02633e
 +        assert(!TaichungEncounterSpeciesSelectable(SPECIES_DRAGONITE));
 +        assert(!TaichungEncounterBegin(TAICHUNG_ENCOUNTER_GREEN_MUSEUMBRARY));
 +    }
-+    puts("PASS: 20 active sites, independent retired and replacement slots, Dragonite and Porygon save continuity, durable ACKs and three throws");
++    puts("PASS: 21 active sites, independent retired and replacement slots, Dragonite and Porygon save continuity, durable ACKs and three throws");
 +    return 0;
 +}
 diff --git a/tests/taichung_encounter_upper_history_test.c b/tests/taichung_encounter_upper_history_test.c
@@ -660643,7 +660774,7 @@ index 00000000..5e771896
 +}
 diff --git a/tests/taichung_north_xitun_continue_test.c b/tests/taichung_north_xitun_continue_test.c
 new file mode 100644
-index 00000000..1889f04e
+index 00000000..6b31f76a
 --- /dev/null
 +++ b/tests/taichung_north_xitun_continue_test.c
 @@ -0,0 +1,112 @@
@@ -660694,9 +660825,9 @@ index 00000000..1889f04e
 +int main(void)
 +{
 +    unsigned m, x, y, i, v;
-+    const u8 maps[]={27,35,36,29,30,58,62};
-+    const u8 widths[]={33,49,49,33,33,42,44};
-+    const u8 heights[]={46,46,19,19,44,46,46};
++    const u8 maps[]={27,35,36,29,30,58,62,70};
++    const u8 widths[]={33,49,49,33,33,42,44,38};
++    const u8 heights[]={46,46,19,19,44,46,46,46};
 +    for (m=0;m<sizeof(maps)/sizeof(maps[0]);m++)
 +        for (y=0;y<heights[m];y++)
 +            for (x=0;x<widths[m];x++)
@@ -670489,10 +670620,10 @@ index 00000000..65deb420
 +    print(json.dumps(result, indent=2)); raise SystemExit(0 if result["passed"] else 1)
 diff --git a/tools/taichung/boulevard_city/build_city.py b/tools/taichung/boulevard_city/build_city.py
 new file mode 100644
-index 00000000..1a1a84c4
+index 00000000..c1bbe401
 --- /dev/null
 +++ b/tools/taichung/boulevard_city/build_city.py
-@@ -0,0 +1,1212 @@
+@@ -0,0 +1,1232 @@
 +#!/usr/bin/env python3
 +"""Build the connected Boulevard city from Fable's raw fill and map book."""
 +
@@ -670555,6 +670686,7 @@ index 00000000..1a1a84c4
 +TALL_GRASS = 0x00D
 +PREVIEW_ENTRY = (20, 71)
 +STATION_SPAWN = (364, 104)
++PARK_LAKESHORE = ROOT / "data/taichung/encounters/taichung-park-lakeshore.json"
 +LANDMARK_ART = HERE / "landmark-art"
 +LANDMARK_SITES = (
 +    ("green-museumbrary", (82, 13, 98, 22), (87, 22), "GreenMuseumbrary"),
@@ -670866,6 +670998,20 @@ index 00000000..1a1a84c4
 +        sign.update(script=script, inLiveGame=True)
 +        capture_signs.append({"id": name, "signTile": tile, "readFrom": read_from, "script": script})
 +    return capture_signs
++
++
++def install_park_lakeshore(world, fill):
++    site = json.loads(PARK_LAKESHORE.read_text())
++    x, y = site["worldSign"]
++    require(site["worldApproach"] == [x, y + 1] and world.at(x, y) == "g"
++            and world.at(x, y + 1) == "W", "The Taichung Park lakeshore verge or approach moved.")
++    world.put((x, y, x + 1, y + 1), "n")
++    fill["events"]["list"].append({
++        "type": "sign", "place": site["id"], "tile": site["worldSign"],
++        "readFrom": site["worldApproach"], "script": site["script"], "inLiveGame": True,
++    })
++    return {"id": site["id"], "signTile": site["worldSign"],
++            "readFrom": site["worldApproach"], "script": site["script"]}
 +
 +
 +def prepare_maps(book):
@@ -671229,6 +671375,9 @@ index 00000000..1a1a84c4
 +    if chatter.is_file():
 +        script_labels.update("TaichungBoulevard_Ambient_" + name for name in
 +                             re.findall(r"^\s*taichung_resident_comment (\w+)$", chatter.read_text(), re.M))
++    encounters = ROOT / "data/scripts/taichung_encounters.inc"
++    script_labels.update("TaichungEncounter_" + name for name in
++                         re.findall(r"^\s*taichung_encounter_entry (\w+),", encounters.read_text(), re.M))
 +    installed = Counter()
 +    deferred = []
 +    for event in fill["events"]["list"]:
@@ -671611,6 +671760,8 @@ index 00000000..1a1a84c4
 +    inputs["scienceMuseumExterior"] = digest(HERE / "science_museum.py")
 +    landmarks = install_landmarks(world, fill)
 +    capture_signs = install_capture_signs(world, fill)
++    capture_signs.append(install_park_lakeshore(world, fill))
++    inputs["parkLakeshore"] = digest(PARK_LAKESHORE)
 +    capture_signs.extend({key: site[key] for key in ("id", "signTile", "readFrom", "script")}
 +                         for site in landmarks)
 +    people_path = HERE / "street-people.json"
@@ -675568,7 +675719,7 @@ HcmV?d00001
 
 diff --git a/tools/taichung/boulevard_city/landmark_signs.py b/tools/taichung/boulevard_city/landmark_signs.py
 new file mode 100644
-index 00000000..55770511
+index 00000000..8c7d57e3
 --- /dev/null
 +++ b/tools/taichung/boulevard_city/landmark_signs.py
 @@ -0,0 +1,175 @@
@@ -675645,7 +675796,7 @@ index 00000000..55770511
 +    plan = json.loads(PLAN.read_text())
 +    styles = {row["script"]: row for row in plan}
 +    actual = [event["script"] for game_map in maps for event in game_map["signs"]]
-+    require(len(plan) == len(styles) == len(actual) == 31 and set(actual) == set(styles),
++    require(len(plan) == len(styles) == len(actual) and set(actual) == set(styles),
 +            "Landmark sign inventory differs")
 +    approaches = {tuple(event["tile"]): tuple(event["readFrom"]) for event in live_events
 +                  if event["type"] == "sign" and event.get("inLiveGame")}
@@ -678572,10 +678723,10 @@ index 00000000..b33b5964
 +            "plazaLampHeads": [(x, y+2) for x, y in sorted(LAMPS)]}
 diff --git a/tools/taichung/boulevard_city/sign-art/README.md b/tools/taichung/boulevard_city/sign-art/README.md
 new file mode 100644
-index 00000000..c4781ec6
+index 00000000..acb1a5db
 --- /dev/null
 +++ b/tools/taichung/boulevard_city/sign-art/README.md
-@@ -0,0 +1,17 @@
+@@ -0,0 +1,18 @@
 +# Boulevard landmark signs
 +
 +These foregrounds come from Taichung Quest's approved drawing pass. The slate
@@ -678590,7 +678741,8 @@ index 00000000..c4781ec6
 +interaction positions in the build report under `landmarkSignArt`. The web
 +renderer can use the original masters at the same offsets for the HD view.
 +
-+`placements.json` records the 31 reviewed signs and their ground surfaces.
++`placements.json` records the reviewed signs and their ground surfaces,
++including the reused wooden design at the Taichung Park lakeshore.
 +The interaction script remains the placement key. All prior sign coordinates,
 +collision and metatile behavior are preserved.
 diff --git a/tools/taichung/boulevard_city/sign-art/bronze-plaque.png b/tools/taichung/boulevard_city/sign-art/bronze-plaque.png
@@ -678628,10 +678780,10 @@ HcmV?d00001
 
 diff --git a/tools/taichung/boulevard_city/sign-art/placements.json b/tools/taichung/boulevard_city/sign-art/placements.json
 new file mode 100644
-index 00000000..6ecfcd4b
+index 00000000..e01d65ed
 --- /dev/null
 +++ b/tools/taichung/boulevard_city/sign-art/placements.json
-@@ -0,0 +1,222 @@
+@@ -0,0 +1,229 @@
 +[
 +  {
 +    "id": "fengjia",
@@ -678824,6 +678976,13 @@ index 00000000..6ecfcd4b
 +    "script": "TaichungCity_Sign_Park",
 +    "style": "wood",
 +    "ground": "pavilion"
++  },
++  {
++    "id": "taichung-park-lakeshore",
++    "name": "Taichung Park Lakeshore",
++    "script": "TaichungEncounter_TaichungParkLakeshore",
++    "style": "wood",
++    "ground": "turf"
 +  },
 +  {
 +    "id": "prefectural-hall",
@@ -747210,10 +747369,10 @@ index 00000000..7a543824
 +print("PASS:20 approved PNG/payload roundtrips, palette/hashes/bit numbering/names,4 after-win-only guarded script paths, no scene/collection progress or money writers")
 diff --git a/tools/taichung_gameplay/audit-encounter-slice.py b/tools/taichung_gameplay/audit-encounter-slice.py
 new file mode 100755
-index 00000000..34c5f1d7
+index 00000000..e22d04ac
 --- /dev/null
 +++ b/tools/taichung_gameplay/audit-encounter-slice.py
-@@ -0,0 +1,185 @@
+@@ -0,0 +1,187 @@
 +#!/usr/bin/env python3
 +"""Check the live landmark roster, saved IDs, dispatch and encounter-only odds."""
 +from collections import Counter
@@ -747229,7 +747388,7 @@ index 00000000..34c5f1d7
 +manifest = json.loads((root / "data/taichung/encounters/sites.json").read_text())
 +assert len(rows) == len(manifest["sites"]) == 27
 +retired = {2: "EXEGGUTOR", 8: "ONIX", 9: "JYNX", 13: "NINETALES",
-+           15: "PORYGON", 18: "VICTREEBEL", 22: "KABUTOPS"}
++           15: "PORYGON", 22: "KABUTOPS"}
 +assert {row["stableSiteId"]: row["species"] for row in manifest["sites"] if row.get("retired")} == retired
 +assert {(row["siteSlug"], row["species"]) for row in manifest["sites"]} >= {
 +    ("city-hall", "MEWTWO"), ("tiger-city", "ZAPDOS"),
@@ -747255,14 +747414,11 @@ index 00000000..34c5f1d7
 +for index, row in enumerate(old_rows):
 +    expected = ("shen-ji-new-village", *row[1:]) if index == 3 else row
 +    if index == 0:
-+        # Lapras retains its original history/species/level at Botanical Garden;
-+        # only the approved place and water-habitat move profile change.
-+        expected = ("botanical-garden", row[1], row[2],
++        # Lapras retains its original ID, species and level at the lakeshore.
++        expected = ("taichung-park-lakeshore", row[1], row[2],
 +                    "MOVE_SURF, MOVE_ICE_BEAM, MOVE_BODY_SLAM, MOVE_SING")
 +    elif index == 13:
 +        expected = ("jingming-street-legacy", *row[1:])
-+    elif index == 18:
-+        expected = ("botanical-garden-victreebel-legacy", *row[1:])
 +    assert rows[index] == expected, (index, "historic encounter reinterpreted")
 +assert [(row[0], row[1], row[2]) for row in rows[21:]] == [
 +    ("national-trade-center", "MAGNETON", "65"),
@@ -747307,7 +747463,9 @@ index 00000000..34c5f1d7
 +assert ids_by_constant['TAICHUNG_ENCOUNTER_EXTRA_USED_MASK'] ^ ids_by_constant['TAICHUNG_ENCOUNTER_EXTRA_RESERVED_MASK'] == 0xFFFF
 +assert 0x1000 + (ids_by_constant['TAICHUNG_ENCOUNTER_EXTRA_VAR'] - 0x4000) * 2 == 0x11DE
 +entry_ids = {"TaichungEncounter_" + name: ids_by_constant[constant] for name, constant in wrappers}
-+assert len(entry_ids) == 20 and set(entry_ids.values()) == set(range(27)) - retired.keys()
++assert len(entry_ids) == 21 and set(entry_ids.values()) == set(range(27)) - retired.keys()
++assert entry_ids["TaichungEncounter_TaichungParkLakeshore"] == 0
++assert entry_ids["TaichungEncounter_BotanicalGarden"] == 18
 +offer = script.split('TaichungEncounter_Offer::',1)[1].split('TaichungEncounter_Begin::',1)[0]
 +assert 'ScriptBegin' not in offer and 'ScriptSave' not in offer
 +assert script.index('goto_if_questlog') < script.index('TaichungEncounter_Offer::')
@@ -747376,6 +747534,9 @@ index 00000000..34c5f1d7
 +            continue
 +        expected_events = 2 if binding == 'TaichungLandmark_TheLin' else 1
 +        assert entry_ids[row["entryScript"]] == site and events[binding] == expected_events, binding
++        if binding in entry_ids:
++            assert entry_ids[binding] == site
++            continue
 +        # Existing city signs dispatch through a history script. New Boulevard
 +        # signs set the stable ID directly after presenting the local history.
 +        target = binding
@@ -747398,7 +747559,7 @@ index 00000000..34c5f1d7
 +        if table["map"].startswith("MAP_TAICHUNG_"):
 +            for habitats in (value for value in table.values() if isinstance(value, dict)):
 +                assert not rare.intersection(mon["species"] for mon in habitats["mons"])
-+print("PASS: 27 profiles/20 active/seven retired save IDs, historical species IDs retained, EC03 history/extra-word allocation and v2/72/27-bit bounds, first-150 roster, gated Team and unchanged Ultra Ball rules; " + ("map bindings deferred to combined Maps slice" if "--registry-only" in sys.argv else "all20 installed map bindings verified"))
++print("PASS: 27 profiles/21 active/six retired save IDs, historical species IDs retained, EC03 history/extra-word allocation and v2/72/27-bit bounds, first-150 roster, gated Team and unchanged Ultra Ball rules; " + ("map bindings deferred to combined Maps slice" if "--registry-only" in sys.argv else "all 21 installed map bindings verified"))
 diff --git a/tools/taichung_gameplay/audit-player-text.py b/tools/taichung_gameplay/audit-player-text.py
 new file mode 100755
 index 00000000..a3e50c49

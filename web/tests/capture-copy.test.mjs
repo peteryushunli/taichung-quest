@@ -70,14 +70,25 @@ test('the Boulevard guide includes encounters for every non-gym destination', ()
   // The checked-in artifact remains paired to its cartridge until Main exports
   // the combined ROM. Assert the entire rotation when it is present.
   const rotated = markersById['maple-garden']?.captureBit === 26;
+  const lakeshore = markersById['taichung-park-lakeshore'];
   const newSites = [['national-trade-center', 21], ['ding-sheng-bhw', rotated ? 25 : 22], ['the-lin', 23]];
   if (rotated) {
-    assert.equal(markersById['botanical-garden'].captureBit, 0);
+    assert.equal(markersById['botanical-garden'].captureBit, lakeshore ? 18 : 0);
     assert.equal(markersById['jingming-street'].captureBit, 24);
-    assert.ok(!Object.values(markersById).some(marker => [13, 18, 22].includes(marker.captureBit)));
+    assert.ok(!Object.values(markersById).some(marker => (lakeshore ? [13, 22] : [13, 18, 22]).includes(marker.captureBit)));
   }
   const hasNewXitun = newSites.some(([id]) => extraSights.some(place => place.id === id));
-  assert.equal(sights.length, hasNewXitun ? 20 : 17);
+  assert.equal(sights.length, (hasNewXitun ? 20 : 17) + Number(Boolean(lakeshore)));
+  if (lakeshore) {
+    const gym = markersById['taichung-park'];
+    assert.equal(lakeshore.captureBit, 0);
+    assert.deepEqual(lakeshore.world, [lakeshore.captureInteraction.world[0], lakeshore.captureInteraction.world[1] + 1]);
+    assert.notDeepEqual(lakeshore.world, gym.world);
+    assert.equal(gym.captureBit, undefined);
+    assert.equal(gym.kind, 'landmark-gym');
+    assert.match(landmarkCaptureCopy(lakeshore.id, 'guide', true, lakeshore.captureBit), /level 65 Lapras.*encounter/i);
+    assert.match(landmarkCaptureCopy('botanical-garden', 'landing', true, 18), /level 65 Victreebel.*encounter/i);
+  }
   if (hasNewXitun) {
     for (const [id, bit] of newSites) assert.equal(markersById[id]?.captureBit, bit, id);
     assert.equal(markersById['shen-ji-new-village'].captureBit, 3);

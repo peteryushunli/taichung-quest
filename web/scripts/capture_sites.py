@@ -17,13 +17,20 @@ def captures_from_registry(registry):
     if len(captures) != len(active) or len({site["currentBinding"] for site in active}) != len(active):
         raise SystemExit("Multiple native encounters share a current place or binding.")
     if len(sites) == 27:
-        expected = {"botanical-garden": (0, 131), "jingming-street": (24, 6),
+        expected = {"taichung-park-lakeshore": (0, 131), "botanical-garden": (18, 71),
+                    "jingming-street": (24, 6),
                     "ding-sheng-bhw": (25, 9), "maple-garden": (26, 3)}
         for place, (stable_id, species) in expected.items():
             site = captures.get(place, {})
             if (site.get("stableSiteId"), site.get("speciesDex"), site.get("level")) != (stable_id, species, 65):
-                raise SystemExit(f"The starter rotation differs for {place}.")
-        for stable_id, species in ((13, 38), (18, 71), (22, 141)):
+                raise SystemExit(f"The active capture roster differs for {place}.")
+        for place, binding in {
+            "taichung-park-lakeshore": "TaichungEncounter_TaichungParkLakeshore",
+            "botanical-garden": "TaichungCity_Sign_BotanicalGarden",
+        }.items():
+            if captures[place]["currentBinding"] != binding:
+                raise SystemExit(f"The active capture interaction differs for {place}.")
+        for stable_id, species in ((13, 38), (22, 141)):
             site = next(site for site in sites if site["stableSiteId"] == stable_id)
             if not site.get("retired") or site.get("currentBinding") or site["speciesDex"] != species:
                 raise SystemExit(f"Retired encounter {stable_id} was rebound or replaced.")

@@ -209,6 +209,8 @@ def landmark_facades(native, fill, report, extras):
     facades = {}
     for place in catalog:
         landmark = place["id"]
+        if landmark == "taichung-park-lakeshore":
+            continue  # The lakeshore card reuses the existing Taichung Park artwork.
         filename = f"{landmark}.png"
         source = approved / filename
         if not source.is_file():
@@ -288,6 +290,8 @@ def main():
                                      "worldRect": site["game"]["authoredWorldRect"],
                                      "signTile": site["game"]["authoredWorldInteraction"]}
     sight_specs = EXTRA_SIGHTS | {place: INSTALLED_SIGHTS[place] for place in installed if place in INSTALLED_SIGHTS}
+    if "taichung-park-lakeshore" in captures:
+        sight_specs["taichung-park-lakeshore"] = ("Taichung Park Lakeshore", "臺中公園湖邊", "oldcity", "Lakeshore", "湖畔")
     require(set(installed) <= places.keys() | sight_specs.keys(),
             "An installed landmark has no website catalog entry.")
     sight_copy = read(DATA / "boulevard-sight-copy.json")
@@ -384,6 +388,25 @@ def main():
     require(required_exterior_captures <= located,
             "Moved/new Boulevard captures lack their current exterior sign or guide.")
 
+    lakeshore_path = None
+    if "taichung-park-lakeshore" in captures:
+        place = "taichung-park-lakeshore"
+        lakeshore_path = args.native / "data/taichung/encounters/taichung-park-lakeshore.json"
+        lakeshore = read(lakeshore_path)
+        interaction = capture_anchors[place]
+        approach = normalize(lakeshore["worldApproach"])
+        land = map_at(approach)
+        dx, dy = (a - b for a, b in zip(approach, interaction["world"]))
+        require(lakeshore["id"] == place and lakeshore["parentLandmark"] == "taichung-park" and
+                lakeshore["captureId"] == captures[place]["stableSiteId"] and
+                lakeshore["nativeMap"] == land["mapId"] and lakeshore["script"] == interaction["script"] and
+                normalize(lakeshore["worldSign"]) == interaction["world"] and
+                land["nativeKey"] == interaction["nativeKey"] and (dx, dy) == (0, 1),
+                "The compiled park encounter does not match its sign and south approach.")
+        # Keep the actual interaction in captureInteraction. Put the pin
+        # where the player can stand to read it.
+        events[place] = {"type": "sign", "tile": lakeshore["worldApproach"]}
+
     markers = {}
     interiors = {}
     for place, special in places.items():
@@ -429,7 +452,8 @@ def main():
         "mapsByNativeKey": {entry["nativeKey"]: entry for entry in exteriors.values()} | interiors,
         "markersById": markers, "seams": seams, "extraSights": extras,
         "sourceSha256": {"compiledMapReport": digest(candidate / "build-report.json"), **report["sourceSha256"],
-                         **({"namedXitunBindings": digest(named_bindings_path)} if named_bindings else {})},
+                         **({"namedXitunBindings": digest(named_bindings_path)} if named_bindings else {}),
+                         **({"taichungParkLakeshore": digest(lakeshore_path)} if lakeshore_path else {})},
     }
     fingerprint = sha256(json.dumps({key: geometry[key] for key in GEOMETRY_FIELDS},
                                      sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode()).hexdigest()

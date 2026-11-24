@@ -94,8 +94,9 @@ export function createCityGuide(host: GuideHost) {
     const outdoor = place.kind === 'sight' || place.id === 'maple-garden';
     const areaLabel = !place.playable ? 'PLANNED AREA · NOT PLAYABLE' : place.phase === 'arrival' ? 'ARRIVAL AREA · EXPLORABLE' : 'EXPLORABLE GAME AREA';
     const areaNote = !place.playable ? 'This landmark is in the city plan; its game area is not playable in this build.' : outdoor ? 'Walk to it on the city streets and read its sign.' : 'Explore this landmark’s district and visitor hall.';
-    const hasEncounter = BOULEVARD_PREVIEW ? cityGeometry.markersById[place.id]?.captureBit !== undefined : undefined;
-    const gymNote = landmarkCaptureCopy(place.id, 'guide', hasEncounter) ?? (!gym ? 'Visit this landmark and learn its local history.' : place.gymStatus === 'playable' ? 'A gym battle is playable here. Speak to the leader and win to earn a badge.' : place.gymStatus === 'pending-verification' ? 'This gym challenge is being verified. The district and visitor hall are explorable.' : 'This landmark’s fictional gym challenge is still in development.');
+    const captureBit = cityGeometry.markersById[place.id]?.captureBit;
+    const hasEncounter = BOULEVARD_PREVIEW ? captureBit !== undefined : undefined;
+    const gymNote = landmarkCaptureCopy(place.id, 'guide', hasEncounter, BOULEVARD_PREVIEW ? captureBit : undefined) ?? (!gym ? 'Visit this landmark and learn its local history.' : place.gymStatus === 'playable' ? 'A gym battle is playable here. Speak to the leader and win to earn a badge.' : place.gymStatus === 'pending-verification' ? 'This gym challenge is being verified. The district and visitor hall are explorable.' : 'This landmark’s fictional gym challenge is still in development.');
     const artLabel = chinese ? `${place.nameZh}原創插圖` : `Original illustration of ${place.nameEn}`;
     const facade = landmarkArt[place.id]?.facade;
     const art = facade ? `<div class="landmark-art is-facade"><img src="${escapeHtml(facade)}" alt="${escapeHtml(info.name)}" loading="lazy" decoding="async"></div>`

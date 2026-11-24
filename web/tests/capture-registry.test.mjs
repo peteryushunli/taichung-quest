@@ -27,26 +27,26 @@ function named(bhw) {
 // or SRAM fields. Main must still export the actual combined native source.
 function rotated() {
   const registry = structuredClone(old), sites = registry.sites;
-  sites[0].siteSlug = 'botanical-garden';
-  sites[0].currentBinding = sites[18].currentBinding;
+  sites[0].siteSlug = 'taichung-park-lakeshore';
+  sites[0].currentBinding = 'TaichungEncounter_TaichungParkLakeshore';
   for (const [stableSiteId, prior, speciesDex] of [[24, 13, 6], [25, 22, 9], [26, 0, 3]]) {
     const source = old.sites[prior];
     sites.push({ stableSiteId, siteSlug: source.siteSlug, currentBinding: source.currentBinding, speciesDex, level: 65 });
   }
-  for (const bit of [13, 18, 22]) Object.assign(sites[bit], { retired: true, currentBinding: null });
+  for (const bit of [13, 22]) Object.assign(sites[bit], { retired: true, currentBinding: null });
   return registry;
 }
 
-test('exporter preserves the old pair and assigns the confirmed rotation without retired markers', () => {
+test('exporter preserves the old pair and assigns the active encounters without retired markers', () => {
   const baseline = validate(old, named(22));
   assert.equal(baseline.status, 0, baseline.stderr);
   assert.equal(JSON.parse(baseline.stdout)['maple-garden'], 0);
   const candidate = validate(rotated(), named(25));
   assert.equal(candidate.status, 0, candidate.stderr);
   const bits = JSON.parse(candidate.stdout);
-  for (const [place, bit] of [['botanical-garden', 0], ['jingming-street', 24], ['ding-sheng-bhw', 25], ['maple-garden', 26]])
+  for (const [place, bit] of [['taichung-park-lakeshore', 0], ['botanical-garden', 18], ['jingming-street', 24], ['ding-sheng-bhw', 25], ['maple-garden', 26]])
     assert.equal(bits[place], bit);
-  assert.ok(!Object.values(bits).some(bit => [13, 18, 22].includes(bit)));
+  assert.ok(!Object.values(bits).some(bit => [13, 22].includes(bit)));
   for (const [place, bit] of Object.entries(JSON.parse(baseline.stdout))) {
     if (!['botanical-garden', 'maple-garden', 'jingming-street', 'ding-sheng-bhw'].includes(place)) assert.equal(bits[place], bit, place);
   }
@@ -63,7 +63,10 @@ test('exporter rejects reused history, wrong species, missing slots and ambiguou
     sites => { sites[25].speciesDex = 141; },
     sites => { sites[24].level = 60; },
     sites => { sites[0].siteSlug = 'maple-garden'; },
-    sites => { sites[18].retired = false; sites[18].currentBinding = 'old-site'; },
+    sites => { sites[18].retired = true; },
+    sites => { sites[18].currentBinding = 'old-site'; },
+    sites => { sites[0].speciesDex = 71; },
+    sites => { sites[18].speciesDex = 131; },
     sites => { sites[13].speciesDex = 6; },
     sites => { sites.pop(); },
     sites => { sites[23].currentBinding = sites[21].currentBinding; },

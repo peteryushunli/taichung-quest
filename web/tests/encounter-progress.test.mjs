@@ -19,7 +19,7 @@ test('caught, every spent result, pending transactions and high bits stay distin
   assert.equal(encounterOutcome(0), 'unknown');
 });
 
-test('Lapras history follows bit0 while retired location histories never unlock replacement starters', () => {
+test('Lapras and Victreebel retain their history independently of replacement starters', () => {
   for (const caught of [false, true]) {
     const attempts = [0, 13, 18, 22].reduce((mask, bit) => mask | 1 << bit, 0);
     const progress = { attempts, unlocks: caught ? attempts : 0, site: 255, phase: 0 };

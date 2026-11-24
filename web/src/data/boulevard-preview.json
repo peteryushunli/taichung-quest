@@ -2864,7 +2864,7 @@
       ],
       "exteriorMapId": "MAP_TAICHUNG_BLVD_BOTANICAL_GARDEN",
       "exteriorNativeKey": "43:62",
-      "captureBit": 0,
+      "captureBit": 18,
       "captureInteraction": {
         "script": "TaichungCity_Sign_BotanicalGarden",
         "world": [
@@ -3402,6 +3402,37 @@
         "local": [
           14,
           13
+        ]
+      }
+    },
+    "taichung-park-lakeshore": {
+      "id": "taichung-park-lakeshore",
+      "name": {
+        "en": "Taichung Park Lakeshore",
+        "zh": "臺中公園湖邊"
+      },
+      "kind": "landmark",
+      "world": [
+        289,
+        80
+      ],
+      "localEntrance": [
+        8,
+        18
+      ],
+      "exteriorMapId": "MAP_TAICHUNG_BLVD_PARK",
+      "exteriorNativeKey": "43:70",
+      "captureBit": 0,
+      "captureInteraction": {
+        "script": "TaichungEncounter_TaichungParkLakeshore",
+        "world": [
+          289,
+          79
+        ],
+        "nativeKey": "43:70",
+        "local": [
+          8,
+          17
         ]
       }
     },
@@ -4798,19 +4829,43 @@
         "https://www.thelin.com.tw/en",
         "https://travel.taichung.gov.tw/zh-tw/shop/accommodation/595"
       ]
+    },
+    {
+      "id": "taichung-park-lakeshore",
+      "nameEn": "Taichung Park Lakeshore",
+      "nameZh": "臺中公園湖邊",
+      "shortNameEn": "Taichung Park Lakeshore",
+      "shortNameZh": "臺中公園湖邊",
+      "minimapNameEn": "Taichung Park Lakeshore",
+      "minimapNameZh": "臺中公園湖邊",
+      "districtId": "oldcity",
+      "districtEn": "Old City",
+      "districtZh": "舊城 · 中區",
+      "category": "Lakeshore",
+      "categoryZh": "湖畔",
+      "kind": "sight",
+      "gymStatus": "not-a-gym",
+      "playable": true,
+      "description": "Paths along Taichung Park’s lake pass arched bridges and look out over the twin roofs of the Mid-Lake Pavilion. The pavilion was built in 1908 for the ceremony marking completion of Taiwan’s north–south railway.",
+      "descriptionZh": "沿著臺中公園日月湖畔的步道散步，可經過拱橋，眺望雙亭並立的湖心亭。湖心亭建於1908年，當時是臺灣縱貫鐵路全通式典禮的貴賓休憩所。",
+      "officialUrl": "https://travel.taichung.gov.tw/en/attractions/intro/882",
+      "officialUrlZh": "https://travel.taichung.gov.tw/en/attractions/intro/882",
+      "officialSourceTitle": "Taichung Tourism and Travel Bureau — Taichung Park"
     }
   ],
   "sourceSha256": {
-    "compiledMapReport": "40a7c5978a65bfce9130a843af29e6193f319c5cda3c18e8c694f5b9f28fed90",
+    "compiledMapReport": "1f8c41053120902c2b4fb9175b8451d3b38ca40a683843d23b1d14d077fbd8c3",
     "fill": "22d9c6695e21ab7419ccafe55d86e4833df8a5e394aee84133d4a1cd6b5849f6",
     "mapBook": "265d64cf1b47a26d412626301a6f1e542f3a19bcd89ec0084e6f08022a713b4d",
     "northXitunPlan": "89c555bbfa2a80d277b9729e6a2a9a1b6480dea9e4ffbf76ace332c7386f76e5",
     "northXitunCompiler": "be903fd3d2d37b0dc6c581512e86b84054457a30a53ce90bc7f83fcd1b65fb34",
     "xitunTowerSwap": "3c6d0e8c0deddd092f650297f58be5ee686d8a1f9c073c009ecc33ea04443ab3",
     "scienceMuseumExterior": "d5498ab8795db850dfeb38174107e6b3f5aa0b0fe23e4d346df7b00513f23409",
+    "parkLakeshore": "c94b2788731344c60e78c2d6dc9897df41d864fe7997fb20a3a50cc8a121a688",
     "streetPeople": "370ac784ff89540cc741402d14c495f5eefe7650c14feb2b51c076ffc8f6a07f",
-    "landmarkSignPlan": "d7c2f2c749af3034e54877ee45b113e68f60809c9dc051ffc074191e85aaad56",
-    "namedXitunBindings": "8dd6432e66f3e9b47e7eb3238f2e8788d29531b60c2f9fc96d5a13a7477d098d"
+    "landmarkSignPlan": "1221181ab85671ec1434f1756a3b45f635c6ba0cbcaa229e2953509713463a30",
+    "namedXitunBindings": "8dd6432e66f3e9b47e7eb3238f2e8788d29531b60c2f9fc96d5a13a7477d098d",
+    "taichungParkLakeshore": "c94b2788731344c60e78c2d6dc9897df41d864fe7997fb20a3a50cc8a121a688"
   },
-  "geometryFingerprintSha256": "f9e758206ea6e7b03d30b0ed8a51e88040f9421abb03daf2b3908c7baf71303b"
+  "geometryFingerprintSha256": "27aa906f34c38fb5af56a9104b6857da918e5577160d1c2f133c9855068af9ef"
 }

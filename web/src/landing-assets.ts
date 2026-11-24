@@ -95,6 +95,8 @@ for (const [path, facade] of Object.entries(isolatedFacades)) {
   landmarkArt[id] = { ...art, facade };
 }
 
+if (BOULEVARD_PREVIEW) landmarkArt['taichung-park-lakeshore'] = landmarkArt['taichung-park'];
+
 /** Page media. An empty slot renders a labelled placeholder. */
 export const landingMedia: {
   heroReel?: string;
