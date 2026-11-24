@@ -4,11 +4,14 @@ import boulevardMap from './assets/boulevard/city.webp';
 import { BOULEVARD_PREVIEW } from './preview-world';
 import heroPoster from './assets/landing/hero-poster.png';
 import heroReel from './assets/landing/hero-reel.mp4';
+import wenyi from './assets/leaders/portraits/wenyi.webp';
+import slowbroIcon from './assets/pokemon/icon/slowbro.png';
+import exeggutorIcon from './assets/pokemon/icon/exeggutor.png';
+import alakazamIcon from './assets/pokemon/icon/alakazam.png';
 import jun from './assets/leaders/portraits/jun.webp';
 import lian from './assets/leaders/portraits/lian.webp';
 import yicheng from './assets/leaders/portraits/yicheng.webp';
 import xingan from './assets/leaders/portraits/xingan.webp';
-import axiu from './assets/leaders/portraits/axiu.webp';
 import caining from './assets/leaders/portraits/caining.webp';
 import jiahe from './assets/leaders/portraits/jiahe.webp';
 import muqing from './assets/leaders/portraits/muqing.webp';
@@ -24,7 +27,6 @@ import dittoIcon from './assets/pokemon/icon/ditto.png';
 import farfetchdIcon from './assets/pokemon/icon/farfetchd.png';
 import jigglypuffIcon from './assets/pokemon/icon/jigglypuff.png';
 import jynxIcon from './assets/pokemon/icon/jynx.png';
-import machokeIcon from './assets/pokemon/icon/machoke.png';
 import magmarIcon from './assets/pokemon/icon/magmar.png';
 import magnetonIcon from './assets/pokemon/icon/magneton.png';
 import meowthIcon from './assets/pokemon/icon/meowth.png';
@@ -71,7 +73,7 @@ export const landmarkArt: Record<string, LandmarkArt> = {
   miyahara: { tint: brick, leader: peiqi, team: [mon('Seel', seelIcon), mon('Cloyster', cloysterIcon), mon('Lapras', laprasIcon)] },
   'natural-science-museum': { tint: modern, leader: yicheng, team: [mon('Magneton', magnetonIcon), mon('Porygon', porygonIcon), mon('Omastar', omastarIcon)] },
   'calligraphy-greenway': { tint: park, leader: xingan, team: [mon('Bellsprout', bellsproutIcon), mon('Vileplume', vileplumeIcon), mon('Tangela', tangelaIcon)] },
-  'shen-ji-new-village': { tint: neutral, leader: axiu, team: [mon('Meowth', meowthIcon), mon('Machoke', machokeIcon), mon('Ditto', dittoIcon)] },
+  'confucius-temple': { tint: neutral, leader: wenyi, team: [mon('Slowbro', slowbroIcon), mon('Exeggutor', exeggutorIcon), mon('Alakazam', alakazamIcon)] },
   'fine-arts-museum': { tint: neutral, leader: caining, team: [mon('Butterfree', butterfreeIcon), mon('Ditto', dittoIcon), mon('Porygon', porygonIcon)] },
   'fengjia-night-market': { tint: brick, leader: jiahe, team: [mon('Farfetch’d', farfetchdIcon), mon('Magmar', magmarIcon), mon('Snorlax', snorlaxIcon)] },
   'taichung-theater': { tint: modern, leader: ling, team: [mon('Jigglypuff', jigglypuffIcon), mon('Jynx', jynxIcon), mon('Mr. Mime', mrMimeIcon)] },

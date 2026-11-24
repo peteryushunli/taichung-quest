@@ -1,6 +1,6 @@
 // The original city predates the capture markers in the Boulevard geometry.
 const legacySignSites = new Set([
-  'botanical-garden', 'confucius-temple', 'yizhong-street', 'prefectural-hall',
+  'botanical-garden', 'shen-ji-new-village', 'yizhong-street', 'prefectural-hall',
   'second-market', 'cultural-heritage-park', 'fengle-sculpture-park',
   'wenxin-forest-park', 'maple-garden',
 ]);

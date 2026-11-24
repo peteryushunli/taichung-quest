@@ -53,5 +53,48 @@
     "officialUrl": "https://travel.taichung.gov.tw/en/Attractions/Intro/884",
     "officialUrlZh": "https://travel.taichung.gov.tw/zh-tw/Attractions/Intro/420/",
     "officialSourceTitle": "Taichung Tourism and Travel Bureau"
+  },
+  "national-trade-center": {
+    "description": "National Trade Center is an office tower in Xitun designed by Aedas around the silhouette of a bamboo shoot. Its rounded profile and layered rain covers stand out near the National Taichung Theater.",
+    "descriptionZh": "NTC國家商貿中心是西屯的商辦大樓，由Aedas以竹筍的輪廓為設計靈感。圓潤的量體與層層雨遮，讓它在國家歌劇院附近的天際線中格外醒目。",
+    "officialUrl": "https://www.google.com/maps/search/?api=1&query=NTC%E5%9C%8B%E5%AE%B6%E5%95%86%E8%B2%BF%E4%B8%AD%E5%BF%83%20%E8%87%BA%E4%B8%AD%E5%B8%82%E8%A5%BF%E5%B1%AF%E5%8D%80%E5%B8%82%E6%94%BF%E5%8C%97%E4%BA%8C%E8%B7%AF282%E8%99%9F",
+    "officialSourceTitle": "National Trade Center — place and address map",
+    "location": {
+      "address": "No. 282, Shizheng N. 2nd Rd., Xitun District, Taichung City",
+      "addressZh": "臺中市西屯區市政北二路282號"
+    },
+    "descriptionSources": [
+      "https://www.aedas.com/en/project/national-trade-center/",
+      "https://green.epb.taichung.gov.tw/page/stronghold/p03.aspx?city=160&num=5952&pro_kind=2"
+    ]
+  },
+  "ding-sheng-bhw": {
+    "description": "Ding Sheng BHW stands on Shizheng North 2nd Road in Xitun. Look up at its tall facade while exploring the streets around Taichung’s modern business district.",
+    "descriptionZh": "鼎盛BHW位於西屯市政北二路。走在臺中現代商辦街區的街道上，可以抬頭欣賞這棟高樓的立面。",
+    "officialUrl": "https://www.google.com/maps/search/?api=1&query=%E9%BC%8E%E7%9B%9BBHW%20%E8%87%BA%E4%B8%AD%E5%B8%82%E8%A5%BF%E5%B1%AF%E5%8D%80%E5%B8%82%E6%94%BF%E5%8C%97%E4%BA%8C%E8%B7%AF230%E8%99%9F",
+    "officialSourceTitle": "Ding Sheng BHW — place and address map",
+    "location": {
+      "address": "No. 230, Shizheng N. 2nd Rd., Xitun District, Taichung City",
+      "addressZh": "臺中市西屯區市政北二路230號"
+    },
+    "descriptionSources": [
+      "https://www.highwealthgroup.com.tw/property/市政萬象廣場",
+      "https://www.kaoarch.org.tw/Upload/20241223095800_40101.pdf"
+    ]
+  },
+  "the-lin": {
+    "description": "THE LIN Hotel stands on Chaofu Road in Xitun, near the National Taichung Theater and Maple Garden. Its design combines modern forms with castle-inspired details. The real building is a working hotel.",
+    "descriptionZh": "林酒店位於西屯朝富路，鄰近國家歌劇院與秋紅谷。建築融合現代造型與古堡式細節；現實中的這棟建築是一間營運中的飯店。",
+    "officialUrl": "https://www.thelin.com.tw/en",
+    "officialUrlZh": "https://www.thelin.com.tw/",
+    "officialSourceTitle": "THE LIN Hotel official website",
+    "location": {
+      "address": "No. 99, Chaofu Rd., Xitun District, Taichung City",
+      "addressZh": "臺中市西屯區朝富路99號"
+    },
+    "descriptionSources": [
+      "https://www.thelin.com.tw/en",
+      "https://travel.taichung.gov.tw/zh-tw/shop/accommodation/595"
+    ]
   }
 }

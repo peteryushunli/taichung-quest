@@ -43,47 +43,49 @@
     "playable": true
   },
   {
-    "id": "confucius-temple",
-    "kind": "sight",
-    "nameEn": "Taichung Confucius Temple",
-    "nameZh": "臺中市孔廟",
-    "shortNameEn": "Confucius Temple",
-    "shortNameZh": "孔廟",
-    "minimapNameEn": "Confucius Temple",
-    "minimapNameZh": "孔廟",
-    "category": "Temple",
-    "categoryZh": "廟宇",
-    "description": "Completed in 1976, Taichung's Confucius Temple is one of the few in Taiwan built in Song dynasty palace style, a choice made partly to set it apart from the Qing-style Martyrs' Shrine next door. Its layout is a scaled-down version of the great Confucius Temple in Qufu, China. Visitors can stroll the calm courtyards around Dacheng Hall, and during exam season the temple holds blessing ceremonies for students. Every Teachers' Day, September 28, it stages a formal rite honouring Confucius with ritual music and the eight-row yi dance.",
-    "descriptionZh": "臺中市孔廟於1976年落成，採用臺灣少見的宋代宮殿式建築，部分原因是要與隔壁清代風格的忠烈祠有所區別；整體配置則仿照山東曲阜孔廟並依比例縮小。遊客可在大成殿周邊的庭院靜靜漫步，考季時廟方也會舉辦考生祈福活動。每年9月28日教師節，這裡會舉行祭孔釋奠典禮，以古樂與八佾舞向孔子致敬。",
-    "districtId": "old-city",
-    "districtEn": "Old city",
-    "districtZh": "舊城區",
-    "gymStatus": "not-a-gym",
-    "world": [
-      119,
-      33
-    ],
-    "artRect": [
-      114,
-      24,
-      126,
-      35
-    ],
-    "officialUrl": "https://travel.taichung.gov.tw/en/attractions/intro/1371",
-    "officialSourceTitle": "Taichung City Confucius Temple – Taichung Tourism (Taichung City Government Tourism and Travel Bureau)",
+    "id": "shen-ji-new-village",
+    "nameEn": "Shen Ji New Village",
+    "nameZh": "審計新村",
+    "shortNameEn": "Shen Ji New Village",
+    "shortNameZh": "審計新村",
+    "minimapNameEn": "Shen Ji",
+    "minimapNameZh": "審計新村",
+    "category": "Creative neighborhood",
+    "categoryZh": "文創街區",
+    "description": "Shen Ji New Village was built by the Taiwan Provincial Government as housing for its audit office staff: a small cluster of two-story, pale-yellow homes off Minsheng Road. After the provincial government was scaled back in 1998, the houses stood empty for years, until professors and students from National Chung Hsing University began holding markets here and the city turned the site into a base for young entrepreneurs in the mid-2010s. Today its lanes are filled with small shops, cafés and design studios, with creative markets on some weekends.",
+    "descriptionZh": "審計新村原是臺灣省政府時期興建的審計處員工宿舍，一棟棟淡黃色的兩層樓房藏在民生路巷內。1998年精省後，宿舍閒置多年，直到中興大學師生來此舉辦市集，市府也在2015年前後將這裡規劃為青年創業基地，才重新熱鬧起來。如今巷弄間聚集小店、咖啡館與設計工作室，週末不時還有文創市集。",
+    "officialUrl": "https://travel.taichung.gov.tw/en/Attractions/Intro/1222",
+    "officialUrlZh": "https://travel.taichung.gov.tw/zh-tw/attractions/intro/1139",
+    "officialSourceTitle": "Taichung Tourism and Travel Bureau — Shen Ji New Village",
     "location": {
-      "address": "No. 30, Sec. 2, Shuangshi Rd., North District, Taichung City",
-      "addressZh": "臺中市北區雙十路二段30號"
+      "address": "Ln. 368, Minsheng Rd., West Dist., Taichung City, Taiwan",
+      "addressZh": "臺中市西區民生路368巷",
+      "latitude": 24.14493,
+      "longitude": 120.66261
     },
-    "descriptionSources": [
-      "https://en.wikipedia.org/wiki/Taichung_Confucian_Temple",
-      "https://zh.wikipedia.org/zh-tw/臺中市孔廟",
-      "https://travel.taichung.gov.tw/en/attractions/intro/1371",
-      "https://travel.taichung.gov.tw/zh-tw/attractions/intro/41"
-    ],
+    "districtId": "greenway",
+    "phase": "city-v1",
+    "gameAreaRef": "MAP_TAICHUNG_GREENWAY",
+    "gameLayoutRef": "LAYOUT_TAICHUNG_GREENWAY",
+    "mapX": 43.0,
+    "mapY": 61.2,
+    "mapLabelSide": "left",
     "playable": true,
-    "landingLabelSide": "below",
-    "guideLabelSide": "above"
+    "districtEn": "Greenway & culture",
+    "districtZh": "草悟道文化區",
+    "cityAnchor": {
+      "x": 11,
+      "y": 81
+    },
+    "landmarkHallRef": "MAP_TAICHUNG_SHEN_JI_GYM",
+    "landingNameEn": "Shen Ji",
+    "gymStatus": "not-a-gym",
+    "descriptionSources": [
+      "https://zh.wikipedia.org/wiki/審計新村",
+      "https://travel.taichung.gov.tw/en/Attractions/Intro/1222",
+      "https://news.pts.org.tw/article/370975"
+    ],
+    "kind": "visit"
   },
   {
     "id": "yizhong-street",

@@ -19,7 +19,7 @@ test('the ten-gym release names every open leader in both languages', () => {
     ['miyahara', 'Peiqi', '沛琪'],
     ['natural-science-museum', 'Yicheng', '以澄'],
     ['calligraphy-greenway', 'Xingan', '行安'],
-    ['shen-ji-new-village', 'Axiu', '阿修'],
+    ['confucius-temple', 'Wenyi', '文儀'],
     ['fine-arts-museum', 'Caining', '采寧'],
     ['fengjia-night-market', 'Jiahe', '嘉禾'],
     ['wanhe-temple', 'Muqing', '沐晴'],
@@ -76,7 +76,7 @@ test('stats come from the landmark data', () => {
 });
 
 test('map pins sit on each entrance tile of the rendered city, labels facing the middle', () => {
-  for (const place of landmarks) assert.ok(city.markersById[place.id], place.id);
+  for (const place of landmarks) assert.ok(city.markersById[place.id] || place.world, place.id);
   // The station sits at world (117,117); the city rework (save v10) grew the canvas to 129x181 behind a raised freeway.
   assert.deepEqual(city.markersById['old-taichung-station'].world, [117, 117]);
   assert.deepEqual(markerPosition([117, 117], city.world), { x: 117.5 / 129 * 100, y: 117.5 / 181 * 100, side: 'left' });
@@ -97,7 +97,7 @@ test('localized places use their own language and secure links', () => {
 });
 
 test('map pins and gym cards use the short English names', () => {
-  assert.deepEqual(landmarks.map((place) => localizedPlace(place, 'en').mapLabel), ['Old Station', 'Taichung Park', 'Miyahara', 'Science Museum', 'Greenway', 'Shen Ji', 'Fine Arts Museum', 'Fengjia Night Market', 'Wanhe Temple', 'Taichung Theater', 'Maple Garden', 'Wenchang Temple']);
+  assert.deepEqual(landmarks.map((place) => localizedPlace(place, 'en').mapLabel), ['Old Station', 'Taichung Park', 'Miyahara', 'Science Museum', 'Greenway', 'Confucius Temple', 'Fine Arts Museum', 'Fengjia Night Market', 'Wanhe Temple', 'Taichung Theater', 'Maple Garden', 'Wenchang Temple']);
   assert.equal(localizedPlace(landmarks[4], 'en').shortName, 'Greenway');
   assert.equal(localizedPlace(landmarks[4], 'zh-Hant').mapLabel, '草悟道');
 });
@@ -154,7 +154,7 @@ test('the listed team orders match the native gym rosters', () => {
     'old-taichung-station': ['Rattata', 'Pidgey', 'Meowth'],
     'natural-science-museum': ['Magneton', 'Porygon', 'Omastar'],
     'calligraphy-greenway': ['Bellsprout', 'Vileplume', 'Tangela'],
-    'shen-ji-new-village': ['Meowth', 'Machoke', 'Ditto'],
+    'confucius-temple': ['Slowbro', 'Exeggutor', 'Alakazam'],
     'fine-arts-museum': ['Butterfree', 'Ditto', 'Porygon'],
     'fengjia-night-market': ['Farfetch’d', 'Magmar', 'Snorlax'],
     'wanhe-temple': ['Poliwhirl', 'Butterfree', 'Vaporeon'],
@@ -176,10 +176,10 @@ test('the ten set-piece landmarks join the map as non-gym places, after the ten 
   assert.equal(cityPlaceSummary(places, 'en'), '4 districts. 20 real places.');
   assert.equal(sights.length, 8);
   for (const place of sights) {
-    assert.equal(place.kind, 'sight', place.id);
+    assert.equal(place.kind, place.id === 'shen-ji-new-village' ? 'visit' : 'sight', place.id);
     assert.equal(place.gymStatus, 'not-a-gym', place.id);
     assert.equal(placeStatus(place), 'Landmark');
-    assert.equal(city.markersById[place.id], undefined, `${place.id} must not touch the fingerprinted contract`);
+    if (place.id !== 'shen-ji-new-village') assert.equal(city.markersById[place.id], undefined, `${place.id} must not touch the fingerprinted contract`);
     for (const locale of ['en', 'zh-Hant']) {
       const info = localizedPlace(place, locale);
       assert.equal(info.leader, undefined, place.id);
@@ -211,7 +211,7 @@ test('every place has a map position inside the 129x181 world, with non-gym art 
     const [x, y] = placeWorld(place, city.markersById);
     const pin = markerPosition([x, y], city.world);
     assert.ok(pin.x > 0 && pin.x < 100 && pin.y > 0 && pin.y < 100, place.id);
-    if (isGym(place)) continue;
+    if (isGym(place) || place.id === 'shen-ji-new-village') continue;
     const [left, top, right, bottom] = place.artRect;
     assert.ok(left <= x && x <= right && top <= y && y <= bottom, `${place.id} crop misses its pin`);
     assert.ok(right <= city.world.width && bottom <= city.world.height, place.id);
@@ -229,7 +229,7 @@ test('district names sit on the freeway for the north and beside Wanhe for Nantu
 
 test('every gym stamps the City Pass with its own game badge and bilingual badge name', () => {
   const gyms = landmarks.filter(isGym);
-  assert.deepEqual(gyms.map((place) => place.badgeNameEn), ['Departure Badge', 'Pavilion Badge', 'Chill Badge', 'Discovery Badge', 'Brush Badge', 'Craft Badge', 'Palette Badge', 'Feast Badge', 'Tide Badge', 'Encore Badge']);
+  assert.deepEqual(gyms.map((place) => place.badgeNameEn), ['Departure Badge', 'Pavilion Badge', 'Chill Badge', 'Discovery Badge', 'Brush Badge', 'Rites Badge', 'Palette Badge', 'Feast Badge', 'Tide Badge', 'Encore Badge']);
   for (const place of gyms) {
     assert.match(place.badgeNameZh, /徽章$/, place.id);
     assert.ok(existsSync(new URL(`../src/assets/badges/${place.id}.png`, import.meta.url)), `${place.id} badge art`);

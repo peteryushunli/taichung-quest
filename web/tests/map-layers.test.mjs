@@ -27,7 +27,8 @@ test('street labels use the longest paired band without changing geometry or mer
 
 test('visitor links name the actual place in both languages and retain the existing URL', () => {
   const sights = JSON.parse(readFileSync(new URL('../src/data/sights.json', import.meta.url)));
-  const temple = sights.find(place => place.id === 'confucius-temple');
+  const gyms = JSON.parse(readFileSync(new URL('../src/data/landmarks.json', import.meta.url)));
+  const temple = [...gyms, ...sights].find(place => place.id === 'confucius-temple');
   assert.equal(localizedPlace(temple, 'en').visitLabel, 'Plan a visit to Taichung Confucius Temple');
   assert.equal(localizedPlace(temple, 'zh-Hant').visitLabel, `規劃參觀${temple.nameZh}`);
   assert.equal(localizedPlace(temple, 'en').url, new URL(temple.officialUrl).href);

@@ -23,6 +23,9 @@ EXTRA_SIGHTS = {
     "city-hall": ("City Hall", "臺中市政府", "xitun", "Civic plaza", "市政廣場"),
 }
 INSTALLED_SIGHTS = {
+    "national-trade-center": ("National Trade Center", "NTC國家商貿中心", "xitun", "Office tower", "商辦大樓"),
+    "ding-sheng-bhw": ("Ding Sheng BHW", "鼎盛BHW", "xitun", "Office tower", "商辦大樓"),
+    "the-lin": ("The Lin", "林酒店", "xitun", "Hotel", "飯店"),
     "green-museumbrary": ("Green Museumbrary", "臺中綠美圖", "shuinan", "Museum and library", "美術館與圖書館"),
     "baseball-stadium": ("Intercontinental Ballpark", "洲際棒球場", "beitun", "Baseball stadium", "棒球場"),
     "folklore-park": ("Folk Museum at Folklore Park", "臺灣民俗文物館", "beitun", "Folk museum", "民俗館"),
