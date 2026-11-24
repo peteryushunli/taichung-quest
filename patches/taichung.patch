@@ -20525,7 +20525,7 @@ index 00000000..0ceff8ee
 +}
 diff --git a/data/maps/TaichungBlvdCentralParkB2/map.json b/data/maps/TaichungBlvdCentralParkB2/map.json
 new file mode 100644
-index 00000000..bd89201f
+index 00000000..e1933c17
 --- /dev/null
 +++ b/data/maps/TaichungBlvdCentralParkB2/map.json
 @@ -0,0 +1,80 @@
@@ -20573,9 +20573,9 @@ index 00000000..bd89201f
 +      "x": 29,
 +      "y": 17,
 +      "elevation": 3,
-+      "movement_type": "MOVEMENT_TYPE_WALK_UP_AND_DOWN",
-+      "movement_range_x": 0,
-+      "movement_range_y": 1,
++      "movement_type": "MOVEMENT_TYPE_WANDER_AROUND_SLOWER",
++      "movement_range_x": 1,
++      "movement_range_y": 2,
 +      "trainer_type": "TRAINER_TYPE_NONE",
 +      "trainer_sight_or_berry_tree_id": "0",
 +      "script": "TaichungBoulevard_Trainer_RunwayJogger",
@@ -20737,7 +20737,7 @@ index 00000000..6b5fe00a
 +}
 diff --git a/data/maps/TaichungBlvdConfuciusTemple/map.json b/data/maps/TaichungBlvdConfuciusTemple/map.json
 new file mode 100644
-index 00000000..4a2feda5
+index 00000000..0e91085d
 --- /dev/null
 +++ b/data/maps/TaichungBlvdConfuciusTemple/map.json
 @@ -0,0 +1,126 @@
@@ -20780,9 +20780,9 @@ index 00000000..4a2feda5
 +      "x": 17,
 +      "y": 26,
 +      "elevation": 3,
-+      "movement_type": "MOVEMENT_TYPE_WALK_LEFT_AND_RIGHT",
-+      "movement_range_x": 1,
-+      "movement_range_y": 0,
++      "movement_type": "MOVEMENT_TYPE_WANDER_AROUND_SLOWER",
++      "movement_range_x": 2,
++      "movement_range_y": 1,
 +      "trainer_type": "TRAINER_TYPE_NONE",
 +      "trainer_sight_or_berry_tree_id": "0",
 +      "script": "TaichungBoulevard_Trainer_NorthStudent",
@@ -23118,7 +23118,7 @@ index 00000000..8ab6009b
 +}
 diff --git a/data/maps/TaichungBlvdShenJiNewVillage/map.json b/data/maps/TaichungBlvdShenJiNewVillage/map.json
 new file mode 100644
-index 00000000..1212bd18
+index 00000000..c3284977
 --- /dev/null
 +++ b/data/maps/TaichungBlvdShenJiNewVillage/map.json
 @@ -0,0 +1,91 @@
@@ -23161,8 +23161,8 @@ index 00000000..1212bd18
 +      "x": 29,
 +      "y": 16,
 +      "elevation": 3,
-+      "movement_type": "MOVEMENT_TYPE_WALK_UP_AND_DOWN",
-+      "movement_range_x": 0,
++      "movement_type": "MOVEMENT_TYPE_WANDER_AROUND_SLOWER",
++      "movement_range_x": 1,
 +      "movement_range_y": 1,
 +      "trainer_type": "TRAINER_TYPE_NONE",
 +      "trainer_sight_or_berry_tree_id": "0",
@@ -36513,10 +36513,10 @@ index 00000000..407af896
 +}
 diff --git a/data/taichung/ambient-npcs/native-overlap-offsets.inc b/data/taichung/ambient-npcs/native-overlap-offsets.inc
 new file mode 100644
-index 00000000..a1101d6c
+index 00000000..b3bbc9c1
 --- /dev/null
 +++ b/data/taichung/ambient-npcs/native-overlap-offsets.inc
-@@ -0,0 +1,451 @@
+@@ -0,0 +1,481 @@
 +// Ordered reviewed offsets from actor-contract.json; native spawn fallback only.
 +    {0, -1},
 +    {-1, 0},
@@ -36962,15 +36962,45 @@ index 00000000..a1101d6c
 +    {1, -1},
 +    {-1, 1},
 +    {1, 1},
-+    {0, 1},
-+    {0, -1},
-+    {0, 1},
-+    {0, -1},
-+    {1, 0},
 +    {-1, 0},
++    {0, -1},
++    {0, 1},
++    {1, 0},
++    {-1, -1},
++    {-1, 1},
++    {0, -2},
++    {0, 2},
++    {1, -1},
++    {1, 1},
++    {-1, -2},
++    {-1, 2},
++    {1, -2},
++    {1, 2},
++    {-1, 0},
++    {0, -1},
++    {0, 1},
++    {1, 0},
++    {-1, -1},
++    {-1, 1},
++    {1, -1},
++    {1, 1},
++    {-1, 0},
++    {0, -1},
++    {0, 1},
++    {1, 0},
++    {-2, 0},
++    {-1, -1},
++    {-1, 1},
++    {1, -1},
++    {1, 1},
++    {2, 0},
++    {-2, -1},
++    {-2, 1},
++    {2, -1},
++    {2, 1},
 diff --git a/data/taichung/ambient-npcs/native-registry.inc b/data/taichung/ambient-npcs/native-registry.inc
 new file mode 100644
-index 00000000..50e579b2
+index 00000000..f27dacae
 --- /dev/null
 +++ b/data/taichung/ambient-npcs/native-registry.inc
 @@ -0,0 +1,60 @@
@@ -37030,16 +37060,16 @@ index 00000000..50e579b2
 +    {MAP_NUM(MAP_TAICHUNG_BLVD_OLD_CITY_D_12), 1, OBJ_EVENT_GFX_SCIENTIST, MOVEMENT_TYPE_WANDER_LEFT_AND_RIGHT, 10, 4, 2, 0, 424, 4}, // resident-53 TaichungBoulevard_Ambient_SakuraShopper
 +    {MAP_NUM(MAP_TAICHUNG_BLVD_CULTURAL_HERITAGE_PARK), 2, OBJ_EVENT_GFX_CRUSH_GIRL, MOVEMENT_TYPE_WANDER_AROUND_SLOWER, 2, 29, 1, 1, 428, 8}, // resident-54 TaichungBoulevard_Ambient_XitunNeighbor
 +    {MAP_NUM(MAP_TAICHUNG_BLVD_XITUN_C_2), 2, OBJ_EVENT_GFX_WORKER_F, MOVEMENT_TYPE_WANDER_AROUND_SLOWER, 32, 41, 1, 1, 436, 8}, // resident-55 TaichungBoulevard_Ambient_WestDistrictShopper
-+// Existing generic manual trainers: final Maps-reviewed small patrols.
-+    {MAP_NUM(MAP_TAICHUNG_BLVD_CENTRAL_PARK_B_2), 1, OBJ_EVENT_GFX_MAN, MOVEMENT_TYPE_WALK_UP_AND_DOWN, 29, 17, 0, 1, 444, 2}, // TaichungBoulevard_Trainer_RunwayJogger
-+    {MAP_NUM(MAP_TAICHUNG_BLVD_SHEN_JI_NEW_VILLAGE), 1, OBJ_EVENT_GFX_CRUSH_GIRL, MOVEMENT_TYPE_WALK_UP_AND_DOWN, 29, 16, 0, 1, 446, 2}, // TaichungBoulevard_Trainer_GreenwayWalker
-+    {MAP_NUM(MAP_TAICHUNG_BLVD_CONFUCIUS_TEMPLE), 1, OBJ_EVENT_GFX_YOUNGSTER, MOVEMENT_TYPE_WALK_LEFT_AND_RIGHT, 17, 26, 1, 0, 448, 2}, // TaichungBoulevard_Trainer_NorthStudent
++// Existing generic manual trainers: fixed-anchor turning strolls.
++    {MAP_NUM(MAP_TAICHUNG_BLVD_CENTRAL_PARK_B_2), 1, OBJ_EVENT_GFX_MAN, MOVEMENT_TYPE_WANDER_AROUND_SLOWER, 29, 17, 1, 2, 444, 14}, // TaichungBoulevard_Trainer_RunwayJogger
++    {MAP_NUM(MAP_TAICHUNG_BLVD_SHEN_JI_NEW_VILLAGE), 1, OBJ_EVENT_GFX_CRUSH_GIRL, MOVEMENT_TYPE_WANDER_AROUND_SLOWER, 29, 16, 1, 1, 458, 8}, // TaichungBoulevard_Trainer_GreenwayWalker
++    {MAP_NUM(MAP_TAICHUNG_BLVD_CONFUCIUS_TEMPLE), 1, OBJ_EVENT_GFX_YOUNGSTER, MOVEMENT_TYPE_WANDER_AROUND_SLOWER, 17, 26, 2, 1, 466, 14}, // TaichungBoulevard_Trainer_NorthStudent
 diff --git a/data/taichung/ambient-npcs/trainer-patrols.json b/data/taichung/ambient-npcs/trainer-patrols.json
 new file mode 100644
-index 00000000..fe2c9c4a
+index 00000000..87002ea3
 --- /dev/null
 +++ b/data/taichung/ambient-npcs/trainer-patrols.json
-@@ -0,0 +1,53 @@
+@@ -0,0 +1,542 @@
 +[
 +  {
 +    "id": "RunwayJogger",
@@ -37052,11 +37082,198 @@ index 00000000..fe2c9c4a
 +    ],
 +    "graphics": "OBJ_EVENT_GFX_MAN",
 +    "script": "TaichungBoulevard_Trainer_RunwayJogger",
-+    "movementType": "MOVEMENT_TYPE_WALK_UP_AND_DOWN",
-+    "rangeX": 0,
-+    "rangeY": 1,
++    "movementType": "MOVEMENT_TYPE_WANDER_AROUND_SLOWER",
++    "rangeX": 1,
++    "rangeY": 2,
 +    "trainerType": "TRAINER_TYPE_NONE",
-+    "battle": "existing optional consent-gated manual battle; identity and flags unchanged"
++    "battle": "existing optional consent-gated manual battle; identity and flags unchanged",
++    "worldRoute": [
++      [
++        100,
++        41
++      ],
++      [
++        100,
++        42
++      ],
++      [
++        100,
++        43
++      ],
++      [
++        100,
++        44
++      ],
++      [
++        100,
++        45
++      ],
++      [
++        101,
++        41
++      ],
++      [
++        101,
++        42
++      ],
++      [
++        101,
++        43
++      ],
++      [
++        101,
++        44
++      ],
++      [
++        101,
++        45
++      ],
++      [
++        102,
++        41
++      ],
++      [
++        102,
++        42
++      ],
++      [
++        102,
++        43
++      ],
++      [
++        102,
++        44
++      ],
++      [
++        102,
++        45
++      ]
++    ],
++    "worldEnvelope": [
++      [
++        100,
++        41
++      ],
++      [
++        100,
++        42
++      ],
++      [
++        100,
++        43
++      ],
++      [
++        100,
++        44
++      ],
++      [
++        100,
++        45
++      ],
++      [
++        101,
++        41
++      ],
++      [
++        101,
++        42
++      ],
++      [
++        101,
++        43
++      ],
++      [
++        101,
++        44
++      ],
++      [
++        101,
++        45
++      ],
++      [
++        102,
++        41
++      ],
++      [
++        102,
++        42
++      ],
++      [
++        102,
++        43
++      ],
++      [
++        102,
++        44
++      ],
++      [
++        102,
++        45
++      ]
++    ],
++    "safeOverlapWorldCandidates": [
++      [
++        100,
++        43
++      ],
++      [
++        101,
++        42
++      ],
++      [
++        101,
++        44
++      ],
++      [
++        102,
++        43
++      ],
++      [
++        100,
++        42
++      ],
++      [
++        100,
++        44
++      ],
++      [
++        101,
++        41
++      ],
++      [
++        101,
++        45
++      ],
++      [
++        102,
++        42
++      ],
++      [
++        102,
++        44
++      ],
++      [
++        100,
++        41
++      ],
++      [
++        100,
++        45
++      ],
++      [
++        102,
++        41
++      ],
++      [
++        102,
++        45
++      ]
++    ],
++    "routeSemantics": "Unordered full native wandering envelope, not a scripted waypoint sequence",
++    "authoredWorld": [
++      101,
++      43
++    ]
 +  },
 +  {
 +    "id": "GreenwayWalker",
@@ -37069,11 +37286,126 @@ index 00000000..fe2c9c4a
 +    ],
 +    "graphics": "OBJ_EVENT_GFX_CRUSH_GIRL",
 +    "script": "TaichungBoulevard_Trainer_GreenwayWalker",
-+    "movementType": "MOVEMENT_TYPE_WALK_UP_AND_DOWN",
-+    "rangeX": 0,
++    "movementType": "MOVEMENT_TYPE_WANDER_AROUND_SLOWER",
++    "rangeX": 1,
 +    "rangeY": 1,
 +    "trainerType": "TRAINER_TYPE_NONE",
-+    "battle": "existing optional consent-gated manual battle; identity and flags unchanged"
++    "battle": "existing optional consent-gated manual battle; identity and flags unchanged",
++    "worldRoute": [
++      [
++        226,
++        161
++      ],
++      [
++        226,
++        162
++      ],
++      [
++        226,
++        163
++      ],
++      [
++        227,
++        161
++      ],
++      [
++        227,
++        162
++      ],
++      [
++        227,
++        163
++      ],
++      [
++        228,
++        161
++      ],
++      [
++        228,
++        162
++      ],
++      [
++        228,
++        163
++      ]
++    ],
++    "worldEnvelope": [
++      [
++        226,
++        161
++      ],
++      [
++        226,
++        162
++      ],
++      [
++        226,
++        163
++      ],
++      [
++        227,
++        161
++      ],
++      [
++        227,
++        162
++      ],
++      [
++        227,
++        163
++      ],
++      [
++        228,
++        161
++      ],
++      [
++        228,
++        162
++      ],
++      [
++        228,
++        163
++      ]
++    ],
++    "safeOverlapWorldCandidates": [
++      [
++        226,
++        162
++      ],
++      [
++        227,
++        161
++      ],
++      [
++        227,
++        163
++      ],
++      [
++        228,
++        162
++      ],
++      [
++        226,
++        161
++      ],
++      [
++        226,
++        163
++      ],
++      [
++        228,
++        161
++      ],
++      [
++        228,
++        163
++      ]
++    ],
++    "routeSemantics": "Unordered full native wandering envelope, not a scripted waypoint sequence",
++    "authoredWorld": [
++      227,
++      162
++    ]
 +  },
 +  {
 +    "id": "NorthStudent",
@@ -37086,11 +37418,198 @@ index 00000000..fe2c9c4a
 +    ],
 +    "graphics": "OBJ_EVENT_GFX_YOUNGSTER",
 +    "script": "TaichungBoulevard_Trainer_NorthStudent",
-+    "movementType": "MOVEMENT_TYPE_WALK_LEFT_AND_RIGHT",
-+    "rangeX": 1,
-+    "rangeY": 0,
++    "movementType": "MOVEMENT_TYPE_WANDER_AROUND_SLOWER",
++    "rangeX": 2,
++    "rangeY": 1,
 +    "trainerType": "TRAINER_TYPE_NONE",
-+    "battle": "existing optional consent-gated manual battle; identity and flags unchanged"
++    "battle": "existing optional consent-gated manual battle; identity and flags unchanged",
++    "worldRoute": [
++      [
++        327,
++        51
++      ],
++      [
++        327,
++        52
++      ],
++      [
++        327,
++        53
++      ],
++      [
++        328,
++        51
++      ],
++      [
++        328,
++        52
++      ],
++      [
++        328,
++        53
++      ],
++      [
++        329,
++        51
++      ],
++      [
++        329,
++        52
++      ],
++      [
++        329,
++        53
++      ],
++      [
++        330,
++        51
++      ],
++      [
++        330,
++        52
++      ],
++      [
++        330,
++        53
++      ],
++      [
++        331,
++        51
++      ],
++      [
++        331,
++        52
++      ],
++      [
++        331,
++        53
++      ]
++    ],
++    "worldEnvelope": [
++      [
++        327,
++        51
++      ],
++      [
++        327,
++        52
++      ],
++      [
++        327,
++        53
++      ],
++      [
++        328,
++        51
++      ],
++      [
++        328,
++        52
++      ],
++      [
++        328,
++        53
++      ],
++      [
++        329,
++        51
++      ],
++      [
++        329,
++        52
++      ],
++      [
++        329,
++        53
++      ],
++      [
++        330,
++        51
++      ],
++      [
++        330,
++        52
++      ],
++      [
++        330,
++        53
++      ],
++      [
++        331,
++        51
++      ],
++      [
++        331,
++        52
++      ],
++      [
++        331,
++        53
++      ]
++    ],
++    "safeOverlapWorldCandidates": [
++      [
++        328,
++        52
++      ],
++      [
++        329,
++        51
++      ],
++      [
++        329,
++        53
++      ],
++      [
++        330,
++        52
++      ],
++      [
++        327,
++        52
++      ],
++      [
++        328,
++        51
++      ],
++      [
++        328,
++        53
++      ],
++      [
++        330,
++        51
++      ],
++      [
++        330,
++        53
++      ],
++      [
++        331,
++        52
++      ],
++      [
++        327,
++        51
++      ],
++      [
++        327,
++        53
++      ],
++      [
++        331,
++        51
++      ],
++      [
++        331,
++        53
++      ]
++    ],
++    "routeSemantics": "Unordered full native wandering envelope, not a scripted waypoint sequence",
++    "authoredWorld": [
++      329,
++      52
++    ]
 +  }
 +]
 diff --git a/data/taichung/approved-landmarks/art/botanical-garden.png b/data/taichung/approved-landmarks/art/botanical-garden.png
@@ -65730,10 +66249,10 @@ index 00000000..fe8a60c5
 +}
 diff --git a/data/taichung/boulevard-population/trainer-patrols.json b/data/taichung/boulevard-population/trainer-patrols.json
 new file mode 100644
-index 00000000..29b7a2f7
+index 00000000..ac7df99c
 --- /dev/null
 +++ b/data/taichung/boulevard-population/trainer-patrols.json
-@@ -0,0 +1,237 @@
+@@ -0,0 +1,582 @@
 +{
 +  "schemaVersion": 1,
 +  "totalOutdoorActors": 75,
@@ -65763,10 +66282,34 @@ index 00000000..29b7a2f7
 +        101,
 +        43
 +      ],
-+      "movementType": "MOVEMENT_TYPE_WALK_UP_AND_DOWN",
-+      "rangeX": 0,
-+      "rangeY": 1,
++      "movementType": "MOVEMENT_TYPE_WANDER_AROUND_SLOWER",
++      "rangeX": 1,
++      "rangeY": 2,
 +      "worldRoute": [
++        [
++          100,
++          41
++        ],
++        [
++          100,
++          42
++        ],
++        [
++          100,
++          43
++        ],
++        [
++          100,
++          44
++        ],
++        [
++          100,
++          45
++        ],
++        [
++          101,
++          41
++        ],
 +        [
 +          101,
 +          42
@@ -65778,41 +66321,156 @@ index 00000000..29b7a2f7
 +        [
 +          101,
 +          44
-+        ]
-+      ],
-+      "safeParallelWorldRoutes": [
-+        [
-+          [
-+            100,
-+            42
-+          ],
-+          [
-+            100,
-+            43
-+          ],
-+          [
-+            100,
-+            44
-+          ]
 +        ],
 +        [
-+          [
-+            102,
-+            42
-+          ],
-+          [
-+            102,
-+            43
-+          ],
-+          [
-+            102,
-+            44
-+          ]
++          101,
++          45
++        ],
++        [
++          102,
++          41
++        ],
++        [
++          102,
++          42
++        ],
++        [
++          102,
++          43
++        ],
++        [
++          102,
++          44
++        ],
++        [
++          102,
++          45
 +        ]
 +      ],
 +      "manualTrainerInteraction": true,
 +      "trainerIdentityUnchanged": true,
-+      "runtimeBattleQualificationOwner": "Gameplay"
++      "runtimeBattleQualificationOwner": "Gameplay",
++      "worldEnvelope": [
++        [
++          100,
++          41
++        ],
++        [
++          100,
++          42
++        ],
++        [
++          100,
++          43
++        ],
++        [
++          100,
++          44
++        ],
++        [
++          100,
++          45
++        ],
++        [
++          101,
++          41
++        ],
++        [
++          101,
++          42
++        ],
++        [
++          101,
++          43
++        ],
++        [
++          101,
++          44
++        ],
++        [
++          101,
++          45
++        ],
++        [
++          102,
++          41
++        ],
++        [
++          102,
++          42
++        ],
++        [
++          102,
++          43
++        ],
++        [
++          102,
++          44
++        ],
++        [
++          102,
++          45
++        ]
++      ],
++      "safeOverlapWorldCandidates": [
++        [
++          100,
++          43
++        ],
++        [
++          101,
++          42
++        ],
++        [
++          101,
++          44
++        ],
++        [
++          102,
++          43
++        ],
++        [
++          100,
++          42
++        ],
++        [
++          100,
++          44
++        ],
++        [
++          101,
++          41
++        ],
++        [
++          101,
++          45
++        ],
++        [
++          102,
++          42
++        ],
++        [
++          102,
++          44
++        ],
++        [
++          100,
++          41
++        ],
++        [
++          100,
++          45
++        ],
++        [
++          102,
++          41
++        ],
++        [
++          102,
++          45
++        ]
++      ],
++      "routeSemantics": "Unordered full native wandering envelope, not a scripted waypoint sequence"
 +    },
 +    {
 +      "id": "patrol-GreenwayWalker",
@@ -65837,10 +66495,22 @@ index 00000000..29b7a2f7
 +        227,
 +        163
 +      ],
-+      "movementType": "MOVEMENT_TYPE_WALK_UP_AND_DOWN",
-+      "rangeX": 0,
++      "movementType": "MOVEMENT_TYPE_WANDER_AROUND_SLOWER",
++      "rangeX": 1,
 +      "rangeY": 1,
 +      "worldRoute": [
++        [
++          226,
++          161
++        ],
++        [
++          226,
++          162
++        ],
++        [
++          226,
++          163
++        ],
 +        [
 +          227,
 +          161
@@ -65852,41 +66522,96 @@ index 00000000..29b7a2f7
 +        [
 +          227,
 +          163
-+        ]
-+      ],
-+      "safeParallelWorldRoutes": [
-+        [
-+          [
-+            226,
-+            161
-+          ],
-+          [
-+            226,
-+            162
-+          ],
-+          [
-+            226,
-+            163
-+          ]
 +        ],
 +        [
-+          [
-+            228,
-+            161
-+          ],
-+          [
-+            228,
-+            162
-+          ],
-+          [
-+            228,
-+            163
-+          ]
++          228,
++          161
++        ],
++        [
++          228,
++          162
++        ],
++        [
++          228,
++          163
 +        ]
 +      ],
 +      "manualTrainerInteraction": true,
 +      "trainerIdentityUnchanged": true,
-+      "runtimeBattleQualificationOwner": "Gameplay"
++      "runtimeBattleQualificationOwner": "Gameplay",
++      "worldEnvelope": [
++        [
++          226,
++          161
++        ],
++        [
++          226,
++          162
++        ],
++        [
++          226,
++          163
++        ],
++        [
++          227,
++          161
++        ],
++        [
++          227,
++          162
++        ],
++        [
++          227,
++          163
++        ],
++        [
++          228,
++          161
++        ],
++        [
++          228,
++          162
++        ],
++        [
++          228,
++          163
++        ]
++      ],
++      "safeOverlapWorldCandidates": [
++        [
++          226,
++          162
++        ],
++        [
++          227,
++          161
++        ],
++        [
++          227,
++          163
++        ],
++        [
++          228,
++          162
++        ],
++        [
++          226,
++          161
++        ],
++        [
++          226,
++          163
++        ],
++        [
++          228,
++          161
++        ],
++        [
++          228,
++          163
++        ]
++      ],
++      "routeSemantics": "Unordered full native wandering envelope, not a scripted waypoint sequence"
 +    },
 +    {
 +      "id": "patrol-NorthStudent",
@@ -65911,56 +66636,195 @@ index 00000000..29b7a2f7
 +        329,
 +        52
 +      ],
-+      "movementType": "MOVEMENT_TYPE_WALK_LEFT_AND_RIGHT",
-+      "rangeX": 1,
-+      "rangeY": 0,
++      "movementType": "MOVEMENT_TYPE_WANDER_AROUND_SLOWER",
++      "rangeX": 2,
++      "rangeY": 1,
 +      "worldRoute": [
++        [
++          327,
++          51
++        ],
++        [
++          327,
++          52
++        ],
++        [
++          327,
++          53
++        ],
++        [
++          328,
++          51
++        ],
 +        [
 +          328,
 +          52
++        ],
++        [
++          328,
++          53
++        ],
++        [
++          329,
++          51
 +        ],
 +        [
 +          329,
 +          52
 +        ],
 +        [
-+          330,
-+          52
-+        ]
-+      ],
-+      "safeParallelWorldRoutes": [
-+        [
-+          [
-+            328,
-+            51
-+          ],
-+          [
-+            329,
-+            51
-+          ],
-+          [
-+            330,
-+            51
-+          ]
++          329,
++          53
 +        ],
 +        [
-+          [
-+            328,
-+            53
-+          ],
-+          [
-+            329,
-+            53
-+          ],
-+          [
-+            330,
-+            53
-+          ]
++          330,
++          51
++        ],
++        [
++          330,
++          52
++        ],
++        [
++          330,
++          53
++        ],
++        [
++          331,
++          51
++        ],
++        [
++          331,
++          52
++        ],
++        [
++          331,
++          53
 +        ]
 +      ],
 +      "manualTrainerInteraction": true,
 +      "trainerIdentityUnchanged": true,
-+      "runtimeBattleQualificationOwner": "Gameplay"
++      "runtimeBattleQualificationOwner": "Gameplay",
++      "worldEnvelope": [
++        [
++          327,
++          51
++        ],
++        [
++          327,
++          52
++        ],
++        [
++          327,
++          53
++        ],
++        [
++          328,
++          51
++        ],
++        [
++          328,
++          52
++        ],
++        [
++          328,
++          53
++        ],
++        [
++          329,
++          51
++        ],
++        [
++          329,
++          52
++        ],
++        [
++          329,
++          53
++        ],
++        [
++          330,
++          51
++        ],
++        [
++          330,
++          52
++        ],
++        [
++          330,
++          53
++        ],
++        [
++          331,
++          51
++        ],
++        [
++          331,
++          52
++        ],
++        [
++          331,
++          53
++        ]
++      ],
++      "safeOverlapWorldCandidates": [
++        [
++          328,
++          52
++        ],
++        [
++          329,
++          51
++        ],
++        [
++          329,
++          53
++        ],
++        [
++          330,
++          52
++        ],
++        [
++          327,
++          52
++        ],
++        [
++          328,
++          51
++        ],
++        [
++          328,
++          53
++        ],
++        [
++          330,
++          51
++        ],
++        [
++          330,
++          53
++        ],
++        [
++          331,
++          52
++        ],
++        [
++          327,
++          51
++        ],
++        [
++          327,
++          53
++        ],
++        [
++          331,
++          51
++        ],
++        [
++          331,
++          53
++        ]
++      ],
++      "routeSemantics": "Unordered full native wandering envelope, not a scripted waypoint sequence"
 +    }
 +  ],
 +  "stationaryTrainerReasons": {
@@ -65970,6 +66834,57 @@ index 00000000..29b7a2f7
 +    "Shopkeeper": "Stationed shopkeeper.",
 +    "VillagePainter": "Rainbow Village-affiliated painter."
 +  }
++}
+diff --git a/data/taichung/boulevard-population/trainer-pause-proof.json b/data/taichung/boulevard-population/trainer-pause-proof.json
+new file mode 100644
+index 00000000..4b7e007a
+--- /dev/null
++++ b/data/taichung/boulevard-population/trainer-pause-proof.json
+@@ -0,0 +1,45 @@
++{
++  "passed": true,
++  "baselineResidentSource": "234b32ec",
++  "scope": "Only three already-qualified manual trainer movement enums; all three full envelopes remain exact",
++  "actors": [
++    {
++      "file": "data/maps/TaichungBlvdShenJiNewVillage/map.json",
++      "localId": 1,
++      "before": "MOVEMENT_TYPE_WALK_UP_AND_DOWN",
++      "after": "MOVEMENT_TYPE_WANDER_UP_AND_DOWN",
++      "x": 29,
++      "y": 16,
++      "rangeX": 0,
++      "rangeY": 1,
++      "script": "TaichungBoulevard_Trainer_GreenwayWalker"
++    },
++    {
++      "file": "data/maps/TaichungBlvdConfuciusTemple/map.json",
++      "localId": 1,
++      "before": "MOVEMENT_TYPE_WALK_LEFT_AND_RIGHT",
++      "after": "MOVEMENT_TYPE_WANDER_LEFT_AND_RIGHT",
++      "x": 17,
++      "y": 26,
++      "rangeX": 1,
++      "rangeY": 0,
++      "script": "TaichungBoulevard_Trainer_NorthStudent"
++    },
++    {
++      "file": "data/maps/TaichungBlvdCentralParkB2/map.json",
++      "localId": 1,
++      "before": "MOVEMENT_TYPE_WALK_UP_AND_DOWN",
++      "after": "MOVEMENT_TYPE_WANDER_UP_AND_DOWN",
++      "x": 29,
++      "y": 17,
++      "rangeX": 0,
++      "rangeY": 1,
++      "script": "TaichungBoulevard_Trainer_RunwayJogger"
++    }
++  ],
++  "terrainWarpsSignsGraphicsScriptsRolesEnvelopesExact": true,
++  "outdoorTotal": 75,
++  "moving": 58,
++  "regularResidents": 55,
++  "gameplayNativeRegistryAndBattleQualification": "Separate required Gameplay slice; not included"
 +}
 diff --git a/data/taichung/capture-gameplay-guard/registration.json b/data/taichung/capture-gameplay-guard/registration.json
 new file mode 100644
@@ -375332,6 +376247,461 @@ index 00000000..5ecf32f3
 +  "secondaryTileCapacity": 384,
 +  "privateMetatiles": 72
 +}
+diff --git a/data/taichung/turning-trainers/chosen-routes.json b/data/taichung/turning-trainers/chosen-routes.json
+new file mode 100644
+index 00000000..4e09c0ad
+--- /dev/null
++++ b/data/taichung/turning-trainers/chosen-routes.json
+@@ -0,0 +1,370 @@
++{
++  "actors": [
++    {
++      "id": "patrol-RunwayJogger",
++      "map": "43:34",
++      "localId": 1,
++      "localAnchor": [
++        29,
++        17
++      ],
++      "worldAnchor": [
++        101,
++        43
++      ],
++      "movementType": "MOVEMENT_TYPE_WANDER_AROUND_SLOWER",
++      "rangeX": 1,
++      "rangeY": 2,
++      "worldEnvelope": [
++        [
++          100,
++          41
++        ],
++        [
++          100,
++          42
++        ],
++        [
++          100,
++          43
++        ],
++        [
++          100,
++          44
++        ],
++        [
++          100,
++          45
++        ],
++        [
++          101,
++          41
++        ],
++        [
++          101,
++          42
++        ],
++        [
++          101,
++          43
++        ],
++        [
++          101,
++          44
++        ],
++        [
++          101,
++          45
++        ],
++        [
++          102,
++          41
++        ],
++        [
++          102,
++          42
++        ],
++        [
++          102,
++          43
++        ],
++        [
++          102,
++          44
++        ],
++        [
++          102,
++          45
++        ]
++      ],
++      "safeOverlapWorldCandidates": [
++        [
++          100,
++          43
++        ],
++        [
++          101,
++          42
++        ],
++        [
++          101,
++          44
++        ],
++        [
++          102,
++          43
++        ],
++        [
++          100,
++          42
++        ],
++        [
++          100,
++          44
++        ],
++        [
++          101,
++          41
++        ],
++        [
++          101,
++          45
++        ],
++        [
++          102,
++          42
++        ],
++        [
++          102,
++          44
++        ],
++        [
++          100,
++          41
++        ],
++        [
++          100,
++          45
++        ],
++        [
++          102,
++          41
++        ],
++        [
++          102,
++          45
++        ]
++      ]
++    },
++    {
++      "id": "patrol-GreenwayWalker",
++      "map": "43:60",
++      "localId": 1,
++      "localAnchor": [
++        29,
++        16
++      ],
++      "worldAnchor": [
++        227,
++        162
++      ],
++      "movementType": "MOVEMENT_TYPE_WANDER_AROUND_SLOWER",
++      "rangeX": 1,
++      "rangeY": 1,
++      "worldEnvelope": [
++        [
++          226,
++          161
++        ],
++        [
++          226,
++          162
++        ],
++        [
++          226,
++          163
++        ],
++        [
++          227,
++          161
++        ],
++        [
++          227,
++          162
++        ],
++        [
++          227,
++          163
++        ],
++        [
++          228,
++          161
++        ],
++        [
++          228,
++          162
++        ],
++        [
++          228,
++          163
++        ]
++      ],
++      "safeOverlapWorldCandidates": [
++        [
++          226,
++          162
++        ],
++        [
++          227,
++          161
++        ],
++        [
++          227,
++          163
++        ],
++        [
++          228,
++          162
++        ],
++        [
++          226,
++          161
++        ],
++        [
++          226,
++          163
++        ],
++        [
++          228,
++          161
++        ],
++        [
++          228,
++          163
++        ]
++      ]
++    },
++    {
++      "id": "patrol-NorthStudent",
++      "map": "43:69",
++      "localId": 1,
++      "localAnchor": [
++        17,
++        26
++      ],
++      "worldAnchor": [
++        329,
++        52
++      ],
++      "movementType": "MOVEMENT_TYPE_WANDER_AROUND_SLOWER",
++      "rangeX": 2,
++      "rangeY": 1,
++      "worldEnvelope": [
++        [
++          327,
++          51
++        ],
++        [
++          327,
++          52
++        ],
++        [
++          327,
++          53
++        ],
++        [
++          328,
++          51
++        ],
++        [
++          328,
++          52
++        ],
++        [
++          328,
++          53
++        ],
++        [
++          329,
++          51
++        ],
++        [
++          329,
++          52
++        ],
++        [
++          329,
++          53
++        ],
++        [
++          330,
++          51
++        ],
++        [
++          330,
++          52
++        ],
++        [
++          330,
++          53
++        ],
++        [
++          331,
++          51
++        ],
++        [
++          331,
++          52
++        ],
++        [
++          331,
++          53
++        ]
++      ],
++      "safeOverlapWorldCandidates": [
++        [
++          328,
++          52
++        ],
++        [
++          329,
++          51
++        ],
++        [
++          329,
++          53
++        ],
++        [
++          330,
++          52
++        ],
++        [
++          327,
++          52
++        ],
++        [
++          328,
++          51
++        ],
++        [
++          328,
++          53
++        ],
++        [
++          330,
++          51
++        ],
++        [
++          330,
++          53
++        ],
++        [
++          331,
++          52
++        ],
++        [
++          327,
++          51
++        ],
++        [
++          327,
++          53
++        ],
++        [
++          331,
++          51
++        ],
++        [
++          331,
++          53
++        ]
++      ]
++    }
++  ],
++  "allThreeCombinedEnvelopesPreserveCityConnectivity": true,
++  "everySingleOccupiedNpcPositionPreservesTravel": true,
++  "anchorRelocations": 0,
++  "newMapGeometry": false,
++  "newArt": false,
++  "ordinaryResidentsUnchanged": 55
++}
+diff --git a/data/taichung/turning-trainers/source-proof.json b/data/taichung/turning-trainers/source-proof.json
+new file mode 100644
+index 00000000..9b4db723
+--- /dev/null
++++ b/data/taichung/turning-trainers/source-proof.json
+@@ -0,0 +1,73 @@
++{
++  "passed": true,
++  "baseline": "18409f114027a17104f8c72d1384cdf8d8f74b4b",
++  "generatedFilesCompared": 340,
++  "onlyChangedNativeObjects": [
++    {
++      "map": "TaichungBlvdCentralParkB2",
++      "localId": 1,
++      "script": "TaichungBoulevard_Trainer_RunwayJogger",
++      "anchor": [
++        29,
++        17
++      ],
++      "ranges": [
++        1,
++        2
++      ]
++    },
++    {
++      "map": "TaichungBlvdConfuciusTemple",
++      "localId": 1,
++      "script": "TaichungBoulevard_Trainer_NorthStudent",
++      "anchor": [
++        17,
++        26
++      ],
++      "ranges": [
++        2,
++        1
++      ]
++    },
++    {
++      "map": "TaichungBlvdShenJiNewVillage",
++      "localId": 1,
++      "script": "TaichungBoulevard_Trainer_GreenwayWalker",
++      "anchor": [
++        29,
++        16
++      ],
++      "ranges": [
++        1,
++        1
++      ]
++    }
++  ],
++  "geometryCollisionMetatilesPalettesArtWarpsSignsConnectionsExact": true,
++  "all75LocalIdsScriptsGraphicsRolesAndAnchorsUnchanged": true,
++  "all55OrdinaryResidentsUnchanged": true,
++  "walkableCells": 40165,
++  "budget": {
++    "tileSlots": 1003,
++    "paletteSlots": 13,
++    "worstTiles": [
++      778,
++      [
++        323,
++        161
++      ]
++    ],
++    "worstPalettes": [
++      13,
++      [
++        359,
++        123
++      ]
++    ],
++    "positions": 40165,
++    "graphicsPool": 14967,
++    "metatileIdsUsed": 1552
++  },
++  "sourceSafety": "Compiler checks full rectangle, road exclusion, clear event buffer and connectivity with all envelopes removed",
++  "saveCacheCompatibility": "Same generic native registry/overlap helper; updated exact three records and all in-envelope fallback offsets only"
++}
 diff --git a/data/taichung/xitun-rework/fill.json b/data/taichung/xitun-rework/fill.json
 new file mode 100644
 index 00000000..2189d69a
@@ -648579,10 +649949,10 @@ index 00000000..65deb420
 +    print(json.dumps(result, indent=2)); raise SystemExit(0 if result["passed"] else 1)
 diff --git a/tools/taichung/boulevard_city/build_city.py b/tools/taichung/boulevard_city/build_city.py
 new file mode 100644
-index 00000000..ad7c61ef
+index 00000000..6e17718f
 --- /dev/null
 +++ b/tools/taichung/boulevard_city/build_city.py
-@@ -0,0 +1,1180 @@
+@@ -0,0 +1,1185 @@
 +#!/usr/bin/env python3
 +"""Build the connected Boulevard city from Fable's raw fill and map book."""
 +
@@ -649372,11 +650742,14 @@ index 00000000..ad7c61ef
 +        if not event.get("inLiveGame") or event.get("role") == "ambient":
 +            continue
 +        for key in ("tile", "approach", "readFrom"):
-+            if event.get(key):
++            if event.get(key) and not (event.get("type") == "person" and event.get("script") in TRAINER_PATROL_SCRIPTS):
 +                critical.add(tuple(event[key]))
-+    # A protected actor occupies its entire existing patrol, including both ends.
++    trainer_routes = {person["script"]: envelope(person) for person in people
++                      if person["script"] in TRAINER_PATROL_SCRIPTS}
++    # Stationed people are critical points; moving trainers protect their whole
++    # envelope for every OTHER actor, without masking a sign inside their own.
 +    for person in people:
-+        if person.get("role") != "ambient":
++        if person.get("role") != "ambient" and person["script"] not in TRAINER_PATROL_SCRIPTS:
 +            critical.update(envelope(person))
 +    repairs = json.loads((ROOT / "data/taichung/north-xitun-continue/repairs.json").read_text())
 +    for row in repairs["maps"]:
@@ -649401,7 +650774,8 @@ index 00000000..ad7c61ef
 +        if not ambient and person["script"] not in TRAINER_PATROL_SCRIPTS:
 +            require(mode == "MOVEMENT_TYPE_FACE_DOWN", "Affiliated guides and stationed workers remain fixed")
 +            continue
-+        if ambient:
++        turning_trainer = not ambient and mode == "MOVEMENT_TYPE_WANDER_AROUND_SLOWER"
++        if ambient or turning_trainer:
 +            require(mode.startswith("MOVEMENT_TYPE_WANDER_"), "Regular residents must use paused wandering")
 +            require(all(world.at(px, py) not in "BSLu" for px, py in route),
 +                    f"Resident wanders onto a road or crossing: {person['id']}")
@@ -649410,8 +650784,9 @@ index 00000000..ad7c61ef
 +            halo = {(px + xx, py + yy) for px, py in route for xx in (-1, 0, 1) for yy in (-1, 0, 1)}
 +            require(halo <= walk and {owners[p] for p in halo} == {owners[x, y]},
 +                    f"Trainer patrol has no broad bypass: {person['script']}")
-+        protected = critical if ambient else critical - route
-+        clearance = 2 if ambient else 3
++        protected = critical | set().union(*(cells for script, cells in trainer_routes.items()
++                                             if script != person["script"]))
++        clearance = 2 if ambient or turning_trainer else 3
 +        require(all(abs(px - qx) + abs(py - qy) >= clearance for px, py in route for qx, qy in protected),
 +                f"Street patrol approaches a protected event: {person['script']}")
 +        manifest.append(dict(id=person["id"], role=person["role"], script=person["script"], worldStart=[x, y],
@@ -656090,7 +657465,7 @@ index 00000000..d92ff48d
 +    return (wall, ballast, track, ballast, track, wall.transpose(Image.Transpose.FLIP_LEFT_RIGHT))
 diff --git a/tools/taichung/boulevard_city/street-people.json b/tools/taichung/boulevard_city/street-people.json
 new file mode 100644
-index 00000000..4bb970fe
+index 00000000..6346337b
 --- /dev/null
 +++ b/tools/taichung/boulevard_city/street-people.json
 @@ -0,0 +1,891 @@
@@ -656122,9 +657497,9 @@ index 00000000..4bb970fe
 +    "graphics": "OBJ_EVENT_GFX_MAN",
 +    "role": "trainer",
 +    "id": "patrol-RunwayJogger",
-+    "movement_type": "MOVEMENT_TYPE_WALK_UP_AND_DOWN",
-+    "movement_range_x": 0,
-+    "movement_range_y": 1
++    "movement_type": "MOVEMENT_TYPE_WANDER_AROUND_SLOWER",
++    "movement_range_x": 1,
++    "movement_range_y": 2
 +  },
 +  {
 +    "script": "TaichungBoulevard_Trainer_BallparkFan",
@@ -656171,9 +657546,9 @@ index 00000000..4bb970fe
 +    "graphics": "OBJ_EVENT_GFX_YOUNGSTER",
 +    "role": "trainer",
 +    "id": "patrol-NorthStudent",
-+    "movement_type": "MOVEMENT_TYPE_WALK_LEFT_AND_RIGHT",
-+    "movement_range_x": 1,
-+    "movement_range_y": 0
++    "movement_type": "MOVEMENT_TYPE_WANDER_AROUND_SLOWER",
++    "movement_range_x": 2,
++    "movement_range_y": 1
 +  },
 +  {
 +    "script": "TaichungBoulevard_Trainer_GreenwayWalker",
@@ -656184,8 +657559,8 @@ index 00000000..4bb970fe
 +    "graphics": "OBJ_EVENT_GFX_CRUSH_GIRL",
 +    "role": "trainer",
 +    "id": "patrol-GreenwayWalker",
-+    "movement_type": "MOVEMENT_TYPE_WALK_UP_AND_DOWN",
-+    "movement_range_x": 0,
++    "movement_type": "MOVEMENT_TYPE_WANDER_AROUND_SLOWER",
++    "movement_range_x": 1,
 +    "movement_range_y": 1
 +  },
 +  {
@@ -657626,6 +659001,31 @@ index 00000000..36824ed9
 + assert cells,name;seams.append(dict(direction=name,traversablePairs=len(cells)))
 +r=dict(passed=True,baseline='f7e7d04d',auditedDistrictAndSeamFloorCells=len(audit),resolvedNativeAndBorderCellsChecked=count,changedWorldCells=sorted(changed),newlyBlockedCells=[],openedClearFloorCells=len(changed),includesPFeatureLawnAndAlreadyOptionalPaving=True,allNativePixelsMetatileAttributesPalettesArtIdentical=True,actorsSignsDoorsAndConnectionsExact=True,noUnexplainedBlankFloorBlockers=True,fourApproaches=seams,walkableCount=len(walk[1]),budget=after['budget'],runtime='Separate actual native receipt required')
 +a.output.write_text(json.dumps(r,indent=2)+'\n');print(json.dumps({k:v for k,v in r.items() if k!='changedWorldCells'},indent=2))
+diff --git a/tools/taichung/boulevard_city/verify_turning_trainers.py b/tools/taichung/boulevard_city/verify_turning_trainers.py
+new file mode 100644
+index 00000000..10939c0a
+--- /dev/null
++++ b/tools/taichung/boulevard_city/verify_turning_trainers.py
+@@ -0,0 +1,19 @@
++"""Verify a turning-only trainer change against the qualified paused source."""
++import argparse,json,subprocess
++from pathlib import Path
++p=argparse.ArgumentParser(description=__doc__);p.add_argument('generated',type=Path);p.add_argument('output',type=Path);p.add_argument('--baseline',default='18409f114027a17104f8c72d1384cdf8d8f74b4b');a=p.parse_args();root=Path(__file__).resolve().parents[3]
++files=sorted(f for f in a.generated.rglob('*')if f.is_file()and f.name!='build-report.json');paths=[str(f.relative_to(a.generated))for f in files]
++queries=''.join(a.baseline+':'+name+'\n'for name in paths);raw=subprocess.check_output(['git','cat-file','--batch'],input=queries.encode(),cwd=root);at=0;changed=[];total=0;ambient=0;allowed={'TaichungBoulevard_Trainer_RunwayJogger':(1,2),'TaichungBoulevard_Trainer_GreenwayWalker':(1,1),'TaichungBoulevard_Trainer_NorthStudent':(2,1)}
++for file,path in zip(files,paths):
++ end=raw.index(b'\n',at);header=raw[at:end].split();assert len(header)==3 and header[1]==b'blob',path;size=int(header[2]);before=raw[end+1:end+1+size];at=end+1+size+1;after=file.read_bytes();assert (root/path).read_bytes()==after,('Uninstalled generated output',path)
++ if path.startswith('data/maps/TaichungBlvd')and path.endswith('/map.json'):
++  x=json.loads(before);y=json.loads(after);assert all(x[k]==y[k]for k in x if k!='object_events');assert len(x['object_events'])==len(y['object_events']);total+=len(y['object_events'])
++  for local,(old,new)in enumerate(zip(x['object_events'],y['object_events']),1):
++   ambient+=new['script'].startswith('TaichungBoulevard_Ambient_')
++   if old!=new:
++    assert new['script']in allowed;assert all(old[k]==new[k]for k in old if k not in ['movement_type','movement_range_x','movement_range_y']);assert new['movement_type']=='MOVEMENT_TYPE_WANDER_AROUND_SLOWER';assert(new['movement_range_x'],new['movement_range_y'])==allowed[new['script']];changed.append(dict(map=x['name'],localId=local,script=new['script'],anchor=[new['x'],new['y']],ranges=[new['movement_range_x'],new['movement_range_y']]))
++ else:assert before==after,('Non-object generated data changed',path)
++assert total==75 and ambient==55 and {r['script']for r in changed}==set(allowed) and len(changed)==3
++report=json.loads((a.generated/'build-report.json').read_text());assert report['reachable']['walkableTiles']==40165 and report['reachable']['maps']==54 and len(report['reachable']['seams'])==186
++out=dict(passed=True,baseline=a.baseline,generatedFilesCompared=len(files),onlyChangedNativeObjects=changed,geometryCollisionMetatilesPalettesArtWarpsSignsConnectionsExact=True,all75LocalIdsScriptsGraphicsRolesAndAnchorsUnchanged=True,all55OrdinaryResidentsUnchanged=True,walkableCells=40165,budget=report['budget'],sourceSafety='Compiler checks full rectangle, road exclusion, clear event buffer and connectivity with all envelopes removed',saveCacheCompatibility='Same generic native registry/overlap helper; updated exact three records and all in-envelope fallback offsets only')
++a.output.write_text(json.dumps(out,indent=2)+'\n');print(json.dumps(out,indent=2))
 diff --git a/tools/taichung/build_city.py b/tools/taichung/build_city.py
 new file mode 100644
 index 00000000..998dd2ec
@@ -725364,17 +726764,17 @@ index 00000000..5a6ca154
 +    main()
 diff --git a/tools/taichung_gameplay/test-ambient-registry.py b/tools/taichung_gameplay/test-ambient-registry.py
 new file mode 100644
-index 00000000..35138665
+index 00000000..1da687c6
 --- /dev/null
 +++ b/tools/taichung_gameplay/test-ambient-registry.py
-@@ -0,0 +1,39 @@
+@@ -0,0 +1,47 @@
 +#!/usr/bin/env python3
 +"""Verify exact reviewed resident/trainer identities, envelopes and spawn fallbacks."""
 +import argparse,json,subprocess
 +from collections import Counter
 +from pathlib import Path
 +ROOT=Path(__file__).resolve().parents[2]
-+p=argparse.ArgumentParser(description=__doc__);p.add_argument('--maps-root',type=Path);args=p.parse_args()
++p=argparse.ArgumentParser(description=__doc__);p.add_argument('--maps-root',type=Path);p.add_argument('--write',action='store_true');args=p.parse_args()
 +folder=ROOT/'data/taichung/ambient-npcs';d=json.loads((folder/'actor-contract.json').read_text());assert d['schemaVersion']==2 and d['addedResidents']==55 and d['outdoorTotal']==75 and len(d['actors'])==55
 +old=json.loads(subprocess.check_output(['git','show','f7e7d04d03f22872dad17fbd6bff88d5e1dd4897:data/taichung/ambient-npcs/actor-contract.json'],cwd=ROOT,text=True));old={a['id']:a for a in old['actors']}
 +patrols=json.loads((folder/'trainer-patrols.json').read_text());assert len(patrols)==3
@@ -725395,18 +726795,26 @@ index 00000000..35138665
 +  candidates=a['safeOverlapWorldCandidates'];assert len(set(map(tuple,candidates)))==len(candidates);assert set(map(tuple,candidates))==envelope-{(wx,wy)}
 +  offsets.extend((px-wx,py-wy) for px,py in candidates);comment=f"{a['id']} {a['script']}"
 + else:
-+  if n==55:expected.append('// Existing generic manual trainers: final Maps-reviewed small patrols.')
-+  assert (mode,rx,ry) in [('MOVEMENT_TYPE_WALK_LEFT_AND_RIGHT',1,0),('MOVEMENT_TYPE_WALK_UP_AND_DOWN',0,1)]
-+  offsets.extend([(1,0),(-1,0)] if rx else [(0,1),(0,-1)]);comment=a['script']
++  if n==55:expected.append('// Existing generic manual trainers: fixed-anchor turning strolls.')
++  assert mode=='MOVEMENT_TYPE_WANDER_AROUND_SLOWER'
++  assert (rx,ry)=={'43:34':(1,2),'43:60':(1,1),'43:69':(2,1)}[a['nativeMapKey']]
++  wx,wy=a['authoredWorld'];envelope={(wx+dx,wy+dy) for dx in range(-rx,rx+1) for dy in range(-ry,ry+1)}
++  assert set(map(tuple,a['worldRoute']))==set(map(tuple,a['worldEnvelope']))==envelope
++  candidates=a['safeOverlapWorldCandidates'];assert set(map(tuple,candidates))==envelope-{(wx,wy)} and len(candidates)==len(envelope)-1
++  assert candidates==[list(p)for p in sorted(envelope-{(wx,wy)},key=lambda p:(abs(p[0]-wx)+abs(p[1]-wy),p))]
++  offsets.extend((px-wx,py-wy)for px,py in candidates);comment=a['script']
 + expected.append(f"    {{MAP_NUM({a['nativeMapConstant']}), {a['nativeLocalId']}, {a['graphics']}, {mode}, {x}, {y}, {rx}, {ry}, {start}, {len(offsets)-start}}}, // {comment}")
 + if args.maps_root:
 +  m=json.loads((args.maps_root/f'data/maps/{groups[num]}/map.json').read_text());o=m['object_events'][a['nativeLocalId']-1]
 +  assert (o['x'],o['y'],o['graphics_id'],o['script'],o['movement_type'],o['movement_range_x'],o['movement_range_y'],o['trainer_type'],o['flag'])==(x,y,a['graphics'],a['script'],mode,rx,ry,'TRAINER_TYPE_NONE','0'),a
 +assert profiles=={'turning':41,'lane':14} and moved==19
++if args.write:
++ (folder/'native-registry.inc').write_text('\n'.join(expected)+'\n')
++ (folder/'native-overlap-offsets.inc').write_text('// Ordered reviewed offsets from actor-contract.json; native spawn fallback only.\n'+''.join(f'    {{{x}, {y}}},\n' for x,y in offsets))
 +assert (folder/'native-registry.inc').read_text()=='\n'.join(expected)+'\n'
 +assert (folder/'native-overlap-offsets.inc').read_text()=='// Ordered reviewed offsets from actor-contract.json; native spawn fallback only.\n'+''.join(f'    {{{x}, {y}}},\n' for x,y in offsets)
 +s=(ROOT/'src/overworld.c').read_text();assert s.count('    TaichungAmbientRefreshOnContinue();')==2 and '    TrySpawnObjectEvents(0, 0);\n    TaichungAmbientAvoidPlayerOverlap(x - MAP_OFFSET, y - MAP_OFFSET);' in s
-+print('PASS:55 stable resident identities,41 slow rectangles/14 paused lanes,19 reviewed anchor changes,450 exact ordered fallbacks,3 existing trainer contracts retained, both Continue paths'+('; actual committed Maps bindings verified' if args.maps_root else ''))
++print('PASS:55 stable resident identities,41 slow rectangles/14 paused lanes,19 reviewed anchor changes,480 exact ordered fallbacks,3 turning trainer contracts with fixed anchors, both Continue paths'+('; actual committed Maps bindings verified' if args.maps_root else ''))
 diff --git a/tools/taichung_gameplay/test-ambient-save.sh b/tools/taichung_gameplay/test-ambient-save.sh
 new file mode 100644
 index 00000000..97d9b8dd
