@@ -100,6 +100,7 @@ type Options = {
   // Resolve only after exact SRAM proof + owned-snapshot deletion + durable
   // browser boot intent + IndexedDB flush. Rejection produces failure ACK.
   onDurableSave(snapshot: EncounterSnapshot): Promise<void>;
+  onSaveState?(snapshot?: EncounterSnapshot): void;
 };
 
 /** Sole advancing packet discovery is required after every heap replacement.
@@ -125,6 +126,7 @@ export class NativeEncounterBridge {
   private publish(state: EncounterBridgeState) { this.state = state; this.options.onState(state); }
 
   private rediscover() {
+    this.options.onSaveState?.();
     if (this.interval) clearInterval(this.interval);
     this.interval = undefined;
     this.allocation = undefined; // Invalidates any older asynchronous completion.
@@ -182,6 +184,13 @@ export class NativeEncounterBridge {
     } finally { this.discovering = false; }
   }
 
+  /** Core frame boundary sees the single pending-save frame before flash
+   * programming. It does not publish UI state or acknowledge durability. */
+  onFrame() {
+    if (this.stopped || !this.options.isActive()) { this.options.onSaveState?.(); return; }
+    this.options.onSaveState?.(this.currentSnapshot);
+  }
+
   private poll() {
     if (this.stopped) return;
     const a = this.allocation;
@@ -198,9 +207,11 @@ export class NativeEncounterBridge {
     }
     if (snapshot.frame !== this.lastFrame) { this.lastFrame = snapshot.frame; this.advancedAt = Date.now(); }
     if (!this.options.isActive() || Date.now() - this.advancedAt > 500) {
+      this.options.onSaveState?.();
       this.publish({ status: 'paused', snapshot });
       return;
     }
+    this.options.onSaveState?.(snapshot);
     this.publish({ status: 'live', snapshot });
     if (pendingSave(snapshot) && snapshot.acknowledgement !== snapshot.request && !this.transaction)
       void this.complete(a, snapshot);
@@ -218,11 +229,13 @@ export class NativeEncounterBridge {
       if (this.stopped || !this.options.isActive() || this.allocation !== allocation
         || currentHeap?.buffer !== allocation.heap.buffer || currentHeap.byteLength !== allocation.heap.byteLength
         || Date.now() - this.advancedAt > 500) return;
+      this.options.onSaveState?.(); // Restore ordinary timing before ACK/battle.
       writeEncounterAcknowledgement(allocation.heap, allocation.offset, this.options.metadata, snapshot, status);
-    } finally { this.transaction = false; }
+    } finally { this.options.onSaveState?.(); this.transaction = false; }
   }
 
   stop() {
+    this.options.onSaveState?.();
     this.stopped = true;
     this.allocation = undefined;
     if (this.interval) clearInterval(this.interval);

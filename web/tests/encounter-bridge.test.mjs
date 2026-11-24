@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import { parseEncounterMetadata, readEncounterSnapshot, writeEncounterAcknowledgement,
   NativeEncounterBridge } from '../src/encounter-bridge.ts';
+import { EncounterSaveSpeed } from '../src/encounter-save-speed.ts';
 
 const metadata = { version: 1, size: 64, address: 0x0203f560, magicA: 0x4e454354, magicB: 0x31525443 };
 const sha = 'b'.repeat(64);
@@ -108,6 +109,33 @@ test('live client ACK waits for the entire durable callback; storage failure emi
       if (fails) reject(new Error('expected storage denial')); else resolve();
       await until(() => f.view.getUint32(offset + 28, true) === 1);
       assert.equal(f.heap[offset + 43], fails ? 2 : 1);
+    } finally { bridge.stop(); clearInterval(timer); }
+  }
+});
+
+test('frame probe accelerates unsaved flash only and restores before success/failure ACK or stop', async () => {
+  for (const ending of ['success', 'failure', 'stop']) {
+    const f = fixture(); f.heap[offset + 42] = 0;
+    let value = 1, resolve, reject, entered = false;
+    const restores = [];
+    const speed = new EncounterSaveSpeed({ getFastForwardMultiplier: () => value,
+      setFastForwardMultiplier: n => { value = n; if (n === 1) restores.push(f.view.getUint32(offset + 28, true)); } });
+    const transaction = new Promise((a, b) => { resolve = a; reject = b; });
+    const timer = setInterval(() => f.tick(), 5);
+    const bridge = new NativeEncounterBridge({ metadata, getHeap: () => f.heap, isActive: () => true, onState() {},
+      onSaveState: p => speed.update(p), onDurableSave: async () => { entered = true; await transaction; } });
+    try {
+      await bridge.start(); bridge.onFrame(); assert.equal(value, 8);
+      assert.equal(entered, false); assert.equal(f.view.getUint32(offset + 28, true), 0);
+      f.heap[offset + 42] = 1;
+      await until(() => entered); assert.equal(value, 8);
+      if (ending === 'stop') bridge.stop();
+      if (ending === 'failure') reject(new Error('expected storage denial')); else resolve();
+      await until(() => value === 1);
+      if (ending !== 'stop') await until(() => f.view.getUint32(offset + 28, true) === 1);
+      assert.deepEqual(restores, [0], 'ordinary speed must be restored before the mailbox commits');
+      assert.equal(f.view.getUint32(offset + 28, true), ending === 'stop' ? 0 : 1);
+      if (ending !== 'stop') assert.equal(f.heap[offset + 43], ending === 'failure' ? 2 : 1);
     } finally { bridge.stop(); clearInterval(timer); }
   }
 });

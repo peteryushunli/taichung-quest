@@ -36,6 +36,7 @@ import { parseOnboardingMetadata } from './onboarding-bridge';
 import { NativeEncounterBridge, parseEncounterMetadata } from './encounter-bridge';
 import type { EncounterMetadata } from './encounter-bridge';
 import { CaptureStorageController } from './capture-storage';
+import { EncounterSaveSpeed } from './encounter-save-speed';
 import { DETAILS, HdOverlay, keepCanvasReadable } from './hd-overlay';
 import { HdSceneTracker } from './hd-scene';
 import './hd-overlay.css';
@@ -409,10 +410,12 @@ function connectNativeEncounters() {
   cityGuide.updateEncounter({ status: 'discovering' });
   if (!encounterMetadata || !activeRomSha256 || !emulator) return;
   let controller: CaptureStorageController | undefined;
+  const saveSpeed = new EncounterSaveSpeed(emulator);
   let nextReconcile = 0;
   let reportedFailure = false;
   const bridge = new NativeEncounterBridge({
     metadata: encounterMetadata,
+    onSaveState: snapshot => saveSpeed.update(snapshot),
     getHeap: () => (emulator as LanguageRuntime | undefined)?.getTaichungHeapU8?.(),
     isActive: () => running && !paused && !restarting,
     onState: ({ status: connection, snapshot }) => {
@@ -560,6 +563,7 @@ async function startGame() {
         allowOpposingDirections: false,
       });
       emulator.addCoreCallbacks({
+        videoFrameEndedCallback: () => encounterBridge?.onFrame(),
         coreCrashedCallback: () => {
           if (restarting) return;
           navigationBridge?.stop();
