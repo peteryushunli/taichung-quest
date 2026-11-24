@@ -5,7 +5,7 @@ export function observeNeighborhoodLayout(map: HTMLElement, labelSelector: strin
   const layout = () => {
     const bounds = map.getBoundingClientRect();
     if (!bounds.width || !bounds.height) return;
-    const labels = [...map.querySelectorAll<HTMLElement>(labelSelector)].filter(label => label.dataset.anchorX !== undefined);
+    const labels = [...map.querySelectorAll<HTMLElement>(labelSelector)].filter(label => label.dataset.anchorX !== undefined && !label.closest('[data-map-layer][hidden]'));
     const obstacles = [...map.querySelectorAll<HTMLElement>(obstacleSelector)].map(element => element.getBoundingClientRect())
       .filter(box => box.width && box.height).map(box => ({ x: box.left - bounds.left, y: box.top - bounds.top, width: box.width, height: box.height }));
     const boxes = labels.map(label => {

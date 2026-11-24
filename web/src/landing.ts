@@ -1,3 +1,4 @@
+import { createMapLayers, MAP_LAYERS, DEFAULT_MAP_LAYERS, mapLayerLabel, namedStreetLabels } from './map-layers';
 import { observeNeighborhoodLayout } from './neighborhood-layout';
 import landmarkCatalog from './data/landmarks.json';
 import { BOULEVARD_PREVIEW, cityGeometry as city, sightCatalog } from './preview-world';
@@ -43,7 +44,19 @@ function cityMap() {
   const { width, height } = city.world;
   const labels = districtLabelSpots(city).map(({ label, name, sign, x, y }) =>
     `<span class="lp-district-name${name ? ' is-neighborhood' : sign ? ' lp-district-sign' : ''}" ${name ? `data-neighborhood="${escapeHtml(name.en)}" data-anchor-x="${x}" data-anchor-y="${y}"` : ''} style="left:${x}%;top:${y}%">${name ? `<span lang="en">${escapeHtml(name.en)}</span><span lang="zh-Hant">${escapeHtml(name.zh)}</span>` : label}</span>`).join('');
-  return `<img class="lp-map-art" src="${escapeHtml(landingMedia.cityMap)}" width="${width * 16}" height="${height * 16}" alt="" loading="lazy" decoding="async">${labels}<span class="lp-map-chip">${copy('IN-GAME MAP')}</span>`;
+  return `<img class="lp-map-art" src="${escapeHtml(landingMedia.cityMap)}" width="${width * 16}" height="${height * 16}" alt="" loading="lazy" decoding="async"><div id="lp-districts-layer" data-map-layer="districts" hidden>${labels}</div><div id="lp-streets-layer" data-map-layer="streets" hidden></div><span class="lp-map-chip">${copy('IN-GAME MAP')}</span>`;
+}
+
+function renderStreets() {
+  const { width, height, streetBands = [] } = city.world;
+  const language = getLocale() === 'zh-Hant' ? 'zh' : 'en';
+  const lines = streetBands.map(({ name, bounds: [left, top, right, bottom], axis }) => {
+    const [x1, y1, x2, y2] = axis === 'h' ? [left, (top + bottom) / 2, right, (top + bottom) / 2] : [(left + right) / 2, top, (left + right) / 2, bottom];
+    return `<path d="M${x1},${y1}L${x2},${y2}"><title>${escapeHtml(name[language])}</title></path>`;
+  }).join('');
+  const names = namedStreetLabels(city);
+  return `<svg class="lp-street-lines" viewBox="0 0 ${width} ${height}" role="img" aria-label="${escapeHtml(t('Named streets'))}"><desc>${escapeHtml(names.map(street => street.name[language]).join(', '))}</desc>${lines}</svg>`
+    + names.map(({ name, bounds: [left, top, right, bottom], axis }) => `<span class="lp-street-label" data-axis="${axis}" data-bounds="${[left / width * 100, top / height * 100, right / width * 100, bottom / height * 100]}">${escapeHtml(name[language])}</span>`).join('');
 }
 
 // Step 3's City Pass, stamped with every gym's badge as the game draws it.
@@ -101,11 +114,12 @@ function markup() {
 
       <section class="lp-map-section" id="map"><div class="lp-wrap">
         ${sectionHead('01 — THE MAP', cityPlaceSummary(landmarks, getLocale(), city.world.neighborhoods?.length), "Distances are compressed, but the city keeps its shape: the old city around the station, the Greenway's museums in the middle, Xitun's theater and night market to the northwest, and Nantun's temples and parks to the south. Green pins are gyms; gold pins are landmarks to find on foot.", 'lp-map-heading')}
+        <fieldset class="lp-map-controls" id="lp-map-controls"><legend class="visually-hidden">${copy('Map layers')}</legend>${MAP_LAYERS.map(layer => `<label><input type="checkbox" data-map-toggle="${layer}" aria-controls="lp-${layer}-layer"${DEFAULT_MAP_LAYERS[layer] ? ' checked' : ''}><span data-map-layer-label="${layer}">${mapLayerLabel(layer, getLocale())}</span></label>`).join('')}</fieldset>
         <div class="lp-map-body">
           <div class="lp-map${BOULEVARD_PREVIEW ? ' lp-map-boulevard' : ''}" id="lp-map" style="aspect-ratio:${city.world.width} / ${city.world.height};background-size:${800 / city.world.width}% ${800 / city.world.height}%" role="group" aria-label="${escapeHtml(t('Choose a landmark'))}" data-i18n-label="Choose a landmark">
             ${cityMap()}
             <div id="lp-markers"></div>
-            <div class="lp-map-legend"><span><i class="lp-swatch-open"></i>${copy('Gym')}</span><span><i class="lp-swatch-landmark"></i>${copy('Landmark')}</span>${gyms.some((place) => !isGymOpen(place)) ? `<span><i class="lp-swatch-planned"></i>${copy('In development')}</span>` : ''}</div>
+            <div class="lp-map-legend"><span data-map-legend="gyms"><i class="lp-swatch-open"></i>${copy('Gym')}</span><span data-map-legend="landmarks"><i class="lp-swatch-landmark"></i>${copy('Landmark')}</span>${gyms.some((place) => !isGymOpen(place)) ? `<span data-map-legend="gyms"><i class="lp-swatch-planned"></i>${copy('In development')}</span>` : ''}</div>
           </div>
           <aside class="lp-detail" id="lp-detail" aria-live="polite"></aside>
         </div>
@@ -172,15 +186,16 @@ function markup() {
 
 function renderMarkers(selected: string) {
   const locale = getLocale();
-  return landmarks.map((place, index) => {
+  const pins = landmarks.map((place, index) => {
     const { x, y, side } = markerPosition(placeWorld(place, city.markersById), city.world);
     const { name, mapLabel } = localizedPlace(place, locale);
     const state = `${!isGym(place) ? 'is-landmark' : isGymOpen(place) ? 'is-open' : 'is-planned'}${place.id === selected ? ' is-selected' : ''}`;
-    return `<div class="lp-pin ${state} lp-side-${place.landingLabelSide ?? side}" data-pin="${escapeHtml(place.id)}" style="left:${x}%;top:${y}%">
+    return { layer: isGym(place) ? 'gyms' : 'landmarks', html: `<div class="lp-pin ${state} lp-side-${place.landingLabelSide ?? side}" data-pin="${escapeHtml(place.id)}" style="left:${x}%;top:${y}%">
       <button type="button" class="lp-marker" data-select="${escapeHtml(place.id)}" aria-label="${escapeHtml(`${name} · ${t(placeStatus(place))}`)}" aria-pressed="${place.id === selected}">${number(index)}</button>
       <span class="lp-pin-label" data-select="${escapeHtml(place.id)}" aria-hidden="true">${escapeHtml(mapLabel)}</span>
-    </div>`;
-  }).join('');
+    </div>` };
+  });
+  return (['gyms', 'landmarks'] as const).map(layer => `<div id="lp-${layer}-layer" data-map-layer="${layer}">${pins.filter(pin => pin.layer === layer).map(pin => pin.html).join('')}</div>`).join('');
 }
 
 function renderDetail(id: string) {
@@ -207,8 +222,8 @@ function renderDetail(id: string) {
       <p class="lp-detail-text">${escapeHtml(info.description)}</p>
       <div class="lp-detail-foot">
         ${isGym(place) ? `<div class="lp-leader">${portrait}<div class="lp-leader-name"><small>${copy('Gym leader')}</small><b>${info.leader ? escapeHtml(info.leader) : copy('To be revealed')}</b></div>${teamSprites}</div>` : `<p class="lp-landmark-note">${copy(landmarkCaptureCopy(place.id, 'landing', hasEncounter) ?? 'Visit this landmark and learn its local history.')}</p>`}
-        ${info.url ? `<div class="lp-real-life"><span>${copy('In real life')}</span><a href="${escapeHtml(info.url)}" target="_blank" rel="noopener">${copy('Visitor info ↗')}</a></div>` : ''}
       </div>
+      ${info.url ? `<div class="lp-visit-link"><a href="${escapeHtml(info.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(info.visitLabel)} <span aria-hidden="true">↗</span></a></div>` : ''}
     </div>`;
 }
 
@@ -244,11 +259,14 @@ export function createLanding(root: HTMLElement, host: LandingHost) {
   const reel = root.querySelector<HTMLVideoElement>('#lp-reel');
 
   const layoutLabels = observeNeighborhoodLayout(root.querySelector('#lp-map')!, '.is-neighborhood', '.lp-marker, .lp-pin-label, .lp-map-chip, .lp-map-legend');
+  const layers = createMapLayers(root.querySelector('#lp-map')!, root.querySelector('#lp-map-controls')!, layoutLabels);
   function renderLocalized() {
     markers.innerHTML = renderMarkers(selected);
     detail.innerHTML = renderDetail(selected);
     gallery.innerHTML = renderGallery();
-    layoutLabels();
+    root.querySelector('#lp-streets-layer')!.innerHTML = renderStreets();
+    root.querySelectorAll<HTMLElement>('[data-map-layer-label]').forEach(label => { label.textContent = mapLayerLabel(label.dataset.mapLayerLabel as typeof MAP_LAYERS[number], getLocale()); });
+    layers.refresh();
     root.querySelector('#lp-pass')!.innerHTML = renderPass();
     root.querySelector('#lp-map-heading')!.textContent = cityPlaceSummary(landmarks, getLocale(), city.world.neighborhoods?.length);
     root.querySelector('#lp-gym-status')!.textContent = gymStatusSummary(landmarks, getLocale());
@@ -264,7 +282,7 @@ export function createLanding(root: HTMLElement, host: LandingHost) {
       pin.querySelector('button')!.setAttribute('aria-pressed', String(active));
     });
     detail.innerHTML = renderDetail(id);
-    layoutLabels();
+    layers.refresh();
   }
 
   markers.addEventListener('click', (event) => {

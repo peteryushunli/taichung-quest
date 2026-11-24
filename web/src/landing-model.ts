@@ -128,6 +128,7 @@ export function localizedPlace(place: LandingLandmark, locale: LandingLocale) {
   if (url && url.protocol !== 'https:') throw new Error('Landmark information must use a secure official visitor URL.');
   return {
     name: chinese ? place.nameZh : place.nameEn,
+    visitLabel: chinese ? `規劃參觀${place.nameZh}` : `Plan a visit to ${place.nameEn}`,
     otherName: chinese ? place.nameEn : place.nameZh,
     shortName: chinese ? place.shortNameZh : place.landingNameEn ?? place.shortNameEn,
     mapLabel: chinese ? place.minimapNameZh : place.landingNameEn ?? place.shortNameEn,

@@ -17,6 +17,8 @@ const listeners = new Set<(change: LocaleChange) => void>();
 const boundControls = new WeakSet<HTMLSelectElement>();
 
 const zh: Record<string, string> = {
+  'Map layers': '地圖圖層',
+  'Named streets': '具名街道',
   'Caught': '已捕捉',
   'Try used': '機會已用',
   'Encounter status unavailable': '遭遇狀態暫無法讀取',

@@ -108,3 +108,6 @@ html[lang="zh-Hant"] .landmark-tab-names b { font-size: 9px; color: #99a28b; }
 
 .map-district.is-neighborhood[data-neighborhood="North District"] { display: flex; align-items: center; gap: 4px; }
 .map-district.is-neighborhood[hidden] { display: none; }
+
+.visitor-link { margin-top: 18px; padding-top: 15px; border-top: 1px solid #6e7b6155; }
+.visitor-link .official-link { overflow-wrap: anywhere; }
