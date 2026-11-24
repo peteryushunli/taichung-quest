@@ -1,0 +1,57 @@
+{
+  "cartridge": "8516a68407cf50d2f0b7039a977998d2793c162a6115dc393d501d3b972ada8f",
+  "results": [
+    {
+      "site": "ding-sheng-bhw",
+      "screenshot": "/Users/peter/devday_hackathon/artifacts/qa/2026-11-24-confucius-xitun/final-tower-review/ding-sheng-bhw-offer.png",
+      "approach": {
+        "frame": 387,
+        "flags": 79,
+        "context": 0,
+        "field": true,
+        "x": 11,
+        "y": 17,
+        "group": 43,
+        "map": 36,
+        "facing": 1
+      },
+      "offer": {
+        "frame": 527,
+        "flags": 3,
+        "context": 48,
+        "field": false,
+        "x": -1,
+        "y": -1,
+        "group": 255,
+        "map": 255,
+        "facing": 0
+      }
+    },
+    {
+      "site": "national-trade-center",
+      "screenshot": "/Users/peter/devday_hackathon/artifacts/qa/2026-11-24-confucius-xitun/final-tower-review/national-trade-center-offer.png",
+      "approach": {
+        "frame": 388,
+        "flags": 79,
+        "context": 0,
+        "field": true,
+        "x": 14,
+        "y": 17,
+        "group": 43,
+        "map": 36,
+        "facing": 1
+      },
+      "offer": {
+        "frame": 529,
+        "flags": 3,
+        "context": 48,
+        "field": false,
+        "x": -1,
+        "y": -1,
+        "group": 255,
+        "map": 255,
+        "facing": 0
+      }
+    }
+  ]
+}

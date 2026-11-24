@@ -1,0 +1,32 @@
+{
+  "status": "PASS_COMBINED_REVIEW_ACCEPTANCE",
+  "preview": "https://taichung-quest-1k4l443j3-peteryushunli-6635s-projects.vercel.app",
+  "deploymentId": "dpl_J8hcmR8vT6MegBQCbgAnSKcDQ6Nw",
+  "frontendCommit": "653e1d0ca818a8efbcc2fd0efe76c00a11780472",
+  "nativeCommit": "bc5f8b9bd36fdfebf0364e62a4613e5d5d3c836d",
+  "romSha256": "8516a68407cf50d2f0b7039a977998d2793c162a6115dc393d501d3b972ada8f",
+  "target": "preview",
+  "authenticationWithoutCredential": "302 to existing Vercel SSO",
+  "hostedFilesByteVerified": 198,
+  "draftPr": "https://github.com/peteryushunli/taichung-quest/pull/25",
+  "productionIdUnchanged": "dpl_6866rzQ7m2ts1fKLwKUESWSrp4VE",
+  "mainUnchanged": "94bb828020993b7dfffbbe28297c863b44cef977",
+  "remainingTargetedNativeAcceptance": [],
+  "browserEarnedRites": "PASS actual native1/10 after ordinary victorySave import",
+  "savesPublished": false,
+  "completedNativeAcceptance": [
+    "Wenyi healingOn andOff victories with actual award and ordinary saves",
+    "Both temple doors preserve native entered-door return ownership and mask32",
+    "Wenyi revisit preserves party and launches no second award or battle",
+    "Old a701 native-menu interior8 save continues, both NPCs visit-only, native Boulevard return preserved",
+    "Temple history ends without capture; ShenJi history then AlakazamLv65 bit3 offer",
+    "All three new sites spawn correctLv65 species and durably save Begin counter4/result counter5",
+    "All11 actual72-byte packets and all6 full SRAM transactions independently pass shipped capture24 readers"
+  ],
+  "verificationLimits": [
+    "Constructed isolated fixtures documented; no organic full-playthrough claim",
+    "New21/22/23 smokes resolved Run/spent; new-site catch/KO was not repeated in this round",
+    "Browser rendered earned/unearned CityPass and caught/spent saves; actual award packet independently passed shipped decoder, without claiming a browser award screenshot",
+    "Historical optional-story roster assertion fails identically on live baseline; current20-site binding and native Story checks pass"
+  ]
+}

@@ -1,0 +1,129 @@
+{
+  "badgePresentation": {
+    "assetSetId": "taichung-badges-masters-v1",
+    "gymIds": [
+      "old-taichung-station",
+      "taichung-park",
+      "miyahara",
+      "natural-science-museum",
+      "calligraphy-greenway",
+      "confucius-temple",
+      "fine-arts-museum",
+      "fengjia-night-market",
+      "wanhe-temple",
+      "taichung-theater"
+    ],
+    "schemaVersion": 1,
+    "sourceManifestSha256": "fe6a3224012d2ff5e3d050f4e8c511a2201cdca9f927505a04229048f8cd47de"
+  },
+  "binutils": {
+    "arm-none-eabi-nm": "GNU nm (GNU Binutils) 2.47.20260726",
+    "arm-none-eabi-objcopy": "GNU objcopy (GNU Binutils) 2.47.20260726"
+  },
+  "bridges": {
+    "badgeBridge": {
+      "address": 33813620,
+      "magicA": 1145193300,
+      "magicB": 825241671,
+      "size": 32,
+      "symbol": "gTaichungBadgeBridge",
+      "version": 1
+    },
+    "encounterBridge": {
+      "address": 33813684,
+      "magicA": 1313162068,
+      "magicB": 827479107,
+      "size": 72,
+      "symbol": "gTaichungEncounterBridge",
+      "version": 2
+    },
+    "languageBridge": {
+      "address": 33813796,
+      "magicA": 1095517012,
+      "magicB": 825247566,
+      "size": 32,
+      "symbol": "gTaichungLanguageBridge",
+      "version": 1
+    },
+    "navigationBridge": {
+      "address": 33813832,
+      "magicA": 1095648084,
+      "magicB": 825241686,
+      "size": 52,
+      "symbol": "gTaichungNavigationBridge",
+      "version": 2
+    },
+    "onboardingBridge": {
+      "address": 33813884,
+      "magicA": 1313424212,
+      "magicB": 827282004,
+      "size": 48,
+      "symbol": "gTaichungOnboardingBridge",
+      "version": 1
+    }
+  },
+  "elf": {
+    "independentObjcopyByteExact": true,
+    "objcopyOptions": [
+      "-O",
+      "binary",
+      "--gap-fill",
+      "0xFF",
+      "--pad-to",
+      "0x9000000"
+    ],
+    "sha256": "5a8cb88bdeda3527a7e5e859d770bc5e2b1faa90801e810617869422da7cba99"
+  },
+  "inputs": {
+    "minimap-contract.native.json": {
+      "bytes": 40580,
+      "sha256": "c97176dbbf1908893ad431c848255ad49216599037b74aee98fbb49c7f1fbbce"
+    },
+    "minimap-contract.web.json": {
+      "bytes": 40580,
+      "sha256": "c97176dbbf1908893ad431c848255ad49216599037b74aee98fbb49c7f1fbbce"
+    },
+    "roms/build.json": {
+      "bytes": 1693,
+      "sha256": "6e3ae17ec2e741ba5fd86a77955a53fcb9d83077f4a928dd4c1e0def2cc20b73"
+    },
+    "roms/taichung-firered.elf": {
+      "bytes": 17879956,
+      "sha256": "5a8cb88bdeda3527a7e5e859d770bc5e2b1faa90801e810617869422da7cba99"
+    },
+    "roms/taichung-firered.gba": {
+      "bytes": 16777216,
+      "sha256": "8516a68407cf50d2f0b7039a977998d2793c162a6115dc393d501d3b972ada8f"
+    },
+    "taichung.patch": {
+      "bytes": 25404725,
+      "sha256": "a9d99a19658ae7b6b232224ce3f8460f20118bbf75bf44ff78f9acb11172ba0b"
+    }
+  },
+  "minimap": {
+    "canonicalSha256": "c0576223c6250df6eb495f43e9d03607873e5e4ec37cfd47ade780552cf447f6",
+    "geometryFingerprintSha256": "48fe4ba5208d0a2b1285c1b6aa6f776377ef003d5501e5ae837ca45c6127e92a",
+    "schemaVersion": 1,
+    "sourceFilesVerified": 24
+  },
+  "native": {
+    "clean": true,
+    "commit": "bc5f8b9bd36fdfebf0364e62a4613e5d5d3c836d",
+    "tree": "8d6aa8a8897537b09eb8f6125e642ae283db8df5",
+    "upstreamCommit": "ce6406d8c2eaf46d543c8a2606de0c3cb1951982"
+  },
+  "portablePatch": {
+    "privateObjectStore": true,
+    "realIndexUnchanged": true,
+    "recreatedTree": "8d6aa8a8897537b09eb8f6125e642ae283db8df5"
+  },
+  "rom": {
+    "bytes": 16777216,
+    "sha1": "b61809801012551ec1eca171105cb777bb0d0805",
+    "sha256": "8516a68407cf50d2f0b7039a977998d2793c162a6115dc393d501d3b972ada8f"
+  },
+  "schemaVersion": 1,
+  "scope": "Pair consistency and committed-tree proof; no native recompile, runtime acceptance, or deployment.",
+  "status": "PASS",
+  "verifierSha256": "f84c7aafdd7324663d24e7129540a7ef17fcbf566397525804d5ac5e5881f97e"
+}

@@ -1,0 +1,53 @@
+{
+  "status": "PASS_FINAL_NATIVE_WENYI_OFF_VICTORY_AWARD_DURABLE_SAVE",
+  "ROM": "8516a68407cf50d2f0b7039a977998d2793c162a6115dc393d501d3b972ada8f",
+  "ELF": "5a8cb88bdeda3527a7e5e859d770bc5e2b1faa90801e810617869422da7cba99",
+  "source": "bc5f8b9bd36fdfebf0364e62a4613e5d5d3c836d",
+  "fixtureClassification": "Same constructed isolated three-member injured input as On, differing only preference2. Actual final native emulator, before/after ordinary Save, ordinary button-driven battle, passive HUD reads. No ROM/RNG/RAM/source writes or final export edits.",
+  "before": {
+    "file": "/Users/peter/devday_hackathon/artifacts/qa/2026-11-24-gameplay-captures/final/wenyi-off-before.sav",
+    "sha256": "280ad7a6896859c76a21e772c9dd9b5838bb2c337d5c62cb464ede04564b3fae",
+    "counter": 6,
+    "slot": 0,
+    "all14SectorsValid": true,
+    "position": {
+      "group": 43,
+      "map": 79,
+      "x": 6,
+      "y": 5
+    },
+    "healOption": 2,
+    "gymMask": 0,
+    "schema": 60418,
+    "attempts": 64,
+    "caught": 64,
+    "partyCount": 3
+  },
+  "after": {
+    "file": "/Users/peter/devday_hackathon/artifacts/qa/2026-11-24-gameplay-captures/final/wenyi-off-after.sav",
+    "sha256": "d4e0ec5634598f3dbb2331e7507c0a93cf08cd3ffabbefe76f62f7ca5f40ba81",
+    "counter": 7,
+    "slot": 1,
+    "all14SectorsValid": true,
+    "position": {
+      "group": 43,
+      "map": 79,
+      "x": 6,
+      "y": 5
+    },
+    "healOption": 2,
+    "gymMask": 32,
+    "schema": 60418,
+    "attempts": 64,
+    "caught": 64,
+    "partyCount": 3
+  },
+  "nativeWin": "All3Wenyi partners defeated; won1 and live Rites award screenshot; mask32 recorded once.",
+  "Off": "Snorlax255\u2192136HP; ShadowBall8\u21922PP. Scyther120/145 HP and spentPP unchanged; Venusaur130/155HP, spentPP and poison8 unchanged. No post-win recovery. Levels60/50/50 and identities retained. Untouched bench injuries/PP/poison also rule out an entry full-heal.",
+  "inputDriver": "auto-battle.js,59 ordinary input steps selected from passive native HUD/cursor reads, full trace in wenyi-off-recording.json. Native AI/capture/RNG untouched.",
+  "awardScreenshot": "/Users/peter/devday_hackathon/artifacts/qa/2026-11-24-gameplay-captures/final/wenyi-off-award-visible.png",
+  "savedResultForMain": "/Users/peter/devday_hackathon/artifacts/qa/2026-11-24-gameplay-captures/final/wenyi-off-after.sav",
+  "afterFileSha256": "d4e0ec5634598f3dbb2331e7507c0a93cf08cd3ffabbefe76f62f7ca5f40ba81",
+  "pairedBrowserAcceptance": "Main owns browser proof; native evidence only.",
+  "remaining": "New-site21/22/23 native smokes active independently."
+}

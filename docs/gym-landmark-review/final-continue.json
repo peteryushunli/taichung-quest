@@ -1,0 +1,40 @@
+[
+  {
+    "id": "authentic-production-menu",
+    "pending": false,
+    "authentic": true,
+    "control": false,
+    "before": [
+      36,
+      3,
+      5
+    ],
+    "after": [
+      36,
+      2,
+      5
+    ],
+    "protectedNativeBytesIdentical": true,
+    "hp": 7,
+    "move1PP": 1
+  },
+  {
+    "id": "36-3-5-ordinary",
+    "pending": false,
+    "authentic": true,
+    "control": false,
+    "before": [
+      36,
+      3,
+      5
+    ],
+    "after": [
+      36,
+      2,
+      5
+    ],
+    "protectedNativeBytesIdentical": true,
+    "hp": 7,
+    "move1PP": 1
+  }
+]

@@ -1,0 +1,84 @@
+{
+  "status": "PASS_FINAL_NATIVE_SITE_ENTRY_AND_DURABLE_SPENT_OUTCOME",
+  "ROM": "8516a68407cf50d2f0b7039a977998d2793c162a6115dc393d501d3b972ada8f",
+  "ELF": "5a8cb88bdeda3527a7e5e859d770bc5e2b1faa90801e810617869422da7cba99",
+  "source": "bc5f8b9bd36fdfebf0364e62a4613e5d5d3c836d",
+  "site": 21,
+  "species": "Magneton",
+  "speciesId": 82,
+  "level": 65,
+  "fixtureClassification": "Constructed initial isolated native SRAM relocation, same original3 native partners (22 reorderedVenusaur first). Actual final-ROM Continue warp, ordinary beforeSave, Prepare\u2192Back, silent durableBegin, actual encounter, ordinary Run, automatic durable result; no source/ROM/RNG/RAM writes or post-export edits.",
+  "before": {
+    "file": "/Users/peter/devday_hackathon/artifacts/qa/2026-11-24-gameplay-captures/final/site21-before.sav",
+    "sha256": "20ee4dced7f8ae07bad370ad906aca8d5371dc788bf4bcc164f8a29abe1b4400",
+    "counter": 3,
+    "slot": 1,
+    "all14SectorsValid": true,
+    "position": {
+      "group": 43,
+      "map": 36,
+      "x": 14,
+      "y": 17
+    },
+    "healOption": 0,
+    "gymMask": 0,
+    "schema": 60418,
+    "attempts": 0,
+    "caught": 0,
+    "partyCount": 3
+  },
+  "durableBegin": {
+    "file": "/Users/peter/devday_hackathon/artifacts/qa/2026-11-24-gameplay-captures/final/site21-durable-begin.sav",
+    "sha256": "c94b66beec81db324e57fd8e93ec1c3d529ccb759e63170f5d3ecfe655466ac6",
+    "counter": 4,
+    "slot": 0,
+    "all14SectorsValid": true,
+    "position": {
+      "group": 43,
+      "map": 36,
+      "x": 14,
+      "y": 17
+    },
+    "healOption": 0,
+    "gymMask": 0,
+    "schema": 60418,
+    "attempts": 2097152,
+    "caught": 0,
+    "partyCount": 3
+  },
+  "after": {
+    "file": "/Users/peter/devday_hackathon/artifacts/qa/2026-11-24-gameplay-captures/final/site21-after.sav",
+    "sha256": "44cc5a292abb5721962dd45d017a0e10648cb2d604ba83ee6efd594d6ce126f2",
+    "counter": 5,
+    "slot": 1,
+    "all14SectorsValid": true,
+    "position": {
+      "group": 43,
+      "map": 36,
+      "x": 14,
+      "y": 17
+    },
+    "healOption": 0,
+    "gymMask": 0,
+    "schema": 60418,
+    "attempts": 2097152,
+    "caught": 0,
+    "partyCount": 3
+  },
+  "outcome": "ACTUAL native Run4 / encounterResultRAN3, spent without catch; no Team unlock. Each is an independent isolated native save.",
+  "upperWordAttempt": "0x800",
+  "unlockUpperWord": "0x0",
+  "nativePendingAndResultSnapshots": {
+    "parsedTrace": "/Users/peter/devday_hackathon/artifacts/qa/2026-11-24-gameplay-captures/final/site21-capture-trace.json",
+    "raw72Packets": "/Users/peter/devday_hackathon/artifacts/qa/2026-11-24-gameplay-captures/final/site21-raw-packets.json",
+    "rawObservedPhases": [
+      5
+    ],
+    "note": "21 raw collection began after resolution: actual phase5 packet; its Begin pending captured as original parsed bridge snapshot + exact durable SRAM. 22/23 include actual stable phase4 pending-result and phase5 copies. No reconstructed raw packets claimed."
+  },
+  "nativeEnemyRaw": "/Users/peter/devday_hackathon/artifacts/qa/2026-11-24-gameplay-captures/final/site21-enemy-entry.json",
+  "entryScreenshot": "/Users/peter/devday_hackathon/artifacts/qa/2026-11-24-gameplay-captures/final/site21-native-battle-entry.png",
+  "resultScreenshot": "/Users/peter/devday_hackathon/artifacts/qa/2026-11-24-gameplay-captures/final/site21-resolved-result.png",
+  "runtimeJS": "Exact653e1d0 current capture24 NativeEncounterBridge/CaptureStorageController bundle SHA7e437643e24cb9bfe173a510965c58ad6792266c9ebbaba862ce937af0548178, independently rebuilt byte-identical.",
+  "limit": "This focused smoke resolves spent/Run, not a new-site actual catch/KO. Generic caught/KO/add/replace acceptance remains the existing compiled/native baseline evidence accepted by Main. Actual Continue/retry block checks follow independently."
+}
