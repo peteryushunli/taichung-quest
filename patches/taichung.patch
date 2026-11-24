@@ -20525,7 +20525,7 @@ index 00000000..0ceff8ee
 +}
 diff --git a/data/maps/TaichungBlvdCentralParkB2/map.json b/data/maps/TaichungBlvdCentralParkB2/map.json
 new file mode 100644
-index 00000000..bd89201f
+index 00000000..e1933c17
 --- /dev/null
 +++ b/data/maps/TaichungBlvdCentralParkB2/map.json
 @@ -0,0 +1,80 @@
@@ -20573,9 +20573,9 @@ index 00000000..bd89201f
 +      "x": 29,
 +      "y": 17,
 +      "elevation": 3,
-+      "movement_type": "MOVEMENT_TYPE_WALK_UP_AND_DOWN",
-+      "movement_range_x": 0,
-+      "movement_range_y": 1,
++      "movement_type": "MOVEMENT_TYPE_WANDER_AROUND_SLOWER",
++      "movement_range_x": 1,
++      "movement_range_y": 2,
 +      "trainer_type": "TRAINER_TYPE_NONE",
 +      "trainer_sight_or_berry_tree_id": "0",
 +      "script": "TaichungBoulevard_Trainer_RunwayJogger",
@@ -20737,7 +20737,7 @@ index 00000000..6b5fe00a
 +}
 diff --git a/data/maps/TaichungBlvdConfuciusTemple/map.json b/data/maps/TaichungBlvdConfuciusTemple/map.json
 new file mode 100644
-index 00000000..4a2feda5
+index 00000000..0e91085d
 --- /dev/null
 +++ b/data/maps/TaichungBlvdConfuciusTemple/map.json
 @@ -0,0 +1,126 @@
@@ -20780,9 +20780,9 @@ index 00000000..4a2feda5
 +      "x": 17,
 +      "y": 26,
 +      "elevation": 3,
-+      "movement_type": "MOVEMENT_TYPE_WALK_LEFT_AND_RIGHT",
-+      "movement_range_x": 1,
-+      "movement_range_y": 0,
++      "movement_type": "MOVEMENT_TYPE_WANDER_AROUND_SLOWER",
++      "movement_range_x": 2,
++      "movement_range_y": 1,
 +      "trainer_type": "TRAINER_TYPE_NONE",
 +      "trainer_sight_or_berry_tree_id": "0",
 +      "script": "TaichungBoulevard_Trainer_NorthStudent",
@@ -23118,7 +23118,7 @@ index 00000000..8ab6009b
 +}
 diff --git a/data/maps/TaichungBlvdShenJiNewVillage/map.json b/data/maps/TaichungBlvdShenJiNewVillage/map.json
 new file mode 100644
-index 00000000..1212bd18
+index 00000000..c3284977
 --- /dev/null
 +++ b/data/maps/TaichungBlvdShenJiNewVillage/map.json
 @@ -0,0 +1,91 @@
@@ -23161,8 +23161,8 @@ index 00000000..1212bd18
 +      "x": 29,
 +      "y": 16,
 +      "elevation": 3,
-+      "movement_type": "MOVEMENT_TYPE_WALK_UP_AND_DOWN",
-+      "movement_range_x": 0,
++      "movement_type": "MOVEMENT_TYPE_WANDER_AROUND_SLOWER",
++      "movement_range_x": 1,
 +      "movement_range_y": 1,
 +      "trainer_type": "TRAINER_TYPE_NONE",
 +      "trainer_sight_or_berry_tree_id": "0",
@@ -26855,7 +26855,7 @@ index 00000000..fa91ee81
 +    end
 diff --git a/data/scripts/taichung_boulevard_landmarks.inc b/data/scripts/taichung_boulevard_landmarks.inc
 new file mode 100644
-index 00000000..59c64432
+index 00000000..b8de33f4
 --- /dev/null
 +++ b/data/scripts/taichung_boulevard_landmarks.inc
 @@ -0,0 +1,76 @@
@@ -26911,7 +26911,7 @@ index 00000000..59c64432
 +	goto_if_questlog TaichungStory_SignDone
 +	callnative TaichungBoulevard_BufferJingmingStreetSign
 +	msgbox gStringVar4, MSGBOX_SIGN
-+	setvar VAR_0x8004, TAICHUNG_ENCOUNTER_JINGMING_STREET
++	setvar VAR_0x8004, TAICHUNG_ENCOUNTER_CHARIZARD
 +	goto TaichungEncounter_Interact
 +
 +TaichungBoulevard_Sign_TigerCity::
@@ -27506,7 +27506,7 @@ index 00000000..9f61a703
 +	end
 diff --git a/data/scripts/taichung_encounters.inc b/data/scripts/taichung_encounters.inc
 new file mode 100644
-index 00000000..0768d3da
+index 00000000..f1293a94
 --- /dev/null
 +++ b/data/scripts/taichung_encounters.inc
 @@ -0,0 +1,104 @@
@@ -27588,9 +27588,9 @@ index 00000000..0768d3da
 +	setvar VAR_0x8004, \site
 +	goto TaichungEncounter_Interact
 +	.endm
-+	taichung_encounter_entry MapleGarden, TAICHUNG_ENCOUNTER_MAPLE_GARDEN
++	taichung_encounter_entry MapleGarden, TAICHUNG_ENCOUNTER_VENUSAUR
 +	taichung_encounter_entry WenchangTemple, TAICHUNG_ENCOUNTER_WENCHANG_TEMPLE
-+	taichung_encounter_entry BotanicalGarden, TAICHUNG_ENCOUNTER_BOTANICAL_GARDEN
++	taichung_encounter_entry BotanicalGarden, TAICHUNG_ENCOUNTER_LAPRAS
 +	taichung_encounter_entry ShenJi, TAICHUNG_ENCOUNTER_SHEN_JI
 +	taichung_encounter_entry YizhongStreet, TAICHUNG_ENCOUNTER_YIZHONG_STREET
 +	taichung_encounter_entry PrefecturalHall, TAICHUNG_ENCOUNTER_PREFECTURAL_HALL
@@ -27601,13 +27601,13 @@ index 00000000..0768d3da
 +	taichung_encounter_entry GreenMuseumbrary, TAICHUNG_ENCOUNTER_GREEN_MUSEUMBRARY
 +	taichung_encounter_entry RainbowVillage, TAICHUNG_ENCOUNTER_RAINBOW_VILLAGE
 +	taichung_encounter_entry CityHall, TAICHUNG_ENCOUNTER_CITY_HALL
-+	taichung_encounter_entry JingmingStreet, TAICHUNG_ENCOUNTER_JINGMING_STREET
++	taichung_encounter_entry JingmingStreet, TAICHUNG_ENCOUNTER_CHARIZARD
 +	taichung_encounter_entry TigerCity, TAICHUNG_ENCOUNTER_TIGER_CITY
 +	taichung_encounter_entry Ballpark, TAICHUNG_ENCOUNTER_BALLPARK
 +	taichung_encounter_entry FolklorePark, TAICHUNG_ENCOUNTER_FOLKLORE_PARK
 +
 +	taichung_encounter_entry NationalTradeCenter, TAICHUNG_ENCOUNTER_NATIONAL_TRADE_CENTER
-+	taichung_encounter_entry DingShengBHW, TAICHUNG_ENCOUNTER_DING_SHENG_BHW
++	taichung_encounter_entry DingShengBHW, TAICHUNG_ENCOUNTER_BLASTOISE
 +	taichung_encounter_entry TheLin, TAICHUNG_ENCOUNTER_THE_LIN
 +
 +@ Retired Temple symbol stays link-compatible without a second capture route.
@@ -28107,7 +28107,7 @@ index 00000000..5322f994
 +	end
 diff --git a/data/scripts/taichung_named_xitun.inc b/data/scripts/taichung_named_xitun.inc
 new file mode 100644
-index 00000000..2258f45f
+index 00000000..6e9dd76e
 --- /dev/null
 +++ b/data/scripts/taichung_named_xitun.inc
 @@ -0,0 +1,17 @@
@@ -28118,7 +28118,7 @@ index 00000000..2258f45f
 +    goto TaichungEncounter_Interact
 +
 +TaichungLandmark_DingShengBHW::
-+    setvar VAR_0x8004, 22
++    setvar VAR_0x8004, TAICHUNG_ENCOUNTER_BLASTOISE
 +    goto TaichungEncounter_Interact
 +
 +TaichungLandmark_TheLin::
@@ -36513,10 +36513,10 @@ index 00000000..407af896
 +}
 diff --git a/data/taichung/ambient-npcs/native-overlap-offsets.inc b/data/taichung/ambient-npcs/native-overlap-offsets.inc
 new file mode 100644
-index 00000000..a1101d6c
+index 00000000..b3bbc9c1
 --- /dev/null
 +++ b/data/taichung/ambient-npcs/native-overlap-offsets.inc
-@@ -0,0 +1,451 @@
+@@ -0,0 +1,481 @@
 +// Ordered reviewed offsets from actor-contract.json; native spawn fallback only.
 +    {0, -1},
 +    {-1, 0},
@@ -36962,15 +36962,45 @@ index 00000000..a1101d6c
 +    {1, -1},
 +    {-1, 1},
 +    {1, 1},
-+    {0, 1},
-+    {0, -1},
-+    {0, 1},
-+    {0, -1},
-+    {1, 0},
 +    {-1, 0},
++    {0, -1},
++    {0, 1},
++    {1, 0},
++    {-1, -1},
++    {-1, 1},
++    {0, -2},
++    {0, 2},
++    {1, -1},
++    {1, 1},
++    {-1, -2},
++    {-1, 2},
++    {1, -2},
++    {1, 2},
++    {-1, 0},
++    {0, -1},
++    {0, 1},
++    {1, 0},
++    {-1, -1},
++    {-1, 1},
++    {1, -1},
++    {1, 1},
++    {-1, 0},
++    {0, -1},
++    {0, 1},
++    {1, 0},
++    {-2, 0},
++    {-1, -1},
++    {-1, 1},
++    {1, -1},
++    {1, 1},
++    {2, 0},
++    {-2, -1},
++    {-2, 1},
++    {2, -1},
++    {2, 1},
 diff --git a/data/taichung/ambient-npcs/native-registry.inc b/data/taichung/ambient-npcs/native-registry.inc
 new file mode 100644
-index 00000000..50e579b2
+index 00000000..f27dacae
 --- /dev/null
 +++ b/data/taichung/ambient-npcs/native-registry.inc
 @@ -0,0 +1,60 @@
@@ -37030,16 +37060,16 @@ index 00000000..50e579b2
 +    {MAP_NUM(MAP_TAICHUNG_BLVD_OLD_CITY_D_12), 1, OBJ_EVENT_GFX_SCIENTIST, MOVEMENT_TYPE_WANDER_LEFT_AND_RIGHT, 10, 4, 2, 0, 424, 4}, // resident-53 TaichungBoulevard_Ambient_SakuraShopper
 +    {MAP_NUM(MAP_TAICHUNG_BLVD_CULTURAL_HERITAGE_PARK), 2, OBJ_EVENT_GFX_CRUSH_GIRL, MOVEMENT_TYPE_WANDER_AROUND_SLOWER, 2, 29, 1, 1, 428, 8}, // resident-54 TaichungBoulevard_Ambient_XitunNeighbor
 +    {MAP_NUM(MAP_TAICHUNG_BLVD_XITUN_C_2), 2, OBJ_EVENT_GFX_WORKER_F, MOVEMENT_TYPE_WANDER_AROUND_SLOWER, 32, 41, 1, 1, 436, 8}, // resident-55 TaichungBoulevard_Ambient_WestDistrictShopper
-+// Existing generic manual trainers: final Maps-reviewed small patrols.
-+    {MAP_NUM(MAP_TAICHUNG_BLVD_CENTRAL_PARK_B_2), 1, OBJ_EVENT_GFX_MAN, MOVEMENT_TYPE_WALK_UP_AND_DOWN, 29, 17, 0, 1, 444, 2}, // TaichungBoulevard_Trainer_RunwayJogger
-+    {MAP_NUM(MAP_TAICHUNG_BLVD_SHEN_JI_NEW_VILLAGE), 1, OBJ_EVENT_GFX_CRUSH_GIRL, MOVEMENT_TYPE_WALK_UP_AND_DOWN, 29, 16, 0, 1, 446, 2}, // TaichungBoulevard_Trainer_GreenwayWalker
-+    {MAP_NUM(MAP_TAICHUNG_BLVD_CONFUCIUS_TEMPLE), 1, OBJ_EVENT_GFX_YOUNGSTER, MOVEMENT_TYPE_WALK_LEFT_AND_RIGHT, 17, 26, 1, 0, 448, 2}, // TaichungBoulevard_Trainer_NorthStudent
++// Existing generic manual trainers: fixed-anchor turning strolls.
++    {MAP_NUM(MAP_TAICHUNG_BLVD_CENTRAL_PARK_B_2), 1, OBJ_EVENT_GFX_MAN, MOVEMENT_TYPE_WANDER_AROUND_SLOWER, 29, 17, 1, 2, 444, 14}, // TaichungBoulevard_Trainer_RunwayJogger
++    {MAP_NUM(MAP_TAICHUNG_BLVD_SHEN_JI_NEW_VILLAGE), 1, OBJ_EVENT_GFX_CRUSH_GIRL, MOVEMENT_TYPE_WANDER_AROUND_SLOWER, 29, 16, 1, 1, 458, 8}, // TaichungBoulevard_Trainer_GreenwayWalker
++    {MAP_NUM(MAP_TAICHUNG_BLVD_CONFUCIUS_TEMPLE), 1, OBJ_EVENT_GFX_YOUNGSTER, MOVEMENT_TYPE_WANDER_AROUND_SLOWER, 17, 26, 2, 1, 466, 14}, // TaichungBoulevard_Trainer_NorthStudent
 diff --git a/data/taichung/ambient-npcs/trainer-patrols.json b/data/taichung/ambient-npcs/trainer-patrols.json
 new file mode 100644
-index 00000000..fe2c9c4a
+index 00000000..87002ea3
 --- /dev/null
 +++ b/data/taichung/ambient-npcs/trainer-patrols.json
-@@ -0,0 +1,53 @@
+@@ -0,0 +1,542 @@
 +[
 +  {
 +    "id": "RunwayJogger",
@@ -37052,11 +37082,198 @@ index 00000000..fe2c9c4a
 +    ],
 +    "graphics": "OBJ_EVENT_GFX_MAN",
 +    "script": "TaichungBoulevard_Trainer_RunwayJogger",
-+    "movementType": "MOVEMENT_TYPE_WALK_UP_AND_DOWN",
-+    "rangeX": 0,
-+    "rangeY": 1,
++    "movementType": "MOVEMENT_TYPE_WANDER_AROUND_SLOWER",
++    "rangeX": 1,
++    "rangeY": 2,
 +    "trainerType": "TRAINER_TYPE_NONE",
-+    "battle": "existing optional consent-gated manual battle; identity and flags unchanged"
++    "battle": "existing optional consent-gated manual battle; identity and flags unchanged",
++    "worldRoute": [
++      [
++        100,
++        41
++      ],
++      [
++        100,
++        42
++      ],
++      [
++        100,
++        43
++      ],
++      [
++        100,
++        44
++      ],
++      [
++        100,
++        45
++      ],
++      [
++        101,
++        41
++      ],
++      [
++        101,
++        42
++      ],
++      [
++        101,
++        43
++      ],
++      [
++        101,
++        44
++      ],
++      [
++        101,
++        45
++      ],
++      [
++        102,
++        41
++      ],
++      [
++        102,
++        42
++      ],
++      [
++        102,
++        43
++      ],
++      [
++        102,
++        44
++      ],
++      [
++        102,
++        45
++      ]
++    ],
++    "worldEnvelope": [
++      [
++        100,
++        41
++      ],
++      [
++        100,
++        42
++      ],
++      [
++        100,
++        43
++      ],
++      [
++        100,
++        44
++      ],
++      [
++        100,
++        45
++      ],
++      [
++        101,
++        41
++      ],
++      [
++        101,
++        42
++      ],
++      [
++        101,
++        43
++      ],
++      [
++        101,
++        44
++      ],
++      [
++        101,
++        45
++      ],
++      [
++        102,
++        41
++      ],
++      [
++        102,
++        42
++      ],
++      [
++        102,
++        43
++      ],
++      [
++        102,
++        44
++      ],
++      [
++        102,
++        45
++      ]
++    ],
++    "safeOverlapWorldCandidates": [
++      [
++        100,
++        43
++      ],
++      [
++        101,
++        42
++      ],
++      [
++        101,
++        44
++      ],
++      [
++        102,
++        43
++      ],
++      [
++        100,
++        42
++      ],
++      [
++        100,
++        44
++      ],
++      [
++        101,
++        41
++      ],
++      [
++        101,
++        45
++      ],
++      [
++        102,
++        42
++      ],
++      [
++        102,
++        44
++      ],
++      [
++        100,
++        41
++      ],
++      [
++        100,
++        45
++      ],
++      [
++        102,
++        41
++      ],
++      [
++        102,
++        45
++      ]
++    ],
++    "routeSemantics": "Unordered full native wandering envelope, not a scripted waypoint sequence",
++    "authoredWorld": [
++      101,
++      43
++    ]
 +  },
 +  {
 +    "id": "GreenwayWalker",
@@ -37069,11 +37286,126 @@ index 00000000..fe2c9c4a
 +    ],
 +    "graphics": "OBJ_EVENT_GFX_CRUSH_GIRL",
 +    "script": "TaichungBoulevard_Trainer_GreenwayWalker",
-+    "movementType": "MOVEMENT_TYPE_WALK_UP_AND_DOWN",
-+    "rangeX": 0,
++    "movementType": "MOVEMENT_TYPE_WANDER_AROUND_SLOWER",
++    "rangeX": 1,
 +    "rangeY": 1,
 +    "trainerType": "TRAINER_TYPE_NONE",
-+    "battle": "existing optional consent-gated manual battle; identity and flags unchanged"
++    "battle": "existing optional consent-gated manual battle; identity and flags unchanged",
++    "worldRoute": [
++      [
++        226,
++        161
++      ],
++      [
++        226,
++        162
++      ],
++      [
++        226,
++        163
++      ],
++      [
++        227,
++        161
++      ],
++      [
++        227,
++        162
++      ],
++      [
++        227,
++        163
++      ],
++      [
++        228,
++        161
++      ],
++      [
++        228,
++        162
++      ],
++      [
++        228,
++        163
++      ]
++    ],
++    "worldEnvelope": [
++      [
++        226,
++        161
++      ],
++      [
++        226,
++        162
++      ],
++      [
++        226,
++        163
++      ],
++      [
++        227,
++        161
++      ],
++      [
++        227,
++        162
++      ],
++      [
++        227,
++        163
++      ],
++      [
++        228,
++        161
++      ],
++      [
++        228,
++        162
++      ],
++      [
++        228,
++        163
++      ]
++    ],
++    "safeOverlapWorldCandidates": [
++      [
++        226,
++        162
++      ],
++      [
++        227,
++        161
++      ],
++      [
++        227,
++        163
++      ],
++      [
++        228,
++        162
++      ],
++      [
++        226,
++        161
++      ],
++      [
++        226,
++        163
++      ],
++      [
++        228,
++        161
++      ],
++      [
++        228,
++        163
++      ]
++    ],
++    "routeSemantics": "Unordered full native wandering envelope, not a scripted waypoint sequence",
++    "authoredWorld": [
++      227,
++      162
++    ]
 +  },
 +  {
 +    "id": "NorthStudent",
@@ -37086,11 +37418,198 @@ index 00000000..fe2c9c4a
 +    ],
 +    "graphics": "OBJ_EVENT_GFX_YOUNGSTER",
 +    "script": "TaichungBoulevard_Trainer_NorthStudent",
-+    "movementType": "MOVEMENT_TYPE_WALK_LEFT_AND_RIGHT",
-+    "rangeX": 1,
-+    "rangeY": 0,
++    "movementType": "MOVEMENT_TYPE_WANDER_AROUND_SLOWER",
++    "rangeX": 2,
++    "rangeY": 1,
 +    "trainerType": "TRAINER_TYPE_NONE",
-+    "battle": "existing optional consent-gated manual battle; identity and flags unchanged"
++    "battle": "existing optional consent-gated manual battle; identity and flags unchanged",
++    "worldRoute": [
++      [
++        327,
++        51
++      ],
++      [
++        327,
++        52
++      ],
++      [
++        327,
++        53
++      ],
++      [
++        328,
++        51
++      ],
++      [
++        328,
++        52
++      ],
++      [
++        328,
++        53
++      ],
++      [
++        329,
++        51
++      ],
++      [
++        329,
++        52
++      ],
++      [
++        329,
++        53
++      ],
++      [
++        330,
++        51
++      ],
++      [
++        330,
++        52
++      ],
++      [
++        330,
++        53
++      ],
++      [
++        331,
++        51
++      ],
++      [
++        331,
++        52
++      ],
++      [
++        331,
++        53
++      ]
++    ],
++    "worldEnvelope": [
++      [
++        327,
++        51
++      ],
++      [
++        327,
++        52
++      ],
++      [
++        327,
++        53
++      ],
++      [
++        328,
++        51
++      ],
++      [
++        328,
++        52
++      ],
++      [
++        328,
++        53
++      ],
++      [
++        329,
++        51
++      ],
++      [
++        329,
++        52
++      ],
++      [
++        329,
++        53
++      ],
++      [
++        330,
++        51
++      ],
++      [
++        330,
++        52
++      ],
++      [
++        330,
++        53
++      ],
++      [
++        331,
++        51
++      ],
++      [
++        331,
++        52
++      ],
++      [
++        331,
++        53
++      ]
++    ],
++    "safeOverlapWorldCandidates": [
++      [
++        328,
++        52
++      ],
++      [
++        329,
++        51
++      ],
++      [
++        329,
++        53
++      ],
++      [
++        330,
++        52
++      ],
++      [
++        327,
++        52
++      ],
++      [
++        328,
++        51
++      ],
++      [
++        328,
++        53
++      ],
++      [
++        330,
++        51
++      ],
++      [
++        330,
++        53
++      ],
++      [
++        331,
++        52
++      ],
++      [
++        327,
++        51
++      ],
++      [
++        327,
++        53
++      ],
++      [
++        331,
++        51
++      ],
++      [
++        331,
++        53
++      ]
++    ],
++    "routeSemantics": "Unordered full native wandering envelope, not a scripted waypoint sequence",
++    "authoredWorld": [
++      329,
++      52
++    ]
 +  }
 +]
 diff --git a/data/taichung/approved-landmarks/art/botanical-garden.png b/data/taichung/approved-landmarks/art/botanical-garden.png
@@ -65730,10 +66249,10 @@ index 00000000..fe8a60c5
 +}
 diff --git a/data/taichung/boulevard-population/trainer-patrols.json b/data/taichung/boulevard-population/trainer-patrols.json
 new file mode 100644
-index 00000000..29b7a2f7
+index 00000000..ac7df99c
 --- /dev/null
 +++ b/data/taichung/boulevard-population/trainer-patrols.json
-@@ -0,0 +1,237 @@
+@@ -0,0 +1,582 @@
 +{
 +  "schemaVersion": 1,
 +  "totalOutdoorActors": 75,
@@ -65763,10 +66282,34 @@ index 00000000..29b7a2f7
 +        101,
 +        43
 +      ],
-+      "movementType": "MOVEMENT_TYPE_WALK_UP_AND_DOWN",
-+      "rangeX": 0,
-+      "rangeY": 1,
++      "movementType": "MOVEMENT_TYPE_WANDER_AROUND_SLOWER",
++      "rangeX": 1,
++      "rangeY": 2,
 +      "worldRoute": [
++        [
++          100,
++          41
++        ],
++        [
++          100,
++          42
++        ],
++        [
++          100,
++          43
++        ],
++        [
++          100,
++          44
++        ],
++        [
++          100,
++          45
++        ],
++        [
++          101,
++          41
++        ],
 +        [
 +          101,
 +          42
@@ -65778,41 +66321,156 @@ index 00000000..29b7a2f7
 +        [
 +          101,
 +          44
-+        ]
-+      ],
-+      "safeParallelWorldRoutes": [
-+        [
-+          [
-+            100,
-+            42
-+          ],
-+          [
-+            100,
-+            43
-+          ],
-+          [
-+            100,
-+            44
-+          ]
 +        ],
 +        [
-+          [
-+            102,
-+            42
-+          ],
-+          [
-+            102,
-+            43
-+          ],
-+          [
-+            102,
-+            44
-+          ]
++          101,
++          45
++        ],
++        [
++          102,
++          41
++        ],
++        [
++          102,
++          42
++        ],
++        [
++          102,
++          43
++        ],
++        [
++          102,
++          44
++        ],
++        [
++          102,
++          45
 +        ]
 +      ],
 +      "manualTrainerInteraction": true,
 +      "trainerIdentityUnchanged": true,
-+      "runtimeBattleQualificationOwner": "Gameplay"
++      "runtimeBattleQualificationOwner": "Gameplay",
++      "worldEnvelope": [
++        [
++          100,
++          41
++        ],
++        [
++          100,
++          42
++        ],
++        [
++          100,
++          43
++        ],
++        [
++          100,
++          44
++        ],
++        [
++          100,
++          45
++        ],
++        [
++          101,
++          41
++        ],
++        [
++          101,
++          42
++        ],
++        [
++          101,
++          43
++        ],
++        [
++          101,
++          44
++        ],
++        [
++          101,
++          45
++        ],
++        [
++          102,
++          41
++        ],
++        [
++          102,
++          42
++        ],
++        [
++          102,
++          43
++        ],
++        [
++          102,
++          44
++        ],
++        [
++          102,
++          45
++        ]
++      ],
++      "safeOverlapWorldCandidates": [
++        [
++          100,
++          43
++        ],
++        [
++          101,
++          42
++        ],
++        [
++          101,
++          44
++        ],
++        [
++          102,
++          43
++        ],
++        [
++          100,
++          42
++        ],
++        [
++          100,
++          44
++        ],
++        [
++          101,
++          41
++        ],
++        [
++          101,
++          45
++        ],
++        [
++          102,
++          42
++        ],
++        [
++          102,
++          44
++        ],
++        [
++          100,
++          41
++        ],
++        [
++          100,
++          45
++        ],
++        [
++          102,
++          41
++        ],
++        [
++          102,
++          45
++        ]
++      ],
++      "routeSemantics": "Unordered full native wandering envelope, not a scripted waypoint sequence"
 +    },
 +    {
 +      "id": "patrol-GreenwayWalker",
@@ -65837,10 +66495,22 @@ index 00000000..29b7a2f7
 +        227,
 +        163
 +      ],
-+      "movementType": "MOVEMENT_TYPE_WALK_UP_AND_DOWN",
-+      "rangeX": 0,
++      "movementType": "MOVEMENT_TYPE_WANDER_AROUND_SLOWER",
++      "rangeX": 1,
 +      "rangeY": 1,
 +      "worldRoute": [
++        [
++          226,
++          161
++        ],
++        [
++          226,
++          162
++        ],
++        [
++          226,
++          163
++        ],
 +        [
 +          227,
 +          161
@@ -65852,41 +66522,96 @@ index 00000000..29b7a2f7
 +        [
 +          227,
 +          163
-+        ]
-+      ],
-+      "safeParallelWorldRoutes": [
-+        [
-+          [
-+            226,
-+            161
-+          ],
-+          [
-+            226,
-+            162
-+          ],
-+          [
-+            226,
-+            163
-+          ]
 +        ],
 +        [
-+          [
-+            228,
-+            161
-+          ],
-+          [
-+            228,
-+            162
-+          ],
-+          [
-+            228,
-+            163
-+          ]
++          228,
++          161
++        ],
++        [
++          228,
++          162
++        ],
++        [
++          228,
++          163
 +        ]
 +      ],
 +      "manualTrainerInteraction": true,
 +      "trainerIdentityUnchanged": true,
-+      "runtimeBattleQualificationOwner": "Gameplay"
++      "runtimeBattleQualificationOwner": "Gameplay",
++      "worldEnvelope": [
++        [
++          226,
++          161
++        ],
++        [
++          226,
++          162
++        ],
++        [
++          226,
++          163
++        ],
++        [
++          227,
++          161
++        ],
++        [
++          227,
++          162
++        ],
++        [
++          227,
++          163
++        ],
++        [
++          228,
++          161
++        ],
++        [
++          228,
++          162
++        ],
++        [
++          228,
++          163
++        ]
++      ],
++      "safeOverlapWorldCandidates": [
++        [
++          226,
++          162
++        ],
++        [
++          227,
++          161
++        ],
++        [
++          227,
++          163
++        ],
++        [
++          228,
++          162
++        ],
++        [
++          226,
++          161
++        ],
++        [
++          226,
++          163
++        ],
++        [
++          228,
++          161
++        ],
++        [
++          228,
++          163
++        ]
++      ],
++      "routeSemantics": "Unordered full native wandering envelope, not a scripted waypoint sequence"
 +    },
 +    {
 +      "id": "patrol-NorthStudent",
@@ -65911,56 +66636,195 @@ index 00000000..29b7a2f7
 +        329,
 +        52
 +      ],
-+      "movementType": "MOVEMENT_TYPE_WALK_LEFT_AND_RIGHT",
-+      "rangeX": 1,
-+      "rangeY": 0,
++      "movementType": "MOVEMENT_TYPE_WANDER_AROUND_SLOWER",
++      "rangeX": 2,
++      "rangeY": 1,
 +      "worldRoute": [
++        [
++          327,
++          51
++        ],
++        [
++          327,
++          52
++        ],
++        [
++          327,
++          53
++        ],
++        [
++          328,
++          51
++        ],
 +        [
 +          328,
 +          52
++        ],
++        [
++          328,
++          53
++        ],
++        [
++          329,
++          51
 +        ],
 +        [
 +          329,
 +          52
 +        ],
 +        [
-+          330,
-+          52
-+        ]
-+      ],
-+      "safeParallelWorldRoutes": [
-+        [
-+          [
-+            328,
-+            51
-+          ],
-+          [
-+            329,
-+            51
-+          ],
-+          [
-+            330,
-+            51
-+          ]
++          329,
++          53
 +        ],
 +        [
-+          [
-+            328,
-+            53
-+          ],
-+          [
-+            329,
-+            53
-+          ],
-+          [
-+            330,
-+            53
-+          ]
++          330,
++          51
++        ],
++        [
++          330,
++          52
++        ],
++        [
++          330,
++          53
++        ],
++        [
++          331,
++          51
++        ],
++        [
++          331,
++          52
++        ],
++        [
++          331,
++          53
 +        ]
 +      ],
 +      "manualTrainerInteraction": true,
 +      "trainerIdentityUnchanged": true,
-+      "runtimeBattleQualificationOwner": "Gameplay"
++      "runtimeBattleQualificationOwner": "Gameplay",
++      "worldEnvelope": [
++        [
++          327,
++          51
++        ],
++        [
++          327,
++          52
++        ],
++        [
++          327,
++          53
++        ],
++        [
++          328,
++          51
++        ],
++        [
++          328,
++          52
++        ],
++        [
++          328,
++          53
++        ],
++        [
++          329,
++          51
++        ],
++        [
++          329,
++          52
++        ],
++        [
++          329,
++          53
++        ],
++        [
++          330,
++          51
++        ],
++        [
++          330,
++          52
++        ],
++        [
++          330,
++          53
++        ],
++        [
++          331,
++          51
++        ],
++        [
++          331,
++          52
++        ],
++        [
++          331,
++          53
++        ]
++      ],
++      "safeOverlapWorldCandidates": [
++        [
++          328,
++          52
++        ],
++        [
++          329,
++          51
++        ],
++        [
++          329,
++          53
++        ],
++        [
++          330,
++          52
++        ],
++        [
++          327,
++          52
++        ],
++        [
++          328,
++          51
++        ],
++        [
++          328,
++          53
++        ],
++        [
++          330,
++          51
++        ],
++        [
++          330,
++          53
++        ],
++        [
++          331,
++          52
++        ],
++        [
++          327,
++          51
++        ],
++        [
++          327,
++          53
++        ],
++        [
++          331,
++          51
++        ],
++        [
++          331,
++          53
++        ]
++      ],
++      "routeSemantics": "Unordered full native wandering envelope, not a scripted waypoint sequence"
 +    }
 +  ],
 +  "stationaryTrainerReasons": {
@@ -65970,6 +66834,57 @@ index 00000000..29b7a2f7
 +    "Shopkeeper": "Stationed shopkeeper.",
 +    "VillagePainter": "Rainbow Village-affiliated painter."
 +  }
++}
+diff --git a/data/taichung/boulevard-population/trainer-pause-proof.json b/data/taichung/boulevard-population/trainer-pause-proof.json
+new file mode 100644
+index 00000000..4b7e007a
+--- /dev/null
++++ b/data/taichung/boulevard-population/trainer-pause-proof.json
+@@ -0,0 +1,45 @@
++{
++  "passed": true,
++  "baselineResidentSource": "234b32ec",
++  "scope": "Only three already-qualified manual trainer movement enums; all three full envelopes remain exact",
++  "actors": [
++    {
++      "file": "data/maps/TaichungBlvdShenJiNewVillage/map.json",
++      "localId": 1,
++      "before": "MOVEMENT_TYPE_WALK_UP_AND_DOWN",
++      "after": "MOVEMENT_TYPE_WANDER_UP_AND_DOWN",
++      "x": 29,
++      "y": 16,
++      "rangeX": 0,
++      "rangeY": 1,
++      "script": "TaichungBoulevard_Trainer_GreenwayWalker"
++    },
++    {
++      "file": "data/maps/TaichungBlvdConfuciusTemple/map.json",
++      "localId": 1,
++      "before": "MOVEMENT_TYPE_WALK_LEFT_AND_RIGHT",
++      "after": "MOVEMENT_TYPE_WANDER_LEFT_AND_RIGHT",
++      "x": 17,
++      "y": 26,
++      "rangeX": 1,
++      "rangeY": 0,
++      "script": "TaichungBoulevard_Trainer_NorthStudent"
++    },
++    {
++      "file": "data/maps/TaichungBlvdCentralParkB2/map.json",
++      "localId": 1,
++      "before": "MOVEMENT_TYPE_WALK_UP_AND_DOWN",
++      "after": "MOVEMENT_TYPE_WANDER_UP_AND_DOWN",
++      "x": 29,
++      "y": 17,
++      "rangeX": 0,
++      "rangeY": 1,
++      "script": "TaichungBoulevard_Trainer_RunwayJogger"
++    }
++  ],
++  "terrainWarpsSignsGraphicsScriptsRolesEnvelopesExact": true,
++  "outdoorTotal": 75,
++  "moving": 58,
++  "regularResidents": 55,
++  "gameplayNativeRegistryAndBattleQualification": "Separate required Gameplay slice; not included"
 +}
 diff --git a/data/taichung/capture-gameplay-guard/registration.json b/data/taichung/capture-gameplay-guard/registration.json
 new file mode 100644
@@ -97599,41 +98514,49 @@ index 00000000..83f5389d
 +}
 diff --git a/data/taichung/encounters/sites.json b/data/taichung/encounters/sites.json
 new file mode 100644
-index 00000000..df26286b
+index 00000000..2dfa1ea3
 --- /dev/null
 +++ b/data/taichung/encounters/sites.json
-@@ -0,0 +1,419 @@
+@@ -0,0 +1,481 @@
 +{
 +  "schemaVersion": 1,
-+  "baseNativeCommit": "6ae533a874c6a4d05775c60f589472947bca0d28",
++  "baseNativeCommit": "3000e237cc1836e5e04b574ed8918da9d2d72b75",
 +  "state": {
 +    "schemaVar": "0x40F3",
-+    "marker": "0xEC02",
++    "marker": "0xEC03",
 +    "attemptVar": "0x40F4",
 +    "unlockVar": "0x40F5",
 +    "legacyMarker": "0xEC01",
 +    "attemptUpperVar": "0x40F0",
 +    "unlockUpperVar": "0x40F2",
-+    "lowBits": 10
++    "lowBits": 10,
++    "previousMarker": "0xEC02",
++    "previousSupportedMask": "0x00FFFFFF",
++    "extraVar": "0x40EF",
++    "extraAttemptBit": "0x0001",
++    "extraUnlockBit": "0x0100",
++    "extraReservedMask": "0xFEFE",
++    "supportedMask": "0x07FFFFFF"
 +  },
 +  "interactionApi": "TaichungEncounter_Interact; VAR_0x8004=stableSiteId",
 +  "coordinates": "Maps owns event positions and geometry; none assigned by this manifest.",
 +  "sites": [
 +    {
 +      "stableSiteId": 0,
-+      "siteSlug": "maple-garden",
++      "siteSlug": "botanical-garden",
 +      "speciesDex": 131,
 +      "species": "LAPRAS",
 +      "level": 65,
 +      "moves": [
-+        "MOVE_WATER_GUN",
++        "MOVE_SURF",
 +        "MOVE_ICE_BEAM",
-+        "MOVE_GROWL",
-+        "MOVE_MIST"
++        "MOVE_BODY_SLAM",
++        "MOVE_SING"
 +      ],
-+      "entryScript": "TaichungEncounter_MapleGarden",
++      "entryScript": "TaichungEncounter_BotanicalGarden",
 +      "existingPlace": true,
-+      "currentBinding": "TaichungCity_Sign_MapleGarden"
++      "currentBinding": "TaichungCity_Sign_BotanicalGarden",
++      "history": "Lapras keeps savedID0 when moving from Maple Garden; no new attempt."
 +    },
 +    {
 +      "stableSiteId": 1,
@@ -97833,7 +98756,7 @@ index 00000000..df26286b
 +    },
 +    {
 +      "stableSiteId": 13,
-+      "siteSlug": "jingming-street",
++      "siteSlug": "jingming-street-legacy",
 +      "speciesDex": 38,
 +      "species": "NINETALES",
 +      "level": 65,
@@ -97843,9 +98766,10 @@ index 00000000..df26286b
 +        "MOVE_TAIL_WHIP",
 +        "MOVE_CONFUSE_RAY"
 +      ],
-+      "entryScript": "TaichungEncounter_JingmingStreet",
++      "entryScript": null,
 +      "existingPlace": true,
-+      "currentBinding": "TaichungBoulevard_Sign_JingmingStreet"
++      "currentBinding": null,
++      "retired": true
 +    },
 +    {
 +      "stableSiteId": 14,
@@ -97914,7 +98838,7 @@ index 00000000..df26286b
 +    },
 +    {
 +      "stableSiteId": 18,
-+      "siteSlug": "botanical-garden",
++      "siteSlug": "botanical-garden-victreebel-legacy",
 +      "speciesDex": 71,
 +      "species": "VICTREEBEL",
 +      "level": 65,
@@ -97924,9 +98848,10 @@ index 00000000..df26286b
 +        "MOVE_STUN_SPORE",
 +        "MOVE_SWEET_SCENT"
 +      ],
-+      "entryScript": "TaichungEncounter_BotanicalGarden",
++      "entryScript": null,
 +      "existingPlace": true,
-+      "currentBinding": "TaichungCity_Sign_BotanicalGarden"
++      "currentBinding": null,
++      "retired": true
 +    },
 +    {
 +      "stableSiteId": 19,
@@ -97978,7 +98903,7 @@ index 00000000..df26286b
 +    },
 +    {
 +      "stableSiteId": 22,
-+      "siteSlug": "ding-sheng-bhw",
++      "siteSlug": "ding-sheng-bhw-legacy",
 +      "speciesDex": 141,
 +      "species": "KABUTOPS",
 +      "level": 65,
@@ -97988,9 +98913,10 @@ index 00000000..df26286b
 +        "MOVE_LEER",
 +        "MOVE_HARDEN"
 +      ],
-+      "entryScript": "TaichungEncounter_DingShengBHW",
++      "entryScript": null,
 +      "existingPlace": true,
-+      "currentBinding": "TaichungLandmark_DingShengBHW"
++      "currentBinding": null,
++      "retired": true
 +    },
 +    {
 +      "stableSiteId": 23,
@@ -98007,6 +98933,57 @@ index 00000000..df26286b
 +      "entryScript": "TaichungEncounter_TheLin",
 +      "existingPlace": true,
 +      "currentBinding": "TaichungLandmark_TheLin"
++    },
++    {
++      "stableSiteId": 24,
++      "siteSlug": "jingming-street",
++      "speciesDex": 6,
++      "species": "CHARIZARD",
++      "level": 65,
++      "moves": [
++        "MOVE_FLAMETHROWER",
++        "MOVE_WING_ATTACK",
++        "MOVE_DRAGON_CLAW",
++        "MOVE_SMOKESCREEN"
++      ],
++      "entryScript": "TaichungEncounter_JingmingStreet",
++      "existingPlace": true,
++      "currentBinding": "TaichungBoulevard_Sign_JingmingStreet",
++      "history": "Independent new starter history; no inherited old location or free-picker unlock."
++    },
++    {
++      "stableSiteId": 25,
++      "siteSlug": "ding-sheng-bhw",
++      "speciesDex": 9,
++      "species": "BLASTOISE",
++      "level": 65,
++      "moves": [
++        "MOVE_SURF",
++        "MOVE_ICE_BEAM",
++        "MOVE_BITE",
++        "MOVE_SKULL_BASH"
++      ],
++      "entryScript": "TaichungEncounter_DingShengBHW",
++      "existingPlace": true,
++      "currentBinding": "TaichungLandmark_DingShengBHW",
++      "history": "Independent new starter history; no inherited old location or free-picker unlock."
++    },
++    {
++      "stableSiteId": 26,
++      "siteSlug": "maple-garden",
++      "speciesDex": 3,
++      "species": "VENUSAUR",
++      "level": 65,
++      "moves": [
++        "MOVE_SOLAR_BEAM",
++        "MOVE_SLUDGE_BOMB",
++        "MOVE_SUNNY_DAY",
++        "MOVE_SLEEP_POWDER"
++      ],
++      "entryScript": "TaichungEncounter_MapleGarden",
++      "existingPlace": true,
++      "currentBinding": "TaichungCity_Sign_MapleGarden",
++      "history": "Independent new starter history; no inherited old location or free-picker unlock."
 +    }
 +  ],
 +  "capture": {
@@ -98014,12 +98991,12 @@ index 00000000..df26286b
 +    "throws": 3,
 +    "minimumCatchRate": 45
 +  },
-+  "supportedSiteCount": 24,
-+  "allMask": "0x00FFFFFF",
++  "supportedSiteCount": 27,
++  "allMask": "0x07FFFFFF",
 +  "bridge": {
 +    "version": 2,
 +    "size": 72,
-+    "change": "count/mask/registry bounds only; EC02 unchanged"
++    "change": "27-slot bounds and EC03 save history; v2/72-byte packet shape unchanged"
 +  }
 +}
 diff --git a/data/taichung/greenway-grove-flower-beds/audit-before.json b/data/taichung/greenway-grove-flower-beds/audit-before.json
@@ -302839,7 +303816,7 @@ index 00000000..fe8b131d
 +}
 diff --git a/data/taichung/named-xitun-bindings/anchors.json b/data/taichung/named-xitun-bindings/anchors.json
 new file mode 100644
-index 00000000..9c9126f0
+index 00000000..2c4da7ed
 --- /dev/null
 +++ b/data/taichung/named-xitun-bindings/anchors.json
 @@ -0,0 +1,208 @@
@@ -302920,8 +303897,8 @@ index 00000000..9c9126f0
 +        "en": "Ding Sheng BHW",
 +        "zh": "鼎盛BHW"
 +      },
-+      "captureSiteId": 22,
-+      "species": "Kabutops",
++      "captureSiteId": 25,
++      "species": "Blastoise",
 +      "gym": false,
 +      "game": {
 +        "authoredWorldRect": [
@@ -375331,6 +376308,461 @@ index 00000000..5ecf32f3
 +  "privateSecondaryTiles": 118,
 +  "secondaryTileCapacity": 384,
 +  "privateMetatiles": 72
++}
+diff --git a/data/taichung/turning-trainers/chosen-routes.json b/data/taichung/turning-trainers/chosen-routes.json
+new file mode 100644
+index 00000000..4e09c0ad
+--- /dev/null
++++ b/data/taichung/turning-trainers/chosen-routes.json
+@@ -0,0 +1,370 @@
++{
++  "actors": [
++    {
++      "id": "patrol-RunwayJogger",
++      "map": "43:34",
++      "localId": 1,
++      "localAnchor": [
++        29,
++        17
++      ],
++      "worldAnchor": [
++        101,
++        43
++      ],
++      "movementType": "MOVEMENT_TYPE_WANDER_AROUND_SLOWER",
++      "rangeX": 1,
++      "rangeY": 2,
++      "worldEnvelope": [
++        [
++          100,
++          41
++        ],
++        [
++          100,
++          42
++        ],
++        [
++          100,
++          43
++        ],
++        [
++          100,
++          44
++        ],
++        [
++          100,
++          45
++        ],
++        [
++          101,
++          41
++        ],
++        [
++          101,
++          42
++        ],
++        [
++          101,
++          43
++        ],
++        [
++          101,
++          44
++        ],
++        [
++          101,
++          45
++        ],
++        [
++          102,
++          41
++        ],
++        [
++          102,
++          42
++        ],
++        [
++          102,
++          43
++        ],
++        [
++          102,
++          44
++        ],
++        [
++          102,
++          45
++        ]
++      ],
++      "safeOverlapWorldCandidates": [
++        [
++          100,
++          43
++        ],
++        [
++          101,
++          42
++        ],
++        [
++          101,
++          44
++        ],
++        [
++          102,
++          43
++        ],
++        [
++          100,
++          42
++        ],
++        [
++          100,
++          44
++        ],
++        [
++          101,
++          41
++        ],
++        [
++          101,
++          45
++        ],
++        [
++          102,
++          42
++        ],
++        [
++          102,
++          44
++        ],
++        [
++          100,
++          41
++        ],
++        [
++          100,
++          45
++        ],
++        [
++          102,
++          41
++        ],
++        [
++          102,
++          45
++        ]
++      ]
++    },
++    {
++      "id": "patrol-GreenwayWalker",
++      "map": "43:60",
++      "localId": 1,
++      "localAnchor": [
++        29,
++        16
++      ],
++      "worldAnchor": [
++        227,
++        162
++      ],
++      "movementType": "MOVEMENT_TYPE_WANDER_AROUND_SLOWER",
++      "rangeX": 1,
++      "rangeY": 1,
++      "worldEnvelope": [
++        [
++          226,
++          161
++        ],
++        [
++          226,
++          162
++        ],
++        [
++          226,
++          163
++        ],
++        [
++          227,
++          161
++        ],
++        [
++          227,
++          162
++        ],
++        [
++          227,
++          163
++        ],
++        [
++          228,
++          161
++        ],
++        [
++          228,
++          162
++        ],
++        [
++          228,
++          163
++        ]
++      ],
++      "safeOverlapWorldCandidates": [
++        [
++          226,
++          162
++        ],
++        [
++          227,
++          161
++        ],
++        [
++          227,
++          163
++        ],
++        [
++          228,
++          162
++        ],
++        [
++          226,
++          161
++        ],
++        [
++          226,
++          163
++        ],
++        [
++          228,
++          161
++        ],
++        [
++          228,
++          163
++        ]
++      ]
++    },
++    {
++      "id": "patrol-NorthStudent",
++      "map": "43:69",
++      "localId": 1,
++      "localAnchor": [
++        17,
++        26
++      ],
++      "worldAnchor": [
++        329,
++        52
++      ],
++      "movementType": "MOVEMENT_TYPE_WANDER_AROUND_SLOWER",
++      "rangeX": 2,
++      "rangeY": 1,
++      "worldEnvelope": [
++        [
++          327,
++          51
++        ],
++        [
++          327,
++          52
++        ],
++        [
++          327,
++          53
++        ],
++        [
++          328,
++          51
++        ],
++        [
++          328,
++          52
++        ],
++        [
++          328,
++          53
++        ],
++        [
++          329,
++          51
++        ],
++        [
++          329,
++          52
++        ],
++        [
++          329,
++          53
++        ],
++        [
++          330,
++          51
++        ],
++        [
++          330,
++          52
++        ],
++        [
++          330,
++          53
++        ],
++        [
++          331,
++          51
++        ],
++        [
++          331,
++          52
++        ],
++        [
++          331,
++          53
++        ]
++      ],
++      "safeOverlapWorldCandidates": [
++        [
++          328,
++          52
++        ],
++        [
++          329,
++          51
++        ],
++        [
++          329,
++          53
++        ],
++        [
++          330,
++          52
++        ],
++        [
++          327,
++          52
++        ],
++        [
++          328,
++          51
++        ],
++        [
++          328,
++          53
++        ],
++        [
++          330,
++          51
++        ],
++        [
++          330,
++          53
++        ],
++        [
++          331,
++          52
++        ],
++        [
++          327,
++          51
++        ],
++        [
++          327,
++          53
++        ],
++        [
++          331,
++          51
++        ],
++        [
++          331,
++          53
++        ]
++      ]
++    }
++  ],
++  "allThreeCombinedEnvelopesPreserveCityConnectivity": true,
++  "everySingleOccupiedNpcPositionPreservesTravel": true,
++  "anchorRelocations": 0,
++  "newMapGeometry": false,
++  "newArt": false,
++  "ordinaryResidentsUnchanged": 55
++}
+diff --git a/data/taichung/turning-trainers/source-proof.json b/data/taichung/turning-trainers/source-proof.json
+new file mode 100644
+index 00000000..9b4db723
+--- /dev/null
++++ b/data/taichung/turning-trainers/source-proof.json
+@@ -0,0 +1,73 @@
++{
++  "passed": true,
++  "baseline": "18409f114027a17104f8c72d1384cdf8d8f74b4b",
++  "generatedFilesCompared": 340,
++  "onlyChangedNativeObjects": [
++    {
++      "map": "TaichungBlvdCentralParkB2",
++      "localId": 1,
++      "script": "TaichungBoulevard_Trainer_RunwayJogger",
++      "anchor": [
++        29,
++        17
++      ],
++      "ranges": [
++        1,
++        2
++      ]
++    },
++    {
++      "map": "TaichungBlvdConfuciusTemple",
++      "localId": 1,
++      "script": "TaichungBoulevard_Trainer_NorthStudent",
++      "anchor": [
++        17,
++        26
++      ],
++      "ranges": [
++        2,
++        1
++      ]
++    },
++    {
++      "map": "TaichungBlvdShenJiNewVillage",
++      "localId": 1,
++      "script": "TaichungBoulevard_Trainer_GreenwayWalker",
++      "anchor": [
++        29,
++        16
++      ],
++      "ranges": [
++        1,
++        1
++      ]
++    }
++  ],
++  "geometryCollisionMetatilesPalettesArtWarpsSignsConnectionsExact": true,
++  "all75LocalIdsScriptsGraphicsRolesAndAnchorsUnchanged": true,
++  "all55OrdinaryResidentsUnchanged": true,
++  "walkableCells": 40165,
++  "budget": {
++    "tileSlots": 1003,
++    "paletteSlots": 13,
++    "worstTiles": [
++      778,
++      [
++        323,
++        161
++      ]
++    ],
++    "worstPalettes": [
++      13,
++      [
++        359,
++        123
++      ]
++    ],
++    "positions": 40165,
++    "graphicsPool": 14967,
++    "metatileIdsUsed": 1552
++  },
++  "sourceSafety": "Compiler checks full rectangle, road exclusion, clear event buffer and connectivity with all envelopes removed",
++  "saveCacheCompatibility": "Same generic native registry/overlap helper; updated exact three records and all in-envelope fallback offsets only"
 +}
 diff --git a/data/taichung/xitun-rework/fill.json b/data/taichung/xitun-rework/fill.json
 new file mode 100644
@@ -611411,10 +612843,10 @@ index 00000000..a486066c
 +#endif
 diff --git a/include/constants/taichung_encounters.h b/include/constants/taichung_encounters.h
 new file mode 100644
-index 00000000..00bd72cb
+index 00000000..580733f7
 --- /dev/null
 +++ b/include/constants/taichung_encounters.h
-@@ -0,0 +1,72 @@
+@@ -0,0 +1,90 @@
 +#ifndef GUARD_CONSTANTS_TAICHUNG_ENCOUNTERS_H
 +#define GUARD_CONSTANTS_TAICHUNG_ENCOUNTERS_H
 +
@@ -611425,9 +612857,18 @@ index 00000000..00bd72cb
 +#define TAICHUNG_ENCOUNTER_ATTEMPT_UPPER_VAR 0x40F0
 +#define TAICHUNG_ENCOUNTER_UNLOCK_UPPER_VAR 0x40F2
 +#define TAICHUNG_ENCOUNTER_SCHEMA_V1 0xEC01
-+#define TAICHUNG_ENCOUNTER_SCHEMA 0xEC02
-+#define TAICHUNG_ENCOUNTER_COUNT 24
-+#define TAICHUNG_ENCOUNTER_ALL_MASK 0x00FFFFFF
++#define TAICHUNG_ENCOUNTER_SCHEMA_V2 0xEC02
++#define TAICHUNG_ENCOUNTER_SCHEMA 0xEC03
++#define TAICHUNG_ENCOUNTER_V2_MASK 0x00FFFFFF
++// EC03 adds site26 without reusing any historical bit. Other bits in this
++// newly allocated word are reserved and must remain zero.
++#define TAICHUNG_ENCOUNTER_EXTRA_VAR 0x40EF
++#define TAICHUNG_ENCOUNTER_EXTRA_ATTEMPT_BIT 0x0001
++#define TAICHUNG_ENCOUNTER_EXTRA_UNLOCK_BIT 0x0100
++#define TAICHUNG_ENCOUNTER_EXTRA_USED_MASK 0x0101
++#define TAICHUNG_ENCOUNTER_EXTRA_RESERVED_MASK 0xFEFE
++#define TAICHUNG_ENCOUNTER_COUNT 27
++#define TAICHUNG_ENCOUNTER_ALL_MASK 0x07FFFFFF
 +// The original ten positions share the physical low word with old reserved bits.
 +#define TAICHUNG_ENCOUNTER_SAVE_LOW_BITS 10
 +#define TAICHUNG_ENCOUNTER_SAVE_LOW_MASK 0x03FF
@@ -611464,10 +612905,19 @@ index 00000000..00bd72cb
 +#define TAICHUNG_ENCOUNTER_NATIONAL_TRADE_CENTER 21
 +#define TAICHUNG_ENCOUNTER_DING_SHENG_BHW 22
 +#define TAICHUNG_ENCOUNTER_THE_LIN 23
++#define TAICHUNG_ENCOUNTER_CHARIZARD 24
++#define TAICHUNG_ENCOUNTER_BLASTOISE 25
++#define TAICHUNG_ENCOUNTER_VENUSAUR 26
++// Historic location-named constants above retain their original saved IDs.
++// Current location wrappers below the registry choose these new species IDs.
++#define TAICHUNG_ENCOUNTER_LAPRAS TAICHUNG_ENCOUNTER_MAPLE_GARDEN
 +#define TAICHUNG_ENCOUNTER_RETIRED_MASK ((1u << TAICHUNG_ENCOUNTER_LEGACY_BOTANICAL_GARDEN) \
 +    | (1u << TAICHUNG_ENCOUNTER_LEGACY_FENGLE_SCULPTURE_PARK) \
 +    | (1u << TAICHUNG_ENCOUNTER_LEGACY_WENXIN_FOREST_PARK) \
-+    | (1u << TAICHUNG_ENCOUNTER_LEGACY_GREEN_MUSEUMBRARY))
++    | (1u << TAICHUNG_ENCOUNTER_LEGACY_GREEN_MUSEUMBRARY) \
++    | (1u << TAICHUNG_ENCOUNTER_JINGMING_STREET) \
++    | (1u << TAICHUNG_ENCOUNTER_BOTANICAL_GARDEN) \
++    | (1u << TAICHUNG_ENCOUNTER_DING_SHENG_BHW))
 +
 +#define TAICHUNG_ENCOUNTER_PHASE_IDLE 0
 +#define TAICHUNG_ENCOUNTER_PHASE_SAVE_BEGIN 1
@@ -622816,10 +624266,10 @@ index 00000000..47759efa
 +}
 diff --git a/src/taichung_encounter.c b/src/taichung_encounter.c
 new file mode 100644
-index 00000000..d113b328
+index 00000000..8ccaf100
 --- /dev/null
 +++ b/src/taichung_encounter.c
-@@ -0,0 +1,261 @@
+@@ -0,0 +1,281 @@
 +#include "global.h"
 +#include "event_data.h"
 +#include "taichung_encounter.h"
@@ -622829,7 +624279,7 @@ index 00000000..d113b328
 +#include "constants/vars.h"
 +
 +static const struct TaichungEncounterSite sSites[TAICHUNG_ENCOUNTER_COUNT] = {
-+    {"maple-garden", SPECIES_LAPRAS, 65, {MOVE_WATER_GUN, MOVE_ICE_BEAM, MOVE_GROWL, MOVE_MIST}},
++    {"botanical-garden", SPECIES_LAPRAS, 65, {MOVE_SURF, MOVE_ICE_BEAM, MOVE_BODY_SLAM, MOVE_SING}},
 +    {"wenchang-temple", SPECIES_GYARADOS, 70, {MOVE_BITE, MOVE_WATERFALL, MOVE_LEER, MOVE_TWISTER}},
 +    {"botanical-garden-legacy", SPECIES_EXEGGUTOR, 65, {MOVE_CONFUSION, MOVE_STOMP, MOVE_LEECH_SEED, MOVE_REFLECT}},
 +    {"shen-ji-new-village", SPECIES_ALAKAZAM, 65, {MOVE_CONFUSION, MOVE_PSYBEAM, MOVE_KINESIS, MOVE_REFLECT}},
@@ -622842,17 +624292,20 @@ index 00000000..d113b328
 +    {"green-museumbrary", SPECIES_DRAGONITE, 72, {MOVE_WING_ATTACK, MOVE_TWISTER, MOVE_THUNDER_WAVE, MOVE_SAFEGUARD}},
 +    {"rainbow-village", SPECIES_CLEFABLE, 67, {MOVE_BODY_SLAM, MOVE_PSYWAVE, MOVE_REFLECT, MOVE_SING}},
 +    {"city-hall", SPECIES_MEWTWO, 75, {MOVE_PSYCHIC, MOVE_SWIFT, MOVE_BARRIER, MOVE_SAFEGUARD}},
-+    {"jingming-street", SPECIES_NINETALES, 65, {MOVE_FLAMETHROWER, MOVE_QUICK_ATTACK, MOVE_TAIL_WHIP, MOVE_CONFUSE_RAY}},
++    {"jingming-street-legacy", SPECIES_NINETALES, 65, {MOVE_FLAMETHROWER, MOVE_QUICK_ATTACK, MOVE_TAIL_WHIP, MOVE_CONFUSE_RAY}},
 +    {"tiger-city", SPECIES_ZAPDOS, 75, {MOVE_THUNDERBOLT, MOVE_DRILL_PECK, MOVE_AGILITY, MOVE_LIGHT_SCREEN}},
 +    {"green-museumbrary-legacy", SPECIES_PORYGON, 65, {MOVE_TRI_ATTACK, MOVE_PSYBEAM, MOVE_AGILITY, MOVE_CONVERSION}},
 +    {"baseball-stadium", SPECIES_AERODACTYL, 72, {MOVE_WING_ATTACK, MOVE_ANCIENT_POWER, MOVE_SCARY_FACE, MOVE_SUPERSONIC}},
 +    {"folklore-park", SPECIES_GENGAR, 68, {MOVE_SHADOW_BALL, MOVE_NIGHT_SHADE, MOVE_CONFUSE_RAY, MOVE_LICK}},
-+    {"botanical-garden", SPECIES_VICTREEBEL, 65, {MOVE_RAZOR_LEAF, MOVE_ACID, MOVE_STUN_SPORE, MOVE_SWEET_SCENT}},
++    {"botanical-garden-victreebel-legacy", SPECIES_VICTREEBEL, 65, {MOVE_RAZOR_LEAF, MOVE_ACID, MOVE_STUN_SPORE, MOVE_SWEET_SCENT}},
 +    {"fengle-sculpture-park", SPECIES_RHYDON, 68, {MOVE_ROCK_SLIDE, MOVE_STOMP, MOVE_SCARY_FACE, MOVE_TAIL_WHIP}},
 +    {"wenxin-forest-park", SPECIES_ARTICUNO, 75, {MOVE_ICE_BEAM, MOVE_GUST, MOVE_MIST, MOVE_AGILITY}},
 +    {"national-trade-center", SPECIES_MAGNETON, 65, {MOVE_THUNDER_SHOCK, MOVE_SONIC_BOOM, MOVE_METAL_SOUND, MOVE_THUNDER_WAVE}},
-+    {"ding-sheng-bhw", SPECIES_KABUTOPS, 65, {MOVE_WATER_GUN, MOVE_ROCK_THROW, MOVE_LEER, MOVE_HARDEN}},
++    {"ding-sheng-bhw-legacy", SPECIES_KABUTOPS, 65, {MOVE_WATER_GUN, MOVE_ROCK_THROW, MOVE_LEER, MOVE_HARDEN}},
 +    {"the-lin", SPECIES_PERSIAN, 65, {MOVE_SCRATCH, MOVE_BITE, MOVE_GROWL, MOVE_SCREECH}},
++    {"jingming-street", SPECIES_CHARIZARD, 65, {MOVE_FLAMETHROWER, MOVE_WING_ATTACK, MOVE_DRAGON_CLAW, MOVE_SMOKESCREEN}},
++    {"ding-sheng-bhw", SPECIES_BLASTOISE, 65, {MOVE_SURF, MOVE_ICE_BEAM, MOVE_BITE, MOVE_SKULL_BASH}},
++    {"maple-garden", SPECIES_VENUSAUR, 65, {MOVE_SOLAR_BEAM, MOVE_SLUDGE_BOMB, MOVE_SUNNY_DAY, MOVE_SLEEP_POWDER}},
 +};
 +
 +static EWRAM_DATA struct
@@ -622867,17 +624320,28 @@ index 00000000..d113b328
 +    return gSaveBlock1Ptr == NULL ? 0 : gSaveBlock1Ptr->vars[var - VARS_START];
 +}
 +
++static u16 ExtraBit(u16 low)
++{
++    return low == TAICHUNG_ENCOUNTER_ATTEMPT_VAR
++        ? TAICHUNG_ENCOUNTER_EXTRA_ATTEMPT_BIT : TAICHUNG_ENCOUNTER_EXTRA_UNLOCK_BIT;
++}
++
 +static u32 SavedMask(u16 low, u16 upper)
 +{
 +    return (Saved(low) & TAICHUNG_ENCOUNTER_SAVE_LOW_MASK)
-+        | (((u32)Saved(upper) << TAICHUNG_ENCOUNTER_SAVE_LOW_BITS) & TAICHUNG_ENCOUNTER_ALL_MASK);
++        | ((u32)Saved(upper) << TAICHUNG_ENCOUNTER_SAVE_LOW_BITS)
++        | ((Saved(TAICHUNG_ENCOUNTER_EXTRA_VAR) & ExtraBit(low)) ? (1u << 26) : 0);
 +}
 +
 +static bool8 SetSiteBit(u16 low, u16 upper, u16 site)
 +{
 +    if (site < TAICHUNG_ENCOUNTER_SAVE_LOW_BITS)
 +        return VarSet(low, Saved(low) | (1u << site));
-+    return VarSet(upper, Saved(upper) | (1u << (site - TAICHUNG_ENCOUNTER_SAVE_LOW_BITS)));
++    if (site < 26)
++        return VarSet(upper, Saved(upper) | (1u << (site - TAICHUNG_ENCOUNTER_SAVE_LOW_BITS)));
++    if (site == 26)
++        return VarSet(TAICHUNG_ENCOUNTER_EXTRA_VAR, Saved(TAICHUNG_ENCOUNTER_EXTRA_VAR) | ExtraBit(low));
++    return FALSE;
 +}
 +
 +static void NextSequence(void)
@@ -622907,26 +624371,32 @@ index 00000000..d113b328
 +
 +bool8 TaichungEncounterStateReady(void)
 +{
-+    return gSaveBlock1Ptr != NULL && Saved(TAICHUNG_ENCOUNTER_SCHEMA_VAR) == TAICHUNG_ENCOUNTER_SCHEMA;
++    return gSaveBlock1Ptr != NULL && Saved(TAICHUNG_ENCOUNTER_SCHEMA_VAR) == TAICHUNG_ENCOUNTER_SCHEMA
++        && !(Saved(TAICHUNG_ENCOUNTER_EXTRA_VAR) & TAICHUNG_ENCOUNTER_EXTRA_RESERVED_MASK);
 +}
 +
 +bool8 TaichungEncounterInitSaveState(void)
 +{
 +    u16 schema;
++    u16 upperMask;
 +
 +    if (TaichungEncounterStateReady())
 +        return TRUE;
 +    if (gSaveBlock1Ptr == NULL)
 +        return FALSE;
 +    schema = Saved(TAICHUNG_ENCOUNTER_SCHEMA_VAR);
-+    if (schema != TAICHUNG_ENCOUNTER_SCHEMA_V1
++    if (schema != TAICHUNG_ENCOUNTER_SCHEMA_V1 && schema != TAICHUNG_ENCOUNTER_SCHEMA_V2
 +        && (schema != 0 || Saved(TAICHUNG_ENCOUNTER_ATTEMPT_VAR) || Saved(TAICHUNG_ENCOUNTER_UNLOCK_VAR)
 +            || Saved(TAICHUNG_ENCOUNTER_ATTEMPT_UPPER_VAR) || Saved(TAICHUNG_ENCOUNTER_UNLOCK_UPPER_VAR)))
 +        return FALSE;
-+    // Old attempts and catches keep their original ten low bits and their species.
-+    // The new upper words never reinterpret reserved bits in an older save.
-+    return VarSet(TAICHUNG_ENCOUNTER_ATTEMPT_UPPER_VAR, 0)
-+        && VarSet(TAICHUNG_ENCOUNTER_UNLOCK_UPPER_VAR, 0)
++    // EC02 supported only IDs0..23: upper bits14/15 must never become
++    // starter history. EC01 keeps its existing original-ten-bit migration.
++    // Preserve raw low-word reserved bits and every historical species bit.
++    upperMask = schema == TAICHUNG_ENCOUNTER_SCHEMA_V2
++        ? (TAICHUNG_ENCOUNTER_V2_MASK >> TAICHUNG_ENCOUNTER_SAVE_LOW_BITS) : 0;
++    return VarSet(TAICHUNG_ENCOUNTER_ATTEMPT_UPPER_VAR, Saved(TAICHUNG_ENCOUNTER_ATTEMPT_UPPER_VAR) & upperMask)
++        && VarSet(TAICHUNG_ENCOUNTER_UNLOCK_UPPER_VAR, Saved(TAICHUNG_ENCOUNTER_UNLOCK_UPPER_VAR) & upperMask)
++        && VarSet(TAICHUNG_ENCOUNTER_EXTRA_VAR, 0)
 +        && VarSet(TAICHUNG_ENCOUNTER_SCHEMA_VAR, TAICHUNG_ENCOUNTER_SCHEMA)
 +        && TaichungEncounterStateReady();
 +}
@@ -623157,10 +624627,10 @@ index 00000000..503d796e
 +}
 diff --git a/src/taichung_encounter_field.c b/src/taichung_encounter_field.c
 new file mode 100644
-index 00000000..ff72105e
+index 00000000..1842f807
 --- /dev/null
 +++ b/src/taichung_encounter_field.c
-@@ -0,0 +1,451 @@
+@@ -0,0 +1,453 @@
 +#include "global.h"
 +#include "battle.h"
 +#include "battle_setup.h"
@@ -623336,16 +624806,18 @@ index 00000000..ff72105e
 +static const u8 sDingShengZh[] = _("鼎盛BHW");
 +static const u8 sTheLinEn[] = _("The Lin");
 +static const u8 sTheLinZh[] = _("林酒店");
-+static const u8 *const sPlaces[TAICHUNG_ENCOUNTER_COUNT][2] = {
-+    {sMapleEn, sMapleZh}, {sWenchangEn, sWenchangZh}, {sBotanicalEn, sBotanicalZh},
++static const u8 *const sPlaces[][2] = {
++    {sBotanicalEn, sBotanicalZh}, {sWenchangEn, sWenchangZh}, {sBotanicalEn, sBotanicalZh},
 +    {sShenJiEn, sShenJiZh}, {sYizhongEn, sYizhongZh}, {sPrefecturalEn, sPrefecturalZh},
 +    {sSecondMarketEn, sSecondMarketZh}, {sHeritageEn, sHeritageZh}, {sFengleEn, sFengleZh},
 +    {sWenxinEn, sWenxinZh}, {sMuseumbraryEn, sMuseumbraryZh}, {sRainbowEn, sRainbowZh},
 +    {sCityHallEn, sCityHallZh}, {sJingmingEn, sJingmingZh}, {sTigerCityEn, sTigerCityZh},
 +    {sMuseumbraryEn, sMuseumbraryZh}, {sBallparkEn, sBallparkZh}, {sFolkloreEn, sFolkloreZh},
 +    {sBotanicalEn, sBotanicalZh}, {sFengleEn, sFengleZh}, {sWenxinEn, sWenxinZh},
-+    {sNationalTradeEn, sNationalTradeZh}, {sDingShengEn, sDingShengZh}, {sTheLinEn, sTheLinZh}
++    {sNationalTradeEn, sNationalTradeZh}, {sDingShengEn, sDingShengZh}, {sTheLinEn, sTheLinZh},
++    {sJingmingEn, sJingmingZh}, {sDingShengEn, sDingShengZh}, {sMapleEn, sMapleZh}
 +};
++typedef char EncounterPlaceCountCheck[ARRAY_COUNT(sPlaces) == TAICHUNG_ENCOUNTER_COUNT ? 1 : -1];
 +static const u8 sBall0En[] = _("{PALETTE 5}{COLOR_HIGHLIGHT_SHADOW 13 14 15}FIGHT{CLEAR_TO 56}BALL 0\nPOKéMON{CLEAR_TO 56}RUN");
 +static const u8 sBall1En[] = _("{PALETTE 5}{COLOR_HIGHLIGHT_SHADOW 13 14 15}FIGHT{CLEAR_TO 56}BALL 1\nPOKéMON{CLEAR_TO 56}RUN");
 +static const u8 sBall2En[] = _("{PALETTE 5}{COLOR_HIGHLIGHT_SHADOW 13 14 15}FIGHT{CLEAR_TO 56}BALL 2\nPOKéMON{CLEAR_TO 56}RUN");
@@ -627206,7 +628678,7 @@ index 00000000..3f39e5c5
 +}
 diff --git a/src/taichung_save.c b/src/taichung_save.c
 new file mode 100644
-index 00000000..50266dc9
+index 00000000..3620b232
 --- /dev/null
 +++ b/src/taichung_save.c
 @@ -0,0 +1,3930 @@
@@ -627242,7 +628714,7 @@ index 00000000..50266dc9
 +static void InitCityEncounterSaveState(void)
 +{
 +    u16 schema = SavedVar(TAICHUNG_ENCOUNTER_SCHEMA_VAR);
-+    if (schema == TAICHUNG_ENCOUNTER_SCHEMA_V1
++    if (schema == TAICHUNG_ENCOUNTER_SCHEMA_V1 || schema == TAICHUNG_ENCOUNTER_SCHEMA_V2
 +        || (schema == 0 && SavedVar(TAICHUNG_ENCOUNTER_ATTEMPT_VAR) == 0
 +            && SavedVar(TAICHUNG_ENCOUNTER_UNLOCK_VAR) == 0
 +            && SavedVar(TAICHUNG_ENCOUNTER_ATTEMPT_UPPER_VAR) == 0
@@ -631594,10 +633066,10 @@ index 00000000..da9aa636
 +}
 diff --git a/src/taichung_team.c b/src/taichung_team.c
 new file mode 100644
-index 00000000..0381d245
+index 00000000..374d5c95
 --- /dev/null
 +++ b/src/taichung_team.c
-@@ -0,0 +1,248 @@
+@@ -0,0 +1,250 @@
 +#include "global.h"
 +#include "pokemon.h"
 +#include "pokedex.h"
@@ -631675,14 +633147,16 @@ index 00000000..0381d245
 +    HealPlayerParty();
 +}
 +
-+static bool8 PreserveExistingRarePartner(struct Pokemon *mon)
++static bool8 PreserveExistingEncounterPartner(struct Pokemon *mon)
 +{
 +    u16 species = GetMonData(mon, MON_DATA_SPECIES);
-+    // These species were freely selectable before sites21-23 existed. There is
-+    // no per-mon migration flag: leave every existing partner intact, even if
-+    // the site is caught later. Fresh selections already use captured levels.
++    // Added/retired encounters must not rewrite an existing saved partner,
++    // even after a later catch. Fresh choices already use the captured level.
 +    return species == SPECIES_MAGNETON || species == SPECIES_KABUTOPS
-+        || species == SPECIES_PERSIAN;
++        || species == SPECIES_PERSIAN || species == SPECIES_LAPRAS
++        || species == SPECIES_NINETALES || species == SPECIES_VICTREEBEL
++        || species == SPECIES_CHARIZARD || species == SPECIES_BLASTOISE
++        || species == SPECIES_VENUSAUR;
 +}
 +
 +static void SyncMonPresetMoves(struct Pokemon *mon)
@@ -631690,7 +633164,7 @@ index 00000000..0381d245
 +    const u16 *moves;
 +    u8 slot;
 +    u8 pp[MAX_MON_MOVES];
-+    if (GetMonData(mon, MON_DATA_IS_EGG) || PreserveExistingRarePartner(mon))
++    if (GetMonData(mon, MON_DATA_IS_EGG) || PreserveExistingEncounterPartner(mon))
 +        return;
 +    moves = TaichungTeamGetPresetMoves(GetMonData(mon, MON_DATA_SPECIES));
 +    if (moves == NULL)
@@ -631754,7 +633228,7 @@ index 00000000..0381d245
 +    CalculatePlayerPartyCount();
 +    for (slot = 0; slot < gPlayerPartyCount; slot++)
 +    {
-+        if (PreserveExistingRarePartner(&gPlayerParty[slot]))
++        if (PreserveExistingEncounterPartner(&gPlayerParty[slot]))
 +            continue;
 +        // Upgrade an older party once. Ordinary exploration battles do not
 +        // refill an already-normalized partner's HP, status or PP.
@@ -631848,10 +633322,10 @@ index 00000000..0381d245
 +}
 diff --git a/src/taichung_team_menu.c b/src/taichung_team_menu.c
 new file mode 100644
-index 00000000..d4727be0
+index 00000000..f175f787
 --- /dev/null
 +++ b/src/taichung_team_menu.c
-@@ -0,0 +1,632 @@
+@@ -0,0 +1,661 @@
 +#include "global.h"
 +#include "gflib.h"
 +#include "main.h"
@@ -631999,14 +633473,20 @@ index 00000000..d4727be0
 +static const u8 sLv[] = _("Lv");
 +static const u8 sMovesEn[] = _("PRESET MOVES");
 +static const u8 sMovesZh[] = _("招式");
++static const u8 sSavedMovesEn[] = _("CURRENT MOVES");
++static const u8 sSavedMovesZh[] = _("現有招式");
++static const u8 sKeepEn[] = _("Keep this partner?");
++static const u8 sKeepZh[] = _("保留這位夥伴？");
++static const u8 sKeepStatsEn[] = _("Keep current HP and PP.");
++static const u8 sKeepStatsZh[] = _("保留HP與PP。");
 +static const u8 sConfirmEn[] = _("Use this POKéMON in this slot?");
 +static const u8 sConfirmZh[] = _("要選這隻嗎？");
 +static const u8 sConfirmFooterEn[] = _("A: confirm   B: keep choosing");
 +static const u8 sConfirmFooterZh[] = _("A確認 B重選");
 +static const u8 sReplacingEn[] = _("Replacing:");
 +static const u8 sReplacingZh[] = _("更換：");
-+static const u8 sFullHpEn[] = _("Full HP and PP. Ready to battle.");
-+static const u8 sFullHpZh[] = _("HP與PP全滿，準備對戰。");
++static const u8 sFullHpEn[] = _("Full HP and PP.");
++static const u8 sFullHpZh[] = _("HP與PP全滿。");
 +static const u8 sNoCatchesEn[] = _("Landmark catches appear here.");
 +static const u8 sNoCatchesZh[] = _("地標捕捉的寶可夢會出現在這裡。");
 +static const u8 sBackEn[] = _("B: back");
@@ -632075,13 +633555,36 @@ index 00000000..d4727be0
 +    Print(8, 144, sTextColors, sBattlePrep.active ? TaichungText(sPrepFooterEn, sPrepFooterZh) : TaichungText(sSlotFooterEn, sSlotFooterZh));
 +}
 +
++static bool8 KeepingCurrentPartner(void)
++{
++    return sSlot < CalculatePlayerPartyCount()
++        && GetMonData(&gPlayerParty[sSlot], MON_DATA_SPECIES) == sSpecies;
++}
++
++static u8 ChoiceLevel(void)
++{
++    return KeepingCurrentPartner() ? GetMonData(&gPlayerParty[sSlot], MON_DATA_LEVEL)
++        : TaichungTeamLevelForSpecies(sSpecies);
++}
++
++static u16 ChoiceMove(u8 move)
++{
++    const u16 *moves;
++    if (KeepingCurrentPartner())
++        return GetMonData(&gPlayerParty[sSlot], MON_DATA_MOVE1 + move);
++    moves = TaichungTeamGetPresetMoves(sSpecies);
++    return moves == NULL ? 0 : moves[move];
++}
++
 +static void DrawMoves(u8 x, u8 y)
 +{
 +    u8 move;
-+    const u16 *moves = TaichungTeamGetPresetMoves(sSpecies);
-+    Print(x, y, sMutedColors, TaichungText(sMovesEn, sMovesZh));
++    Print(x, y, sMutedColors, KeepingCurrentPartner() ? TaichungText(sSavedMovesEn, sSavedMovesZh) : TaichungText(sMovesEn, sMovesZh));
 +    for (move = 0; move < MAX_MON_MOVES; move++)
-+        Print(x, y + 16 + move * 16, sTextColors, moves[move] ? gMoveNames[moves[move]] : sLocked);
++    {
++        u16 chosen = ChoiceMove(move);
++        Print(x, y + 16 + move * 16, sTextColors, chosen ? gMoveNames[chosen] : sLocked);
++    }
 +}
 +
 +static bool8 SpeciesInCategory(u16 species, u8 type)
@@ -632209,7 +633712,7 @@ index 00000000..d4727be0
 +        Print(18, y, i == sRosterIndex ? sSelectedColors : sMutedColors, text);
 +        Print(40, y, i == sRosterIndex ? sSelectedColors : sTextColors, gSpeciesNames[sRoster[i]]);
 +    }
-+    PrintLevel(148, 30, sSelectedColors, TaichungTeamLevelForSpecies(sSpecies));
++    PrintLevel(148, 30, sSelectedColors, ChoiceLevel());
 +    DrawMoves(140, 48);
 +    Print(8, 144, sMutedColors, TaichungText(sSpeciesFooterEn, sSpeciesFooterZh));
 +}
@@ -632217,16 +633720,16 @@ index 00000000..d4727be0
 +static void DrawConfirmation(void)
 +{
 +    AddTextPrinterParameterized3(0, FONT_NORMAL, 8, 4, sTextColors, -1, TaichungText(sTitleEn, sTitleZh));
-+    Print(8, 24, sTextColors, TaichungText(sConfirmEn, sConfirmZh));
++    Print(8, 24, sTextColors, KeepingCurrentPartner() ? TaichungText(sKeepEn, sKeepZh) : TaichungText(sConfirmEn, sConfirmZh));
 +    Print(8, 48, sSelectedColors, gSpeciesNames[sSpecies]);
-+    PrintLevel(100, 48, sSelectedColors, TaichungTeamLevelForSpecies(sSpecies));
-+    if (sSlot < CalculatePlayerPartyCount())
++    PrintLevel(100, 48, sSelectedColors, ChoiceLevel());
++    if (sSlot < CalculatePlayerPartyCount() && !KeepingCurrentPartner())
 +    {
 +        Print(8, 70, sMutedColors, TaichungText(sReplacingEn, sReplacingZh));
 +        Print(8, 86, sTextColors, gSpeciesNames[GetMonData(&gPlayerParty[sSlot], MON_DATA_SPECIES)]);
 +    }
 +    DrawMoves(140, 48);
-+    Print(8, 126, sMutedColors, TaichungText(sFullHpEn, sFullHpZh));
++    Print(8, 126, sMutedColors, KeepingCurrentPartner() ? TaichungText(sKeepStatsEn, sKeepStatsZh) : TaichungText(sFullHpEn, sFullHpZh));
 +    Print(8, 144, sTextColors, TaichungText(sConfirmFooterEn, sConfirmFooterZh));
 +}
 +
@@ -635974,10 +637477,10 @@ index 00000000..9c7b3cdd
 +}
 diff --git a/tests/taichung_encounter_field_test.c b/tests/taichung_encounter_field_test.c
 new file mode 100644
-index 00000000..87655088
+index 00000000..695bb683
 --- /dev/null
 +++ b/tests/taichung_encounter_field_test.c
-@@ -0,0 +1,369 @@
+@@ -0,0 +1,409 @@
 +#include "global.h"
 +#include "battle.h"
 +#include "battle_setup.h"
@@ -636022,13 +637525,14 @@ index 00000000..87655088
 +u32 gSaveCounter;
 +u8 gStringVar1[32], gStringVar2[20], gStringVar3[20], gStringVar4[1000];
 +const u8 gSpeciesNames[NUM_SPECIES][POKEMON_NAME_LENGTH + 1] = {
-+    [SPECIES_LAPRAS] = "LAPRAS", [SPECIES_GYARADOS] = "GYARADOS"
++    [SPECIES_LAPRAS] = "LAPRAS", [SPECIES_GYARADOS] = "GYARADOS",
++    [SPECIES_CHARIZARD] = "CHARIZARD", [SPECIES_BLASTOISE] = "BLASTOISE", [SPECIES_VENUSAUR] = "VENUSAUR"
 +};
 +static bool8 sChinese, sHealthy, sSaveFail;
 +static unsigned sCreates, sBattles, sSaves, sTeams, sReturns, sHeals;
 +static u16 sEnemySpecies, sEnemyMoves[4];
 +static u8 sEnemyLevel;
-+static u16 sFlashAttempts, sFlashUnlocks;
++static u32 sFlashAttempts, sFlashUnlocks;
 +static unsigned sLiveMapGeneration, sSavedMapGeneration, sMapRefreshes;
 +static u8 sPartyCount = 2;
 +static u8 sAddedSlot;
@@ -636181,6 +637685,43 @@ index 00000000..87655088
 +    sHealthy = TRUE; sSaveFail = FALSE; gQuestLogState = 0; gSpecialVar_0x8007 = 0;
 +    sLastScript = NULL; sMenuCallback = NULL; sFadeFinished = TRUE; sPreparedStart = FALSE;
 +}
++static void TestRotatedFieldRoutes(void)
++{
++    const u8 routes[] = {0, 24, 25, 26};
++    u8 i;
++    for (i = 0; i < 4; i++)
++    {
++        u8 site = routes[i];
++        const struct TaichungEncounterSite *target = TaichungEncounterGetSite(site);
++        Reset(); gSpecialVar_0x8007 = site;
++        TaichungEncounter_ScriptOffer(); assert(!gSpecialVar_Result);
++        assert(strstr((char *)gStringVar4, (const char *)gSpeciesNames[target->species]));
++        assert(strstr((char *)gStringVar4, "65"));
++        TaichungEncounter_ScriptBegin(); assert(gSpecialVar_Result);
++        TaichungEncounter_ScriptSaveBegin(); Frame(); Frame(); assert(sSaves == 1 && !sBattles);
++        Ack(); Frame(); assert(sBattles == 1 && sEnemySpecies == target->species && sEnemyLevel == 65);
++        assert(!memcmp(sEnemyMoves, target->moves, sizeof(sEnemyMoves)));
++        assert(TaichungEncounterTakeBall() && TaichungEncounterRecordCapture(target->species));
++        gBattleOutcome = B_OUTCOME_CAUGHT; CB2_EndScriptedWildBattle(); gMain.callback2();
++        Frame(); Frame(); assert(sSaves == 2 && sFlashUnlocks == (1u << site));
++        Ack(); sFadeFinished = TRUE; Frame();
++        TaichungEncounter_ScriptResult(); assert(gSpecialVar_Result);
++        assert(strstr((char *)gStringVar4, (const char *)gSpeciesNames[target->species]));
++        assert(TaichungEncounterGetPlaceName(site) && TaichungEncounterGetPlaceName(site)[0]);
++    }
++}
++
++static void TestPlaceNames(void)
++{
++    u16 site;
++    for (site = 0; site < TAICHUNG_ENCOUNTER_COUNT; site++)
++        assert(TaichungEncounterGetPlaceName(site) != NULL && TaichungEncounterGetPlaceName(site)[0]);
++    assert(!strcmp((const char *)TaichungEncounterGetPlaceName(0), sChinese ? "植物園" : "Botanical Garden"));
++    assert(!strcmp((const char *)TaichungEncounterGetPlaceName(24), sChinese ? "精明一街" : "Jingming 1st Street"));
++    assert(!strcmp((const char *)TaichungEncounterGetPlaceName(25), sChinese ? "鼎盛BHW" : "Ding Sheng BHW"));
++    assert(!strcmp((const char *)TaichungEncounterGetPlaceName(26), sChinese ? "秋紅谷" : "Maple Garden"));
++}
++
 +static void TestGlobalRules(void)
 +{
 +    struct SaveBlock1 persisted;
@@ -636221,6 +637762,8 @@ index 00000000..87655088
 +    u8 outcome, textSite, site, failure;
 +    for (sChinese = FALSE; sChinese <= TRUE; sChinese++)
 +    {
++        TestRotatedFieldRoutes();
++        TestPlaceNames();
 +        TestGlobalRules();
 +        for (site = 0; site < TAICHUNG_ENCOUNTER_COUNT; site++)
 +        {
@@ -636349,10 +637892,10 @@ index 00000000..87655088
 +}
 diff --git a/tests/taichung_encounter_save_test.c b/tests/taichung_encounter_save_test.c
 new file mode 100644
-index 00000000..bea341f8
+index 00000000..c7af07c7
 --- /dev/null
 +++ b/tests/taichung_encounter_save_test.c
-@@ -0,0 +1,279 @@
+@@ -0,0 +1,335 @@
 +#include <assert.h>
 +#include <stdio.h>
 +#include <string.h>
@@ -636374,16 +637917,17 @@ index 00000000..bea341f8
 +static bool32 sPending;
 +static unsigned sWrites, sEncounterWrites, sWarpRequests, sCancels, sCases;
 +static unsigned sFailAt, sIgnoreAt;
-+static u16 sEncounterWriteOrder[3];
++static u16 sEncounterWriteOrder[4];
 +#define V(id) sSave.vars[(id) - VARS_START]
 +
 +bool8 VarSet(u16 id, u16 value)
 +{
 +    if ((id >= TAICHUNG_ENCOUNTER_SCHEMA_VAR && id <= TAICHUNG_ENCOUNTER_UNLOCK_VAR)
 +        || id == TAICHUNG_ENCOUNTER_ATTEMPT_UPPER_VAR
-+        || id == TAICHUNG_ENCOUNTER_UNLOCK_UPPER_VAR)
++        || id == TAICHUNG_ENCOUNTER_UNLOCK_UPPER_VAR
++        || id == TAICHUNG_ENCOUNTER_EXTRA_VAR)
 +    {
-+        assert(sEncounterWrites < 3);
++        assert(sEncounterWrites < 4);
 +        sEncounterWriteOrder[sEncounterWrites++] = id;
 +        if (sEncounterWrites == sFailAt) return FALSE;
 +        if (sEncounterWrites == sIgnoreAt) return TRUE;
@@ -636416,6 +637960,7 @@ index 00000000..bea341f8
 +    V(TAICHUNG_ENCOUNTER_UNLOCK_VAR) = unlocks;
 +    V(TAICHUNG_ENCOUNTER_ATTEMPT_UPPER_VAR) = schema == 0 ? 0 : 0x9555;
 +    V(TAICHUNG_ENCOUNTER_UNLOCK_UPPER_VAR) = schema == 0 ? 0 : 0x0555;
++    V(TAICHUNG_ENCOUNTER_EXTRA_VAR) = schema == TAICHUNG_ENCOUNTER_SCHEMA ? 0 : 0xA5EF;
 +    V(0x40FB) = 2;
 +    V(0x40FC) = SPECIES_PIKACHU;
 +    V(0x40FD) = 1;
@@ -636448,6 +637993,7 @@ index 00000000..bea341f8
 +    V(TAICHUNG_ENCOUNTER_SCHEMA_VAR) = TAICHUNG_ENCOUNTER_SCHEMA;
 +    V(TAICHUNG_ENCOUNTER_ATTEMPT_VAR) = V(TAICHUNG_ENCOUNTER_UNLOCK_VAR) = 0;
 +    V(TAICHUNG_ENCOUNTER_ATTEMPT_UPPER_VAR) = V(TAICHUNG_ENCOUNTER_UNLOCK_UPPER_VAR) = 0;
++    V(TAICHUNG_ENCOUNTER_EXTRA_VAR) = 0;
 +    ClearCalls();
 +    assert(TaichungEncounterBegin(0));
 +    if (phase >= TAICHUNG_ENCOUNTER_PHASE_ARMED && phase != TAICHUNG_ENCOUNTER_PHASE_ERROR)
@@ -636473,7 +638019,10 @@ index 00000000..bea341f8
 +    bool8 virgin = V(TAICHUNG_ENCOUNTER_SCHEMA_VAR) == 0
 +        && V(TAICHUNG_ENCOUNTER_ATTEMPT_VAR) == 0 && V(TAICHUNG_ENCOUNTER_UNLOCK_VAR) == 0
 +        && V(TAICHUNG_ENCOUNTER_ATTEMPT_UPPER_VAR) == 0 && V(TAICHUNG_ENCOUNTER_UNLOCK_UPPER_VAR) == 0;
-+    bool8 legacy = V(TAICHUNG_ENCOUNTER_SCHEMA_VAR) == TAICHUNG_ENCOUNTER_SCHEMA_V1;
++    bool8 legacy = V(TAICHUNG_ENCOUNTER_SCHEMA_VAR) == TAICHUNG_ENCOUNTER_SCHEMA_V1
++        || V(TAICHUNG_ENCOUNTER_SCHEMA_VAR) == TAICHUNG_ENCOUNTER_SCHEMA_V2;
++    // Independent EC03 contract: historical EC02 preserves only IDs0..23.
++    u16 upperMask = V(TAICHUNG_ENCOUNTER_SCHEMA_VAR) == 0xEC02 ? 0x3FFF : 0;
 +    bool8 initialize = (virgin || legacy) && (fresh || Authenticated());
 +    if (fresh) BaselineTaichungSaveInitNewGame(); else BaselineTaichungSaveUpgradeOnContinue();
 +    expected = sSave;
@@ -636492,14 +638041,16 @@ index 00000000..bea341f8
 +    assert(TaichungEncounterGetSequence() == sequence);
 +    if (initialize)
 +    {
-+        unsigned attemptedWrites = fail ? fail : 3;
++        unsigned attemptedWrites = fail ? fail : 4;
 +        assert(sEncounterWrites == attemptedWrites);
 +        assert(sEncounterWriteOrder[0] == TAICHUNG_ENCOUNTER_ATTEMPT_UPPER_VAR);
 +        if (attemptedWrites >= 2) assert(sEncounterWriteOrder[1] == TAICHUNG_ENCOUNTER_UNLOCK_UPPER_VAR);
-+        if (attemptedWrites >= 3) assert(sEncounterWriteOrder[2] == TAICHUNG_ENCOUNTER_SCHEMA_VAR);
-+        if (fail != 1 && ignore != 1) expected.vars[TAICHUNG_ENCOUNTER_ATTEMPT_UPPER_VAR - VARS_START] = 0;
-+        if ((!fail || fail > 2) && ignore != 2) expected.vars[TAICHUNG_ENCOUNTER_UNLOCK_UPPER_VAR - VARS_START] = 0;
-+        if (!fail && ignore != 3) expected.vars[TAICHUNG_ENCOUNTER_SCHEMA_VAR - VARS_START] = TAICHUNG_ENCOUNTER_SCHEMA;
++        if (attemptedWrites >= 3) assert(sEncounterWriteOrder[2] == TAICHUNG_ENCOUNTER_EXTRA_VAR);
++        if (attemptedWrites >= 4) assert(sEncounterWriteOrder[3] == TAICHUNG_ENCOUNTER_SCHEMA_VAR);
++        if (fail != 1 && ignore != 1) expected.vars[TAICHUNG_ENCOUNTER_ATTEMPT_UPPER_VAR - VARS_START] &= upperMask;
++        if ((!fail || fail > 2) && ignore != 2) expected.vars[TAICHUNG_ENCOUNTER_UNLOCK_UPPER_VAR - VARS_START] &= upperMask;
++        if ((!fail || fail > 3) && ignore != 3) expected.vars[TAICHUNG_ENCOUNTER_EXTRA_VAR - VARS_START] = 0;
++        if (!fail && ignore != 4) expected.vars[TAICHUNG_ENCOUNTER_SCHEMA_VAR - VARS_START] = 0xEC03;
 +        assert(sWrites == expectedWrites + attemptedWrites - !!fail - !!ignore);
 +    }
 +    else assert(sEncounterWrites == 0 && sWrites == expectedWrites);
@@ -636515,7 +638066,8 @@ index 00000000..bea341f8
 +    static const u16 states[][3] = {
 +        {0, 0, 0}, {TAICHUNG_ENCOUNTER_SCHEMA, 0, 0}, {TAICHUNG_ENCOUNTER_SCHEMA, 0xC001, 0x8001},
 +        {TAICHUNG_ENCOUNTER_SCHEMA, 0xFFFF, 0xFFFF}, {0, 1, 0}, {0, 0, 0x8000},
-+        {1, 0, 0}, {TAICHUNG_ENCOUNTER_SCHEMA_V1, 0xA203, 0x8201}, {0xFFFF, 0xFFFF, 0xFFFF}
++        {1, 0, 0}, {TAICHUNG_ENCOUNTER_SCHEMA_V1, 0xA203, 0x8201}, {0xFFFF, 0xFFFF, 0xFFFF},
++        {0xEC02, 0, 0}, {0xEC02, 0xC001, 0x8001}, {0xEC02, 0xFFFF, 0xFFFF}
 +    };
 +    static const u16 starters[] = {0, SPECIES_BULBASAUR, SPECIES_CHARMANDER, SPECIES_SQUIRTLE, SPECIES_PIKACHU, 0xFFFF};
 +    static const u16 futures[] = {TAICHUNG_SAVE_VERSION + 1, 0xEC01, 0xFFFF};
@@ -636556,7 +638108,7 @@ index 00000000..bea341f8
 +        Fixture(TAICHUNG_SAVE_VERSION, TAICHUNG_ENCOUNTER_SCHEMA, mask, mask ^ 0xA55A, TRUE);
 +        CompareBaseline(FALSE, TAICHUNG_ENCOUNTER_PHASE_DONE, 0, 0);
 +    }
-+    for (version = 0; version <= TAICHUNG_SAVE_VERSION; version++) for (failure = 1; failure <= 3; failure++)
++    for (version = 0; version <= TAICHUNG_SAVE_VERSION; version++) for (failure = 1; failure <= 4; failure++)
 +    {
 +        Fixture(version, 0, 0, 0, TRUE);
 +        CompareBaseline(FALSE, TAICHUNG_ENCOUNTER_PHASE_SAVE_BEGIN, failure, 0);
@@ -636603,7 +638155,7 @@ index 00000000..bea341f8
 +                CompareBaseline(FALSE, TAICHUNG_ENCOUNTER_PHASE_ARMED, 0, 0);
 +            }
 +        for (version = 1; version <= TAICHUNG_SAVE_VERSION; version++)
-+            for (map = 0; map < 3; map++) for (failure = 1; failure <= 3; failure++)
++            for (map = 0; map < 3; map++) for (failure = 1; failure <= 4; failure++)
 +            {
 +                Fixture(version, 0, 0, 0, FALSE); sSave.location.mapNum = contexts[map][1];
 +                CompareBaseline(FALSE, TAICHUNG_ENCOUNTER_PHASE_SAVE_BEGIN, failure, 0);
@@ -636616,9 +638168,9 @@ index 00000000..bea341f8
 +        memset(&sSave, 0, sizeof(sSave));
 +        TaichungSaveInitNewGame(); // Before any partner/Continue.
 +        assert(sSave.playerPartyCount == 0 && TaichungEncounterStateReady());
-+        assert(V(TAICHUNG_SAVE_VERSION_VAR) == 12 && sEncounterWrites == 3);
++        assert(V(TAICHUNG_SAVE_VERSION_VAR) == 12 && sEncounterWrites == 4);
 +    }
-+    for (failure = 1; failure <= 3; failure++)
++    for (failure = 1; failure <= 4; failure++)
 +    {
 +        Fixture(0, 0, 0, 0, FALSE);
 +        CompareBaseline(TRUE, TAICHUNG_ENCOUNTER_PHASE_SAVE_BEGIN, failure, 0);
@@ -636629,15 +638181,62 @@ index 00000000..bea341f8
 +        ClearCalls(); sSave.playerPartyCount = 1;
 +        CompareBaseline(FALSE, TAICHUNG_ENCOUNTER_PHASE_SAVE_RESULT, 0, 0);
 +    }
++    // Independent EC03 field contract, including every historically ignored
++    // upper-word and unallocated EF value. The whole modeled save still equals
++    // the immutable baseline plus only the four specified migration fields.
++    for (mask = 0; mask <= 0xFFFF; mask++)
++    {
++        Fixture(12, 0xEC02, mask, mask ^ 0xA55A, TRUE);
++        V(0x40F0) = mask; V(0x40F2) = mask ^ 0xA55A;
++        V(0x40EF) = mask ^ 0xCAFE;
++        CompareBaseline(FALSE, TAICHUNG_ENCOUNTER_PHASE_DONE, 0, 0);
++        assert(V(0x40F0) == (mask & 0x3FFF));
++        assert(V(0x40F2) == ((mask ^ 0xA55A) & 0x3FFF));
++        assert(V(0x40F4) == mask && V(0x40F5) == (mask ^ 0xA55A));
++        assert(V(0x40EF) == 0 && V(0x40F3) == 0xEC03);
++        assert(!(TaichungEncounterGetAttemptMask() & 0x07000000));
++        assert(!(TaichungEncounterGetUnlockMask() & 0x07000000));
++        ClearCalls(); CompareBaseline(FALSE, TAICHUNG_ENCOUNTER_PHASE_ERROR, 0, 0);
++        assert(sEncounterWrites == 0);
++    }
++    // Current valid EC03 is idempotent even with arbitrary raw low reserved
++    // bits; every reserved EF bit fails closed without rewriting any byte.
++    for (mask = 0; mask <= 0xFFFF; mask++)
++    {
++        Fixture(12, 0xEC03, 0xFC01, 0xA001, TRUE); V(0x40EF) = mask;
++        CompareBaseline(FALSE, TAICHUNG_ENCOUNTER_PHASE_DONE, 0, 0);
++        assert(V(0x40EF) == mask && sEncounterWrites == 0);
++        if (mask & 0xFEFE)
++        {
++            assert(!TaichungEncounterStateReady());
++            assert(TaichungEncounterGetAttemptMask() == 0 && TaichungEncounterGetUnlockMask() == 0);
++            assert(!TaichungEncounterBegin(24) && !TaichungEncounterBegin(25) && !TaichungEncounterBegin(26));
++        }
++        else assert(TaichungEncounterStateReady());
++    }
++    // Every prior schema migration and all four physical writes: false returns
++    // stop before the stamp; true no-op writes remain precisely modeled. Retry
++    // must never modify unrelated save bytes, party, or raw low reserved bits.
++    for (state = 0; state < 3; state++) for (failure = 1; failure <= 4; failure++)
++    {
++        u16 schema = state == 0 ? 0 : state == 1 ? 0xEC01 : 0xEC02;
++        Fixture(12, schema, schema ? 0xF803 : 0, schema ? 0xA001 : 0, TRUE);
++        CompareBaseline(FALSE, TAICHUNG_ENCOUNTER_PHASE_SAVE_BEGIN, failure, 0);
++        assert(V(0x40F3) == schema);
++        ClearCalls(); CompareBaseline(FALSE, TAICHUNG_ENCOUNTER_PHASE_ERROR, 0, 0);
++        Fixture(12, schema, schema ? 0xF803 : 0, schema ? 0xA001 : 0, TRUE);
++        CompareBaseline(FALSE, TAICHUNG_ENCOUNTER_PHASE_SAVE_BEGIN, 0, failure);
++        ClearCalls(); CompareBaseline(FALSE, TAICHUNG_ENCOUNTER_PHASE_ERROR, 0, 0);
++    }
 +    printf("PASS: %u actual-C encounter/save cases vs immutable baseline, with legacy migration, protected save bytes, every low word, and initialization retry\n", sCases);
 +    return 0;
 +}
 diff --git a/tests/taichung_encounter_team_test.c b/tests/taichung_encounter_team_test.c
 new file mode 100644
-index 00000000..56d94cc6
+index 00000000..543f7552
 --- /dev/null
 +++ b/tests/taichung_encounter_team_test.c
-@@ -0,0 +1,144 @@
+@@ -0,0 +1,149 @@
 +// Reuse modeled mon/stat services, but link the real encounter state and team C
 +// together so saved unlocks, all current site levels, and refresh are exercised.
 +#define main ExistingTeamTestMain
@@ -636665,7 +638264,8 @@ index 00000000..56d94cc6
 +{
 +    assert(id == TAICHUNG_ENCOUNTER_ATTEMPT_VAR || id == TAICHUNG_ENCOUNTER_UNLOCK_VAR
 +        || id == TAICHUNG_ENCOUNTER_ATTEMPT_UPPER_VAR || id == TAICHUNG_ENCOUNTER_UNLOCK_UPPER_VAR
-+        || id == TAICHUNG_ENCOUNTER_SCHEMA_VAR || id == TAICHUNG_GYM_COMPLETION_VAR);
++        || id == TAICHUNG_ENCOUNTER_SCHEMA_VAR || id == TAICHUNG_GYM_COMPLETION_VAR
++        || id == TAICHUNG_ENCOUNTER_EXTRA_VAR);
 +    sSave.vars[id - VARS_START] = value; return TRUE;
 +}
 +static void NewSave(void)
@@ -636687,53 +638287,57 @@ index 00000000..56d94cc6
 +}
 +static void TestExistingNewRarePartners(void)
 +{
-+    const u16 species[] = {SPECIES_MAGNETON, SPECIES_KABUTOPS, SPECIES_PERSIAN};
++    const u16 species[] = {SPECIES_MAGNETON, SPECIES_KABUTOPS, SPECIES_PERSIAN,
++        SPECIES_LAPRAS, SPECIES_NINETALES, SPECIES_VICTREEBEL,
++        SPECIES_CHARIZARD, SPECIES_BLASTOISE, SPECIES_VENUSAUR};
 +    const u8 levels[] = {5, 50, 80};
-+    u8 phase, level, i, pass;
-+    for (phase = 0; phase < 3; phase++)
-+        for (level = 0; level < 3; level++)
-+        {
-+            struct Pokemon before[PARTY_SIZE];
-+            NewSave();
-+            for (i = 0; i < 3; i++)
++    struct Pokemon before[PARTY_SIZE];
++    struct SaveBlock1 saved;
++    u8 phase, level, member, pass, slot;
++    for (member = 0; member < sizeof(species) / sizeof(species[0]); member++)
++        for (phase = 0; phase < 3; phase++)
++            for (level = 0; level < 3; level++)
 +            {
-+                u32 mask = 1u << (21 + i);
-+                gPlayerParty[i] = OldPartner(species[i], levels[level]);
-+                gPlayerParty[i].hp = i ? 7 : 0;
-+                gPlayerParty[i].status = 8;
-+                gPlayerParty[i].pp[0] = 1; gPlayerParty[i].pp[1] = 0;
-+                gPlayerParty[i].pp[2] = 3; gPlayerParty[i].pp[3] = 4;
-+                gPlayerParty[i].ppBonuses = 0x55;
++                u8 site = TaichungEncounterSiteForSpecies(species[member]);
++                NewSave();
++                gPlayerParty[0] = OldPartner(species[member], levels[level]);
++                gPlayerParty[0].hp = 0; gPlayerParty[0].status = 8;
++                gPlayerParty[0].pp[0] = 1; gPlayerParty[0].pp[1] = 0;
++                gPlayerParty[0].pp[2] = 3; gPlayerParty[0].pp[3] = 4;
++                gPlayerParty[0].ppBonuses = 0x55;
++                gPlayerParty[1] = OldPartner(SPECIES_PIKACHU, 50);
++                gPlayerParty[2] = OldPartner(SPECIES_SCYTHER, 50);
++                for (slot = 1; slot < 3; slot++)
++                    memcpy(gPlayerParty[slot].moves, TaichungTeamGetPresetMoves(gPlayerParty[slot].species), sizeof(gPlayerParty[slot].moves));
++                CalculatePlayerPartyCount();
 +                if (phase)
-+                    sSave.vars[TAICHUNG_ENCOUNTER_ATTEMPT_UPPER_VAR - VARS_START] |= mask >> 10;
++                {
++                    u16 var = site < 10 ? TAICHUNG_ENCOUNTER_ATTEMPT_VAR : site < 26 ? TAICHUNG_ENCOUNTER_ATTEMPT_UPPER_VAR : TAICHUNG_ENCOUNTER_EXTRA_VAR;
++                    sSave.vars[var - VARS_START] |= site < 10 ? 1u << site : site < 26 ? 1u << (site - 10) : 1;
++                }
 +                if (phase == 2)
-+                    sSave.vars[TAICHUNG_ENCOUNTER_UNLOCK_UPPER_VAR - VARS_START] |= mask >> 10;
-+            }
-+            memcpy(before, gPlayerParty, sizeof(before));
-+            for (pass = 0; pass < 2; pass++)
-+            {
-+                // Actual Continue state initialization, then the same automatic
-+                // maintenance called by gym entry, menus and battle creation.
-+                TaichungEncounterResetSession();
-+                assert(TaichungEncounterInitSaveState());
-+                gSpecialVar_0x8004 = TAICHUNG_GYM_CONFUCIUS_TEMPLE;
-+                gSpecialVar_0x8005 = TRAINER_TAICHUNG_CONFUCIUS_WENYI;
-+                TaichungGym_ScriptPrepareChallenge();
-+                assert(gSpecialVar_Result); // The actual adapter sees usable saved partners.
-+                TaichungTeamEnsurePartyLevel();
-+                TaichungTeamSyncPresetMoves();
++                {
++                    u16 var = site < 10 ? TAICHUNG_ENCOUNTER_UNLOCK_VAR : site < 26 ? TAICHUNG_ENCOUNTER_UNLOCK_UPPER_VAR : TAICHUNG_ENCOUNTER_EXTRA_VAR;
++                    sSave.vars[var - VARS_START] |= site < 10 ? 1u << site : site < 26 ? 1u << (site - 10) : 0x100;
++                }
++                memcpy(before, gPlayerParty, sizeof(before)); saved = sSave;
++                for (pass = 0; pass < 2; pass++)
++                {
++                    TaichungEncounterResetSession(); assert(TaichungEncounterInitSaveState());
++                    gSpecialVar_0x8004 = TAICHUNG_GYM_CONFUCIUS_TEMPLE;
++                    gSpecialVar_0x8005 = TRAINER_TAICHUNG_CONFUCIUS_WENYI;
++                    TaichungGym_ScriptPrepareChallenge(); assert(gSpecialVar_Result);
++                    TaichungTeamEnsurePartyLevel(); TaichungTeamSyncPresetMoves();
++                    assert(!memcmp(before, gPlayerParty, sizeof(before)));
++                    assert(!memcmp(&saved, &sSave, sizeof(saved)));
++                    assert(CalculatePlayerPartyCount() == 3 && gPlayerParty[0].hp == 0 && gPlayerParty[1].hp);
++                    assert(TaichungEncounterSpeciesSelectable(species[member]) == (!TaichungEncounterSiteAvailable(site) || phase == 2));
++                }
++                assert(!TaichungTeamSetSlot(3, species[member]));
++                assert(TaichungTeamSetSlot(0, species[member]));
 +                assert(!memcmp(before, gPlayerParty, sizeof(before)));
-+                assert(CalculatePlayerPartyCount() == 3 && gPlayerParty[1].hp);
-+                for (i = 0; i < 3; i++)
-+                    assert(TaichungEncounterSpeciesSelectable(species[i]) == (phase == 2));
 +            }
-+            for (i = 0; i < 3; i++)
-+            {
-+                assert(!TaichungTeamSetSlot(3, species[i])); // Existing member already occupies a slot, even after catch.
-+            }
-+            assert(!memcmp(before, gPlayerParty, sizeof(struct Pokemon) * 3));
-+        }
-+    puts("PASS: existing Magneton/Kabutops/Persian atLv5/50/80 retain exact entire party bytes through repeated Continue/gym maintenance, available/spent/caught masks; no heal, PP/moves/identity/level change or implicit unlock; new caught choicesLv65.");
++    puts("PASS:9 existing rotated/new-lock species atLv5/50/80 retain entire party records through repeated Continue/gym maintenance in available/spent/caught states; firstfainted/otherhealthy remains usable, no heal/PP/moves/identity/level changes or clone.");
 +}
 +
 +int main(void)
@@ -636758,7 +638362,7 @@ index 00000000..56d94cc6
 +        assert(TaichungEncounterSpeciesSelectable(site->species));
 +        assert(!TaichungTeamSetSlot(1, site->species)); // Capture cannot clone an existing legacy partner.
 +        TaichungTeamEnsurePartyLevel();
-+        assert(gPlayerParty[0].level == (id >= 21 ? partner.level : site->level) && gPlayerParty[0].hp == partner.hp);
++        assert(gPlayerParty[0].level == (id == 0 || id >= 21 ? partner.level : site->level) && gPlayerParty[0].hp == partner.hp);
 +        assert(gPlayerParty[0].status == partner.status && !memcmp(gPlayerParty[0].pp, partner.pp, 4));
 +        assert(!memcmp(&gPlayerParty[0].identity, &partner.identity, sizeof(partner.identity)));
 +        assert(TaichungTeamSetSlot(0, SPECIES_RATICATE));
@@ -636784,10 +638388,10 @@ index 00000000..56d94cc6
 +}
 diff --git a/tests/taichung_encounter_test.c b/tests/taichung_encounter_test.c
 new file mode 100644
-index 00000000..9bbc66bd
+index 00000000..1c02633e
 --- /dev/null
 +++ b/tests/taichung_encounter_test.c
-@@ -0,0 +1,218 @@
+@@ -0,0 +1,272 @@
 +#include "global.h"
 +#include "event_data.h"
 +#include "taichung_encounter.h"
@@ -636806,7 +638410,8 @@ index 00000000..9bbc66bd
 +static bool8 IsEncounterVar(u16 var)
 +{
 +    return (var >= TAICHUNG_ENCOUNTER_SCHEMA_VAR && var <= TAICHUNG_ENCOUNTER_UNLOCK_VAR)
-+        || var == TAICHUNG_ENCOUNTER_ATTEMPT_UPPER_VAR || var == TAICHUNG_ENCOUNTER_UNLOCK_UPPER_VAR;
++        || var == TAICHUNG_ENCOUNTER_ATTEMPT_UPPER_VAR || var == TAICHUNG_ENCOUNTER_UNLOCK_UPPER_VAR
++        || var == TAICHUNG_ENCOUNTER_EXTRA_VAR;
 +}
 +
 +u16 VarGet(u16 var) { (void)var; assert(0 && "No quest-log or caught-flag reads"); return 0; }
@@ -636827,6 +638432,8 @@ index 00000000..9bbc66bd
 +    V(TAICHUNG_ENCOUNTER_UNLOCK_VAR) = (unlocks & TAICHUNG_ENCOUNTER_SAVE_LOW_MASK) | 0x8000;
 +    V(TAICHUNG_ENCOUNTER_ATTEMPT_UPPER_VAR) = attempts >> TAICHUNG_ENCOUNTER_SAVE_LOW_BITS;
 +    V(TAICHUNG_ENCOUNTER_UNLOCK_UPPER_VAR) = unlocks >> TAICHUNG_ENCOUNTER_SAVE_LOW_BITS;
++    V(TAICHUNG_ENCOUNTER_EXTRA_VAR) = ((attempts & (1u << 26)) ? TAICHUNG_ENCOUNTER_EXTRA_ATTEMPT_BIT : 0)
++        | ((unlocks & (1u << 26)) ? TAICHUNG_ENCOUNTER_EXTRA_UNLOCK_BIT : 0);
 +    TaichungEncounterResetSession();
 +    sWrites = 0;
 +    sFailWrite = sIgnoreWrite = FALSE;
@@ -636852,11 +638459,60 @@ index 00000000..9bbc66bd
 +    assert(!TaichungEncounterOnBattleStart(s->species, 50));
 +    assert(TaichungEncounterOnBattleStart(s->species, s->level));
 +}
++static void TestEc03Migration(void)
++{
++    const u8 oldSites[] = {0, 13, 18, 22};
++    const u16 noise[] = {0, 1, 0x100, 0x101, 0xFFFF, 0xFEFE};
++    u16 before[256];
++    unsigned site, phase, junk, i, writes;
++    for (site = 0; site < 4; site++)
++        for (phase = 0; phase < 3; phase++)
++            for (junk = 0; junk < sizeof(noise) / sizeof(noise[0]); junk++)
++            {
++                u32 attempts = (1u << 6) | (phase ? 1u << oldSites[site] : 0);
++                u32 caught = (1u << 6) | (phase == 2 ? 1u << oldSites[site] : 0);
++                Fixture(attempts, caught);
++                V(TAICHUNG_ENCOUNTER_SCHEMA_VAR) = TAICHUNG_ENCOUNTER_SCHEMA_V2;
++                V(TAICHUNG_ENCOUNTER_ATTEMPT_UPPER_VAR) |= 0xC000;
++                V(TAICHUNG_ENCOUNTER_UNLOCK_UPPER_VAR) |= 0xC000;
++                V(TAICHUNG_ENCOUNTER_EXTRA_VAR) = noise[junk];
++                memcpy(before, sSave.vars, sizeof(before));
++                assert(TaichungEncounterInitSaveState());
++                assert(TaichungEncounterGetAttemptMask() == attempts && TaichungEncounterGetUnlockMask() == caught);
++                assert(V(TAICHUNG_ENCOUNTER_EXTRA_VAR) == 0);
++                assert(!(V(TAICHUNG_ENCOUNTER_ATTEMPT_UPPER_VAR) & 0xC000));
++                assert(!(V(TAICHUNG_ENCOUNTER_UNLOCK_UPPER_VAR) & 0xC000));
++                for (i = 0; i < 256; i++)
++                    if (i + 0x4000 != TAICHUNG_ENCOUNTER_SCHEMA_VAR && i + 0x4000 != TAICHUNG_ENCOUNTER_EXTRA_VAR
++                        && i + 0x4000 != TAICHUNG_ENCOUNTER_ATTEMPT_UPPER_VAR && i + 0x4000 != TAICHUNG_ENCOUNTER_UNLOCK_UPPER_VAR)
++                        assert(sSave.vars[i] == before[i]);
++                for (i = 24; i < 27; i++)
++                    assert(!TaichungEncounterWasAttempted(i) && !TaichungEncounterSpeciesSelectable(TaichungEncounterGetSite(i)->species));
++                writes = sWrites; assert(TaichungEncounterInitSaveState() && sWrites == writes);
++            }
++    Fixture(TAICHUNG_ENCOUNTER_ALL_MASK, TAICHUNG_ENCOUNTER_ALL_MASK);
++    assert(TaichungEncounterGetAttemptMask() == TAICHUNG_ENCOUNTER_ALL_MASK);
++    assert(TaichungEncounterGetUnlockMask() == TAICHUNG_ENCOUNTER_ALL_MASK);
++    assert(V(TAICHUNG_ENCOUNTER_EXTRA_VAR) == 0x0101);
++    for (site = 0; site < 27; site++) assert(!TaichungEncounterBegin(site));
++    assert(TaichungEncounterInitSaveState() && !sWrites);
++    for (junk = 1; junk < 0x10000; junk <<= 1)
++    {
++        if (!(junk & TAICHUNG_ENCOUNTER_EXTRA_RESERVED_MASK)) continue;
++        Fixture(0, 0); V(TAICHUNG_ENCOUNTER_EXTRA_VAR) = junk;
++        memcpy(before, sSave.vars, sizeof(before));
++        assert(!TaichungEncounterStateReady() && !TaichungEncounterInitSaveState());
++        assert(!memcmp(before, sSave.vars, sizeof(before)) && !sWrites);
++    }
++    puts("PASS: EC02 available/spent/caught at all4rotated sites, all historical bits, upper24/25 noise and arbitrary oldEF sanitized; all other variables protected; current27-bit history/idempotence and reserved-bit rejection.");
++}
++
 +int main(void)
 +{
 +    u16 site, species;
 +    u32 bits, mask;
 +    u8 outcome;
++    TestEc03Migration();
 +    // A failed Snorlax throw, including the misleading near-catch line, is not
 +    // capture provenance. Even a bogus caught outcome cannot grant its unlock.
 +    for (outcome = 0; outcome < 4; outcome++)
@@ -636979,8 +638635,10 @@ index 00000000..9bbc66bd
 +    assert(TaichungEncounterGetAttemptMask() == 0x104 && TaichungEncounterGetUnlockMask() == 4);
 +    assert(V(TAICHUNG_ENCOUNTER_ATTEMPT_VAR) == 0xE104 && V(TAICHUNG_ENCOUNTER_UNLOCK_VAR) == 0xE004);
 +    assert(TaichungEncounterSpeciesSelectable(SPECIES_EXEGGUTOR));
-+    assert(!TaichungEncounterSpeciesSelectable(SPECIES_VICTREEBEL));
-+    assert(TaichungEncounterBegin(TAICHUNG_ENCOUNTER_BOTANICAL_GARDEN));
++    assert(TaichungEncounterSpeciesSelectable(SPECIES_VICTREEBEL)); // Retired, as with the other legacy targets.
++    assert(!TaichungEncounterBegin(TAICHUNG_ENCOUNTER_BOTANICAL_GARDEN));
++    assert(!TaichungEncounterSpeciesSelectable(SPECIES_VENUSAUR));
++    assert(TaichungEncounterBegin(TAICHUNG_ENCOUNTER_VENUSAUR));
 +    {
 +        const u32 oldPark = 1u << 10;
 +        const u32 oldMuseum = 1u << 15;
@@ -637008,10 +638666,10 @@ index 00000000..9bbc66bd
 +}
 diff --git a/tests/taichung_encounter_upper_history_test.c b/tests/taichung_encounter_upper_history_test.c
 new file mode 100644
-index 00000000..e66db5df
+index 00000000..c2759f06
 --- /dev/null
 +++ b/tests/taichung_encounter_upper_history_test.c
-@@ -0,0 +1,84 @@
+@@ -0,0 +1,102 @@
 +#include "global.h"
 +#include "taichung_encounter.h"
 +#include "constants/battle.h"
@@ -637023,7 +638681,7 @@ index 00000000..e66db5df
 +static unsigned sWrites, sCases;
 +#define V(id) sSave.vars[(id) - 0x4000]
 +u16 VarGet(u16 id) { (void)id; assert(0); return 0; }
-+bool8 VarSet(u16 id, u16 value) { assert(id == 0x40F0 || (id >= 0x40F2 && id <= 0x40F5)); V(id) = value; sWrites++; return TRUE; }
++bool8 VarSet(u16 id, u16 value) { assert(id == 0x40EF || id == 0x40F0 || (id >= 0x40F2 && id <= 0x40F5)); V(id) = value; sWrites++; return TRUE; }
 +bool8 LegacyTaichungEncounterInitSaveState(void);
 +void LegacyTaichungEncounterResetSession(void);
 +bool8 LegacyTaichungEncounterBegin(u16 site);
@@ -637037,13 +638695,33 @@ index 00000000..e66db5df
 +bool8 LegacyTaichungEncounterRecordCapture(u16 species);
 +bool8 LegacyTaichungEncounterOnBattleEnd(u16 species, u8 outcome);
 +static void Reset(void) { memset(&sSave,0,sizeof(sSave)); sWrites=0; LegacyTaichungEncounterResetSession(); TaichungEncounterResetSession(); }
++static void CheckMigratedLegacy(void)
++{
++    struct SaveBlock1 input = sSave, expected = sSave;
++    unsigned writes = sWrites, id;
++    u32 attempts = LegacyTaichungEncounterGetAttemptMask();
++    u32 unlocks = LegacyTaichungEncounterGetUnlockMask();
++    // Independent contract: original EC02 history0..23 only, stamp last,
++    // clear unallocated EF. Every unrelated native byte remains exact.
++    expected.vars[0xF0] &= 0x3FFF;
++    expected.vars[0xF2] &= 0x3FFF;
++    expected.vars[0xEF] = 0;
++    expected.vars[0xF3] = 0xEC03;
++    sWrites = 0;
++    assert(TaichungEncounterInitSaveState());
++    assert(sWrites == 4 && !memcmp(&sSave, &expected, sizeof(sSave)));
++    assert(TaichungEncounterGetAttemptMask() == attempts);
++    assert(TaichungEncounterGetUnlockMask() == unlocks);
++    for (id = 21; id < 27; id++) assert(!TaichungEncounterWasAttempted(id));
++    sWrites = 0;
++    assert(TaichungEncounterInitSaveState() && !sWrites);
++    assert(!memcmp(&sSave, &expected, sizeof(sSave)));
++    sSave = input; sWrites = writes;
++}
 +static void CheckNewSitesUnspent(void)
 +{
-+    unsigned id;
 +    assert((V(0x40F0) & 0xF800) == 0 && (V(0x40F2) & 0xF800) == 0);
-+    assert(!(TaichungEncounterGetAttemptMask() & 0xE00000));
-+    assert(!(TaichungEncounterGetUnlockMask() & 0xE00000));
-+    for(id=21;id<24;id++) assert(!TaichungEncounterWasAttempted(id));
++    CheckMigratedLegacy();
 +}
 +int main(void)
 +{
@@ -637058,7 +638736,7 @@ index 00000000..e66db5df
 +        V(0x40F4)=value; V(0x40F5)=value ^ 0xCAFE;
 +        assert(LegacyTaichungEncounterInitSaveState());
 +        assert(V(0x40F4)==value && V(0x40F5)==(value ^ 0xCAFE));
-+        CheckNewSitesUnspent(); assert(TaichungEncounterInitSaveState()); sCases++;
++        CheckNewSitesUnspent(); sCases++;
 +    }
 +    // Every historically reachable upper11-bit pattern, every old site, both
 +    // true-caught and KO outcomes. Direct legacy and new reads agree exactly.
@@ -637068,10 +638746,9 @@ index 00000000..e66db5df
 +        Reset(); V(0x40F3)=0xEC02; V(0x40F0)=value; V(0x40F2)=value & 0x555;
 +        V(0x40F4)=0xC000 | (value & 0x3FF); V(0x40F5)=0x8000 | (value & 0x155);
 +        initial=sSave;
-+        assert(LegacyTaichungEncounterInitSaveState() && TaichungEncounterInitSaveState());
++        assert(LegacyTaichungEncounterInitSaveState());
 +        assert(!sWrites && !memcmp(&initial,&sSave,sizeof(sSave)));
-+        assert(TaichungEncounterGetAttemptMask()==LegacyTaichungEncounterGetAttemptMask());
-+        assert(TaichungEncounterGetUnlockMask()==LegacyTaichungEncounterGetUnlockMask());
++        CheckMigratedLegacy();
 +        CheckNewSitesUnspent(); sCases++;
 +        for(id=0;id<21;id++) for(caught=0;caught<2;caught++)
 +        {
@@ -637085,15 +638762,14 @@ index 00000000..e66db5df
 +            if(caught) assert(LegacyTaichungEncounterTakeBall() && LegacyTaichungEncounterRecordCapture(site->species));
 +            assert(LegacyTaichungEncounterOnBattleEnd(site->species,caught?B_OUTCOME_CAUGHT:B_OUTCOME_WON));
 +            CheckNewSitesUnspent();
-+            assert(TaichungEncounterGetAttemptMask()==LegacyTaichungEncounterGetAttemptMask());
-+            assert(TaichungEncounterGetUnlockMask()==LegacyTaichungEncounterGetUnlockMask());
-+            assert(TaichungEncounterWasAttempted(id));
-+            assert(!!(TaichungEncounterGetUnlockMask() & (1u<<id))==!!caught);
++            CheckMigratedLegacy();
++            assert(LegacyTaichungEncounterGetAttemptMask() & (1u << id));
++            assert(!!(LegacyTaichungEncounterGetUnlockMask() & (1u<<id))==!!caught);
 +            assert((V(0x40F4)&0xFC00)==0xC000 && (V(0x40F5)&0xFC00)==0x8000);
 +            sCases++;
 +        }
 +    }
-+    printf("PASS:%u frozen-old/new native C cases; all65536EC01 stale upper patterns clear; all2048reachable EC02upper patterns plus all old sites Begin/caught/KO keep bits21-23 zero; no save sanitization/version change, original masks/reserved bits retained.\n",sCases);
++    printf("PASS:%u frozen-old/new native C cases; all65536EC01 stale upper patterns clear; all2048reachable EC02upper patterns plus all old sites Begin/caught/KO keep bits21-23 zero; EC03 full-save migration delta and idempotence checked on every old result; original low/reserved bits retained.\n",sCases);
 +    return 0;
 +}
 diff --git a/tests/taichung_exploration_test.c b/tests/taichung_exploration_test.c
@@ -645480,7 +647156,7 @@ index 00000000..5f44efa9
 +}
 diff --git a/tests/taichung_team_test.c b/tests/taichung_team_test.c
 new file mode 100644
-index 00000000..83f10052
+index 00000000..81d243af
 --- /dev/null
 +++ b/tests/taichung_team_test.c
 @@ -0,0 +1,612 @@
@@ -645960,7 +647636,7 @@ index 00000000..83f10052
 +{
 +    struct Pokemon before, refreshed;
 +    Reset();
-+    gPlayerParty[0] = OldPartner(SPECIES_VENUSAUR, 50);
++    gPlayerParty[0] = OldPartner(SPECIES_BULBASAUR, 50);
 +    before = gPlayerParty[0];
 +    gMain.inBattle = TRUE;
 +    TaichungTeamSyncPresetMoves();
@@ -648579,10 +650255,10 @@ index 00000000..65deb420
 +    print(json.dumps(result, indent=2)); raise SystemExit(0 if result["passed"] else 1)
 diff --git a/tools/taichung/boulevard_city/build_city.py b/tools/taichung/boulevard_city/build_city.py
 new file mode 100644
-index 00000000..ad7c61ef
+index 00000000..6e17718f
 --- /dev/null
 +++ b/tools/taichung/boulevard_city/build_city.py
-@@ -0,0 +1,1180 @@
+@@ -0,0 +1,1185 @@
 +#!/usr/bin/env python3
 +"""Build the connected Boulevard city from Fable's raw fill and map book."""
 +
@@ -649372,11 +651048,14 @@ index 00000000..ad7c61ef
 +        if not event.get("inLiveGame") or event.get("role") == "ambient":
 +            continue
 +        for key in ("tile", "approach", "readFrom"):
-+            if event.get(key):
++            if event.get(key) and not (event.get("type") == "person" and event.get("script") in TRAINER_PATROL_SCRIPTS):
 +                critical.add(tuple(event[key]))
-+    # A protected actor occupies its entire existing patrol, including both ends.
++    trainer_routes = {person["script"]: envelope(person) for person in people
++                      if person["script"] in TRAINER_PATROL_SCRIPTS}
++    # Stationed people are critical points; moving trainers protect their whole
++    # envelope for every OTHER actor, without masking a sign inside their own.
 +    for person in people:
-+        if person.get("role") != "ambient":
++        if person.get("role") != "ambient" and person["script"] not in TRAINER_PATROL_SCRIPTS:
 +            critical.update(envelope(person))
 +    repairs = json.loads((ROOT / "data/taichung/north-xitun-continue/repairs.json").read_text())
 +    for row in repairs["maps"]:
@@ -649401,7 +651080,8 @@ index 00000000..ad7c61ef
 +        if not ambient and person["script"] not in TRAINER_PATROL_SCRIPTS:
 +            require(mode == "MOVEMENT_TYPE_FACE_DOWN", "Affiliated guides and stationed workers remain fixed")
 +            continue
-+        if ambient:
++        turning_trainer = not ambient and mode == "MOVEMENT_TYPE_WANDER_AROUND_SLOWER"
++        if ambient or turning_trainer:
 +            require(mode.startswith("MOVEMENT_TYPE_WANDER_"), "Regular residents must use paused wandering")
 +            require(all(world.at(px, py) not in "BSLu" for px, py in route),
 +                    f"Resident wanders onto a road or crossing: {person['id']}")
@@ -649410,8 +651090,9 @@ index 00000000..ad7c61ef
 +            halo = {(px + xx, py + yy) for px, py in route for xx in (-1, 0, 1) for yy in (-1, 0, 1)}
 +            require(halo <= walk and {owners[p] for p in halo} == {owners[x, y]},
 +                    f"Trainer patrol has no broad bypass: {person['script']}")
-+        protected = critical if ambient else critical - route
-+        clearance = 2 if ambient else 3
++        protected = critical | set().union(*(cells for script, cells in trainer_routes.items()
++                                             if script != person["script"]))
++        clearance = 2 if ambient or turning_trainer else 3
 +        require(all(abs(px - qx) + abs(py - qy) >= clearance for px, py in route for qx, qy in protected),
 +                f"Street patrol approaches a protected event: {person['script']}")
 +        manifest.append(dict(id=person["id"], role=person["role"], script=person["script"], worldStart=[x, y],
@@ -656090,7 +657771,7 @@ index 00000000..d92ff48d
 +    return (wall, ballast, track, ballast, track, wall.transpose(Image.Transpose.FLIP_LEFT_RIGHT))
 diff --git a/tools/taichung/boulevard_city/street-people.json b/tools/taichung/boulevard_city/street-people.json
 new file mode 100644
-index 00000000..4bb970fe
+index 00000000..6346337b
 --- /dev/null
 +++ b/tools/taichung/boulevard_city/street-people.json
 @@ -0,0 +1,891 @@
@@ -656122,9 +657803,9 @@ index 00000000..4bb970fe
 +    "graphics": "OBJ_EVENT_GFX_MAN",
 +    "role": "trainer",
 +    "id": "patrol-RunwayJogger",
-+    "movement_type": "MOVEMENT_TYPE_WALK_UP_AND_DOWN",
-+    "movement_range_x": 0,
-+    "movement_range_y": 1
++    "movement_type": "MOVEMENT_TYPE_WANDER_AROUND_SLOWER",
++    "movement_range_x": 1,
++    "movement_range_y": 2
 +  },
 +  {
 +    "script": "TaichungBoulevard_Trainer_BallparkFan",
@@ -656171,9 +657852,9 @@ index 00000000..4bb970fe
 +    "graphics": "OBJ_EVENT_GFX_YOUNGSTER",
 +    "role": "trainer",
 +    "id": "patrol-NorthStudent",
-+    "movement_type": "MOVEMENT_TYPE_WALK_LEFT_AND_RIGHT",
-+    "movement_range_x": 1,
-+    "movement_range_y": 0
++    "movement_type": "MOVEMENT_TYPE_WANDER_AROUND_SLOWER",
++    "movement_range_x": 2,
++    "movement_range_y": 1
 +  },
 +  {
 +    "script": "TaichungBoulevard_Trainer_GreenwayWalker",
@@ -656184,8 +657865,8 @@ index 00000000..4bb970fe
 +    "graphics": "OBJ_EVENT_GFX_CRUSH_GIRL",
 +    "role": "trainer",
 +    "id": "patrol-GreenwayWalker",
-+    "movement_type": "MOVEMENT_TYPE_WALK_UP_AND_DOWN",
-+    "movement_range_x": 0,
++    "movement_type": "MOVEMENT_TYPE_WANDER_AROUND_SLOWER",
++    "movement_range_x": 1,
 +    "movement_range_y": 1
 +  },
 +  {
@@ -657626,6 +659307,31 @@ index 00000000..36824ed9
 + assert cells,name;seams.append(dict(direction=name,traversablePairs=len(cells)))
 +r=dict(passed=True,baseline='f7e7d04d',auditedDistrictAndSeamFloorCells=len(audit),resolvedNativeAndBorderCellsChecked=count,changedWorldCells=sorted(changed),newlyBlockedCells=[],openedClearFloorCells=len(changed),includesPFeatureLawnAndAlreadyOptionalPaving=True,allNativePixelsMetatileAttributesPalettesArtIdentical=True,actorsSignsDoorsAndConnectionsExact=True,noUnexplainedBlankFloorBlockers=True,fourApproaches=seams,walkableCount=len(walk[1]),budget=after['budget'],runtime='Separate actual native receipt required')
 +a.output.write_text(json.dumps(r,indent=2)+'\n');print(json.dumps({k:v for k,v in r.items() if k!='changedWorldCells'},indent=2))
+diff --git a/tools/taichung/boulevard_city/verify_turning_trainers.py b/tools/taichung/boulevard_city/verify_turning_trainers.py
+new file mode 100644
+index 00000000..10939c0a
+--- /dev/null
++++ b/tools/taichung/boulevard_city/verify_turning_trainers.py
+@@ -0,0 +1,19 @@
++"""Verify a turning-only trainer change against the qualified paused source."""
++import argparse,json,subprocess
++from pathlib import Path
++p=argparse.ArgumentParser(description=__doc__);p.add_argument('generated',type=Path);p.add_argument('output',type=Path);p.add_argument('--baseline',default='18409f114027a17104f8c72d1384cdf8d8f74b4b');a=p.parse_args();root=Path(__file__).resolve().parents[3]
++files=sorted(f for f in a.generated.rglob('*')if f.is_file()and f.name!='build-report.json');paths=[str(f.relative_to(a.generated))for f in files]
++queries=''.join(a.baseline+':'+name+'\n'for name in paths);raw=subprocess.check_output(['git','cat-file','--batch'],input=queries.encode(),cwd=root);at=0;changed=[];total=0;ambient=0;allowed={'TaichungBoulevard_Trainer_RunwayJogger':(1,2),'TaichungBoulevard_Trainer_GreenwayWalker':(1,1),'TaichungBoulevard_Trainer_NorthStudent':(2,1)}
++for file,path in zip(files,paths):
++ end=raw.index(b'\n',at);header=raw[at:end].split();assert len(header)==3 and header[1]==b'blob',path;size=int(header[2]);before=raw[end+1:end+1+size];at=end+1+size+1;after=file.read_bytes();assert (root/path).read_bytes()==after,('Uninstalled generated output',path)
++ if path.startswith('data/maps/TaichungBlvd')and path.endswith('/map.json'):
++  x=json.loads(before);y=json.loads(after);assert all(x[k]==y[k]for k in x if k!='object_events');assert len(x['object_events'])==len(y['object_events']);total+=len(y['object_events'])
++  for local,(old,new)in enumerate(zip(x['object_events'],y['object_events']),1):
++   ambient+=new['script'].startswith('TaichungBoulevard_Ambient_')
++   if old!=new:
++    assert new['script']in allowed;assert all(old[k]==new[k]for k in old if k not in ['movement_type','movement_range_x','movement_range_y']);assert new['movement_type']=='MOVEMENT_TYPE_WANDER_AROUND_SLOWER';assert(new['movement_range_x'],new['movement_range_y'])==allowed[new['script']];changed.append(dict(map=x['name'],localId=local,script=new['script'],anchor=[new['x'],new['y']],ranges=[new['movement_range_x'],new['movement_range_y']]))
++ else:assert before==after,('Non-object generated data changed',path)
++assert total==75 and ambient==55 and {r['script']for r in changed}==set(allowed) and len(changed)==3
++report=json.loads((a.generated/'build-report.json').read_text());assert report['reachable']['walkableTiles']==40165 and report['reachable']['maps']==54 and len(report['reachable']['seams'])==186
++out=dict(passed=True,baseline=a.baseline,generatedFilesCompared=len(files),onlyChangedNativeObjects=changed,geometryCollisionMetatilesPalettesArtWarpsSignsConnectionsExact=True,all75LocalIdsScriptsGraphicsRolesAndAnchorsUnchanged=True,all55OrdinaryResidentsUnchanged=True,walkableCells=40165,budget=report['budget'],sourceSafety='Compiler checks full rectangle, road exclusion, clear event buffer and connectivity with all envelopes removed',saveCacheCompatibility='Same generic native registry/overlap helper; updated exact three records and all in-envelope fallback offsets only')
++a.output.write_text(json.dumps(out,indent=2)+'\n');print(json.dumps(out,indent=2))
 diff --git a/tools/taichung/build_city.py b/tools/taichung/build_city.py
 new file mode 100644
 index 00000000..998dd2ec
@@ -722868,10 +724574,10 @@ index 00000000..7a543824
 +print("PASS:20 approved PNG/payload roundtrips, palette/hashes/bit numbering/names,4 after-win-only guarded script paths, no scene/collection progress or money writers")
 diff --git a/tools/taichung_gameplay/audit-encounter-slice.py b/tools/taichung_gameplay/audit-encounter-slice.py
 new file mode 100755
-index 00000000..92ca5bdc
+index 00000000..34c5f1d7
 --- /dev/null
 +++ b/tools/taichung_gameplay/audit-encounter-slice.py
-@@ -0,0 +1,131 @@
+@@ -0,0 +1,185 @@
 +#!/usr/bin/env python3
 +"""Check the live landmark roster, saved IDs, dispatch and encounter-only odds."""
 +from collections import Counter
@@ -722885,8 +724591,9 @@ index 00000000..92ca5bdc
 +core = (root / "src/taichung_encounter.c").read_text()
 +rows = re.findall(r'\{"([\w-]+)", SPECIES_(\w+), (\d+), \{([^}]+)\}\}', core)
 +manifest = json.loads((root / "data/taichung/encounters/sites.json").read_text())
-+assert len(rows) == len(manifest["sites"]) == 24
-+retired = {2: "EXEGGUTOR", 8: "ONIX", 9: "JYNX", 15: "PORYGON"}
++assert len(rows) == len(manifest["sites"]) == 27
++retired = {2: "EXEGGUTOR", 8: "ONIX", 9: "JYNX", 13: "NINETALES",
++           15: "PORYGON", 18: "VICTREEBEL", 22: "KABUTOPS"}
 +assert {row["stableSiteId"]: row["species"] for row in manifest["sites"] if row.get("retired")} == retired
 +assert {(row["siteSlug"], row["species"]) for row in manifest["sites"]} >= {
 +    ("city-hall", "MEWTWO"), ("tiger-city", "ZAPDOS"),
@@ -722911,20 +724618,60 @@ index 00000000..92ca5bdc
 +assert len(old_rows) == 21
 +for index, row in enumerate(old_rows):
 +    expected = ("shen-ji-new-village", *row[1:]) if index == 3 else row
++    if index == 0:
++        # Lapras retains its original history/species/level at Botanical Garden;
++        # only the approved place and water-habitat move profile change.
++        expected = ("botanical-garden", row[1], row[2],
++                    "MOVE_SURF, MOVE_ICE_BEAM, MOVE_BODY_SLAM, MOVE_SING")
++    elif index == 13:
++        expected = ("jingming-street-legacy", *row[1:])
++    elif index == 18:
++        expected = ("botanical-garden-victreebel-legacy", *row[1:])
 +    assert rows[index] == expected, (index, "historic encounter reinterpreted")
 +assert [(row[0], row[1], row[2]) for row in rows[21:]] == [
 +    ("national-trade-center", "MAGNETON", "65"),
-+    ("ding-sheng-bhw", "KABUTOPS", "65"), ("the-lin", "PERSIAN", "65")]
-+assert manifest["state"]["marker"] == "0xEC02" and manifest["state"]["lowBits"] == 10
++    ("ding-sheng-bhw-legacy", "KABUTOPS", "65"), ("the-lin", "PERSIAN", "65"),
++    ("jingming-street", "CHARIZARD", "65"), ("ding-sheng-bhw", "BLASTOISE", "65"),
++    ("maple-garden", "VENUSAUR", "65")]
++for site, expected_moves in {
++    24: ["MOVE_FLAMETHROWER", "MOVE_WING_ATTACK", "MOVE_DRAGON_CLAW", "MOVE_SMOKESCREEN"],
++    25: ["MOVE_SURF", "MOVE_ICE_BEAM", "MOVE_BITE", "MOVE_SKULL_BASH"],
++    26: ["MOVE_SOLAR_BEAM", "MOVE_SLUDGE_BOMB", "MOVE_SUNNY_DAY", "MOVE_SLEEP_POWDER"],
++}.items():
++    assert manifest["sites"][site]["moves"] == expected_moves
++assert manifest["state"] == {
++    "schemaVar": "0x40F3", "marker": "0xEC03", "attemptVar": "0x40F4", "unlockVar": "0x40F5",
++    "legacyMarker": "0xEC01", "attemptUpperVar": "0x40F0", "unlockUpperVar": "0x40F2",
++    "lowBits": 10, "previousMarker": "0xEC02", "previousSupportedMask": "0x00FFFFFF",
++    "extraVar": "0x40EF", "extraAttemptBit": "0x0001", "extraUnlockBit": "0x0100",
++    "extraReservedMask": "0xFEFE", "supportedMask": "0x07FFFFFF",
++}
 +assert manifest["bridge"]["version"] == 2 and manifest["bridge"]["size"] == 72
-+assert manifest["supportedSiteCount"] == 24 and manifest["allMask"] == "0x00FFFFFF"
++assert manifest["supportedSiteCount"] == 27 and manifest["allMask"] == "0x07FFFFFF"
 +
 +script = (root / "data/scripts/taichung_encounters.inc").read_text()
 +wrappers = re.findall(r'^\s*taichung_encounter_entry (\w+), (TAICHUNG_ENCOUNTER_\w+)$', script, re.M)
 +header = (root / "include/constants/taichung_encounters.h").read_text()
-+ids_by_constant = {name: int(value) for name, value in re.findall(r'^#define (TAICHUNG_ENCOUNTER_\w+) (\d+)$', header, re.M)}
++definitions = dict(re.findall(r'^#define (TAICHUNG_ENCOUNTER_\w+) (0x[0-9A-Fa-f]+|\d+|TAICHUNG_ENCOUNTER_\w+)$', header, re.M))
++def constant(name):
++    value = definitions[name]
++    return constant(value) if value.startswith('TAICHUNG_ENCOUNTER_') else int(value, 0)
++ids_by_constant = {name: constant(name) for name in definitions}
++assert ids_by_constant['TAICHUNG_ENCOUNTER_COUNT'] == manifest['supportedSiteCount'] == len(rows)
++assert ids_by_constant['TAICHUNG_ENCOUNTER_ALL_MASK'] == int(manifest['allMask'], 16) == (1 << 27) - 1
++for name, value in {
++    'SCHEMA_VAR': 0x40F3, 'SCHEMA_V1': 0xEC01, 'SCHEMA_V2': 0xEC02, 'SCHEMA': 0xEC03,
++    'ATTEMPT_VAR': 0x40F4, 'UNLOCK_VAR': 0x40F5,
++    'ATTEMPT_UPPER_VAR': 0x40F0, 'UNLOCK_UPPER_VAR': 0x40F2,
++    'SAVE_LOW_BITS': 10, 'SAVE_LOW_MASK': 0x03FF, 'V2_MASK': 0x00FFFFFF,
++    'EXTRA_VAR': 0x40EF, 'EXTRA_ATTEMPT_BIT': 0x0001, 'EXTRA_UNLOCK_BIT': 0x0100,
++    'EXTRA_USED_MASK': 0x0101, 'EXTRA_RESERVED_MASK': 0xFEFE,
++}.items():
++    assert ids_by_constant['TAICHUNG_ENCOUNTER_' + name] == value
++assert ids_by_constant['TAICHUNG_ENCOUNTER_EXTRA_USED_MASK'] ^ ids_by_constant['TAICHUNG_ENCOUNTER_EXTRA_RESERVED_MASK'] == 0xFFFF
++assert 0x1000 + (ids_by_constant['TAICHUNG_ENCOUNTER_EXTRA_VAR'] - 0x4000) * 2 == 0x11DE
 +entry_ids = {"TaichungEncounter_" + name: ids_by_constant[constant] for name, constant in wrappers}
-+assert len(entry_ids) == 20 and set(entry_ids.values()) == set(range(24)) - retired.keys()
++assert len(entry_ids) == 20 and set(entry_ids.values()) == set(range(27)) - retired.keys()
 +offer = script.split('TaichungEncounter_Offer::',1)[1].split('TaichungEncounter_Begin::',1)[0]
 +assert 'ScriptBegin' not in offer and 'ScriptSave' not in offer
 +assert script.index('goto_if_questlog') < script.index('TaichungEncounter_Offer::')
@@ -722966,20 +724713,33 @@ index 00000000..92ca5bdc
 +maps = root / "data/maps"
 +groups = json.loads((maps / "map_groups.json").read_text())["gMapGroup_Taichung"]
 +events = Counter()
++event_positions = {}
 +for map_name in groups:
 +    record = json.loads((maps / map_name / "map.json").read_text())
 +    if map_name.startswith("TaichungBlvd"):
 +        events.update(event["script"] for event in record["bg_events"] if event["type"] == "sign")
++        for event in record['bg_events']:
++            if event['type'] == 'sign':
++                event_positions.setdefault(event['script'], []).append((map_name, 'sign', event['x'], event['y']))
 +    events.update(event["script"] for event in record["object_events"])
++    for event in record['object_events']:
++        event_positions.setdefault(event['script'], []).append((map_name, 'object', event['x'], event['y']))
 +
 +if "--registry-only" not in sys.argv:
++    # The approved visible hotel post supplements its retained guide; both
++    # share the same durable one-attempt ID. No other duplicate is allowed.
++    assert sorted(event_positions['TaichungLandmark_TheLin']) == [
++        ('TaichungBlvdTigerCity', 'object', 18, 13),
++        ('TaichungBlvdTigerCity', 'sign', 14, 13),
++    ]
 +    for row in manifest["sites"]:
 +        site = row["stableSiteId"]
 +        binding = row["currentBinding"]
 +        if site in retired:
 +            assert row["entryScript"] is None and binding is None
 +            continue
-+        assert entry_ids[row["entryScript"]] == site and events[binding] == 1, binding
++        expected_events = 2 if binding == 'TaichungLandmark_TheLin' else 1
++        assert entry_ids[row["entryScript"]] == site and events[binding] == expected_events, binding
 +        # Existing city signs dispatch through a history script. New Boulevard
 +        # signs set the stable ID directly after presenting the local history.
 +        target = binding
@@ -723002,7 +724762,7 @@ index 00000000..92ca5bdc
 +        if table["map"].startswith("MAP_TAICHUNG_"):
 +            for habitats in (value for value in table.values() if isinstance(value, dict)):
 +                assert not rare.intersection(mon["species"] for mon in habitats["mons"])
-+print("PASS: 20 active profiles, four retired save IDs, historical IDs unchanged, EC02/v2/72 and24-bit bounds, first-150 roster, gated Team and unchanged Ultra Ball rules; " + ("map bindings deferred to combined Maps slice" if "--registry-only" in sys.argv else "all20 installed map bindings verified"))
++print("PASS: 27 profiles/20 active/seven retired save IDs, historical species IDs retained, EC03 history/extra-word allocation and v2/72/27-bit bounds, first-150 roster, gated Team and unchanged Ultra Ball rules; " + ("map bindings deferred to combined Maps slice" if "--registry-only" in sys.argv else "all20 installed map bindings verified"))
 diff --git a/tools/taichung_gameplay/audit-player-text.py b/tools/taichung_gameplay/audit-player-text.py
 new file mode 100755
 index 00000000..a3e50c49
@@ -725364,17 +727124,17 @@ index 00000000..5a6ca154
 +    main()
 diff --git a/tools/taichung_gameplay/test-ambient-registry.py b/tools/taichung_gameplay/test-ambient-registry.py
 new file mode 100644
-index 00000000..35138665
+index 00000000..1da687c6
 --- /dev/null
 +++ b/tools/taichung_gameplay/test-ambient-registry.py
-@@ -0,0 +1,39 @@
+@@ -0,0 +1,47 @@
 +#!/usr/bin/env python3
 +"""Verify exact reviewed resident/trainer identities, envelopes and spawn fallbacks."""
 +import argparse,json,subprocess
 +from collections import Counter
 +from pathlib import Path
 +ROOT=Path(__file__).resolve().parents[2]
-+p=argparse.ArgumentParser(description=__doc__);p.add_argument('--maps-root',type=Path);args=p.parse_args()
++p=argparse.ArgumentParser(description=__doc__);p.add_argument('--maps-root',type=Path);p.add_argument('--write',action='store_true');args=p.parse_args()
 +folder=ROOT/'data/taichung/ambient-npcs';d=json.loads((folder/'actor-contract.json').read_text());assert d['schemaVersion']==2 and d['addedResidents']==55 and d['outdoorTotal']==75 and len(d['actors'])==55
 +old=json.loads(subprocess.check_output(['git','show','f7e7d04d03f22872dad17fbd6bff88d5e1dd4897:data/taichung/ambient-npcs/actor-contract.json'],cwd=ROOT,text=True));old={a['id']:a for a in old['actors']}
 +patrols=json.loads((folder/'trainer-patrols.json').read_text());assert len(patrols)==3
@@ -725395,18 +727155,26 @@ index 00000000..35138665
 +  candidates=a['safeOverlapWorldCandidates'];assert len(set(map(tuple,candidates)))==len(candidates);assert set(map(tuple,candidates))==envelope-{(wx,wy)}
 +  offsets.extend((px-wx,py-wy) for px,py in candidates);comment=f"{a['id']} {a['script']}"
 + else:
-+  if n==55:expected.append('// Existing generic manual trainers: final Maps-reviewed small patrols.')
-+  assert (mode,rx,ry) in [('MOVEMENT_TYPE_WALK_LEFT_AND_RIGHT',1,0),('MOVEMENT_TYPE_WALK_UP_AND_DOWN',0,1)]
-+  offsets.extend([(1,0),(-1,0)] if rx else [(0,1),(0,-1)]);comment=a['script']
++  if n==55:expected.append('// Existing generic manual trainers: fixed-anchor turning strolls.')
++  assert mode=='MOVEMENT_TYPE_WANDER_AROUND_SLOWER'
++  assert (rx,ry)=={'43:34':(1,2),'43:60':(1,1),'43:69':(2,1)}[a['nativeMapKey']]
++  wx,wy=a['authoredWorld'];envelope={(wx+dx,wy+dy) for dx in range(-rx,rx+1) for dy in range(-ry,ry+1)}
++  assert set(map(tuple,a['worldRoute']))==set(map(tuple,a['worldEnvelope']))==envelope
++  candidates=a['safeOverlapWorldCandidates'];assert set(map(tuple,candidates))==envelope-{(wx,wy)} and len(candidates)==len(envelope)-1
++  assert candidates==[list(p)for p in sorted(envelope-{(wx,wy)},key=lambda p:(abs(p[0]-wx)+abs(p[1]-wy),p))]
++  offsets.extend((px-wx,py-wy)for px,py in candidates);comment=a['script']
 + expected.append(f"    {{MAP_NUM({a['nativeMapConstant']}), {a['nativeLocalId']}, {a['graphics']}, {mode}, {x}, {y}, {rx}, {ry}, {start}, {len(offsets)-start}}}, // {comment}")
 + if args.maps_root:
 +  m=json.loads((args.maps_root/f'data/maps/{groups[num]}/map.json').read_text());o=m['object_events'][a['nativeLocalId']-1]
 +  assert (o['x'],o['y'],o['graphics_id'],o['script'],o['movement_type'],o['movement_range_x'],o['movement_range_y'],o['trainer_type'],o['flag'])==(x,y,a['graphics'],a['script'],mode,rx,ry,'TRAINER_TYPE_NONE','0'),a
 +assert profiles=={'turning':41,'lane':14} and moved==19
++if args.write:
++ (folder/'native-registry.inc').write_text('\n'.join(expected)+'\n')
++ (folder/'native-overlap-offsets.inc').write_text('// Ordered reviewed offsets from actor-contract.json; native spawn fallback only.\n'+''.join(f'    {{{x}, {y}}},\n' for x,y in offsets))
 +assert (folder/'native-registry.inc').read_text()=='\n'.join(expected)+'\n'
 +assert (folder/'native-overlap-offsets.inc').read_text()=='// Ordered reviewed offsets from actor-contract.json; native spawn fallback only.\n'+''.join(f'    {{{x}, {y}}},\n' for x,y in offsets)
 +s=(ROOT/'src/overworld.c').read_text();assert s.count('    TaichungAmbientRefreshOnContinue();')==2 and '    TrySpawnObjectEvents(0, 0);\n    TaichungAmbientAvoidPlayerOverlap(x - MAP_OFFSET, y - MAP_OFFSET);' in s
-+print('PASS:55 stable resident identities,41 slow rectangles/14 paused lanes,19 reviewed anchor changes,450 exact ordered fallbacks,3 existing trainer contracts retained, both Continue paths'+('; actual committed Maps bindings verified' if args.maps_root else ''))
++print('PASS:55 stable resident identities,41 slow rectangles/14 paused lanes,19 reviewed anchor changes,480 exact ordered fallbacks,3 turning trainer contracts with fixed anchors, both Continue paths'+('; actual committed Maps bindings verified' if args.maps_root else ''))
 diff --git a/tools/taichung_gameplay/test-ambient-save.sh b/tools/taichung_gameplay/test-ambient-save.sh
 new file mode 100644
 index 00000000..97d9b8dd
@@ -728615,10 +730383,10 @@ index 00000000..f53c5282
 +if __name__=='__main__':main()
 diff --git a/tools/taichung_gameplay/test-save-v12.py b/tools/taichung_gameplay/test-save-v12.py
 new file mode 100644
-index 00000000..99178316
+index 00000000..3d30db48
 --- /dev/null
 +++ b/tools/taichung_gameplay/test-save-v12.py
-@@ -0,0 +1,30 @@
+@@ -0,0 +1,31 @@
 +#!/usr/bin/env python3
 +"""Compile the actual save migration C and test the v12 gym-room arrivals."""
 +from pathlib import Path
@@ -728639,7 +730407,8 @@ index 00000000..99178316
 +    binary = OUT / 'save-v12'
 +    subprocess.run(['cc', '-std=c99', '-Wall', '-Wextra', '-Werror',
 +                    '-I' + str(ROOT / 'tests/save_host'), '-I' + str(ROOT / 'include'), '-I' + str(OUT),
-+                    str(ROOT / 'src/taichung_save.c'), str(ROOT / 'tests/taichung_save_v12_test.c'), '-o', str(binary)], check=True)
++                    str(ROOT / 'src/taichung_save.c'), str(ROOT / 'src/taichung_encounter.c'),
++                    str(ROOT / 'tests/taichung_save_v12_test.c'), '-o', str(binary)], check=True)
 +    result = subprocess.run([str(binary)], capture_output=True, text=True)
 +    if result.returncode:
 +        sys.stderr.write(result.stdout + result.stderr)
@@ -728705,6 +730474,43 @@ index 00000000..c24add4f
 +  "$GAME_ROOT/src/taichung_starter.c" "$GAME_ROOT/tests/taichung_starter_test.c" \
 +  -o "$test_dir/starter"
 +"$test_dir/starter"
+diff --git a/tools/taichung_gameplay/test-team-current-choice.py b/tools/taichung_gameplay/test-team-current-choice.py
+new file mode 100644
+index 00000000..5f922084
+--- /dev/null
++++ b/tools/taichung_gameplay/test-team-current-choice.py
+@@ -0,0 +1,31 @@
++#!/usr/bin/env python3
++"""Current-partner previews match the setter's intentional same-slot no-op."""
++from pathlib import Path
++import importlib.util,subprocess
++ROOT=Path(__file__).resolve().parents[2];OUT=ROOT/'build/taichung-tests/team-current-choice';OUT.mkdir(parents=True,exist_ok=True)
++spec=importlib.util.spec_from_file_location('extract',ROOT/'tools/taichung_gameplay/test-save-facing.py');m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m)
++s=(ROOT/'src/taichung_team_menu.c').read_text();(OUT/'native-choice.inc').write_text('\n'.join(m.definition(s,f)[0]for f in ['KeepingCurrentPartner','ChoiceLevel','ChoiceMove'])+'\n')
++(OUT/'test.c').write_text('''#include <stdint.h>
++#include <stddef.h>
++#include <assert.h>
++#include <string.h>
++#include <stdio.h>
++typedef uint8_t u8;typedef uint16_t u16;typedef uint32_t u32;typedef uint8_t bool8;
++#define MON_DATA_SPECIES 0
++#define MON_DATA_LEVEL 1
++#define MON_DATA_MOVE1 2
++static struct Mon {u16 species;u8 level;u16 moves[4];u16 hp,pp[4];}gPlayerParty[6];
++static u8 sSlot,count;static u16 sSpecies;static const u16 preset[4]={11,12,13,14};
++static u8 CalculatePlayerPartyCount(void){return count;}
++static u32 GetMonData(struct Mon*p,int field){if(!field)return p->species;if(field==1)return p->level;return p->moves[field-2];}
++static u8 TaichungTeamLevelForSpecies(u16 species){(void)species;return 65;}
++static const u16 *TaichungTeamGetPresetMoves(u16 species){(void)species;return preset;}
++#include "native-choice.inc"
++int main(void){struct Mon before[6];u8 level,i;count=1;sSpecies=82;
++for(level=5;level<=80;level+=25){gPlayerParty[0].species=82;gPlayerParty[0].level=level;gPlayerParty[0].hp=0;for(i=0;i<4;i++){gPlayerParty[0].moves[i]=31+i;gPlayerParty[0].pp[i]=i;}memcpy(before,gPlayerParty,sizeof(before));
++assert(KeepingCurrentPartner()&&ChoiceLevel()==level);for(i=0;i<4;i++)assert(ChoiceMove(i)==31+i);assert(!memcmp(before,gPlayerParty,sizeof(before)));}
++sSpecies=6;assert(!KeepingCurrentPartner()&&ChoiceLevel()==65);for(i=0;i<4;i++)assert(ChoiceMove(i)==preset[i]);sSpecies=82;sSlot=1;assert(!KeepingCurrentPartner()&&ChoiceLevel()==65);
++puts("PASS: saved fainted/legacy partner preview uses actual level/moves without mutation; new/append choices use the captured level and preset. Same-slot UI no longer promises a heal/replacement.");}
++''')
++subprocess.run(['cc','-std=c99','-Wall','-Wextra','-Werror','-I'+str(OUT),str(OUT/'test.c'),'-o',str(OUT/'test')],check=True);subprocess.run([str(OUT/'test')],check=True)
++for needle in ['KeepingCurrentPartner() ? TaichungText(sKeepEn, sKeepZh)','KeepingCurrentPartner() ? TaichungText(sKeepStatsEn, sKeepStatsZh)','KeepingCurrentPartner() ? TaichungText(sSavedMovesEn, sSavedMovesZh)']:assert needle in s
 diff --git a/tools/taichung_gameplay/test-team-preparation.py b/tools/taichung_gameplay/test-team-preparation.py
 new file mode 100644
 index 00000000..a1378e5d

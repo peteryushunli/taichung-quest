@@ -2801,7 +2801,7 @@
       ],
       "exteriorMapId": "MAP_TAICHUNG_BLVD_MAPLE_GARDEN",
       "exteriorNativeKey": "43:28",
-      "captureBit": 0,
+      "captureBit": 26,
       "captureInteraction": {
         "script": "TaichungCity_Sign_MapleGarden",
         "world": [
@@ -2851,7 +2851,7 @@
       ],
       "exteriorMapId": "MAP_TAICHUNG_BLVD_BOTANICAL_GARDEN",
       "exteriorNativeKey": "43:62",
-      "captureBit": 18,
+      "captureBit": 0,
       "captureInteraction": {
         "script": "TaichungCity_Sign_BotanicalGarden",
         "world": [
@@ -3161,7 +3161,7 @@
       ],
       "exteriorMapId": "MAP_TAICHUNG_BLVD_JINGMING_1ST_STREET",
       "exteriorNativeKey": "43:55",
-      "captureBit": 13,
+      "captureBit": 24,
       "captureInteraction": {
         "script": "TaichungBoulevard_Sign_JingmingStreet",
         "world": [
@@ -3347,7 +3347,7 @@
       ],
       "exteriorMapId": "MAP_TAICHUNG_BLVD_XITUN_D_2",
       "exteriorNativeKey": "43:36",
-      "captureBit": 22,
+      "captureBit": 25,
       "captureInteraction": {
         "script": "TaichungLandmark_DingShengBHW",
         "world": [
@@ -4752,7 +4752,7 @@
         "addressZh": "臺中市西屯區市政北二路230號"
       },
       "descriptionSources": [
-        "https://www.taichung.gov.tw/8868/8872/9962/971521",
+        "https://www.taichung.gov.tw/971521/post",
         "https://www.kaoarch.org.tw/Upload/20241223095800_40101.pdf"
       ]
     },
@@ -4788,13 +4788,13 @@
     }
   ],
   "sourceSha256": {
-    "compiledMapReport": "349b5da3981fd565258780a9fa0ddedcf2972c3f3832f57dcf71dcf9d46f5e0c",
+    "compiledMapReport": "e4880bbd2e634abf4856df9449d613ff2b8320b67d888625edaae6dc0f463adb",
     "fill": "22d9c6695e21ab7419ccafe55d86e4833df8a5e394aee84133d4a1cd6b5849f6",
     "mapBook": "265d64cf1b47a26d412626301a6f1e542f3a19bcd89ec0084e6f08022a713b4d",
     "northXitunPlan": "89c555bbfa2a80d277b9729e6a2a9a1b6480dea9e4ffbf76ace332c7386f76e5",
     "northXitunCompiler": "be903fd3d2d37b0dc6c581512e86b84054457a30a53ce90bc7f83fcd1b65fb34",
-    "streetPeople": "7fa5553e2c8dae7b23b4831f873615b37c4a09129b972aac67212791b6e0164f",
-    "namedXitunBindings": "1138c1c0341508281bb3e5d02d516960c5e1dcb7494bdc68bb28c7432425f8b3"
+    "streetPeople": "311668ad29fc3b66fdcbc387170c52be3d84bc0396a39e893e3af1b96b80530c",
+    "namedXitunBindings": "ad216e4c9c22fbc6eca70f1e7d7be2779edc2f37b491580818abc7f06b51c1dc"
   },
-  "geometryFingerprintSha256": "9264b2c250859f1606d58f0800bc6d84a2de93cb094766819f2d856b0454b7c4"
+  "geometryFingerprintSha256": "afda7f68a55a4dcd20468e0842f640c61c2e592f2a4e72f0a71312d037ca28d5"
 }
