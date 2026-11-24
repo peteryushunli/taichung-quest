@@ -68,6 +68,25 @@ test('expanded saves prove the highest attempt and unlock independently of legac
   assert.equal(verifyCaptureNativeSave(bytes, { ...expected, unlocks: 0x41 }), undefined);
 });
 
+test('EC02 keeps 24 stable bits in the original low-10/upper-16 layout', () => {
+  for (const bit of [3, 21, 22, 23]) for (const caught of [false, true]) for (const slot of [0, 1]) {
+    const expected = { ...proof, attempts: proof.attempts | (1 << bit), unlocks: proof.unlocks | (caught ? 1 << bit : 0) };
+    const { bytes, view, positions, seal } = fixture(expected, slot, 13, 0xec02);
+    // Bits 24/25 remain reserved; low-word bits 10–15 remain opaque too.
+    for (const at of [0x260, 0x264]) view.setUint16(positions[2] + at, view.getUint16(positions[2] + at, true) | 0xc000, true);
+    view.setUint16(positions[2] + 0x268, expected.attempts & 0x3ff | 0xfc00, true); seal(2);
+    assert.deepEqual(verifyCaptureNativeSave(bytes, expected), { ...expected, slot });
+    assert.equal(verifyCaptureNativeSave(bytes, { ...expected, attempts: expected.attempts ^ (1 << bit) }), undefined);
+    if (caught) assert.equal(verifyCaptureNativeSave(bytes, { ...expected, unlocks: expected.unlocks ^ (1 << bit) }), undefined);
+  }
+  // Genuine old masks are preserved in both schemas; no browser migration.
+  for (const schema of [0xec01, 0xec02]) assert.ok(verifyCaptureNativeSave(fixture(proof, 1, 5, schema).bytes, proof));
+  // Newly supported bits cannot be guessed away when native proof and file differ.
+  const file = fixture({ ...proof, attempts: proof.attempts | 1 << 23 }, 1, 5, 0xec02).bytes;
+  assert.equal(verifyCaptureNativeSave(file, proof), undefined);
+  for (const bit of [24, 25, 26]) assert.equal(verifyCaptureNativeSave(file, { ...proof, attempts: 1 << bit, unlocks: 0 }), undefined);
+});
+
 function storage() {
   const values = new Map();
   return { getItem: key => values.get(key) ?? null, setItem: (key, value) => values.set(key, value), removeItem: key => values.delete(key) };
@@ -104,4 +123,12 @@ test('unavailable, malformed or silently failed intent storage never acknowledge
 test('pending, armed, active, settling and failed encounters exclude every CPU snapshot path', () => {
   for (const phase of [1, 2, 3, 4, 6]) assert.equal(captureBlocksSnapshots(phase), true);
   for (const phase of [undefined, 0, 5]) assert.equal(captureBlocksSnapshots(phase), false);
+});
+
+test('24-bit boot intents survive reload while unsupported slots stay blocked', () => {
+  const store = storage();
+  const expanded = { ...intent, attempts: 0xffffff, unlocks: 1 << 23 };
+  writeCaptureBootIntent(store, expanded);
+  assert.deepEqual(readCaptureBootPolicy(store).intent, expanded);
+  for (const bit of [24, 25, 26]) assert.throws(() => writeCaptureBootIntent(store, { ...expanded, attempts: 1 << bit, unlocks: 0 }), /Invalid/);
 });

@@ -7,6 +7,15 @@ import { initializeLocalization, onLocaleChange, setLocale } from '../src/i18n';
 import type { EncounterBridgeState } from '../src/encounter-bridge';
 import type { NavigationSnapshot } from '../src/navigation-bridge';
 
+// Test-only remap: exercises high bits before final native marker export exists.
+// Production catalogs/geometry are unchanged; no fixture save is imported.
+const syntheticBit = Number(new URLSearchParams(location.search).get('bit'));
+if ([21, 22, 23].includes(syntheticBit)) geometry.markersById['maple-garden'].captureBit = syntheticBit;
+const bitChoice = document.querySelector<HTMLSelectElement>('#bit')!;
+bitChoice.value = [21, 22, 23].includes(syntheticBit) ? String(syntheticBit) : '0';
+bitChoice.addEventListener('change', () => { location.search = `bit=${bitChoice.value}`; });
+document.querySelector('#fixture-label')!.textContent = [21, 22, 23].includes(syntheticBit)
+  ? `Synthetic bit ${syntheticBit} on Maple Garden’s existing marker (not native placement)` : 'Maple Garden test position';
 const guide = createCityGuide({ getState: () => ({ running: true, paused: false }), pause() {}, resume() {}, releaseInputs() {} });
 const hud = createMinimap({ screen: document.querySelector('#fixture-screen')!, toggle: document.querySelector('#visibility')!, zoom: document.querySelector('#zoom')!, hint: document.querySelector('#hint')!, geometry, storage: { getItem: () => null, setItem() {} }, openGuide: () => guide.open() });
 const marker = geometry.markersById['maple-garden'];

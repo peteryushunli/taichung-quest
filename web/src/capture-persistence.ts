@@ -3,7 +3,7 @@
 import { isFullFireRedSaveSize, readFireRedSaveSlot } from './firered-save.ts';
 
 export const CAPTURE_BOOT_INTENT_KEY = 'taichung-quest-capture-boot-v1';
-export const CAPTURE_SITE_COUNT = 21;
+export const CAPTURE_SITE_COUNT = 24;
 export const CAPTURE_MASK = (1 << CAPTURE_SITE_COUNT) - 1;
 export const LEGACY_CAPTURE_MASK = 0x3fff;
 const SAVE_LOW_BITS = 10;

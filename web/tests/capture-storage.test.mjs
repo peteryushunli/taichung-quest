@@ -109,3 +109,15 @@ test('a genuinely replaced native save reconciles only after its new identity an
   assert.equal(await controller.reconcile(f.current), true);
   assert.equal(controller.blocksSnapshots, false);
 });
+
+test('new high-bit results retain the ordered native durability transaction', async () => {
+  for (const site of [21, 22, 23]) for (const caught of [false, true]) {
+    const f = setup();
+    f.current = { ...f.current, phase: 4, site, attempts: proof.attempts | 1 << site, unlocks: proof.unlocks | (caught ? 1 << site : 0) };
+    f.bytes = fixture(f.current, 1, 5, 0xec02).bytes;
+    const controller = new CaptureStorageController(f.options);
+    await controller.persist(f.current);
+    assert.deepEqual(f.events, ['intent', 'flush', 'discard', 'flush', 'clear']);
+    assert.equal(controller.blocksSnapshots, false);
+  }
+});
