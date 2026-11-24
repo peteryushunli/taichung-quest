@@ -1,0 +1,116 @@
+{
+  "nativeCommit": "3349d1f175c5a352653f4b7687618b6585721d57",
+  "contractSha256": "a275efbe796cca44ee0473f0331a23f9aa942dea3cf240b5e831db6823bdc425",
+  "sites": {
+    "old-taichung-station": {
+      "trainer": "StationJun",
+      "species": [
+        "RATICATE",
+        "PIDGEOT",
+        "PERSIAN"
+      ]
+    },
+    "taichung-park": {
+      "trainer": "ParkLian",
+      "species": [
+        "SEAKING",
+        "GOLDUCK",
+        "PIDGEOT"
+      ]
+    },
+    "miyahara": {
+      "trainer": "MiyaharaPeiqi",
+      "species": [
+        "DEWGONG",
+        "CLOYSTER",
+        "LAPRAS"
+      ]
+    },
+    "natural-science-museum": {
+      "trainer": "ScienceYicheng",
+      "species": [
+        "MAGNETON",
+        "AERODACTYL",
+        "OMASTAR"
+      ]
+    },
+    "calligraphy-greenway": {
+      "trainer": "GreenwayXingan",
+      "species": [
+        "VICTREEBEL",
+        "VILEPLUME",
+        "TANGELA"
+      ]
+    },
+    "confucius-temple": {
+      "trainer": "ConfuciusWenyi",
+      "species": [
+        "SLOWBRO",
+        "EXEGGUTOR",
+        "ALAKAZAM"
+      ]
+    },
+    "fine-arts-museum": {
+      "trainer": "FineArtsCaining",
+      "species": [
+        "BUTTERFREE",
+        "MUK",
+        "CLEFABLE"
+      ]
+    },
+    "fengjia-night-market": {
+      "trainer": "FengjiaJiahe",
+      "species": [
+        "FARFETCHD",
+        "MAGMAR",
+        "SNORLAX"
+      ]
+    },
+    "wanhe-temple": {
+      "trainer": "MapleGardenMuqing",
+      "species": [
+        "POLIWRATH",
+        "BUTTERFREE",
+        "VAPOREON"
+      ]
+    },
+    "taichung-theater": {
+      "trainer": "TheaterLing",
+      "species": [
+        "WIGGLYTUFF",
+        "JYNX",
+        "MR_MIME"
+      ]
+    }
+  },
+  "iconSha256": {
+    "RATICATE": "35b59703da9b664380f152f7a2f127250eeada8dffb7fc4b1a7bf836de10b32d",
+    "PIDGEOT": "3704c0fc885bbb65955ec1091d58ea07e2dce4b9083ae7b1082f1a432097f908",
+    "PERSIAN": "44bae415d778e12b4fd28dddaa7d685f936322ea6b99ba2ebec3598c46a8a1d2",
+    "SEAKING": "dd41992a9cdbe6c0f77525afa5617150edd92e93cbce1371d762e4a832240078",
+    "GOLDUCK": "061ba235fd4ad8ee4859dc167a46dbbe03f24f7d99f0a20be534a856e59dfacb",
+    "DEWGONG": "bce8272188f4433044d1154881267f4e27ee078a4a037025375f1e1ad0b4a7c4",
+    "CLOYSTER": "f1f694150a10d568c8e064fc6b295b0b7dea98f5a44a85c762801da97583057b",
+    "LAPRAS": "8399b501b87c2aa6b41927b8cc320637d3a5c0d383a0ffa0df208d4e0f0aa81e",
+    "MAGNETON": "69af5373c8bf5b8092a072fdb091d19afcf993f1884822623ed0027c952028ea",
+    "AERODACTYL": "9c26cabb62163c525cbc4f5437c16fa31f34b5bcd828953591f155cc70f5294e",
+    "OMASTAR": "9d9495b247a70988d804426215953961010367c8987c50484789ccc61958f6c6",
+    "VICTREEBEL": "ac030d2a53ebc84b82e76fb6ba6d0426fc1455f0e13f183f53f8691edbe30471",
+    "VILEPLUME": "225bb834ad8daff529cd834bb340f3636acdc2d9612cea037ccb59da1d0dca0f",
+    "TANGELA": "c30256d79899afc52f9acda5471688549f0c9f51f1ec7f02fea0a8838d4e574d",
+    "SLOWBRO": "24942d615010136b1050f1dd059df9f5e68c795a26911332ca247be98833fad9",
+    "EXEGGUTOR": "18da5df0c7d14d3071d69630eb68461c3ae5d60e46d98c0df6615ed8a2f828e6",
+    "ALAKAZAM": "8647fd0a9127639cb375acfa536b99aace26b5a5ba67cc6add77af820f4f8bc4",
+    "BUTTERFREE": "120eff312ec5113740737951e9288e02f0d50f54f6f3cf91d4b027a3e34013ae",
+    "MUK": "70f2a82caea128992a855b99f254380cbc1a8abfe446558621814025a4245e21",
+    "CLEFABLE": "ce5148ca52a2589d4fb907f496f0c6b7d37b3ef3d7cfca90a697ef15d7d5f9b4",
+    "FARFETCHD": "a3148d0a45b289607469cc1c98d84d533cec449626dd0247a41f6c5a1b54fd09",
+    "MAGMAR": "1e1be61a5a92a693891fa3d23cbce35a38e4f3c73daa345cde362c98456333fa",
+    "SNORLAX": "df54dc15d0a0f92c9a39e3f60a2ab2f44c063533756f6d8a532649425786cd6f",
+    "POLIWRATH": "9308149597969b4a30874df9f9ad14a63a6872b94ecfc4ab1b52112be93d1ff1",
+    "VAPOREON": "ac7eb05a1fe6d1831c0283597fc579a4acac1318ace977d4e0604e4902ca2a9d",
+    "WIGGLYTUFF": "52abca4cfa76026f951d16c5918efdac36db450f983754fbb04b27178e01a120",
+    "JYNX": "76649721db4e768364f60977bec82bf5caa0fab48035ad69ef457bf2fb55b073",
+    "MR_MIME": "0beed31d9f9451d149e462654aca58ebab304fe2e09c74b0b9e9572008499373"
+  }
+}

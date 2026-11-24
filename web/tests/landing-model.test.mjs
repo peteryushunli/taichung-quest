@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import { readFileSync } from 'node:fs';
 import { existsSync } from 'node:fs';
+import { createHash } from 'node:crypto';
 import { districtCount, districtLabelSpots, gymStatusSummary, isGym, isGymOpen, localizedPlace, markerPosition, orderPlaces, placeStatus, placeWorld } from '../src/landing-model.ts';
 
 const landmarks = JSON.parse(readFileSync(new URL('../src/data/landmarks.json', import.meta.url), 'utf8'));
@@ -148,21 +149,26 @@ test('every open gym has a leader portrait and three Pokémon', () => {
   }
 });
 
-test('the listed team orders match the native gym rosters', () => {
-  const expected = {
-    'old-taichung-station': ['Rattata', 'Pidgey', 'Meowth'],
-    'natural-science-museum': ['Magneton', 'Porygon', 'Omastar'],
-    'calligraphy-greenway': ['Bellsprout', 'Vileplume', 'Tangela'],
-    'confucius-temple': ['Slowbro', 'Exeggutor', 'Alakazam'],
-    'fine-arts-museum': ['Butterfree', 'Ditto', 'Porygon'],
-    'fengjia-night-market': ['Farfetch’d', 'Magmar', 'Snorlax'],
-    'wanhe-temple': ['Poliwhirl', 'Butterfree', 'Vaporeon'],
-    'taichung-theater': ['Jigglypuff', 'Jynx', 'Mr. Mime'],
-  };
-  for (const [id, names] of Object.entries(expected)) {
-    const entry = assets.split('\n').find((line) => line.includes(`'${id}':`));
+test('all ten website teams and their icons match native roster checkpoint3349d1f1', () => {
+  const roster = JSON.parse(readFileSync(new URL('./fixtures/gym-rosters-3349d1f1.json', import.meta.url)));
+  assert.equal(roster.nativeCommit, '3349d1f175c5a352653f4b7687618b6585721d57');
+  assert.deepEqual(Object.keys(roster.sites).sort(), open.map(place => place.id).sort());
+  assert.equal(roster.sites['wanhe-temple'].trainer, 'MapleGardenMuqing');
+  const icons = new Map([...assets.matchAll(/import (\w+) from '\.\/assets\/pokemon\/icon\/([^']+)';/g)].map(match => [match[1], match[2]]));
+  for (const [id, { species }] of Object.entries(roster.sites)) {
+    const entry = assets.split('\n').find(line => line.includes(`'${id}':`) || line.trimStart().startsWith(`${id}:`));
     assert.ok(entry, id);
-    assert.deepEqual([...entry.matchAll(/mon\('([^']+)', \w+\)/g)].map((match) => match[1]), names, id);
+    const team = [...entry.matchAll(/mon\('([^']+)', (\w+)\)/g)];
+    const toSpecies = name => name.replace(/[’'.]/g, '').replace(/ /g, '_').toUpperCase();
+    assert.deepEqual(team.map(match => toSpecies(match[1])), species, id);
+    for (const [index, match] of team.entries()) {
+      const filename = icons.get(match[2]);
+      assert.equal(filename, `${species[index].toLowerCase()}.png`, `${id} slot${index} icon species`);
+      const bytes = readFileSync(new URL(`../src/assets/pokemon/icon/${filename}`, import.meta.url));
+      assert.equal(bytes.subarray(1, 4).toString(), 'PNG');
+      assert.deepEqual([bytes.readUInt32BE(16), bytes.readUInt32BE(20)], [32, 64], filename);
+      assert.equal(createHash('sha256').update(bytes).digest('hex'), roster.iconSha256[species[index]], filename);
+    }
   }
 });
 
