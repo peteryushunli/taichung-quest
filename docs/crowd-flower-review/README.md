@@ -1,0 +1,11 @@
+# Outdoor crowd and covered-flower review
+
+The city has exactly 75 outdoor people: 55 new noncombat residents plus the existing 20. All 55 residents and three qualified optional trainers roam, for 58 walking and 17 stationed people. All 54 outdoor sections are populated. Existing actor identities, dialogue consent, gym/landmark guides and eight optional trainer identities are retained. The Greenway walker moves one tile north into its reviewed three-wide patrol envelope. Uniform spawn-viewport coverage is 17.05%; this is a map-density measurement, not a travel probability.
+
+Old missing/stale object caches reload normally. An old player standing on a newly authored actor spawn retains their position and facing; only the NPC takes a bounded alternative position. Compiled 58-actor/protected-save cases and all 20 actual bilingual C buffers pass. Unchanged old ordinary saves, both exact-spawn cases and talk/patrol/resume checks passed on the combined pre-isolation cartridge. Their final-cartridge repeats are being recorded separately. Actual trainer decline/victory/revisit checks use the qualified native movement controller with final axes and anchors.
+
+The rear red flower pair at authored world [242,137] and [243,137] animates beneath unchanged tree graphics. Its resources are private to the 54 Boulevard layouts. All 406 other layouts and shared legacy graphics retain their baseline values. On final cartridge 3dcbe774, 15 actual frames show rear/front animation with zero opaque-tree changes and zero stream overflows; the previously affected legacy storefront remains stable through all animation phases.
+
+Native source f7e7d04d03f22872dad17fbd6bff88d5e1dd4897 pairs cartridge 3dcbe7747c057f6da995c9ce8fdc5a717f08473daa4510ee7b71a9205a0dc6d3 with its own ELF, 76 fresh HD references and all five bridge pins. Only the two reviewed flower cells differ visually from the first preview. Approved pictures and nine recomputed tower masks remain byte-identical. Radar and active map geometry remain unchanged. The city overview is retained outside those two cells. All 340 regenerated native outputs match source; 134 web tests and TypeScript pass.
+
+This checkpoint remains on draft PR 25 for a protected preview. The approved Crisp 2× player rendering is a separate web commit. Production is unchanged.

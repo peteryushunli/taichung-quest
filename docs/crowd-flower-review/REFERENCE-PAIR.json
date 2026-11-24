@@ -1,0 +1,35 @@
+{
+  "status": "PASS",
+  "mapsCompared": 76,
+  "legacy43.18RestoredByteExact": true,
+  "changed": [
+    {
+      "map": "43.59",
+      "pixels": 194,
+      "worldCells": [
+        [
+          242,
+          137
+        ],
+        [
+          243,
+          137
+        ]
+      ]
+    },
+    {
+      "map": "43.63",
+      "pixels": 194,
+      "worldCells": [
+        [
+          242,
+          137
+        ],
+        [
+          243,
+          137
+        ]
+      ]
+    }
+  ]
+}

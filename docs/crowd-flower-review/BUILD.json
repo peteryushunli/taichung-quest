@@ -1,0 +1,66 @@
+{
+  "file": "taichung-firered.gba",
+  "bytes": 16777216,
+  "sha1": "d30354a39d61466ac96eb152c3866a6987c5952d",
+  "sha256": "3dcbe7747c057f6da995c9ce8fdc5a717f08473daa4510ee7b71a9205a0dc6d3",
+  "upstreamCommit": "ce6406d8c2eaf46d543c8a2606de0c3cb1951982",
+  "sourceCommit": "f7e7d04d03f22872dad17fbd6bff88d5e1dd4897",
+  "modified": true,
+  "languageBridge": {
+    "version": 1,
+    "size": 32,
+    "address": 33813796,
+    "magicA": 1095517012,
+    "magicB": 825247566
+  },
+  "navigationBridge": {
+    "version": 2,
+    "size": 52,
+    "address": 33813832,
+    "magicA": 1095648084,
+    "magicB": 825241686
+  },
+  "minimap": {
+    "schemaVersion": 1,
+    "geometryFingerprintSha256": "48fe4ba5208d0a2b1285c1b6aa6f776377ef003d5501e5ae837ca45c6127e92a"
+  },
+  "onboardingBridge": {
+    "version": 1,
+    "size": 48,
+    "address": 33813884,
+    "magicA": 1313424212,
+    "magicB": 827282004
+  },
+  "encounterBridge": {
+    "version": 2,
+    "size": 72,
+    "address": 33813684,
+    "magicA": 1313162068,
+    "magicB": 827479107
+  },
+  "badgeBridge": {
+    "version": 1,
+    "size": 32,
+    "address": 33813620,
+    "magicA": 1145193300,
+    "magicB": 825241671
+  },
+  "badgePresentation": {
+    "schemaVersion": 1,
+    "assetSetId": "taichung-badges-masters-v1",
+    "gymIds": [
+      "old-taichung-station",
+      "taichung-park",
+      "miyahara",
+      "natural-science-museum",
+      "calligraphy-greenway",
+      "confucius-temple",
+      "fine-arts-museum",
+      "fengjia-night-market",
+      "wanhe-temple",
+      "taichung-theater"
+    ]
+  },
+  "sourceTree": "73dbd1d4adba905f5140cb7663ef374ffaf9181f",
+  "elfSha256": "990e30680a71cd025df193e8b41cc87e142a46ba3ada2502cca1d7d8e2290fd9"
+}

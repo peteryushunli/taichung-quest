@@ -1,0 +1,34 @@
+{
+  "passed": true,
+  "romSha256": "3dcbe7747c057f6da995c9ce8fdc5a717f08473daa4510ee7b71a9205a0dc6d3",
+  "elfSha256": "990e30680a71cd025df193e8b41cc87e142a46ba3ada2502cca1d7d8e2290fd9",
+  "qualifiedFinalMainCommit": "f7e7d04d03f22872dad17fbd6bff88d5e1dd4897",
+  "flowers": {
+    "frames": 15,
+    "rearAnimatedPixels": 173,
+    "frontAnimatedPixels": 254,
+    "changedOpaqueTreePixels": 0,
+    "dynamicSlots": 1003,
+    "tileOverflow": 0,
+    "paletteOverflow": 0
+  },
+  "legacy": {
+    "frames": 15,
+    "map": "43:18",
+    "localCells": [
+      [
+        38,
+        41
+      ],
+      [
+        38,
+        42
+      ],
+      [
+        38,
+        43
+      ]
+    ],
+    "changedPixelsAfterAnimationTicks": 0
+  }
+}

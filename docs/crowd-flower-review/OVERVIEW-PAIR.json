@@ -1,0 +1,18 @@
+{
+  "status": "PASS",
+  "baseline": "Verified first-preview overview retained outside two reviewed flower cells",
+  "replacementAuthoredCells": [
+    [
+      242,
+      137
+    ],
+    [
+      243,
+      137
+    ]
+  ],
+  "changedPixels": 72,
+  "allChangesWithinAuthorisedCells": true,
+  "privateInitialPixelsIdenticalToReviewedD9cf": true,
+  "overviewSha256": "88cf58edf91e7c071f45c66a56bc941e1a579026756fb7b8f4909c0684cb4532"
+}
