@@ -13642,7 +13642,7 @@ index 6f41e3ce..9a3be94d 100644
  	printstring STRINGID_GOTCHAPKMNCAUGHT2
  	setbyte gBattleOutcome, B_OUTCOME_CAUGHT
 diff --git a/data/event_scripts.s b/data/event_scripts.s
-index 88d75946..4efacd42 100644
+index 88d75946..e7202e8d 100644
 --- a/data/event_scripts.s
 +++ b/data/event_scripts.s
 @@ -23,6 +23,9 @@
@@ -13655,7 +13655,7 @@ index 88d75946..4efacd42 100644
  #include "constants/battle_setup.h"
  #include "constants/map_scripts.h"
  #include "constants/cable_club.h"
-@@ -1360,3 +1363,20 @@ Text_TestMsg::
+@@ -1360,3 +1363,21 @@ Text_TestMsg::
  	.include "data/text/save.inc"
  	.include "data/text/new_game_intro.inc"
  	.include "data/text/pokedude.inc"
@@ -13676,6 +13676,7 @@ index 88d75946..4efacd42 100644
 +	.include "data/scripts/taichung_fengjia_gym.inc"
 +	.include "data/scripts/taichung_maple_garden_gym.inc"
 +	.include "data/scripts/taichung_theater_gym.inc"
++	.include "data/scripts/taichung_gym_preparation.inc"
 diff --git a/data/layouts/PalletTown/map.bin b/data/layouts/PalletTown/map.bin
 index f2113394f22d6f0180f364071301b5ed06588773..bf1cbe2eb7b76e808e1fde8621cdf33a1a71beb2 100644
 GIT binary patch
@@ -27634,12 +27635,81 @@ index 00000000..bc56d9a8
 +++ b/data/scripts/taichung_greenway_gym.inc
 @@ -0,0 +1 @@
 +	taichung_landmark_gym Greenway, TAICHUNG_GYM_GREENWAY, TRAINER_TAICHUNG_GREENWAY_XINGAN
+diff --git a/data/scripts/taichung_gym_preparation.inc b/data/scripts/taichung_gym_preparation.inc
+new file mode 100644
+index 00000000..02abbe35
+--- /dev/null
++++ b/data/scripts/taichung_gym_preparation.inc
+@@ -0,0 +1,63 @@
++@ Only an explicitly completed preparation can arm this one-shot continuation.
++@ The leader's authored intro was shown before Team. Native configuration skips
++@ that repeat while preserving the original trainer and badge-award return.
++TaichungGymPrepared_Start::
++	lockall
++	callnative TaichungGymEntry_ScriptPrepareBattle
++	goto_if_eq VAR_RESULT, FALSE, TaichungGymPrepared_Unavailable
++	.macro prepared_gym_route name, gym, trainer
++	goto_if_eq VAR_0x8004, \gym, TaichungGymPrepared_\name
++	.endm
++	prepared_gym_route Station, TAICHUNG_GYM_OLD_STATION, TRAINER_TAICHUNG_STATION_JUN
++	prepared_gym_route Park, TAICHUNG_GYM_PARK, TRAINER_TAICHUNG_PARK_LIAN
++	prepared_gym_route Miyahara, TAICHUNG_GYM_MIYAHARA, TRAINER_TAICHUNG_MIYAHARA_PEIQI
++	prepared_gym_route Science, TAICHUNG_GYM_SCIENCE_MUSEUM, TRAINER_TAICHUNG_SCIENCE_YICHENG
++	prepared_gym_route Greenway, TAICHUNG_GYM_GREENWAY, TRAINER_TAICHUNG_GREENWAY_XINGAN
++	prepared_gym_route Confucius, TAICHUNG_GYM_CONFUCIUS_TEMPLE, TRAINER_TAICHUNG_CONFUCIUS_WENYI
++	prepared_gym_route FineArts, TAICHUNG_GYM_FINE_ARTS, TRAINER_TAICHUNG_FINE_ARTS_CAINING
++	prepared_gym_route Fengjia, TAICHUNG_GYM_FENGJIA, TRAINER_TAICHUNG_FENGJIA_JIAHE
++	prepared_gym_route MapleGarden, TAICHUNG_GYM_MAPLE_GARDEN, TRAINER_TAICHUNG_MAPLE_GARDEN_MUQING
++	prepared_gym_route Theater, TAICHUNG_GYM_THEATER, TRAINER_TAICHUNG_THEATER_LING
++	goto TaichungGymPrepared_Leave
++
++	.macro prepared_gym_battle name, trainer
++TaichungGymPrepared_\name:
++	goto_if_eq VAR_0x40FB, 2, TaichungGymPrepared_\name\()Chinese
++	trainerbattle_single \trainer, TaichungGym_Text_\name\()IntroEn, TaichungGym_Text_\name\()DefeatEn, TaichungGym_\name\()AfterBattle
++	goto TaichungGymPrepared_Leave
++TaichungGymPrepared_\name\()Chinese:
++	trainerbattle_single \trainer, TaichungGym_Text_\name\()IntroZh, TaichungGym_Text_\name\()DefeatZh, TaichungGym_\name\()AfterBattle
++	goto TaichungGymPrepared_Leave
++	.endm
++	prepared_gym_battle Station, TRAINER_TAICHUNG_STATION_JUN
++	prepared_gym_battle Park, TRAINER_TAICHUNG_PARK_LIAN
++	prepared_gym_battle Miyahara, TRAINER_TAICHUNG_MIYAHARA_PEIQI
++	prepared_gym_battle Science, TRAINER_TAICHUNG_SCIENCE_YICHENG
++	prepared_gym_battle Greenway, TRAINER_TAICHUNG_GREENWAY_XINGAN
++	prepared_gym_battle Confucius, TRAINER_TAICHUNG_CONFUCIUS_WENYI
++	prepared_gym_battle FineArts, TRAINER_TAICHUNG_FINE_ARTS_CAINING
++	prepared_gym_battle Fengjia, TRAINER_TAICHUNG_FENGJIA_JIAHE
++	prepared_gym_battle MapleGarden, TRAINER_TAICHUNG_MAPLE_GARDEN_MUQING
++	prepared_gym_battle Theater, TRAINER_TAICHUNG_THEATER_LING
++
++TaichungGymPrepared_Unavailable::
++	msgbox gStringVar4
++TaichungGymPrepared_Leave::
++	closemessage
++	releaseall
++	end
++
++@ Same native fought/replay/movement safeguards as a normal trainer challenge,
++@ with only the already-shown intro omitted. Continue-script award target stays.
++TaichungGymPrepared_TrainerBattle::
++	lock
++	faceplayer
++	applymovement VAR_LAST_TALKED, Movement_RevealTrainer
++	waitmovement 0
++	specialvar VAR_RESULT, Script_HasTrainerBeenFought
++	goto_if_ne VAR_RESULT, FALSE, EventScript_NoTrainerBattle
++	special PlayTrainerEncounterMusic
++	special SetUpTrainerMovement
++	goto_if_questlog EventScript_EndQuestLogBattle
++	dotrainerbattle
++	gotopostbattlescript
 diff --git a/data/scripts/taichung_gyms.inc b/data/scripts/taichung_gyms.inc
 new file mode 100644
-index 00000000..89245ce8
+index 00000000..b8109f8d
 --- /dev/null
 +++ b/data/scripts/taichung_gyms.inc
-@@ -0,0 +1,111 @@
+@@ -0,0 +1,122 @@
 +@ Optional reusable adapter. The map owner may point the Station host here.
 +@ Other gyms need their own approved trainer/adapter; listed names do not grant badges.
 +TaichungGym_EventScript_StationChallenge::
@@ -27720,7 +27790,7 @@ index 00000000..89245ce8
 +	end
 +
 +@ TEMP_F resets on actual map entry, not when returning from the team menu.
-+@ Remind once per visit; solo challenges remain allowed. No saved flags change.
++@ Offer explicit battle preparation once per visit; later browsing stays optional.
 +TaichungGymEntry_OnFrame::
 +	map_script_2 VAR_TEMP_F, 0, TaichungGymEntry_Check
 +	.2byte 0
@@ -27736,14 +27806,25 @@ index 00000000..89245ce8
 +	multichoice 0, 0, MULTICHOICE_TAICHUNG_TEAM_REMINDER, FALSE
 +	goto_if_eq VAR_RESULT, 0, TaichungGymEntry_ChooseTeam
 +	goto_if_gt VAR_RESULT, 3, TaichungGymEntry_Close
++	copyvar VAR_0x8006, VAR_RESULT
 +	closemessage
++	callnative TaichungGymEntry_ScriptBufferPreparationIntro
++	goto_if_ne VAR_RESULT, TRUE, TaichungGymEntry_Release
++	msgbox gStringVar4
++	closemessage
++	copyvar VAR_RESULT, VAR_0x8006
 +	callnative TaichungGymEntry_ScriptFillRandom
++	goto_if_eq VAR_RESULT, TRUE, TaichungGymPrepared_Start
 +	msgbox gStringVar4
 +	goto TaichungGymEntry_Release
 +TaichungGymEntry_Close::
 +	closemessage
 +	goto TaichungGymEntry_Release
 +TaichungGymEntry_ChooseTeam::
++	closemessage
++	callnative TaichungGymEntry_ScriptBufferPreparationIntro
++	goto_if_ne VAR_RESULT, TRUE, TaichungGymEntry_Release
++	msgbox gStringVar4
 +	closemessage
 +	callnative TaichungGymEntry_ScriptOpenTeam
 +	waitstate
@@ -611232,6 +611313,19 @@ index 9d8c514f..003ab142 100644
  // Aliases for old names. "object event id" normally refers to an index into gObjectEvents, which these are not.
  #define OBJ_EVENT_ID_CAMERA LOCALID_CAMERA
  #define OBJ_EVENT_ID_PLAYER LOCALID_PLAYER
+diff --git a/include/constants/flags.h b/include/constants/flags.h
+index d800adf1..09526411 100644
+--- a/include/constants/flags.h
++++ b/include/constants/flags.h
+@@ -1222,7 +1222,7 @@
+ #define FLAG_HIDDEN_ITEM_SSANNE_EXTERIOR_LAVA_COOKIE                       (FLAG_HIDDEN_ITEMS_START + 190)
+ 
+ // Unused hidden item flags
+-#define FLAG_UNUSED_0x4A7               0x4A7 // Unused Flag
++#define FLAG_TAICHUNG_ENCOUNTER_RULES_SEEN 0x4A7 // Global landmark tutorial, saved with the playthrough
+ #define FLAG_UNUSED_0x4A8               0x4A8 // Unused Flag
+ #define FLAG_UNUSED_0x4A9               0x4A9 // Unused Flag
+ #define FLAG_UNUSED_0x4AA               0x4AA // Unused Flag
 diff --git a/include/constants/menu.h b/include/constants/menu.h
 index 7c36f360..e13540f5 100644
 --- a/include/constants/menu.h
@@ -611902,16 +611996,17 @@ index 00000000..af0b6d80
 +#endif
 diff --git a/include/taichung_encounter_field.h b/include/taichung_encounter_field.h
 new file mode 100644
-index 00000000..11d08f30
+index 00000000..d173e78e
 --- /dev/null
 +++ b/include/taichung_encounter_field.h
-@@ -0,0 +1,20 @@
+@@ -0,0 +1,21 @@
 +#ifndef GUARD_TAICHUNG_ENCOUNTER_FIELD_H
 +#define GUARD_TAICHUNG_ENCOUNTER_FIELD_H
 +#include "global.h"
 +const u8 *TaichungEncounterGetPlaceName(u16 site);
 +const u8 *TaichungEncounterGetBattleMenu(void);
 +void TaichungEncounter_ScriptOffer(void);
++void TaichungEncounterOfferMenuShown(void);
 +void TaichungEncounter_ScriptOpenTeam(void);
 +void TaichungEncounter_ScriptBegin(void);
 +void TaichungEncounter_ScriptSaveBegin(void);
@@ -611965,28 +612060,46 @@ index 00000000..7648a2fd
 +#endif
 diff --git a/include/taichung_gym_entry.h b/include/taichung_gym_entry.h
 new file mode 100644
-index 00000000..0ce14ad9
+index 00000000..6eb1f322
 --- /dev/null
 +++ b/include/taichung_gym_entry.h
-@@ -0,0 +1,12 @@
+@@ -0,0 +1,18 @@
 +#ifndef GUARD_TAICHUNG_GYM_ENTRY_H
 +#define GUARD_TAICHUNG_GYM_ENTRY_H
 +
++extern const u8 TaichungGymPrepared_TrainerBattle[];
 +extern const u8 gTaichungTeamReminderChooseEn[];
 +extern const u8 gTaichungTeamReminderChooseZh[];
 +extern const u8 gTaichungTeamReminderLaterEn[];
 +extern const u8 gTaichungTeamReminderLaterZh[];
++u8 TaichungGymEntryCurrentGym(void);
 +bool8 TaichungGymEntryShouldRemind(void);
++void TaichungGymEntry_ScriptBufferPreparationIntro(void);
++void TaichungGymEntry_ScriptPrepareBattle(void);
++bool8 TaichungGymEntryConsumePreparedIntro(u16 trainerId);
 +void TaichungGymEntry_ScriptCheck(void);
 +void TaichungGymEntry_ScriptOpenTeam(void);
++void TaichungGymEntry_ScriptFillRandom(void);
++
++#endif
+diff --git a/include/taichung_gym_loss.h b/include/taichung_gym_loss.h
+new file mode 100644
+index 00000000..3cdeed6e
+--- /dev/null
++++ b/include/taichung_gym_loss.h
+@@ -0,0 +1,6 @@
++#ifndef GUARD_TAICHUNG_GYM_LOSS_H
++#define GUARD_TAICHUNG_GYM_LOSS_H
++
++const u8 *TaichungGymGetBattleLossText(u16 trainerId, u8 outcome);
 +
 +#endif
 diff --git a/include/taichung_gym_progress.h b/include/taichung_gym_progress.h
 new file mode 100644
-index 00000000..7f0d0d11
+index 00000000..16b0e7d7
 --- /dev/null
 +++ b/include/taichung_gym_progress.h
-@@ -0,0 +1,26 @@
+@@ -0,0 +1,28 @@
 +#ifndef GUARD_TAICHUNG_GYM_PROGRESS_H
 +#define GUARD_TAICHUNG_GYM_PROGRESS_H
 +
@@ -612006,6 +612119,8 @@ index 00000000..7f0d0d11
 +u8 TaichungGymGetLastResult(void);
 +// Only the ten registered, prepared and actually started landmark challenges.
 +bool8 TaichungGymIsBadgeChallenge(u16 trainerId);
++// Read-only identity for the actual matching defeat, before the end callback.
++u16 TaichungGymGetBattleLossGym(u16 trainerId, u8 outcome);
 +// Volatile, consume-once presentation of a newly recorded matching victory.
 +// Existing saved bits populate the collection without creating an award event.
 +bool8 TaichungGymConsumeNewBadge(u16 gymId);
@@ -612600,10 +612715,10 @@ index 00000000..4a3137ae
 +#endif
 diff --git a/include/taichung_team.h b/include/taichung_team.h
 new file mode 100644
-index 00000000..1c550997
+index 00000000..55ea7f84
 --- /dev/null
 +++ b/include/taichung_team.h
-@@ -0,0 +1,25 @@
+@@ -0,0 +1,30 @@
 +#ifndef GUARD_TAICHUNG_TEAM_H
 +#define GUARD_TAICHUNG_TEAM_H
 +
@@ -612615,6 +612730,8 @@ index 00000000..1c550997
 +// Native party is the team store. Landmark targets additionally require their
 +// dedicated genuine-capture unlock before a future selection; existing party
 +// members remain usable regardless of the new lock state.
++// Existing duplicates remain untouched; new selections cannot add another.
++bool8 TaichungTeamSpeciesInOtherSlot(u8 slot, u16 species);
 +bool8 TaichungTeamSetSlot(u8 slot, u16 species);
 +bool8 TaichungTeamFillRandom(u8 target);
 +u8 TaichungTeamLevelForSpecies(u16 species);
@@ -612627,6 +612744,9 @@ index 00000000..1c550997
 +// Refresh changed presets once, without healing or repeated PP refills.
 +void TaichungTeamSyncPresetMoves(void);
 +void ShowTaichungTeamMenu(MainCallback returnCallback);
++// Explicit battle preparation: B after a change or START commits; unedited B cancels.
++void ShowTaichungBattlePreparation(MainCallback returnCallback);
++bool8 TaichungTeamTakePreparedStart(void);
 +
 +#endif
 diff --git a/include/taichung_team_presets.h b/include/taichung_team_presets.h
@@ -612942,16 +613062,17 @@ index d8e1fe71..dc0bfe70 100644
      gBattlerControllerFuncs[gActiveBattler] = OpenBagAndChooseItem;
      gBattlerInMenuId = gActiveBattler;
 diff --git a/src/battle_main.c b/src/battle_main.c
-index 64c9e59b..9200d7da 100644
+index 64c9e59b..5808fe01 100644
 --- a/src/battle_main.c
 +++ b/src/battle_main.c
-@@ -1,4 +1,5 @@
+@@ -1,4 +1,6 @@
  #include "global.h"
 +#include "taichung_encounter.h"
++#include "taichung_gym_loss.h"
  #include "gflib.h"
  #include "battle.h"
  #include "battle_anim.h"
-@@ -22,6 +23,7 @@
+@@ -22,6 +24,7 @@
  #include "load_save.h"
  #include "m4a.h"
  #include "party_menu.h"
@@ -612959,7 +613080,7 @@ index 64c9e59b..9200d7da 100644
  #include "pokeball.h"
  #include "pokedex.h"
  #include "quest_log.h"
-@@ -1631,6 +1633,11 @@ static u8 CreateNPCTrainerParty(struct Pokemon *party, u16 trainerNum)
+@@ -1631,6 +1634,11 @@ static u8 CreateNPCTrainerParty(struct Pokemon *party, u16 trainerNum)
              }
          }
  
@@ -612971,7 +613092,7 @@ index 64c9e59b..9200d7da 100644
          gBattleTypeFlags |= gTrainers[trainerNum].doubleBattle;
      }
  
-@@ -3769,6 +3776,13 @@ static void HandleEndTurn_BattleWon(void)
+@@ -3769,6 +3777,13 @@ static void HandleEndTurn_BattleWon(void)
  static void HandleEndTurn_BattleLost(void)
  {
      gCurrentActionFuncId = 0;
@@ -612985,7 +613106,23 @@ index 64c9e59b..9200d7da 100644
      if (gBattleTypeFlags & BATTLE_TYPE_LINK)
      {
          gBattleTextBuff1[0] = gBattleOutcome;
-@@ -3982,7 +3996,10 @@ static void HandleAction_UseMove(void)
+@@ -3778,7 +3793,14 @@ static void HandleEndTurn_BattleLost(void)
+     }
+     else
+     {
+-        if (gBattleTypeFlags & BATTLE_TYPE_TRAINER && GetTrainerBattleMode() == TRAINER_BATTLE_EARLY_RIVAL)
++        if ((gBattleTypeFlags & BATTLE_TYPE_TRAINER)
++         && TaichungGymGetBattleLossText(gTrainerBattleOpponent_A, gBattleOutcome) != NULL)
++        {
++            // Reuse native trainer win speech, then the ordinary whiteout path.
++            gBattleCommunication[MULTISTRING_CHOOSER] = 2;
++            gBattlerAttacker = GetBattlerAtPosition(B_POSITION_OPPONENT_LEFT);
++        }
++        else if (gBattleTypeFlags & BATTLE_TYPE_TRAINER && GetTrainerBattleMode() == TRAINER_BATTLE_EARLY_RIVAL)
+         {
+             if (GetRivalBattleFlags() & RIVAL_BATTLE_HEAL_AFTER)
+                 gBattleCommunication[MULTISTRING_CHOOSER] = 1; // Dont do white out text
+@@ -3982,7 +4004,10 @@ static void HandleAction_UseMove(void)
      if (gProtectStructs[gBattlerAttacker].noValidMoves)
      {
          gProtectStructs[gBattlerAttacker].noValidMoves = 0;
@@ -612997,7 +613134,7 @@ index 64c9e59b..9200d7da 100644
          gHitMarker |= HITMARKER_NO_PPDEDUCT;
          *(gBattleStruct->moveTarget + gBattlerAttacker) = GetMoveTarget(MOVE_STRUGGLE, NO_TARGET_OVERRIDE);
      }
-@@ -4154,6 +4171,13 @@ static void HandleAction_UseItem(void)
+@@ -4154,6 +4179,13 @@ static void HandleAction_UseItem(void)
      gBattle_BG0_Y = 0;
      ClearFuryCutterDestinyBondGrudge(gBattlerAttacker);
      gLastUsedItem = gBattleBufferB[gBattlerAttacker][1] | (gBattleBufferB[gBattlerAttacker][2] << 8);
@@ -613011,7 +613148,7 @@ index 64c9e59b..9200d7da 100644
      if (gLastUsedItem <= ITEM_PREMIER_BALL) // is ball
      {
          gBattlescriptCurrInstr = gBattlescriptsForBallThrow[gLastUsedItem];
-@@ -4232,6 +4256,12 @@ bool8 TryRunFromBattle(u8 battler)
+@@ -4232,6 +4264,12 @@ bool8 TryRunFromBattle(u8 battler)
      u8 holdEffect;
      u8 speedVar;
  
@@ -613189,14 +613326,16 @@ index 67f90a37..e50f7406 100644
      {
          if (!ShouldShowBoxWasFullMessage())
 diff --git a/src/battle_setup.c b/src/battle_setup.c
-index 6d62084d..425b4e5e 100644
+index 6d62084d..b94c1136 100644
 --- a/src/battle_setup.c
 +++ b/src/battle_setup.c
-@@ -24,6 +24,11 @@
+@@ -24,6 +24,13 @@
  #include "field_message_box.h"
  #include "vs_seeker.h"
  #include "battle.h"
 +#include "taichung_gym_progress.h"
++#include "taichung_gym_loss.h"
++#include "taichung_gym_entry.h"
 +#include "taichung_exploration.h"
 +#include "taichung_team.h"
 +#include "taichung_encounter.h"
@@ -613204,7 +613343,7 @@ index 6d62084d..425b4e5e 100644
  #include "battle_transition.h"
  #include "battle_controllers.h"
  #include "constants/battle_setup.h"
-@@ -214,6 +219,8 @@ static void CreateBattleStartTask(u8 transition, u16 song) // song == 0 means de
+@@ -214,6 +221,8 @@ static void CreateBattleStartTask(u8 transition, u16 song) // song == 0 means de
  {
      u8 taskId = CreateTask(Task_BattleStart, 1);
  
@@ -613213,7 +613352,7 @@ index 6d62084d..425b4e5e 100644
      gTasks[taskId].tTransition = transition;
      PlayMapChosenOrBattleBGM(song);
  }
-@@ -309,6 +316,7 @@ void StartOldManTutorialBattle(void)
+@@ -309,6 +318,7 @@ void StartOldManTutorialBattle(void)
  
  void StartScriptedWildBattle(void)
  {
@@ -613221,7 +613360,7 @@ index 6d62084d..425b4e5e 100644
      LockPlayerFieldControls();
      gMain.savedCallback = CB2_EndScriptedWildBattle;
      gBattleTypeFlags = BATTLE_TYPE_WILD_SCRIPTED;
-@@ -438,7 +446,12 @@ static void CB2_EndScriptedWildBattle(void)
+@@ -438,7 +448,12 @@ static void CB2_EndScriptedWildBattle(void)
  {
      CpuFill16(0, (void *)BG_PLTT, BG_PLTT_SIZE);
      ResetOamRange(0, 128);
@@ -613235,7 +613374,16 @@ index 6d62084d..425b4e5e 100644
          SetMainCallback2(CB2_WhiteOut);
      else
          SetMainCallback2(CB2_ReturnToFieldContinueScriptPlayMapMusic);
-@@ -899,12 +912,16 @@ void StartTrainerBattle(void)
+@@ -801,6 +816,8 @@ const u8 *BattleSetup_ConfigureTrainerBattle(const u8 *data)
+     case TRAINER_BATTLE_CONTINUE_SCRIPT_NO_MUSIC:
+         TrainerBattleLoadArgs(sContinueScriptBattleParams, data);
+         SetMapVarsToTrainer();
++        if (TaichungGymEntryConsumePreparedIntro(gTrainerBattleOpponent_A))
++            return TaichungGymPrepared_TrainerBattle;
+         return EventScript_TryDoNormalTrainerBattle;
+     case TRAINER_BATTLE_CONTINUE_SCRIPT_DOUBLE:
+     case TRAINER_BATTLE_CONTINUE_SCRIPT_DOUBLE_NO_MUSIC:
+@@ -899,12 +916,16 @@ void StartTrainerBattle(void)
      if (GetTrainerBattleMode() == TRAINER_BATTLE_EARLY_RIVAL && GetRivalBattleFlags() & RIVAL_BATTLE_TUTORIAL)
          gBattleTypeFlags |= BATTLE_TYPE_FIRST_BATTLE;
      gMain.savedCallback = CB2_EndTrainerBattle;
@@ -613252,6 +613400,18 @@ index 6d62084d..425b4e5e 100644
      if (sTrainerBattleMode == TRAINER_BATTLE_EARLY_RIVAL)
      {
          if (IsPlayerDefeated(gBattleOutcome) == TRUE)
+@@ -1060,7 +1081,10 @@ const u8 *GetTrainerALoseText(void)
+ 
+ const u8 *GetTrainerWonSpeech(void)
+ {
+-    StringExpandPlaceholders(gStringVar4, ReturnEmptyStringIfNull(sTrainerVictorySpeech));
++    const u8 *text = TaichungGymGetBattleLossText(gTrainerBattleOpponent_A, gBattleOutcome);
++    if (text == NULL)
++        text = sTrainerVictorySpeech;
++    StringExpandPlaceholders(gStringVar4, ReturnEmptyStringIfNull(text));
+     return gStringVar4;
+ }
+ 
 diff --git a/src/battle_util.c b/src/battle_util.c
 index bb66a014..e1045e0b 100644
 --- a/src/battle_util.c
@@ -618350,34 +618510,43 @@ index c2ad6ac9..1a7af18b 100644
 +    TRAINER_PAL(TAICHUNG_WENYI, gTrainerPalette_TaichungWenyi),
  };
 diff --git a/src/data/trainer_parties.h b/src/data/trainer_parties.h
-index 2e578002..d8a20da0 100644
+index 2e578002..0c75a4a7 100644
 --- a/src/data/trainer_parties.h
 +++ b/src/data/trainer_parties.h
-@@ -10860,3 +10860,217 @@ static const struct TrainerMonNoItemDefaultMoves sParty_CueBallPaxton[] = {
+@@ -10860,3 +10860,226 @@ static const struct TrainerMonNoItemDefaultMoves sParty_CueBallPaxton[] = {
          .species = SPECIES_MUK,
      },
  };
 +
-+// The Station's urban team uses the shared city presets and no held items.
-+static const struct TrainerMonNoItemDefaultMoves sParty_TaichungStationJun[] = {
-+    { .iv = 255, .lvl = TAICHUNG_TEAM_LEVEL, .species = SPECIES_RATTATA },
-+    { .iv = 255, .lvl = TAICHUNG_TEAM_LEVEL, .species = SPECIES_PIDGEY },
-+    { .iv = 255, .lvl = TAICHUNG_TEAM_LEVEL, .species = SPECIES_MEOWTH },
++// Evolved urban partners with clear attacks and modest setup; no held items.
++static const struct TrainerMonNoItemCustomMoves sParty_TaichungStationJun[] = {
++    {
++        .iv = 255, .lvl = TAICHUNG_TEAM_LEVEL, .species = SPECIES_RATICATE,
++        .moves = {MOVE_HYPER_FANG, MOVE_QUICK_ATTACK, MOVE_DIG, MOVE_TAIL_WHIP},
++    },
++    {
++        .iv = 255, .lvl = TAICHUNG_TEAM_LEVEL, .species = SPECIES_PIDGEOT,
++        .moves = {MOVE_WING_ATTACK, MOVE_QUICK_ATTACK, MOVE_STEEL_WING, MOVE_FEATHER_DANCE},
++    },
++    {
++        .iv = 255, .lvl = TAICHUNG_TEAM_LEVEL, .species = SPECIES_PERSIAN,
++        .moves = {MOVE_SLASH, MOVE_FAINT_ATTACK, MOVE_FAKE_OUT, MOVE_SCREECH},
++    },
 +};
 +
 +// Revisable Park/Lian default from Story's pond-and-bird team proposal.
 +// These authored moves initially match the shared city level-50 presets.
 +static const struct TrainerMonNoItemCustomMoves sParty_TaichungParkLian[] = {
 +    {
-+        .iv = 255, .lvl = TAICHUNG_TEAM_LEVEL, .species = SPECIES_GOLDEEN,
++        .iv = 255, .lvl = TAICHUNG_TEAM_LEVEL, .species = SPECIES_SEAKING,
 +        .moves = {MOVE_SURF, MOVE_ICE_BEAM, MOVE_FACADE, MOVE_SUPERSONIC},
 +    },
 +    {
-+        .iv = 255, .lvl = TAICHUNG_TEAM_LEVEL, .species = SPECIES_PSYDUCK,
++        .iv = 255, .lvl = TAICHUNG_TEAM_LEVEL, .species = SPECIES_GOLDUCK,
 +        .moves = {MOVE_SURF, MOVE_ICE_BEAM, MOVE_CALM_MIND, MOVE_BRICK_BREAK},
 +    },
 +    {
-+        .iv = 255, .lvl = TAICHUNG_TEAM_LEVEL, .species = SPECIES_PIDGEOTTO,
++        .iv = 255, .lvl = TAICHUNG_TEAM_LEVEL, .species = SPECIES_PIDGEOT,
 +        .moves = {MOVE_FLY, MOVE_STEEL_WING, MOVE_QUICK_ATTACK, MOVE_FEATHER_DANCE},
 +    },
 +};
@@ -618386,7 +618555,7 @@ index 2e578002..d8a20da0 100644
 +// authored moves initially match the shared city presets, with no held items.
 +static const struct TrainerMonNoItemCustomMoves sParty_TaichungMiyaharaPeiqi[] = {
 +    {
-+        .iv = 255, .lvl = TAICHUNG_TEAM_LEVEL, .species = SPECIES_SEEL,
++        .iv = 255, .lvl = TAICHUNG_TEAM_LEVEL, .species = SPECIES_DEWGONG,
 +        .moves = {MOVE_SURF, MOVE_ICE_BEAM, MOVE_BODY_SLAM, MOVE_REST},
 +    },
 +    {
@@ -618406,8 +618575,8 @@ index 2e578002..d8a20da0 100644
 +        .moves = {MOVE_THUNDERBOLT, MOVE_SHOCK_WAVE, MOVE_THUNDER_WAVE, MOVE_REFLECT},
 +    },
 +    {
-+        .iv = 255, .lvl = TAICHUNG_TEAM_LEVEL, .species = SPECIES_PORYGON,
-+        .moves = {MOVE_TRI_ATTACK, MOVE_ICE_BEAM, MOVE_THUNDERBOLT, MOVE_RECOVER},
++        .iv = 255, .lvl = TAICHUNG_TEAM_LEVEL, .species = SPECIES_AERODACTYL,
++        .moves = {MOVE_WING_ATTACK, MOVE_ANCIENT_POWER, MOVE_BITE, MOVE_AGILITY},
 +    },
 +    {
 +        .iv = 255, .lvl = TAICHUNG_TEAM_LEVEL, .species = SPECIES_OMASTAR,
@@ -618418,7 +618587,7 @@ index 2e578002..d8a20da0 100644
 +// Revisable landmark team: shared city level and legal native presets.
 +static const struct TrainerMonNoItemCustomMoves sParty_TaichungGreenwayXingan[] = {
 +    {
-+        .iv = 255, .lvl = TAICHUNG_TEAM_LEVEL, .species = SPECIES_BELLSPROUT,
++        .iv = 255, .lvl = TAICHUNG_TEAM_LEVEL, .species = SPECIES_VICTREEBEL,
 +        .moves = {MOVE_GIGA_DRAIN, MOVE_SLUDGE_BOMB, MOVE_SLEEP_POWDER, MOVE_GROWTH},
 +    },
 +    {
@@ -618454,12 +618623,12 @@ index 2e578002..d8a20da0 100644
 +        .moves = {MOVE_PSYCHIC, MOVE_GIGA_DRAIN, MOVE_SLEEP_POWDER, MOVE_GUST},
 +    },
 +    {
-+        .iv = 255, .lvl = TAICHUNG_TEAM_LEVEL, .species = SPECIES_DITTO,
-+        .moves = {MOVE_TRANSFORM, MOVE_NONE, MOVE_NONE, MOVE_NONE},
++        .iv = 255, .lvl = TAICHUNG_TEAM_LEVEL, .species = SPECIES_MUK,
++        .moves = {MOVE_SLUDGE_BOMB, MOVE_BRICK_BREAK, MOVE_FLAMETHROWER, MOVE_ACID_ARMOR},
 +    },
 +    {
-+        .iv = 255, .lvl = TAICHUNG_TEAM_LEVEL, .species = SPECIES_PORYGON,
-+        .moves = {MOVE_TRI_ATTACK, MOVE_ICE_BEAM, MOVE_THUNDERBOLT, MOVE_RECOVER},
++        .iv = 255, .lvl = TAICHUNG_TEAM_LEVEL, .species = SPECIES_CLEFABLE,
++        .moves = {MOVE_PSYCHIC, MOVE_ICE_BEAM, MOVE_THUNDERBOLT, MOVE_COSMIC_POWER},
 +    },
 +};
 +
@@ -618482,8 +618651,8 @@ index 2e578002..d8a20da0 100644
 +// Revisable landmark team: shared city level and legal native presets.
 +static const struct TrainerMonNoItemCustomMoves sParty_TaichungMapleGardenMuqing[] = {
 +    {
-+        .iv = 255, .lvl = TAICHUNG_TEAM_LEVEL, .species = SPECIES_POLIWHIRL,
-+        .moves = {MOVE_SURF, MOVE_ICE_BEAM, MOVE_BODY_SLAM, MOVE_HYPNOSIS},
++        .iv = 255, .lvl = TAICHUNG_TEAM_LEVEL, .species = SPECIES_POLIWRATH,
++        .moves = {MOVE_SURF, MOVE_ICE_BEAM, MOVE_BRICK_BREAK, MOVE_HYPNOSIS},
 +    },
 +    {
 +        .iv = 255, .lvl = TAICHUNG_TEAM_LEVEL, .species = SPECIES_BUTTERFREE,
@@ -618498,7 +618667,7 @@ index 2e578002..d8a20da0 100644
 +// Revisable landmark team: shared city level and legal native presets.
 +static const struct TrainerMonNoItemCustomMoves sParty_TaichungTheaterLing[] = {
 +    {
-+        .iv = 255, .lvl = TAICHUNG_TEAM_LEVEL, .species = SPECIES_JIGGLYPUFF,
++        .iv = 255, .lvl = TAICHUNG_TEAM_LEVEL, .species = SPECIES_WIGGLYTUFF,
 +        .moves = {MOVE_BODY_SLAM, MOVE_PSYCHIC, MOVE_ICE_BEAM, MOVE_SING},
 +    },
 +    {
@@ -618572,7 +618741,7 @@ index 2e578002..d8a20da0 100644
 +    },
 +};
 diff --git a/src/data/trainers.h b/src/data/trainers.h
-index 02afbfd1..910b1aba 100644
+index 02afbfd1..1221206b 100644
 --- a/src/data/trainers.h
 +++ b/src/data/trainers.h
 @@ -7422,4 +7422,196 @@ const struct Trainer gTrainers[] = {
@@ -618587,7 +618756,7 @@ index 02afbfd1..910b1aba 100644
 +        .items = {},
 +        .doubleBattle = FALSE,
 +        .aiFlags = AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_CHECK_VIABILITY | AI_SCRIPT_TRY_TO_FAINT,
-+        .party = NO_ITEM_DEFAULT_MOVES(sParty_TaichungStationJun),
++        .party = NO_ITEM_CUSTOM_MOVES(sParty_TaichungStationJun),
 +    },
 +    // Park-only revisable content/balance candidate with Story's Lian art.
 +    [TRAINER_TAICHUNG_PARK_LIAN] = {
@@ -620805,7 +620974,7 @@ index 97b695ee..61f00d04 100644
  }
  
 diff --git a/src/script_menu.c b/src/script_menu.c
-index 41eebd86..75d287f8 100644
+index 41eebd86..bd0f45e0 100644
 --- a/src/script_menu.c
 +++ b/src/script_menu.c
 @@ -1,4 +1,10 @@
@@ -620857,12 +621026,12 @@ index 41eebd86..75d287f8 100644
 +    { gTaichungHistoryChallengeZh }, { gTaichungHistoryLeaveZh }
 +};
 +
-+static const u8 sRandomTeam3En[] = _("Random team of 3");
-+static const u8 sRandomTeam4En[] = _("Random team of 4");
-+static const u8 sRandomTeam5En[] = _("Random team of 5");
-+static const u8 sRandomTeam3Zh[] = _("隨機組成3隻");
-+static const u8 sRandomTeam4Zh[] = _("隨機組成4隻");
-+static const u8 sRandomTeam5Zh[] = _("隨機組成5隻");
++static const u8 sRandomTeam3En[] = _("Random 3 & begin");
++static const u8 sRandomTeam4En[] = _("Random 4 & begin");
++static const u8 sRandomTeam5En[] = _("Random 5 & begin");
++static const u8 sRandomTeam3Zh[] = _("隨機3隻後開始");
++static const u8 sRandomTeam4Zh[] = _("隨機4隻後開始");
++static const u8 sRandomTeam5Zh[] = _("隨機5隻後開始");
 +static const struct MenuAction sMultichoiceList_TaichungTeamReminder[] = {
 +    { gTaichungTeamReminderChooseEn }, { sRandomTeam3En }, { sRandomTeam4En }, { sRandomTeam5En },
 +    { gTaichungTeamReminderLaterEn }
@@ -620959,6 +621128,15 @@ index 41eebd86..75d287f8 100644
          strWidth = 0;
          for (i = 0; i < count; i++)
          {
+@@ -747,6 +878,8 @@ static void DrawVerticalMultichoiceMenu(u8 left, u8 top, u8 mcId, u8 ignoreBpres
+             MultichoiceList_PrintItems(windowId, FONT_NORMAL, 8, 2, 14, count, list, 0, 2);
+         Menu_InitCursor(windowId, FONT_NORMAL, 0, 2, 14, count, initPos);
+         CreateMCMenuInputHandlerTask(ignoreBpress, count, windowId, mcId);
++        if (mcId == MULTICHOICE_TAICHUNG_ENCOUNTER)
++            TaichungEncounterOfferMenuShown();
+         ScheduleBgCopyTilemapToVram(0);
+     }
+ }
 diff --git a/src/start_menu.c b/src/start_menu.c
 index 88cc377c..e8756490 100644
 --- a/src/start_menu.c
@@ -622979,10 +623157,10 @@ index 00000000..503d796e
 +}
 diff --git a/src/taichung_encounter_field.c b/src/taichung_encounter_field.c
 new file mode 100644
-index 00000000..ed94f23e
+index 00000000..ff72105e
 --- /dev/null
 +++ b/src/taichung_encounter_field.c
-@@ -0,0 +1,420 @@
+@@ -0,0 +1,451 @@
 +#include "global.h"
 +#include "battle.h"
 +#include "battle_setup.h"
@@ -623006,8 +623184,11 @@ index 00000000..ed94f23e
 +#include "taichung_encounter_field.h"
 +#include "taichung_language.h"
 +#include "taichung_team.h"
++#include "constants/flags.h"
 +
 +extern const u8 TaichungEncounter_OfferPrepared[];
++extern const u8 TaichungEncounter_Begin[];
++extern const u8 TaichungEncounter_Leave[];
 +extern const u8 TaichungEncounter_Result[];
 +extern const u8 TaichungEncounter_ConfirmReplacement[];
 +static EWRAM_DATA u16 sReturnSite = TAICHUNG_ENCOUNTER_NONE;
@@ -623028,8 +623209,15 @@ index 00000000..ed94f23e
 +    gSpecialVar_0x8007 = sReturnSite;
 +    if (sMenuReturnScript == TaichungEncounter_ConfirmReplacement)
 +        gSpecialVar_0x8004 = sReplacementSlot;
-+    DestroyTask(task);
-+    ScriptContext_SetupScript(sMenuReturnScript);
++    {
++        const u8 *script = sMenuReturnScript;
++        if (script == TaichungEncounter_Begin && !TaichungTeamTakePreparedStart())
++            script = TaichungEncounter_Leave;
++        sMenuReturnScript = NULL; // A return continuation is consumed once.
++        DestroyTask(task);
++        if (script != NULL)
++            ScriptContext_SetupScript(script);
++    }
 +}
 +
 +static void FieldCB_ReturnFromEncounterMenu(void)
@@ -623067,14 +623255,16 @@ index 00000000..ed94f23e
 +    CB2_ReturnToField();
 +}
 +
-+const u8 gTaichungEncounterPrepareEn[] = _("Prepare team");
-+const u8 gTaichungEncounterPrepareZh[] = _("準備隊伍");
++const u8 gTaichungEncounterPrepareEn[] = _("Prepare & begin");
++const u8 gTaichungEncounterPrepareZh[] = _("準備後開始");
 +const u8 gTaichungEncounterBeginEn[] = _("Begin");
 +const u8 gTaichungEncounterBeginZh[] = _("開始");
 +const u8 gTaichungEncounterLaterEn[] = _("Later");
 +const u8 gTaichungEncounterLaterZh[] = _("稍後再來");
-+static const u8 sOfferEn[] = _("{STR_VAR_1} Lv{STR_VAR_2} is nearby.\pOne try with 3 ULTRA BALLS.\nWeaken it before throwing.\pA catch unlocks it in Team.\nBegin saves your attempt.");
-+static const u8 sOfferZh[] = _("附近有Lv{STR_VAR_2}的{STR_VAR_1}。\p只能挑戰一次，配有三顆高級球。\n先降低牠的體力再投球。\p捕捉後可在隊伍中選用。\n開始時會儲存挑戰紀錄。");
++static const u8 sOfferEn[] = _("{STR_VAR_1} Lv{STR_VAR_2} is nearby.\pOne try with 3 ULTRA BALLS.\nWeaken it before throwing.\pA catch unlocks it in Team.");
++static const u8 sOfferZh[] = _("附近有Lv{STR_VAR_2}的{STR_VAR_1}。\p只能挑戰一次，配有三顆高級球。\n先降低牠的體力再投球。\p捕捉後可在隊伍中選用。");
++static const u8 sShortOfferEn[] = _("{STR_VAR_1} Lv{STR_VAR_2} is nearby.\nOne attempt here.");
++static const u8 sShortOfferZh[] = _("附近有Lv{STR_VAR_2}的{STR_VAR_1}。\n只能挑戰一次。");
 +static const u8 sUsedEn[] = _("This save has used its attempt.\nThere is no new encounter here.");
 +static const u8 sUsedZh[] = _("這份存檔已用過這裡的機會。\n不會再次開始遭遇。");
 +static const u8 sUnavailableEn[] = _("This encounter is not ready.\nNo battle has started.");
@@ -623190,9 +623380,28 @@ index 00000000..ed94f23e
 +    }
 +}
 +
++static bool8 EncounterRulesSeen(void)
++{
++    // Old landmark attempts prove the earlier global explanation was seen.
++    // Read saved flags directly: quest-log playback may provide replayed flags.
++    return TaichungEncounterGetAttemptMask() != 0
++        || (gSaveBlock1Ptr != NULL && (gSaveBlock1Ptr->flags[FLAG_TAICHUNG_ENCOUNTER_RULES_SEEN / 8]
++            & (1 << (FLAG_TAICHUNG_ENCOUNTER_RULES_SEEN % 8))));
++}
++
++void TaichungEncounterOfferMenuShown(void)
++{
++    // Called only after the actual choices window is created, following the
++    // complete message. Later and Prepare count; interrupted reading does not.
++    if (!QL_IS_PLAYBACK_STATE && TaichungEncounterStateReady()
++        && TaichungEncounterSiteAvailable(gSpecialVar_0x8007)
++        && !TaichungEncounterWasAttempted(gSpecialVar_0x8007))
++        FlagSet(FLAG_TAICHUNG_ENCOUNTER_RULES_SEEN);
++}
++
 +void TaichungEncounter_ScriptOffer(void)
 +{
-+    const u8 *text = TaichungText(sOfferEn, sOfferZh);
++    const u8 *text = EncounterRulesSeen() ? TaichungText(sShortOfferEn, sShortOfferZh) : TaichungText(sOfferEn, sOfferZh);
 +    gSpecialVar_Result = TRUE;
 +    if (!TaichungEncounterSiteAvailable(gSpecialVar_0x8007) || !TaichungEncounterStateReady())
 +        text = TaichungText(sUnavailableEn, sUnavailableZh);
@@ -623211,9 +623420,9 @@ index 00000000..ed94f23e
 +void TaichungEncounter_ScriptOpenTeam(void)
 +{
 +    sReturnSite = gSpecialVar_0x8007;
-+    sMenuReturnScript = TaichungEncounter_OfferPrepared;
++    sMenuReturnScript = TaichungEncounter_Begin;
 +    CleanupOverworldWindowsAndTilemaps();
-+    ShowTaichungTeamMenu(CB2_ReturnFromEncounterMenu);
++    ShowTaichungBattlePreparation(CB2_ReturnFromEncounterMenu);
 +}
 +
 +static void Task_WaitPersistence(u8 task)
@@ -624075,10 +624284,10 @@ index 00000000..b1c02252
 +}
 diff --git a/src/taichung_gym_entry.c b/src/taichung_gym_entry.c
 new file mode 100644
-index 00000000..d416f2d5
+index 00000000..e7446187
 --- /dev/null
 +++ b/src/taichung_gym_entry.c
-@@ -0,0 +1,76 @@
+@@ -0,0 +1,71 @@
 +#include "global.h"
 +#include "event_data.h"
 +#include "field_message_box.h"
@@ -624093,18 +624302,18 @@ index 00000000..d416f2d5
 +#include "taichung_team.h"
 +#include "constants/maps.h"
 +
-+static const u8 sReminderEn[] = _("Your partner stays with you.\nAdd more before the gym?");
-+static const u8 sReminderZh[] = _("你的夥伴會留在隊伍裡。\n挑戰前要再加入幾隻嗎？");
++static const u8 sReminderEn[] = _("Prepare a team for this gym?");
++static const u8 sReminderZh[] = _("要先準備挑戰隊伍嗎？");
 +static const u8 sTeamReadyEn[] = _("Your random team is ready!");
 +static const u8 sTeamReadyZh[] = _("隨機隊伍準備好了！");
 +static const u8 sTeamUnavailableEn[] = _("Couldn't fill your team.\nChoose partners from Team.");
 +static const u8 sTeamUnavailableZh[] = _("無法組成隨機隊伍。\n可從隊伍選單加入夥伴。");
-+const u8 gTaichungTeamReminderChooseEn[] = _("Choose team");
-+const u8 gTaichungTeamReminderChooseZh[] = _("選擇隊伍");
++const u8 gTaichungTeamReminderChooseEn[] = _("Prepare & begin");
++const u8 gTaichungTeamReminderChooseZh[] = _("準備後開始");
 +const u8 gTaichungTeamReminderLaterEn[] = _("Not now");
 +const u8 gTaichungTeamReminderLaterZh[] = _("稍後再說");
 +
-+static u8 GymForCurrentRoom(void)
++u8 TaichungGymEntryCurrentGym(void)
 +{
 +    if (!TaichungTeamNoGrindActive())
 +        return TAICHUNG_GYM_NONE;
@@ -624127,10 +624336,9 @@ index 00000000..d416f2d5
 +
 +bool8 TaichungGymEntryShouldRemind(void)
 +{
-+    u8 gym = GymForCurrentRoom();
++    u8 gym = TaichungGymEntryCurrentGym();
 +    return gym != TAICHUNG_GYM_NONE
-+        && !TaichungGymIsComplete(gym)
-+        && CalculatePlayerPartyCount() == 1;
++        && !TaichungGymIsComplete(gym);
 +}
 +
 +void TaichungGymEntry_ScriptCheck(void)
@@ -624141,26 +624349,154 @@ index 00000000..d416f2d5
 +        StringCopy(gStringVar4, TaichungText(sReminderEn, sReminderZh));
 +}
 +
-+void TaichungGymEntry_ScriptOpenTeam(void)
-+{
-+    CleanupOverworldWindowsAndTilemaps();
-+    ShowTaichungTeamMenu(CB2_ReturnToFieldContinueScriptPlayMapMusic);
-+}
 +
 +void TaichungGymEntry_ScriptFillRandom(void)
 +{
 +    u16 choice = gSpecialVar_Result;
 +    bool8 filled = choice >= 1 && choice <= 3
 +        && TaichungGymEntryShouldRemind() && TaichungTeamFillRandom(choice + 2);
++    gSpecialVar_Result = filled;
 +    StringCopy(gStringVar4, filled ? TaichungText(sTeamReadyEn, sTeamReadyZh)
 +                                  : TaichungText(sTeamUnavailableEn, sTeamUnavailableZh));
 +}
+diff --git a/src/taichung_gym_loss.c b/src/taichung_gym_loss.c
+new file mode 100644
+index 00000000..ea01eaf4
+--- /dev/null
++++ b/src/taichung_gym_loss.c
+@@ -0,0 +1,15 @@
++#include "global.h"
++#include "taichung_gym_loss.h"
++#include "taichung_gym_progress.h"
++#include "characters.h"
++#include "taichung_leader_win_text.h"
++
++const u8 *TaichungGymGetBattleLossText(u16 trainerId, u8 outcome)
++{
++    const u8 *text;
++    u16 gymId = TaichungGymGetBattleLossGym(trainerId, outcome);
++    if (gymId >= TAICHUNG_GYM_COUNT)
++        return NULL;
++    text = TaichungGymGetLeaderWinText(gymId);
++    return text != NULL && text[0] != EOS ? text : NULL;
++}
+diff --git a/src/taichung_gym_preparation.c b/src/taichung_gym_preparation.c
+new file mode 100644
+index 00000000..5cbdcb9d
+--- /dev/null
++++ b/src/taichung_gym_preparation.c
+@@ -0,0 +1,105 @@
++#include "global.h"
++#include "event_data.h"
++#include "field_fadetransition.h"
++#include "overworld.h"
++#include "quest_log.h"
++#include "script.h"
++#include "string_util.h"
++#include "task.h"
++#include "taichung_gym_entry.h"
++#include "taichung_gym_progress.h"
++#include "taichung_language.h"
++#include "taichung_team.h"
++#include "constants/opponents.h"
++
++extern const u8 TaichungGymPrepared_Start[], TaichungGymPrepared_Leave[];
++extern void TaichungGym_ScriptPrepareChallenge(void);
++#define LEADER_INTRO(name) extern const u8 TaichungGym_Text_##name##IntroEn[], TaichungGym_Text_##name##IntroZh[];
++LEADER_INTRO(Station) LEADER_INTRO(Park) LEADER_INTRO(Miyahara) LEADER_INTRO(Science) LEADER_INTRO(Greenway)
++LEADER_INTRO(Confucius) LEADER_INTRO(FineArts) LEADER_INTRO(Fengjia) LEADER_INTRO(MapleGarden) LEADER_INTRO(Theater)
++#define INTRO(name) {TaichungGym_Text_##name##IntroEn, TaichungGym_Text_##name##IntroZh}
++static const u8 *const sIntros[TAICHUNG_GYM_COUNT][2] = {INTRO(Station), INTRO(Park), INTRO(Miyahara), INTRO(Science), INTRO(Greenway), INTRO(Confucius), INTRO(FineArts), INTRO(Fengjia), INTRO(MapleGarden), INTRO(Theater)};
++static const u16 sTrainers[TAICHUNG_GYM_COUNT] = {TRAINER_TAICHUNG_STATION_JUN, TRAINER_TAICHUNG_PARK_LIAN, TRAINER_TAICHUNG_MIYAHARA_PEIQI, TRAINER_TAICHUNG_SCIENCE_YICHENG, TRAINER_TAICHUNG_GREENWAY_XINGAN, TRAINER_TAICHUNG_CONFUCIUS_WENYI, TRAINER_TAICHUNG_FINE_ARTS_CAINING, TRAINER_TAICHUNG_FENGJIA_JIAHE, TRAINER_TAICHUNG_MAPLE_GARDEN_MUQING, TRAINER_TAICHUNG_THEATER_LING};
++static const u8 sUnavailableEn[] = _("A healthy team is needed.\nPrepare again when ready.");
++static const u8 sUnavailableZh[] = _("需要能對戰的隊伍。\n準備好再來吧。");
++static EWRAM_DATA u8 sPreparingGym = TAICHUNG_GYM_NONE;
++static EWRAM_DATA u8 sSkipIntroGym = TAICHUNG_GYM_NONE;
++
++void TaichungGymEntry_ScriptBufferPreparationIntro(void)
++{
++    sPreparingGym = TaichungGymEntryCurrentGym();
++    sSkipIntroGym = TAICHUNG_GYM_NONE;
++    gSpecialVar_Result = !QL_IS_PLAYBACK_STATE && sPreparingGym < TAICHUNG_GYM_COUNT
++        && !TaichungGymIsComplete(sPreparingGym);
++    if (gSpecialVar_Result)
++        StringExpandPlaceholders(gStringVar4, TaichungText(sIntros[sPreparingGym][0], sIntros[sPreparingGym][1]));
++    else
++        sPreparingGym = TAICHUNG_GYM_NONE;
++}
++
++static void Task_ReturnPreparation(u8 task)
++{
++    bool8 start;
++    if (!FieldFadeTransitionBackgroundEffectIsFinished())
++        return;
++    start = TaichungTeamTakePreparedStart() && sPreparingGym < TAICHUNG_GYM_COUNT
++        && sPreparingGym == TaichungGymEntryCurrentGym() && !QL_IS_PLAYBACK_STATE
++        && !TaichungGymIsComplete(sPreparingGym);
++    gSpecialVar_0x8004 = sPreparingGym;
++    if (!start)
++        sPreparingGym = TAICHUNG_GYM_NONE;
++    DestroyTask(task);
++    ScriptContext_SetupScript(start ? TaichungGymPrepared_Start : TaichungGymPrepared_Leave);
++}
++
++static void FieldCB_ReturnPreparation(void)
++{
++    LockPlayerFieldControls();
++    Overworld_PlaySpecialMapMusic();
++    FadeInFromBlack();
++    CreateTask(Task_ReturnPreparation, 10);
++}
++
++static void CB2_ReturnPreparation(void)
++{
++    gFieldCallback = FieldCB_ReturnPreparation;
++    CB2_ReturnToField();
++}
++
++void TaichungGymEntry_ScriptOpenTeam(void)
++{
++    CleanupOverworldWindowsAndTilemaps();
++    ShowTaichungBattlePreparation(CB2_ReturnPreparation);
++}
++
++void TaichungGymEntry_ScriptPrepareBattle(void)
++{
++    u8 gym = sPreparingGym;
++    sPreparingGym = sSkipIntroGym = TAICHUNG_GYM_NONE;
++    gSpecialVar_Result = FALSE;
++    if (gym < TAICHUNG_GYM_COUNT && gym == TaichungGymEntryCurrentGym()
++        && !QL_IS_PLAYBACK_STATE && !gMain.inBattle && !TaichungGymIsComplete(gym))
++    {
++        gSpecialVar_0x8004 = gym;
++        gSpecialVar_0x8005 = sTrainers[gym];
++        // Same healthy-party, normalization and prepared-trainer safeguards.
++        TaichungGym_ScriptPrepareChallenge();
++        if (gSpecialVar_Result)
++        {
++            sSkipIntroGym = gym;
++            // Every active gym's authoritative leader is local object1.
++            gSpecialVar_LastTalked = 1;
++            return;
++        }
++    }
++    TaichungGymCancelChallenge();
++    StringCopy(gStringVar4, TaichungText(sUnavailableEn, sUnavailableZh));
++}
++
++bool8 TaichungGymEntryConsumePreparedIntro(u16 trainerId)
++{
++    u8 gym = sSkipIntroGym;
++    sSkipIntroGym = TAICHUNG_GYM_NONE;
++    return gym < TAICHUNG_GYM_COUNT && gym == TaichungGymEntryCurrentGym()
++        && !QL_IS_PLAYBACK_STATE && sTrainers[gym] == trainerId && !TaichungGymIsComplete(gym);
++}
 diff --git a/src/taichung_gym_progress.c b/src/taichung_gym_progress.c
 new file mode 100644
-index 00000000..3e6042a2
+index 00000000..aaf91499
 --- /dev/null
 +++ b/src/taichung_gym_progress.c
-@@ -0,0 +1,186 @@
+@@ -0,0 +1,194 @@
 +#include "global.h"
 +#include "event_data.h"
 +#include "taichung_gym_progress.h"
@@ -624329,6 +624665,14 @@ index 00000000..3e6042a2
 +    return sChallenge.started && sChallenge.gymId < TAICHUNG_GYM_COUNT
 +        && sChallenge.trainerId == trainerId
 +        && sLandmarkTrainers[sChallenge.gymId] == trainerId;
++}
++
++u16 TaichungGymGetBattleLossGym(u16 trainerId, u8 outcome)
++{
++    if (outcome != B_OUTCOME_LOST || !TaichungGymIsBadgeChallenge(trainerId)
++     || TaichungGymIsComplete(sChallenge.gymId))
++        return TAICHUNG_GYM_NONE;
++    return sChallenge.gymId;
 +}
 +
 +bool8 TaichungGymConsumeNewBadge(u16 gymId)
@@ -626862,10 +627206,10 @@ index 00000000..3f39e5c5
 +}
 diff --git a/src/taichung_save.c b/src/taichung_save.c
 new file mode 100644
-index 00000000..ca27a94f
+index 00000000..50266dc9
 --- /dev/null
 +++ b/src/taichung_save.c
-@@ -0,0 +1,3927 @@
+@@ -0,0 +1,3930 @@
 +#include "global.h"
 +#include "event_data.h"
 +#include "load_save.h"
@@ -626874,6 +627218,7 @@ index 00000000..ca27a94f
 +#include "taichung_language.h"
 +#include "taichung_save.h"
 +#include "constants/maps.h"
++#include "constants/flags.h"
 +#include "constants/species.h"
 +
 +#define TAICHUNG_STARTER_VAR 0x40FC
@@ -626930,6 +627275,8 @@ index 00000000..ca27a94f
 +
 +void TaichungSaveInitNewGame(void)
 +{
++    gSaveBlock1Ptr->flags[FLAG_TAICHUNG_ENCOUNTER_RULES_SEEN / 8]
++        &= ~(1 << (FLAG_TAICHUNG_ENCOUNTER_RULES_SEEN % 8));
 +    sContinueFacing.direction = DIR_NONE;
 +    TaichungGymCancelChallenge();
 +    TaichungEncounterResetSession();
@@ -631247,10 +631594,10 @@ index 00000000..da9aa636
 +}
 diff --git a/src/taichung_team.c b/src/taichung_team.c
 new file mode 100644
-index 00000000..89ab877c
+index 00000000..0381d245
 --- /dev/null
 +++ b/src/taichung_team.c
-@@ -0,0 +1,232 @@
+@@ -0,0 +1,248 @@
 +#include "global.h"
 +#include "pokemon.h"
 +#include "pokedex.h"
@@ -631419,6 +631766,16 @@ index 00000000..89ab877c
 +    }
 +}
 +
++bool8 TaichungTeamSpeciesInOtherSlot(u8 slot, u16 species)
++{
++    u8 other;
++    u8 count = CalculatePlayerPartyCount();
++    for (other = 0; other < count; other++)
++        if (other != slot && GetMonData(&gPlayerParty[other], MON_DATA_SPECIES) == species)
++            return TRUE;
++    return FALSE;
++}
++
 +bool8 TaichungTeamSetSlot(u8 slot, u16 species)
 +{
 +    struct Pokemon replacement;
@@ -631428,8 +631785,14 @@ index 00000000..89ab877c
 +
 +    // Append at the first empty slot, or replace an existing one. Never make
 +    // gaps, send a choice to the PC, or remove the player's last partner.
-+    if (gMain.inBattle || slot >= PARTY_SIZE || slot > count || !TaichungTeamSpeciesAllowed(species)
-+     || !TaichungEncounterSpeciesSelectable(species))
++    if (gMain.inBattle || slot >= PARTY_SIZE || slot > count)
++        return FALSE;
++    // Keeping this same saved partner is a no-op, including legacy parties
++    // with duplicates or a newly capture-locked species. Never reroll/heal it.
++    if (slot < count && GetMonData(&gPlayerParty[slot], MON_DATA_SPECIES) == species)
++        return TRUE;
++    if (!TaichungTeamSpeciesAllowed(species) || !TaichungEncounterSpeciesSelectable(species)
++     || TaichungTeamSpeciesInOtherSlot(slot, species))
 +        return FALSE;
 +    if (slot < count)
 +    {
@@ -631485,10 +631848,10 @@ index 00000000..89ab877c
 +}
 diff --git a/src/taichung_team_menu.c b/src/taichung_team_menu.c
 new file mode 100644
-index 00000000..039af997
+index 00000000..d4727be0
 --- /dev/null
 +++ b/src/taichung_team_menu.c
-@@ -0,0 +1,590 @@
+@@ -0,0 +1,632 @@
 +#include "global.h"
 +#include "gflib.h"
 +#include "main.h"
@@ -631589,6 +631952,7 @@ index 00000000..039af997
 +};
 +
 +static EWRAM_DATA MainCallback sReturnCallback = NULL;
++static EWRAM_DATA struct { u32 partyHash; bool8 active, changed, start; } sBattlePrep = {0};
 +static EWRAM_DATA u16 sSpecies = 1;
 +static EWRAM_DATA u8 sSlot = 0;
 +static EWRAM_DATA u8 sScreen = TEAM_SCREEN_SLOTS;
@@ -631613,6 +631977,10 @@ index 00000000..039af997
 +static const u8 sSlotHelpZh[] = _("選位置加入或更換");
 +static const u8 sSlotFooterEn[] = _("A: choose   SELECT: party   B: back");
 +static const u8 sSlotFooterZh[] = _("A選擇 SELECT查看 B返回");
++static const u8 sPrepHelpEn[] = _("After edits, B begins. START begins now.");
++static const u8 sPrepHelpZh[] = _("更換後按B開始，或按START開始。");
++static const u8 sPrepFooterEn[] = _("A:edit SELECT:party START:begin B:back");
++static const u8 sPrepFooterZh[] = _("A選擇 SELECT查看 START開始 B返回");
 +static const u8 sCategoryTitleEn[] = _("CHOOSE CATEGORY");
 +static const u8 sCategoryTitleZh[] = _("選擇類別");
 +static const u8 sCategoryHintEn[] = _("Sorted by No. Dual types show in both.");
@@ -631688,7 +632056,7 @@ index 00000000..039af997
 +    u16 species;
 +
 +    AddTextPrinterParameterized3(0, FONT_NORMAL, 8, 4, sTextColors, -1, TaichungText(sTitleEn, sTitleZh));
-+    Print(8, 22, sMutedColors, TaichungText(sSlotHelpEn, sSlotHelpZh));
++    Print(8, 22, sMutedColors, sBattlePrep.active ? TaichungText(sPrepHelpEn, sPrepHelpZh) : TaichungText(sSlotHelpEn, sSlotHelpZh));
 +    for (slot = 0; slot < PARTY_SIZE; slot++)
 +    {
 +        u8 y = 40 + slot * 16;
@@ -631704,7 +632072,7 @@ index 00000000..039af997
 +        else
 +            Print(34, y, sMutedColors, slot == count ? TaichungText(sEmptyEn, sEmptyZh) : sLocked);
 +    }
-+    Print(8, 144, sTextColors, TaichungText(sSlotFooterEn, sSlotFooterZh));
++    Print(8, 144, sTextColors, sBattlePrep.active ? TaichungText(sPrepFooterEn, sPrepFooterZh) : TaichungText(sSlotFooterEn, sSlotFooterZh));
 +}
 +
 +static void DrawMoves(u8 x, u8 y)
@@ -631720,6 +632088,8 @@ index 00000000..039af997
 +{
 +    u8 site;
 +    if (!TaichungEncounterSpeciesSelectable(species))
++        return FALSE;
++    if (TaichungTeamSpeciesInOtherSlot(sSlot, species))
 +        return FALSE;
 +    if (type == TEAM_CATEGORY_CAUGHT)
 +    {
@@ -631877,6 +632247,7 @@ index 00000000..039af997
 +
 +void ShowTaichungTeamMenu(MainCallback returnCallback)
 +{
++    sBattlePrep.active = sBattlePrep.changed = sBattlePrep.start = FALSE;
 +    TaichungTeamEnsurePartyLevel();
 +    sReturnCallback = returnCallback;
 +    sSlot = 0;
@@ -631886,8 +632257,33 @@ index 00000000..039af997
 +    SetMainCallback2(CB2_InitTeamMenu);
 +}
 +
++static u32 PreparationPartyHash(void)
++{
++    const u8 *bytes = (const u8 *)gPlayerParty;
++    u32 hash = 2166136261u;
++    u16 i;
++    for (i = 0; i < sizeof(gPlayerParty); i++)
++        hash = (hash ^ bytes[i]) * 16777619u;
++    return hash;
++}
++
++void ShowTaichungBattlePreparation(MainCallback returnCallback)
++{
++    ShowTaichungTeamMenu(returnCallback);
++    sBattlePrep.active = TRUE;
++}
++
++bool8 TaichungTeamTakePreparedStart(void)
++{
++    bool8 start = sBattlePrep.active && sBattlePrep.start;
++    sBattlePrep.active = sBattlePrep.changed = sBattlePrep.start = FALSE;
++    return start;
++}
++
 +static void CB2_ReopenTeamMenu(void)
 +{
++    if (sBattlePrep.active && PreparationPartyHash() != sBattlePrep.partyHash)
++        sBattlePrep.changed = TRUE;
 +    sScreen = TEAM_SCREEN_SLOTS;
 +    SetMainCallback2(CB2_InitTeamMenu);
 +}
@@ -631996,7 +632392,11 @@ index 00000000..039af997
 +        SetVBlankCallback(NULL);
 +        FreeAllWindowBuffers();
 +        if (choice == 2)
++        {
++            if (sBattlePrep.active)
++                sBattlePrep.partyHash = PreparationPartyHash();
 +            InitPartyMenu(PARTY_MENU_TYPE_FIELD, PARTY_LAYOUT_SINGLE, PARTY_ACTION_CHOOSE_MON, FALSE, PARTY_MSG_CHOOSE_MON, Task_HandleChooseMonInput, CB2_ReopenTeamMenu);
++        }
 +        else
 +            SetMainCallback2(sReturnCallback);
 +        return;
@@ -632007,7 +632407,10 @@ index 00000000..039af997
 +        if (rows < PARTY_SIZE)
 +            rows++;
 +        if (JOY_NEW(B_BUTTON | START_BUTTON))
++        {
++            sBattlePrep.start = sBattlePrep.active && (sBattlePrep.changed || JOY_NEW(START_BUTTON));
 +            gTasks[taskId].data[0] = 1;
++        }
 +        else if (JOY_NEW(SELECT_BUTTON) && CalculatePlayerPartyCount() != 0)
 +            gTasks[taskId].data[0] = 2;
 +        else if (JOY_NEW(DPAD_UP))
@@ -632067,7 +632470,9 @@ index 00000000..039af997
 +            sScreen = TEAM_SCREEN_SPECIES;
 +        else if (JOY_NEW(A_BUTTON))
 +        {
-+            TaichungTeamSetSlot(sSlot, sSpecies);
++            u16 previous = sSlot < CalculatePlayerPartyCount() ? GetMonData(&gPlayerParty[sSlot], MON_DATA_SPECIES) : SPECIES_NONE;
++            if (TaichungTeamSetSlot(sSlot, sSpecies) && previous != sSpecies && sBattlePrep.active)
++                sBattlePrep.changed = TRUE;
 +            sScreen = TEAM_SCREEN_SLOTS;
 +        }
 +        else
@@ -634301,10 +634706,10 @@ index 00000000..37004a7c
 +bool8 VarSet(u16 id, u16 value);
 diff --git a/tests/save_host/global.h b/tests/save_host/global.h
 new file mode 100644
-index 00000000..1a45269f
+index 00000000..4998d324
 --- /dev/null
 +++ b/tests/save_host/global.h
-@@ -0,0 +1,35 @@
+@@ -0,0 +1,37 @@
 +#ifndef TAICHUNG_SAVE_HOST_GLOBAL_H
 +#define TAICHUNG_SAVE_HOST_GLOBAL_H
 +#define GUARD_GLOBAL_H
@@ -634323,6 +634728,7 @@ index 00000000..1a45269f
 +#define FALSE 0
 +#define VARS_START 0x4000
 +#include "constants/global.h"
++#include "constants/flags.h"
 +struct WarpData { s8 mapGroup, mapNum, warpId; s16 x, y; };
 +struct Coords16 { s16 x, y; };
 +// Use the native object/avatar definitions, including the saved facing bitfield.
@@ -634332,6 +634738,7 @@ index 00000000..1a45269f
 +    struct WarpData location, continueGameWarp, lastHealLocation;
 +    u8 playerPartyCount;
 +    u16 vars[256];
++    u8 flags[FLAGS_COUNT / 8];
 +    // Six raw party records plus money/items/bag-sized protected bytes. The
 +    // host model does not claim native offsets; engine object types below do.
 +    u8 preservedPartyAndBag[600 + (0x5F8 - 0x290)];
@@ -635567,10 +635974,10 @@ index 00000000..9c7b3cdd
 +}
 diff --git a/tests/taichung_encounter_field_test.c b/tests/taichung_encounter_field_test.c
 new file mode 100644
-index 00000000..909895bd
+index 00000000..87655088
 --- /dev/null
 +++ b/tests/taichung_encounter_field_test.c
-@@ -0,0 +1,329 @@
+@@ -0,0 +1,369 @@
 +#include "global.h"
 +#include "battle.h"
 +#include "battle_setup.h"
@@ -635593,6 +636000,7 @@ index 00000000..909895bd
 +#include "taichung_encounter_field.h"
 +#include "taichung_language.h"
 +#include "taichung_team.h"
++#include "constants/flags.h"
 +#include <assert.h>
 +#include <stdio.h>
 +
@@ -635603,6 +636011,8 @@ index 00000000..909895bd
 +struct Main gMain;
 +MainCallback gFieldCallback;
 +const u8 TaichungEncounter_OfferPrepared[] = {1};
++const u8 TaichungEncounter_Begin[] = {4};
++const u8 TaichungEncounter_Leave[] = {5};
 +const u8 TaichungEncounter_Result[] = {2};
 +const u8 TaichungEncounter_ConfirmReplacement[] = {3};
 +struct Pokemon gPlayerParty[PARTY_SIZE], gEnemyParty[PARTY_SIZE];
@@ -635625,7 +636035,7 @@ index 00000000..909895bd
 +static u16 sAddedSpecies;
 +static MainCallback sMenuCallback;
 +static const u8 *sLastScript;
-+static bool8 sFadeFinished;
++static bool8 sFadeFinished, sPreparedStart;
 +void CB2_WhiteOut(void) {}
 +static bool8 IsPlayerDefeated(u8 outcome) { return outcome == B_OUTCOME_LOST || outcome == B_OUTCOME_DREW; }
 +void SetMainCallback2(MainCallback callback) { gMain.callback2 = callback; }
@@ -635634,6 +636044,7 @@ index 00000000..909895bd
 +#define CpuFill16(value, dest, size) ((void)0)
 +#include "native-encounter-battle-return.inc"
 +
++u8 FlagSet(u16 id) { assert(id == FLAG_TAICHUNG_ENCOUNTER_RULES_SEEN); sSave.flags[id / 8] |= 1 << (id % 8); return 0; }
 +u16 VarGet(u16 id) { (void)id; assert(0); return 0; }
 +bool8 VarSet(u16 id, u16 value) { sSave.vars[id - 0x4000] = value; return TRUE; }
 +const u8 *TaichungText(const u8 *en, const u8 *zh) { return sChinese ? zh : en; }
@@ -635662,7 +636073,8 @@ index 00000000..909895bd
 +u8 *ConvertIntToDecimalStringN(u8 *dest, s32 value, enum StringConvertMode mode, u8 n) { (void)mode; (void)n; sprintf((char *)dest, "%d", value); return dest + strlen((char *)dest); }
 +void CleanupOverworldWindowsAndTilemaps(void) {}
 +void CB2_ReturnToFieldContinueScriptPlayMapMusic(void) {}
-+void ShowTaichungTeamMenu(MainCallback callback) { sMenuCallback = callback; sTeams++; }
++void ShowTaichungBattlePreparation(MainCallback callback) { sPreparedStart = FALSE; sMenuCallback = callback; sTeams++; }
++bool8 TaichungTeamTakePreparedStart(void) { bool8 result = sPreparedStart; sPreparedStart = FALSE; return result; }
 +void LockPlayerFieldControls(void) {}
 +void Overworld_PlaySpecialMapMusic(void) {}
 +void FadeInFromBlack(void) { sFadeFinished = FALSE; }
@@ -635767,14 +636179,49 @@ index 00000000..909895bd
 +    sCreates = sBattles = sSaves = sTeams = sReturns = sHeals = 0;
 +    sLiveMapGeneration = 1; sSavedMapGeneration = sMapRefreshes = 0;
 +    sHealthy = TRUE; sSaveFail = FALSE; gQuestLogState = 0; gSpecialVar_0x8007 = 0;
-+    sLastScript = NULL; sMenuCallback = NULL; sFadeFinished = TRUE;
++    sLastScript = NULL; sMenuCallback = NULL; sFadeFinished = TRUE; sPreparedStart = FALSE;
 +}
++static void TestGlobalRules(void)
++{
++    struct SaveBlock1 persisted;
++    Reset();
++    TaichungEncounter_ScriptOffer();
++    assert(strstr((char *)gStringVar4, sChinese ? "三顆" : "3 ULTRA BALLS"));
++    assert(!strstr((char *)gStringVar4, sChinese ? "儲存" : "saves"));
++    assert(!(sSave.flags[FLAG_TAICHUNG_ENCOUNTER_RULES_SEEN / 8] & (1 << (FLAG_TAICHUNG_ENCOUNTER_RULES_SEEN % 8))));
++    TaichungEncounter_ScriptOffer(); // Interrupted before choices: explain again.
++    assert(strstr((char *)gStringVar4, sChinese ? "三顆" : "3 ULTRA BALLS"));
++    TaichungEncounterOfferMenuShown(); // Later has no further state action.
++    assert(!sSaves && !TaichungEncounterGetAttemptMask());
++    persisted = sSave;
++    TaichungEncounter_ScriptOffer();
++    assert(!strstr((char *)gStringVar4, sChinese ? "三顆" : "ULTRA"));
++    gSpecialVar_0x8007 = 1; TaichungEncounter_ScriptOffer();
++    assert(strstr((char *)gStringVar4, "GYARADOS") && !strstr((char *)gStringVar4, sChinese ? "三顆" : "ULTRA"));
++    TaichungEncounter_ScriptOpenTeam(); sMenuCallback(); sFadeFinished = TRUE; Frame();
++    TaichungEncounter_ScriptOffer();
++    assert(!strstr((char *)gStringVar4, sChinese ? "三顆" : "ULTRA") && !sSaves);
++    Reset(); sSave = persisted; TaichungEncounterResetSession();
++    TaichungEncounter_ScriptOffer(); // Next normal save/Continue retains flag.
++    assert(!strstr((char *)gStringVar4, sChinese ? "三顆" : "ULTRA"));
++    Reset(); assert(TaichungEncounterBegin(1)); // Legacy attempted save, flag clear.
++    TaichungEncounterResetSession(); TaichungEncounter_ScriptOffer();
++    assert(!strstr((char *)gStringVar4, sChinese ? "三顆" : "ULTRA"));
++    Reset(); gQuestLogState = QL_STATE_PLAYBACK; TaichungEncounterOfferMenuShown();
++    assert(!(sSave.flags[FLAG_TAICHUNG_ENCOUNTER_RULES_SEEN / 8] & (1 << (FLAG_TAICHUNG_ENCOUNTER_RULES_SEEN % 8))));
++    Reset(); gSpecialVar_0x8007 = TAICHUNG_ENCOUNTER_COUNT; TaichungEncounterOfferMenuShown();
++    assert(!(sSave.flags[FLAG_TAICHUNG_ENCOUNTER_RULES_SEEN / 8] & (1 << (FLAG_TAICHUNG_ENCOUNTER_RULES_SEEN % 8))));
++    Reset(); TaichungEncounter_ScriptOffer(); // Fresh playthrough starts full.
++    assert(strstr((char *)gStringVar4, sChinese ? "三顆" : "3 ULTRA BALLS"));
++}
++
 +int main(void)
 +{
 +    struct Pokemon original[PARTY_SIZE];
 +    u8 outcome, textSite, site, failure;
 +    for (sChinese = FALSE; sChinese <= TRUE; sChinese++)
 +    {
++        TestGlobalRules();
 +        for (site = 0; site < TAICHUNG_ENCOUNTER_COUNT; site++)
 +        {
 +            if (!TaichungEncounterSiteAvailable(site)) continue;
@@ -635782,8 +636229,8 @@ index 00000000..909895bd
 +            TaichungEncounter_ScriptOpenTeam();
 +            memset(&gPlayerParty[0], 0x3C, sizeof(gPlayerParty[0])); // Prepared team chosen by the player.
 +            memcpy(original, gPlayerParty, sizeof(original));
-+            sMenuCallback(); sFadeFinished = TRUE; Frame();
-+            assert(gSpecialVar_0x8007 == site && sLastScript == TaichungEncounter_OfferPrepared);
++            sPreparedStart = TRUE; sMenuCallback(); sFadeFinished = TRUE; Frame();
++            assert(gSpecialVar_0x8007 == site && sLastScript == TaichungEncounter_Begin && !sPreparedStart);
 +            TaichungEncounter_ScriptOffer();
 +            assert(!gSpecialVar_Result && !TaichungEncounterGetAttemptMask() && !sSaves);
 +            assert(!memcmp(original, gPlayerParty, sizeof(original)));
@@ -635802,7 +636249,7 @@ index 00000000..909895bd
 +        TaichungEncounter_ScriptOpenTeam(); assert(sTeams == 1 && !TaichungEncounterGetAttemptMask());
 +        sMenuCallback(); Frame(); assert(!sReturns);
 +        sFadeFinished = TRUE; Frame();
-+        assert(sLastScript == TaichungEncounter_OfferPrepared && gSpecialVar_0x8007 == 0 && sReturns == 1);
++        assert(sLastScript == TaichungEncounter_Leave && gSpecialVar_0x8007 == 0 && sReturns == 1);
 +        TaichungEncounter_ScriptOffer(); assert(!gSpecialVar_Result && !sSaves && !TaichungEncounterGetAttemptMask());
 +        sReturns = 0;
 +        assert(memcmp(original, gPlayerParty, sizeof(original)) == 0);
@@ -635897,7 +636344,7 @@ index 00000000..909895bd
 +        gBattleOutcome = B_OUTCOME_WON; CB2_EndScriptedWildBattle();
 +        assert(gMain.callback2 == CB2_ReturnToFieldContinueScriptPlayMapMusic);
 +    }
-+    puts("PASS: actual field adapter C in both locales; Prepare returns to same offer without spending; replacement selection survives field reset; battle starts only after exact ACK; outcome saves during fade and immediate result waits for ACK plus fade (either order); party preserved; all consumed outcomes retain spent state");
++    puts("PASS: actual field adapter C in both locales; explicit Prepare returns directly to Begin after commit or safely leaves after cancel, without spending early; replacement selection survives field reset; battle starts only after exact ACK; outcome saves during fade and immediate result waits for ACK plus fade (either order); party preserved; all consumed outcomes retain spent state");
 +    return 0;
 +}
 diff --git a/tests/taichung_encounter_save_test.c b/tests/taichung_encounter_save_test.c
@@ -636185,10 +636632,10 @@ index 00000000..865a7da3
 +}
 diff --git a/tests/taichung_encounter_team_test.c b/tests/taichung_encounter_team_test.c
 new file mode 100644
-index 00000000..ea7f7ab1
+index 00000000..56d94cc6
 --- /dev/null
 +++ b/tests/taichung_encounter_team_test.c
-@@ -0,0 +1,141 @@
+@@ -0,0 +1,144 @@
 +// Reuse modeled mon/stat services, but link the real encounter state and team C
 +// together so saved unlocks, all current site levels, and refresh are exercised.
 +#define main ExistingTeamTestMain
@@ -636280,8 +636727,7 @@ index 00000000..ea7f7ab1
 +            }
 +            for (i = 0; i < 3; i++)
 +            {
-+                assert(TaichungTeamSetSlot(3, species[i]) == (phase == 2));
-+                if (phase == 2) assert(gPlayerParty[3].level == 65);
++                assert(!TaichungTeamSetSlot(3, species[i])); // Existing member already occupies a slot, even after catch.
 +            }
 +            assert(!memcmp(before, gPlayerParty, sizeof(struct Pokemon) * 3));
 +        }
@@ -636308,18 +636754,22 @@ index 00000000..ea7f7ab1
 +        assert(!memcmp(&partner, &gPlayerParty[0], sizeof(partner))); // Existing locked species remains usable.
 +        Battle(id, B_OUTCOME_CAUGHT); durable = sSave;
 +        assert(TaichungEncounterSpeciesSelectable(site->species));
-+        assert(TaichungTeamSetSlot(1, site->species));
-+        assert(gPlayerParty[1].level == site->level);
-+        assert(gPlayerParty[1].exp == gExperienceTables[gSpeciesInfo[site->species].growthRate][site->level]);
++        assert(!TaichungTeamSetSlot(1, site->species)); // Capture cannot clone an existing legacy partner.
 +        TaichungTeamEnsurePartyLevel();
 +        assert(gPlayerParty[0].level == (id >= 21 ? partner.level : site->level) && gPlayerParty[0].hp == partner.hp);
 +        assert(gPlayerParty[0].status == partner.status && !memcmp(gPlayerParty[0].pp, partner.pp, 4));
 +        assert(!memcmp(&gPlayerParty[0].identity, &partner.identity, sizeof(partner.identity)));
++        assert(TaichungTeamSetSlot(0, SPECIES_RATICATE));
++        assert(TaichungTeamSetSlot(1, site->species)); // Explicitly freed species is now a fresh caught choice.
++        assert(gPlayerParty[1].level == site->level);
++        assert(gPlayerParty[1].exp == gExperienceTables[gSpeciesInfo[site->species].growthRate][site->level]);
 +        memcpy(party, gPlayerParty, sizeof(party));
 +        // Native Continue/refresh restores saved masks and levels, no attempt reset.
 +        TaichungEncounterResetSession(); sSave = durable;
 +        assert(TaichungEncounterInitSaveState() && !TaichungEncounterBegin(id));
 +        TaichungTeamEnsurePartyLevel(); assert(!memcmp(party, gPlayerParty, sizeof(party)));
++        assert(!TaichungTeamSetSlot(0, site->species));
++        assert(TaichungTeamSetSlot(1, SPECIES_PIKACHU));
 +        assert(TaichungTeamSetSlot(0, site->species) && gPlayerParty[0].level == site->level);
 +        NewSave(); Battle(id, B_OUTCOME_WON); durable = sSave;
 +        assert(TaichungEncounterWasAttempted(id) && !TaichungEncounterGetUnlockMask());
@@ -636884,6 +637334,105 @@ index 00000000..7aab0abd
 +    printf("PASS: %u real gym entry/victory cases; native HP/PP/PP-Up/status full heal On, damage preserved Off, no preheal/faint revive, legacy normalization and ordinary blackout both modes\n", cases);
 +    return 0;
 +}
+diff --git a/tests/taichung_gym_loss_test.c b/tests/taichung_gym_loss_test.c
+new file mode 100644
+index 00000000..9dd7769f
+--- /dev/null
++++ b/tests/taichung_gym_loss_test.c
+@@ -0,0 +1,54 @@
++#include "global.h"
++#include "taichung_gym_progress.h"
++#include "taichung_gym_loss.h"
++#include "taichung_leader_win_text.h"
++#include "constants/battle.h"
++#include "constants/battle_setup.h"
++#include "constants/battle_script_commands.h"
++#include "constants/opponents.h"
++#include <assert.h>
++#include <stdio.h>
++#include <string.h>
++static struct SaveBlock1 saved; struct SaveBlock1 *gSaveBlock1Ptr=&saved;
++static bool8 chinese,encounter;static unsigned writes;
++u16 VarGet(u16 id){(void)id;assert(0);return 0;}
++bool8 VarSet(u16 id,u16 value){saved.vars[id-0x4000]=value;writes++;return TRUE;}
++const u8 *TaichungText(const u8 *en,const u8 *zh){return chinese?zh:en;}
++static bool8 TaichungEncounterIsActive(void){return encounter;}
++static u8 mode,rivalFlags;
++static u8 GetTrainerBattleMode(void){return mode;}
++static u8 GetRivalBattleFlags(void){return rivalFlags;}
++static u8 GetBattlerAtPosition(u8 position){return position;}
++static void HandleEndTurn_FinishBattle(void){}
++static u8 gCurrentActionFuncId,gBattlerAttacker,gBattleOutcome,gBattleTextBuff1[32],gBattleCommunication[8],gStringVar4[512];
++static u32 gBattleTypeFlags;static u16 gTrainerBattleOpponent_A;
++static const u8 BattleScript_TaichungEncounterLost[]={1},BattleScript_LinkBattleWonOrLost[]={2},BattleScript_LocalBattleLost[]={3};
++static const u8 *gBattlescriptCurrInstr;static void (*gBattleMainFunc)(void);
++static const u8 *sTrainerVictorySpeech=(const u8 *)"stock";
++static const u8 *ReturnEmptyStringIfNull(const u8 *s){return s?s:(const u8 *)"";}
++static void StringExpandPlaceholders(u8 *dest,const u8 *src){strcpy((char *)dest,(const char *)src);}
++#include "loss-route.inc"
++#include "loss-text.inc"
++static const u16 trainers[]={TRAINER_TAICHUNG_STATION_JUN,TRAINER_TAICHUNG_PARK_LIAN,TRAINER_TAICHUNG_MIYAHARA_PEIQI,TRAINER_TAICHUNG_SCIENCE_YICHENG,TRAINER_TAICHUNG_GREENWAY_XINGAN,TRAINER_TAICHUNG_CONFUCIUS_WENYI,TRAINER_TAICHUNG_FINE_ARTS_CAINING,TRAINER_TAICHUNG_FENGJIA_JIAHE,TRAINER_TAICHUNG_MAPLE_GARDEN_MUQING,TRAINER_TAICHUNG_THEATER_LING};
++int main(void){unsigned gym,outcome;struct SaveBlock1 before;
++for(chinese=0;chinese<=1;chinese++)for(gym=0;gym<TAICHUNG_GYM_COUNT;gym++){
++ memset(&saved,0,sizeof(saved));saved.vars[0xF3]=0xEC02;saved.vars[0xF4]=0x155;before=saved;writes=0;
++ TaichungGymCancelChallenge();assert(!TaichungGymGetBattleLossText(trainers[gym],B_OUTCOME_LOST));
++ assert(TaichungGymPrepareChallenge(gym,trainers[gym]));assert(!TaichungGymGetBattleLossText(trainers[gym],B_OUTCOME_LOST));
++ TaichungGymOnTrainerBattleStart(trainers[gym]);
++ for(outcome=0;outcome<16;outcome++)assert((TaichungGymGetBattleLossText(trainers[gym],outcome)!=NULL)==(outcome==B_OUTCOME_LOST));
++ assert(!TaichungGymGetBattleLossText(TRAINER_YOUNGSTER_BEN,B_OUTCOME_LOST));
++ gTrainerBattleOpponent_A=trainers[gym];gBattleOutcome=B_OUTCOME_LOST;gBattleTypeFlags=BATTLE_TYPE_TRAINER;
++ HandleEndTurn_BattleLost();assert(gBattleCommunication[MULTISTRING_CHOOSER]==2&&gBattlerAttacker==B_POSITION_OPPONENT_LEFT&&gBattlescriptCurrInstr==BattleScript_LocalBattleLost&&gBattleMainFunc==HandleEndTurn_FinishBattle);
++ assert(!strcmp((const char *)GetTrainerWonSpeech(),(const char *)TaichungGymGetLeaderWinText(gym)));
++ assert(!memcmp(&saved,&before,sizeof(saved))&&!writes);
++ TaichungGymOnTrainerBattleEnd(trainers[gym],B_OUTCOME_LOST);assert(!TaichungGymIsComplete(gym)&&!TaichungGymConsumeNewBadge(gym));
++ assert(!TaichungGymGetBattleLossText(trainers[gym],B_OUTCOME_LOST));
++ assert(!memcmp(&saved,&before,sizeof(saved))&&!writes);
++ saved.vars[0xFA]=1<<gym;assert(!TaichungGymPrepareChallenge(gym,trainers[gym]));assert(!TaichungGymGetBattleLossText(trainers[gym],B_OUTCOME_LOST));
++}
++TaichungGymCancelChallenge();gTrainerBattleOpponent_A=TRAINER_YOUNGSTER_BEN;gBattleOutcome=B_OUTCOME_LOST;mode=0;gBattleTypeFlags=BATTLE_TYPE_TRAINER;HandleEndTurn_BattleLost();assert(!gBattleCommunication[MULTISTRING_CHOOSER]);assert(!strcmp((char *)GetTrainerWonSpeech(),"stock"));
++mode=TRAINER_BATTLE_EARLY_RIVAL;for(rivalFlags=0;rivalFlags<2;rivalFlags++){HandleEndTurn_BattleLost();assert(gBattleCommunication[MULTISTRING_CHOOSER]==(rivalFlags?1:2));}
++gBattleTypeFlags=BATTLE_TYPE_LINK;gBattleOutcome=B_OUTCOME_LOST|B_OUTCOME_LINK_BATTLE_RAN;HandleEndTurn_BattleLost();assert(gBattlescriptCurrInstr==BattleScript_LinkBattleWonOrLost&&gBattleOutcome==B_OUTCOME_LOST);
++encounter=TRUE;HandleEndTurn_BattleLost();assert(gBattlescriptCurrInstr==BattleScript_TaichungEncounterLost);
++puts("PASS: all ten gym loss selectors in EN/ZH use actual Story lines; exact started trainer/loss guards, protected save bytes, no award, stock/link/early-rival/capture routing retained.");}
+diff --git a/tests/taichung_gym_preparation_test.c b/tests/taichung_gym_preparation_test.c
+new file mode 100644
+index 00000000..b2f8d7ee
+--- /dev/null
++++ b/tests/taichung_gym_preparation_test.c
+@@ -0,0 +1,33 @@
++#define main EncounterFieldTests
++#include "taichung_encounter_field_test.c"
++#undef main
++#include "taichung_gym_entry.h"
++#include "taichung_gym_progress.h"
++#include "constants/maps.h"
++#include "constants/opponents.h"
++u16 gSpecialVar_0x8005,gSpecialVar_LastTalked;
++const u8 TaichungGymPrepared_Start[]={6},TaichungGymPrepared_Leave[]={7};
++static bool8 sCity=TRUE;
++bool8 TaichungTeamNoGrindActive(void){return sCity;}
++void TaichungTeamSyncPresetMoves(void){}
++bool8 TaichungTeamFillRandom(u8 target){return target>=3&&target<=5;}
++#include "native-gym-adapter.inc"
++#include "native-intros.inc"
++static const u16 rooms[]={MAP_TAICHUNG_OLD_STATION_GYM,MAP_TAICHUNG_PARK_GYM,MAP_TAICHUNG_MIYAHARA_GYM,MAP_TAICHUNG_SCIENCE_MUSEUM_GYM,MAP_TAICHUNG_GREENWAY_GYM,MAP_TAICHUNG_CONFUCIUS_GYM,MAP_TAICHUNG_FINE_ARTS_GYM,MAP_TAICHUNG_FENGJIA_GYM,MAP_TAICHUNG_WANHE_TEMPLE_HALL,MAP_TAICHUNG_THEATER_GYM};
++static const u16 trainers[]={TRAINER_TAICHUNG_STATION_JUN,TRAINER_TAICHUNG_PARK_LIAN,TRAINER_TAICHUNG_MIYAHARA_PEIQI,TRAINER_TAICHUNG_SCIENCE_YICHENG,TRAINER_TAICHUNG_GREENWAY_XINGAN,TRAINER_TAICHUNG_CONFUCIUS_WENYI,TRAINER_TAICHUNG_FINE_ARTS_CAINING,TRAINER_TAICHUNG_FENGJIA_JIAHE,TRAINER_TAICHUNG_MAPLE_GARDEN_MUQING,TRAINER_TAICHUNG_THEATER_LING};
++static void Room(unsigned gym){Reset();sCity=TRUE;sSave.vars[0xFA]=0;TaichungGymCancelChallenge();sSave.location.mapGroup=43;sSave.location.mapNum=MAP_NUM(rooms[gym]);}
++static void Return(bool8 start){TaichungGymEntry_ScriptOpenTeam();sPreparedStart=start;sMenuCallback();Frame();assert(!sLastScript);sFadeFinished=TRUE;Frame();assert(!sPreparedStart);}
++int main(void){unsigned gym,choice;struct SaveBlock1 before;struct Pokemon party[PARTY_SIZE];
++for(sChinese=0;sChinese<=1;sChinese++)for(gym=0;gym<10;gym++){
++ Room(gym);before=sSave;memcpy(party,gPlayerParty,sizeof(party));assert(TaichungGymEntryShouldRemind());TaichungGymEntry_ScriptBufferPreparationIntro();assert(gSpecialVar_Result&&gStringVar4[0]);Return(TRUE);assert(sLastScript==TaichungGymPrepared_Start&&gSpecialVar_0x8004==gym);Frame();assert(sReturns==1);
++ TaichungGymEntry_ScriptPrepareBattle();assert(gSpecialVar_Result&&gSpecialVar_0x8004==gym&&gSpecialVar_0x8005==trainers[gym]&&gSpecialVar_LastTalked==1);assert(!memcmp(&before,&sSave,sizeof(before))&&!memcmp(party,gPlayerParty,sizeof(party))&&!sSaves&&!sHeals);
++ assert(TaichungGymEntryConsumePreparedIntro(trainers[gym]));assert(!TaichungGymEntryConsumePreparedIntro(trainers[gym]));TaichungGymEntry_ScriptPrepareBattle();assert(!gSpecialVar_Result);
++ Room(gym);TaichungGymEntry_ScriptBufferPreparationIntro();Return(FALSE);assert(sLastScript==TaichungGymPrepared_Leave);TaichungGymEntry_ScriptPrepareBattle();assert(!gSpecialVar_Result&&!sSaves);
++ Room(gym);TaichungGymEntry_ScriptBufferPreparationIntro();Return(TRUE);sHealthy=FALSE;TaichungGymEntry_ScriptPrepareBattle();assert(!gSpecialVar_Result&&!TaichungGymEntryConsumePreparedIntro(trainers[gym])&&!sSaves);
++ Room(gym);TaichungGymEntry_ScriptBufferPreparationIntro();TaichungGymEntry_ScriptOpenTeam();sPreparedStart=TRUE;sMenuCallback();sSave.location.mapNum=0;sFadeFinished=TRUE;Frame();assert(sLastScript==TaichungGymPrepared_Leave);TaichungGymEntry_ScriptPrepareBattle();assert(!gSpecialVar_Result);
++ for(choice=1;choice<=3;choice++){Room(gym);TaichungGymEntry_ScriptBufferPreparationIntro();gSpecialVar_Result=choice;TaichungGymEntry_ScriptFillRandom();assert(gSpecialVar_Result);TaichungGymEntry_ScriptPrepareBattle();assert(gSpecialVar_Result&&TaichungGymEntryConsumePreparedIntro(trainers[gym]));}
++ Room(gym);sSave.vars[0xFA]=1<<gym;assert(!TaichungGymEntryShouldRemind());TaichungGymEntry_ScriptBufferPreparationIntro();assert(!gSpecialVar_Result);
++ Room(gym);gQuestLogState=QL_STATE_PLAYBACK;TaichungGymEntry_ScriptBufferPreparationIntro();assert(!gSpecialVar_Result);
++}
++Room(0);sCity=FALSE;assert(!TaichungGymEntryShouldRemind());
++puts("PASS: actual ten-gym EN/ZH intro/preparation/field-return/adapter code; one-shot matching room/trainer, cancel, fainted team, changed room, completion, replay and generic context guards; party/HP/PP/save unchanged and no early award.");}
 diff --git a/tests/taichung_gym_progress_test.c b/tests/taichung_gym_progress_test.c
 new file mode 100644
 index 00000000..a375b102
@@ -637955,10 +638504,10 @@ index 00000000..68435e55
 +}
 diff --git a/tests/taichung_locked_menu_test.c b/tests/taichung_locked_menu_test.c
 new file mode 100644
-index 00000000..96d1e9f1
+index 00000000..f3117bef
 --- /dev/null
 +++ b/tests/taichung_locked_menu_test.c
-@@ -0,0 +1,64 @@
+@@ -0,0 +1,81 @@
 +#include <assert.h>
 +#include <stdint.h>
 +#include <stdio.h>
@@ -638006,6 +638555,14 @@ index 00000000..96d1e9f1
 +    return site == TAICHUNG_ENCOUNTER_NONE || (sUnlocks & (1 << site)) != 0;
 +}
 +
++static u8 sSlot, sOtherSlot;
++static bool8 sHasOtherSpecies;
++static u16 sOtherSpecies;
++static bool8 TaichungTeamSpeciesInOtherSlot(u8 slot, u16 species)
++{
++    return sHasOtherSpecies && sOtherSlot != slot && sOtherSpecies == species;
++}
++
 +#include "native-locked-menu.inc"
 +
 +int main(void)
@@ -638020,6 +638577,15 @@ index 00000000..96d1e9f1
 +    assert(SpeciesInCategory(ALAKAZAM, TEAM_CATEGORY_CAUGHT));
 +    assert(SpeciesInCategory(ALAKAZAM, TEAM_CATEGORY_ALL) && SpeciesInCategory(ALAKAZAM, PSYCHIC));
 +    assert(!SpeciesInCategory(FUTURE, TEAM_CATEGORY_ALL));
++    sHasOtherSpecies = TRUE; sOtherSlot = 1; sOtherSpecies = ALAKAZAM;
++    assert(!SpeciesInCategory(ALAKAZAM, TEAM_CATEGORY_ALL));
++    assert(!SpeciesInCategory(ALAKAZAM, TEAM_CATEGORY_CAUGHT));
++    assert(!SpeciesInCategory(ALAKAZAM, PSYCHIC));
++    sSlot = 1;
++    assert(SpeciesInCategory(ALAKAZAM, TEAM_CATEGORY_CAUGHT));
++    sSlot = 0; sOtherSpecies = BULBASAUR;
++    assert(!SpeciesInCategory(BULBASAUR, TEAM_CATEGORY_ALL));
++    assert(!SpeciesInCategory(BULBASAUR, GRASS));
 +    puts("PASS: uncaught species stay hidden and actual landmark unlocks appear in Caught Pokémon.");
 +    return 0;
 +}
@@ -639326,10 +639892,10 @@ index 00000000..1395934a
 +}
 diff --git a/tests/taichung_save_test.c b/tests/taichung_save_test.c
 new file mode 100644
-index 00000000..8ac25473
+index 00000000..c29377bd
 --- /dev/null
 +++ b/tests/taichung_save_test.c
-@@ -0,0 +1,4813 @@
+@@ -0,0 +1,4816 @@
 +#include <assert.h>
 +#include <stdio.h>
 +#include <string.h>
@@ -644132,7 +644698,10 @@ index 00000000..8ac25473
 +        Versioned(version); InOldCity(2,2); before = sSave; TaichungSaveUpgradeOnContinue();
 +        assert(memcmp(&sSave,&before,sizeof(sSave)) == 0 && sWarpRequests == 0 && sVariableWrites == 0);
 +    }
-+    Reset(); TaichungSaveInitNewGame();
++    Reset(); memset(sSave.flags, 0xFF, sizeof(sSave.flags)); TaichungSaveInitNewGame();
++    for (i = 0; i < sizeof(sSave.flags); i++)
++        assert(sSave.flags[i] == (i == FLAG_TAICHUNG_ENCOUNTER_RULES_SEEN / 8
++            ? (0xFF & ~(1 << (FLAG_TAICHUNG_ENCOUNTER_RULES_SEEN % 8))) : 0xFF));
 +    assert(V(0x40F7) == TAICHUNG_SAVE_VERSION && V(0x40FB) == 0 && V(0x40FC) == 0 && sWarpRequests == 0);
 +    assert(TaichungSaveUsesStationCheckpoint());
 +    printf("PASS: OldCity v8 cache-only refresh for v1-v7 with all231 building-side positions kept and a combined pre-v8 OldCity+Greenway+Xitun refresh; Xitun streets v8 exact353 repairs for v1-v7 chained after v4/v7, all1367 final valid Xitun positions, pre-v8 refresh of all three outdoor districts and native pending/door priority; cb-only Xitun v7 exact29 repairs for v1-v6, older62 Xitun union and age gates, all1572 v7 positions, v6 Xitun-only refresh; every prior OldCity/Theater/e9/CMP regression and table, established onboarding stage/bag/team/preferences/checkpoint protection, v10/v11 exits and Park transient lifetime; Maple v9 covers all44 independent map-diff origins, source versions1..8, the v9 age gate and pending/native-door priority. Separate961 OldCity layout excluded. "
@@ -644824,12 +645393,95 @@ index 00000000..8eecfaf5
 +    puts("PASS: four one-time starter grants; duplicate/existing-party/raw-marker guards; failure/context checks; protected fields retained.");
 +    return 0;
 +}
+diff --git a/tests/taichung_team_preparation_test.c b/tests/taichung_team_preparation_test.c
+new file mode 100644
+index 00000000..5f44efa9
+--- /dev/null
++++ b/tests/taichung_team_preparation_test.c
+@@ -0,0 +1,77 @@
++#include <stdint.h>
++#include <assert.h>
++#include <stdio.h>
++#include <string.h>
++typedef uint8_t u8;typedef uint16_t u16;typedef uint32_t u32;typedef uint8_t bool8;typedef void(*MainCallback)(void);
++#define TRUE 1
++#define FALSE 0
++#define PARTY_SIZE 6
++#define SPECIES_NONE 0
++#define MON_DATA_SPECIES 0
++#define A_BUTTON 1
++#define B_BUTTON 2
++#define SELECT_BUTTON 4
++#define START_BUTTON 8
++#define DPAD_UP 16
++#define DPAD_DOWN 32
++#define DPAD_LEFT 64
++#define DPAD_RIGHT 128
++#define JOY_NEW(b) (gMain.newKeys&(b))
++#define PARTY_MENU_TYPE_FIELD 0
++#define PARTY_LAYOUT_SINGLE 0
++#define PARTY_ACTION_CHOOSE_MON 0
++#define PARTY_MSG_CHOOSE_MON 0
++#define SE_SELECT 0
++#define PALETTES_ALL 0
++#define RGB_BLACK 0
++#define TEAM_SCREEN_SLOTS 0
++#define TEAM_SCREEN_CATEGORIES 1
++#define TEAM_SCREEN_SPECIES 2
++#define TEAM_SCREEN_CONFIRM 3
++static struct {u16 newKeys;}gMain;
++static struct {u8 active;}gPaletteFade;
++static struct {u16 data[16];}gTasks[1];
++static struct {u16 species;u8 bytes[98];}gPlayerParty[PARTY_SIZE];
++static struct {u32 partyHash;bool8 active,changed,start;}sBattlePrep;
++static MainCallback sReturnCallback,callback,partyReturn;
++static u8 sSlot,sCategory,sScreen;static u16 sSpecies;
++static u8 sRosterCount=1;static bool8 allowSet=TRUE;static unsigned writes;
++static void CB2_InitTeamMenu(void){}
++static void CB2_ReopenTeamMenu(void);
++static void Task_HandleChooseMonInput(u8 task){(void)task;}
++static void TaichungTeamEnsurePartyLevel(void){}
++static void BuildCategories(void){}
++static void SetMainCallback2(MainCallback fn){callback=fn;}
++static void SetVBlankCallback(MainCallback fn){(void)fn;}
++static void FreeAllWindowBuffers(void){}
++static void DestroyTask(u8 id){assert(!id);gTasks[0].data[0]=0;}
++static void InitPartyMenu(u8 type,u8 layout,u8 action,bool8 keep,u8 message,void(*task)(u8),MainCallback fn){(void)type;(void)layout;(void)action;(void)keep;(void)message;(void)task;partyReturn=fn;}
++static u8 CalculatePlayerPartyCount(void){return 2;}
++static u32 GetMonData(void*mon,u8 field){(void)field;return ((u16*)mon)[0];}
++static bool8 TaichungTeamSpeciesAllowed(u16 species){return species>0;}
++static void ChangeCategory(int delta){(void)delta;}
++static void ChangeCategoryColumn(bool8 direction){(void)direction;}
++static void BuildRoster(void){sSpecies=3;}
++static void ChangeSpecies(int delta){(void)delta;}
++#define SPECIES_PER_PAGE 8
++static bool8 TaichungTeamSetSlot(u8 slot,u16 species){if(!allowSet)return FALSE;gPlayerParty[slot].species=species;writes++;return TRUE;}
++static void PlaySE(u16 se){(void)se;}
++static void BeginNormalPaletteFade(u32 palettes,int delay,int first,int last,int color){(void)palettes;(void)delay;(void)first;(void)last;(void)color;}
++static void DrawTeamMenu(void){}
++#include "native-menu.inc"
++static void Return(void){}
++static void Key(u16 key){gMain.newKeys=key;Task_TeamMenuInput(0);gMain.newKeys=0;}
++static void Close(u16 key){Key(key);Task_TeamMenuInput(0);assert(callback==Return);}
++static void Reset(void){memset(gPlayerParty,0xA5,sizeof(gPlayerParty));gPlayerParty[0].species=1;gPlayerParty[1].species=2;memset(gTasks,0,sizeof(gTasks));allowSet=TRUE;writes=0;callback=partyReturn=NULL;}
++int main(void){
++ Reset();ShowTaichungTeamMenu(Return);Close(START_BUTTON);assert(!TaichungTeamTakePreparedStart());
++ Reset();ShowTaichungBattlePreparation(Return);Close(B_BUTTON);assert(!TaichungTeamTakePreparedStart());
++ Reset();ShowTaichungBattlePreparation(Return);Close(START_BUTTON);assert(TaichungTeamTakePreparedStart());assert(!TaichungTeamTakePreparedStart());
++ Reset();ShowTaichungBattlePreparation(Return);Key(A_BUTTON);Key(A_BUTTON);Key(A_BUTTON);Key(A_BUTTON);assert(writes==1&&gPlayerParty[0].species==3&&sScreen==TEAM_SCREEN_SLOTS);Close(B_BUTTON);assert(TaichungTeamTakePreparedStart());
++ Reset();ShowTaichungBattlePreparation(Return);Key(A_BUTTON);Key(A_BUTTON);sSpecies=1;Key(A_BUTTON);Key(A_BUTTON);Close(B_BUTTON);assert(!TaichungTeamTakePreparedStart());
++ Reset();ShowTaichungBattlePreparation(Return);allowSet=FALSE;Key(A_BUTTON);Key(A_BUTTON);Key(A_BUTTON);Key(A_BUTTON);Close(B_BUTTON);assert(!TaichungTeamTakePreparedStart()&&!writes);
++ Reset();ShowTaichungBattlePreparation(Return);Key(SELECT_BUTTON);Task_TeamMenuInput(0);assert(partyReturn);partyReturn();Close(B_BUTTON);assert(!TaichungTeamTakePreparedStart());
++ Reset();ShowTaichungBattlePreparation(Return);Key(SELECT_BUTTON);Task_TeamMenuInput(0);gPlayerParty[0].bytes[30]++;partyReturn();Close(B_BUTTON);assert(TaichungTeamTakePreparedStart());
++ Reset();ShowTaichungBattlePreparation(Return);Close(START_BUTTON);ShowTaichungTeamMenu(Return);assert(!TaichungTeamTakePreparedStart());
++ puts("PASS: actual Team input: generic never starts; explicit START/changed B commits once; unchanged B/same slot/rejected setter cancel; SELECT mutation detection and generic reopening clear stale intent.");
++}
 diff --git a/tests/taichung_team_test.c b/tests/taichung_team_test.c
 new file mode 100644
-index 00000000..e57fca51
+index 00000000..83f10052
 --- /dev/null
 +++ b/tests/taichung_team_test.c
-@@ -0,0 +1,557 @@
+@@ -0,0 +1,612 @@
 +#include <assert.h>
 +#include <stdio.h>
 +#include <string.h>
@@ -644894,6 +645546,7 @@ index 00000000..e57fca51
 +    case MON_DATA_MOVE1: case MON_DATA_MOVE2: case MON_DATA_MOVE3: case MON_DATA_MOVE4:
 +        return mon->moves[field - MON_DATA_MOVE1];
 +    case MON_DATA_SPECIES: return mon->species;
++    case MON_DATA_SPECIES_OR_EGG: return mon->isEgg ? SPECIES_EGG : mon->species;
 +    case MON_DATA_HELD_ITEM: return mon->heldItem;
 +    case MON_DATA_MAIL: return mon->mail;
 +    case MON_DATA_IS_EGG: return mon->isEgg;
@@ -645365,11 +646018,64 @@ index 00000000..e57fca51
 +    assert(TaichungTeamLevelForSpecies(SPECIES_ALAKAZAM) == 65);
 +    TaichungTeamEnsurePartyLevel();
 +    assert(gPlayerParty[0].level == 65);
-+    assert(TaichungTeamSetSlot(1, SPECIES_ALAKAZAM));
-+    assert(gPlayerParty[1].level == 65);
++    assert(!TaichungTeamSetSlot(1, SPECIES_ALAKAZAM));
++    assert(TaichungTeamSetSlot(0, SPECIES_ALAKAZAM));
++    assert(gPlayerParty[0].level == 65);
++    assert(TaichungTeamSetSlot(1, SPECIES_VENUSAUR));
 +    TaichungTeamPrepareParty();
-+    assert(gPlayerParty[0].level == 65 && gPlayerParty[1].level == 65);
++    assert(gPlayerParty[0].level == 65 && gPlayerParty[1].level == 50);
 +    sUnlocks = 0;
++}
++
++#ifdef TAICHUNG_TEST_NATIVE_LEAD
++#include "constants/battle.h"
++#define GET_BATTLER_SIDE2(battler) ((battler) & 1)
++u32 gBattleTypeFlags;
++u8 gBattlersCount;
++u16 gBattlerPartyIndexes[4];
++struct Pokemon gEnemyParty[PARTY_SIZE];
++#include "native-party-lead.inc"
++#endif
++
++static void TestUniqueSelectionsAndLegacyDuplicates(void)
++{
++    struct Pokemon before[PARTY_SIZE];
++    unsigned created, dex;
++    Reset();
++    gPlayerParty[0] = OldPartner(SPECIES_PIKACHU, 50);
++    gPlayerParty[1] = OldPartner(SPECIES_DRAGONITE, 50);
++    CalculatePlayerPartyCount();
++    memcpy(before, gPlayerParty, sizeof(before));
++    assert(!TaichungTeamSetSlot(2, SPECIES_DRAGONITE));
++    assert(!TaichungTeamSetSlot(0, SPECIES_DRAGONITE));
++    assert(!memcmp(before, gPlayerParty, sizeof(before)) && sCreates==0 && sDexWrites==0);
++    assert(TaichungTeamSetSlot(1, SPECIES_DRAGONITE));
++    assert(!memcmp(before, gPlayerParty, sizeof(before)) && sCreates==0 && sDexWrites==0);
++    assert(TaichungTeamSetSlot(2, SPECIES_VENUSAUR));
++    assert(!memcmp(before, gPlayerParty, 2*sizeof(struct Pokemon)));
++    // Legacy duplicate records survive Continue/prep; only an explicitly
++    // selected replacement changes, with no invisible reorder or extra clone.
++    gPlayerParty[2] = gPlayerParty[1];
++    gPlayerParty[0].hp=0;
++    memcpy(before,gPlayerParty,sizeof(before));
++    created=sCreates;dex=sDexWrites;
++    assert(TaichungTeamSetSlot(2,SPECIES_DRAGONITE));
++    assert(!memcmp(before,gPlayerParty,sizeof(before)) && sCreates==created && sDexWrites==dex);
++    assert(!TaichungTeamSetSlot(0,SPECIES_DRAGONITE));
++    assert(!memcmp(before,gPlayerParty,sizeof(before)));
++    assert(TaichungTeamSetSlot(2,SPECIES_CHARIZARD));
++    assert(!memcmp(before,gPlayerParty,2*sizeof(struct Pokemon)) && sCreates==created+1);
++    assert(gPlayerParty[0].hp==0 && gPlayerParty[1].species==SPECIES_DRAGONITE && gPlayerParty[2].species==SPECIES_CHARIZARD);
++#ifdef TAICHUNG_TEST_NATIVE_LEAD
++    memcpy(before,gPlayerParty,sizeof(before));
++    memset(gEnemyParty,0,sizeof(gEnemyParty));gEnemyParty[0]=OldPartner(SPECIES_RATICATE,50);
++    gBattleTypeFlags=0;gBattlersCount=2;gBattlerPartyIndexes[0]=5;gBattlerPartyIndexes[1]=5;
++    SetBattlePartyIds();
++    assert(gBattlerPartyIndexes[0]==1 && gBattlerPartyIndexes[1]==0);
++    assert(!memcmp(before,gPlayerParty,sizeof(before)));
++    puts("PASS: native first-healthy selector leads slot1Dragonite when slot0Pikachu is fainted; finalized roster bytes and order stay intact.");
++#endif
++    AssertProtectedSave();
 +}
 +
 +int main(void)
@@ -645383,6 +646089,7 @@ index 00000000..e57fca51
 +    TestPrepareTrainerMoves();
 +    TestEnsureLevelPreservesExplorationDamage();
 +    TestCaughtLevelAndRandomTeam();
++    TestUniqueSelectionsAndLegacyDuplicates();
 +    puts("PASS: landmark levels on fresh selections, old parties and battle preparation; unique random teams of 3/4/5 preserve existing partners.");
 +    puts("PASS: native team slot/capacity/battle guards, evolved choices, six-partner preparation, held mail, EXP-derived level 50, identity retention, high-level HP recovery, authored trainer moves/full PP versus default presets, eggs/roster bounds, city-only upgrade, no exploration refill and protected save fields.");
 +    return 0;
@@ -725258,6 +725965,46 @@ index 00000000..4ed1a221
 +    str(ROOT/"src/taichung_gym_progress.c"), "-I"+str(OUT),
 +    str(ROOT/"tests/taichung_encounter_team_test.c"), "-o", str(OUT/"encounter-team")], env=env, check=True)
 +subprocess.run([str(OUT/"encounter-team")], check=True)
+diff --git a/tools/taichung_gameplay/test-encounter-rules.py b/tools/taichung_gameplay/test-encounter-rules.py
+new file mode 100644
+index 00000000..bea0e38f
+--- /dev/null
++++ b/tools/taichung_gameplay/test-encounter-rules.py
+@@ -0,0 +1,34 @@
++#!/usr/bin/env python3
++"""Check actual global-rules C, native New Game reset and menu timing binding."""
++import importlib.util,subprocess
++from pathlib import Path
++ROOT=Path(__file__).resolve().parents[2];OUT=ROOT/'build/taichung-tests/encounter-rules';OUT.mkdir(parents=True,exist_ok=True)
++spec=importlib.util.spec_from_file_location('extract',ROOT/'tools/taichung_gameplay/test-save-facing.py');extract=importlib.util.module_from_spec(spec);spec.loader.exec_module(extract)
++source=(ROOT/'src/taichung_save.c').read_text();definition=extract.definition(source,'TaichungSaveInitNewGame')[0]
++(OUT/'new-game-test.c').write_text('''#include "global.h"
++#include "taichung_save.h"
++#include <assert.h>
++#include <string.h>
++#include <stdio.h>
++static struct SaveBlock1 saved; struct SaveBlock1 *gSaveBlock1Ptr=&saved;
++static struct { u8 direction; } sContinueFacing;
++static unsigned canceled,reset,init,checkpoint;
++static void TaichungGymCancelChallenge(void){canceled++;}
++static void TaichungEncounterResetSession(void){reset++;}
++static void InitCityEncounterSaveState(void){init++;}
++void TaichungSaveSetStationCheckpoint(void){checkpoint++;}
++static void VarSet(u16 id,u16 value){assert(id==TAICHUNG_SAVE_VERSION_VAR&&value==TAICHUNG_SAVE_VERSION);}
++'''+definition+'''
++int main(void){unsigned i;memset(&saved,0xA5,sizeof(saved));sContinueFacing.direction=4;
++TaichungSaveInitNewGame();assert(!sContinueFacing.direction&&canceled==1&&reset==1&&init==1&&checkpoint==1);
++for(i=0;i<sizeof(saved.flags);i++)assert(saved.flags[i]==(i==FLAG_TAICHUNG_ENCOUNTER_RULES_SEEN/8?(0xA5&~(1<<(FLAG_TAICHUNG_ENCOUNTER_RULES_SEEN%8))):0xA5));
++puts("PASS: actual New Game function clears only the global rules bit, retaining native reset/checkpoint dispatch.");}
++''')
++subprocess.run(['cc','-std=c99','-Wall','-Wextra','-Werror','-I'+str(ROOT/'tests/save_host'),'-I'+str(ROOT/'include'),str(OUT/'new-game-test.c'),'-o',str(OUT/'new-game')],check=True)
++subprocess.run([str(OUT/'new-game')],check=True)
++menu=extract.definition((ROOT/'src/script_menu.c').read_text(),'DrawVerticalMultichoiceMenu')[0]
++assert menu.index('CreateMCMenuInputHandlerTask(ignoreBpress, count, windowId, mcId);')<menu.index('if (mcId == MULTICHOICE_TAICHUNG_ENCOUNTER)\n            TaichungEncounterOfferMenuShown();')<menu.index('ScheduleBgCopyTilemapToVram(0);')
++script=(ROOT/'data/scripts/taichung_encounters.inc').read_text();offer=script.split('TaichungEncounter_Offer::')[1].split('TaichungEncounter_HandleChoice::')[0]
++assert offer.index('waitmessage')<offer.index('multichoice')
++subprocess.run(['python3',str(ROOT/'tools/taichung_gameplay/test-encounter-return.py')],check=True)
++print('PASS: menu marks only after all rules advance to real choices; Later/Prepare/second-site/legacy attempt/saved-state/new-game cases pass in both languages without a reading save.')
 diff --git a/tools/taichung_gameplay/test-encounter-save.py b/tools/taichung_gameplay/test-encounter-save.py
 new file mode 100644
 index 00000000..971b3931
@@ -725984,6 +726731,97 @@ index 00000000..a1c7563f
 +assert result.returncode == 0, result.stdout + result.stderr
 +print(result.stdout.strip())
 +subprocess.run(["bash", "tools/taichung_gameplay/test-team.sh"], cwd=ROOT, env=env, check=True)
+diff --git a/tools/taichung_gameplay/test-gym-loss.py b/tools/taichung_gameplay/test-gym-loss.py
+new file mode 100644
+index 00000000..02dd5ec1
+--- /dev/null
++++ b/tools/taichung_gameplay/test-gym-loss.py
+@@ -0,0 +1,14 @@
++#!/usr/bin/env python3
++"""Compile real loss dispatch, progress, Story selector and battle routing."""
++from pathlib import Path
++import importlib.util,subprocess
++ROOT=Path(__file__).resolve().parents[2];OUT=ROOT/'build/taichung-tests/gym-loss';OUT.mkdir(parents=True,exist_ok=True)
++spec=importlib.util.spec_from_file_location('extract',ROOT/'tools/taichung_gameplay/test-save-facing.py');m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m)
++for file,fn,out in [('src/battle_main.c','HandleEndTurn_BattleLost','loss-route.inc'),('src/battle_setup.c','GetTrainerWonSpeech','loss-text.inc')]:
++ (OUT/out).write_text(m.definition((ROOT/file).read_text(),fn)[0]+'\n')
++subprocess.run(['cc','-std=c99','-Wall','-Wextra','-Werror','-Wno-unknown-escape-sequence','-D_(x)=x','-DGUARD_GLOBAL_H','-I'+str(ROOT/'tests/host'),'-I'+str(ROOT/'include'),'-I'+str(OUT),str(ROOT/'src/taichung_gym_progress.c'),str(ROOT/'src/taichung_gym_loss.c'),str(ROOT/'src/taichung_leader_win_text.c'),str(ROOT/'tests/taichung_gym_loss_test.c'),'-o',str(OUT/'test')],check=True)
++subprocess.run([str(OUT/'test')],check=True)
++s=(ROOT/'data/battle_scripts_1.s').read_text();speech=s.split('BattleScript_RivalBattleLostSkipMonRecall::')[1].split('BattleScript_BattleTowerLost::')[0]
++assert speech.index('STRINGID_TRAINER1WINTEXT')<speech.index('CMP_EQUAL, cMULTISTRING_CHOOSER, 2, BattleScript_LocalBattleLostPrintWhiteOut')
++assert 'BattleScript_LocalBattleLostEnd::' in s and 'CB2_WhiteOut' in (ROOT/'src/battle_setup.c').read_text()
++print('PASS: existing native trainer-win script prints the leader line then takes chooser2 through ordinary prize/whiteout end; battle scripts and blackout routing unchanged.')
+diff --git a/tools/taichung_gameplay/test-gym-preparation.py b/tools/taichung_gameplay/test-gym-preparation.py
+new file mode 100644
+index 00000000..662924ba
+--- /dev/null
++++ b/tools/taichung_gameplay/test-gym-preparation.py
+@@ -0,0 +1,19 @@
++#!/usr/bin/env python3
++"""Exercise actual ten-gym preparation guards, field return and intro routing."""
++from pathlib import Path
++import importlib.util,subprocess,re
++ROOT=Path(__file__).resolve().parents[2];OUT=ROOT/'build/taichung-tests/gym-preparation';OUT.mkdir(parents=True,exist_ok=True)
++subprocess.run(['python3',str(ROOT/'tools/taichung_gameplay/test-encounter-return.py')],check=True)
++spec=importlib.util.spec_from_file_location('extract',ROOT/'tools/taichung_gameplay/test-save-facing.py');m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m)
++(OUT/'native-gym-adapter.inc').write_text(m.definition((ROOT/'src/taichung_gym_adapter.c').read_text(),'TaichungGym_ScriptPrepareChallenge')[0]+'\n')
++lines=[]
++for f in ['taichung_gym_adapter','taichung_park_gym','taichung_miyahara_gym','taichung_science_gym','taichung_greenway_gym','taichung_confucius_gym','taichung_fine_arts_gym','taichung_fengjia_gym','taichung_maple_garden_gym','taichung_theater_gym']:
++ lines.extend(re.findall(r'^const u8 TaichungGym_Text_\w+Intro(?:En|Zh)\[\] = .*?;$',(ROOT/'src'/f'{f}.c').read_text(),re.M))
++assert len(lines)==20;(OUT/'native-intros.inc').write_text('\n'.join(lines)+'\n')
++args=['cc','-std=gnu99','-Werror=implicit-function-declaration','-Wno-unknown-attributes','-Wno-unknown-escape-sequence','-Wno-pointer-to-int-cast','-Wno-int-to-pointer-cast','-I'+str(ROOT/'include'),'-I'+str(OUT),'-I'+str(ROOT/'build/taichung-tests/encounter-return'),str(ROOT/'src/taichung_encounter.c'),str(ROOT/'src/taichung_encounter_bridge.c'),str(ROOT/'src/taichung_encounter_field.c'),str(ROOT/'src/taichung_gym_progress.c'),str(ROOT/'src/taichung_gym_entry.c'),str(ROOT/'src/taichung_gym_preparation.c'),str(ROOT/'tests/taichung_gym_preparation_test.c'),'-o',str(OUT/'test')]
++subprocess.run(args,check=True);subprocess.run([str(OUT/'test')],check=True)
++setup=m.definition((ROOT/'src/battle_setup.c').read_text(),'BattleSetup_ConfigureTrainerBattle')[0];clause=setup.split('case TRAINER_BATTLE_CONTINUE_SCRIPT_NO_MUSIC:')[1].split('case TRAINER_BATTLE_CONTINUE_SCRIPT_DOUBLE:')[0];assert clause.index('TrainerBattleLoadArgs(sContinueScriptBattleParams, data)')<clause.index('TaichungGymEntryConsumePreparedIntro')<clause.index('return TaichungGymPrepared_TrainerBattle')
++s=(ROOT/'data/scripts/taichung_gym_preparation.inc').read_text();assert len(re.findall(r'^\tprepared_gym_battle ',s,re.M))==10
++for guard in ['Script_HasTrainerBeenFought','EventScript_NoTrainerBattle','SetUpTrainerMovement','EventScript_EndQuestLogBattle','dotrainerbattle','gotopostbattlescript']:assert guard in s
++assert 'ShowTrainerIntroSpeech'not in s
++print('PASS: prepared-only routing retains continue-script trainer parameters, ten original AfterBattle targets and fought/replay guards, omitting only the already-shown intro.')
+diff --git a/tools/taichung_gameplay/test-gym-rosters.py b/tools/taichung_gameplay/test-gym-rosters.py
+new file mode 100644
+index 00000000..c38682dd
+--- /dev/null
++++ b/tools/taichung_gameplay/test-gym-rosters.py
+@@ -0,0 +1,40 @@
++#!/usr/bin/env python3
++"""Validate the ten installed leader parties against native Gen III learn data."""
++from pathlib import Path
++import re,json,subprocess
++ROOT=Path(__file__).resolve().parents[2]
++def read(p):return (ROOT/p).read_text()
++def entries(text):
++ m=list(re.finditer(r'\[(SPECIES_\w+)\]\s*=',text));return {x[1]:text[x.end():m[i+1].start() if i+1<len(m)else len(text)]for i,x in enumerate(m)}
++expected={'StationJun':['RATICATE','PIDGEOT','PERSIAN'],'ParkLian':['SEAKING','GOLDUCK','PIDGEOT'],'MiyaharaPeiqi':['DEWGONG','CLOYSTER','LAPRAS'],'ScienceYicheng':['MAGNETON','AERODACTYL','OMASTAR'],'GreenwayXingan':['VICTREEBEL','VILEPLUME','TANGELA'],'ConfuciusWenyi':['SLOWBRO','EXEGGUTOR','ALAKAZAM'],'FineArtsCaining':['BUTTERFREE','MUK','CLEFABLE'],'FengjiaJiahe':['FARFETCHD','MAGMAR','SNORLAX'],'MapleGardenMuqing':['POLIWRATH','BUTTERFREE','VAPOREON'],'TheaterLing':['WIGGLYTUFF','JYNX','MR_MIME']}
++ids={n:int(v)for n,v in re.findall(r'^#define (SPECIES_\w+) (\d+)$',read('include/constants/species.h'),re.M)}
++pointers=dict(re.findall(r'\[(SPECIES_\w+)\] = (s\w+LevelUpLearnset)',read('src/data/pokemon/level_up_learnset_pointers.h')))
++levels={n:{move for lvl,move in re.findall(r'LEVEL_UP_MOVE\((\d+), (MOVE_\w+)\)',body)if int(lvl)<=50}for n,body in re.findall(r'static const u16 (s\w+LevelUpLearnset)\[\] = \{(.*?)\};',read('src/data/pokemon/level_up_learnsets.h'),re.S)}
++parents={}
++for parent,body in entries(read('src/data/pokemon/evolution.h')).items():
++ for child in re.findall(r'\{EVO_\w+,\s*\w+,\s*(SPECIES_\w+)\}',body):parents.setdefault(child,set()).add(parent)
++def inherited(n,seen=None):
++ seen=set()if seen is None else seen
++ if n in seen:return set()
++ seen.add(n);return levels[pointers[n]]|set().union(*(inherited(p,seen)for p in parents.get(n,[])))
++tm={n:{'MOVE_'+v for v in re.findall(r'TMHM\((?:TM|HM)\d+_(\w+)\)',body)}for n,body in entries(read('src/data/pokemon/tmhm_learnsets.h')).items()}
++tutor={n:set(re.findall(r'TUTOR\((MOVE_\w+)\)',body))for n,body in entries(read('src/data/pokemon/tutor_learnsets.h')).items()}
++source=read('src/data/trainer_parties.h');trainers=read('src/data/trainers.h');proof={}
++pattern=r'static const struct (TrainerMon\w+) sParty_Taichung(\w+)\[\] = \{(.*?)\n\};'
++parties={name:(typ,body)for typ,name,body in re.findall(pattern,source,re.S)}
++for name,roster in expected.items():
++ typ,body=parties[name];assert typ=='TrainerMonNoItemCustomMoves';mons=re.findall(r'\.lvl = (\w+), \.species = (SPECIES_\w+),\s*\.moves = \{([^}]+)\}',body)
++ assert len(mons)==3 and [s[8:]for _,s,_ in mons]==roster,(name,mons)
++ proof[name]=[]
++ for lvl,species,slots in mons:
++  assert lvl=='TAICHUNG_TEAM_LEVEL'and 1<=ids[species]<=150;assert '#define TAICHUNG_TEAM_LEVEL 50' in read('include/taichung_team_presets.h')
++  moves=re.findall(r'MOVE_\w+',slots);assert len(moves)==len(set(moves))==4
++  legal=inherited(species)|tm.get(species,set())|tutor.get(species,set());assert set(moves)<=legal,(name,species,set(moves)-legal)
++  proof[name].append({'species':species[8:],'level':50,'moves':moves,'legalSources':{move:'level or ancestor <=50'if move in inherited(species)else'TM/HM'if move in tm[species]else'native tutor'for move in moves}})
++ assert 'NO_ITEM_CUSTOM_MOVES(sParty_Taichung'+name+')'in trainers
++old=subprocess.check_output(['git','show','f7e7d04d03f22872dad17fbd6bff88d5e1dd4897:src/data/trainer_parties.h'],cwd=ROOT,text=True)
++oldpart={name:(typ,body)for typ,name,body in re.findall(pattern,old,re.S)}
++for name,value in oldpart.items():
++ if name not in expected:assert parties[name]==value,name
++out=ROOT/'build/taichung-tests/gym-rosters.json';out.parent.mkdir(parents=True,exist_ok=True);out.write_text(json.dumps(proof,indent=2)+'\n')
++print('PASS: ten original-150 parties, each3Lv50/no items/four legal moves (native inherited level<=50, TM/HM or tutor); retired ShenJi and every generic trainer unchanged.');print(out)
 diff --git a/tools/taichung_gameplay/test-gym-staff-dialogue.py b/tools/taichung_gameplay/test-gym-staff-dialogue.py
 new file mode 100644
 index 00000000..15b4feb6
@@ -727865,6 +728703,39 @@ index 00000000..c24add4f
 +  "$GAME_ROOT/src/taichung_starter.c" "$GAME_ROOT/tests/taichung_starter_test.c" \
 +  -o "$test_dir/starter"
 +"$test_dir/starter"
+diff --git a/tools/taichung_gameplay/test-team-preparation.py b/tools/taichung_gameplay/test-team-preparation.py
+new file mode 100644
+index 00000000..a1378e5d
+--- /dev/null
++++ b/tools/taichung_gameplay/test-team-preparation.py
+@@ -0,0 +1,8 @@
++#!/usr/bin/env python3
++"""Exercise the actual menu input and explicit battle-preparation return API."""
++from pathlib import Path
++import importlib.util,subprocess
++ROOT=Path(__file__).resolve().parents[2];OUT=ROOT/'build/taichung-tests/team-preparation';OUT.mkdir(parents=True,exist_ok=True)
++spec=importlib.util.spec_from_file_location('extract',ROOT/'tools/taichung_gameplay/test-save-facing.py');m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m)
++s=(ROOT/'src/taichung_team_menu.c').read_text();fns=['PreparationPartyHash','ShowTaichungTeamMenu','ShowTaichungBattlePreparation','TaichungTeamTakePreparedStart','CB2_ReopenTeamMenu','Task_TeamMenuInput'];(OUT/'native-menu.inc').write_text('\n'.join(m.definition(s,f)[0]for f in fns)+'\n')
++subprocess.run(['cc','-std=c99','-Wall','-Wextra','-Werror','-I'+str(OUT),str(ROOT/'tests/taichung_team_preparation_test.c'),'-o',str(OUT/'test')],check=True);subprocess.run([str(OUT/'test')],check=True)
+diff --git a/tools/taichung_gameplay/test-team-unique.py b/tools/taichung_gameplay/test-team-unique.py
+new file mode 100644
+index 00000000..5c726112
+--- /dev/null
++++ b/tools/taichung_gameplay/test-team-unique.py
+@@ -0,0 +1,13 @@
++#!/usr/bin/env python3
++"""Run the real Team setters and the native first-healthy battle lead selector."""
++import argparse,importlib.util,subprocess
++from pathlib import Path
++ROOT=Path(__file__).resolve().parents[2];OUT=ROOT/'build/taichung-tests/team-unique';OUT.mkdir(parents=True,exist_ok=True)
++p=argparse.ArgumentParser();p.add_argument('--prove-regression',action='store_true');args=p.parse_args()
++spec=importlib.util.spec_from_file_location('native_extract',Path(__file__).with_name('test-save-facing.py'));m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m)
++(OUT/'native-party-lead.inc').write_text(m.definition((ROOT/'src/battle_controllers.c').read_text(),'SetBattlePartyIds')[0]+'\n')
++def run(source,label):
++ binary=OUT/label;subprocess.run(['cc','-std=c99','-Wall','-Wextra','-Werror','-DTAICHUNG_TEST_NATIVE_LEAD','-I'+str(ROOT/'tests/team_host'),'-I'+str(ROOT/'include'),'-I'+str(OUT),str(source),str(ROOT/'tests/taichung_team_test.c'),'-o',str(binary)],check=True);return subprocess.run([str(binary)],capture_output=True)
++r=run(ROOT/'src/taichung_team.c','team-unique');print(r.stdout.decode(),end='');assert r.returncode==0,r.stderr.decode()
++if args.prove_regression:
++ old=OUT/'team-before.c';old.write_bytes(subprocess.check_output(['git','show','f7e7d04d03f22872dad17fbd6bff88d5e1dd4897:src/taichung_team.c'],cwd=ROOT));r=run(old,'team-before');assert r.returncode!=0 and b'!TaichungTeamSetSlot(1, SPECIES_ALAKAZAM)' in r.stderr,r.stderr.decode();print('PASS: same setter tests reject the preview\'s allowed duplicate caught-species append.')
 diff --git a/tools/taichung_gameplay/test-team.sh b/tools/taichung_gameplay/test-team.sh
 new file mode 100755
 index 00000000..6dbaeb81
