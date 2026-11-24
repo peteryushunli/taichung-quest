@@ -11,6 +11,7 @@ import './immersive.css';
 import './minimap.css';
 import './title-screen.css';
 import './upright.css';
+import './pause-screen.css';
 import titleStation from './assets/landmarks/old-station.png';
 import titleBulbasaur from './assets/pokemon/front/bulbasaur.png';
 import titleCharmander from './assets/pokemon/front/charmander.png';
@@ -115,7 +116,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
                   <p id="play-feedback" class="title-text-box" role="status" aria-live="polite" hidden></p>
                 </div>
               </div>
-              <div class="pause-screen" id="pause-screen" hidden><p class="screen-eyebrow" data-i18n="TAKE YOUR TIME">TAKE YOUR TIME</p><h2 data-i18n="A little breather.">A little breather.</h2><button class="start-button" id="resume-button">${icon('play')} <span data-i18n="Keep exploring">Keep exploring</span></button></div>
+              <div class="pause-screen" id="pause-screen" hidden><section class="pause-panel" role="dialog" aria-labelledby="pause-title"><h2 class="pause-title" id="pause-title" data-i18n="Paused">Paused</h2><button class="pause-continue" id="resume-button"><span class="pause-pointer" aria-hidden="true"></span><span data-i18n="Continue">Continue</span></button></section></div>
             </div>
             <div class="screen-caption"><span><i></i> <span id="game-status">READY WHEN YOU ARE</span></span><span>240 × 160 · GBA</span></div>
           </div>
@@ -658,6 +659,11 @@ async function startGame() {
   }
 }
 
+function focusPauseAction() {
+  if (paused && !document.hidden && gameView.immersive && !document.querySelector('dialog[open]'))
+    el<HTMLButtonElement>('resume-button').focus({ preventScroll: true });
+}
+
 function setPaused(value: boolean) {
   if (!running || !emulator || paused === value) return;
   releaseInputs();
@@ -678,6 +684,7 @@ function setPaused(value: boolean) {
   gameInput?.refresh();
   refreshNavigation();
   onboarding?.refresh();
+  if (paused) focusPauseAction();
 }
 
 const cityGuide = createCityGuide({
@@ -756,6 +763,9 @@ copyLinkButton.addEventListener('click', async () => {
   copyLinkButton.textContent = t(copyLinkButton.dataset.i18n);
 });
 el('resume-button').addEventListener('click', openGame);
+// A modal's own close handler restores its trigger first. If the game remains
+// paused, place keyboard focus on the visible Continue action afterwards.
+for (const id of ['game-options', 'city-guide']) el(id).addEventListener('close', () => queueMicrotask(focusPauseAction));
 el('exit-fullscreen-button').addEventListener('click', () => { onboarding?.beforeLeave(); gameView.leave(); });
 el('game-options-button').addEventListener('click', () => gameView.openOptions(el('game-options-button')));
 el('pause-button').addEventListener('click', () => {
@@ -910,7 +920,11 @@ gameInput = createGameControls({
   press: (button) => emulator?.buttonPress(button),
   release: (button) => emulator?.buttonUnpress(button),
 });
-document.addEventListener('visibilitychange', () => { if (!restarting && !confirmationOpen && document.hidden && running && !paused) setPaused(true); });
+document.addEventListener('visibilitychange', () => {
+  if (restarting || confirmationOpen) return;
+  if (document.hidden && running && !paused) setPaused(true);
+  else if (!document.hidden) focusPauseAction();
+});
 window.addEventListener('pagehide', () => { languageBridge?.stop(); navigationBridge?.stop(); badgeBridge?.stop(); onboarding?.stop(); encounterBridge?.stop(); releaseInputs(); if (saveInterval) clearInterval(saveInterval); });
 
 // Locale refresh updates existing nodes, preserving the live emulator canvas.

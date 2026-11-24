@@ -86,6 +86,8 @@ const zh: Record<string, string> = {
   'Packing your bag…': '正在準備行囊…',
   'Begin at the old station. Make the city your own.': '從舊車站出發，慢慢認識臺中。',
   'TAKE YOUR TIME': '慢慢來，沒關係',
+  'Paused': '遊戲暫停',
+  'Continue': '繼續',
   'A little breather.': '休息一下。',
   'Keep exploring': '繼續探索',
   'READY WHEN YOU ARE': '準備好了，就出發吧',
