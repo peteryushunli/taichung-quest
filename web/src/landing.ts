@@ -10,8 +10,9 @@ import { badgeArt, landingMedia, landmarkArt } from './landing-assets';
 import { landmarkCaptureCopy } from './capture-copy';
 import type { PokemonIcon } from './landing-assets';
 import { pixelFlag } from './landing-flag';
-import { districtCount, districtLabelSpots, gymStatusSummary, isGym, isGymOpen, localizedPlace, markerPosition, orderPlaces, placeStatus, placeWorld } from './landing-model';
+import { districtLabelSpots, gymStatusSummary, isGym, isGymOpen, localizedPlace, markerPosition, orderPlaces, placeStatus, placeWorld } from './landing-model';
 import type { LandingLandmark } from './landing-model';
+import type { MapView } from './map-fold';
 
 interface LandingHost {
   startNewGame(): void;
@@ -24,6 +25,16 @@ const landmarks = orderPlaces([...landmarkCatalog, ...sightCatalog] as LandingLa
 const gyms = landmarks.filter(isGym);
 const sights = landmarks.filter((place) => !isGym(place));
 const DEFAULT_LANDMARK = 'old-taichung-station';
+// The Boulevard map folds between two views around Taiwan Blvd; this is the boulevard's centre row, in tiles.
+const taiwanBoulevard = city.world.streetBands?.find((band) => band.name.en === 'Taiwan Boulevard')?.bounds;
+const BOULEVARD_ROW = taiwanBoulevard ? (taiwanBoulevard[1] + taiwanBoulevard[3]) / 2 : city.world.height / 2;
+// The page's words sell the city; they do not explain how the map was made.
+const LEAD_HEADING = 'Explore Taichung, street by street.';
+const LEAD_TEXT = 'Taiwan Boulevard runs through the heart of this map, just as it runs through the heart of the city. The night market, the temples and the old station were all built out from it by hand. Flip the map to see the real Taichung underneath.';
+const REAL_MAP_CAPTION = 'The real city. Everything inside the bright ground is yours to explore.';
+const GAME_MAP_CAPTION = 'The same streets, ready to ride.';
+const HOW_HEADING = 'Plays like the Pokémon you remember.';
+const HOW_TEXT = "Pick a partner, take on gym leaders, fill your badge case. The only thing that's new is the city.";
 const GITHUB_URL = 'https://github.com/peteryushunli/taichung-quest';
 const starters = [
   { key: 'charmander', name: 'Charmander', dex: '004', type: 'Fire', tint: '#f3d9cc', ink: '#8a3a22' },
@@ -44,7 +55,24 @@ function cityMap() {
   const { width, height } = city.world;
   const labels = districtLabelSpots(city).map(({ label, name, sign, x, y }) =>
     `<span class="lp-district-name${name ? ' is-neighborhood' : sign ? ' lp-district-sign' : ''}" ${name ? `data-neighborhood="${escapeHtml(name.en)}" data-anchor-x="${x}" data-anchor-y="${y}"` : ''} style="left:${x}%;top:${y}%">${name ? `<span lang="en">${escapeHtml(name.en)}</span><span lang="zh-Hant">${escapeHtml(name.zh)}</span>` : label}</span>`).join('');
-  return `<img class="lp-map-art" src="${escapeHtml(landingMedia.cityMap)}" width="${width * 16}" height="${height * 16}" alt="" loading="lazy" decoding="async"><div id="lp-districts-layer" data-map-layer="districts" hidden>${labels}</div><div id="lp-streets-layer" data-map-layer="streets" hidden></div><span class="lp-map-chip">${copy('IN-GAME MAP')}</span>`;
+  // The map leads the page now, so its picture loads at once.
+  const art = `<img class="lp-map-art" src="${escapeHtml(landingMedia.cityMap)}" width="${width * 16}" height="${height * 16}" alt="" decoding="async">`;
+  const layers = `<div id="lp-districts-layer" data-map-layer="districts" hidden>${labels}</div><div id="lp-streets-layer" data-map-layer="streets" hidden></div>`;
+  if (!BOULEVARD_PREVIEW) return `${art}${layers}<span class="lp-map-chip">${copy('IN-GAME MAP')}</span>`;
+  // The Boulevard map has a second view, real Taichung, which folds into this one around Taiwan Blvd (real-map.ts).
+  // The gold line traces the boulevard in both; its name tag sits on the one point that never moves.
+  const lineHeight = 1000 * height / width;
+  const lineY = (lineHeight * BOULEVARD_ROW / height).toFixed(1);
+  return `${art}<img class="lp-map-real-art" id="lp-map-real-art" alt="" hidden><canvas class="lp-map-fold" id="lp-map-fold" hidden></canvas>
+    <svg class="lp-map-boulevard-line" viewBox="0 0 1000 ${lineHeight.toFixed(3)}" preserveAspectRatio="none" aria-hidden="true"><polyline class="lp-boulevard-casing" points="0,${lineY} 1000,${lineY}"/><polyline class="lp-boulevard-gold" points="0,${lineY} 1000,${lineY}"/></svg>
+    ${layers}
+    <div class="lp-map-anchor" style="top:${BOULEVARD_ROW / height * 100}%" aria-hidden="true"><i></i><span>${copy('Taiwan Blvd')}</span></div>
+    <div class="lp-map-real-only" aria-hidden="true"><span class="lp-map-north"><svg viewBox="-12 -12 24 24" width="26" height="26"><g transform="rotate(-34.4)"><path d="M0 -10L4.2 3.5L0 1.2L-4.2 3.5Z"/><text y="10.6" text-anchor="middle">N</text></g></svg></span><span class="lp-map-scale"><b id="lp-map-scale-bar"></b><span>2 km</span></span></div>`;
+}
+
+function mapSwitch() {
+  const tab = (view: MapView, label: string) => `<button type="button" data-map-view="${view}" aria-pressed="${view === 'game'}">${copy(label)}</button>`;
+  return `<div class="lp-map-tabs" role="group" aria-label="${escapeHtml(t('Which map to show'))}" data-i18n-label="Which map to show">${tab('real', 'Real Taichung')}${tab('game', 'In the game')}</div>`;
 }
 
 function renderStreets() {
@@ -94,44 +122,57 @@ function markup() {
       </nav>
     </div></header>
     <main>
-      <section class="lp-hero" id="top">
-        <div class="lp-hero-copy">
-          <p class="lp-eyebrow lp-eyebrow-dot">${copy('A POKÉMON FIRERED ADVENTURE · 臺中')}</p>
-          <h1 class="lp-h1 lp-display">${copy('Taichung, shrunk to fit a Game Boy.')}</h1>
-          <p class="lp-lede">${copy('Explore Taichung in the world of Pokémon. Challenge ten landmark gyms, collect badges, and catch rare Pokémon at places like Taichung Prefectural Hall and Maple Garden. Pick a partner, hop on a bike, and play free in your browser.')}</p>
-          <div class="lp-actions"><a class="lp-btn" id="hero-play" href="#play" data-play-link><span aria-hidden="true">▶</span> <span data-play-label="Play in your browser">${escapeHtml(t('Play in your browser'))}</span></a><a class="lp-text-link" href="#map">${copy('Explore the map ↓')}</a></div>
-          <div class="lp-facts"><span>${gyms.length} ${copy('gyms')}</span><span>${landmarks.length} ${copy('landmarks')}</span><span>${city.world.neighborhoods?.length || districtCount(landmarks)} ${copy(city.world.neighborhoods?.length ? 'neighborhoods' : 'districts')}</span><span>English · 繁體中文</span>${copy('No install')}</div>
-        </div>
-        <div class="lp-hero-frame">
-          <div class="lp-casing">
-            <div class="lp-casing-top"><span class="lp-power"><i></i>臺中 · TAICHUNG</span>${copy('OLD STATION PLAZA')}</div>
-            <div class="lp-bezel"><div class="lp-screen">${heroScreen()}</div></div>
-            <div class="lp-partner">${landingMedia.heroPartner ? pixelImage(landingMedia.heroPartner, 'Pikachu') : placeholder('Partner Pokémon sprite', 'lp-slot-fill')}</div>
+      <span id="top"></span>
+      <!-- The map leads the page: the city first, with the way into the game beside it. -->
+      <section class="lp-map-section lp-lead" id="map"><div class="lp-wrap">
+        <div class="lp-lead-head">
+          <div class="lp-lead-title">
+            <p class="lp-eyebrow lp-eyebrow-dot">${copy('A POKÉMON FIRERED ADVENTURE · 臺中')}</p>
+            <h1 class="lp-h1 lp-display" id="lp-map-heading">${copy(LEAD_HEADING)}</h1>
           </div>
-          <p class="lp-status"><b>${copy('Early access.')}</b> <span id="lp-gym-status"></span></p>
+          <div class="lp-lead-side">
+            <p class="lp-lede">${copy(LEAD_TEXT)}</p>
+            <div class="lp-actions"><a class="lp-btn lp-btn-light" id="hero-play" href="#play" data-play-link><span aria-hidden="true">▶</span> <span data-play-label="Play in your browser">${escapeHtml(t('Play in your browser'))}</span></a><a class="lp-text-link" href="#how">${copy('See how it plays ↓')}</a></div>
+          </div>
         </div>
-      </section>
-
-      <section class="lp-map-section" id="map"><div class="lp-wrap">
-        ${sectionHead('01 — THE MAP', 'Explore Taichung’s real neighborhoods and landmarks.', "Distances are compressed, but the city keeps its shape: the old city around the station, the Greenway's museums in the middle, Xitun's theater and night market to the northwest, and Nantun's temples and parks to the south. Green pins are gyms; gold pins are landmarks to find on foot.", 'lp-map-heading')}
-        <fieldset class="lp-map-controls" id="lp-map-controls"><legend class="visually-hidden">${copy('Map layers')}</legend>${MAP_LAYERS.map(layer => `<label><input type="checkbox" data-map-toggle="${layer}" aria-controls="lp-${layer}-layer"${DEFAULT_MAP_LAYERS[layer] ? ' checked' : ''}><span data-map-layer-label="${layer}">${mapLayerLabel(layer, getLocale())}</span></label>`).join('')}</fieldset>
-        <div class="lp-map-body">
+        <div class="lp-map-body" id="lp-map-stage">
+          <div class="lp-map-col">
+          <div class="lp-map-bar">
+            ${BOULEVARD_PREVIEW ? mapSwitch() : ''}
+            <fieldset class="lp-map-controls" id="lp-map-controls"><legend class="visually-hidden">${copy('Map layers')}</legend>${MAP_LAYERS.map(layer => `<label><input type="checkbox" data-map-toggle="${layer}" aria-controls="lp-${layer}-layer"${DEFAULT_MAP_LAYERS[layer] ? ' checked' : ''}><span data-map-layer-label="${layer}">${mapLayerLabel(layer, getLocale())}</span></label>`).join('')}</fieldset>
+          </div>
           <div class="lp-map${BOULEVARD_PREVIEW ? ' lp-map-boulevard' : ''}" id="lp-map" style="aspect-ratio:${city.world.width} / ${city.world.height};background-size:${800 / city.world.width}% ${800 / city.world.height}%" role="group" aria-label="${escapeHtml(t('Choose a landmark'))}" data-i18n-label="Choose a landmark">
             ${cityMap()}
             <div id="lp-markers"></div>
-            <div class="lp-map-legend"><span data-map-legend="gyms"><i class="lp-swatch-open"></i>${copy('Gym')}</span><span data-map-legend="landmarks"><i class="lp-swatch-landmark"></i>${copy('Landmark')}</span>${gyms.some((place) => !isGymOpen(place)) ? `<span data-map-legend="gyms"><i class="lp-swatch-planned"></i>${copy('In development')}</span>` : ''}</div>
+            <div class="lp-map-legend"><span data-map-legend="gyms"><i class="lp-swatch-open"></i>${copy('Gym')}</span><span data-map-legend="landmarks"><i class="lp-swatch-landmark"></i>${copy('Landmark')}</span>${gyms.some((place) => !isGymOpen(place)) ? `<span data-map-legend="gyms"><i class="lp-swatch-planned"></i>${copy('In development')}</span>` : ''}${BOULEVARD_PREVIEW ? `<span><i class="lp-swatch-boulevard"></i>${copy('Taiwan Blvd')}</span><span class="lp-legend-real-only"><i class="lp-swatch-covered"></i>${copy('In the game')}</span>` : ''}</div>
+          </div>
+          ${BOULEVARD_PREVIEW ? `<div class="lp-map-foot"><p><span data-map-caption="real" hidden>${copy(REAL_MAP_CAPTION)}</span><span data-map-caption="game">${copy(GAME_MAP_CAPTION)}</span></p><small>${copy('Real map © OpenStreetMap contributors')}</small></div>` : ''}
           </div>
           <aside class="lp-detail" id="lp-detail" aria-live="polite"></aside>
         </div>
       </div></section>
 
       <section class="lp-wrap" id="gyms">
-        ${sectionHead('02 — THE LANDMARKS', 'Ten landmark gyms. Rare Pokémon across the city.', 'Each place is redrawn tile by tile. Gym leaders are fictional; the buildings are real.')}
+        ${sectionHead('01 — THE LANDMARKS', 'Ten landmark gyms. Rare Pokémon across the city.', 'Each place is redrawn tile by tile. Gym leaders are fictional; the buildings are real.')}
         <div class="lp-gallery" id="lp-gallery"></div>
       </section>
 
       <section class="lp-how" id="how"><div class="lp-wrap">
-        ${sectionHead('03 — HOW IT PLAYS', 'A short guide, then the city is yours.')}
+        <div class="lp-how-lead">
+          <div class="lp-how-copy">
+            <p class="lp-eyebrow">${copy('02 — HOW IT PLAYS')}</p>
+            <h2 class="lp-h2 lp-display">${copy(HOW_HEADING)}</h2>
+            <p class="lp-lede">${copy(HOW_TEXT)}</p>
+          </div>
+          <div class="lp-hero-frame">
+            <div class="lp-casing">
+              <div class="lp-casing-top"><span class="lp-power"><i></i>臺中 · TAICHUNG</span>${copy('OLD STATION PLAZA')}</div>
+              <div class="lp-bezel"><div class="lp-screen">${heroScreen()}</div></div>
+              <div class="lp-partner">${landingMedia.heroPartner ? pixelImage(landingMedia.heroPartner, 'Pikachu') : placeholder('Partner Pokémon sprite', 'lp-slot-fill')}</div>
+            </div>
+            <p class="lp-status"><b>${copy('Early access.')}</b> <span id="lp-gym-status"></span></p>
+          </div>
+        </div>
         <div class="lp-step-one">
           <div class="lp-step-one-copy">
             <span class="lp-step-label">${copy('STEP 1')}</span>
@@ -190,7 +231,7 @@ function renderMarkers(selected: string) {
     const { x, y, side } = markerPosition(placeWorld(place, city.markersById), city.world);
     const { name, mapLabel } = localizedPlace(place, locale);
     const state = `${!isGym(place) ? 'is-landmark' : isGymOpen(place) ? 'is-open' : 'is-planned'}${place.id === selected ? ' is-selected' : ''}`;
-    return { layer: isGym(place) ? 'gyms' : 'landmarks', html: `<div class="lp-pin ${state} lp-side-${place.landingLabelSide ?? side}" data-pin="${escapeHtml(place.id)}" style="left:${x}%;top:${y}%">
+    return { layer: isGym(place) ? 'gyms' : 'landmarks', html: `<div class="lp-pin ${state} lp-side-${place.landingLabelSide ?? side}" data-pin="${escapeHtml(place.id)}" data-x="${x}" data-y="${y}" style="left:${x}%;top:${y}%">
       <button type="button" class="lp-marker" data-select="${escapeHtml(place.id)}" aria-label="${escapeHtml(`${name} · ${t(placeStatus(place))}`)}" aria-pressed="${place.id === selected}">${number(index)}</button>
       <span class="lp-pin-label" data-select="${escapeHtml(place.id)}" aria-hidden="true">${escapeHtml(mapLabel)}</span>
     </div>` };
@@ -218,7 +259,7 @@ function renderDetail(id: string) {
   return `
     <div class="lp-detail-art">${facade}</div>
     <div class="lp-detail-body" role="region" aria-labelledby="lp-detail-name" tabindex="0">
-      <div class="lp-detail-meta"><span>No. ${number(index)} · ${escapeHtml(info.district)}</span><span class="lp-chip ${!isGym(place) ? 'is-landmark' : isGymOpen(place) ? 'is-open' : ''}">${copy(!isGym(place) ? 'LANDMARK' : isGymOpen(place) ? 'GYM OPEN' : 'IN DEVELOPMENT')}</span></div>
+      <div class="lp-detail-meta"><span>No. ${number(index)} · ${escapeHtml(info.district)}</span></div>
       <div class="lp-detail-names"><h3 class="lp-display" id="lp-detail-name">${escapeHtml(info.name)}</h3><span>${escapeHtml(info.otherName)}</span></div>
       <p class="lp-detail-text">${escapeHtml(info.description)}</p>
       <div class="lp-detail-foot">
@@ -234,7 +275,7 @@ function renderCard(place: LandingLandmark, locale: ReturnType<typeof getLocale>
   const art = landmarkArt[place.id];
   return `<button type="button" class="lp-card${isGym(place) ? '' : ' is-landmark'}" data-card="${escapeHtml(place.id)}">
       <span class="lp-card-art" style="background:${art?.tint ?? '#eee8dc'}">${art?.facade ? `<img class="lp-card-facade" src="${escapeHtml(art.facade)}" alt="" loading="lazy" decoding="async">` : `<span class="lp-card-pending">${copy('facade art')}</span>`}</span>
-      <span class="lp-card-body"><span class="lp-card-meta"><span>No. ${number(index)}</span><span class="${!isGym(place) ? 'is-landmark' : isGymOpen(place) ? 'is-open' : 'is-planned'}">● ${copy(placeStatus(place))}</span></span><span class="lp-card-name">${escapeHtml(info.shortName)}</span><span class="lp-card-other">${escapeHtml(info.otherName)}</span></span>
+      <span class="lp-card-body"><span class="lp-card-meta"><span>No. ${number(index)}</span></span><span class="lp-card-name">${escapeHtml(info.shortName)}</span><span class="lp-card-other">${escapeHtml(info.otherName)}</span></span>
     </button>`;
 }
 
@@ -259,10 +300,55 @@ export function createLanding(root: HTMLElement, host: LandingHost) {
   const continueGame = root.querySelector<HTMLButtonElement>('#lp-continue')!;
   const reel = root.querySelector<HTMLVideoElement>('#lp-reel');
 
-  const layoutLabels = observeNeighborhoodLayout(root.querySelector('#lp-map')!, '.is-neighborhood', '.lp-marker, .lp-pin-label, .lp-map-chip, .lp-map-legend');
-  const layers = createMapLayers(root.querySelector('#lp-map')!, root.querySelector('#lp-map-controls')!, layoutLabels);
+  const mapFrame = root.querySelector<HTMLElement>('#lp-map')!;
+  const placeLabels = observeNeighborhoodLayout(mapFrame, '.is-neighborhood', '.lp-marker, .lp-pin-label, .lp-map-chip, .lp-map-legend, .lp-map-anchor > span');
+
+  // Real Taichung behind the Boulevard map. Its picture and drawing code are fetched once the page has settled;
+  // the two tabs then fold the frame from one map to the other.
+  const mapTabs = [...root.querySelectorAll<HTMLButtonElement>('[data-map-view]')];
+  let realMap: { choose(view: MapView): void; layout(): void; view(): MapView } | undefined;
+  let realMapLoading = false;
+  let wantedView: MapView | undefined;
+  // Neighbourhood names are placed round the pins where the game map has them, so only while that map shows.
+  const layoutLabels = () => { if (!realMap || realMap.view() === 'game') placeLabels(); };
+  const layers = createMapLayers(mapFrame, root.querySelector('#lp-map-controls')!, layoutLabels);
+  function showMapView(view: MapView, settled: boolean) {
+    mapTabs.forEach((tab) => tab.setAttribute('aria-pressed', String(tab.dataset.mapView === view)));
+    root.querySelectorAll<HTMLElement>('[data-map-caption]').forEach((caption) => { caption.hidden = caption.dataset.mapCaption !== view; });
+    if (settled && view === 'game') layers.refresh();
+  }
+  function loadRealMap() {
+    if (realMapLoading || !mapTabs.length) return;
+    realMapLoading = true;
+    void import('./real-map').then(({ createRealMap }) => {
+      const created = createRealMap({
+        map: mapFrame,
+        canvas: root.querySelector<HTMLCanvasElement>('#lp-map-fold')!,
+        gameArt: root.querySelector<HTMLImageElement>('.lp-map-art')!,
+        realArt: root.querySelector<HTMLImageElement>('#lp-map-real-art')!,
+        boulevard: [...root.querySelectorAll<SVGPolylineElement>('.lp-map-boulevard-line polyline')],
+        scaleBar: root.querySelector<HTMLElement>('#lp-map-scale-bar')!,
+        reducedMotion,
+        onView: showMapView,
+      });
+      return created.ready.then(() => { realMap = created; if (wantedView) created.choose(wantedView); });
+    }).catch(() => { realMapLoading = false; });
+  }
+  mapTabs.forEach((tab) => tab.addEventListener('click', () => {
+    const view = tab.dataset.mapView as MapView;
+    if (realMap) realMap.choose(view);
+    else { wantedView = view; loadRealMap(); }
+  }));
+  // The map is the first thing on the page, so fetch its second view as soon as the browser is idle.
+  if (mapTabs.length) {
+    const whenIdle = (window as Window & { requestIdleCallback?: (run: () => void, options?: { timeout: number }) => number }).requestIdleCallback;
+    if (whenIdle) whenIdle(loadRealMap, { timeout: 2500 });
+    else window.setTimeout(loadRealMap, 600);
+  }
+
   function renderLocalized() {
     markers.innerHTML = renderMarkers(selected);
+    realMap?.layout();
     detail.innerHTML = renderDetail(selected);
     gallery.innerHTML = renderGallery();
     root.querySelector('#lp-streets-layer')!.innerHTML = renderStreets();
@@ -293,7 +379,7 @@ export function createLanding(root: HTMLElement, host: LandingHost) {
     const id = (event.target as HTMLElement).closest<HTMLElement>('[data-card]')?.dataset.card;
     if (!id) return;
     select(id);
-    root.querySelector('#map')!.scrollIntoView({ behavior: reducedMotion() ? 'auto' : 'smooth' });
+    root.querySelector('#lp-map-stage')!.scrollIntoView({ behavior: reducedMotion() ? 'auto' : 'smooth' });
     markers.querySelector<HTMLElement>(`[data-pin="${id}"] button`)?.focus({ preventScroll: true });
   });
   root.querySelectorAll<HTMLButtonElement>('[data-locale-toggle]').forEach((button) => {

@@ -62,14 +62,11 @@ html[lang="zh-Hant"] .lp-display { font-family: var(--lp-zh); font-weight: 500; 
 .lp-lang button[aria-pressed="true"] { background: var(--lp-pine); color: var(--lp-cream-dark); }
 .lp-lang button:focus-visible { outline-offset: -3px; }
 
-/* Hero */
-.lp-hero { max-width: 1240px; margin: 0 auto; padding: 72px var(--lp-gutter) 88px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 440px), 1fr)); gap: 56px; align-items: center; }
-.lp-hero-copy { display: flex; flex-direction: column; gap: 28px; }
+/* The page's opening lines and, further down, the Game Boy that shows the game itself */
 .lp-eyebrow-dot { display: flex; align-items: center; gap: 10px; }
 .lp-eyebrow-dot::before { content: ''; flex: none; width: 7px; height: 7px; border-radius: 50%; background: var(--lp-coral); }
 .lp-h1 { font-size: clamp(44px, 6vw, 76px); line-height: 1.02; letter-spacing: -2px; color: var(--lp-pine); text-wrap: balance; }
 .lp-lede { max-width: 520px; font-size: 18px; line-height: 1.6; color: var(--lp-body); text-wrap: pretty; }
-.lp-facts { display: flex; flex-wrap: wrap; gap: 10px 24px; padding-top: 24px; border-top: 1px solid var(--lp-line); font: 12px var(--lp-mono-face); color: var(--lp-muted); }
 .lp-hero-frame { display: flex; flex-direction: column; gap: 14px; min-width: 0; }
 .lp-casing { position: relative; padding: 20px 22px 30px; border: 1px solid #ced5c5; border-radius: 16px 16px 48px 16px; background: #e6e9dd; box-shadow: 0 6px 0 #d2d7c8, 0 24px 40px #2d493014; }
 .lp-casing-top { display: flex; justify-content: space-between; gap: 12px; padding: 0 4px 14px; font: 10px var(--lp-mono-face); letter-spacing: 1.3px; color: #65785f; }
@@ -255,7 +252,6 @@ html[lang="zh-Hant"] .lp-cta-zh { display: none; }
 }
 @media (max-width: 720px) {
   .landing { --lp-gutter: 20px; --lp-section: 64px; }
-  .lp-hero { padding-top: 40px; padding-bottom: 64px; gap: 40px; }
   /* Numbered squares and the detail panel carry the map on a phone. */
   .lp-pin:not(.is-selected) > .lp-pin-label { display: none; }
   /* Keep neighboring pins tappable when the whole Boulevard map fits on a phone. */
@@ -327,3 +323,93 @@ html[lang="zh-Hant"] .lp-cta-zh { display: none; }
 .lp-map-legend[hidden], .lp-map-legend [hidden] { display: none; }
 @media(max-width:450px) { .lp-map-controls input { width: 15px; height: 15px; } .lp-map-controls label { gap: 4px; } }
 @media(max-width:360px) { .lp-map-controls { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+/* The map leads the page. Its head carries the page's opening lines and the way into the game. */
+.lp-lead .lp-wrap { padding-top: 48px; gap: 36px; }
+.lp-lead-head { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 20px 56px; align-items: end; }
+.lp-lead-title { display: flex; flex-direction: column; gap: 22px; }
+.lp-lead-side { display: flex; flex-direction: column; gap: 22px; }
+.lp-map-section .lp-h1 { color: inherit; }
+.lp-map-section .lp-lede { max-width: 540px; color: var(--lp-map-text); }
+.landing .lp-btn-light { background: var(--lp-cream); box-shadow: 0 4px 0 var(--lp-pine-shadow); color: var(--lp-pine); }
+.landing .lp-btn-light:hover:not(:disabled) { background: #fffaf0; color: var(--lp-pine); }
+.landing .lp-map-section .lp-text-link { border-color: #ffffff59; color: var(--lp-cream-dark); }
+.landing .lp-map-section .lp-text-link:hover { border-color: var(--lp-cream-dark); color: #ffffff; }
+.lp-map-body { scroll-margin-top: 96px; }
+
+/* The Boulevard map has two views, switched by tabs on the frame's top edge: real Taichung, and the game.
+   One folds into the other around Taiwan Blvd, which is drawn in gold and keeps its place (real-map.ts). */
+.lp-map-col { display: grid; min-width: 0; }
+/* When the two groups cannot share a row, the layer switches go above and the tabs stay joined to the map. */
+.lp-map-bar { display: flex; flex-wrap: wrap-reverse; align-items: flex-end; justify-content: space-between; gap: 10px 16px; }
+.lp-map-tabs { display: flex; gap: 4px; }
+.landing .lp-map-tabs button { display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px 9px; border: 1px solid #ffffff3d; border-bottom: 0; border-radius: 5px 5px 0 0; background: transparent; color: var(--lp-map-text); font: 600 14px/1.2 'DM Sans', sans-serif; cursor: pointer; }
+.lp-map-tabs button::before { content: ''; width: 9px; height: 9px; border: 1.5px solid currentColor; border-radius: 2px; }
+.landing .lp-map-tabs button[aria-pressed="true"] { border-color: var(--lp-cream); background: var(--lp-cream); color: var(--lp-pine); }
+.lp-map-tabs button[aria-pressed="true"]::before { border-color: var(--lp-pine); background: var(--lp-pine); }
+.lp-map-tabs button:focus-visible { outline: 2px solid var(--lp-gold); outline-offset: 2px; }
+/* The layer switches sit beside the tabs; on wide screens they are smaller than when they stood alone. */
+.lp-map-bar .lp-map-controls { max-width: none; margin: 0 0 8px auto; }
+@media (min-width: 721px) {
+  .lp-map-bar .lp-map-controls { display: flex; gap: 6px; }
+  .lp-map-bar .lp-map-controls label { min-height: 34px; padding: 5px 10px; font-size: 12px; }
+  .lp-map-bar .lp-map-controls input { width: 14px; height: 14px; }
+}
+/* --lp-pin-k, --lp-game and --lp-real follow the fold: pin size, and how much of each map's own furniture shows. */
+.lp-map-col > .lp-map-boulevard { border-top-left-radius: 0; --lp-pin-k: 1; --lp-game: 1; --lp-real: 0; --lp-pin-real: .62; }
+.lp-map-real-art, .lp-map-fold { position: absolute; inset: 0; width: 100%; height: 100%; }
+.lp-map-real-art { opacity: 0; }
+.lp-map-boulevard-line { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+.lp-map-boulevard-line polyline { fill: none; stroke-linecap: round; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
+.lp-boulevard-casing { stroke: var(--lp-pine-shadow); stroke-opacity: .6; stroke-width: 7px; }
+.lp-boulevard-gold { stroke: var(--lp-gold); stroke-width: 3.5px; }
+/* Above the pins so the name always reads; it takes no clicks, so a pin beneath it can still be chosen. */
+.lp-map-anchor { position: absolute; left: 50%; z-index: 3; width: 0; height: 0; pointer-events: none; }
+.lp-map-anchor i { position: absolute; left: -6px; top: -6px; width: 12px; height: 12px; border: 2px solid var(--lp-gold-ink); background: var(--lp-gold); transform: rotate(45deg); }
+.lp-map-anchor > span { position: absolute; left: 0; bottom: 13px; padding: 3px 8px; border-radius: 2px; background: var(--lp-gold); box-shadow: 0 2px 0 #5a3f1266; color: var(--lp-gold-ink); font-size: 12px; font-weight: 600; line-height: 1.35; white-space: nowrap; transform: translateX(-50%); }
+.lp-map-real-only { position: absolute; inset: 0; opacity: var(--lp-real); pointer-events: none; }
+.lp-map-north { position: absolute; left: 2.5%; top: 4%; display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; background: #f6f3e9e0; }
+.lp-map-north path { fill: var(--lp-pine); }
+.lp-map-north text { fill: var(--lp-pine); font: 500 7.4px var(--lp-mono-face); }
+.lp-map-scale { position: absolute; left: 2.5%; bottom: 4%; display: grid; gap: 3px; width: 95%; }
+.lp-map-scale b { display: block; height: 5px; border: 2px solid var(--lp-cream); border-top: 0; }
+.lp-map-scale span { justify-self: start; padding: 2px 6px; border-radius: 2px; background: #f6f3e9e0; font: 10px var(--lp-mono-face); color: #4d5f4a; }
+/* District names and street lines are laid out on the game map, so they fade with it. */
+.lp-map-boulevard #lp-districts-layer, .lp-map-boulevard #lp-streets-layer { opacity: var(--lp-game); }
+/* On the real map the places sit close together: only the chosen one keeps its name. */
+.lp-map-boulevard .lp-pin:not(.is-selected) > .lp-pin-label { opacity: var(--lp-game); }
+.lp-map-boulevard .lp-marker { scale: var(--lp-pin-k); }
+.lp-map-boulevard .is-selected > .lp-marker { scale: 1; }
+.lp-swatch-boulevard { width: 14px !important; height: 0 !important; border-top: 3.5px solid var(--lp-gold); border-radius: 0 !important; box-shadow: 0 0 0 1px #173a2a66; }
+.lp-swatch-covered { width: 14px !important; height: 8px !important; border: 1.5px dashed #6d7a74; background: #e4e9eb; }
+.lp-map-legend .lp-legend-real-only { overflow: hidden; max-height: calc(16px * var(--lp-real)); margin-top: calc(-6px * (1 - var(--lp-real))); opacity: var(--lp-real); }
+.lp-map-foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 18px; padding-top: 12px; font-size: 14px; line-height: 1.5; color: var(--lp-map-text); }
+.lp-map-foot p { max-width: 62ch; }
+.lp-map-foot small { align-self: end; font: 11px var(--lp-mono-face); color: var(--lp-map-eyebrow); }
+
+/* How it plays opens on the Game Boy: this is the game you know. */
+.lp-how-lead { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 440px), 1fr)); gap: 56px; align-items: center; }
+.lp-how-copy { display: flex; flex-direction: column; gap: 20px; }
+.lp-how-lead .lp-hero-frame { padding-bottom: 20px; }
+
+@media (max-width: 900px) {
+  .lp-lead-head { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 720px) {
+  .lp-lead .lp-wrap { padding-top: 40px; gap: 32px; }
+  /* Layer switches above, tabs below them so they stay joined to the map. */
+  .lp-map-bar { flex-direction: column-reverse; align-items: stretch; gap: 12px; }
+  .lp-map-bar .lp-map-controls { margin: 0; }
+  .lp-lead-title, .lp-lead-side { gap: 18px; }
+  .lp-map-section .lp-lede { font-size: 16px; }
+  .lp-map-tabs { flex: 1; }
+  .landing .lp-map-tabs button { flex: 1; justify-content: center; padding: 12px 8px 11px; }
+  .lp-map-col > .lp-map-boulevard { border-top-right-radius: 0; --lp-pin-real: .5; }
+  .lp-boulevard-casing { stroke-width: 5px; }
+  .lp-boulevard-gold { stroke-width: 2.5px; }
+  .lp-map-anchor i { left: -4.5px; top: -4.5px; width: 9px; height: 9px; border-width: 1.5px; }
+  .lp-map-anchor > span { bottom: 9px; padding: 2px 6px; font-size: 10px; }
+  .lp-map-north { width: 26px; height: 26px; }
+  .lp-map-north svg { width: 20px; height: 20px; }
+  .lp-how-lead { gap: 40px; }
+}
