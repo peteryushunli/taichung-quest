@@ -4,6 +4,61 @@ Public source: <https://github.com/peteryushunli/taichung-quest>
 
 Play: <https://taichung-quest.vercel.app> — the canonical production frontend.
 
+<p align="center">
+  <a href="https://taichung-quest.vercel.app"><img src="docs/readme/old-city.png" width="100%" alt="The Old City in the game: the double-roofed pavilion in the Taichung Park lake on the left, the red-brick Old Taichung Station on the right, and tree-lined Taiwan Boulevard below."></a>
+  <br>
+  Cross the lake at Taichung Park, then walk over to the Old Station.
+</p>
+
+<table>
+  <tr>
+    <td width="50%" valign="top">
+      <img src="docs/readme/old-station.png" alt="The player reads a sign in front of the red-brick station. It says: Old Taichung Station. Station built in 1917.">
+      <br><strong>Old Taichung Station</strong>
+      <br>舊臺中車站
+      <br>Look up for the clock tower.
+    </td>
+    <td width="50%" valign="top">
+      <img src="docs/readme/miyahara.png" alt="The player reads a sign beside Miyahara's red-brick arcade and glass roof. It says: A Japanese eye doctor founded this clinic.">
+      <br><strong>Miyahara</strong>
+      <br>宮原眼科
+      <br>An old eye clinic, now famous for ice cream.
+    </td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top">
+      <img src="docs/readme/rainbow-village.png" alt="The player reads a sign next to brightly painted houses. It says: A retired soldier painted the walls to save the village.">
+      <br><strong>Rainbow Village</strong>
+      <br>彩虹眷村
+      <br>Find the rabbit, the bird and the smiling flowers.
+    </td>
+    <td width="50%" valign="top">
+      <img src="docs/readme/fengjia-night-market.png" alt="The player reads a sign under the lit 逢甲夜市 gate and striped awnings. It says: It was once Wenhua Market. Now named for Feng Chia.">
+      <br><strong>Fengjia Night Market</strong>
+      <br>逢甲夜市
+      <br>Come hungry.
+    </td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top">
+      <img src="docs/readme/map-real-taichung.jpg" alt="A map of real Taichung with pins on Fengjia Night Market, the National Theater, the Science Museum, Wanhe Temple, the Confucius Temple, Taichung Park and the Old Station.">
+      <br><strong>Real Taichung</strong>
+      <br>Map data © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>.
+    </td>
+    <td width="50%" valign="top">
+      <img src="docs/readme/map-game.jpg" alt="The game's pixel-art city with the same places pinned, from Fengjia Night Market in the west to the Old Station in the east.">
+      <br><strong>The same places in the game</strong>
+      <br>Walk it all, from Fengjia to the Old Station.
+    </td>
+  </tr>
+</table>
+
+<p align="center">
+  <img src="docs/readme/phone.png" width="300" alt="The game on a phone in Traditional Chinese, with a direction pad and buttons under the screen. The station sign reads 舊臺中車站, 站房建於1917年.">
+  <br>
+  Take it with you, in English or 繁體中文.
+</p>
+
 A Pokémon FireRed modification set in a compressed, fictionalized Taichung. A real Game Boy Advance ROM runs in the browser through mGBA WebAssembly.
 
 Explore Claude’s expanded Taichung across six connected districts, with ten gym
