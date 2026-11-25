@@ -1,3 +1,8 @@
+import { NativeBadgeBridge, parseBadgeMetadata } from './badge-bridge';
+import type { BadgeMetadata } from './badge-bridge';
+import { pairedBadgePresentation } from './badge-view-model';
+import { badgeDesigns } from './badge-art';
+import { createBadgeView } from './badge-view';
 import { bilingualNeighborhood } from './neighborhood-labels';
 import './style.css';
 import './confirm.css';
@@ -6,6 +11,7 @@ import './immersive.css';
 import './minimap.css';
 import './title-screen.css';
 import './upright.css';
+import './pause-screen.css';
 import titleStation from './assets/landmarks/old-station.png';
 import titleBulbasaur from './assets/pokemon/front/bulbasaur.png';
 import titleCharmander from './assets/pokemon/front/charmander.png';
@@ -18,6 +24,7 @@ import { createLanding } from './landing';
 import { NativeLanguageBridge, parseLanguageBridgeMetadata } from './language-bridge';
 import type { LanguageBridgeState } from './language-bridge';
 import { createGameControls } from './game-controls';
+import { KEY_BINDINGS } from './input-state';
 import { createGameView } from './game-view';
 import { protectGameDisplay } from './game-display';
 import { NativeNavigationBridge, parseNavigationMetadata } from './navigation-bridge';
@@ -30,12 +37,14 @@ import { parseOnboardingMetadata } from './onboarding-bridge';
 import { NativeEncounterBridge, parseEncounterMetadata } from './encounter-bridge';
 import type { EncounterMetadata } from './encounter-bridge';
 import { CaptureStorageController } from './capture-storage';
+import { EncounterSaveSpeed } from './encounter-save-speed';
 import { DETAILS, HdOverlay, keepCanvasReadable } from './hd-overlay';
 import { HdSceneTracker } from './hd-scene';
 import './hd-overlay.css';
 import { CAPTURE_BOOT_INTENT_KEY, captureBlocksSnapshots, readCaptureBootPolicy } from './capture-persistence';
 import { hasReadableFireRedSave, isFireRedBackupSize } from './firered-save';
 import { isUntouchedDemoSave } from './demo-save';
+import { addPreviewSave, downloadPreviewSave, isTaichungSnapshot, PREVIEW_NEW_GAME_KEY } from './preview-save';
 import { readWithProgress } from './download';
 import { copyText, unsupportedBrowserMessage } from './browser-support';
 import { startAnalytics, track } from './analytics';
@@ -55,6 +64,7 @@ const SAVE_STORE = 'FILE_DATA';
 const SAVE_STAMP = 'taichung-quest-save-time';
 const CARTRIDGE_BOOT_PARAM = 'cartridge-boot';
 const cartridgeBootIntent = new URL(window.location.href).searchParams.get(CARTRIDGE_BOOT_PARAM);
+const previewSaveRequested = import.meta.env.VITE_PLAYTEST_PREVIEW_SAVE === '1';
 function captureBootRequired() {
   try { return readCaptureBootPolicy(localStorage).forceCartridge; } catch { return true; }
 }
@@ -63,6 +73,17 @@ let explicitCartridgeRestart = false;
 let savedAt: string | null = null;
 try { savedAt = localStorage.getItem(SAVE_STAMP); } catch { /* Storage can be disabled in private browser sessions. */ }
 let hasSave = savedAt !== null;
+let previewSeeded = false;
+
+function previewSaveWanted() {
+  if (!previewSaveRequested || bootFromCartridge || hasSave) return false;
+  try { return localStorage.getItem(PREVIEW_NEW_GAME_KEY) === null; } catch { return false; }
+}
+
+function skipPreviewSave() {
+  if (!previewSaveRequested) return;
+  try { localStorage.setItem(PREVIEW_NEW_GAME_KEY, '1'); } catch { /* Without storage, preview seeding is disabled. */ }
+}
 
 const icons = {
   play: '<path d="m9 5 11 7-11 7z"/>',
@@ -110,7 +131,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
                   <p id="play-feedback" class="title-text-box" role="status" aria-live="polite" hidden></p>
                 </div>
               </div>
-              <div class="pause-screen" id="pause-screen" hidden><p class="screen-eyebrow" data-i18n="TAKE YOUR TIME">TAKE YOUR TIME</p><h2 data-i18n="A little breather.">A little breather.</h2><button class="start-button" id="resume-button">${icon('play')} <span data-i18n="Keep exploring">Keep exploring</span></button></div>
+              <div class="pause-screen" id="pause-screen" hidden><section class="pause-panel" role="dialog" aria-labelledby="pause-title"><h2 class="pause-title" id="pause-title" data-i18n="Paused">Paused</h2><button class="pause-continue" id="resume-button"><span class="pause-pointer" aria-hidden="true"></span><span data-i18n="Continue">Continue</span></button></section></div>
             </div>
             <div class="screen-caption"><span><i></i> <span id="game-status">READY WHEN YOU ARE</span></span><span>240 × 160 · GBA</span></div>
           </div>
@@ -144,6 +165,7 @@ const landing = createLanding(el('landing'), {
 });
 const canvas = el<HTMLCanvasElement>('game-canvas');
 protectGameDisplay(el('screen'));
+const badgeView = createBadgeView(el('screen'), badgeDesigns);
 // High-resolution buildings and characters drawn over the game's own frame, at
 // the chosen 2× detail. H turns the layer off and on (keyboards only).
 keepCanvasReadable(canvas);
@@ -151,7 +173,8 @@ const hdScene = new HdSceneTracker();
 const hdOverlay = new HdOverlay(canvas, '/hd/world', '/hd/sprites', {
   getScene: () => {
     if (!running || restarting) { hdScene.reset(); return; }
-    return hdScene.observe(navigationState, onboarding?.currentState ?? { status: 'unavailable' });
+    return hdScene.observe(navigationState, onboarding?.currentState ?? { status: 'unavailable' },
+      navigationBridge?.canRenderFieldInteraction);
   },
 });
 canvas.after(hdOverlay.element);
@@ -159,6 +182,7 @@ if (hdOverlay.detail !== DETAILS[0]) hdOverlay.detail = DETAILS[0];
 if (location.hostname === '127.0.0.1' || location.hostname === 'localhost') (window as unknown as { __hd?: HdOverlay }).__hd = hdOverlay;
 window.addEventListener('keydown', (event) => {
   if (event.key !== 'h' && event.key !== 'H' || event.repeat || event.ctrlKey || event.metaKey || event.altKey) return;
+  if (KEY_BINDINGS[event.code] === 'A') return;
   const target = event.target as HTMLElement | null;
   if (target && (target.isContentEditable || ['INPUT', 'TEXTAREA', 'SELECT'].includes(target.tagName))) return;
   hdOverlay.enabled = !hdOverlay.enabled;
@@ -171,6 +195,8 @@ let emulator: mGBAEmulator | undefined;
 let languageBridge: NativeLanguageBridge | undefined;
 let languageState: LanguageBridgeState | undefined;
 let navigationBridge: NativeNavigationBridge | undefined;
+let badgeBridge: NativeBadgeBridge | undefined;
+let badgeMetadata: BadgeMetadata | undefined;
 let navigationState: NavigationState = { phase: 'unavailable' };
 let onboarding: ReturnType<typeof createOnboarding> | undefined;
 let encounterBridge: NativeEncounterBridge | undefined;
@@ -243,8 +269,12 @@ async function connectNativeLanguage(romSha256: string, romBytes: number) {
   }
 }
 
+function gameInputAvailable() {
+  return running && !restarting && !confirmationOpen && !cityGuide.isOpen && gameView.immersive && !gameView.optionsOpen && !uprightScreen.open && !onboarding?.blocksInput && !document.hidden;
+}
+
 function canPlayGame() {
-  return running && !paused && !restarting && !confirmationOpen && !cityGuide.isOpen && gameView.immersive && !gameView.optionsOpen && !uprightScreen.open && !onboarding?.blocksInput && !document.hidden;
+  return !paused && gameInputAvailable();
 }
 
 function renderNavigation() {
@@ -283,7 +313,15 @@ function renderNavigation() {
   help.textContent = t(hint);
 }
 
-function refreshNavigation() { navigationBridge?.refresh(); renderNavigation(); }
+function refreshNavigation() { navigationBridge?.refresh(); renderNavigation(); badgeBridge?.refresh(); }
+
+function connectNativeBadges() {
+  badgeBridge?.stop(); badgeBridge = undefined; badgeView.update({});
+  if (!badgeMetadata) return;
+  badgeBridge = new NativeBadgeBridge({ metadata: badgeMetadata, getAnchor: () => navigationBridge?.ewramAnchor,
+    isActive: canPlayGame, onState: state => badgeView.update(state) });
+  badgeBridge.start();
+}
 
 async function connectNativeNavigation(romSha256: string, romBytes: number) {
   navigationBridge?.stop();
@@ -367,9 +405,7 @@ function flushFilesystem() {
 
 function discardOwnedSnapshot(path: string | undefined) {
   if (!emulator || !path) return;
-  const directory = `${emulator.filePaths().autosave}/`;
-  const filename = path.startsWith(directory) ? path.slice(directory.length) : '';
-  if (/^taichung-firered(?:-[a-f0-9]{16})?_auto\.ss$/.test(filename) && emulator.FS.analyzePath(path).exists) emulator.FS.unlink(path);
+  if (isTaichungSnapshot(path, emulator.filePaths().autosave) && emulator.FS.analyzePath(path).exists) emulator.FS.unlink(path);
 }
 
 function ownedSnapshotPath() {
@@ -392,10 +428,12 @@ function connectNativeEncounters() {
   cityGuide.updateEncounter({ status: 'discovering' });
   if (!encounterMetadata || !activeRomSha256 || !emulator) return;
   let controller: CaptureStorageController | undefined;
+  const saveSpeed = new EncounterSaveSpeed(emulator);
   let nextReconcile = 0;
   let reportedFailure = false;
   const bridge = new NativeEncounterBridge({
     metadata: encounterMetadata,
+    onSaveState: snapshot => saveSpeed.update(snapshot),
     getHeap: () => (emulator as LanguageRuntime | undefined)?.getTaichungHeapU8?.(),
     isActive: () => running && !paused && !restarting,
     onState: ({ status: connection, snapshot }) => {
@@ -494,6 +532,27 @@ async function persist(showFeedback = false) {
   }
 }
 
+async function installPreviewSave(runtime: mGBAEmulator, metadata: unknown, romSha256: string, romBytes: number) {
+  if (!previewSaveWanted() || runtime.FS.analyzePath(SAVE_PATH).exists) return;
+  const paths = runtime.filePaths();
+  if (runtime.FS.readdir(paths.autosave).some((name) => isTaichungSnapshot(`${paths.autosave}/${name}`, paths.autosave))) return;
+  try {
+    const seed = await downloadPreviewSave(metadata, romSha256, romBytes);
+    if (!seed || !previewSaveWanted()) return;
+    const added = await addPreviewSave(seed, {
+      database: SAVE_DATABASE, save: SAVE_PATH, saveDirectory: paths.savePath, snapshots: paths.autosave,
+    }, previewSaveWanted);
+    // Refresh the mounts before any cartridge or local writes. This also
+    // picks up progress that another tab persisted during the download.
+    await new Promise<void>((resolve, reject) => runtime.FS.syncfs(true, (error) => error ? reject(error) : resolve()));
+    for (const directory of Object.values(paths)) if (!runtime.FS.analyzePath(directory).exists) runtime.FS.mkdir(directory);
+    previewSeeded = added && runtime.FS.analyzePath(SAVE_PATH).exists;
+    if (previewSeeded) hasSave = true;
+  } catch (error) {
+    console.info('Preview save unavailable. Starting normally:', error);
+  }
+}
+
 async function startGame() {
   if (starting || running) return;
   starting = true;
@@ -522,6 +581,8 @@ async function startGame() {
     const buildId = romSha256.slice(0, 16);
     const onboardingMetadata = parseOnboardingMetadata(metadata, romSha256, rom.length);
     encounterMetadata = parseEncounterMetadata(metadata, romSha256, rom.length);
+    badgeMetadata = parseBadgeMetadata(metadata, romSha256, rom.length);
+    badgeView.setPaired(pairedBadgePresentation(metadata, romSha256, rom.length));
     activeRomSha256 = romSha256;
     // The game's first settings screen shows this language (the website choice, else the
     // browser's), and the player can change it there. No web picker comes first.
@@ -531,6 +592,7 @@ async function startGame() {
       emulator = await createEmulator({ canvas });
       if (location.hostname === "127.0.0.1" || location.hostname === "localhost") (window as unknown as { __taichungEmulator?: mGBAEmulator }).__taichungEmulator = emulator;
       await emulator.FSInit();
+      await installPreviewSave(emulator, metadata, romSha256, rom.length);
       emulator.setCoreSettings({
         // The wrapper owns one guarded snapshot timer. Avoid the native loop's
         // duplicate timer and its unguardable thread-interrupt capture path.
@@ -541,9 +603,11 @@ async function startGame() {
         allowOpposingDirections: false,
       });
       emulator.addCoreCallbacks({
+        videoFrameEndedCallback: () => encounterBridge?.onFrame(),
         coreCrashedCallback: () => {
           if (restarting) return;
           navigationBridge?.stop();
+          badgeBridge?.stop();
           onboarding?.stop();
           encounterBridge?.stop();
           minimap.updateEncounter({ status: 'unavailable' });
@@ -610,7 +674,7 @@ async function startGame() {
     hdOverlay.start();
     document.querySelectorAll<HTMLButtonElement>('#pause-button, #sound-button, #game-sound-button, #save-button, #restart-button, #export-button, #import-button').forEach((button) => button.disabled = false);
     setStatus('OUT EXPLORING');
-    message(freshCartridgeBoot && cartridgeBootIntent ? cartridgeBootIntent === 'import' ? 'Save imported. Choose Continue from the game’s title screen.' : 'Cartridge restarted. Continue your in-game save or begin a new adventure.' : !freshCartridgeBoot && emulator.getAutoSaveState() ? 'Welcome back. Your last saved spot is waiting for you.' : 'Wake up in the guest house near Old Station. Use City Map to discover Taichung’s landmarks.');
+    message(freshCartridgeBoot && cartridgeBootIntent ? cartridgeBootIntent === 'import' ? 'Save imported. Choose Continue from the game’s title screen.' : 'Cartridge restarted. Continue your in-game save or begin a new adventure.' : !freshCartridgeBoot && emulator.getAutoSaveState() ? 'Welcome back. Your last saved spot is waiting for you.' : previewSeeded ? 'Choose Continue to open the playtest save.' : 'Wake up in the guest house near Old Station. Use City Map to discover Taichung’s landmarks.');
     canvas.focus({ preventScroll: true });
     // The Play button may have scrolled the intro into view. Collapsing that
     // intro must not leave a phone looking below its newly positioned game.
@@ -625,6 +689,7 @@ async function startGame() {
     uprightScreen.hold();
     void connectNativeLanguage(romSha256, rom.length);
     void connectNativeNavigation(romSha256, rom.length);
+    connectNativeBadges();
   } catch (error) {
     showDownload();
     const reason = error instanceof Error ? error.message : 'Something went wrong while loading the game.';
@@ -636,6 +701,11 @@ async function startGame() {
     playButton.disabled = false;
     refreshRuntimeLabels();
   }
+}
+
+function focusPauseAction() {
+  if (paused && !document.hidden && gameView.immersive && !document.querySelector('dialog[open]'))
+    el<HTMLButtonElement>('resume-button').focus({ preventScroll: true });
 }
 
 function setPaused(value: boolean) {
@@ -658,6 +728,7 @@ function setPaused(value: boolean) {
   gameInput?.refresh();
   refreshNavigation();
   onboarding?.refresh();
+  if (paused) focusPauseAction();
 }
 
 const cityGuide = createCityGuide({
@@ -723,6 +794,7 @@ async function startNewGame() {
   if (starting || restarting) return;
   if (running) { void restartCartridge(); return; }
   if (savedAt && !bootFromCartridge && !(await confirmAction('Start a new game?', 'The cartridge restarts at its title screen, where you can choose New Game. Your in-game save is kept until you save over it; progress since that save will be lost.', 'Restart'))) return;
+  skipPreviewSave();
   bootFromCartridge = true;
   explicitCartridgeRestart = true;
   savedAt = null;
@@ -736,6 +808,9 @@ copyLinkButton.addEventListener('click', async () => {
   copyLinkButton.textContent = t(copyLinkButton.dataset.i18n);
 });
 el('resume-button').addEventListener('click', openGame);
+// A modal's own close handler restores its trigger first. If the game remains
+// paused, place keyboard focus on the visible Continue action afterwards.
+for (const id of ['game-options', 'city-guide']) el(id).addEventListener('close', () => queueMicrotask(focusPauseAction));
 el('exit-fullscreen-button').addEventListener('click', () => { onboarding?.beforeLeave(); gameView.leave(); });
 el('game-options-button').addEventListener('click', () => gameView.openOptions(el('game-options-button')));
 el('pause-button').addEventListener('click', () => {
@@ -810,6 +885,7 @@ async function restartCartridge(importedSave?: Uint8Array) {
       ]);
     } finally { if (timeout) clearTimeout(timeout); }
     console.info('Cartridge reboot: save files flushed.');
+    skipPreviewSave();
     // The user confirmed this restart/import. The snapshot deletion and latest
     // SRAM are durable, so it is safe to clear the old encounter boot safeguard.
     try { localStorage.removeItem(CAPTURE_BOOT_INTENT_KEY); } catch { /* Conservative cartridge-only fallback remains. */ }
@@ -828,6 +904,7 @@ async function restartCartridge(importedSave?: Uint8Array) {
     }
     restarting = false;
     connectNativeEncounters();
+    connectNativeBadges();
     refreshLanguageConnection();
     document.querySelectorAll<HTMLButtonElement>('#pause-button, #resume-button, #sound-button, #game-sound-button, #save-button, #restart-button, #import-button, #touch-city-map-button').forEach((button) => button.disabled = false);
     paused = wasPaused;
@@ -884,13 +961,21 @@ gameInput = createGameControls({
   root: document.querySelector<HTMLElement>('.physical-controls')!,
   canvas,
   canPlay: canPlayGame,
+  pauseResume: {
+    available: () => paused && !starting && gameInputAvailable() && !el('pause-screen').hidden,
+    resume: () => setPaused(false),
+  },
   tutorialInteract: { available: () => !!onboarding?.canAdvanceGuide, advance: () => onboarding?.advanceGuide() },
   focus: focusGame,
   press: (button) => emulator?.buttonPress(button),
   release: (button) => emulator?.buttonUnpress(button),
 });
-document.addEventListener('visibilitychange', () => { if (!restarting && !confirmationOpen && document.hidden && running && !paused) setPaused(true); });
-window.addEventListener('pagehide', () => { languageBridge?.stop(); navigationBridge?.stop(); onboarding?.stop(); encounterBridge?.stop(); releaseInputs(); if (saveInterval) clearInterval(saveInterval); });
+document.addEventListener('visibilitychange', () => {
+  if (restarting || confirmationOpen) return;
+  if (document.hidden && running && !paused) setPaused(true);
+  else if (!document.hidden) focusPauseAction();
+});
+window.addEventListener('pagehide', () => { languageBridge?.stop(); navigationBridge?.stop(); badgeBridge?.stop(); onboarding?.stop(); encounterBridge?.stop(); releaseInputs(); if (saveInterval) clearInterval(saveInterval); });
 
 // Locale refresh updates existing nodes, preserving the live emulator canvas.
 document.querySelectorAll<HTMLElement>('[aria-label]').forEach((element) => {

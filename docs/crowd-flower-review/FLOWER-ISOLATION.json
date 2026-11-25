@@ -1,0 +1,34 @@
+{
+  "passed": true,
+  "sharedLegacyImageRestoredSha256": "734f8e56ed8d1ce394eda8082b0c46c2b585f31b6a23d6977a04d4b6eba5a97c",
+  "privateInitialPixelsIdenticalToReviewedD9cf": true,
+  "privateInitialQuartetFullyOpaque": true,
+  "legacyCallbacksNoCoveredWrites": true,
+  "privateCallbackOnlyOnBoulevard": true,
+  "privateLayouts": 54,
+  "otherLayoutsUnchanged": 406,
+  "legacySecondaryReferencesPreserved": [
+    {
+      "metatile": 156,
+      "entry": 7,
+      "tile": 500
+    },
+    {
+      "metatile": 157,
+      "entry": 4,
+      "tile": 501
+    },
+    {
+      "metatile": 157,
+      "entry": 5,
+      "tile": 502
+    },
+    {
+      "metatile": 158,
+      "entry": 4,
+      "tile": 503
+    }
+  ],
+  "generatedOutputsUnchangedExceptThreePrimaryDescriptorFiles": 337,
+  "terrainCollisionEventsNpcAndFrameDataUnchanged": true
+}

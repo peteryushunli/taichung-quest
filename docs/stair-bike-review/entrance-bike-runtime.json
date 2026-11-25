@@ -1,0 +1,35 @@
+{
+  "passed": true,
+  "input": "old-temple-approach.sav imported unchanged",
+  "mode": "bike",
+  "results": [
+    {
+      "stair": [
+        69,
+        22,
+        9
+      ],
+      "outerRailBlocked": true,
+      "entered": 79,
+      "returned": [
+        69,
+        22,
+        9
+      ]
+    },
+    {
+      "stair": [
+        69,
+        23,
+        9
+      ],
+      "outerRailBlocked": true,
+      "entered": 79,
+      "returned": [
+        69,
+        23,
+        9
+      ]
+    }
+  ]
+}

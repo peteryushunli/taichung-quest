@@ -1,0 +1,32 @@
+{
+  "style": "Source Detail 2\u00d7",
+  "source": "Story Source Detail sheets, approved in the right panel of the 2026-11-24 gameplay comparison",
+  "nativeSourceInputsSha256": {
+    "walking-native.png": "29a451251942c3115c492f1b0c134805ed902c2a759463ede19f34065bb2b761",
+    "running-native.png": "3865e79b23d5a5dd4937ede0f9cc342e44418e5239903d16599c4dd5cb8f1643",
+    "cycling-native.png": "0d265fdd7c329cd667fa2715e955c7575683db1afbf900da846d6e72dc882d6d"
+  },
+  "artworkSourceInputsSha256": {
+    "walking-source-2x.png": "8309b3188c483e1bb2d6166bd4c99661615b211125747cf67f146e8b0bcc84e0",
+    "running-source-2x.png": "54270729b88040a019c01cd65352e978c3527310774c98d2b556ae4222a7e5b6",
+    "cycling-source-2x.png": "853a69ebb731dbc93f3a617c7daf7fefef64c19c0e52617aa2e7338bac5f7068"
+  },
+  "approvedComparisonAtlasSha256": "602947f0aa1a40f77f1eca1256dc15b283cd39857650adadcd3e6052a6571346",
+  "approvedComparisonRgbaSha256": "363533c80c282e12046f4f0aa74fa1a02a4e8d299a94ccac23fdd8833cd83361",
+  "counts": {
+    "walking": 9,
+    "running": 11,
+    "cycling": 9
+  },
+  "east": "Only native west poses are mirrored",
+  "templateCount": 38,
+  "atlasScale": 2,
+  "atlasSize": [
+    800,
+    128
+  ],
+  "opaquePaletteColors": 15,
+  "atlasSha256": "602947f0aa1a40f77f1eca1256dc15b283cd39857650adadcd3e6052a6571346",
+  "packSha256": "10ae3d70a1aedb930e612c4f4db2eb650008c02aa395a6b1c73a91e60e87030c",
+  "nativeControl": "Framebuffer pose/time/position"
+}

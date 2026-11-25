@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { NativeNavigationBridge, NavigationFreshness, parseNavigationMetadata, readNavigationSnapshot } from '../src/navigation-bridge.ts';
+import { isFieldInteractionSnapshot, NativeNavigationBridge, NavigationFreshness, parseNavigationMetadata, readNavigationSnapshot } from '../src/navigation-bridge.ts';
 
 const sha256 = 'a'.repeat(64);
 const fingerprint = 'b'.repeat(64);
@@ -68,7 +68,13 @@ test('v2 reads saved progress with the original packet size', () => {
   assert.deepEqual(readNavigationSnapshot(heap, 64, v2), { ...packet(), gymMask: 0x101, captureMask: 0x8 });
   words[11] = 0x10008;
   assert.equal(readNavigationSnapshot(heap, 64, v2).captureMask, 0x10008);
-  words[11] = 1 << 21;
+  words[11] = 1 << 23;
+  assert.equal(readNavigationSnapshot(heap, 64, v2).captureMask, 1 << 23);
+  for (const site of [24, 25, 26]) {
+    words[11] = 1 << site;
+    assert.equal(readNavigationSnapshot(heap, 64, v2).captureMask, 1 << site);
+  }
+  words[11] = 1 << 27;
   assert.equal(readNavigationSnapshot(heap, 64, v2), undefined);
 });
 
@@ -169,4 +175,57 @@ test('browser pause clears immediately; replaced shared heap must prove freshnes
   Atomics.store(words, 10, 0x8000); // Unknown busy context is always hidden.
   f.bridge.refresh();
   assert.equal(f.bridge.currentState.phase, 'hidden');
+});
+
+test('only advancing, script-locked field packets keep the renderer hint while navigation stays hidden', async (t) => {
+  const sample = { ...packet(), flags: 3, x: -1, y: -1, mapGroup: 255, mapNumber: 255 };
+  for (const contextFlags of [16, 32, 48]) assert.equal(isFieldInteractionSnapshot({ ...sample, contextFlags }), true);
+  for (const bit of [1, 2, 4, 8, 64, 128, 256, 512, 1024, 2048]) {
+    assert.equal(isFieldInteractionSnapshot({ ...sample, contextFlags: 48 | bit }), false);
+  }
+  assert.equal(isFieldInteractionSnapshot({ ...sample, flags: 2, contextFlags: 48 }), false);
+
+  const f = fixture(t);
+  void f.bridge.start();
+  await until(() => f.bridge.currentState.phase === 'live');
+  const words = new Uint32Array(f.heap.buffer, 64, 12);
+  words[6] = 3;
+  words[10] = 48;
+  f.bridge.refresh();
+  assert.deepEqual(f.bridge.currentState, { phase: 'hidden' });
+  assert.equal(f.bridge.canRenderFieldInteraction, true);
+  words[10] = 56;
+  f.bridge.refresh();
+  assert.equal(f.bridge.canRenderFieldInteraction, false, 'a transition clears the renderer hint even while HUD stays hidden');
+
+  words[10] = 16;
+  f.bridge.refresh();
+  assert.equal(f.bridge.canRenderFieldInteraction, true);
+  f.setActive(false);
+  assert.equal(f.bridge.canRenderFieldInteraction, false);
+  f.setActive(true);
+  assert.equal(f.bridge.canRenderFieldInteraction, false, 'resuming requires a newly advancing packet');
+  await until(() => f.bridge.canRenderFieldInteraction);
+  f.stopTicks();
+  await until(() => !f.bridge.canRenderFieldInteraction);
+});
+
+test('EWRAM anchor stays read-only and fresh in hidden native menus, and fails closed on pause/reset/stall', async (t) => {
+  const f = fixture(t);
+  assert.equal(f.bridge.ewramAnchor, undefined);
+  void f.bridge.start(); await until(() => f.bridge.currentState.phase === 'live');
+  assert.equal(f.bridge.ewramAnchor.offset, 64);
+  const words = new Uint32Array(f.heap.buffer, 64, 12);
+  words[6] = 0; words[7] = 0xffffffff; words[10] = 0x800;
+  await until(() => f.bridge.currentState.phase === 'hidden');
+  const before = f.heap.slice();
+  assert.equal(f.bridge.ewramAnchor.address, metadata.address);
+  assert.deepEqual(f.heap, before);
+  assert.equal(f.bridge.currentState.snapshot, undefined);
+  f.setActive(false); assert.equal(f.bridge.ewramAnchor, undefined);
+  f.setActive(true); assert.equal(f.bridge.ewramAnchor, undefined);
+  await until(() => !!f.bridge.ewramAnchor);
+  f.stopTicks(); await until(() => !f.bridge.ewramAnchor);
+  f.replaceHeap(); assert.equal(f.bridge.ewramAnchor, undefined);
+  f.bridge.stop(); assert.equal(f.bridge.ewramAnchor, undefined);
 });

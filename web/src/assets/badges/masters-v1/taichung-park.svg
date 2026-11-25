@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 256 256" role="img"><title>Pavilion Badge</title><g stroke="#283848" stroke-width="8" stroke-linejoin="round" stroke-linecap="round">
+<path d="M72 125H94V189H72ZM164 125H186V189H164Z" fill="#c88838"/>
+<path d="M22 104Q64 103 100 62L120 29H136L156 62Q192 103 234 104V128H22Z" fill="#a84850"/>
+<path d="M41 102Q84 93 118 54H138Q172 93 215 102" fill="none" stroke="#e87858" stroke-width="10"/>
+<path d="M33 122H223" fill="none" stroke="#a84850" stroke-width="10"/>
+<path d="M57 181H199V196H57Z" fill="#283848"/>
+<path d="M31 216H93L113 229H181L211 215" fill="none" stroke="#68a8d8" stroke-width="10"/>
+<path d="M68 246H190" fill="none" stroke="#40a8a0" stroke-width="9"/>
+</g></svg>

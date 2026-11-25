@@ -1,0 +1,312 @@
+{
+  "status": "PASS",
+  "classification": "Exact observed native72-byte packets and full ordinary native SRAM transactions independently validated with the shipped653e1d0 reader; no synthetic raw packets or emulator writes.",
+  "romSha256": "8516a68407cf50d2f0b7039a977998d2793c162a6115dc393d501d3b972ada8f",
+  "frontendCommit": "653e1d0ca818a8efbcc2fd0efe76c00a11780472",
+  "metadata": {
+    "version": 2,
+    "size": 72,
+    "address": 33813684,
+    "magicA": 1313162068,
+    "magicB": 827479107
+  },
+  "readOnly": true,
+  "results": [
+    {
+      "site": 21,
+      "species": 82,
+      "level": 65,
+      "rawPackets": 1,
+      "observedPhases": [
+        5
+      ],
+      "decoded": [
+        {
+          "publication": 325784,
+          "frame": 162892,
+          "request": 2,
+          "acknowledgement": 2,
+          "attempts": 2097152,
+          "unlocks": 0,
+          "species": 82,
+          "site": 21,
+          "phase": 5,
+          "balls": 3,
+          "result": 3,
+          "saveStatus": 1,
+          "ackStatus": 1,
+          "saveCounter": 5,
+          "trainerId": 2897464883
+        }
+      ],
+      "saves": [
+        {
+          "stage": "durableBegin",
+          "sha256": "c94b66beec81db324e57fd8e93ec1c3d529ccb759e63170f5d3ecfe655466ac6",
+          "verified": {
+            "saveCounter": 4,
+            "trainerId": 2897464883,
+            "attempts": 2097152,
+            "unlocks": 0,
+            "slot": 0
+          }
+        },
+        {
+          "stage": "after",
+          "sha256": "44cc5a292abb5721962dd45d017a0e10648cb2d604ba83ee6efd594d6ce126f2",
+          "verified": {
+            "saveCounter": 5,
+            "trainerId": 2897464883,
+            "attempts": 2097152,
+            "unlocks": 0,
+            "slot": 1
+          }
+        }
+      ]
+    },
+    {
+      "site": 22,
+      "species": 141,
+      "level": 65,
+      "rawPackets": 5,
+      "observedPhases": [
+        3,
+        4,
+        5
+      ],
+      "decoded": [
+        {
+          "publication": 220422,
+          "frame": 110211,
+          "request": 1,
+          "acknowledgement": 1,
+          "attempts": 4194304,
+          "unlocks": 0,
+          "species": 141,
+          "site": 22,
+          "phase": 3,
+          "balls": 3,
+          "result": 0,
+          "saveStatus": 1,
+          "ackStatus": 1,
+          "saveCounter": 4,
+          "trainerId": 2897464883
+        },
+        {
+          "publication": 221540,
+          "frame": 110770,
+          "request": 2,
+          "acknowledgement": 1,
+          "attempts": 4194304,
+          "unlocks": 0,
+          "species": 141,
+          "site": 22,
+          "phase": 4,
+          "balls": 3,
+          "result": 3,
+          "saveStatus": 0,
+          "ackStatus": 1,
+          "saveCounter": 4,
+          "trainerId": 2897464883
+        },
+        {
+          "publication": 221554,
+          "frame": 110777,
+          "request": 2,
+          "acknowledgement": 0,
+          "attempts": 4194304,
+          "unlocks": 0,
+          "species": 141,
+          "site": 22,
+          "phase": 4,
+          "balls": 3,
+          "result": 3,
+          "saveStatus": 1,
+          "ackStatus": 0,
+          "saveCounter": 5,
+          "trainerId": 2897464883
+        },
+        {
+          "publication": 221586,
+          "frame": 110793,
+          "request": 2,
+          "acknowledgement": 2,
+          "attempts": 4194304,
+          "unlocks": 0,
+          "species": 141,
+          "site": 22,
+          "phase": 4,
+          "balls": 3,
+          "result": 3,
+          "saveStatus": 1,
+          "ackStatus": 1,
+          "saveCounter": 5,
+          "trainerId": 2897464883
+        },
+        {
+          "publication": 221590,
+          "frame": 110795,
+          "request": 2,
+          "acknowledgement": 2,
+          "attempts": 4194304,
+          "unlocks": 0,
+          "species": 141,
+          "site": 22,
+          "phase": 5,
+          "balls": 3,
+          "result": 3,
+          "saveStatus": 1,
+          "ackStatus": 1,
+          "saveCounter": 5,
+          "trainerId": 2897464883
+        }
+      ],
+      "saves": [
+        {
+          "stage": "durableBegin",
+          "sha256": "333b07d9298a9df6e1aca245f217bfe1518265167391609aa1c0bf8d73c0df4e",
+          "verified": {
+            "saveCounter": 4,
+            "trainerId": 2897464883,
+            "attempts": 4194304,
+            "unlocks": 0,
+            "slot": 0
+          }
+        },
+        {
+          "stage": "after",
+          "sha256": "2bb0bbbb8e09e16b61387f38289e91c127032c323fe00df1d486cde6db4b639e",
+          "verified": {
+            "saveCounter": 5,
+            "trainerId": 2897464883,
+            "attempts": 4194304,
+            "unlocks": 0,
+            "slot": 1
+          }
+        }
+      ]
+    },
+    {
+      "site": 23,
+      "species": 53,
+      "level": 65,
+      "rawPackets": 5,
+      "observedPhases": [
+        3,
+        4,
+        5
+      ],
+      "decoded": [
+        {
+          "publication": 199140,
+          "frame": 99570,
+          "request": 1,
+          "acknowledgement": 1,
+          "attempts": 8388608,
+          "unlocks": 0,
+          "species": 53,
+          "site": 23,
+          "phase": 3,
+          "balls": 3,
+          "result": 0,
+          "saveStatus": 1,
+          "ackStatus": 1,
+          "saveCounter": 4,
+          "trainerId": 2897464883
+        },
+        {
+          "publication": 200252,
+          "frame": 100126,
+          "request": 2,
+          "acknowledgement": 1,
+          "attempts": 8388608,
+          "unlocks": 0,
+          "species": 53,
+          "site": 23,
+          "phase": 4,
+          "balls": 3,
+          "result": 3,
+          "saveStatus": 0,
+          "ackStatus": 1,
+          "saveCounter": 4,
+          "trainerId": 2897464883
+        },
+        {
+          "publication": 200266,
+          "frame": 100133,
+          "request": 2,
+          "acknowledgement": 0,
+          "attempts": 8388608,
+          "unlocks": 0,
+          "species": 53,
+          "site": 23,
+          "phase": 4,
+          "balls": 3,
+          "result": 3,
+          "saveStatus": 1,
+          "ackStatus": 0,
+          "saveCounter": 5,
+          "trainerId": 2897464883
+        },
+        {
+          "publication": 200298,
+          "frame": 100149,
+          "request": 2,
+          "acknowledgement": 2,
+          "attempts": 8388608,
+          "unlocks": 0,
+          "species": 53,
+          "site": 23,
+          "phase": 4,
+          "balls": 3,
+          "result": 3,
+          "saveStatus": 1,
+          "ackStatus": 1,
+          "saveCounter": 5,
+          "trainerId": 2897464883
+        },
+        {
+          "publication": 200300,
+          "frame": 100150,
+          "request": 2,
+          "acknowledgement": 2,
+          "attempts": 8388608,
+          "unlocks": 0,
+          "species": 53,
+          "site": 23,
+          "phase": 5,
+          "balls": 3,
+          "result": 3,
+          "saveStatus": 1,
+          "ackStatus": 1,
+          "saveCounter": 5,
+          "trainerId": 2897464883
+        }
+      ],
+      "saves": [
+        {
+          "stage": "durableBegin",
+          "sha256": "8f92de01f10d1ef48218b4542a7e0f8d98ed859c75fb029c654b3007029e68c3",
+          "verified": {
+            "saveCounter": 4,
+            "trainerId": 2897464883,
+            "attempts": 8388608,
+            "unlocks": 0,
+            "slot": 0
+          }
+        },
+        {
+          "stage": "after",
+          "sha256": "6512b90aa058eb9e9156e982e0221a9f5ccf76fdf09833d0b348235b613f2887",
+          "verified": {
+            "saveCounter": 5,
+            "trainerId": 2897464883,
+            "attempts": 8388608,
+            "unlocks": 0,
+            "slot": 1
+          }
+        }
+      ]
+    }
+  ]
+}

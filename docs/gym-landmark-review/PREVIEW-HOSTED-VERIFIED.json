@@ -1,0 +1,2389 @@
+{
+  "status": "PASS",
+  "origin": "https://taichung-quest-1k4l443j3-peteryushunli-6635s-projects.vercel.app",
+  "frontendCommit": "653e1d0ca818a8efbcc2fd0efe76c00a11780472",
+  "rom": "8516a68407cf50d2f0b7039a977998d2793c162a6115dc393d501d3b972ada8f",
+  "files": [
+    {
+      "file": "_headers",
+      "bytes": 124,
+      "servedSha256": "6e292754c5e0fa6e7f5091aed828329bf411730f8a471995a2733ad49843e14f",
+      "sourceSha256": "6e292754c5e0fa6e7f5091aed828329bf411730f8a471995a2733ad49843e14f",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "application/octet-stream",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "assets/baseball-stadium-BdCveAms.png",
+      "bytes": 56875,
+      "servedSha256": "95198023f75977c4937b9670429f03189d545ac7380723a5887a8578c24a3968",
+      "sourceSha256": "95198023f75977c4937b9670429f03189d545ac7380723a5887a8578c24a3968",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "assets/bike-greenway-ChySrAzr.png",
+      "bytes": 49167,
+      "servedSha256": "ae0c53f906643b70ace0b6dc8aa9c9503e70fe1179e9ac21e73ca1eae188ec40",
+      "sourceSha256": "ae0c53f906643b70ace0b6dc8aa9c9503e70fe1179e9ac21e73ca1eae188ec40",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "assets/botanical-garden-Dg0Z_oJe.png",
+      "bytes": 14024,
+      "servedSha256": "564c9709986eb59bff185f25d87126ca78a9dcb5c637a905f72b3dcf7b6e16dd",
+      "sourceSha256": "564c9709986eb59bff185f25d87126ca78a9dcb5c637a905f72b3dcf7b6e16dd",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "assets/caining-CfS0XS-7.webp",
+      "bytes": 37750,
+      "servedSha256": "e739725c3e273c884e498ec47796ea04549f5a7134ec240d169eb02ab83a5e90",
+      "sourceSha256": "e739725c3e273c884e498ec47796ea04549f5a7134ec240d169eb02ab83a5e90",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/webp",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "assets/city-hall-_5_2gJCW.png",
+      "bytes": 5341,
+      "servedSha256": "66684f1be8d48dbd5f405bdb86494af361cdc358e467cb874e8cef16b7bcfc5c",
+      "sourceSha256": "66684f1be8d48dbd5f405bdb86494af361cdc358e467cb874e8cef16b7bcfc5c",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "assets/city-map-D8cc14-h.png",
+      "bytes": 295607,
+      "servedSha256": "b973ea39375d498550632d1974d01b58c060a5e04d79fe587e5813b1133c6616",
+      "sourceSha256": "b973ea39375d498550632d1974d01b58c060a5e04d79fe587e5813b1133c6616",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "assets/city-sc9LGiPu.webp",
+      "bytes": 774004,
+      "servedSha256": "02ed7e033dea4c49b96381871724f17196e4d24a21fa367001026756da81f2ad",
+      "sourceSha256": "02ed7e033dea4c49b96381871724f17196e4d24a21fa367001026756da81f2ad",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/webp",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "assets/confucius-temple-QZSVLj0_.png",
+      "bytes": 6040,
+      "servedSha256": "4fcb87dc41e87d2da0a04081c62779c684ad8a8b600728451cceab67a9940766",
+      "sourceSha256": "4fcb87dc41e87d2da0a04081c62779c684ad8a8b600728451cceab67a9940766",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "assets/cultural-heritage-park-CyvI01Wf.png",
+      "bytes": 14878,
+      "servedSha256": "36159ba440219a953732168da0837079f21148e32d49b2369d3ffcc52e7f349b",
+      "sourceSha256": "36159ba440219a953732168da0837079f21148e32d49b2369d3ffcc52e7f349b",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "assets/ding-sheng-bhw-D4cEysgI.png",
+      "bytes": 18334,
+      "servedSha256": "81cc8333105dab73393d4d096a860306b2ba69179e5b0b3402cdcd2f6dda7edb",
+      "sourceSha256": "81cc8333105dab73393d4d096a860306b2ba69179e5b0b3402cdcd2f6dda7edb",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "assets/fengle-sculpture-park-DH4gjBc4.png",
+      "bytes": 6443,
+      "servedSha256": "3b3af04995f9ff8cbf52ae60d6a959c2d4ca403e275a45c74dc3667499f374bc",
+      "sourceSha256": "3b3af04995f9ff8cbf52ae60d6a959c2d4ca403e275a45c74dc3667499f374bc",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "assets/folklore-park-BsSka86t.png",
+      "bytes": 39683,
+      "servedSha256": "2e7c4d067d56ecece1cbc27225cb6c8c7faf7c809b00ca230b85282ea7886072",
+      "sourceSha256": "2e7c4d067d56ecece1cbc27225cb6c8c7faf7c809b00ca230b85282ea7886072",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "assets/green-museumbrary-inxD-8eF.png",
+      "bytes": 9093,
+      "servedSha256": "28ec6c7ccaef38df9a2c24171bfcea734cd83923befe817b69a7212f00fbc6c6",
+      "sourceSha256": "28ec6c7ccaef38df9a2c24171bfcea734cd83923befe817b69a7212f00fbc6c6",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "assets/hero-poster-CB5Gc8xE.png",
+      "bytes": 60686,
+      "servedSha256": "9abc53abfee6fc351b5f7d0ce5779542cb5d2f8e03f6fb775c428cac5e10b2b0",
+      "sourceSha256": "9abc53abfee6fc351b5f7d0ce5779542cb5d2f8e03f6fb775c428cac5e10b2b0",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "assets/hero-reel-4XNzpcfr.mp4",
+      "bytes": 1606560,
+      "servedSha256": "f4d655a0dbf04b7f6dd41c4fc8ddeaafcdbfc947f187453a914e03e898af70f0",
+      "sourceSha256": "f4d655a0dbf04b7f6dd41c4fc8ddeaafcdbfc947f187453a914e03e898af70f0",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "video/mp4",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "assets/index-CQQhMQ0g.js",
+      "bytes": 350472,
+      "servedSha256": "fcbe4ee3f22ac02cc8e7c6644c58eab0935ab2c702aea4e60ba1ea4a9214bbf7",
+      "sourceSha256": "fcbe4ee3f22ac02cc8e7c6644c58eab0935ab2c702aea4e60ba1ea4a9214bbf7",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "application/javascript; charset=utf-8",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "assets/index-DTKXjmVQ.css",
+      "bytes": 92419,
+      "servedSha256": "d89152daaab5850f56071542170af16f4027ec8b7ec36cf71d62477ed224c763",
+      "sourceSha256": "d89152daaab5850f56071542170af16f4027ec8b7ec36cf71d62477ed224c763",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "text/css; charset=utf-8",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "assets/jiahe-UC1RwA9u.webp",
+      "bytes": 39658,
+      "servedSha256": "f79480e1400033328dd2e984301a6d277b456f478c8ee2093d1fcee57bc0128c",
+      "sourceSha256": "f79480e1400033328dd2e984301a6d277b456f478c8ee2093d1fcee57bc0128c",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/webp",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "assets/jingming-street-DOYHMDeD.png",
+      "bytes": 6354,
+      "servedSha256": "50e64bd8580517f38b5b9aa6984d5866c7542a76d4bac00f7b40ae270bc3e61d",
+      "sourceSha256": "50e64bd8580517f38b5b9aa6984d5866c7542a76d4bac00f7b40ae270bc3e61d",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "assets/jun-BzcfO033.webp",
+      "bytes": 38856,
+      "servedSha256": "9b72fcc0db411921f0ddd22bd738dcf9bb740210da45cf50a10c129501a75695",
+      "sourceSha256": "9b72fcc0db411921f0ddd22bd738dcf9bb740210da45cf50a10c129501a75695",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/webp",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "assets/lian-DNKISBGK.webp",
+      "bytes": 37042,
+      "servedSha256": "ad3087559818a5e1fd4460a9fd95c4376a259cbb0bf573236cac5c31840c1385",
+      "sourceSha256": "ad3087559818a5e1fd4460a9fd95c4376a259cbb0bf573236cac5c31840c1385",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/webp",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "assets/ling-BPu0Acs-.webp",
+      "bytes": 33164,
+      "servedSha256": "c8cde192126a2f9e46a1c2ba250ee69f3a97d1ea545c785aa7335601de9f7c85",
+      "sourceSha256": "c8cde192126a2f9e46a1c2ba250ee69f3a97d1ea545c785aa7335601de9f7c85",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/webp",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "assets/maple-garden-W3s3sFGE.png",
+      "bytes": 5838,
+      "servedSha256": "c959f50fb19c1a36e09c3317e277039ee0fadf69095d3bb1027fc7e5bafb47de",
+      "sourceSha256": "c959f50fb19c1a36e09c3317e277039ee0fadf69095d3bb1027fc7e5bafb47de",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "assets/miyahara-CDxbmG2K.png",
+      "bytes": 5569,
+      "servedSha256": "7d959007c3c1deff84cc144ba8f2e36b1accebd011f43cd87ac38907cbd37550",
+      "sourceSha256": "7d959007c3c1deff84cc144ba8f2e36b1accebd011f43cd87ac38907cbd37550",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "assets/muqing-CHl31jD2.webp",
+      "bytes": 38570,
+      "servedSha256": "1ca0ffda11a8d7f92f963ee172396b7e3ad406cf7847606a2d7c749367c3bb39",
+      "sourceSha256": "1ca0ffda11a8d7f92f963ee172396b7e3ad406cf7847606a2d7c749367c3bb39",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/webp",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "assets/national-trade-center-BugxxxC7.png",
+      "bytes": 13176,
+      "servedSha256": "2a1cadb573a89bb1d689f28f0c0a1b8adb561255897e7a6e6911c3bbc9226569",
+      "sourceSha256": "2a1cadb573a89bb1d689f28f0c0a1b8adb561255897e7a6e6911c3bbc9226569",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "assets/old-station-DDth4EBK.png",
+      "bytes": 4440,
+      "servedSha256": "22f508c0b0bfdb27a34a7d755169cb5a29bb42da8c55876db9f5575f96cdac0f",
+      "sourceSha256": "22f508c0b0bfdb27a34a7d755169cb5a29bb42da8c55876db9f5575f96cdac0f",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "assets/old-taichung-station-IdndiTkx.png",
+      "bytes": 8240,
+      "servedSha256": "66fb12a57caa10829446ab92ff80dcee73bd5b6f6b8bf5fa635154ab0432ed0c",
+      "sourceSha256": "66fb12a57caa10829446ab92ff80dcee73bd5b6f6b8bf5fa635154ab0432ed0c",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "assets/peiqi-CaOiZOFJ.webp",
+      "bytes": 34440,
+      "servedSha256": "024a72a4398aa1ea591760e113601e3d686d2880d0401bb14ca5c1bcb0eca626",
+      "sourceSha256": "024a72a4398aa1ea591760e113601e3d686d2880d0401bb14ca5c1bcb0eca626",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/webp",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "assets/prefectural-hall-CaejAtRr.png",
+      "bytes": 11088,
+      "servedSha256": "1927fb973e5a57e9a4029e0a0806b9f50e223f74e77289b7b564fe9e6e359a58",
+      "sourceSha256": "1927fb973e5a57e9a4029e0a0806b9f50e223f74e77289b7b564fe9e6e359a58",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "assets/radar-D_bz7BaA.png",
+      "bytes": 7702,
+      "servedSha256": "3d6c6e487fdf161a97614ec0d6fe0addf934158e8ed9374da114b4dc529152d3",
+      "sourceSha256": "3d6c6e487fdf161a97614ec0d6fe0addf934158e8ed9374da114b4dc529152d3",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "assets/rainbow-village-DmNwFltu.png",
+      "bytes": 7121,
+      "servedSha256": "183a8f6908280932a58d2025a106e9df3489f52362f2796a6eb9ddd9a3e44562",
+      "sourceSha256": "183a8f6908280932a58d2025a106e9df3489f52362f2796a6eb9ddd9a3e44562",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "assets/second-market-BEZBzsTj.png",
+      "bytes": 6038,
+      "servedSha256": "b9079dc9112b6b5eaada12df08d7e8cda69b7b9ca174df12e5d6e04fab9280bf",
+      "sourceSha256": "b9079dc9112b6b5eaada12df08d7e8cda69b7b9ca174df12e5d6e04fab9280bf",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "assets/taichung-park-Cm8es2qI.png",
+      "bytes": 6220,
+      "servedSha256": "0b3fddc86c309fb3a2b658b8f512c2f6ca604492f833c7647af3c0de19d3f97e",
+      "sourceSha256": "0b3fddc86c309fb3a2b658b8f512c2f6ca604492f833c7647af3c0de19d3f97e",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "assets/taichung-theater-BAOAHsbP.png",
+      "bytes": 4711,
+      "servedSha256": "8240d86e113ff0b369c008f5509b904446888edba03930323ca9c3c088387efd",
+      "sourceSha256": "8240d86e113ff0b369c008f5509b904446888edba03930323ca9c3c088387efd",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "assets/the-lin-D7hRKav2.png",
+      "bytes": 6361,
+      "servedSha256": "73144736660200601f54d9fddc19af79052caf25576fc420bb5dccd2c331fbda",
+      "sourceSha256": "73144736660200601f54d9fddc19af79052caf25576fc420bb5dccd2c331fbda",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "assets/tiger-city-8oj3teIb.png",
+      "bytes": 8681,
+      "servedSha256": "52f4c2e33545b35ce403f65e5ad2d743ef5d69727ce9369c3d454965b3968750",
+      "sourceSha256": "52f4c2e33545b35ce403f65e5ad2d743ef5d69727ce9369c3d454965b3968750",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "assets/wanhe-temple-n4X8Vx7U.png",
+      "bytes": 9469,
+      "servedSha256": "b4af48eacc0a6bae754df53f50de1dc44cc48abe56b90f46556574d79726c98b",
+      "sourceSha256": "b4af48eacc0a6bae754df53f50de1dc44cc48abe56b90f46556574d79726c98b",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "assets/wenchang-temple-DtllW-is.png",
+      "bytes": 5194,
+      "servedSha256": "74f58bf6cae27f0cbbed7ddd8e892415ce4f752550f50bd8ce9d64a32a31cc67",
+      "sourceSha256": "74f58bf6cae27f0cbbed7ddd8e892415ce4f752550f50bd8ce9d64a32a31cc67",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "assets/wenxin-forest-park-DBLlQAvp.png",
+      "bytes": 8274,
+      "servedSha256": "f6173663758925ebc4c8ae261f8cf2079e88d2ed73e336b4d1c251ccbe82f6af",
+      "sourceSha256": "f6173663758925ebc4c8ae261f8cf2079e88d2ed73e336b4d1c251ccbe82f6af",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "assets/wenyi-jd_Op8TU.webp",
+      "bytes": 18378,
+      "servedSha256": "f8207238117b8fc65debe1d0d742ca8046d143d728e96b819a3a73b87b094993",
+      "sourceSha256": "f8207238117b8fc65debe1d0d742ca8046d143d728e96b819a3a73b87b094993",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/webp",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "assets/xingan-BPTS4ZdX.webp",
+      "bytes": 38440,
+      "servedSha256": "484463f99c06d913d54e708148dacb811b945f949e40be475d59f9e3f6335c7f",
+      "sourceSha256": "484463f99c06d913d54e708148dacb811b945f949e40be475d59f9e3f6335c7f",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/webp",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "assets/yicheng-CMwjfuYh.webp",
+      "bytes": 39752,
+      "servedSha256": "dfb3bd462d9fe09c3668cd04ba10d24786dbd55e5de8eb31fa85b891f3f7f897",
+      "sourceSha256": "dfb3bd462d9fe09c3668cd04ba10d24786dbd55e5de8eb31fa85b891f3f7f897",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/webp",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "assets/yizhong-street-BFoUSbpO.png",
+      "bytes": 7391,
+      "servedSha256": "61a459173ef715b73d3e8b492b799b9c6edbf8f86216c4d9d69af90e3792cdce",
+      "sourceSha256": "61a459173ef715b73d3e8b492b799b9c6edbf8f86216c4d9d69af90e3792cdce",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "emulator-loader.js",
+      "bytes": 310,
+      "servedSha256": "ef615a65057b673edbd3aea77c5e77598e051e6f654f0ac8b25e972e811d57f5",
+      "sourceSha256": "ef615a65057b673edbd3aea77c5e77598e051e6f654f0ac8b25e972e811d57f5",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "application/javascript; charset=utf-8",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "emulator/LICENSE.txt",
+      "bytes": 16726,
+      "servedSha256": "fab3dd6bdab226f1c08630b1dd917e11fcb4ec5e1e020e2c16f83a0a13863e85",
+      "sourceSha256": "fab3dd6bdab226f1c08630b1dd917e11fcb4ec5e1e020e2c16f83a0a13863e85",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "text/plain; charset=utf-8",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "emulator/mgba.js",
+      "bytes": 248890,
+      "servedSha256": "8078cdde97c16d19d1b8b7037da1f663128318b1137cbd42cf973376f287443c",
+      "sourceSha256": "8078cdde97c16d19d1b8b7037da1f663128318b1137cbd42cf973376f287443c",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "application/javascript; charset=utf-8",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "emulator/mgba.wasm",
+      "bytes": 1852041,
+      "servedSha256": "89b7e3e053189575e0ed799a769fdb7a61316dd992c53673c246c0de574e23b4",
+      "sourceSha256": "89b7e3e053189575e0ed799a769fdb7a61316dd992c53673c246c0de574e23b4",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "application/wasm",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "emulator/prepare-emulator.mjs",
+      "bytes": 2668,
+      "servedSha256": "fe35ba021a72bba18ae5436e666de1399114e136483f147f914fce2842604c49",
+      "sourceSha256": "fe35ba021a72bba18ae5436e666de1399114e136483f147f914fce2842604c49",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "application/javascript; charset=utf-8",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "emulator/SOURCE.txt",
+      "bytes": 864,
+      "servedSha256": "a7577c23f8b4ddf249d4d27deb9d7ff863f825e4bc0f98034dfb082ad575ccf8",
+      "sourceSha256": "a7577c23f8b4ddf249d4d27deb9d7ff863f825e4bc0f98034dfb082ad575ccf8",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "text/plain; charset=utf-8",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "favicon.svg",
+      "bytes": 289,
+      "servedSha256": "0e0d31693e991074abebd2ccfaaebdc17499aafe9f5c8ab29edc99e3d11ddec2",
+      "sourceSha256": "0e0d31693e991074abebd2ccfaaebdc17499aafe9f5c8ab29edc99e3d11ddec2",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/svg+xml",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/sprites/atlas.png",
+      "bytes": 2276293,
+      "servedSha256": "a57c5165a0ffa2d637bffded3cb127b658b23fe2f6ae7e05516b5978ae6acd7a",
+      "sourceSha256": "a57c5165a0ffa2d637bffded3cb127b658b23fe2f6ae7e05516b5978ae6acd7a",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/sprites/sprites.json",
+      "bytes": 423105,
+      "servedSha256": "701dcd6331287e62f72d3271d0705f7591f3b0dc55e4bda04e21e1b96cd009df",
+      "sourceSha256": "701dcd6331287e62f72d3271d0705f7591f3b0dc55e4bda04e21e1b96cd009df",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "application/json; charset=utf-8",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/maps/43.0.png",
+      "bytes": 172003,
+      "servedSha256": "509b79dea2669a828b898295e7088875fe825921d8382ec9b4857cb1c686fec7",
+      "sourceSha256": "509b79dea2669a828b898295e7088875fe825921d8382ec9b4857cb1c686fec7",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/maps/43.1.png",
+      "bytes": 232720,
+      "servedSha256": "628debad621c9549cba7f2ca1a3d2fbacfc1a2df16c1a8ae54d057f7163fa790",
+      "sourceSha256": "628debad621c9549cba7f2ca1a3d2fbacfc1a2df16c1a8ae54d057f7163fa790",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/maps/43.10.png",
+      "bytes": 10285,
+      "servedSha256": "5b713de415088db1b6afc428673541f6dc8a83cc41e7784602cc47a0ca7a9c2c",
+      "sourceSha256": "5b713de415088db1b6afc428673541f6dc8a83cc41e7784602cc47a0ca7a9c2c",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/maps/43.11.png",
+      "bytes": 3733,
+      "servedSha256": "eb87fc442df966ad9de448a7b16e8b20b43febc9c3308a6dd7f75d186646fbb5",
+      "sourceSha256": "eb87fc442df966ad9de448a7b16e8b20b43febc9c3308a6dd7f75d186646fbb5",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/maps/43.12.png",
+      "bytes": 4298,
+      "servedSha256": "a43caed5ba42f3ddc65d11ea1af6a20a5576e656d19e1ed418bc03a0190127ef",
+      "sourceSha256": "a43caed5ba42f3ddc65d11ea1af6a20a5576e656d19e1ed418bc03a0190127ef",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/maps/43.13.png",
+      "bytes": 2535,
+      "servedSha256": "7ea6765aceeffd4b351d0213ef467a64327c1fc63517afb141140e3ba3a70cb6",
+      "sourceSha256": "7ea6765aceeffd4b351d0213ef467a64327c1fc63517afb141140e3ba3a70cb6",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/maps/43.14.png",
+      "bytes": 99937,
+      "servedSha256": "2ab49c4e9f2ebcc0b357d9e30dce2416a4d674ba150a18f4f691922304515580",
+      "sourceSha256": "2ab49c4e9f2ebcc0b357d9e30dce2416a4d674ba150a18f4f691922304515580",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/maps/43.15.png",
+      "bytes": 181296,
+      "servedSha256": "7c3501f137380dd986928437909dadb50a0b66d33087a706b1786bca734f2c72",
+      "sourceSha256": "7c3501f137380dd986928437909dadb50a0b66d33087a706b1786bca734f2c72",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/maps/43.16.png",
+      "bytes": 3559,
+      "servedSha256": "aa13507a833084644201ffcbdf5a8ffa30e145b0361da0096e78b416a909f9fb",
+      "sourceSha256": "aa13507a833084644201ffcbdf5a8ffa30e145b0361da0096e78b416a909f9fb",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/maps/43.17.png",
+      "bytes": 3733,
+      "servedSha256": "eb87fc442df966ad9de448a7b16e8b20b43febc9c3308a6dd7f75d186646fbb5",
+      "sourceSha256": "eb87fc442df966ad9de448a7b16e8b20b43febc9c3308a6dd7f75d186646fbb5",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/maps/43.18.png",
+      "bytes": 104843,
+      "servedSha256": "7ff7cebba245bf34cd584ff8454acbfdadcf12bcf47323d47e19dd49201704e0",
+      "sourceSha256": "7ff7cebba245bf34cd584ff8454acbfdadcf12bcf47323d47e19dd49201704e0",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/maps/43.19.png",
+      "bytes": 5066,
+      "servedSha256": "d9041dcf02a19ebaf6ba38402d05b0ea61f09e81b0b5cafe601c774b9ff05c72",
+      "sourceSha256": "d9041dcf02a19ebaf6ba38402d05b0ea61f09e81b0b5cafe601c774b9ff05c72",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/maps/43.2.png",
+      "bytes": 160603,
+      "servedSha256": "b7a79d2a436943325af83fdbe730fadbd1607d48b0d21ffcaef77229f44346a7",
+      "sourceSha256": "b7a79d2a436943325af83fdbe730fadbd1607d48b0d21ffcaef77229f44346a7",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/maps/43.20.png",
+      "bytes": 4324,
+      "servedSha256": "0ab5dae1b6c44efbca7a79de9589d50fa8058e20697d0fd84e21a793d00b64de",
+      "sourceSha256": "0ab5dae1b6c44efbca7a79de9589d50fa8058e20697d0fd84e21a793d00b64de",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/maps/43.25.png",
+      "bytes": 72174,
+      "servedSha256": "cb419381bd1fd139fdafe9ec7b47c04d32527f96e766cb752d6e91c678dbfcb6",
+      "sourceSha256": "cb419381bd1fd139fdafe9ec7b47c04d32527f96e766cb752d6e91c678dbfcb6",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/maps/43.26.png",
+      "bytes": 128888,
+      "servedSha256": "865b8fcbdc94a263827ae2d1fc3253891b1ce9219a5690931c96df962fb844f3",
+      "sourceSha256": "865b8fcbdc94a263827ae2d1fc3253891b1ce9219a5690931c96df962fb844f3",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/maps/43.27.png",
+      "bytes": 129215,
+      "servedSha256": "cff43ab37975e92a8e1ce953e91c4529f56d19edd3367e7b8b1965f2472a742d",
+      "sourceSha256": "cff43ab37975e92a8e1ce953e91c4529f56d19edd3367e7b8b1965f2472a742d",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/maps/43.28.png",
+      "bytes": 80128,
+      "servedSha256": "aa427be8052ecaf2653d34c1bd3aab6bf9ada9b7f166d1666b270d0440f5697f",
+      "sourceSha256": "aa427be8052ecaf2653d34c1bd3aab6bf9ada9b7f166d1666b270d0440f5697f",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/maps/43.29.png",
+      "bytes": 88797,
+      "servedSha256": "4c0d2ed0209451f5a2eabec67e5cefb09510970b918b332eeee2cbd1b7714f9b",
+      "sourceSha256": "4c0d2ed0209451f5a2eabec67e5cefb09510970b918b332eeee2cbd1b7714f9b",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/maps/43.3.png",
+      "bytes": 6865,
+      "servedSha256": "3825accc3b9ec57f02f2f2a1418cb33e96732dd9d31f3d86daab728569db59d7",
+      "sourceSha256": "3825accc3b9ec57f02f2f2a1418cb33e96732dd9d31f3d86daab728569db59d7",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/maps/43.30.png",
+      "bytes": 140102,
+      "servedSha256": "bdc144cf3eaffa50b1e076b70c3d9f64598a1a2bea11b2e0feaf7192c2029ae2",
+      "sourceSha256": "bdc144cf3eaffa50b1e076b70c3d9f64598a1a2bea11b2e0feaf7192c2029ae2",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/maps/43.31.png",
+      "bytes": 104316,
+      "servedSha256": "3d11b1268ef70e595b4e5eab125b345544ada9e3eae61df0165cadbaf9bdc181",
+      "sourceSha256": "3d11b1268ef70e595b4e5eab125b345544ada9e3eae61df0165cadbaf9bdc181",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/maps/43.32.png",
+      "bytes": 99624,
+      "servedSha256": "6481c5b8b7370390447c386a3ada941315ffdc947501796dbd50a327fb400f54",
+      "sourceSha256": "6481c5b8b7370390447c386a3ada941315ffdc947501796dbd50a327fb400f54",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/maps/43.33.png",
+      "bytes": 76425,
+      "servedSha256": "6521d23288f7428c51201eb7a8150c2cf83adb2a4db760aa0b5e7eb4ca7f3420",
+      "sourceSha256": "6521d23288f7428c51201eb7a8150c2cf83adb2a4db760aa0b5e7eb4ca7f3420",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/maps/43.34.png",
+      "bytes": 143803,
+      "servedSha256": "6b85d219997919adb76b63a5caa51a77e22f81951e214e585b406072fb4e099d",
+      "sourceSha256": "6b85d219997919adb76b63a5caa51a77e22f81951e214e585b406072fb4e099d",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/maps/43.35.png",
+      "bytes": 141722,
+      "servedSha256": "3c647798e35721ea36d1492547f59521cf227ad4b24006db23409acd3accd52f",
+      "sourceSha256": "3c647798e35721ea36d1492547f59521cf227ad4b24006db23409acd3accd52f",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/maps/43.36.png",
+      "bytes": 88110,
+      "servedSha256": "6d529d1c3b1ef22a4258aebed4604fe151c3630adc239fcb4426ce219f6e267b",
+      "sourceSha256": "6d529d1c3b1ef22a4258aebed4604fe151c3630adc239fcb4426ce219f6e267b",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/maps/43.37.png",
+      "bytes": 90258,
+      "servedSha256": "52a7800d5f1a838a15771d564786ed480a36a6d0d6aab6e7807722a8bcffbba0",
+      "sourceSha256": "52a7800d5f1a838a15771d564786ed480a36a6d0d6aab6e7807722a8bcffbba0",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/maps/43.38.png",
+      "bytes": 141656,
+      "servedSha256": "78378c77d40cba6ccac435f20dde3e793dad15b374bd51b609d7b336751c2211",
+      "sourceSha256": "78378c77d40cba6ccac435f20dde3e793dad15b374bd51b609d7b336751c2211",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/maps/43.39.png",
+      "bytes": 123202,
+      "servedSha256": "88f6f0478bbfee28d41a82639d852d135cb88cec729d4a95e9aa73774150a84e",
+      "sourceSha256": "88f6f0478bbfee28d41a82639d852d135cb88cec729d4a95e9aa73774150a84e",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/maps/43.4.png",
+      "bytes": 3944,
+      "servedSha256": "53667a26c829014a16c5fbcca36478fd800ddb7ecd4ecb0a1eb6f94a60e37ec4",
+      "sourceSha256": "53667a26c829014a16c5fbcca36478fd800ddb7ecd4ecb0a1eb6f94a60e37ec4",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/maps/43.40.png",
+      "bytes": 107743,
+      "servedSha256": "ea602c9abe35bcda0c44b853c49537b4216ad5f7318f4ee4ae36dbdb7458593a",
+      "sourceSha256": "ea602c9abe35bcda0c44b853c49537b4216ad5f7318f4ee4ae36dbdb7458593a",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/maps/43.41.png",
+      "bytes": 56957,
+      "servedSha256": "b1bf9266ce78e5b3c98439c78ff040d4f2ca9046e51c1d63ed4b64178ece13f8",
+      "sourceSha256": "b1bf9266ce78e5b3c98439c78ff040d4f2ca9046e51c1d63ed4b64178ece13f8",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/maps/43.42.png",
+      "bytes": 73814,
+      "servedSha256": "112bba02caaae4ccf056c1fac6d9f31444652f2b02ff1131ae287ed239ec1ef0",
+      "sourceSha256": "112bba02caaae4ccf056c1fac6d9f31444652f2b02ff1131ae287ed239ec1ef0",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/maps/43.43.png",
+      "bytes": 81217,
+      "servedSha256": "778c845a30c06d97f0789de3e3b4dab413cc73cefceb0e3551d0d22fba4de50e",
+      "sourceSha256": "778c845a30c06d97f0789de3e3b4dab413cc73cefceb0e3551d0d22fba4de50e",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/maps/43.44.png",
+      "bytes": 41414,
+      "servedSha256": "c458bfb7f40ccb4c12d596288094cde145d1966b1a24612f16b2cc6519bcf031",
+      "sourceSha256": "c458bfb7f40ccb4c12d596288094cde145d1966b1a24612f16b2cc6519bcf031",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/maps/43.45.png",
+      "bytes": 45601,
+      "servedSha256": "a4edcf3a47b507578cd1d88ae1b9d24969fe7a5ec8e8e464ee46ca150a55e832",
+      "sourceSha256": "a4edcf3a47b507578cd1d88ae1b9d24969fe7a5ec8e8e464ee46ca150a55e832",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/maps/43.46.png",
+      "bytes": 88102,
+      "servedSha256": "cfc044a84fd5e9daf4b9418c55c3590aaf0c63eb34dce16aabf943e2d3ca7451",
+      "sourceSha256": "cfc044a84fd5e9daf4b9418c55c3590aaf0c63eb34dce16aabf943e2d3ca7451",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/maps/43.47.png",
+      "bytes": 56009,
+      "servedSha256": "a7e3079944b56991a14c4722f57120190005625d06043507d176f5d698e81dbf",
+      "sourceSha256": "a7e3079944b56991a14c4722f57120190005625d06043507d176f5d698e81dbf",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/maps/43.48.png",
+      "bytes": 48672,
+      "servedSha256": "9f0095f0dc0522ac8890f746fdff599a9dab0c69994cf662f5d8a56a113e05fb",
+      "sourceSha256": "9f0095f0dc0522ac8890f746fdff599a9dab0c69994cf662f5d8a56a113e05fb",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/maps/43.49.png",
+      "bytes": 82202,
+      "servedSha256": "9598b18b5e0e4d6ce5fa802262c1059a48fef2426b5516b878ecd381472bea3e",
+      "sourceSha256": "9598b18b5e0e4d6ce5fa802262c1059a48fef2426b5516b878ecd381472bea3e",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/maps/43.5.png",
+      "bytes": 5999,
+      "servedSha256": "f612279c1446646508f54686a81df149101d53d68ff09ac26ac35f467a90ed63",
+      "sourceSha256": "f612279c1446646508f54686a81df149101d53d68ff09ac26ac35f467a90ed63",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/maps/43.50.png",
+      "bytes": 102850,
+      "servedSha256": "0379df8f158080fe458bd6ad66aff7430377ce395adb9588d90602157fd74942",
+      "sourceSha256": "0379df8f158080fe458bd6ad66aff7430377ce395adb9588d90602157fd74942",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/maps/43.51.png",
+      "bytes": 84754,
+      "servedSha256": "bda8ecd2d290975f1d51abb03c57198850c89874952f1872ccc449199b55037b",
+      "sourceSha256": "bda8ecd2d290975f1d51abb03c57198850c89874952f1872ccc449199b55037b",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/maps/43.52.png",
+      "bytes": 114760,
+      "servedSha256": "49ec7be1db58e7b11c4486b5e3d95b77a6dd0ab6f2c6e5b8a4b5a881c755ed48",
+      "sourceSha256": "49ec7be1db58e7b11c4486b5e3d95b77a6dd0ab6f2c6e5b8a4b5a881c755ed48",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/maps/43.53.png",
+      "bytes": 95091,
+      "servedSha256": "832c3367c5096dea437f7d85fd8549debc3b7a584882bc7e4f46b7a1dd39ea29",
+      "sourceSha256": "832c3367c5096dea437f7d85fd8549debc3b7a584882bc7e4f46b7a1dd39ea29",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/maps/43.54.png",
+      "bytes": 153595,
+      "servedSha256": "c54137acd645d8dd1cc60effe9a63b6d108b729a903c96834a002c44d3e6cd08",
+      "sourceSha256": "c54137acd645d8dd1cc60effe9a63b6d108b729a903c96834a002c44d3e6cd08",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/maps/43.55.png",
+      "bytes": 128641,
+      "servedSha256": "8840e17b220a5fc05058b9b5dec3c2e9922752eea17d6a84afdc9314842b645a",
+      "sourceSha256": "8840e17b220a5fc05058b9b5dec3c2e9922752eea17d6a84afdc9314842b645a",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/maps/43.56.png",
+      "bytes": 140848,
+      "servedSha256": "873754d712095035debfbde7fcb90e3656b038feb909022b2e7f3f953ce61ea9",
+      "sourceSha256": "873754d712095035debfbde7fcb90e3656b038feb909022b2e7f3f953ce61ea9",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/maps/43.57.png",
+      "bytes": 117179,
+      "servedSha256": "9db4bf29301911ee968434b6dac1c08282457adf6287c36c7f961fd2a9ce9dae",
+      "sourceSha256": "9db4bf29301911ee968434b6dac1c08282457adf6287c36c7f961fd2a9ce9dae",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/maps/43.58.png",
+      "bytes": 165504,
+      "servedSha256": "8790695134e883c8300460048eb4cbf1b6baa439d69879acc4b1497cfeac6d05",
+      "sourceSha256": "8790695134e883c8300460048eb4cbf1b6baa439d69879acc4b1497cfeac6d05",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/maps/43.59.png",
+      "bytes": 144017,
+      "servedSha256": "252df4d3080e2eb9f81ef7a3b9337b0a497ed8ba64169c6c5e5cf8bb91db270b",
+      "sourceSha256": "252df4d3080e2eb9f81ef7a3b9337b0a497ed8ba64169c6c5e5cf8bb91db270b",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/maps/43.6.png",
+      "bytes": 6202,
+      "servedSha256": "a9230903e0b25152b61f273da88e331969ddffe0f0dc609223d8ea81cdaf008c",
+      "sourceSha256": "a9230903e0b25152b61f273da88e331969ddffe0f0dc609223d8ea81cdaf008c",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/maps/43.60.png",
+      "bytes": 147827,
+      "servedSha256": "b0054c3c5057f9408bf689aa0bb16d676d2612ace6c63a510af10d3911ed0b11",
+      "sourceSha256": "b0054c3c5057f9408bf689aa0bb16d676d2612ace6c63a510af10d3911ed0b11",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/maps/43.61.png",
+      "bytes": 133635,
+      "servedSha256": "e2d86120dcbe6e47aae98d6b674286fffae89e726d2e2777a7c605b8756be592",
+      "sourceSha256": "e2d86120dcbe6e47aae98d6b674286fffae89e726d2e2777a7c605b8756be592",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/maps/43.62.png",
+      "bytes": 168424,
+      "servedSha256": "cf9e4bfeba0708e30ea808e60d0aab86191f7a89c214c8fbb7bbe3aebbfbc3f9",
+      "sourceSha256": "cf9e4bfeba0708e30ea808e60d0aab86191f7a89c214c8fbb7bbe3aebbfbc3f9",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/maps/43.63.png",
+      "bytes": 139648,
+      "servedSha256": "2bc127b6d7c82838acecc5c21bce704e1695aac015f76bd744b8503adcf0c011",
+      "sourceSha256": "2bc127b6d7c82838acecc5c21bce704e1695aac015f76bd744b8503adcf0c011",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/maps/43.64.png",
+      "bytes": 167456,
+      "servedSha256": "005ede9998a80fde6ac3c5db880bf87fc05155cd948facbf02058f8289e07a23",
+      "sourceSha256": "005ede9998a80fde6ac3c5db880bf87fc05155cd948facbf02058f8289e07a23",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/maps/43.65.png",
+      "bytes": 96973,
+      "servedSha256": "dfc159c651daf8088ffcd1faae1b9e4bbf0d65ab7140c4b9764df1304366230d",
+      "sourceSha256": "dfc159c651daf8088ffcd1faae1b9e4bbf0d65ab7140c4b9764df1304366230d",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/maps/43.66.png",
+      "bytes": 126698,
+      "servedSha256": "a613ff55ee7eb1acd3a85754912494ded41b28323869ef16be27a0027ecb6c34",
+      "sourceSha256": "a613ff55ee7eb1acd3a85754912494ded41b28323869ef16be27a0027ecb6c34",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/maps/43.67.png",
+      "bytes": 110672,
+      "servedSha256": "b6b8056eac4445830cb87b666e05f7e368685504cc64a09faf8d7b0c16603567",
+      "sourceSha256": "b6b8056eac4445830cb87b666e05f7e368685504cc64a09faf8d7b0c16603567",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/maps/43.68.png",
+      "bytes": 126428,
+      "servedSha256": "c9a382e99eab8f100938218485f81adf81d133aafeaa2eb4b63b6bc9c31edda7",
+      "sourceSha256": "c9a382e99eab8f100938218485f81adf81d133aafeaa2eb4b63b6bc9c31edda7",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/maps/43.69.png",
+      "bytes": 114835,
+      "servedSha256": "58e745da0cc2b88ba651915ed3d0a4b7aed057ab3afa3c4a9606648adff555c9",
+      "sourceSha256": "58e745da0cc2b88ba651915ed3d0a4b7aed057ab3afa3c4a9606648adff555c9",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/maps/43.7.png",
+      "bytes": 9478,
+      "servedSha256": "335894779cfd99fbf091635cf38cbb673fabba88149a7eb6a25bb99b36cb75a8",
+      "sourceSha256": "335894779cfd99fbf091635cf38cbb673fabba88149a7eb6a25bb99b36cb75a8",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/maps/43.70.png",
+      "bytes": 149980,
+      "servedSha256": "4c1ccccf5c1bb5e28896d0241582209f0348c78e5f42dbee4fbcf8510526b91a",
+      "sourceSha256": "4c1ccccf5c1bb5e28896d0241582209f0348c78e5f42dbee4fbcf8510526b91a",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/maps/43.71.png",
+      "bytes": 98530,
+      "servedSha256": "1f9ed91605349e3167e65231947ab9b90f74214d455618c19c55dbe2e5c5bd0f",
+      "sourceSha256": "1f9ed91605349e3167e65231947ab9b90f74214d455618c19c55dbe2e5c5bd0f",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/maps/43.72.png",
+      "bytes": 100524,
+      "servedSha256": "d55b0ca68eba4531d9723da9f58bddb255b98f02b068f0c3bc92c4fbc1c3ebba",
+      "sourceSha256": "d55b0ca68eba4531d9723da9f58bddb255b98f02b068f0c3bc92c4fbc1c3ebba",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/maps/43.73.png",
+      "bytes": 92193,
+      "servedSha256": "5241fd2304ec4418559dce43216d7110a1bbbf8900ed637bd2790cfd2b8886c9",
+      "sourceSha256": "5241fd2304ec4418559dce43216d7110a1bbbf8900ed637bd2790cfd2b8886c9",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/maps/43.74.png",
+      "bytes": 90892,
+      "servedSha256": "805f45b045319bbd811cc88bbc5e8c9f2841a340701754f9faec9eed55cc46e1",
+      "sourceSha256": "805f45b045319bbd811cc88bbc5e8c9f2841a340701754f9faec9eed55cc46e1",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/maps/43.75.png",
+      "bytes": 109379,
+      "servedSha256": "c068f166d7335ee992511b337b850dadbcf28c4dd41981a635188254b12249bc",
+      "sourceSha256": "c068f166d7335ee992511b337b850dadbcf28c4dd41981a635188254b12249bc",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/maps/43.76.png",
+      "bytes": 139455,
+      "servedSha256": "b29b292d74a2ccbbc623adcec966f329e956cb7ec5a0d684cf6c230cae299a32",
+      "sourceSha256": "b29b292d74a2ccbbc623adcec966f329e956cb7ec5a0d684cf6c230cae299a32",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/maps/43.77.png",
+      "bytes": 70783,
+      "servedSha256": "7d942bf42a54b42bc18fb4d8272b89bcbdd949d84337de8a3968d298230c27de",
+      "sourceSha256": "7d942bf42a54b42bc18fb4d8272b89bcbdd949d84337de8a3968d298230c27de",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/maps/43.78.png",
+      "bytes": 60306,
+      "servedSha256": "d2157e91097eb076b6580acf5ecbea171f4208d4303d5ccc42540c3a46b4fa05",
+      "sourceSha256": "d2157e91097eb076b6580acf5ecbea171f4208d4303d5ccc42540c3a46b4fa05",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/maps/43.79.png",
+      "bytes": 3559,
+      "servedSha256": "aa13507a833084644201ffcbdf5a8ffa30e145b0361da0096e78b416a909f9fb",
+      "sourceSha256": "aa13507a833084644201ffcbdf5a8ffa30e145b0361da0096e78b416a909f9fb",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/maps/43.8.png",
+      "bytes": 7028,
+      "servedSha256": "5cdbc4c45a5dac356c0bf5c21bbf8e741b7991dccd926b89cf4d1c70cea449e8",
+      "sourceSha256": "5cdbc4c45a5dac356c0bf5c21bbf8e741b7991dccd926b89cf4d1c70cea449e8",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/maps/43.9.png",
+      "bytes": 5133,
+      "servedSha256": "8b3be738c2477d14c6a40c912c30dac662e5fdd0653ba5c36aa5526667538cef",
+      "sourceSha256": "8b3be738c2477d14c6a40c912c30dac662e5fdd0653ba5c36aa5526667538cef",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/pack.json",
+      "bytes": 1205751,
+      "servedSha256": "16aae3cdbf8da3bfaeea91b3ca20011a45f9f6507b774c5cbd3321a0827f0d52",
+      "sourceSha256": "16aae3cdbf8da3bfaeea91b3ca20011a45f9f6507b774c5cbd3321a0827f0d52",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "application/json; charset=utf-8",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/pictures/city-development-20261116--apartment-balconies-v1--buildings--charcoal-green.webp",
+      "bytes": 34642,
+      "servedSha256": "9c5f560d2c79e292b7e7b7f411ada0dfac5cafc61d8a9e2a1438f383199635f8",
+      "sourceSha256": "9c5f560d2c79e292b7e7b7f411ada0dfac5cafc61d8a9e2a1438f383199635f8",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/webp",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/pictures/city-development-20261116--apartment-balconies-v1--buildings--clay-red.webp",
+      "bytes": 60390,
+      "servedSha256": "4060861b99b4b6ec9f64ce7139e6b36eefacb4af638faecbaa8bad73b90d942d",
+      "sourceSha256": "4060861b99b4b6ec9f64ce7139e6b36eefacb4af638faecbaa8bad73b90d942d",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/webp",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/pictures/city-development-20261116--apartment-balconies-v1--buildings--full-lot-apartments.webp",
+      "bytes": 74586,
+      "servedSha256": "8d620054f162e1f6a0f711f0a79b61e81f2a786a8a749c8387ae1fc7f62694a8",
+      "sourceSha256": "8d620054f162e1f6a0f711f0a79b61e81f2a786a8a749c8387ae1fc7f62694a8",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/webp",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/pictures/city-development-20261116--apartment-balconies-v1--buildings--ivory-stone.webp",
+      "bytes": 49138,
+      "servedSha256": "190adfe8796db58773fc4e5052dcc8348e830a8a7655ecc0d9780c842623a91f",
+      "sourceSha256": "190adfe8796db58773fc4e5052dcc8348e830a8a7655ecc0d9780c842623a91f",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/webp",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/pictures/city-development-20261116--apartment-balconies-v1--buildings--sage-tile.webp",
+      "bytes": 39662,
+      "servedSha256": "5170f522f102a46bc70a933ba81e9d1cd63cc80890e4e9c9f8e717877d17d40d",
+      "sourceSha256": "5170f522f102a46bc70a933ba81e9d1cd63cc80890e4e9c9f8e717877d17d40d",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/webp",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/pictures/city-development-20261116--central-park-nature-v1--sprites--bank-reeds.webp",
+      "bytes": 6588,
+      "servedSha256": "887a6f3cd6ddc6eae9ed9ee7ad8aa4d37b533cfa1777b5f9c89442fbabe99e02",
+      "sourceSha256": "887a6f3cd6ddc6eae9ed9ee7ad8aa4d37b533cfa1777b5f9c89442fbabe99e02",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/webp",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/pictures/city-development-20261116--central-park-nature-v1--sprites--camphor.webp",
+      "bytes": 16458,
+      "servedSha256": "4b53cef540c5927e499aa0411305a4d15c53167511b463e25ff3a36e779a3a1e",
+      "sourceSha256": "4b53cef540c5927e499aa0411305a4d15c53167511b463e25ff3a36e779a3a1e",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/webp",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/pictures/city-development-20261116--central-park-nature-v1--sprites--courtyard-tree.webp",
+      "bytes": 5460,
+      "servedSha256": "e974e6475ab1ac58b0c82dd74a4ddb550b64269e78e7feeea996e0e34a666707",
+      "sourceSha256": "e974e6475ab1ac58b0c82dd74a4ddb550b64269e78e7feeea996e0e34a666707",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/webp",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/pictures/city-development-20261116--central-park-nature-v1--sprites--fern-stone.webp",
+      "bytes": 4702,
+      "servedSha256": "13a432de053789c9f8ef47085dcc0e1233fc22a128df72c37eb07c66bb9a8fcb",
+      "sourceSha256": "13a432de053789c9f8ef47085dcc0e1233fc22a128df72c37eb07c66bb9a8fcb",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/webp",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/pictures/city-development-20261116--central-park-nature-v1--sprites--flower-shrub.webp",
+      "bytes": 4248,
+      "servedSha256": "cbad9a2700baebe1c3d5c3e149d6d84d972bf7954b5fe2001a9a101c93a3b738",
+      "sourceSha256": "cbad9a2700baebe1c3d5c3e149d6d84d972bf7954b5fe2001a9a101c93a3b738",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/webp",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/pictures/city-development-20261116--central-park-nature-v1--sprites--grove-tree.webp",
+      "bytes": 7838,
+      "servedSha256": "87a5185d177a0665677e4a105ca753db2d681a9e78a171b447fdd5da41dc0435",
+      "sourceSha256": "87a5185d177a0665677e4a105ca753db2d681a9e78a171b447fdd5da41dc0435",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/webp",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/pictures/city-development-20261116--central-park-nature-v1--sprites--meadow-tuft.webp",
+      "bytes": 3400,
+      "servedSha256": "3dee3c26eb3e495e3d3c8ff0d42ba3ceb57c565ade2ff7f2558e1d3f81fa0143",
+      "sourceSha256": "3dee3c26eb3e495e3d3c8ff0d42ba3ceb57c565ade2ff7f2558e1d3f81fa0143",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/webp",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/pictures/city-development-20261116--central-park-nature-v1--sprites--pond-lilies.webp",
+      "bytes": 3258,
+      "servedSha256": "529f992097d13c13d86c885a0cc7aa09ae365b8d93cf9b9b1005f10b67ca6a06",
+      "sourceSha256": "529f992097d13c13d86c885a0cc7aa09ae365b8d93cf9b9b1005f10b67ca6a06",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/webp",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/pictures/city-development-20261116--central-park-nature-v1--sprites--wild-grass.webp",
+      "bytes": 3918,
+      "servedSha256": "70c36336b142459a07f0b018890afaa728b4b13a8d206ed344aab56059ec9856",
+      "sourceSha256": "70c36336b142459a07f0b018890afaa728b4b13a8d206ed344aab56059ec9856",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/webp",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/pictures/city-development-20261116--compact-neighborhood-blocks-v1--buildings--full-lot-apartments.webp",
+      "bytes": 75432,
+      "servedSha256": "383b89e085c7bc0a012e0adadf0cc64e3642306d5b99d2ac40744119b7d73cd8",
+      "sourceSha256": "383b89e085c7bc0a012e0adadf0cc64e3642306d5b99d2ac40744119b7d73cd8",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/webp",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/pictures/city-development-20261116--fable-xitun-fill-v2--buildings--the-lin.webp",
+      "bytes": 54804,
+      "servedSha256": "7d30be38f2ec7fdeead81594783a0cfa38130b41f643021531609f5c5281aa86",
+      "sourceSha256": "7d30be38f2ec7fdeead81594783a0cfa38130b41f643021531609f5c5281aa86",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/webp",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/pictures/city-development-20261116--fable-xitun-fill-v3--buildings--charcoal-green.webp",
+      "bytes": 31364,
+      "servedSha256": "07395b8f882390a20f78e8b6b0f011639a527b3e7298d543c5dfb65360f2623f",
+      "sourceSha256": "07395b8f882390a20f78e8b6b0f011639a527b3e7298d543c5dfb65360f2623f",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/webp",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/pictures/city-development-20261116--fable-xitun-fill-v3--buildings--clay-red.webp",
+      "bytes": 51226,
+      "servedSha256": "683c78e4af150f12e7068c94acd967d7099a8edd0d5916de2e18e67fb8aedb94",
+      "sourceSha256": "683c78e4af150f12e7068c94acd967d7099a8edd0d5916de2e18e67fb8aedb94",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/webp",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/pictures/city-development-20261116--fable-xitun-fill-v3--buildings--ivory-stone.webp",
+      "bytes": 45974,
+      "servedSha256": "fa96264f567adfb685e7bd0b47663b8061e3e5ed2145fe996bbbd2efc6bf9556",
+      "sourceSha256": "fa96264f567adfb685e7bd0b47663b8061e3e5ed2145fe996bbbd2efc6bf9556",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/webp",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/pictures/city-development-20261116--fable-xitun-fill-v3--buildings--sage-tile.webp",
+      "bytes": 36814,
+      "servedSha256": "d1e3dc1ab699f48ef2b3b3abf2d432bfdc0ff0b2bcd694b8446d5c9e3f053f1c",
+      "sourceSha256": "d1e3dc1ab699f48ef2b3b3abf2d432bfdc0ff0b2bcd694b8446d5c9e3f053f1c",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/webp",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/pictures/city-development-20261116--green-museumbrary-v1--buildings--green-museumbrary.webp",
+      "bytes": 94936,
+      "servedSha256": "2b1b30bd215165d42899e658952f5e83aec7ad3f016bb621283644bf521df3ee",
+      "sourceSha256": "2b1b30bd215165d42899e658952f5e83aec7ad3f016bb621283644bf521df3ee",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/webp",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/pictures/city-development-20261116--neighborhood-art-refresh-v1--buildings--corner-grocery.webp",
+      "bytes": 18598,
+      "servedSha256": "a9726e2c09073d2502b8dce7fbd2fd589325d3b89239e193527ce0b788fb1a51",
+      "sourceSha256": "a9726e2c09073d2502b8dce7fbd2fd589325d3b89239e193527ce0b788fb1a51",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/webp",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/pictures/city-development-20261116--neighborhood-art-refresh-v1--buildings--familymart.webp",
+      "bytes": 15984,
+      "servedSha256": "62896fc82abc03d9c061f84184fdb61f1c1d0b3610d25885fb124613fb2a1af6",
+      "sourceSha256": "62896fc82abc03d9c061f84184fdb61f1c1d0b3610d25885fb124613fb2a1af6",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/webp",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/pictures/city-development-20261116--neighborhood-art-refresh-v1--buildings--gabled-frontage.webp",
+      "bytes": 29450,
+      "servedSha256": "1eb48e0dc635e112cd4e45647b9020d90e05e870a8c740883097697d4708c5bd",
+      "sourceSha256": "1eb48e0dc635e112cd4e45647b9020d90e05e870a8c740883097697d4708c5bd",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/webp",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/pictures/city-development-20261116--neighborhood-art-refresh-v1--buildings--glass-midrise.webp",
+      "bytes": 29104,
+      "servedSha256": "85eff225adfb13c09f872e2044c1dc9e0ed31e79ed84c776f4e88ebba182a5f5",
+      "sourceSha256": "85eff225adfb13c09f872e2044c1dc9e0ed31e79ed84c776f4e88ebba182a5f5",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/webp",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/pictures/city-development-20261116--neighborhood-art-refresh-v1--buildings--greenway-cafe.webp",
+      "bytes": 20702,
+      "servedSha256": "efa9f62722099871e33ea9309e1efab572640a3cb3cc7182992c1e9509f3ef69",
+      "sourceSha256": "efa9f62722099871e33ea9309e1efab572640a3cb3cc7182992c1e9509f3ef69",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/webp",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/pictures/city-development-20261116--neighborhood-art-refresh-v1--buildings--nantun-courtyard-house-mirrored.webp",
+      "bytes": 24322,
+      "servedSha256": "7eb167ae9ae1e6833011c66793b80e2552d460951b1a02bd9d5e07388176056d",
+      "sourceSha256": "7eb167ae9ae1e6833011c66793b80e2552d460951b1a02bd9d5e07388176056d",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/webp",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/pictures/city-development-20261116--neighborhood-art-refresh-v1--buildings--nantun-courtyard-house.webp",
+      "bytes": 24200,
+      "servedSha256": "4511bd00b6c9e3bc899a5253ca986850b6fe6222afaa25f6bd7b14973a6bae0f",
+      "sourceSha256": "4511bd00b6c9e3bc899a5253ca986850b6fe6222afaa25f6bd7b14973a6bae0f",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/webp",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/pictures/city-development-20261116--neighborhood-art-refresh-v1--buildings--service-workshop.webp",
+      "bytes": 13396,
+      "servedSha256": "dd1bf440493445dda9fd2e94a5b288be4ba11272e1ef1a837dfbd416030b4f0d",
+      "sourceSha256": "dd1bf440493445dda9fd2e94a5b288be4ba11272e1ef1a837dfbd416030b4f0d",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/webp",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/pictures/city-development-20261116--neighborhood-art-refresh-v1--buildings--seven-eleven.webp",
+      "bytes": 13430,
+      "servedSha256": "4c24486a4c950ea81d45b86c103f6a0bad59113dbb8f2795738a316606007807",
+      "sourceSha256": "4c24486a4c950ea81d45b86c103f6a0bad59113dbb8f2795738a316606007807",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/webp",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/pictures/city-development-20261116--neighborhood-art-refresh-v1--buildings--three-bay-arcade.webp",
+      "bytes": 30132,
+      "servedSha256": "f8deef24c51bbe271d7b74c150a3dda9a5284bf23667f67cf1c31457829fecbc",
+      "sourceSha256": "f8deef24c51bbe271d7b74c150a3dda9a5284bf23667f67cf1c31457829fecbc",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/webp",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/pictures/city-development-20261116--neighborhood-art-refresh-v1--buildings--tile-townhouse-mirrored.webp",
+      "bytes": 18174,
+      "servedSha256": "17215a83618c16eedec032db944d5087bec788d74cad7384a9c218f7c9e2763d",
+      "sourceSha256": "17215a83618c16eedec032db944d5087bec788d74cad7384a9c218f7c9e2763d",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/webp",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/pictures/city-development-20261116--neighborhood-art-refresh-v1--buildings--tile-townhouse.webp",
+      "bytes": 17716,
+      "servedSha256": "7c32067baae88fc389729d0faccc0a384d9fa0e4fdcaf7cf7c96cc05b29071f8",
+      "sourceSha256": "7c32067baae88fc389729d0faccc0a384d9fa0e4fdcaf7cf7c96cc05b29071f8",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/webp",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/pictures/city-development-20261116--neighborhood-art-refresh-v1--buildings--wider-attached-shops.webp",
+      "bytes": 38284,
+      "servedSha256": "7ab58b7663d4faa838779c44a080dc6df08f3beb06e2e5b38d412aaa7bf66166",
+      "sourceSha256": "7ab58b7663d4faa838779c44a080dc6df08f3beb06e2e5b38d412aaa7bf66166",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/webp",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/pictures/city-development-20261116--older-mixed-use-blocks-v1--buildings--dadun-peach.webp",
+      "bytes": 87596,
+      "servedSha256": "b9cb8a5a912e58f794340aa769ec333f6e2a9179b188b159dc93c9a0d0677e0b",
+      "sourceSha256": "b9cb8a5a912e58f794340aa769ec333f6e2a9179b188b159dc93c9a0d0677e0b",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/webp",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/pictures/city-development-20261116--older-mixed-use-blocks-v1--buildings--dadun-rust.webp",
+      "bytes": 63602,
+      "servedSha256": "ff46486660bacf690515fcd606a82bb7d83415fc9f71ce1533f11859cf9f705a",
+      "sourceSha256": "ff46486660bacf690515fcd606a82bb7d83415fc9f71ce1533f11859cf9f705a",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/webp",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/pictures/city-development-20261116--older-mixed-use-blocks-v1--buildings--dadun-sage.webp",
+      "bytes": 63804,
+      "servedSha256": "0d72f2fa3b1ec4165e6afdd11dc3fa29bc513d905f0acd0aa143a980edd3117f",
+      "sourceSha256": "0d72f2fa3b1ec4165e6afdd11dc3fa29bc513d905f0acd0aa143a980edd3117f",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/webp",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/pictures/city-development-20261116--older-mixed-use-blocks-v1--buildings--oldcity-brick.webp",
+      "bytes": 111110,
+      "servedSha256": "03f8c31df264a8504b2c162521d1e2249fdf460d29e7d1b5711975356e870c9c",
+      "sourceSha256": "03f8c31df264a8504b2c162521d1e2249fdf460d29e7d1b5711975356e870c9c",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/webp",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/pictures/city-development-20261116--older-mixed-use-blocks-v1--buildings--oldcity-green-tile.webp",
+      "bytes": 102822,
+      "servedSha256": "cadaadf66784df180ddaa78bb2d91b868665dbb2d0e9dd8aa9be3f5aca319b83",
+      "sourceSha256": "cadaadf66784df180ddaa78bb2d91b868665dbb2d0e9dd8aa9be3f5aca319b83",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/webp",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/pictures/city-development-20261116--older-mixed-use-blocks-v1--buildings--oldcity-stone.webp",
+      "bytes": 104670,
+      "servedSha256": "c98606f493b34a4ea9f7ddcab02941995e3681b3c3d4fe9fc5f1617f11e0979d",
+      "sourceSha256": "c98606f493b34a4ea9f7ddcab02941995e3681b3c3d4fe9fc5f1617f11e0979d",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/webp",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/pictures/city-development-20261116--xitun-apartments-v1--charcoal-open-crown.webp",
+      "bytes": 17436,
+      "servedSha256": "31b617ddfdb00ac4643dd8ae0f2968bb04fe8ed5b8be03a006c75f150a8e83c7",
+      "sourceSha256": "31b617ddfdb00ac4643dd8ae0f2968bb04fe8ed5b8be03a006c75f150a8e83c7",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/webp",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/pictures/city-development-20261116--xitun-apartments-v1--offset-balconies.webp",
+      "bytes": 15368,
+      "servedSha256": "0bd24146d402a4ffacd011fd17a73eb4bee7b5155fce017258333d52abbb123d",
+      "sourceSha256": "0bd24146d402a4ffacd011fd17a73eb4bee7b5155fce017258333d52abbb123d",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/webp",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/pictures/city-development-20261116--xitun-apartments-v1--sand-tile.webp",
+      "bytes": 19328,
+      "servedSha256": "93f52e0a955235ad9627d670ad3a5f98e51cf0af738ebe822b6f12d4d69fa448",
+      "sourceSha256": "93f52e0a955235ad9627d670ad3a5f98e51cf0af738ebe822b6f12d4d69fa448",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/webp",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/pictures/city-development-20261116--xitun-apartments-v1--smoke-green.webp",
+      "bytes": 17176,
+      "servedSha256": "1f0b5cb4272423ffc5ddb9bd16d3128abed39d4da3171d47807eb89b7e41f559",
+      "sourceSha256": "1f0b5cb4272423ffc5ddb9bd16d3128abed39d4da3171d47807eb89b7e41f559",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/webp",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/pictures/ding-sheng-bhw.webp",
+      "bytes": 83980,
+      "servedSha256": "af8b50244aad40d4bed7e6a79d404f2b6849699517f17e1bf023215257f4543c",
+      "sourceSha256": "af8b50244aad40d4bed7e6a79d404f2b6849699517f17e1bf023215257f4543c",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/webp",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/pictures/landmark-rework-20261110--boulevard-redraws-v2--botanical-garden.webp",
+      "bytes": 102498,
+      "servedSha256": "591b5db7adc3aaeaf283d2bae876a79a604100604aba150548f573751f5e076f",
+      "sourceSha256": "591b5db7adc3aaeaf283d2bae876a79a604100604aba150548f573751f5e076f",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/webp",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/pictures/landmark-rework-20261110--boulevard-redraws-v2--confucius-temple.webp",
+      "bytes": 79090,
+      "servedSha256": "59bb161581c0f819e7be1cbc2e9cadcffc1a1f5cde1806c633630becdbed3163",
+      "sourceSha256": "59bb161581c0f819e7be1cbc2e9cadcffc1a1f5cde1806c633630becdbed3163",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/webp",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/pictures/landmark-rework-20261110--boulevard-redraws-v2--fengle-sculpture-park.webp",
+      "bytes": 64014,
+      "servedSha256": "b64411e9e6523bc801edafc78802773463b32657953ce3f0bba13df5ee26a370",
+      "sourceSha256": "b64411e9e6523bc801edafc78802773463b32657953ce3f0bba13df5ee26a370",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/webp",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/pictures/landmark-rework-20261110--boulevard-redraws-v2--wanhe-temple.webp",
+      "bytes": 82394,
+      "servedSha256": "09c30eee7c8c1c1cfa594353fe35a23d622624076c4b4f0bd33d698a63ffb6f1",
+      "sourceSha256": "09c30eee7c8c1c1cfa594353fe35a23d622624076c4b4f0bd33d698a63ffb6f1",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/webp",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/pictures/landmark-rework-20261110--boulevard-redraws-v2--wenchang-temple.webp",
+      "bytes": 47504,
+      "servedSha256": "e5cdadd6f5ad5e098bb61b7f694149dacad712b4c958f0d3d47986088a8f81df",
+      "sourceSha256": "e5cdadd6f5ad5e098bb61b7f694149dacad712b4c958f0d3d47986088a8f81df",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/webp",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/pictures/landmark-rework-20261110--boulevard-redraws-v2--wenxin-forest-park.webp",
+      "bytes": 68860,
+      "servedSha256": "ebbbbd2b016a14bd914fd79ea8323372b42637505be332e48b904d582c13d135",
+      "sourceSha256": "ebbbbd2b016a14bd914fd79ea8323372b42637505be332e48b904d582c13d135",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/webp",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/pictures/landmark-rework-20261110--boulevard-redraws-v2--yizhong-street.webp",
+      "bytes": 64000,
+      "servedSha256": "03307e2a9a3c9fa408075b57bcec6a2aaee217ef96b8325e034e3e2650f876bf",
+      "sourceSha256": "03307e2a9a3c9fa408075b57bcec6a2aaee217ef96b8325e034e3e2650f876bf",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/webp",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/pictures/landmark-rework-20261110--detailed-facades-v1--buildings--cultural-heritage-park.webp",
+      "bytes": 122092,
+      "servedSha256": "e7f9495e2ccb1683cc10fa65013167462e64eaf55388b0894c9c5496c237e2cb",
+      "sourceSha256": "e7f9495e2ccb1683cc10fa65013167462e64eaf55388b0894c9c5496c237e2cb",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/webp",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/pictures/landmark-rework-20261110--detailed-facades-v1--buildings--prefectural-hall.webp",
+      "bytes": 77488,
+      "servedSha256": "94166f23066c441c08ee2ca1efa8484ea5037e2864d83d029396b54476b5d4bf",
+      "sourceSha256": "94166f23066c441c08ee2ca1efa8484ea5037e2864d83d029396b54476b5d4bf",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/webp",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "hd/world/pictures/national-trade-center.webp",
+      "bytes": 49048,
+      "servedSha256": "49a91bb3506efdf1cde022a8723d8af4e42fb6d8713f17715bcb6705f6d67f91",
+      "sourceSha256": "49a91bb3506efdf1cde022a8723d8af4e42fb6d8713f17715bcb6705f6d67f91",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/webp",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "index.html",
+      "bytes": 2480,
+      "servedSha256": "4016b4feb33916210fb796a63d0ac3cd6be2b88de60d65603d4f7c0451271cee",
+      "sourceSha256": "ae3a841efc8c6779ea0c32f5139f13032bc0ef7f6ec8570a90bdeb12b5ec0490",
+      "platformPreviewToolbar": true,
+      "headers": {
+        "type": "text/html; charset=utf-8",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "licenses/fusion-pixel-12/LICENSES/ark-pixel/OFL.txt",
+      "bytes": 4412,
+      "servedSha256": "3ab41567e68e3988ba1ef16dd2644eca95ca5648ea12e7d46e6287fc0bbe5aee",
+      "sourceSha256": "3ab41567e68e3988ba1ef16dd2644eca95ca5648ea12e7d46e6287fc0bbe5aee",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "text/plain; charset=utf-8",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "licenses/fusion-pixel-12/LICENSES/cubic-11/OFL.txt",
+      "bytes": 5364,
+      "servedSha256": "2b6e5938e5cffa0b9e183bd05f8c363e174e7ebed1a0556e2855fd1707fa2188",
+      "sourceSha256": "2b6e5938e5cffa0b9e183bd05f8c363e174e7ebed1a0556e2855fd1707fa2188",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "text/plain; charset=utf-8",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "licenses/fusion-pixel-12/LICENSES/galmuri/LICENSE.txt",
+      "bytes": 4360,
+      "servedSha256": "86a3ee9495f942f0243f18c103da9faca27adb88142613edb8bb852e56c892c1",
+      "sourceSha256": "86a3ee9495f942f0243f18c103da9faca27adb88142613edb8bb852e56c892c1",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "text/plain; charset=utf-8",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "licenses/fusion-pixel-12/NOTICE.md",
+      "bytes": 1383,
+      "servedSha256": "f0384b2c8a787b3cbe029a57e8944fd9a1f1c13ad3d2a8844cce7f47d5dc937e",
+      "sourceSha256": "f0384b2c8a787b3cbe029a57e8944fd9a1f1c13ad3d2a8844cce7f47d5dc937e",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "text/markdown; charset=utf-8",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "licenses/fusion-pixel-12/OFL.txt",
+      "bytes": 4418,
+      "servedSha256": "bc518cf64b8032c07690f33cc270c35c179255a6ac8efa7c165ebae7e8f76a63",
+      "sourceSha256": "bc518cf64b8032c07690f33cc270c35c179255a6ac8efa7c165ebae7e8f76a63",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "text/plain; charset=utf-8",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "licenses/index.html",
+      "bytes": 1840,
+      "servedSha256": "7c16b2274b28104f08c55e06a2a3f8eaca5ae8756e10eb6ff20b5b1bc830b8b9",
+      "sourceSha256": "15d22f2ea35124c11bbac1c87f8b3881ff25709dfe16f16f5abda19f1686ee68",
+      "platformPreviewToolbar": true,
+      "headers": {
+        "type": "text/html; charset=utf-8",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "licenses/native-font.txt",
+      "bytes": 20254,
+      "servedSha256": "aef9d84038f1d35ffc8e0822bd9843f2eb4a9903c2423016728653ffa13d2f94",
+      "sourceSha256": "aef9d84038f1d35ffc8e0822bd9843f2eb4a9903c2423016728653ffa13d2f94",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "text/plain; charset=utf-8",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "licenses/NotoSansTC-OFL.txt",
+      "bytes": 4388,
+      "servedSha256": "1c05c68c34f9708415aada51f17e1b0092d2cea709bf4a94cd38114f9e73d7d9",
+      "sourceSha256": "1c05c68c34f9708415aada51f17e1b0092d2cea709bf4a94cd38114f9e73d7d9",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "text/plain; charset=utf-8",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "roms/build.json",
+      "bytes": 1693,
+      "servedSha256": "d1c66e207e07c87e3c4aa516ff256a450f6014d665a868898f2f38751d58e77d",
+      "sourceSha256": "d1c66e207e07c87e3c4aa516ff256a450f6014d665a868898f2f38751d58e77d",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "application/json; charset=utf-8",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "roms/taichung-firered.gba",
+      "bytes": 16777216,
+      "servedSha256": "8516a68407cf50d2f0b7039a977998d2793c162a6115dc393d501d3b972ada8f",
+      "sourceSha256": "8516a68407cf50d2f0b7039a977998d2793c162a6115dc393d501d3b972ada8f",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "application/octet-stream",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    },
+    {
+      "file": "social-card.png",
+      "bytes": 70543,
+      "servedSha256": "9456ec856ef30ef0c14cb210775b4c2ceda41526106a9d7a6a92ed6d618fc6ca",
+      "sourceSha256": "9456ec856ef30ef0c14cb210775b4c2ceda41526106a9d7a6a92ed6d618fc6ca",
+      "platformPreviewToolbar": false,
+      "headers": {
+        "type": "image/png",
+        "coop": "same-origin",
+        "coep": "require-corp"
+      }
+    }
+  ],
+  "credential": "Existing project automation credential reused in memory; never persisted or printed",
+  "readOnly": true,
+  "tokenCreated": false,
+  "accessSettingsChanged": false,
+  "productionChanged": false
+}

@@ -1,0 +1,18 @@
+{
+  "status": "PASS_ACTUAL_FINAL_NATIVE_FIRST_ENTRY_AND_OLD_PARTY",
+  "ROM": "8516a68407cf50d2f0b7039a977998d2793c162a6115dc393d501d3b972ada8f",
+  "ELF": "5a8cb88bdeda3527a7e5e859d770bc5e2b1faa90801e810617869422da7cba99",
+  "source": "bc5f8b9bd36fdfebf0364e62a4613e5d5d3c836d",
+  "inputNativeSave": "../old634/temple-door-ordinary-native-save.sav",
+  "inputSha256": "2ebb882d98334d9e279da205e83b747691df29b489fbdec334e3cd3cc46549dc",
+  "nativeActions": "Continue then Up through22,9 into79[6,11]; walk Up to6,7; no A/dialogue; full Wenyi sprite and player visible.",
+  "partyAll600Bytes": "IDENTICAL oldROM export/newROM Continue/newroom entry/6,8; native original levels, identity, injuredHP/spentPP retained for all3new lockedspecies",
+  "nativeScreenshot": "/Users/peter/devday_hackathon/artifacts/qa/2026-11-24-gameplay-captures/final/temple-door-wenyi-full-sprite-before-dialogue.png",
+  "browserLimit": "Pure native emulator screenshot, no webHD/badge renderer. Main owns requested paired-browser view.",
+  "snapshots": [
+    "temple-door-final-continue-before-entry.json",
+    "temple-door-final-room-first-entry.json",
+    "temple-door-final-wenyi-and-player-before-dialogue.json",
+    "temple-door-wenyi-full-sprite-before-dialogue.json"
+  ]
+}

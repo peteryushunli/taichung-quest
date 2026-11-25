@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import { parseEncounterMetadata, readEncounterSnapshot, writeEncounterAcknowledgement,
   NativeEncounterBridge } from '../src/encounter-bridge.ts';
+import { EncounterSaveSpeed } from '../src/encounter-save-speed.ts';
 
 const metadata = { version: 1, size: 64, address: 0x0203f560, magicA: 0x4e454354, magicB: 0x31525443 };
 const sha = 'b'.repeat(64);
@@ -66,31 +67,33 @@ test('ACK commits only its five fields and refuses stale, wrong-phase, already-A
   assert.equal(writeEncounterAcknowledgement(g.heap, offset, metadata, old, 1), false);
 });
 
-test('v2 preserves the highest site in both the capture and durable acknowledgement', () => {
+test('v2/72 preserves each new site and writes only the existing ACK fields', () => {
   const v2 = { ...metadata, version: 2, size: 72 };
   assert.deepEqual(parseEncounterMetadata({ sha256: sha, bytes: 16, encounterBridge: v2 }, sha, 16), v2);
-  const { heap, u32, view } = fixture();
-  const captures = 1 << 20;
-  u32(8, 72 << 16 | 2);
-  u32(32, captures);
-  u32(36, captures);
-  u32(40, 144 | 20 << 16 | 4 << 24);
-  u32(44, 2 | 1 << 8 | 1 << 16);
-  u32(56, 12);
-  u32(60, 0x12345678);
-  const packet = readEncounterSnapshot(heap, offset, v2);
-  assert.equal(packet.site, 20);
-  assert.equal(packet.attempts, captures);
-  assert.equal(packet.unlocks, captures);
-  assert.equal(writeEncounterAcknowledgement(heap, offset, v2, { ...packet, attempts: 0 }, 1), false);
-  assert.equal(writeEncounterAcknowledgement(heap, offset, v2, packet, 1), true);
-  assert.equal(view.getUint32(offset + 28, true), packet.request);
-  assert.equal(view.getUint32(offset + 48, true), captures);
-  assert.equal(view.getUint32(offset + 52, true), captures);
-  assert.equal(view.getUint32(offset + 64, true), packet.saveCounter);
-  assert.equal(heap[offset + 47], 1);
-  u32(32, 1 << 21);
-  assert.equal(readEncounterSnapshot(heap, offset, v2), undefined);
+  for (const [site, species] of [[0, 131], [3, 65], [20, 144], [21, 82], [22, 141], [23, 53], [24, 6], [25, 9], [26, 3]]) for (const caught of [false, true]) {
+    const { heap, u32, view } = fixture();
+    const attempts = (1 << site) | (1 << 3); // Alakazam keeps its stable historical bit.
+    const unlocks = caught ? attempts : 0;
+    u32(8, 72 << 16 | 2); u32(32, attempts); u32(36, unlocks);
+    u32(40, species | site << 16 | 4 << 24);
+    u32(44, 2 | 1 << 8 | 1 << 16); u32(56, 12); u32(60, 0x12345678);
+    const packet = readEncounterSnapshot(heap, offset, v2);
+    assert.equal(packet.site, site); assert.equal(packet.species, species);
+    assert.equal(packet.attempts, attempts); assert.equal(packet.unlocks, unlocks);
+    assert.equal(writeEncounterAcknowledgement(heap, offset, v2, { ...packet, attempts: 0 }, 1), false);
+    const before = heap.slice();
+    assert.equal(writeEncounterAcknowledgement(heap, offset, v2, packet, 1), true);
+    const mutable = new Set([28, 48, 52, 64].flatMap(at => Array.from({ length: 4 }, (_, i) => offset + at + i)).concat(offset + 47));
+    for (let i = 0; i < heap.length; i++) if (!mutable.has(i)) assert.equal(heap[i], before[i], `readonly byte ${i}`);
+    assert.equal(view.getUint32(offset + 28, true), packet.request);
+    assert.equal(view.getUint32(offset + 48, true), attempts);
+    assert.equal(view.getUint32(offset + 52, true), unlocks);
+    assert.equal(view.getUint32(offset + 64, true), packet.saveCounter);
+    assert.equal(heap[offset + 47], 1);
+    u32(32, 1 << 27); assert.equal(readEncounterSnapshot(heap, offset, v2), undefined);
+    u32(32, attempts); u32(40, species | 27 << 16 | 4 << 24);
+    assert.equal(readEncounterSnapshot(heap, offset, v2), undefined);
+  }
 });
 
 test('live client ACK waits for the entire durable callback; storage failure emits only failure ACK', async () => {
@@ -106,6 +109,33 @@ test('live client ACK waits for the entire durable callback; storage failure emi
       if (fails) reject(new Error('expected storage denial')); else resolve();
       await until(() => f.view.getUint32(offset + 28, true) === 1);
       assert.equal(f.heap[offset + 43], fails ? 2 : 1);
+    } finally { bridge.stop(); clearInterval(timer); }
+  }
+});
+
+test('frame probe accelerates unsaved flash only and restores before success/failure ACK or stop', async () => {
+  for (const ending of ['success', 'failure', 'stop']) {
+    const f = fixture(); f.heap[offset + 42] = 0;
+    let value = 1, resolve, reject, entered = false;
+    const restores = [];
+    const speed = new EncounterSaveSpeed({ getFastForwardMultiplier: () => value,
+      setFastForwardMultiplier: n => { value = n; if (n === 1) restores.push(f.view.getUint32(offset + 28, true)); } });
+    const transaction = new Promise((a, b) => { resolve = a; reject = b; });
+    const timer = setInterval(() => f.tick(), 5);
+    const bridge = new NativeEncounterBridge({ metadata, getHeap: () => f.heap, isActive: () => true, onState() {},
+      onSaveState: p => speed.update(p), onDurableSave: async () => { entered = true; await transaction; } });
+    try {
+      await bridge.start(); bridge.onFrame(); assert.equal(value, 8);
+      assert.equal(entered, false); assert.equal(f.view.getUint32(offset + 28, true), 0);
+      f.heap[offset + 42] = 1;
+      await until(() => entered); assert.equal(value, 8);
+      if (ending === 'stop') bridge.stop();
+      if (ending === 'failure') reject(new Error('expected storage denial')); else resolve();
+      await until(() => value === 1);
+      if (ending !== 'stop') await until(() => f.view.getUint32(offset + 28, true) === 1);
+      assert.deepEqual(restores, [0], 'ordinary speed must be restored before the mailbox commits');
+      assert.equal(f.view.getUint32(offset + 28, true), ending === 'stop' ? 0 : 1);
+      if (ending !== 'stop') assert.equal(f.heap[offset + 43], ending === 'failure' ? 2 : 1);
     } finally { bridge.stop(); clearInterval(timer); }
   }
 });

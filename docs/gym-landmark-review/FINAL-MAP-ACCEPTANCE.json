@@ -1,0 +1,102 @@
+{
+  "passed": true,
+  "readOnlySource": true,
+  "romSha256": "8516a68407cf50d2f0b7039a977998d2793c162a6115dc393d501d3b972ada8f",
+  "elfSha256": "5a8cb88bdeda3527a7e5e859d770bc5e2b1faa90801e810617869422da7cba99",
+  "bothDoors": {
+    "passed": true,
+    "rom": "8516a684",
+    "sourceSave": "wenyi-on-after.sav",
+    "unchangedImport": true,
+    "results": [
+      {
+        "door": [
+          69,
+          22,
+          9
+        ],
+        "approach": [
+          22,
+          10
+        ],
+        "nativeEntered": 79,
+        "returned": [
+          69,
+          22,
+          10
+        ],
+        "gymMask": 32
+      },
+      {
+        "door": [
+          69,
+          23,
+          9
+        ],
+        "approach": [
+          23,
+          10
+        ],
+        "nativeEntered": 79,
+        "returned": [
+          69,
+          23,
+          10
+        ],
+        "gymMask": 32
+      }
+    ]
+  },
+  "legacyRoom": {
+    "passed": true,
+    "continuedUnchangedOrdinaryA701Save": true,
+    "pages": [
+      "I\u2019m\u3000Axiu\u3002\u3000I\u3000make\u3000things\u3000here\u3002|These\u3000homes\u3000date\u3000from\u30001969\u3002",
+      "I\u2019m\u3000Axiu\u3002\u3000I\u3000make\u3000things\u3000here\u3002|These\u3000homes\u3000date\u3000from\u30001969\u3002"
+    ],
+    "exit": {
+      "frame": 3222,
+      "flags": 79,
+      "context": 0,
+      "field": true,
+      "x": 29,
+      "y": 12,
+      "group": 43,
+      "map": 60,
+      "facing": 1
+    },
+    "noBattle": true
+  },
+  "legacySave": {
+    "file": "/Users/peter/devday_hackathon/artifacts/qa/2026-11-24-confucius-xitun/final-map-acceptance/legacy8-ordinary-a701.sav",
+    "sha256": "e7cf71ed6ee181ffd7a7a42447247a1c48ad21aea15ce859ce7caecba3afe0b1",
+    "counter": 4,
+    "slot": 0,
+    "all14SectorsValid": true,
+    "position": {
+      "group": 43,
+      "map": 8,
+      "x": 4,
+      "y": 7
+    },
+    "healOption": 0,
+    "gymMask": 0,
+    "schema": 60418,
+    "attempts": 0,
+    "caught": 0,
+    "partyCount": 3
+  },
+  "legacyConstruction": "Isolated checksum-valid a701 map-only bootstrap OUTSIDE ShenJi; actual a701 native door entry into8, walked4,7, native Save menu. Final ordinary export imported unchanged in8516; no post-export edits. This is a genuine native-menu ordinary save from a constructed location, not an untouched historic user save.",
+  "templeHistoryOnly": true,
+  "templeEncounterSitePhase": [
+    255,
+    0
+  ],
+  "shenJiHistoryThenAlakazam": true,
+  "shenJiCaptureSiteId": 3,
+  "shenJiTrialNotStarted": true,
+  "notes": [
+    "Both legacy NPCs deliberately share the currently approved visit-only Axiu guide script; neither offers battle.",
+    "Native RAM reads only; no source, ROM, RNG or RAM mutation. Sign input saves are isolated coordinate fixtures."
+  ]
+}

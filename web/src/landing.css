@@ -207,7 +207,7 @@ html[lang="zh-Hant"] .lp-card-other { font-family: inherit; font-size: 12px; let
 .lp-stamp.is-earned { border: 2px solid var(--lp-coral); background: #d46d4d18; color: var(--lp-link-hover); }
 /* The badge stays upright and crisp inside the tilted stamp ring; its number tucks under it. */
 .lp-stamp { position: relative; }
-.lp-stamp img { width: 58%; height: auto; transform: rotate(12deg); image-rendering: pixelated; }
+.lp-stamp img { width: 58%; height: auto; transform: rotate(12deg); image-rendering: auto; }
 .lp-stamp > span { position: absolute; bottom: -2px; left: 50%; padding: 0 3px; background: var(--lp-card); font-size: 8px; line-height: 1.2; transform: translateX(-50%) rotate(12deg); }
 
 /* Play */
@@ -308,3 +308,22 @@ html[lang="zh-Hant"] .lp-cta-zh { display: none; }
 .lp-district-name.is-neighborhood[hidden] { display: none; }
 
 @media(max-width:450px) { .lp-map-chip { display: none; } }
+
+.lp-map-controls { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; max-width: 760px; min-width: 0; margin: 0 0 16px; padding: 0; border: 0; }
+.lp-map-controls legend { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.lp-map-controls label { display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; padding: 8px; border: 1px solid #9aaa8b; border-radius: 5px; background: #f5f0df; color: #284c38; font: 600 13px/1.2 'DM Sans', sans-serif; cursor: pointer; }
+.lp-map-controls input { width: 17px; height: 17px; margin: 0; accent-color: #315e42; flex-shrink: 0; }
+.lp-map-controls label:has(input:checked) { border-color: #e3d5a9; background: #e5ebd5; }
+.lp-map-controls label:has(input:focus-visible) { outline: 3px solid var(--lp-coral); outline-offset: 3px; }
+.lp-map [data-map-layer][hidden] { display: none; }
+.lp-street-lines { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.lp-street-lines path { fill: none; stroke: #fff2a8; stroke-width: 2.2; stroke-linecap: round; opacity: .9; }
+.lp-street-label { position: absolute; z-index: 1; padding: 1px 3px; border-radius: 2px; background: #fff4d9f2; color: #244d3a; font: 600 10px/1.2 Arial, sans-serif; white-space: nowrap; pointer-events: none; }
+.lp-street-label[hidden] { display: none; }
+.lp-visit-link { padding-top: 16px; border-top: 1px solid var(--lp-card-line); font-size: 13px; line-height: 1.6; }
+.lp-visit-link a { color: var(--lp-pine); text-decoration: underline; text-underline-offset: 3px; overflow-wrap: anywhere; }
+@media(max-width:450px) { .lp-map-controls { gap: 6px; } .lp-map-controls label { gap: 5px; padding: 8px 4px; font-size: 11px; } .lp-street-label { font-size: 9px; } }
+
+.lp-map-legend[hidden], .lp-map-legend [hidden] { display: none; }
+@media(max-width:450px) { .lp-map-controls input { width: 15px; height: 15px; } .lp-map-controls label { gap: 4px; } }
+@media(max-width:360px) { .lp-map-controls { grid-template-columns: repeat(2, minmax(0, 1fr)); } }

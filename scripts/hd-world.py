@@ -212,8 +212,12 @@ class Streamed:
     def __init__(self, game):
         sec = os.path.join(game, 'data/tilesets/secondary/taichung_boulevard')
         pri = os.path.join(game, 'data/tilesets/primary/taichung_approved_old_city_north')
+        # The streamed city isolates its animated flower graphics from the
+        # legacy primary while retaining that primary's palettes/metatiles.
+        city_tiles = os.path.join(game, 'data/tilesets/primary/taichung_boulevard/tiles.4bpp')
+        primary_tiles = city_tiles if os.path.isfile(city_tiles) else os.path.join(pri, 'tiles.4bpp')
         self.sec = sec
-        self.tiles = [open(os.path.join(pri, 'tiles.4bpp'), 'rb').read(), open(os.path.join(sec, 'tiles.bin'), 'rb').read()]
+        self.tiles = [open(primary_tiles, 'rb').read(), open(os.path.join(sec, 'tiles.bin'), 'rb').read()]
         pal = words(os.path.join(sec, 'palettes.bin'))
         self.palettes = [pal[i * 16:(i + 1) * 16] for i in range(len(pal) // 16)]
         for i in range(7):
@@ -309,6 +313,8 @@ def render_fn(grid, draw):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('game'); ap.add_argument('out'); ap.add_argument('--group', type=int, default=43)
+    ap.add_argument('--map-number', type=int, action='append',
+                    help='Render only these map numbers in the selected group.')
     args = ap.parse_args()
     game, out = args.game, args.out
     os.makedirs(os.path.join(out, 'maps'), exist_ok=True)
@@ -325,7 +331,12 @@ def main():
     streamed = None
     lib = library()
     entries, pictures, pack_maps = [], {}, {}
-    for index, name in enumerate(groups[groups['group_order'][args.group]]):
+    group_maps = groups[groups['group_order'][args.group]]
+    selected = sorted(set(args.map_number)) if args.map_number else range(len(group_maps))
+    if any(index not in range(len(group_maps)) for index in selected):
+        ap.error('Map number is outside the selected group.')
+    for index in selected:
+        name = group_maps[index]
         m = maps[name]
         layout = layouts.by_id[m['layout']]
         key = (layout['primary_tileset'], layout['secondary_tileset'])

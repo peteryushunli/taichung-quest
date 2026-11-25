@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 256 256" role="img"><title>Chill Badge</title><g stroke="#283848" stroke-width="8" stroke-linejoin="round" stroke-linecap="round">
+<path d="M67 128H189L142 229Q128 249 113 228Z" fill="#c88838"/>
+<path d="M81 144H172L128 220Z" fill="#f8c858" stroke="none"/>
+<path d="M89 154L149 187M103 140L163 172" fill="none" stroke="#c88838" stroke-width="7"/>
+<path d="M48 104C41 48 77 15 126 15C182 12 215 48 208 104L195 145H61Z" fill="#d8a0b0"/>
+<path d="M75 66Q89 43 126 43" fill="none" stroke="#f8f0d0" stroke-width="9"/>
+<path d="M87 151H172" fill="none" stroke="#a84850" stroke-width="10"/>
+</g></svg>

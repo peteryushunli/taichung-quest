@@ -1,3 +1,5 @@
+import { PlayerMatcher, parsePlayerTemplates } from './hd-player';
+import type { PlayerForeground, PlayerMatch } from './hd-player';
 import { scoreHdCamera } from './hd-scene';
 import type { HdScene } from './hd-scene';
 
@@ -13,7 +15,7 @@ import type { HdScene } from './hd-scene';
 // fade) is put back from the frame, so whatever the game puts in front stays in
 // front. With nothing to replace, the overlay hides and the original canvas shows.
 
-type Building = { sprite: string; x: number; y: number; w: number; h: number; picture: string; covers: string; mask?: Uint8Array };
+type Building = { sprite: string; x: number; y: number; w: number; h: number; picture: string; covers: string; mask?: Uint8Array; kind?: 'sign' };
 type MapEntry = { name: string; ref: string; width: number; height: number; margin: number; cells: [number, number]; buildings: Building[] };
 type WorldPack = { version: 2; scale: number; group: number; romSha256: string | null; maps: Record<string, MapEntry> };
 type Loaded = { key: string; map: MapEntry; ref: Uint16Array; refW: number; refH: number };
@@ -108,6 +110,8 @@ export class HdOverlay {
   private readonly patch = document.createElement('canvas');
   private readonly patchCtx: CanvasRenderingContext2D;
   private readonly patchData: ImageData;
+  private readonly playerUnderlay = document.createElement('canvas');
+  private readonly playerUnderlayCtx = this.playerUnderlay.getContext('2d')!;
   private readonly frame = new Uint16Array(W * H);
   private rgba = new Uint8ClampedArray(W * H * 4);
   private loaded?: Loaded;
@@ -116,6 +120,9 @@ export class HdOverlay {
   private readonly pictures = new Map<string, HTMLImageElement | 'loading'>();
   lastNav?: Nav;
   private sprites?: SpritePack;
+  private player?: { atlas: HTMLImageElement; matcher: PlayerMatcher };
+  private playerLoading = false;
+  private readonly localPlayerDiagnostics = typeof location !== 'undefined' && ['127.0.0.1', 'localhost'].includes(location.hostname);
   lastSprites: string[] = [];
   private camera?: { x: number; y: number };
   private raf = 0;
@@ -184,7 +191,19 @@ export class HdOverlay {
   private emit() { this.listeners.forEach((listener) => listener()); }
 
   start() {
-    if (!this.enabledValue || this.raf) return;
+    if (!this.enabledValue) return;
+    if (!this.player && !this.playerLoading) {
+      this.playerLoading = true;
+      Promise.all([fetch('/hd/player/player.json', { cache: 'no-cache' }).then(r => {
+        if (!r.ok) throw new Error('Player presentation is unavailable.');
+        return r.json();
+      }), loadImage('/hd/player/atlas.png')]).then(([pack, atlas]) => {
+        const templates = parsePlayerTemplates(pack, atlas.width, atlas.height);
+        if (!templates) throw new Error('Unpaired player presentation.');
+        this.player = { atlas, matcher: new PlayerMatcher(templates) };
+      }).catch(error => console.info('Using native player pixels:', error)).finally(() => { this.playerLoading = false; });
+    }
+    if (this.raf) return;
     if (!this.sprites) loadSprites(this.spriteBase).then((sprites) => { this.sprites = sprites; })
       .catch((error) => console.info('HD character pack unavailable:', error));
     if (!this.pack && this.status !== 'loading') {
@@ -205,7 +224,7 @@ export class HdOverlay {
 
   stop() { cancelAnimationFrame(this.raf); this.raf = 0; this.hide(); }
 
-  private hide() { this.element.classList.remove('playing'); this.camera = undefined; }
+  private hide() { this.element.classList.remove('playing'); this.camera = undefined; this.playerDiagnostic(); }
 
   private readFrame() {
     this.grabCtx.drawImage(this.source, 0, 0, W, H);
@@ -220,7 +239,7 @@ export class HdOverlay {
     const key = `${nav.group}.${nav.map}`;
     if (this.loaded?.key === key) return this.loaded;
     const map = this.pack.maps[key];
-    if (!map || !map.buildings.length) return undefined;
+    if (!map) return undefined;
     if (this.loadingMap !== key) {
       this.loadingMap = key;
       loadMap(this.packBase, key, map).then((loaded) => { if (this.loadingMap === key) { this.loaded = loaded; this.camera = undefined; } })
@@ -330,6 +349,13 @@ export class HdOverlay {
     return kept;
   }
 
+  /** Read-only rendering evidence; no game state or user controls. */
+  private playerDiagnostic(match?: PlayerMatch) {
+    if (!this.localPlayerDiagnostics) return;
+    const value = match ? `${match.t.kind}:${match.t.frame}:${match.t.east ? 'east' : 'native'}@${match.x},${match.y}` : '';
+    if (this.element.dataset.playerPose !== value) this.element.dataset.playerPose = value;
+  }
+
   /** Smooth only when shrinking an original; game pixels always stay hard-edged. */
   private smooth(on: boolean) {
     const resize = on && this.detailValue !== this.packScale;
@@ -350,6 +376,17 @@ export class HdOverlay {
     const loaded = nav ? this.currentMap(nav) : undefined;
     const camera = loaded ? this.locate(nav!) : undefined;
     const sprites = this.findSprites();
+    // Trust only a complete native overworld match with its feet below the
+    // player. A partial NPC match may be behind the player or other scenery.
+    const foregroundSprites = sprites.filter(({ t, hits }) => t.kind === 'overworld' && hits === t.opaque);
+    const coversPlayer: PlayerForeground | undefined = foregroundSprites.length ? (x, y, playerBottom) =>
+      foregroundSprites.some(({ t, x: sx, y: sy }) => sy + t.h > playerBottom &&
+        x >= sx && x < sx + t.w && y >= sy && y < sy + t.h && t.px[(y - sy) * t.w + x - sx] !== 0xffff) : undefined;
+    const player = nav && camera && loaded && this.player ? this.player.matcher.match(this.frame, {
+      x: (nav.x + loaded.map.margin) * 16 + 8 - camera.x,
+      y: (nav.y + loaded.map.margin) * 16 + 16 - camera.y,
+    }, coversPlayer) : undefined;
+    this.playerDiagnostic(player);
     this.camera = camera;
     const next = camera ? 'locked' : 'searching';
     if (this.status !== next) { this.status = next; this.emit(); }
@@ -362,11 +399,19 @@ export class HdOverlay {
     if (camera && loaded) {
       const { map, ref, refW } = loaded;
       let patched = false;
+      let drawingSigns = false;
       for (const b of map.buildings) {
         const x0 = b.x - camera.x, y0 = b.y - camera.y;
         if (x0 >= W || y0 >= H || x0 + b.w <= 0 || y0 + b.h <= 0) continue;
         const image = this.picture(b.picture);
         if (!image) continue;
+        if (b.kind === 'sign' && !drawingSigns) {
+          // Signs follow buildings in the pack. Restore the building pass
+          // first so a plaque can stay sharp in front of a facade.
+          if (patched) this.flushPatch();
+          patched = false;
+          drawingSigns = true;
+        }
         this.smooth(true);
         out.drawImage(image, x0 * k, y0 * k, b.w * k, b.h * k);
         this.smooth(false);
@@ -402,6 +447,40 @@ export class HdOverlay {
         }
       }
       if (patched) this.flushPatch();
+    }
+    if (player && this.player && loaded && camera) {
+      const { t, x, y } = player;
+      // Save the already composited scene wherever native foreground covers
+      // the player. Restoring raw game pixels here would erase HD characters
+      // visible through the player's transparent head/shoulder area.
+      const foreground: [number, number, number][] = [];
+      for (let ty = 0; ty < t.h; ty++) {
+        let start = -1;
+        for (let tx = 0; tx <= t.w; tx++) {
+          const i = (y + ty) * W + x + tx;
+          const expected = t.px[ty * t.w + tx];
+          const covered = tx < t.w && (expected === 0xffff
+            ? this.frame[i] !== loaded.ref[(y + ty + camera.y) * loaded.refW + x + tx + camera.x]
+            : this.frame[i] !== expected || (player.obscured > 0 && coversPlayer?.(x + tx, y + ty, y + t.h)));
+          if (covered && start < 0) start = tx;
+          if (!covered && start >= 0) { foreground.push([start, ty, tx - start]); start = -1; }
+        }
+      }
+      if (foreground.length) {
+        const buffer = this.playerUnderlay;
+        if (buffer.width !== t.w * k || buffer.height !== t.h * k) {
+          buffer.width = t.w * k; buffer.height = t.h * k;
+        }
+        this.playerUnderlayCtx.drawImage(this.element, x * k, y * k, t.w * k, t.h * k, 0, 0, t.w * k, t.h * k);
+      }
+      // The player atlas is genuinely2x; never apply the NPC pack's4x scale.
+      this.out.imageSmoothingEnabled = false;
+      out.drawImage(this.player.atlas, t.atlasX, t.atlasY, t.w * 2, t.h * 2, x * k, y * k, t.w * k, t.h * k);
+      if (foreground.length) {
+        out.save(); out.beginPath();
+        for (const [tx, ty, width] of foreground) out.rect((x + tx) * k, (y + ty) * k, width * k, k);
+        out.clip(); out.drawImage(this.playerUnderlay, x * k, y * k); out.restore();
+      }
     }
     this.lastSprites = sprites.map(({ t, x, y }) => `${t.character}:${t.kind}:${t.frame}@${x},${y}`);
     this.element.classList.add('playing');

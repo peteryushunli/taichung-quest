@@ -1,0 +1,132 @@
+{
+  "status": "PASS",
+  "romSha256": "8516a68407cf50d2f0b7039a977998d2793c162a6115dc393d501d3b972ada8f",
+  "maps": 76,
+  "changedReferenceMaps": [
+    "43.27",
+    "43.28",
+    "43.29",
+    "43.35",
+    "43.36",
+    "43.37",
+    "43.69"
+  ],
+  "automaticPicturesByteExact": true,
+  "templeDoorChangedPixels": 512,
+  "templeChangesOnlyAtAuthoredDoorTiles": true,
+  "scopedAutomaticOverlayChanges": 1,
+  "towerCoordinatesAndMasksFresh": true,
+  "coverage": [
+    {
+      "nativeKey": "43.27",
+      "sprite": "ding-sheng-bhw",
+      "envelope": [
+        704,
+        944,
+        128,
+        208
+      ],
+      "coveredPixels": 2331,
+      "clipped": true
+    },
+    {
+      "nativeKey": "43.28",
+      "sprite": "ding-sheng-bhw",
+      "envelope": [
+        704,
+        208,
+        128,
+        208
+      ],
+      "coveredPixels": 14820,
+      "clipped": true
+    },
+    {
+      "nativeKey": "43.29",
+      "sprite": "ding-sheng-bhw",
+      "envelope": [
+        704,
+        -96,
+        128,
+        208
+      ],
+      "coveredPixels": 8745,
+      "clipped": true
+    },
+    {
+      "nativeKey": "43.35",
+      "sprite": "ding-sheng-bhw",
+      "envelope": [
+        176,
+        944,
+        128,
+        208
+      ],
+      "coveredPixels": 2400,
+      "clipped": true
+    },
+    {
+      "nativeKey": "43.35",
+      "sprite": "national-trade-center",
+      "envelope": [
+        368,
+        944,
+        128,
+        208
+      ],
+      "coveredPixels": 2270,
+      "clipped": true
+    },
+    {
+      "nativeKey": "43.36",
+      "sprite": "ding-sheng-bhw",
+      "envelope": [
+        176,
+        208,
+        128,
+        208
+      ],
+      "coveredPixels": 22009,
+      "clipped": false
+    },
+    {
+      "nativeKey": "43.36",
+      "sprite": "national-trade-center",
+      "envelope": [
+        368,
+        208,
+        128,
+        208
+      ],
+      "coveredPixels": 20466,
+      "clipped": false
+    },
+    {
+      "nativeKey": "43.37",
+      "sprite": "ding-sheng-bhw",
+      "envelope": [
+        176,
+        -96,
+        128,
+        208
+      ],
+      "coveredPixels": 13906,
+      "clipped": true
+    },
+    {
+      "nativeKey": "43.37",
+      "sprite": "national-trade-center",
+      "envelope": [
+        368,
+        -96,
+        128,
+        208
+      ],
+      "coveredPixels": 13541,
+      "clipped": true
+    }
+  ],
+  "compiledMapReportSha256": "fbfbe596976f1f45efda1b207db22cca2b5c8afe6290ae2d565b18b10a58e43a",
+  "anchorsSha256": "f6570ca3d6952cfa247a2ea33f43816ac8adda944a9b9ab5334a9685816bb264",
+  "proofSha256": "5e01bb82da93d1ce3fb4e2b2650362726f9e72fde3738db6e1ac3b526193d883"
+}

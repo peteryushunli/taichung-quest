@@ -1,0 +1,28 @@
+{
+  "status": "PASS_TARGETED_BROWSER_ACCEPTANCE",
+  "preview": "https://taichung-quest-ct70x9yz4-peteryushunli-6635s-projects.vercel.app/",
+  "hosted": {
+    "entry": "Normal protected preview; existing sign-in succeeded",
+    "englishHeading": "Explore Taichung’s real neighborhoods and landmarks.",
+    "traditionalChineseHeading": "探索臺中的真實街區與地標。",
+    "freshPlay": "Native language/encounter/healing settings reached",
+    "screenshot": "hosted-play-starts.jpg"
+  },
+  "local": {
+    "origin": "http://127.0.0.1:4216",
+    "oldOrdinarySave": "2eebd6baf8c7117d1e6cd84edb1a12cc9bf04fab2336ecc8ab5d249b939ab9d8",
+    "normalImportAndNativeContinue": "PASS; new moving resident and radar present",
+    "crispWalking": "walking:0:native@112,56",
+    "crispCycling": "cycling:0:native@104,56",
+    "tallGrassOcclusion": "Pose diagnostic clears and native pixels remain after moving into grass",
+    "flowers": "HD-FLOWER-BROWSER.json",
+    "originalLocalSaveRestoredSha256": "7b95a8c865337beb949068c34647d8ddfdc5385135f828a3f333a16b4b624fdd",
+    "restoreFeedback": "Save imported. Choose Continue saved game, then Continue on the title screen.",
+    "originalHdOffPreferenceRestored": true
+  },
+  "limits": [
+    "All38 supported templates pass deterministic tests. Live running and exhaustive directional/frame observations were not repeated.",
+    "Full battles and badge flows were not repeated on3dc; retained earlier evidence is tied to byte-identical existing core handlers."
+  ],
+  "productionIdUnchanged": "dpl_6866rzQ7m2ts1fKLwKUESWSrp4VE"
+}

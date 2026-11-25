@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 256 256" role="img"><title>Discovery Badge</title><g stroke="#283848" stroke-width="8" stroke-linejoin="round" stroke-linecap="round">
+<path d="M29 150C-1 123 55 78 144 52C216 31 254 48 238 77" fill="none" stroke="#283848" stroke-width="21"/>
+<path d="M29 150C-1 123 55 78 144 52C216 31 254 48 238 77" fill="none" stroke="#f8c858" stroke-width="11"/>
+<circle cx="130" cy="120" r="76" fill="#406898"/>
+<path d="M75 154C52 102 88 49 136 48C168 47 197 74 199 114C176 152 126 174 75 154Z" fill="#68a8d8" stroke="none"/>
+<path d="M85 88Q102 65 132 67" fill="none" stroke="#f8f0d0" stroke-width="8"/>
+<path d="M238 77C252 102 184 160 99 185C35 205 5 187 29 150" fill="none" stroke="#283848" stroke-width="23"/>
+<path d="M238 77C252 102 184 160 99 185C35 205 5 187 29 150" fill="none" stroke="#f8c858" stroke-width="12"/>
+<path d="M226 86Q219 99 209 106" fill="none" stroke="#f8f0d0" stroke-width="6"/>
+</g></svg>

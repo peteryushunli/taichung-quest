@@ -10,6 +10,7 @@ import subprocess
 import sys
 
 from PIL import Image, ImageColor
+from capture_sites import captures_from_registry, validate_named_bindings
 
 
 WEB = Path(__file__).resolve().parents[1]
@@ -23,6 +24,9 @@ EXTRA_SIGHTS = {
     "city-hall": ("City Hall", "臺中市政府", "xitun", "Civic plaza", "市政廣場"),
 }
 INSTALLED_SIGHTS = {
+    "national-trade-center": ("National Trade Center", "NTC國家商貿中心", "xitun", "Office tower", "商辦大樓"),
+    "ding-sheng-bhw": ("Ding Sheng BHW", "鼎盛BHW", "xitun", "Office tower", "商辦大樓"),
+    "the-lin": ("The Lin", "林酒店", "xitun", "Hotel", "飯店"),
     "green-museumbrary": ("Green Museumbrary", "臺中綠美圖", "shuinan", "Museum and library", "美術館與圖書館"),
     "baseball-stadium": ("Intercontinental Ballpark", "洲際棒球場", "beitun", "Baseball stadium", "棒球場"),
     "folklore-park": ("Folk Museum at Folklore Park", "臺灣民俗文物館", "beitun", "Folk museum", "民俗館"),
@@ -73,8 +77,9 @@ def native_registry(root):
     return registry
 
 
-def street_bands(plan, fill, origin):
+def street_bands(plan, fill, origin, forecourt=None):
     bands = []
+    forecourt_applied = False
 
     def add(name, zh, rect, axis):
         x0, y0, x1, y1 = rect
@@ -86,11 +91,34 @@ def street_bands(plan, fill, origin):
             continue
         en = "Taiwan Boulevard" if street["name"] == "Taiwan Blvd" else street["name"]
         for start, end, rect in zip(street["points"], street["points"][1:], street["rects"]):
-            add(en, street["zh"], rect, "h" if start[1] == end[1] else "v")
+            axis = "h" if start[1] == end[1] else "v"
+            if street["id"] == "shizheng" and forecourt:
+                left, top, right, bottom = rect
+                cut_left, cut_top, cut_right, cut_bottom = forecourt
+                require(not forecourt_applied and axis == "h" and
+                        top == cut_top and bottom == cut_bottom and left < cut_left < cut_right < right,
+                        "The compiled forecourt must cut the full width of a single Shizheng Road band.")
+                add(en, street["zh"], (left, top, cut_left, bottom), axis)
+                add(en, street["zh"], (cut_right, top, right, bottom), axis)
+                forecourt_applied = True
+            else:
+                add(en, street["zh"], rect, axis)
     for lane in fill["newLanes"]:
         if lane["zh"] and lane["direction"] in ("h", "v"):
             add(lane["name"], lane["zh"], lane["rect"], lane["direction"])
+    require(not forecourt or forecourt_applied, "Missing Shizheng Road band for the compiled forecourt.")
     return bands
+
+
+def apply_compiled_ground(world, areas):
+    for area in areas:
+        left, top, right, bottom = area["worldRect"]
+        rows = area["rows"]
+        require(len(rows) == bottom - top and all(len(row) == right - left for row in rows),
+                f"Unexpected terrain dimensions at {area['worldRect']}.")
+        for y, row in enumerate(rows, top):
+            for x, ground in enumerate(row, left):
+                world.put((x, y, x + 1, y + 1), ground)
 
 
 def terrain_images(fill, plan, candidate, geometry, report):
@@ -104,8 +132,17 @@ def terrain_images(fill, plan, candidate, geometry, report):
         world.put(site["block"], site["ground"])
         for ground_rect in site.get("groundRects", []):
             world.put(ground_rect["rect"], ground_rect["ground"])
-    if tower_block := report.get("xitunTowerBlock"):
-        world.put(tower_block["paving"], "p")
+    tower_block = report.get("xitunTowerBlock", {})
+    forecourt = tower_block.get("forecourt")
+    if forecourt:
+        areas = tower_block.get("radarGround", [])
+        require(len(areas) == 3 and {tuple(area["worldRect"]) for area in areas} ==
+                {tuple(tower_block[key]) for key in ("oldLot", "towerLot", "forecourt")},
+                "The Xitun radar ground must cover both swapped blocks and the forecourt.")
+        apply_compiled_ground(world, areas)
+    elif paving := tower_block.get("paving"):
+        world.put(paving, "p")
+    apply_compiled_ground(world, report.get("xitunFrontageCleanup", {}).get("radarGround", []))
     width, height = geometry["world"]["width"], geometry["world"]["height"]
     origin = plan["world"]["box"][:2]
     ink = {
@@ -129,7 +166,7 @@ def terrain_images(fill, plan, candidate, geometry, report):
     colors = {key: ImageColor.getrgb(value) for key, value in ink.items()}
     pavilion_tiles = {(x, y) for left, top, right, bottom in report.get("pavilionDeck", {}).values()
                       for x in range(left, right) for y in range(top, bottom)}
-    # Only Huimin's compiled path overlays use path ink; other paving stays land.
+    # Huimin's paths and the forecourt use path ink; other paving stays land.
     huimin_path_tiles = {(x, y) for site in report.get("northXitun", {}).get("sites", [])
                          if site["id"] == "huimin-park"
                          for ground_rect in site.get("groundRects", []) if ground_rect["ground"] == "p"
@@ -140,8 +177,10 @@ def terrain_images(fill, plan, candidate, geometry, report):
             tile = col + origin[0], row + origin[1]
             ground = world.at(*tile)
             walkable = walkable_by_tile.get(tile)
+            on_forecourt = (forecourt and forecourt[0] <= tile[0] < forecourt[2]
+                            and forecourt[1] <= tile[1] < forecourt[3])
             if walkable and (tile in pavilion_tiles or ground in "aW=qkK"
-                             or ground == "p" and tile in huimin_path_tiles):
+                             or ground == "p" and (tile in huimin_path_tiles or on_forecourt)):
                 kind = "path"
             elif ground == "~":
                 kind = "water"
@@ -170,6 +209,8 @@ def landmark_facades(native, fill, report, extras):
     facades = {}
     for place in catalog:
         landmark = place["id"]
+        if landmark == "taichung-park-lakeshore":
+            continue  # The lakeshore card reuses the existing Taichung Park artwork.
         filename = f"{landmark}.png"
         source = approved / filename
         if not source.is_file():
@@ -239,10 +280,20 @@ def main():
     places = {place["id"]: place for place in read(DATA / "landmarks.json") + read(DATA / "sights.json")}
     plan_districts = {district["id"]: district for district in plan["districts"]}
     installed = {entry["id"]: entry for entry in report.get("installedLandmarks", [])}
-    captures = {site["siteSlug"]: site
-                for site in read(args.native / "data/taichung/encounters/sites.json")["sites"]
-                if site["currentBinding"]}
-    sight_specs = EXTRA_SIGHTS | {place: INSTALLED_SIGHTS[place] for place in installed}
+    captures = captures_from_registry(read(args.native / "data/taichung/encounters/sites.json"))
+    named_bindings_path = args.native / "data/taichung/named-xitun-bindings/anchors.json"
+    named_bindings = read(named_bindings_path) if named_bindings_path.is_file() else None
+    if named_bindings:
+        validate_named_bindings(named_bindings, captures)
+        for site in named_bindings["sites"]:
+            installed[site["id"]] = {"id": site["id"],
+                                     "worldRect": site["game"]["authoredWorldRect"],
+                                     "signTile": site["game"]["authoredWorldInteraction"]}
+    sight_specs = EXTRA_SIGHTS | {place: INSTALLED_SIGHTS[place] for place in installed if place in INSTALLED_SIGHTS}
+    if "taichung-park-lakeshore" in captures:
+        sight_specs["taichung-park-lakeshore"] = ("Taichung Park Lakeshore", "臺中公園湖邊", "oldcity", "Lakeshore", "湖畔")
+    require(set(installed) <= places.keys() | sight_specs.keys(),
+            "An installed landmark has no website catalog entry.")
     sight_copy = read(DATA / "boulevard-sight-copy.json")
     short_names = {"baseball-stadium": ("Ballpark", "洲際棒球場"), "folklore-park": ("Folk Museum", "民俗公園")}
     extras = []
@@ -267,21 +318,94 @@ def main():
             events[place] = event
     for place, entry in installed.items():
         events[place] = {"type": "sign", "tile": entry["signTile"]}
-    # The cartridge's sign registration determines the marker when a capture
-    # has been moved or installed after the original map design.
-    capture_signs = {captures[place]["currentBinding"]: place for place in captures.keys() & sight_specs.keys()}
+    # Current registered doors own hall locations. The original design's events
+    # predate the Confucius room and must not keep its old outdoor-only anchor.
+    native_exteriors = {parent["nativeKey"]: read(args.native / "data/maps" / parent["nativeMapName"] / "map.json")
+                        for parent in exteriors.values()}
+    for place, special in places.items():
+        hall = special.get("landmarkHallRef")
+        if not hall:
+            continue
+        require(hall in registry, f"The website hall for {place} is not registered.")
+        doors = []
+        for parent in exteriors.values():
+            ox, oy = parent["worldOrigin"]
+            for warp in native_exteriors[parent["nativeKey"]]["warp_events"]:
+                if warp["dest_map"] == hall:
+                    doors.append({"type": "door", "destMap": hall,
+                                  "tile": [x0 + ox + warp["x"], y0 + oy + warp["y"]]})
+        require(doors, f"No active exterior door enters the registered hall for {place}.")
+        # Adjacent paired entrance mats have one deterministic western anchor.
+        doors.sort(key=lambda door: (door["tile"][1], door["tile"][0]))
+        require(len({map_at(normalize(door["tile"]))["nativeKey"] for door in doors}) == 1,
+                f"Multiple exteriors enter the hall for {place}.")
+        events[place] = doors[0]
+
+    # A capture can be read from either a sign or a local guide. Derive these
+    # anchors from current native objects, including relocated Lapras/Alakazam,
+    # the starters and Xitun sites, instead of design-era marker coordinates.
+    capture_bindings = {site["currentBinding"]: place for place, site in captures.items()}
     located = set()
+    capture_anchors = {}
     for parent in exteriors.values():
-        native = read(args.native / "data/maps" / parent["nativeMapName"] / "map.json")
+        native = native_exteriors[parent["nativeKey"]]
         ox, oy = parent["worldOrigin"]
-        for event in native["bg_events"]:
-            if event["type"] != "sign" or event["script"] not in capture_signs:
+        for event in [*native["bg_events"], *native["object_events"]]:
+            if event.get("script") not in capture_bindings:
                 continue
-            place = capture_signs[event["script"]]
-            require(place not in located, f"Multiple native capture signs for {place}.")
+            place = capture_bindings[event["script"]]
+            require(place in places, f"The native encounter {place} has no website catalog entry.")
+            # The Lin keeps its original guide beside the new visible post.
+            # Only the explicitly registered companion is secondary; all other
+            # duplicate encounter bindings still fail below.
+            binding = next((site["game"] for site in (named_bindings or {}).get("sites", [])
+                            if site["id"] == place), {})
+            world = [x0 + ox + event["x"], y0 + oy + event["y"]]
+            if event in native["object_events"] and world == binding.get("existingGuideInteraction"):
+                require(binding.get("kind") == "sign" and any(
+                    sign.get("script") == event["script"] and
+                    [x0 + ox + sign["x"], y0 + oy + sign["y"]] == binding["authoredWorldInteraction"]
+                    for sign in native["bg_events"]),
+                    f"The preserved guide for {place} has no registered visible sign.")
+                continue
+            require(place not in located, f"Multiple active exterior capture interactions for {place}.")
+            if binding:
+                require(world == binding["authoredWorldInteraction"] and
+                        parent["nativeKey"] == binding["nativeKey"] and
+                        [event["x"], event["y"]] == binding["localInteraction"],
+                        f"The compiled interaction disagrees with the named anchor for {place}.")
             located.add(place)
-            events[place] = {"type": "sign", "tile": [x0 + ox + event["x"], y0 + oy + event["y"]]}
-    require(located == set(capture_signs.values()), "Installed Boulevard capture signs do not match the encounter catalog.")
+            tile = world
+            capture_anchors[place] = {"script": event["script"], "world": normalize(tile),
+                                      "nativeKey": parent["nativeKey"], "local": [event["x"], event["y"]]}
+            # Preserve a visitor hall's actual door projection when its outdoor
+            # encounter stands nearby. Both anchors remain in the export.
+            if events.get(place, {}).get("type") != "door":
+                events[place] = {"type": "sign", "tile": tile}
+    required_exterior_captures = (captures.keys() & sight_specs.keys()) | {
+        place for place, site in captures.items() if site["stableSiteId"] in (0, 3, 21, 22, 23, 24, 25, 26)
+    }
+    require(required_exterior_captures <= located,
+            "Moved/new Boulevard captures lack their current exterior sign or guide.")
+
+    lakeshore_path = None
+    if "taichung-park-lakeshore" in captures:
+        place = "taichung-park-lakeshore"
+        lakeshore_path = args.native / "data/taichung/encounters/taichung-park-lakeshore.json"
+        lakeshore = read(lakeshore_path)
+        interaction = capture_anchors[place]
+        approach = normalize(lakeshore["worldApproach"])
+        land = map_at(approach)
+        dx, dy = (a - b for a, b in zip(approach, interaction["world"]))
+        require(lakeshore["id"] == place and lakeshore["parentLandmark"] == "taichung-park" and
+                lakeshore["captureId"] == captures[place]["stableSiteId"] and
+                lakeshore["nativeMap"] == land["mapId"] and lakeshore["script"] == interaction["script"] and
+                normalize(lakeshore["worldSign"]) == interaction["world"] and
+                land["nativeKey"] == interaction["nativeKey"] and (dx, dy) == (0, 1),
+                "The compiled park encounter does not match its sign and south approach.")
+        # Keep the actual interaction in captureInteraction. Put the pin
+        # where the player can stand to read it.
+        events[place] = {"type": "sign", "tile": lakeshore["worldApproach"]}
 
     markers = {}
     interiors = {}
@@ -292,12 +416,14 @@ def main():
         parent = map_at(point)
         ox, oy = parent["worldOrigin"]
         marker = {"id": place, "name": {"en": special["nameEn"], "zh": special["nameZh"]},
-                  "kind": "landmark" if special.get("gymStatus") == "not-a-gym" else "landmark-gym",
+                  "kind": "home" if place == "guest-house" else "landmark" if special.get("gymStatus") == "not-a-gym" else "landmark-gym",
                   "world": point, "localEntrance": [point[0] - ox, point[1] - oy],
                   "exteriorMapId": parent["mapId"], "exteriorNativeKey": parent["nativeKey"]}
         markers[place] = marker
         if place in captures:
             marker["captureBit"] = captures[place]["stableSiteId"]
+            if place in capture_anchors:
+                marker["captureInteraction"] = capture_anchors[place]
         if event["type"] == "door":
             room = registry[event["destMap"]]
             interiors[room["nativeKey"]] = {**room, "kind": "interior", "projection": "parent-entrance",
@@ -320,12 +446,14 @@ def main():
         "schemaVersion": 1, "contractId": "taichung-boulevard-preview",
         "coordinateSystem": {"units": "metatiles", "metatilePixels": 16, "northUp": False},
         "world": {"width": width, "height": height, "homeWorld": markers["guest-house"]["world"],
-                  "streetBands": street_bands(plan, raw, (x0, y0)),
+                  "streetBands": street_bands(plan, raw, (x0, y0), report.get("xitunTowerBlock", {}).get("forecourt")),
                   "neighborhoods": [{"name": {"en": en, "zh": zh}, "tile": normalize([x, y])}
                                     for en, zh, x, y in NEIGHBORHOODS.values()]},
         "mapsByNativeKey": {entry["nativeKey"]: entry for entry in exteriors.values()} | interiors,
         "markersById": markers, "seams": seams, "extraSights": extras,
-        "sourceSha256": {"compiledMapReport": digest(candidate / "build-report.json"), **report["sourceSha256"]},
+        "sourceSha256": {"compiledMapReport": digest(candidate / "build-report.json"), **report["sourceSha256"],
+                         **({"namedXitunBindings": digest(named_bindings_path)} if named_bindings else {}),
+                         **({"taichungParkLakeshore": digest(lakeshore_path)} if lakeshore_path else {})},
     }
     fingerprint = sha256(json.dumps({key: geometry[key] for key in GEOMETRY_FIELDS},
                                      sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode()).hexdigest()

@@ -1,0 +1,115 @@
+{
+  "status": "PASS",
+  "romSha256": "d05cdd78e0a615f9354021d14b359e5a00053f44a54cde9ee6a9fbda14257cc3",
+  "maps": 76,
+  "changedReferenceMaps": [
+    "43.69"
+  ],
+  "changedPixels": 512,
+  "changedWorldCells": [
+    [
+      334,
+      35
+    ],
+    [
+      335,
+      35
+    ]
+  ],
+  "automaticPicturesByteExact": true,
+  "freshTowerMasksByteExact": true,
+  "coverage": [
+    {
+      "nativeKey": "43.27",
+      "sprite": "ding-sheng-bhw",
+      "envelope": [
+        704,
+        944,
+        128,
+        208
+      ]
+    },
+    {
+      "nativeKey": "43.28",
+      "sprite": "ding-sheng-bhw",
+      "envelope": [
+        704,
+        208,
+        128,
+        208
+      ]
+    },
+    {
+      "nativeKey": "43.29",
+      "sprite": "ding-sheng-bhw",
+      "envelope": [
+        704,
+        -96,
+        128,
+        208
+      ]
+    },
+    {
+      "nativeKey": "43.35",
+      "sprite": "ding-sheng-bhw",
+      "envelope": [
+        176,
+        944,
+        128,
+        208
+      ]
+    },
+    {
+      "nativeKey": "43.35",
+      "sprite": "national-trade-center",
+      "envelope": [
+        368,
+        944,
+        128,
+        208
+      ]
+    },
+    {
+      "nativeKey": "43.36",
+      "sprite": "ding-sheng-bhw",
+      "envelope": [
+        176,
+        208,
+        128,
+        208
+      ]
+    },
+    {
+      "nativeKey": "43.36",
+      "sprite": "national-trade-center",
+      "envelope": [
+        368,
+        208,
+        128,
+        208
+      ]
+    },
+    {
+      "nativeKey": "43.37",
+      "sprite": "ding-sheng-bhw",
+      "envelope": [
+        176,
+        -96,
+        128,
+        208
+      ]
+    },
+    {
+      "nativeKey": "43.37",
+      "sprite": "national-trade-center",
+      "envelope": [
+        368,
+        -96,
+        128,
+        208
+      ]
+    }
+  ],
+  "sourceProofSha256": "49beb9d5bfb330baefe370ab7fb2c43a14c012f03983a230b6dcf0bd92479931",
+  "compiledMapReportSha256": "f5ee63e9f3a670c6a472ddb934f2f470835df2a58bf0ed185b7d056c8939820f"
+}

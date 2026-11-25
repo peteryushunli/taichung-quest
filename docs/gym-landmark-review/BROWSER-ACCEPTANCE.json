@@ -1,0 +1,64 @@
+{
+  "status": "PASS_TARGETED_PAIRED_BROWSER_ACCEPTANCE",
+  "origin": "http://127.0.0.1:4216",
+  "romSha256": "8516a68407cf50d2f0b7039a977998d2793c162a6115dc393d501d3b972ada8f",
+  "sourceCommit": "bc5f8b9bd36fdfebf0364e62a4613e5d5d3c836d",
+  "frontendCommit": "653e1d0ca818a8efbcc2fd0efe76c00a11780472",
+  "input": "Unchanged ordinary native Save-menu export; initial map-only fixture construction documented separately",
+  "fixtureSha256": "2ebb882d98334d9e279da205e83b747691df29b489fbdec334e3cd3cc46549dc",
+  "passed": [
+    "Normal UI save import and cartridge restart",
+    "Native Continue reaches Confucius exterior with HD and North District EN/ZH label",
+    "Actual Up input enters new gym through existing facade",
+    "Native Menu \u2192 PASS publishes sharp City Pass, 0/10 unearned mask",
+    "Actual Down selects Rites Badge / Confucius Temple, unearned",
+    "Actual A hides sharp overlay during native Trainer Card transition",
+    "Native Trainer Card actually displayed with sharp overlay absent",
+    "Native B returns from Trainer Card with Rites selection preserved",
+    "Native B closes City Pass and removes sharp overlay",
+    "Protected hosted preview opens in existing signed-in Chrome",
+    "Hosted landing has 10 gym and 20 landmark pins",
+    "EN Gym and Landmark layer hidden attributes toggle independently",
+    "EN and ZH Temple details identify Wenyi and North District with descriptive standalone visitor link",
+    "Unchanged trapped ordinary tower save arrives at exact projected repaired tile43,113",
+    "Radar and HD restore after Continue and native bike/movement input",
+    "Hosted fresh Chinese Play reaches native settings with Heal after gym battles On by default and no console warnings",
+    "Native City Pass and Rites detail follow actual Chinese language packet",
+    "Unchanged actual final Wenyi victory Save reimported; native Continue title and City Pass report1/10",
+    "Actual native Down selects Rites Badge / Confucius Temple / Earned",
+    "City Map hides sharp native badge overlay and Back restores the same Rites scene",
+    "Actual saved caught Second Market progress renders Caught / TEAM unlocked",
+    "New21/22/23 and moved Shen Ji show available; Confucius has no capture offer status",
+    "Original local SRAM backup restored via normal UI import; title reflects original0/10 progress",
+    "Restored actual native exhaustion save shows Second Market Try used / not caught; three appended sites remain available"
+  ],
+  "screenshots": [
+    "browser-confucius-entry.jpg",
+    "browser-rites-pass-unearned.jpg",
+    "hosted-map-chinese.jpg",
+    "browser-tower-continue-safe.jpg",
+    "browser-tower-continue-moved.jpg",
+    "browser-rites-pass-chinese.jpg",
+    "hosted-chinese-native-settings.jpg",
+    "browser-rites-earned.jpg",
+    "browser-restored-spent-map.jpg"
+  ],
+  "pending": [],
+  "hostedOrigin": "https://taichung-quest-1k4l443j3-peteryushunli-6635s-projects.vercel.app",
+  "observations": [
+    {
+      "check": "Ordinary trapped tower save Continue",
+      "inputSha256": "6219b1e92f2664dc92532feeea555818854534e566b855b405524d8bb076da3b",
+      "observed": "Title loads normally; after Continue game remained black without a browser error. Exact final-ROM native reproduction requested from Maps. Not counted as PASS.",
+      "resolution": "On reactivating local tab it rendered the correct repaired arrival without source changes or second import. Live radar player translate(43 113) matches native43:36 local[2,5] (authored74,113, normalized43,113); native D mounted bike and Left moved freely. Final native harness independently passes HP7/PP1 and protected saved state."
+    }
+  ],
+  "towerAfterMovementTransform": "translate(40 113) translate(.5 .5) rotate(270) scale(2.1)",
+  "victorySaveSha256": "f9c54762ec10618c0dde21809de48f44870ec0693ab97a008633e67b9520a10f",
+  "localBackupRestored": {
+    "sha256": "7b95a8c865337beb949068c34647d8ddfdc5385135f828a3f333a16b4b624fdd",
+    "nativeContinue": "PASS",
+    "source": "local-save-before-pairing.sav",
+    "browserMarker": "Try used / not caught"
+  }
+}

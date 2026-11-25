@@ -1,0 +1,22 @@
+{
+  "status": "PASS_PAIRED_COPY_DOOR_BIKE_CHECKPOINT",
+  "nativeCommit": "da308778406fd03762ce000cdd59848f298f8700",
+  "romSha256": "d05cdd78e0a615f9354021d14b359e5a00053f44a54cde9ee6a9fbda14257cc3",
+  "elfSha256": "9de46909f7ccb70fca6ec265854f08d316283a0e2e9dbc5916373f763272f507",
+  "geometryFingerprintSha256": "9b40d2e8cb824bfbf3f42a6382e5b1e7126c7d55e14da3839283bd3f19ad9460",
+  "webTests": {
+    "pass": 134,
+    "fail": 0,
+    "typescript": "PASS"
+  },
+  "ewramUsed": 261828,
+  "ewramFree": 316,
+  "iwramUsed": 29824,
+  "sourceHandoffs": {
+    "copy": "e5a37c5e",
+    "temple": "12104dc2",
+    "bike": "e2a42252"
+  },
+  "productionChange": false,
+  "laterNpcFlowerSliceIncluded": false
+}

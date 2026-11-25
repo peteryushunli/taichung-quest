@@ -68,6 +68,72 @@ test('expanded saves prove the highest attempt and unlock independently of legac
   assert.equal(verifyCaptureNativeSave(bytes, { ...expected, unlocks: 0x41 }), undefined);
 });
 
+test('EC02 keeps 24 stable bits in the original low-10/upper-16 layout', () => {
+  for (const bit of [3, 21, 22, 23]) for (const caught of [false, true]) for (const slot of [0, 1]) {
+    const expected = { ...proof, attempts: proof.attempts | (1 << bit), unlocks: proof.unlocks | (caught ? 1 << bit : 0) };
+    const { bytes, view, positions, seal } = fixture(expected, slot, 13, 0xec02);
+    // Bits 24/25 remain reserved; low-word bits 10–15 remain opaque too.
+    for (const at of [0x260, 0x264]) view.setUint16(positions[2] + at, view.getUint16(positions[2] + at, true) | 0xc000, true);
+    view.setUint16(positions[2] + 0x268, expected.attempts & 0x3ff | 0xfc00, true); seal(2);
+    assert.deepEqual(verifyCaptureNativeSave(bytes, expected), { ...expected, slot });
+    assert.equal(verifyCaptureNativeSave(bytes, { ...expected, attempts: expected.attempts ^ (1 << bit) }), undefined);
+    if (caught) assert.equal(verifyCaptureNativeSave(bytes, { ...expected, unlocks: expected.unlocks ^ (1 << bit) }), undefined);
+  }
+  // Genuine old masks are preserved in both schemas; no browser migration.
+  for (const schema of [0xec01, 0xec02]) assert.ok(verifyCaptureNativeSave(fixture(proof, 1, 5, schema).bytes, proof));
+  // Newly supported bits cannot be guessed away when native proof and file differ.
+  const file = fixture({ ...proof, attempts: proof.attempts | 1 << 23 }, 1, 5, 0xec02).bytes;
+  assert.equal(verifyCaptureNativeSave(file, proof), undefined);
+  for (const bit of [24, 25, 26]) assert.equal(verifyCaptureNativeSave(file, { ...proof, attempts: 1 << bit, unlocks: 0 }), undefined);
+});
+
+test('EC03 attests all 27 slots, including independent starter and retired history in rotated save sectors', () => {
+  for (const bit of Array.from({ length: 27 }, (_, bit) => bit)) for (const caught of [false, true])
+    for (const slot of [0, 1]) for (const rotation of [0, 5, 13]) {
+      const expected = { ...proof, attempts: proof.attempts | 1 << bit, unlocks: proof.unlocks | (caught ? 1 << bit : 0) };
+      const { bytes } = fixture(expected, slot, rotation, 0xec03);
+      const before = bytes.slice();
+      assert.deepEqual(verifyCaptureNativeSave(bytes, expected), { ...expected, slot });
+      assert.equal(verifyCaptureNativeSave(bytes, { ...expected, attempts: expected.attempts ^ 1 << bit }), undefined);
+      assert.deepEqual(bytes, before, 'The browser reader must never migrate or mutate SRAM.');
+    }
+  for (const saveCounter of [0, 0xffffffff]) {
+    const expected = { ...proof, saveCounter, attempts: 0x7ffffff, unlocks: 0x7ffffff };
+    assert.ok(verifyCaptureNativeSave(fixture(expected, 1, 13, 0xec03).bytes, expected));
+  }
+});
+
+test('EC03 rejects reserved extra bits, orphan caught26, unknown schemas and duplicate native transactions', () => {
+  const expected = { ...proof, attempts: proof.attempts | 1 << 26, unlocks: proof.unlocks | 1 << 26 };
+  for (let bit = 0; bit < 16; bit++) {
+    if (bit === 0 || bit === 8) continue;
+    const { bytes, view, positions, seal } = fixture(expected, 1, 5, 0xec03);
+    view.setUint16(positions[2] + 0x25e, 0x101 | 1 << bit, true); seal(2);
+    assert.equal(verifyCaptureNativeSave(bytes, expected), undefined, `reserved extra bit${bit}`);
+  }
+  const orphan = fixture(proof, 1, 5, 0xec03);
+  orphan.view.setUint16(orphan.positions[2] + 0x25e, 0x100, true); orphan.seal(2);
+  assert.equal(verifyCaptureNativeSave(orphan.bytes, proof), undefined);
+  for (const schema of [0, 0xec04, 0xffff]) assert.equal(verifyCaptureNativeSave(fixture(proof, 1, 5, schema).bytes, proof), undefined);
+  const duplicate = fixture(expected, 1, 5, 0xec03).bytes;
+  duplicate.set(fixture(expected, 0, 13, 0xec03).bytes.subarray(0, 14 * 0x1000), 0);
+  assert.equal(verifyCaptureNativeSave(duplicate, expected), undefined);
+});
+
+test('EC01/EC02 reserved upper and extra words cannot become fresh starter progress', () => {
+  for (const schema of [0xec01, 0xec02]) {
+    const { bytes, view, positions, seal } = fixture(proof, 1, 13, schema);
+    view.setUint16(positions[2] + 0x25e, 0xffff, true);
+    for (const at of [0x260, 0x264]) view.setUint16(positions[2] + at, view.getUint16(positions[2] + at, true) | 0xc000, true);
+    seal(2);
+    assert.ok(verifyCaptureNativeSave(bytes, proof));
+    for (const bit of [24, 25, 26]) {
+      assert.equal(verifyCaptureNativeSave(bytes, { ...proof, attempts: proof.attempts | 1 << bit }), undefined);
+      assert.equal(verifyCaptureNativeSave(bytes, { ...proof, attempts: proof.attempts | 1 << bit, unlocks: proof.unlocks | 1 << bit }), undefined);
+    }
+  }
+});
+
 function storage() {
   const values = new Map();
   return { getItem: key => values.get(key) ?? null, setItem: (key, value) => values.set(key, value), removeItem: key => values.delete(key) };
@@ -104,4 +170,12 @@ test('unavailable, malformed or silently failed intent storage never acknowledge
 test('pending, armed, active, settling and failed encounters exclude every CPU snapshot path', () => {
   for (const phase of [1, 2, 3, 4, 6]) assert.equal(captureBlocksSnapshots(phase), true);
   for (const phase of [undefined, 0, 5]) assert.equal(captureBlocksSnapshots(phase), false);
+});
+
+test('27-bit boot intents survive reload while unsupported slots stay blocked', () => {
+  const store = storage();
+  const expanded = { ...intent, attempts: 0x7ffffff, unlocks: 1 << 26 };
+  writeCaptureBootIntent(store, expanded);
+  assert.deepEqual(readCaptureBootPolicy(store).intent, expanded);
+  for (const bit of [27, 28, 31]) assert.throws(() => writeCaptureBootIntent(store, { ...expanded, attempts: 2 ** bit, unlocks: 0 }), /Invalid/);
 });

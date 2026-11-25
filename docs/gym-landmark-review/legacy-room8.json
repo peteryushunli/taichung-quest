@@ -1,0 +1,20 @@
+{
+  "passed": true,
+  "continuedUnchangedOrdinaryA701Save": true,
+  "pages": [
+    "I’m　Axiu。　I　make　things　here。|These　homes　date　from　1969。",
+    "I’m　Axiu。　I　make　things　here。|These　homes　date　from　1969。"
+  ],
+  "exit": {
+    "frame": 3222,
+    "flags": 79,
+    "context": 0,
+    "field": true,
+    "x": 29,
+    "y": 12,
+    "group": 43,
+    "map": 60,
+    "facing": 1
+  },
+  "noBattle": true
+}

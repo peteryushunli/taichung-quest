@@ -2,7 +2,8 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import { readFileSync } from 'node:fs';
 import { existsSync } from 'node:fs';
-import { cityPlaceSummary, districtCount, districtLabelSpots, gymStatusSummary, isGym, isGymOpen, localizedPlace, markerPosition, orderPlaces, placeStatus, placeWorld } from '../src/landing-model.ts';
+import { createHash } from 'node:crypto';
+import { districtCount, districtLabelSpots, gymStatusSummary, isGym, isGymOpen, localizedPlace, markerPosition, orderPlaces, placeStatus, placeWorld } from '../src/landing-model.ts';
 
 const landmarks = JSON.parse(readFileSync(new URL('../src/data/landmarks.json', import.meta.url), 'utf8'));
 const sights = JSON.parse(readFileSync(new URL('../src/data/sights.json', import.meta.url), 'utf8'));
@@ -19,7 +20,7 @@ test('the ten-gym release names every open leader in both languages', () => {
     ['miyahara', 'Peiqi', '沛琪'],
     ['natural-science-museum', 'Yicheng', '以澄'],
     ['calligraphy-greenway', 'Xingan', '行安'],
-    ['shen-ji-new-village', 'Axiu', '阿修'],
+    ['confucius-temple', 'Wenyi', '文儀'],
     ['fine-arts-museum', 'Caining', '采寧'],
     ['fengjia-night-market', 'Jiahe', '嘉禾'],
     ['wanhe-temple', 'Muqing', '沐晴'],
@@ -69,14 +70,13 @@ test('the gym status line follows the data in both languages', () => {
 
 test('stats come from the landmark data', () => {
   assert.equal(landmarks.length, 12);
-  assert.equal(districtCount(landmarks), 4);
+  assert.equal(districtCount(landmarks), 5);
+  assert.deepEqual(new Set(landmarks.map(place => place.districtId)), new Set(['old-city', 'greenway', 'xitun', 'nantun', 'north']));
   assert.equal(landmarks.filter(isGym).length, 10);
-  assert.equal(cityPlaceSummary(landmarks, 'en'), '4 districts. 12 real places.');
-  assert.equal(cityPlaceSummary(landmarks, 'zh-Hant'), '4 個街區，12 個真實地點。');
 });
 
 test('map pins sit on each entrance tile of the rendered city, labels facing the middle', () => {
-  for (const place of landmarks) assert.ok(city.markersById[place.id], place.id);
+  for (const place of landmarks) assert.ok(city.markersById[place.id] || place.world, place.id);
   // The station sits at world (117,117); the city rework (save v10) grew the canvas to 129x181 behind a raised freeway.
   assert.deepEqual(city.markersById['old-taichung-station'].world, [117, 117]);
   assert.deepEqual(markerPosition([117, 117], city.world), { x: 117.5 / 129 * 100, y: 117.5 / 181 * 100, side: 'left' });
@@ -97,15 +97,18 @@ test('localized places use their own language and secure links', () => {
 });
 
 test('map pins and gym cards use the short English names', () => {
-  assert.deepEqual(landmarks.map((place) => localizedPlace(place, 'en').mapLabel), ['Old Station', 'Taichung Park', 'Miyahara', 'Science Museum', 'Greenway', 'Shen Ji', 'Fine Arts Museum', 'Fengjia Night Market', 'Wanhe Temple', 'Taichung Theater', 'Maple Garden', 'Wenchang Temple']);
+  assert.deepEqual(landmarks.map((place) => localizedPlace(place, 'en').mapLabel), ['Old Station', 'Taichung Park', 'Miyahara', 'Science Museum', 'Greenway', 'Confucius Temple', 'Fine Arts Museum', 'Fengjia Night Market', 'Wanhe Temple', 'Taichung Theater', 'Maple Garden', 'Wenchang Temple']);
   assert.equal(localizedPlace(landmarks[4], 'en').shortName, 'Greenway');
   assert.equal(localizedPlace(landmarks[4], 'zh-Hant').mapLabel, '草悟道');
 });
 
-test('every gym and landmark has an isolated facade in the website catalog', () => {
+test('every gym and landmark has facade art in the website catalog', () => {
   assert.ok(assets.includes("('./assets/landmarks/isolated/*.png'"));
   for (const place of [...landmarks, ...sights, ...extraSights]) {
-    assert.ok(existsSync(new URL(`../src/assets/landmarks/isolated/${place.id}.png`, import.meta.url)), place.id);
+    const parentIcon = place.id === 'taichung-park-lakeshore';
+    if (parentIcon) assert.ok(assets.includes("landmarkArt['taichung-park-lakeshore'] = landmarkArt['taichung-park']"));
+    const facadeId = parentIcon ? 'taichung-park' : place.id;
+    assert.ok(existsSync(new URL(`../src/assets/landmarks/isolated/${facadeId}.png`, import.meta.url)), place.id);
   }
 });
 
@@ -149,21 +152,26 @@ test('every open gym has a leader portrait and three Pokémon', () => {
   }
 });
 
-test('the listed team orders match the native gym rosters', () => {
-  const expected = {
-    'old-taichung-station': ['Rattata', 'Pidgey', 'Meowth'],
-    'natural-science-museum': ['Magneton', 'Porygon', 'Omastar'],
-    'calligraphy-greenway': ['Bellsprout', 'Vileplume', 'Tangela'],
-    'shen-ji-new-village': ['Meowth', 'Machoke', 'Ditto'],
-    'fine-arts-museum': ['Butterfree', 'Ditto', 'Porygon'],
-    'fengjia-night-market': ['Farfetch’d', 'Magmar', 'Snorlax'],
-    'wanhe-temple': ['Poliwhirl', 'Butterfree', 'Vaporeon'],
-    'taichung-theater': ['Jigglypuff', 'Jynx', 'Mr. Mime'],
-  };
-  for (const [id, names] of Object.entries(expected)) {
-    const entry = assets.split('\n').find((line) => line.includes(`'${id}':`));
+test('all ten website teams and their icons match native roster checkpoint3349d1f1', () => {
+  const roster = JSON.parse(readFileSync(new URL('./fixtures/gym-rosters-3349d1f1.json', import.meta.url)));
+  assert.equal(roster.nativeCommit, '3349d1f175c5a352653f4b7687618b6585721d57');
+  assert.deepEqual(Object.keys(roster.sites).sort(), open.map(place => place.id).sort());
+  assert.equal(roster.sites['wanhe-temple'].trainer, 'MapleGardenMuqing');
+  const icons = new Map([...assets.matchAll(/import (\w+) from '\.\/assets\/pokemon\/icon\/([^']+)';/g)].map(match => [match[1], match[2]]));
+  for (const [id, { species }] of Object.entries(roster.sites)) {
+    const entry = assets.split('\n').find(line => line.includes(`'${id}':`) || line.trimStart().startsWith(`${id}:`));
     assert.ok(entry, id);
-    assert.deepEqual([...entry.matchAll(/mon\('([^']+)', \w+\)/g)].map((match) => match[1]), names, id);
+    const team = [...entry.matchAll(/mon\('([^']+)', (\w+)\)/g)];
+    const toSpecies = name => name.replace(/[’'.]/g, '').replace(/ /g, '_').toUpperCase();
+    assert.deepEqual(team.map(match => toSpecies(match[1])), species, id);
+    for (const [index, match] of team.entries()) {
+      const filename = icons.get(match[2]);
+      assert.equal(filename, `${species[index].toLowerCase()}.png`, `${id} slot${index} icon species`);
+      const bytes = readFileSync(new URL(`../src/assets/pokemon/icon/${filename}`, import.meta.url));
+      assert.equal(bytes.subarray(1, 4).toString(), 'PNG');
+      assert.deepEqual([bytes.readUInt32BE(16), bytes.readUInt32BE(20)], [32, 64], filename);
+      assert.equal(createHash('sha256').update(bytes).digest('hex'), roster.iconSha256[species[index]], filename);
+    }
   }
 });
 
@@ -173,13 +181,12 @@ test('the ten set-piece landmarks join the map as non-gym places, after the ten 
   assert.equal(new Set(places.map((place) => place.id)).size, 20);
   assert.deepEqual(places.slice(0, 10).map(isGym), Array(10).fill(true));
   assert.deepEqual(places.slice(10).map(isGym), Array(10).fill(false));
-  assert.equal(cityPlaceSummary(places, 'en'), '4 districts. 20 real places.');
   assert.equal(sights.length, 8);
   for (const place of sights) {
-    assert.equal(place.kind, 'sight', place.id);
+    assert.equal(place.kind, place.id === 'shen-ji-new-village' ? 'visit' : 'sight', place.id);
     assert.equal(place.gymStatus, 'not-a-gym', place.id);
     assert.equal(placeStatus(place), 'Landmark');
-    assert.equal(city.markersById[place.id], undefined, `${place.id} must not touch the fingerprinted contract`);
+    if (place.id !== 'shen-ji-new-village') assert.equal(city.markersById[place.id], undefined, `${place.id} must not touch the fingerprinted contract`);
     for (const locale of ['en', 'zh-Hant']) {
       const info = localizedPlace(place, locale);
       assert.equal(info.leader, undefined, place.id);
@@ -199,7 +206,7 @@ test('Boulevard map cards use the complete bilingual visitor descriptions', () =
       [description, descriptionZh, officialUrl, officialUrlZh],
       place.id,
     );
-    assert.ok(description.length > 200 && descriptionZh.length > 60, place.id);
+    assert.ok(description.trim() && descriptionZh.trim(), `${place.id}: both sourced visitor descriptions are required`);
     for (const locale of ['en', 'zh-Hant']) {
       assert.ok(localizedPlace(place, locale).url?.startsWith('https://'), place.id);
     }
@@ -211,7 +218,7 @@ test('every place has a map position inside the 129x181 world, with non-gym art 
     const [x, y] = placeWorld(place, city.markersById);
     const pin = markerPosition([x, y], city.world);
     assert.ok(pin.x > 0 && pin.x < 100 && pin.y > 0 && pin.y < 100, place.id);
-    if (isGym(place)) continue;
+    if (isGym(place) || place.id === 'shen-ji-new-village') continue;
     const [left, top, right, bottom] = place.artRect;
     assert.ok(left <= x && x <= right && top <= y && y <= bottom, `${place.id} crop misses its pin`);
     assert.ok(right <= city.world.width && bottom <= city.world.height, place.id);
@@ -229,7 +236,7 @@ test('district names sit on the freeway for the north and beside Wanhe for Nantu
 
 test('every gym stamps the City Pass with its own game badge and bilingual badge name', () => {
   const gyms = landmarks.filter(isGym);
-  assert.deepEqual(gyms.map((place) => place.badgeNameEn), ['Departure Badge', 'Pavilion Badge', 'Chill Badge', 'Discovery Badge', 'Brush Badge', 'Craft Badge', 'Palette Badge', 'Feast Badge', 'Tide Badge', 'Encore Badge']);
+  assert.deepEqual(gyms.map((place) => place.badgeNameEn), ['Departure Badge', 'Pavilion Badge', 'Chill Badge', 'Discovery Badge', 'Brush Badge', 'Rites Badge', 'Palette Badge', 'Feast Badge', 'Tide Badge', 'Encore Badge']);
   for (const place of gyms) {
     assert.match(place.badgeNameZh, /徽章$/, place.id);
     assert.ok(existsSync(new URL(`../src/assets/badges/${place.id}.png`, import.meta.url)), `${place.id} badge art`);

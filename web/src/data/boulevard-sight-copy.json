@@ -1,10 +1,21 @@
 {
+  "taichung-park-lakeshore": {
+    "description": "Paths along Taichung Park’s lake pass arched bridges and look out over the twin roofs of the Mid-Lake Pavilion. The pavilion was built in 1908 for the ceremony marking completion of Taiwan’s north–south railway.",
+    "descriptionZh": "沿著臺中公園日月湖畔的步道散步，可經過拱橋，眺望雙亭並立的湖心亭。湖心亭建於1908年，當時是臺灣縱貫鐵路全通式典禮的貴賓休憩所。",
+    "officialUrl": "https://travel.taichung.gov.tw/en/attractions/intro/882",
+    "officialUrlZh": "https://travel.taichung.gov.tw/en/attractions/intro/882",
+    "officialSourceTitle": "Taichung Tourism and Travel Bureau — Taichung Park"
+  },
   "tiger-city": {
-    "description": "Tiger City is a shopping and entertainment complex on Henan Road in Xitun’s Seventh Redevelopment Zone. Restaurants, shops and a cinema open off a broad outdoor plaza, and a glass elevator looks over the square. Maple Garden and the National Taichung Theater are both a short walk away. In a few blocks, the neighborhood goes from the mall and its cinema to the theater’s curved walls and the park’s sunken paths.",
-    "descriptionZh": "老虎城位於西屯七期重劃區的河南路上，聚集了商店、餐廳與影城。從寬闊的戶外廣場進入商場，還能搭乘透明景觀電梯俯瞰廣場。步行不遠，就是秋紅谷和臺中國家歌劇院。短短幾個街廓，從影城與商場的熱鬧、歌劇院的曲牆，到下沉公園的步道，就能看見七期不同的面貌。",
+    "description": "An evening at Tiger City can pair dinner and a film with the changing lineup of events on its outdoor plaza. This mix of moviegoing and an open-air gathering place gives the Xitun complex a distinctive place in Taichung’s evening scene. Take the glass elevator for a view over the square, then walk a few minutes to nearby Maple Garden.",
+    "descriptionZh": "在老虎城，可以把晚餐、看電影與戶外廣場不定期推出的活動排成一個晚上的行程。影城與開放式廣場相連，讓這個西屯去處在臺中的夜間生活裡別具特色。搭上玻璃景觀電梯俯瞰廣場，再走一小段路，就能到秋紅谷散步。",
     "officialUrl": "https://www.tigercity.com.tw/en/info/about/",
     "officialUrlZh": "https://www.tigercity.com.tw/info/about/",
-    "officialSourceTitle": "Tiger City"
+    "officialSourceTitle": "Tiger City",
+    "descriptionSources": [
+      "https://www.tigercity.com.tw/en/info/about/",
+      "https://www.tigercity.com.tw/news/"
+    ]
   },
   "rainbow-village": {
     "description": "The low houses of Rainbow Village once housed military families in Nantun. When the neighborhood faced demolition, retired soldier and resident Huang Yong-Fu began painting his home and the walls around it. Bright figures and patterns spread down the lanes, and public support helped persuade the city to preserve the painted cluster. Huang became known as Rainbow Grandpa. The narrow lanes and single-story roofs still show how the old community was laid out.",
@@ -53,5 +64,47 @@
     "officialUrl": "https://travel.taichung.gov.tw/en/Attractions/Intro/884",
     "officialUrlZh": "https://travel.taichung.gov.tw/zh-tw/Attractions/Intro/420/",
     "officialSourceTitle": "Taichung Tourism and Travel Bureau"
+  },
+  "national-trade-center": {
+    "description": "Across from the National Taichung Theater, National Trade Center rises like a bamboo shoot, narrowing toward the top. Aedas shaped this Xitun office tower with an oval outline, folded glass curtain walls and layered horizontal rain shades. From street level, those stacked bands are a clear clue to its bamboo-inspired design.",
+    "descriptionZh": "國家歌劇院對面的NTC國家商貿中心，像竹筍般向上收尖。Aedas以橢圓輪廓、摺面玻璃帷幕與層層水平雨遮，塑造這棟西屯商辦大樓。從街道望去，一圈圈堆疊的線條，就是辨認竹筍造型的線索。",
+    "officialUrl": "https://www.google.com/maps/search/?api=1&query=NTC%E5%9C%8B%E5%AE%B6%E5%95%86%E8%B2%BF%E4%B8%AD%E5%BF%83%20%E8%87%BA%E4%B8%AD%E5%B8%82%E8%A5%BF%E5%B1%AF%E5%8D%80%E5%B8%82%E6%94%BF%E5%8C%97%E4%BA%8C%E8%B7%AF282%E8%99%9F",
+    "officialSourceTitle": "National Trade Center — place and address map",
+    "location": {
+      "address": "No. 282, Shizheng N. 2nd Rd., Xitun District, Taichung City",
+      "addressZh": "臺中市西屯區市政北二路282號"
+    },
+    "descriptionSources": [
+      "https://www.aedas.com/en/project/national-trade-center/"
+    ]
+  },
+  "ding-sheng-bhw": {
+    "description": "Ding Sheng BHW rises 36 stories at the corner of Henan Road and Shizheng North 2nd Road in Xitun. Stone panels and glass curtain walls define its exterior, while a planted setback lines the frontage. Look for that green edge as you walk around the base of the tower.",
+    "descriptionZh": "鼎盛BHW位在西屯河南路與市政北二路轉角，是一棟地上三十六層的商辦大樓。外牆結合石材與玻璃帷幕，臨街退縮處則留有植栽綠帶。沿著人行道經過時，可以從大樓腳下的綠意認出這處街角。",
+    "officialUrl": "https://www.google.com/maps/search/?api=1&query=%E9%BC%8E%E7%9B%9BBHW%20%E8%87%BA%E4%B8%AD%E5%B8%82%E8%A5%BF%E5%B1%AF%E5%8D%80%E5%B8%82%E6%94%BF%E5%8C%97%E4%BA%8C%E8%B7%AF230%E8%99%9F",
+    "officialSourceTitle": "Ding Sheng BHW — place and address map",
+    "location": {
+      "address": "No. 230, Shizheng N. 2nd Rd., Xitun District, Taichung City",
+      "addressZh": "臺中市西屯區市政北二路230號"
+    },
+    "descriptionSources": [
+      "https://www.taichung.gov.tw/971521/post",
+      "https://www.kaoarch.org.tw/Upload/20241223095800_40101.pdf"
+    ]
+  },
+  "the-lin": {
+    "description": "THE LIN Hotel stands on Chaofu Road in Xitun, near the National Taichung Theater and Maple Garden. Its design combines modern forms with castle-inspired details. The real building is a working hotel.",
+    "descriptionZh": "林酒店位於西屯朝富路，鄰近國家歌劇院與秋紅谷。建築融合現代造型與古堡式細節；現實中的這棟建築是一間營運中的飯店。",
+    "officialUrl": "https://www.thelin.com.tw/en",
+    "officialUrlZh": "https://www.thelin.com.tw/",
+    "officialSourceTitle": "THE LIN Hotel official website",
+    "location": {
+      "address": "No. 99, Chaofu Rd., Xitun District, Taichung City",
+      "addressZh": "臺中市西屯區朝富路99號"
+    },
+    "descriptionSources": [
+      "https://www.thelin.com.tw/en",
+      "https://travel.taichung.gov.tw/zh-tw/shop/accommodation/595"
+    ]
   }
 }

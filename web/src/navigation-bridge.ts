@@ -2,6 +2,7 @@ import { CAPTURE_MASK } from './capture-persistence.ts';
 
 /** Read-only TCNAV001 client. The GBA address identifies the native packet. */
 export const NAVIGATION_FLAGS = { READY: 1, FIELD: 2, POSITION_VALID: 4, OUTDOOR: 8, INDOOR: 16, CYCLING: 32, CAN_TOGGLE_BIKE: 64 } as const;
+const FIELD_SCRIPT_CONTEXTS = (1 << 4) | (1 << 5); // Native SCRIPT and DIALOGUE.
 export type NavigationMetadata = ({ version: 1; size: 48 } | { version: 2; size: 52 }) &
   { address: number; magicA: number; magicB: number };
 export type NavigationSnapshot = {
@@ -10,6 +11,7 @@ export type NavigationSnapshot = {
   width: number; height: number; contextFlags: number;
   gymMask?: number; captureMask?: number;
 };
+export type NativeEwramAnchor = { heap: Uint8Array; offset: number; address: number };
 export type NavigationState = { phase: 'connecting' | 'hidden' | 'live' | 'unavailable'; snapshot?: NavigationSnapshot };
 const MAGIC_A = 0x414e4354;
 const MAGIC_B = 0x31303056;
@@ -68,6 +70,13 @@ export function isFieldSnapshot(packet: NavigationSnapshot) {
     packet.facing >= 1 && packet.facing <= 4;
 }
 
+/** A script can hide navigation while the native overworld remains on screen. */
+export function isFieldInteractionSnapshot(packet: NavigationSnapshot) {
+  const readyField = NAVIGATION_FLAGS.READY | NAVIGATION_FLAGS.FIELD;
+  return (packet.flags & readyField) === readyField && packet.contextFlags !== 0 &&
+    (packet.contextFlags & ~FIELD_SCRIPT_CONTEXTS) === 0;
+}
+
 /** First samples, pauses, frame/sequence rewind and wrap start a new epoch.
  * A stationary player stays fresh when native frames continue to advance. */
 export class NavigationFreshness {
@@ -76,6 +85,12 @@ export class NavigationFreshness {
   private advancing = false;
   reset() { this.previous = undefined; this.advancing = false; this.advancedAt = 0; }
   isStale(now: number) { return !!this.previous && now - this.advancedAt >= 1000; }
+  canAnchor(packet: NavigationSnapshot, now: number) {
+    const previous = this.previous;
+    return this.advancing && !!previous && now >= this.advancedAt && !this.isStale(now)
+      && packet.frame >= previous.frame && packet.sequence >= previous.sequence
+      && (packet.frame === previous.frame || packet.sequence > previous.sequence);
+  }
   observe(packet: NavigationSnapshot, now: number) {
     const previous = this.previous;
     if (!previous || packet.frame < previous.frame || packet.sequence < previous.sequence || now < this.advancedAt) {
@@ -129,11 +144,24 @@ export class NativeNavigationBridge {
   private freshness = new NavigationFreshness();
   private wasActive = false;
   private invalidReads = 0;
+  private fieldInteraction = false;
   private state: NavigationState = { phase: 'connecting' };
   private options: ClientOptions;
   constructor(options: ClientOptions) { this.options = options; }
   get currentState() { return this.state; }
-  private publish(state: NavigationState) {
+  get canRenderFieldInteraction() { return this.fieldInteraction; }
+  /** The uniquely advancing nav allocation anchors other ROM-paired EWRAM
+   * packets even in hidden native menus. Never exposes a hidden position. */
+  get ewramAnchor(): NativeEwramAnchor | undefined {
+    if (this.stopped || !this.wasActive || this.discovering || !this.options.isActive() || this.offset === undefined) return;
+    const heap = this.options.getHeap();
+    if (!heap || heap.buffer !== this.heap?.buffer || heap.byteLength !== this.heap.byteLength) return;
+    const packet = readNavigationSnapshot(heap, this.offset, this.options.metadata);
+    if (!packet || !this.freshness.canAnchor(packet, performance.now())) return;
+    return { heap, offset: this.offset, address: this.options.metadata.address };
+  }
+  private publish(state: NavigationState, fieldInteraction = false) {
+    this.fieldInteraction = fieldInteraction;
     if (!state.snapshot && !this.state.snapshot && this.state.phase === state.phase) return;
     this.state = state;
     this.options.onState(state);
@@ -207,7 +235,8 @@ export class NativeNavigationBridge {
     this.invalidReads = 0;
     const now = performance.now();
     const fresh = this.freshness.observe(packet, now);
-    this.publish(fresh && isFieldSnapshot(packet) ? { phase: 'live', snapshot: packet } : { phase: 'hidden' });
+    this.publish(fresh && isFieldSnapshot(packet) ? { phase: 'live', snapshot: packet } : { phase: 'hidden' },
+      fresh && isFieldInteractionSnapshot(packet));
     // EWRAM can be reallocated inside the same Wasm heap after a core reset.
     // A coherent but frozen old allocation is not a reason to keep its offset.
     if (this.freshness.isStale(now)) this.reconnect();

@@ -287,12 +287,57 @@ class ReleasePairTests(unittest.TestCase):
         with self.assertRaisesRegex(PAIR.PairError, 'encounterBridge: metadata does not match ELF'):
             self.verify()
 
+    def test_badge_absence_mismatch_and_overlap_are_rejected(self):
+        without_badge = [row for row in self.symbols if row[0] != 'gTaichungBadgeBridge']
+        self.elf.write_bytes(synthetic_elf(self.text, without_badge))
+        with self.assertRaisesRegex(PAIR.PairError, 'badgeBridge: expected one sized ELF'):
+            self.verify()
+        packet = self.build.pop('badgeBridge')
+        self.save_metadata()
+        receipt, _ = self.verify()
+        self.assertNotIn('badgeBridge', receipt['bridges'])
+        self.elf.write_bytes(synthetic_elf(self.text, self.symbols))
+        with self.assertRaisesRegex(PAIR.PairError, 'badgeBridge: metadata does not match ELF'):
+            self.verify()
+        # Matching metadata cannot bless overlapping native packet storage.
+        address = self.build['languageBridge']['address']
+        self.build['badgeBridge'] = dict(packet, address=address)
+        self.save_metadata()
+        symbols = without_badge + [('gTaichungBadgeBridge', address, 32)]
+        self.elf.write_bytes(synthetic_elf(self.text, symbols))
+        with self.assertRaisesRegex(PAIR.PairError, 'badgeBridge: bridge storage overlaps'):
+            self.verify()
+
     def test_web_contract_differs_even_with_identical_fingerprint(self):
         other = copy.deepcopy(self.contract)
         other['policy'] = {'wrong': 'not part of the geometry fingerprint'}
         self.web.write_bytes(PAIR.json_bytes(other))
         with self.assertRaisesRegex(PAIR.PairError, 'Native/web minimap contracts differ'):
             self.verify()
+
+    def test_badge_presentation_matches_the_committed_ten_slot_layout(self):
+        ids = ['station','park','miyahara','science','greenway','confucius','arts','fengjia','wanhe','theater']
+        manifest = dict(schemaVersion=1, assetSetId='explicit-test-art-set',
+                        badges=[dict(gymIndex=i, completionBit=i, landmarkId=name) for i,name in enumerate(ids)])
+        path = self.source / 'data/taichung/story-confucius/badge-display-manifest-v1.json'
+        path.parent.mkdir(parents=True)
+        path.write_bytes(PAIR.json_bytes(manifest))
+        self.commit('register explicit badge display fixture')
+        self.build['sourceCommit'] = self.git('rev-parse','HEAD').decode().strip()
+        self.patch.write_bytes(self.git('diff','--binary',self.upstream,'HEAD'))
+        presentation = dict(schemaVersion=1,assetSetId='explicit-test-art-set',gymIds=ids)
+        self.build['badgePresentation'] = copy.deepcopy(presentation)
+        self.save_metadata()
+        receipt,_ = self.verify()
+        self.assertEqual(receipt['badgePresentation']['gymIds'],ids)
+        self.assertEqual(receipt['badgePresentation']['sourceManifestSha256'],PAIR.sha256(path.read_bytes()))
+        for change in [dict(schemaVersion=True),dict(assetSetId='wrong-art-set'),
+                       dict(gymIds=ids[:5]+['old-shen-ji']+ids[6:]),dict(extra='unregistered')]:
+            with self.subTest(change=change):
+                self.build['badgePresentation'] = {**presentation,**change}
+                self.save_metadata()
+                with self.assertRaisesRegex(PAIR.PairError,'Badge presentation differs'):
+                    self.verify()
 
     def test_metadata_geometry_binding_is_checked(self):
         self.build['minimap']['geometryFingerprintSha256'] = '0' * 64

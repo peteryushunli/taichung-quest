@@ -1,0 +1,44 @@
+{
+  "passed": true,
+  "rom": "8516a684",
+  "sourceSave": "wenyi-on-after.sav",
+  "unchangedImport": true,
+  "results": [
+    {
+      "door": [
+        69,
+        22,
+        9
+      ],
+      "approach": [
+        22,
+        10
+      ],
+      "nativeEntered": 79,
+      "returned": [
+        69,
+        22,
+        10
+      ],
+      "gymMask": 32
+    },
+    {
+      "door": [
+        69,
+        23,
+        9
+      ],
+      "approach": [
+        23,
+        10
+      ],
+      "nativeEntered": 79,
+      "returned": [
+        69,
+        23,
+        10
+      ],
+      "gymMask": 32
+    }
+  ]
+}

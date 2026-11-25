@@ -1,0 +1,11 @@
+/* A small field dialogue inside the display, over the frozen native scene. */
+#pause-screen { z-index: 4; container-type: inline-size; padding: 4%; justify-content: flex-end; align-items: stretch; text-align: left; color: #2d4248; background: linear-gradient(#152b2426, #152b2452); }
+.pause-panel { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 7px 12px; padding: clamp(12px, 3cqw, 22px); border: 3px solid #2d4248; background: #f8f5e3; box-shadow: inset 0 0 0 3px #a5b7b5, inset 0 0 0 5px #fffdf0, 3px 3px 0 #142c2480; }
+#pause-screen .pause-title { margin: 0; color: #2d4248; text-shadow: none; font: 400 clamp(14px, 3.6cqw, 24px)/1.35 'Silkscreen', var(--mono), monospace; letter-spacing: 0; overflow-wrap: normal; }
+.pause-continue { display: inline-flex; align-items: center; justify-content: flex-start; gap: 9px; min-height: 44px; min-width: 104px; padding: 9px 12px; border: 2px solid #647e77; border-radius: 0; background: #e3ead6; color: #263e34; box-shadow: 2px 2px 0 #9aaca0; font: 400 clamp(11px, 2.6cqw, 16px)/1.2 'Silkscreen', var(--mono), monospace; }
+.pause-continue:hover { background: #d4e0c7; border-color: #365a4a; }
+.pause-continue:active { transform: translate(1px, 1px); box-shadow: 1px 1px 0 #9aaca0; }
+.pause-continue:focus-visible { outline: 3px solid #c28b41; outline-offset: 3px; }
+.pause-pointer { flex: none; width: 8px; height: 12px; background: currentColor; clip-path: polygon(0 0, 33% 0, 33% 16%, 66% 16%, 66% 33%, 100% 33%, 100% 66%, 66% 66%, 66% 83%, 33% 83%, 33% 100%, 0 100%); }
+#pause-screen .pause-title:lang(zh-Hant) { font-family: var(--mono), 'PingFang TC', 'Microsoft JhengHei', sans-serif; font-size: clamp(16px, 3.6cqw, 24px); font-weight: 600; line-height: 1.5; letter-spacing: .04em; }
+.pause-continue:lang(zh-Hant) { font-family: var(--mono), 'PingFang TC', 'Microsoft JhengHei', sans-serif; font-weight: 600; letter-spacing: .08em; }

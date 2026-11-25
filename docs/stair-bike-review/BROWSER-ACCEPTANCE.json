@@ -1,0 +1,30 @@
+{
+  "status": "PASS_PAIRED_BROWSER_ACCEPTANCE",
+  "origin": "http://127.0.0.1:4216",
+  "romSha256": "d05cdd78e0a615f9354021d14b359e5a00053f44a54cde9ee6a9fbda14257cc3",
+  "frontendCommit": "a94e78095e05614199a08a869a118bd84f3b1678",
+  "inputSaveSha256": "2ebb882d98334d9e279da205e83b747691df29b489fbdec334e3cd3cc46549dc",
+  "passed": [
+    "Unchanged ordinary oldSRAM import and native Continue",
+    "Native Up walks central restored stair; actual live radar tile303,35",
+    "Next Up enters the existing gym through painteddoor",
+    "HDfacade displays restored stairs with no wood placeholders",
+    "Walking exit returns toexactstair303,35 inlive radar",
+    "Native D mounts bike onrestoredstair; Up entersgymusingcombinedslowerbike",
+    "Combined bike entry reachesgymdismounted",
+    "Original local SRAMbackup restored throughnormalUIimport",
+    "Protected landingheadingverifiedEN/ZH",
+    "Protected City MapintroductionverifiedEN/ZH throughnormalentrybuttons",
+    "Protected Play reachesnativeSettings"
+  ],
+  "screenshots": [
+    "paired-hd-central-stair.jpg",
+    "paired-gym-entry.jpg",
+    "hosted-city-map-zh.jpg",
+    "hosted-city-map-en.jpg",
+    "hosted-play-starts.jpg"
+  ],
+  "pending": [],
+  "localSaveRestoredSha256": "7b95a8c865337beb949068c34647d8ddfdc5385135f828a3f333a16b4b624fdd",
+  "hostedOrigin": "https://taichung-quest-81hr5nal1-peteryushunli-6635s-projects.vercel.app"
+}

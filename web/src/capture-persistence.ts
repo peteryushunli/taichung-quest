@@ -3,13 +3,17 @@
 import { isFullFireRedSaveSize, readFireRedSaveSlot } from './firered-save.ts';
 
 export const CAPTURE_BOOT_INTENT_KEY = 'taichung-quest-capture-boot-v1';
-export const CAPTURE_SITE_COUNT = 21;
+export const CAPTURE_SITE_COUNT = 27;
 export const CAPTURE_MASK = (1 << CAPTURE_SITE_COUNT) - 1;
 export const LEGACY_CAPTURE_MASK = 0x3fff;
 const SAVE_LOW_BITS = 10;
 const SAVE_LOW_MASK = (1 << SAVE_LOW_BITS) - 1;
 const LEGACY_SCHEMA = 0xec01;
-const SCHEMA = 0xec02;
+const EC02_SCHEMA = 0xec02;
+const SCHEMA = 0xec03;
+// EC02 predates the starter rotation. Its reserved bits must not become new
+// starter history merely because the live bridge supports more stable slots.
+const EC02_CAPTURE_MASK = 0xffffff;
 
 export type CaptureSaveProof = {
   saveCounter: number;
@@ -48,11 +52,20 @@ export function verifyCaptureNativeSave(bytes: Uint8Array, expected: CaptureSave
     // SaveBlock1's vars start at 0x1000, across sectors 1/2.
     const variable = (id: number) => view.getUint16(save1SecondSector + 0x1000 + (id - 0x4000) * 2 - 0xf80, true);
     const schema = variable(0x40f3);
-    if (schema !== SCHEMA && schema !== LEGACY_SCHEMA) continue;
-    const mask = (low: number, upper: number) => schema === LEGACY_SCHEMA ? variable(low) & LEGACY_CAPTURE_MASK
-      : (variable(low) & SAVE_LOW_MASK) | ((variable(upper) << SAVE_LOW_BITS) & CAPTURE_MASK);
-    const attempts = mask(0x40f4, 0x40f0);
-    const unlocks = mask(0x40f5, 0x40f2);
+    if (schema !== SCHEMA && schema !== EC02_SCHEMA && schema !== LEGACY_SCHEMA) continue;
+    // EC03 dedicates 0x40EF bit0/bit8 to attempted/caught slot26. Its other
+    // bits are invalid, not additional capture IDs. Older schemas ignore this
+    // previously unallocated word entirely (native owns their migration).
+    const extra = schema === SCHEMA ? variable(0x40ef) : 0;
+    if (extra & ~0x0101) continue;
+    const mask = (low: number, upper: number, extraBit: number) => {
+      if (schema === LEGACY_SCHEMA) return variable(low) & LEGACY_CAPTURE_MASK;
+      const historical = (variable(low) & SAVE_LOW_MASK) | (variable(upper) << SAVE_LOW_BITS);
+      if (schema === EC02_SCHEMA) return historical & EC02_CAPTURE_MASK;
+      return historical | (extra & extraBit ? 1 << 26 : 0);
+    };
+    const attempts = mask(0x40f4, 0x40f0, 0x0001);
+    const unlocks = mask(0x40f5, 0x40f2, 0x0100);
     if (attempts !== expected.attempts || unlocks !== expected.unlocks
       || (unlocks & ~attempts) || view.getUint32(save2 + 0xa, true) !== expected.trainerId) continue;
     matches.push({ ...expected, slot });

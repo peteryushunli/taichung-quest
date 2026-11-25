@@ -5,7 +5,7 @@ import type { EncounterBridgeState } from './encounter-bridge';
 import landmarkCatalog from './data/landmarks.json';
 import { BOULEVARD_PREVIEW, cityGeometry, sightCatalog } from './preview-world';
 import { landingMedia, landmarkArt } from './landing-assets';
-import { cityPlaceSummary, districtLabelSpots, isGym, localizedPlace, markerPosition, orderPlaces, placeWorld } from './landing-model';
+import { districtLabelSpots, isGym, localizedPlace, markerPosition, orderPlaces, placeWorld } from './landing-model';
 import type { LandingLandmark } from './landing-model';
 import './city-guide.css';
 import { getLocale, initializeLocalization, localizeTree, onLocaleChange, t } from './i18n';
@@ -47,7 +47,7 @@ export function createCityGuide(host: GuideHost) {
   dialog.innerHTML = `
     <div class="guide-shell">
       <header class="guide-header"><div><p class="guide-eyebrow"><span data-i18n="TAICHUNG FIELD GUIDE">TAICHUNG FIELD GUIDE</span> <span class="guide-bilingual-heading" lang="zh-Hant">· 台中城市導覽</span></p><h2 id="city-guide-title" data-i18n="A small map. A bigger city.">A small map. A bigger city.</h2></div><button class="guide-close" aria-label="Close City Map" data-i18n-label="Close City Map" autofocus>×</button></header>
-      <p class="guide-intro" id="city-guide-intro"><span id="guide-place-count"></span> <span data-i18n="Choose a landmark to explore its game-world stop and find visitor information where available.">Choose a landmark to explore its game-world stop and find visitor information where available.</span></p>
+      <p class="guide-intro" id="city-guide-intro"><span data-i18n="Explore Taichung’s real neighborhoods and landmarks.">Explore Taichung’s real neighborhoods and landmarks.</span> <span data-i18n="Choose a landmark to explore its game-world stop and find visitor information where available.">Choose a landmark to explore its game-world stop and find visitor information where available.</span></p>
       <div class="guide-body">
         <section class="guide-overview" aria-label="Taichung city map" data-i18n-label="Taichung city map">
           <div class="overview-heading"><span>TAICHUNG <span lang="zh-Hant">臺中</span></span>${cityGeometry.coordinateSystem?.northUp === false ? '' : '<span class="compass" aria-label="North points up">N ↑</span>'}</div>
@@ -94,15 +94,16 @@ export function createCityGuide(host: GuideHost) {
     const outdoor = place.kind === 'sight' || place.id === 'maple-garden';
     const areaLabel = !place.playable ? 'PLANNED AREA · NOT PLAYABLE' : place.phase === 'arrival' ? 'ARRIVAL AREA · EXPLORABLE' : 'EXPLORABLE GAME AREA';
     const areaNote = !place.playable ? 'This landmark is in the city plan; its game area is not playable in this build.' : outdoor ? 'Walk to it on the city streets and read its sign.' : 'Explore this landmark’s district and visitor hall.';
-    const hasEncounter = BOULEVARD_PREVIEW ? cityGeometry.markersById[place.id]?.captureBit !== undefined : undefined;
-    const gymNote = landmarkCaptureCopy(place.id, 'guide', hasEncounter) ?? (!gym ? 'Visit this landmark and learn its local history.' : place.gymStatus === 'playable' ? 'A gym battle is playable here. Speak to the leader and win to earn a badge.' : place.gymStatus === 'pending-verification' ? 'This gym challenge is being verified. The district and visitor hall are explorable.' : 'This landmark’s fictional gym challenge is still in development.');
+    const captureBit = cityGeometry.markersById[place.id]?.captureBit;
+    const hasEncounter = BOULEVARD_PREVIEW ? captureBit !== undefined : undefined;
+    const gymNote = landmarkCaptureCopy(place.id, 'guide', hasEncounter, BOULEVARD_PREVIEW ? captureBit : undefined) ?? (!gym ? 'Visit this landmark and learn its local history.' : place.gymStatus === 'playable' ? 'A gym battle is playable here. Speak to the leader and win to earn a badge.' : place.gymStatus === 'pending-verification' ? 'This gym challenge is being verified. The district and visitor hall are explorable.' : 'This landmark’s fictional gym challenge is still in development.');
     const artLabel = chinese ? `${place.nameZh}原創插圖` : `Original illustration of ${place.nameEn}`;
     const facade = landmarkArt[place.id]?.facade;
     const art = facade ? `<div class="landmark-art is-facade"><img src="${escapeHtml(facade)}" alt="${escapeHtml(info.name)}" loading="lazy" decoding="async"></div>`
       : gym ? `<div class="landmark-art">${landmarkSketch(place.id, artLabel)}<span>${t('ORIGINAL FIELD SKETCH')}</span></div>` : '';
     dialog.querySelector('#landmark-detail')!.innerHTML = `
       ${art}
-      <div class="landmark-copy"><p class="landmark-category">${escapeHtml(chinese ? place.categoryZh : place.category)} <span>· ${escapeHtml(chinese ? place.districtZh : place.districtEn)}</span></p><h3>${escapeHtml(chinese ? place.nameZh : place.nameEn)}<span lang="${chinese ? 'en' : 'zh-Hant'}">${escapeHtml(chinese ? place.nameEn : place.nameZh)}</span></h3><p class="visitor-description">${escapeHtml(chinese ? place.descriptionZh : place.description)}</p>${place.location ? `<div class="visitor-address"><span>${t('Real-world address')}</span><address>${escapeHtml(chinese ? place.location.addressZh : place.location.address)}</address></div>` : ''}${info.url ? `<a class="official-link" href="${escapeHtml(info.url)}" target="_blank" rel="noopener noreferrer">${t('Official visitor information')} <span aria-hidden="true">↗</span></a>` : ''}${info.url && place.officialSourceTitle ? `<p class="visitor-source">${t('Source')}: ${escapeHtml(place.officialSourceTitle)}</p>` : ''}</div>
+      <div class="landmark-copy"><p class="landmark-category">${escapeHtml(chinese ? place.categoryZh : place.category)} <span>· ${escapeHtml(chinese ? place.districtZh : place.districtEn)}</span></p><h3>${escapeHtml(chinese ? place.nameZh : place.nameEn)}<span lang="${chinese ? 'en' : 'zh-Hant'}">${escapeHtml(chinese ? place.nameEn : place.nameZh)}</span></h3><p class="visitor-description">${escapeHtml(chinese ? place.descriptionZh : place.description)}</p>${place.location ? `<div class="visitor-address"><span>${t('Real-world address')}</span><address>${escapeHtml(chinese ? place.location.addressZh : place.location.address)}</address></div>` : ''}${info.url ? `<div class="visitor-link"><a class="official-link" href="${escapeHtml(info.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(info.visitLabel)} <span aria-hidden="true">↗</span></a></div>` : ''}</div>
       <div class="landmark-game-note"><span class="area-status ${place.playable ? 'area-playable' : 'area-planned'}">${t(areaLabel)}</span><p>${t(areaNote)}</p><div class="gym-note"><span>${t(gym ? 'FICTIONAL GYM CHALLENGE' : 'LANDMARK')}</span><p>${t(gymNote)}</p><p class="guide-encounter-status" hidden></p></div></div>`;
     renderEncounterStatus();
     layoutLabels();
@@ -146,12 +147,10 @@ export function createCityGuide(host: GuideHost) {
     resumeOnClose = false;
     returnFocus?.focus({ preventScroll: true });
   });
-  dialog.querySelector('#guide-place-count')!.textContent = cityPlaceSummary(landmarks, getLocale(), cityGeometry.world.neighborhoods?.length);
   if (selected) select(selected);
   initializeLocalization(dialog);
   onLocaleChange(() => {
     localizeTree(dialog);
-    dialog.querySelector('#guide-place-count')!.textContent = cityPlaceSummary(landmarks, getLocale(), cityGeometry.world.neighborhoods?.length);
     if (selected) select(selected);
   });
 

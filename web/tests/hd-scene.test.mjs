@@ -19,6 +19,20 @@ test('script location comes from the verified onboarding client and survives its
   assert.deepEqual(tracker.observe(navigation, opening), { group: 43, map: 66, x: 3, y: 4 });
 });
 
+test('ordinary field dialogue and choices can use the idle mailbox for rendering', () => {
+  const tracker = new HdSceneTracker();
+  const park = { status: 'live', snapshot: { flags: 0, mapGroup: 43, mapNumber: 46, x: 9, y: 34 } };
+  const scene = { group: 43, map: 46, x: 9, y: 34 };
+  assert.equal(tracker.observe(hidden, park), undefined);
+  assert.deepEqual(tracker.observe(hidden, park, true), scene);
+  assert.deepEqual(tracker.observe(hidden, { status: 'unavailable' }, true), scene);
+  const moved = { ...park, snapshot: { ...park.snapshot, x: 10 } };
+  assert.deepEqual(tracker.observe(hidden, moved, true), { ...scene, x: 10 });
+  assert.equal(tracker.observe(hidden, moved), undefined);
+  assert.equal(tracker.observe(hidden, { status: 'unavailable' }, true), undefined);
+  assert.equal(tracker.observe({ phase: 'connecting' }, park, true), undefined);
+});
+
 test('camera confidence excludes dialogue but rejects a changed scene, fade, and invalid crop', () => {
   const refW = 300, refH = 200, cx = 25, cy = 17;
   const ref = Uint16Array.from({ length: refW * refH }, (_, i) => (i * 157 + (i % 29) * 37) % 32767 + 1);

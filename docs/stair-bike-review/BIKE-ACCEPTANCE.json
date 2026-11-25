@@ -1,0 +1,246 @@
+{
+  "classification": "Actual native controller travel from constructed isolated saved-location fixtures; no RAM/ROM/RNG writes.",
+  "timing": {
+    "baseline-bike-right": {
+      "tiles": 32,
+      "pixels": 512,
+      "nativeFrames": 96,
+      "framesPerTile": 3,
+      "start": {
+        "tick": 2845,
+        "frame": 2681,
+        "flags": 111,
+        "context": 0,
+        "field": true,
+        "x": 8,
+        "y": 2,
+        "group": 43,
+        "map": 40,
+        "facing": 4
+      },
+      "end": {
+        "tick": 2941,
+        "frame": 2777,
+        "flags": 111,
+        "context": 0,
+        "field": true,
+        "x": 40,
+        "y": 2,
+        "group": 43,
+        "map": 40,
+        "facing": 4
+      },
+      "receipt": "/Users/peter/devday_hackathon/artifacts/qa/2026-11-24-bike-75/baseline-route-bike-right.json"
+    },
+    "slower-bike-right": {
+      "tiles": 32,
+      "pixels": 512,
+      "nativeFrames": 128,
+      "framesPerTile": 4,
+      "start": {
+        "tick": 1337,
+        "frame": 1173,
+        "flags": 111,
+        "context": 0,
+        "field": true,
+        "x": 8,
+        "y": 2,
+        "group": 43,
+        "map": 40,
+        "facing": 4
+      },
+      "end": {
+        "tick": 1465,
+        "frame": 1301,
+        "flags": 111,
+        "context": 0,
+        "field": true,
+        "x": 40,
+        "y": 2,
+        "group": 43,
+        "map": 40,
+        "facing": 4
+      },
+      "receipt": "/Users/peter/devday_hackathon/artifacts/qa/2026-11-24-bike-75/slower-route-bike-right.json"
+    },
+    "slower-bike-left": {
+      "tiles": 32,
+      "pixels": 512,
+      "nativeFrames": 128,
+      "framesPerTile": 4,
+      "start": {
+        "tick": 1512,
+        "frame": 1348,
+        "flags": 111,
+        "context": 0,
+        "field": true,
+        "x": 36,
+        "y": 2,
+        "group": 43,
+        "map": 40,
+        "facing": 3
+      },
+      "end": {
+        "tick": 1640,
+        "frame": 1476,
+        "flags": 111,
+        "context": 0,
+        "field": true,
+        "x": 4,
+        "y": 2,
+        "group": 43,
+        "map": 40,
+        "facing": 3
+      },
+      "receipt": "/Users/peter/devday_hackathon/artifacts/qa/2026-11-24-bike-75/slower-route-bike-left.json"
+    },
+    "baseline-walk-left": {
+      "tiles": 32,
+      "pixels": 512,
+      "nativeFrames": 512,
+      "framesPerTile": 16,
+      "start": {
+        "tick": 4717,
+        "frame": 4553,
+        "flags": 79,
+        "context": 0,
+        "field": true,
+        "x": 36,
+        "y": 2,
+        "group": 43,
+        "map": 40,
+        "facing": 3
+      },
+      "end": {
+        "tick": 5229,
+        "frame": 5065,
+        "flags": 79,
+        "context": 0,
+        "field": true,
+        "x": 4,
+        "y": 2,
+        "group": 43,
+        "map": 40,
+        "facing": 3
+      },
+      "receipt": "/Users/peter/devday_hackathon/artifacts/qa/2026-11-24-bike-75/baseline-route-walk-left.json"
+    },
+    "slower-walk-right": {
+      "tiles": 32,
+      "pixels": 512,
+      "nativeFrames": 512,
+      "framesPerTile": 16,
+      "start": {
+        "tick": 3940,
+        "frame": 3776,
+        "flags": 79,
+        "context": 0,
+        "field": true,
+        "x": 8,
+        "y": 2,
+        "group": 43,
+        "map": 40,
+        "facing": 4
+      },
+      "end": {
+        "tick": 4453,
+        "frame": 4288,
+        "flags": 79,
+        "context": 0,
+        "field": true,
+        "x": 40,
+        "y": 2,
+        "group": 43,
+        "map": 40,
+        "facing": 4
+      },
+      "receipt": "/Users/peter/devday_hackathon/artifacts/qa/2026-11-24-bike-75/slower-route-walk-right.json"
+    },
+    "baseline-run-right": {
+      "tiles": 32,
+      "pixels": 512,
+      "nativeFrames": 256,
+      "framesPerTile": 8,
+      "start": {
+        "tick": 5392,
+        "frame": 5227,
+        "flags": 79,
+        "context": 0,
+        "field": true,
+        "x": 8,
+        "y": 2,
+        "group": 43,
+        "map": 40,
+        "facing": 4
+      },
+      "end": {
+        "tick": 5649,
+        "frame": 5483,
+        "flags": 79,
+        "context": 0,
+        "field": true,
+        "x": 40,
+        "y": 2,
+        "group": 43,
+        "map": 40,
+        "facing": 4
+      },
+      "receipt": "/Users/peter/devday_hackathon/artifacts/qa/2026-11-24-bike-75/baseline-route-run-right.json"
+    },
+    "slower-run-left": {
+      "tiles": 32,
+      "pixels": 512,
+      "nativeFrames": 256,
+      "framesPerTile": 8,
+      "start": {
+        "tick": 4615,
+        "frame": 4449,
+        "flags": 79,
+        "context": 0,
+        "field": true,
+        "x": 36,
+        "y": 2,
+        "group": 43,
+        "map": 40,
+        "facing": 3
+      },
+      "end": {
+        "tick": 4871,
+        "frame": 4705,
+        "flags": 79,
+        "context": 0,
+        "field": true,
+        "x": 4,
+        "y": 2,
+        "group": 43,
+        "map": 40,
+        "facing": 3
+      },
+      "receipt": "/Users/peter/devday_hackathon/artifacts/qa/2026-11-24-bike-75/slower-route-run-left.json"
+    }
+  },
+  "speedRatio": 0.75,
+  "controls": {
+    "wall": "60 held Down frames stop at43:40[4,2], faceDown; no clipping",
+    "toggle": "heldB30frames toggles once",
+    "turns": "Right\u2192Left reverse travels36tiles; fourframe cadence settles exactly atstart",
+    "door": "MountedOldStation exterior43:76[14,38] Up\u2192room43:3[9,13], dismounted; indoorB staysfoot; Down returns43:76[14,38], B remounts"
+  },
+  "artifacts": {
+    "baseline-route-bike-right.json": "c056ce141d98e96d1da488bd497c8c1b73d4fc97bcd7b98cb0fdc505058d6ad6",
+    "baseline-route-run-right.json": "86916c6114edff87cce20330c8c8c01beb8781571a990f7491f29de8fa52f081",
+    "baseline-route-walk-left.json": "6fce9317de60d8e35860cc8cd977d0b5b156b482c403e03fce1f24789398bad7",
+    "slower-door-entered-dismounted.json": "b515a70efc14456584c4c15eb01bf8a755aff44f99da3ebdb333b499c91753d0",
+    "slower-door-exit-return.json": "3e8610791e4485dc86bb0912ec38d84b6b2f6c78e62bcb5ec73cf44a6b24a6ba",
+    "slower-door-indoor-b-no-bike.json": "130b036235758fab3d37e060f1cb46751f78a3a2ff61f6b67aad836f3ad4314c",
+    "slower-door-mounted-exterior.json": "25b4a19945b4c0b4132b37a5cf879f293f622c6f49e5475b656c8feb222e218e",
+    "slower-door-outside-remount.json": "ee00ed143a4be9d7ee0c604241216c3786bfa94422e1db7d96dd4a1bcabf460f",
+    "slower-route-before-wall.json": "fdb5221cc90b3484acf65d85ca5b0c80ce898d463bb42eb89ba4bd198e7ef64d",
+    "slower-route-bike-left.json": "a78d584203ba1efe62d78b95a4293b13805863dc21a5b3387732f7645a20552b",
+    "slower-route-bike-right.json": "02bd4d35bef267017fe43e44b78452bde68b9f3c2b8bec066792e1d0f2abc89d",
+    "slower-route-held-b-single-toggle.json": "75604ff244718845ceda3f531a6586e59e43b084425298e69ebbe6e06bba9aa8",
+    "slower-route-run-left.json": "a75934bbfab9fa78b8bf49fb2ce734246da254ba63066265c3d2555207984b04",
+    "slower-route-walk-right.json": "fdabcc137c7d872e7a788d8ba301ea1eeb01e8ab2567805e17805b15db9770ca",
+    "slower-route-wall-stopped.json": "2966b0fe865dda7c17e2b09390d804a8eaeac0fca7690084cd53eef7c454496d"
+  }
+}

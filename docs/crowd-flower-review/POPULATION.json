@@ -1,0 +1,59 @@
+{
+  "passed": true,
+  "coordinateWindow": "Actor x-center[-7,7], y-center[-5,4]; uniform walkable cells/spawn tiles, not travel-route probability",
+  "before": {
+    "total": 20,
+    "walking": 0,
+    "stationary": 20,
+    "trainers": 8,
+    "residents": 0,
+    "populatedSections": 17,
+    "sections": 54,
+    "perDistrict": {
+      "fengjia": 1,
+      "xitun": 2,
+      "nantun": 3,
+      "centralpark": 1,
+      "beitun": 1,
+      "dadun": 1,
+      "west": 3,
+      "oldcity": 5,
+      "north": 3
+    },
+    "walkableCells": 40041,
+    "viewportCovered": 1862,
+    "viewportPercent": 4.650233510651582,
+    "maximum15x10": 2,
+    "maximum17x17": 2,
+    "maximumPerMap": 3
+  },
+  "after": {
+    "total": 75,
+    "walking": 58,
+    "stationary": 17,
+    "trainers": 8,
+    "residents": 55,
+    "populatedSections": 54,
+    "sections": 54,
+    "perDistrict": {
+      "fengjia": 3,
+      "xitun": 12,
+      "nantun": 12,
+      "centralpark": 5,
+      "beitun": 6,
+      "dadun": 7,
+      "west": 9,
+      "oldcity": 16,
+      "north": 5
+    },
+    "walkableCells": 40041,
+    "viewportCovered": 6827,
+    "viewportPercent": 17.050023725681175,
+    "maximum15x10": 2,
+    "maximum17x17": 3,
+    "maximumPerMap": 4
+  },
+  "allOldLocalIdsPreserved": true,
+  "terrainCollisionWarpSignAndConnectivityUnchanged": true,
+  "trainerPatrols": true
+}

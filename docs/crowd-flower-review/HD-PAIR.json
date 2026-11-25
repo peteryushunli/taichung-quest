@@ -1,0 +1,117 @@
+{
+  "status": "PASS",
+  "scope": "covered-flowers",
+  "romSha256": "3dcbe7747c057f6da995c9ce8fdc5a717f08473daa4510ee7b71a9205a0dc6d3",
+  "maps": 76,
+  "changedReferenceMaps": [
+    "43.59",
+    "43.63"
+  ],
+  "changedPixels": 388,
+  "changedWorldCells": [
+    [
+      242,
+      137
+    ],
+    [
+      243,
+      137
+    ]
+  ],
+  "automaticPicturesByteExact": true,
+  "freshTowerMasksByteExact": true,
+  "coverage": [
+    {
+      "nativeKey": "43.27",
+      "sprite": "ding-sheng-bhw",
+      "envelope": [
+        704,
+        944,
+        128,
+        208
+      ]
+    },
+    {
+      "nativeKey": "43.28",
+      "sprite": "ding-sheng-bhw",
+      "envelope": [
+        704,
+        208,
+        128,
+        208
+      ]
+    },
+    {
+      "nativeKey": "43.29",
+      "sprite": "ding-sheng-bhw",
+      "envelope": [
+        704,
+        -96,
+        128,
+        208
+      ]
+    },
+    {
+      "nativeKey": "43.35",
+      "sprite": "ding-sheng-bhw",
+      "envelope": [
+        176,
+        944,
+        128,
+        208
+      ]
+    },
+    {
+      "nativeKey": "43.35",
+      "sprite": "national-trade-center",
+      "envelope": [
+        368,
+        944,
+        128,
+        208
+      ]
+    },
+    {
+      "nativeKey": "43.36",
+      "sprite": "ding-sheng-bhw",
+      "envelope": [
+        176,
+        208,
+        128,
+        208
+      ]
+    },
+    {
+      "nativeKey": "43.36",
+      "sprite": "national-trade-center",
+      "envelope": [
+        368,
+        208,
+        128,
+        208
+      ]
+    },
+    {
+      "nativeKey": "43.37",
+      "sprite": "ding-sheng-bhw",
+      "envelope": [
+        176,
+        -96,
+        128,
+        208
+      ]
+    },
+    {
+      "nativeKey": "43.37",
+      "sprite": "national-trade-center",
+      "envelope": [
+        368,
+        -96,
+        128,
+        208
+      ]
+    }
+  ],
+  "sourceProofSha256": "83f30052e74745c4513fa7bfcb24fdaaada1ecc1c68ca22f3138e3230768b3d1",
+  "compiledMapReportSha256": "4e4397f7e14dbe9fdf9e8877cd61b6438a19918612054a6dc78c6fe247b6056d"
+}

@@ -1,0 +1,9 @@
+{
+  "baseline": "a701ed5109ffd5eddd6b0581ade46591146e9656",
+  "status": "PREEXISTING_BASELINE_FAILURE_CONFIRMED",
+  "test": "test-optional-story.py",
+  "failure": "Pre-Boulevard roster assumes exactly one global map use per historical label; released native baseline has retained legacy + active Boulevard map bindings.",
+  "baselineReadOnly": true,
+  "executedFrom": "Private temporary Git archive; release reference checkout untouched.",
+  "currentScope": "Current24-site registry/retired-route audit, actual-C Story/gym guards and final active map bindings cover this release. Historical test was not weakened."
+}
