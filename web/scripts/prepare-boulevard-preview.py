@@ -82,10 +82,13 @@ def street_bands(plan, fill, origin, forecourt=None):
     bands = []
     forecourt_applied = False
 
-    def add(name, zh, rect, axis):
+    def add(name, zh, rect, axis, street_id=None):
         x0, y0, x1, y1 = rect
         bounds = [x0 - origin[0], y0 - origin[1], x1 - origin[0], y1 - origin[1]]
-        bands.append({"name": {"en": name, "zh": zh}, "bounds": bounds, "axis": axis})
+        band = {"name": {"en": name, "zh": zh}, "bounds": bounds, "axis": axis}
+        if street_id is not None:
+            band["id"] = street_id
+        bands.append(band)
 
     for street in plan["streets"]:
         if street["kind"] not in ("boulevard", "street", "lane"):
@@ -99,11 +102,11 @@ def street_bands(plan, fill, origin, forecourt=None):
                 require(not forecourt_applied and axis == "h" and
                         top == cut_top and bottom == cut_bottom and left < cut_left < cut_right < right,
                         "The compiled forecourt must cut the full width of a single Shizheng Road band.")
-                add(en, street["zh"], (left, top, cut_left, bottom), axis)
-                add(en, street["zh"], (cut_right, top, right, bottom), axis)
+                add(en, street["zh"], (left, top, cut_left, bottom), axis, street["id"])
+                add(en, street["zh"], (cut_right, top, right, bottom), axis, street["id"])
                 forecourt_applied = True
             else:
-                add(en, street["zh"], rect, axis)
+                add(en, street["zh"], rect, axis, street["id"])
     for lane in fill["newLanes"]:
         if lane["zh"] and lane["direction"] in ("h", "v"):
             add(lane["name"], lane["zh"], lane["rect"], lane["direction"])
@@ -220,14 +223,17 @@ def landmark_facades(native, fill, report, extras):
             source = kit / filename
         require(source.is_file() and digest(source) == report["spriteSha256"].get(landmark),
                 f"{landmark} art does not match the compiled Boulevard report.")
-        if landmark in {"calligraphy-greenway", "yuanbao-temple"} or (
-                landmark == "fengjia-night-market" and report.get("fengjiaSouthEntrance")):
+        fengjia_arch = landmark == "fengjia-night-market" and report.get("fengjiaSouthEntrance")
+        if landmark in {"calligraphy-greenway", "yuanbao-temple"} or fengjia_arch:
             source = WEB / "src/assets/landmarks/reviewed" / f"{landmark}-4x.png"
         with Image.open(source) as sprite:
             image = sprite.convert("RGBA")
         bounds = image.getchannel("A").getbbox()
         require(bounds, f"{landmark} facade has no visible pixels.")
-        facades[filename] = image.crop(bounds)
+        facade = image.crop(bounds)
+        if fengjia_arch:
+            facade = facade.resize((facade.width // 2, facade.height // 2), Image.Resampling.LANCZOS)
+        facades[filename] = facade
     directory = WEB / "src/assets/landmarks/isolated"
     directory.mkdir(parents=True, exist_ok=True)
     for filename, image in facades.items():

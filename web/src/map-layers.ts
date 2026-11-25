@@ -9,9 +9,10 @@ const LABELS: Record<MapLayer, [string, string]> = { gyms: ['Gyms', '道館'], l
 export const mapLayerLabel = (layer: MapLayer, locale: Locale) => LABELS[layer][locale === 'zh-Hant' ? 1 : 0];
 
 /** Label a street's longest band; draw every paired band, including turns. */
-export function namedStreetLabels(geometry: MinimapGeometry) {
+export function namedStreetLabels(geometry: MinimapGeometry, anchoredStreetId?: string) {
   const longest = new Map<string, NonNullable<MinimapGeometry['world']['streetBands']>[number]>();
   for (const band of geometry.world.streetBands ?? []) {
+    if (anchoredStreetId && band.id === anchoredStreetId) continue;
     const key = `${band.name.en}\0${band.name.zh}`;
     const length = (value: typeof band) => value.axis === 'h' ? value.bounds[2] - value.bounds[0] : value.bounds[3] - value.bounds[1];
     const previous = longest.get(key);
@@ -26,7 +27,8 @@ export function createMapLayers(map: HTMLElement, controls: HTMLElement, layoutD
     if (!enabled.streets) return;
     const bounds = map.getBoundingClientRect();
     if (!bounds.width || !bounds.height) return;
-    const occupied = [...map.querySelectorAll<HTMLElement>('.lp-marker,.lp-pin-label,.lp-map-chip,.lp-map-legend,.is-neighborhood')]
+    const occupied = [...map.querySelectorAll('.lp-marker,.lp-pin-label,.lp-map-chip,.lp-map-legend,.is-neighborhood,.lp-map-anchor > span')]
+      .map(element => element.querySelector(':scope > .lp-gym-icon, :scope > .lp-mon') ?? element)
       .map(element => element.getBoundingClientRect()).filter(box => box.width && box.height)
       .map(box => ({ x: box.left - bounds.left, y: box.top - bounds.top, width: box.width, height: box.height }));
     for (const label of map.querySelectorAll<HTMLElement>('.lp-street-label')) {

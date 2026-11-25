@@ -26,7 +26,8 @@ const gyms = landmarks.filter(isGym);
 const sights = landmarks.filter((place) => !isGym(place));
 const DEFAULT_LANDMARK = 'old-taichung-station';
 // The Boulevard map folds between two views around Taiwan Blvd; this is the boulevard's centre row, in tiles.
-const taiwanBoulevard = city.world.streetBands?.find((band) => band.name.en === 'Taiwan Boulevard')?.bounds;
+const TAIWAN_BOULEVARD_ID = 'taiwan';
+const taiwanBoulevard = city.world.streetBands?.find((band) => band.id === TAIWAN_BOULEVARD_ID)?.bounds;
 const BOULEVARD_ROW = taiwanBoulevard ? (taiwanBoulevard[1] + taiwanBoulevard[3]) / 2 : city.world.height / 2;
 // The page's words sell the city; they do not explain how the map was made.
 const LEAD_HEADING = 'Explore Taichung, street by street.';
@@ -91,8 +92,9 @@ function renderStreets() {
     return `<path d="M${x1},${y1}L${x2},${y2}"><title>${escapeHtml(name[language])}</title></path>`;
   }).join('');
   const names = namedStreetLabels(city);
+  const labels = BOULEVARD_PREVIEW && taiwanBoulevard ? namedStreetLabels(city, TAIWAN_BOULEVARD_ID) : names;
   return `<svg class="lp-street-lines" viewBox="0 0 ${width} ${height}" role="img" aria-label="${escapeHtml(t('Named streets'))}"><desc>${escapeHtml(names.map(street => street.name[language]).join(', '))}</desc>${lines}</svg>`
-    + names.map(({ name, bounds: [left, top, right, bottom], axis }) => `<span class="lp-street-label" data-axis="${axis}" data-bounds="${[left / width * 100, top / height * 100, right / width * 100, bottom / height * 100]}">${escapeHtml(name[language])}</span>`).join('');
+    + labels.map(({ name, bounds: [left, top, right, bottom], axis }) => `<span class="lp-street-label" data-axis="${axis}" data-bounds="${[left / width * 100, top / height * 100, right / width * 100, bottom / height * 100]}">${escapeHtml(name[language])}</span>`).join('');
 }
 
 // Step 3’s City Pass uses the same stable badge IDs and original-detail masters.
