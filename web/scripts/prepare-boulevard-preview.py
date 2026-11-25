@@ -24,6 +24,7 @@ EXTRA_SIGHTS = {
     "city-hall": ("City Hall", "臺中市政府", "xitun", "Civic plaza", "市政廣場"),
 }
 INSTALLED_SIGHTS = {
+    "yuanbao-temple": ("Yuanbao Temple", "元保宮", "north", "Temple", "廟宇"),
     "national-trade-center": ("National Trade Center", "NTC國家商貿中心", "xitun", "Office tower", "商辦大樓"),
     "ding-sheng-bhw": ("Ding Sheng BHW", "鼎盛BHW", "xitun", "Office tower", "商辦大樓"),
     "the-lin": ("The Lin", "林酒店", "xitun", "Hotel", "飯店"),
@@ -143,6 +144,7 @@ def terrain_images(fill, plan, candidate, geometry, report):
     elif paving := tower_block.get("paving"):
         world.put(paving, "p")
     apply_compiled_ground(world, report.get("xitunFrontageCleanup", {}).get("radarGround", []))
+    apply_compiled_ground(world, report.get("yuanbaoTemple", {}).get("ground", []))
     width, height = geometry["world"]["width"], geometry["world"]["height"]
     origin = plan["world"]["box"][:2]
     ink = {
@@ -217,6 +219,8 @@ def landmark_facades(native, fill, report, extras):
             source = kit / filename
         require(source.is_file() and digest(source) == report["spriteSha256"].get(landmark),
                 f"{landmark} art does not match the compiled Boulevard report.")
+        if landmark == "yuanbao-temple":
+            source = WEB / "src/assets/landmarks/reviewed/yuanbao-temple-4x.png"
         with Image.open(source) as sprite:
             image = sprite.convert("RGBA")
         bounds = image.getchannel("A").getbbox()
@@ -281,6 +285,12 @@ def main():
     plan_districts = {district["id"]: district for district in plan["districts"]}
     installed = {entry["id"]: entry for entry in report.get("installedLandmarks", [])}
     captures = captures_from_registry(read(args.native / "data/taichung/encounters/sites.json"))
+    yuanbao = report.get("yuanbaoTemple")
+    require(bool(yuanbao) == ("yuanbao-temple" in captures),
+            "The Yuanbao Temple placement and encounter registry must be paired.")
+    if yuanbao:
+        require(yuanbao["id"] == "yuanbao-temple", "The compiled Yuanbao Temple landmark ID differs.")
+        installed["yuanbao-temple"] = yuanbao
     named_bindings_path = args.native / "data/taichung/named-xitun-bindings/anchors.json"
     named_bindings = read(named_bindings_path) if named_bindings_path.is_file() else None
     if named_bindings:
@@ -387,6 +397,15 @@ def main():
     }
     require(required_exterior_captures <= located,
             "Moved/new Boulevard captures lack their current exterior sign or guide.")
+
+    if yuanbao:
+        interaction = capture_anchors["yuanbao-temple"]
+        approach = normalize(yuanbao["readFrom"])
+        sign = normalize(yuanbao["signTile"])
+        require(interaction["script"] == yuanbao["script"] and interaction["world"] == sign
+                and map_at(approach)["nativeKey"] == interaction["nativeKey"] == yuanbao["nativeKey"]
+                and approach == [sign[0], sign[1] + 1],
+                "The compiled Yuanbao Temple encounter does not match its sign and south approach.")
 
     lakeshore_path = None
     if "taichung-park-lakeshore" in captures:

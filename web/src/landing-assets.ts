@@ -74,6 +74,7 @@ export const landmarkArt: Record<string, LandmarkArt> = {
   miyahara: { tint: brick, leader: peiqi, team: [mon('Dewgong', dewgongIcon), mon('Cloyster', cloysterIcon), mon('Lapras', laprasIcon)] },
   'natural-science-museum': { tint: modern, leader: yicheng, team: [mon('Magneton', magnetonIcon), mon('Aerodactyl', aerodactylIcon), mon('Omastar', omastarIcon)] },
   'calligraphy-greenway': { tint: park, leader: xingan, team: [mon('Victreebel', victreebelIcon), mon('Vileplume', vileplumeIcon), mon('Tangela', tangelaIcon)] },
+  'yuanbao-temple': { tint: brick },
   'confucius-temple': { tint: neutral, leader: wenyi, team: [mon('Slowbro', slowbroIcon), mon('Exeggutor', exeggutorIcon), mon('Alakazam', alakazamIcon)] },
   'fine-arts-museum': { tint: neutral, leader: caining, team: [mon('Butterfree', butterfreeIcon), mon('Muk', mukIcon), mon('Clefable', clefableIcon)] },
   'fengjia-night-market': { tint: brick, leader: jiahe, team: [mon('Farfetch’d', farfetchdIcon), mon('Magmar', magmarIcon), mon('Snorlax', snorlaxIcon)] },

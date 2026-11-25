@@ -92,6 +92,22 @@
       "https://www.kaoarch.org.tw/Upload/20241223095800_40101.pdf"
     ]
   },
+  "yuanbao-temple": {
+    "description": "Completed in 1791, Yuanbao Temple stands on Meichuan West Road in Taichung’s North District. The Lai family came from Pinghe, Fujian, and brought their devotion to Baosheng Dadi from Xintian Temple. Seventeen villages helped build the temple.",
+    "descriptionZh": "元保宮位於臺中市北區梅川西路，於1791年落成。來自福建平和的賴氏族人，從心田宮迎來保生大帝香火，並與十七庄信眾合力興建廟宇。",
+    "officialUrl": "https://travel.taichung.gov.tw/en/Attractions/Intro/1659",
+    "officialSourceTitle": "Taichung Tourism and Travel Bureau",
+    "location": {
+      "address": "No. 109, Sec. 3, Meichuan W. Rd., North District, Taichung City",
+      "addressZh": "臺中市北區梅川西路三段109號",
+      "latitude": 24.1628328,
+      "longitude": 120.676291
+    },
+    "descriptionSources": [
+      "https://travel.taichung.gov.tw/en/Attractions/Intro/1659",
+      "https://www.tchac.taichung.gov.tw/historybuilding?pid=272&uid=39"
+    ]
+  },
   "the-lin": {
     "description": "THE LIN Hotel stands on Chaofu Road in Xitun, near the National Taichung Theater and Maple Garden. Its design combines modern forms with castle-inspired details. The real building is a working hotel.",
     "descriptionZh": "林酒店位於西屯朝富路，鄰近國家歌劇院與秋紅谷。建築融合現代造型與古堡式細節；現實中的這棟建築是一間營運中的飯店。",

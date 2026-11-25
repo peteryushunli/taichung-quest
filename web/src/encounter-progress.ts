@@ -1,5 +1,5 @@
 import type { EncounterBridgeState } from './encounter-bridge';
-import { CAPTURE_SITE_COUNT } from './capture-persistence.ts';
+import { CAPTURE_SITE_COUNT, RESERVED_CAPTURE_SITE_ID } from './capture-persistence.ts';
 
 export type EncounterProgress = { attempts: number; unlocks: number; site: number; phase: number };
 export type EncounterOutcome = 'unknown' | 'available' | 'pending' | 'caught' | 'spent';
@@ -15,7 +15,8 @@ export function encounterProgress(state: EncounterBridgeState, previous?: Encoun
 }
 
 export function encounterOutcome(bit: number | undefined, progress?: EncounterProgress, caughtMask = 0): EncounterOutcome {
-  if (bit === undefined || !Number.isInteger(bit) || bit < 0 || bit >= CAPTURE_SITE_COUNT) return 'unknown';
+  if (bit === undefined || !Number.isInteger(bit) || bit < 0 || bit >= CAPTURE_SITE_COUNT
+      || bit === RESERVED_CAPTURE_SITE_ID) return 'unknown';
   const mask = 1 << bit;
   if ((progress?.unlocks ?? caughtMask) & mask) return 'caught';
   if (!progress) return 'unknown';
