@@ -10,7 +10,9 @@ export function landmarkCaptureCopy(id: string, surface: 'guide' | 'landing',
   if (!hasEncounter) return undefined;
   if (id === 'botanical-garden' && captureBit === 18)
     return 'Read the sign for a level 65 Victreebel encounter. A successful capture unlocks Victreebel in TEAM.';
-  if (id === 'yuanbao-temple' && captureBit === 28)
+  if (id === 'yuanbao-temple' && captureBit === 24)
+    return 'Read the sign for a level 65 Charizard encounter. A successful capture unlocks Charizard in TEAM.';
+  if (id === 'shen-ji-new-village' && captureBit === 28)
     return 'Read the sign for a level 60 Chansey encounter. A successful capture unlocks Chansey in TEAM.';
   if (id === 'wenchang-temple') return surface === 'landing'
     ? 'In the game: meet the hall host for local history and a rare Pokémon encounter. A successful capture unlocks that Pokémon in TEAM.'

@@ -5,6 +5,18 @@ slots remain in the native registry but must never bind a current marker.
 """
 
 
+REASSIGNED_LANDMARKS = {
+    "yuanbao-temple": (24, 6, 65),
+    "tiger-city": (12, 150, 75),
+    "city-hall": (5, 59, 65),
+    "national-trade-center": (7, 146, 75),
+    "shen-ji-new-village": (28, 113, 60),
+    "jingming-street": (21, 82, 65),
+    "prefectural-hall": (3, 65, 65),
+    "cultural-heritage-park": (14, 145, 75),
+}
+
+
 def captures_from_registry(registry):
     sites = registry["sites"]
     ids = [site["stableSiteId"] for site in sites]
@@ -18,21 +30,29 @@ def captures_from_registry(registry):
         raise SystemExit("Multiple native encounters share a current place or binding.")
     if len(sites) >= 27:
         by_id = {site["stableSiteId"]: site for site in sites}
-        expected = {"botanical-garden": (18, 71),
-                    "jingming-street": (24, 6),
-                    "ding-sheng-bhw": (25, 9), "maple-garden": (26, 3)}
+        reassigned = len(sites) == 29 and by_id[24].get("siteSlug") == "yuanbao-temple"
+        expected = {"botanical-garden": (18, 71, 65),
+                    "ding-sheng-bhw": (25, 9, 65), "maple-garden": (26, 3, 65)}
         lapras = by_id[0]
         if lapras.get("retired"):
             if (lapras.get("species"), lapras.get("speciesDex"), lapras.get("level"),
                     lapras.get("entryScript"), lapras.get("currentBinding")) != ("LAPRAS", 131, 65, None, None):
                 raise SystemExit("Retired capture slot 0 must preserve Lapras and its saved history.")
         else:
-            expected["taichung-park-lakeshore"] = (0, 131)
+            expected["taichung-park-lakeshore"] = (0, 131, 65)
             if lapras.get("currentBinding") != "TaichungEncounter_TaichungParkLakeshore":
                 raise SystemExit("The historical active Lapras interaction differs.")
-        for place, (stable_id, species) in expected.items():
+        if reassigned:
+            expected.update(REASSIGNED_LANDMARKS)
+        else:
+            expected["jingming-street"] = (24, 6, 65)
+            if len(sites) == 29:
+                expected.update({"shen-ji-new-village": (3, 65, 65), "prefectural-hall": (5, 59, 65),
+                                 "cultural-heritage-park": (7, 146, 75), "city-hall": (12, 150, 75),
+                                 "tiger-city": (14, 145, 75), "national-trade-center": (21, 82, 65)})
+        for place, identity in expected.items():
             site = captures.get(place, {})
-            if (site.get("stableSiteId"), site.get("speciesDex"), site.get("level")) != (stable_id, species, 65):
+            if (site.get("stableSiteId"), site.get("speciesDex"), site.get("level")) != identity:
                 raise SystemExit(f"The active capture roster differs for {place}.")
         if captures["botanical-garden"]["currentBinding"] != "TaichungCity_Sign_BotanicalGarden":
             raise SystemExit("The active capture interaction differs for botanical-garden.")
@@ -46,10 +66,10 @@ def captures_from_registry(registry):
                 or any(reserved.get(key) is not None for key in ("currentBinding", "species", "speciesDex", "level", "entryScript"))):
             raise SystemExit("Capture slot 27 must preserve history without an active encounter.")
         yuanbao = by_id[28]
-        if (yuanbao.get("siteSlug"), yuanbao.get("speciesDex"), yuanbao.get("level"),
-                yuanbao.get("entryScript"), yuanbao.get("currentBinding")) != (
+        if not reassigned and (yuanbao.get("siteSlug"), yuanbao.get("speciesDex"), yuanbao.get("level"),
+                               yuanbao.get("entryScript"), yuanbao.get("currentBinding")) != (
                 "yuanbao-temple", 113, 60, "TaichungEncounter_YuanbaoTemple", "TaichungCity_Sign_YuanbaoTemple"):
-            raise SystemExit("Capture slot 28 must match the Yuanbao Temple Chansey encounter.")
+            raise SystemExit("The historical Yuanbao Temple encounter must use Chansey's slot 28.")
     return captures
 
 

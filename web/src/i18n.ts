@@ -277,6 +277,7 @@ const zh: Record<string, string> = {
   'Visit this landmark and learn its local history.': '走訪這個地標，了解地方歷史。',
   'Walk to it on the city streets and read its sign.': '沿著城市街道走過去，讀讀旁邊的告示牌。',
   'Read the sign for a level 60 Chansey encounter. A successful capture unlocks Chansey in TEAM.': '閱讀告示牌，即可挑戰 Lv. 60 的吉利蛋。成功捕捉後，可在 TEAM 中選用吉利蛋。',
+  'Read the sign for a level 65 Charizard encounter. A successful capture unlocks Charizard in TEAM.': '閱讀告示牌，即可挑戰 Lv. 65 的噴火龍。成功捕捉後，可在 TEAM 中選用噴火龍。',
   'Read the sign for a level 65 Victreebel encounter. A successful capture unlocks Victreebel in TEAM.': '閱讀告示牌，即可挑戰 Lv. 65 的大食花。成功捕捉後，可在 TEAM 中選用大食花。',
   'The sign offers a rare Pokémon encounter. A successful capture unlocks that Pokémon in TEAM.': '告示牌可開啟稀有寶可夢捕捉挑戰。成功捕捉後，即可解鎖並在 TEAM 中選用。',
   'ON THE GAME MAP': '遊戲地圖上的樣子',

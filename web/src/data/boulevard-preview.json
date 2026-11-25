@@ -2928,7 +2928,7 @@
       ],
       "exteriorMapId": "MAP_TAICHUNG_BLVD_SHEN_JI_NEW_VILLAGE",
       "exteriorNativeKey": "43:60",
-      "captureBit": 3,
+      "captureBit": 28,
       "captureInteraction": {
         "script": "TaichungLandmark_ShenJi",
         "world": [
@@ -2990,7 +2990,7 @@
       ],
       "exteriorMapId": "MAP_TAICHUNG_BLVD_PREFECTURAL_HALL",
       "exteriorNativeKey": "43:71",
-      "captureBit": 5,
+      "captureBit": 3,
       "captureInteraction": {
         "script": "TaichungCity_Sign_PrefecturalHall",
         "world": [
@@ -3052,7 +3052,7 @@
       ],
       "exteriorMapId": "MAP_TAICHUNG_BLVD_CULTURAL_HERITAGE_PARK",
       "exteriorNativeKey": "43:78",
-      "captureBit": 7,
+      "captureBit": 14,
       "captureInteraction": {
         "script": "TaichungCity_Sign_CulturalHeritagePark",
         "world": [
@@ -3145,7 +3145,7 @@
       ],
       "exteriorMapId": "MAP_TAICHUNG_BLVD_TIGER_CITY",
       "exteriorNativeKey": "43:29",
-      "captureBit": 14,
+      "captureBit": 12,
       "captureInteraction": {
         "script": "TaichungBoulevard_Sign_TigerCity",
         "world": [
@@ -3207,7 +3207,7 @@
       ],
       "exteriorMapId": "MAP_TAICHUNG_BLVD_JINGMING_1ST_STREET",
       "exteriorNativeKey": "43:55",
-      "captureBit": 24,
+      "captureBit": 21,
       "captureInteraction": {
         "script": "TaichungBoulevard_Sign_JingmingStreet",
         "world": [
@@ -3238,7 +3238,7 @@
       ],
       "exteriorMapId": "MAP_TAICHUNG_BLVD_XITUN_E_3",
       "exteriorNativeKey": "43:45",
-      "captureBit": 12,
+      "captureBit": 5,
       "captureInteraction": {
         "script": "TaichungBoulevard_Sign_CityHall",
         "world": [
@@ -3362,7 +3362,7 @@
       ],
       "exteriorMapId": "MAP_TAICHUNG_BLVD_CONFUCIUS_TEMPLE",
       "exteriorNativeKey": "43:69",
-      "captureBit": 28,
+      "captureBit": 24,
       "captureInteraction": {
         "script": "TaichungCity_Sign_YuanbaoTemple",
         "world": [
@@ -3393,7 +3393,7 @@
       ],
       "exteriorMapId": "MAP_TAICHUNG_BLVD_NANTUN_F_1",
       "exteriorNativeKey": "43:30",
-      "captureBit": 21,
+      "captureBit": 7,
       "captureInteraction": {
         "script": "TaichungLandmark_NationalTradeCenter",
         "world": [
@@ -4908,7 +4908,7 @@
     "fineArtsToned": "1daa5b536583b99fc63be9ab5d242b2b271856838fdee299c18db4bf8cd14083",
     "streetPeople": "370ac784ff89540cc741402d14c495f5eefe7650c14feb2b51c076ffc8f6a07f",
     "landmarkSignPlan": "f57a0556709e320c2d485ab57935f634643c39731650570f7adc93e7fd5f4f3c",
-    "namedXitunBindings": "8dd6432e66f3e9b47e7eb3238f2e8788d29531b60c2f9fc96d5a13a7477d098d"
+    "namedXitunBindings": "a421378b20de3e224b25aeb0c1af057c0dee989c32f477a0ef95cc9160bdba2c"
   },
-  "geometryFingerprintSha256": "39d7834b1b5ba8e521bbb1a3a0dd76d7cbb5793e451762514f08f33bdb8d5270"
+  "geometryFingerprintSha256": "17a668365f3a5547658429a5e53d74f76a26e3c0d9c698c7cd00a343b31c15e4"
 }

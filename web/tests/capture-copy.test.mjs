@@ -56,9 +56,10 @@ test('real sign/host copy keeps capture-before-TEAM-unlock and the correct entry
         }
       }
       for (const surface of ['guide', 'landing']) {
-        const chansey = landmarkCaptureCopy('yuanbao-temple', surface, true, 28);
-        const expected = locale === 'en' ? /level 60 Chansey.*capture.*TEAM/ : /Lv\. 60 的吉利蛋.*捕捉.*TEAM/;
-        assert.match(t(chansey), expected);
+        const charizard = landmarkCaptureCopy('yuanbao-temple', surface, true, 24);
+        const chansey = landmarkCaptureCopy('shen-ji-new-village', surface, true, 28);
+        assert.match(t(charizard), locale === 'en' ? /level 65 Charizard.*capture.*TEAM/ : /Lv\. 65 的噴火龍.*捕捉.*TEAM/);
+        assert.match(t(chansey), locale === 'en' ? /level 60 Chansey.*capture.*TEAM/ : /Lv\. 60 的吉利蛋.*捕捉.*TEAM/);
       }
     }
   } finally {
@@ -75,14 +76,15 @@ test('the Boulevard guide includes encounters for every non-gym destination', ()
   // The checked-in artifact remains paired to its cartridge until Main exports
   // the combined ROM. Assert the entire rotation when it is present.
   const rotated = markersById['maple-garden']?.captureBit === 26;
-  const newSites = [['national-trade-center', 21], ['ding-sheng-bhw', rotated ? 25 : 22], ['the-lin', 23]];
+  const temple = markersById['yuanbao-temple'];
+  const reassigned = temple?.captureBit === 24;
+  const newSites = [['national-trade-center', reassigned ? 7 : 21], ['ding-sheng-bhw', rotated ? 25 : 22], ['the-lin', 23]];
   if (rotated) {
     assert.equal(markersById['botanical-garden'].captureBit, 18);
-    assert.equal(markersById['jingming-street'].captureBit, 24);
+    assert.equal(markersById['jingming-street'].captureBit, reassigned ? 21 : 24);
     assert.ok(!Object.values(markersById).some(marker => [0, 13, 22].includes(marker.captureBit)));
   }
   const hasNewXitun = newSites.some(([id]) => extraSights.some(place => place.id === id));
-  const temple = markersById['yuanbao-temple'];
   assert.equal(sights.length, (hasNewXitun ? 20 : 17) + Number(Boolean(temple)));
   assert.equal(Object.values(markersById).filter((marker) => marker.kind === 'landmark-gym').length, 10);
   assert.ok(!Object.values(markersById).some((marker) => marker.captureBit === 27));
@@ -93,7 +95,7 @@ test('the Boulevard guide includes encounters for every non-gym destination', ()
     });
     assert.deepEqual(temple.world, temple.captureInteraction.world);
     assert.equal(temple.kind, 'landmark');
-    assert.equal(temple.captureBit, 28);
+    assert.equal(temple.captureBit, reassigned ? 24 : 28);
     assert.equal(card.nameZh, '元保宮');
     assert.equal(card.districtId, 'north');
     assert.equal(card.officialUrl, 'https://travel.taichung.gov.tw/en/Attractions/Intro/1659');
@@ -108,7 +110,7 @@ test('the Boulevard guide includes encounters for every non-gym destination', ()
   assert.match(landmarkCaptureCopy('botanical-garden', 'landing', true, 18), /level 65 Victreebel.*encounter/i);
   if (hasNewXitun) {
     for (const [id, bit] of newSites) assert.equal(markersById[id]?.captureBit, bit, id);
-    assert.equal(markersById['shen-ji-new-village'].captureBit, 3);
+    assert.equal(markersById['shen-ji-new-village'].captureBit, reassigned ? 28 : 3);
     assert.equal(markersById['confucius-temple'].captureBit, undefined);
   }
   assert.ok(!markersById['central-park']);

@@ -28162,7 +28162,7 @@ index 00000000..fa91ee81
 +    end
 diff --git a/data/scripts/taichung_boulevard_landmarks.inc b/data/scripts/taichung_boulevard_landmarks.inc
 new file mode 100644
-index 00000000..b8de33f4
+index 00000000..716fc52b
 --- /dev/null
 +++ b/data/scripts/taichung_boulevard_landmarks.inc
 @@ -0,0 +1,76 @@
@@ -28210,7 +28210,7 @@ index 00000000..b8de33f4
 +	goto_if_questlog TaichungStory_SignDone
 +	callnative TaichungBoulevard_BufferCityHallSign
 +	msgbox gStringVar4, MSGBOX_SIGN
-+	setvar VAR_0x8004, TAICHUNG_ENCOUNTER_CITY_HALL
++	setvar VAR_0x8004, TAICHUNG_ENCOUNTER_ARCANINE
 +	goto TaichungEncounter_Interact
 +
 +TaichungBoulevard_Sign_JingmingStreet::
@@ -28218,7 +28218,7 @@ index 00000000..b8de33f4
 +	goto_if_questlog TaichungStory_SignDone
 +	callnative TaichungBoulevard_BufferJingmingStreetSign
 +	msgbox gStringVar4, MSGBOX_SIGN
-+	setvar VAR_0x8004, TAICHUNG_ENCOUNTER_CHARIZARD
++	setvar VAR_0x8004, TAICHUNG_ENCOUNTER_MAGNETON
 +	goto TaichungEncounter_Interact
 +
 +TaichungBoulevard_Sign_TigerCity::
@@ -28226,7 +28226,7 @@ index 00000000..b8de33f4
 +	goto_if_questlog TaichungStory_SignDone
 +	callnative TaichungBoulevard_BufferTigerCitySign
 +	msgbox gStringVar4, MSGBOX_SIGN
-+	setvar VAR_0x8004, TAICHUNG_ENCOUNTER_TIGER_CITY
++	setvar VAR_0x8004, TAICHUNG_ENCOUNTER_MEWTWO
 +	goto TaichungEncounter_Interact
 +
 +TaichungBoulevard_Sign_ParkPath::
@@ -28820,7 +28820,7 @@ index 00000000..9f61a703
 +	end
 diff --git a/data/scripts/taichung_encounters.inc b/data/scripts/taichung_encounters.inc
 new file mode 100644
-index 00000000..b3cb2937
+index 00000000..ea145baf
 --- /dev/null
 +++ b/data/scripts/taichung_encounters.inc
 @@ -0,0 +1,105 @@
@@ -28905,25 +28905,25 @@ index 00000000..b3cb2937
 +	taichung_encounter_entry MapleGarden, TAICHUNG_ENCOUNTER_VENUSAUR
 +	taichung_encounter_entry WenchangTemple, TAICHUNG_ENCOUNTER_WENCHANG_TEMPLE
 +	taichung_encounter_entry BotanicalGarden, TAICHUNG_ENCOUNTER_BOTANICAL_GARDEN
-+	taichung_encounter_entry ShenJi, TAICHUNG_ENCOUNTER_SHEN_JI
++	taichung_encounter_entry ShenJi, TAICHUNG_ENCOUNTER_CHANSEY
 +	taichung_encounter_entry YizhongStreet, TAICHUNG_ENCOUNTER_YIZHONG_STREET
-+	taichung_encounter_entry PrefecturalHall, TAICHUNG_ENCOUNTER_PREFECTURAL_HALL
++	taichung_encounter_entry PrefecturalHall, TAICHUNG_ENCOUNTER_ALAKAZAM
 +	taichung_encounter_entry SecondMarket, TAICHUNG_ENCOUNTER_SECOND_MARKET
-+	taichung_encounter_entry CulturalHeritagePark, TAICHUNG_ENCOUNTER_CULTURAL_HERITAGE_PARK
++	taichung_encounter_entry CulturalHeritagePark, TAICHUNG_ENCOUNTER_ZAPDOS
 +	taichung_encounter_entry FengleSculpturePark, TAICHUNG_ENCOUNTER_FENGLE_SCULPTURE_PARK
 +	taichung_encounter_entry WenxinForestPark, TAICHUNG_ENCOUNTER_WENXIN_FOREST_PARK
 +	taichung_encounter_entry GreenMuseumbrary, TAICHUNG_ENCOUNTER_GREEN_MUSEUMBRARY
 +	taichung_encounter_entry RainbowVillage, TAICHUNG_ENCOUNTER_RAINBOW_VILLAGE
-+	taichung_encounter_entry CityHall, TAICHUNG_ENCOUNTER_CITY_HALL
-+	taichung_encounter_entry JingmingStreet, TAICHUNG_ENCOUNTER_CHARIZARD
-+	taichung_encounter_entry TigerCity, TAICHUNG_ENCOUNTER_TIGER_CITY
++	taichung_encounter_entry CityHall, TAICHUNG_ENCOUNTER_ARCANINE
++	taichung_encounter_entry JingmingStreet, TAICHUNG_ENCOUNTER_MAGNETON
++	taichung_encounter_entry TigerCity, TAICHUNG_ENCOUNTER_MEWTWO
 +	taichung_encounter_entry Ballpark, TAICHUNG_ENCOUNTER_BALLPARK
 +	taichung_encounter_entry FolklorePark, TAICHUNG_ENCOUNTER_FOLKLORE_PARK
 +
-+	taichung_encounter_entry NationalTradeCenter, TAICHUNG_ENCOUNTER_NATIONAL_TRADE_CENTER
++	taichung_encounter_entry NationalTradeCenter, TAICHUNG_ENCOUNTER_MOLTRES
 +	taichung_encounter_entry DingShengBHW, TAICHUNG_ENCOUNTER_BLASTOISE
 +	taichung_encounter_entry TheLin, TAICHUNG_ENCOUNTER_THE_LIN
-+	taichung_encounter_entry YuanbaoTemple, TAICHUNG_ENCOUNTER_YUANBAO_TEMPLE
++	taichung_encounter_entry YuanbaoTemple, TAICHUNG_ENCOUNTER_CHARIZARD
 +
 +@ Retired Temple symbol stays link-compatible without a second capture route.
 +TaichungEncounter_ConfuciusTemple::
@@ -29407,7 +29407,7 @@ index 00000000..d7aa294c
 +	end
 diff --git a/data/scripts/taichung_named_xitun.inc b/data/scripts/taichung_named_xitun.inc
 new file mode 100644
-index 00000000..6ee5eaba
+index 00000000..83a8893e
 --- /dev/null
 +++ b/data/scripts/taichung_named_xitun.inc
 @@ -0,0 +1,29 @@
@@ -29418,7 +29418,7 @@ index 00000000..6ee5eaba
 +    goto_if_questlog TaichungStory_SignDone
 +    callnative TaichungBoulevard_BufferNationalTradeCenterSign
 +    msgbox gStringVar4, MSGBOX_SIGN
-+    setvar VAR_0x8004, 21
++    setvar VAR_0x8004, TAICHUNG_ENCOUNTER_MOLTRES
 +    goto TaichungEncounter_Interact
 +
 +TaichungLandmark_DingShengBHW::
@@ -29437,7 +29437,7 @@ index 00000000..6ee5eaba
 +    setvar VAR_0x8004, 23
 +    goto TaichungEncounter_Interact
 +
-+@ Existing Alakazam encounter keeps bit3 at its new Shen Ji location.
++@ Both Shen Ji signs share the same history and Chansey encounter.
 +TaichungLandmark_ShenJi::
 +    goto TaichungStory_Sign5
 diff --git a/data/scripts/taichung_optional_story.inc b/data/scripts/taichung_optional_story.inc
@@ -113604,7 +113604,7 @@ index 00000000..2d255bdf
 +Painted-entrance correction from bc5f8b9b: native full build passes.227,652 resolved map/border cells compared; only4intended cells differ, visual changes only the2former wood tiles. Zero newly blocked cells, all95Continue targets retained. Unchanged old a701 ordinary entrance save continues and can enter/return through both lanes. Evidence: /Users/peter/devday_hackathon/artifacts/qa/2026-11-24-confucius-painted-entrance/.
 diff --git a/data/taichung/confucius-map-bindings/anchors.json b/data/taichung/confucius-map-bindings/anchors.json
 new file mode 100644
-index 00000000..d01ba724
+index 00000000..6ee71706
 --- /dev/null
 +++ b/data/taichung/confucius-map-bindings/anchors.json
 @@ -0,0 +1,149 @@
@@ -113726,7 +113726,7 @@ index 00000000..d01ba724
 +    }
 +  },
 +  "shenJi": {
-+    "captureSiteId": 3,
++    "captureSiteId": 28,
 +    "script": "TaichungLandmark_ShenJi",
 +    "storyRoute": "TaichungStory_Sign5",
 +    "nativeKey": "43:60",
@@ -114063,10 +114063,10 @@ index 00000000..83f5389d
 +}
 diff --git a/data/taichung/encounters/sites.json b/data/taichung/encounters/sites.json
 new file mode 100644
-index 00000000..b968b499
+index 00000000..c7ae6baf
 --- /dev/null
 +++ b/data/taichung/encounters/sites.json
-@@ -0,0 +1,511 @@
+@@ -0,0 +1,512 @@
 +{
 +  "schemaVersion": 1,
 +  "baseNativeCommit": "3000e237cc1836e5e04b574ed8918da9d2d72b75",
@@ -114143,7 +114143,7 @@ index 00000000..b968b499
 +    },
 +    {
 +      "stableSiteId": 3,
-+      "siteSlug": "shen-ji-new-village",
++      "siteSlug": "prefectural-hall",
 +      "speciesDex": 65,
 +      "species": "ALAKAZAM",
 +      "level": 65,
@@ -114153,10 +114153,10 @@ index 00000000..b968b499
 +        "MOVE_KINESIS",
 +        "MOVE_REFLECT"
 +      ],
-+      "entryScript": "TaichungEncounter_ShenJi",
++      "entryScript": "TaichungEncounter_PrefecturalHall",
 +      "existingPlace": true,
-+      "currentBinding": "TaichungLandmark_ShenJi",
-+      "compatibility": "Saved bit3 and Lv65 remain unchanged from Confucius Temple; no new attempt or unlock."
++      "currentBinding": "TaichungCity_Sign_PrefecturalHall",
++      "compatibility": "Saved bit 3 and Lv65 follow Alakazam from Confucius Temple and Shen Ji to Prefectural Hall."
 +    },
 +    {
 +      "stableSiteId": 4,
@@ -114176,7 +114176,7 @@ index 00000000..b968b499
 +    },
 +    {
 +      "stableSiteId": 5,
-+      "siteSlug": "prefectural-hall",
++      "siteSlug": "city-hall",
 +      "speciesDex": 59,
 +      "species": "ARCANINE",
 +      "level": 65,
@@ -114186,9 +114186,9 @@ index 00000000..b968b499
 +        "MOVE_LEER",
 +        "MOVE_AGILITY"
 +      ],
-+      "entryScript": "TaichungEncounter_PrefecturalHall",
++      "entryScript": "TaichungEncounter_CityHall",
 +      "existingPlace": true,
-+      "currentBinding": "TaichungCity_Sign_PrefecturalHall"
++      "currentBinding": "TaichungBoulevard_Sign_CityHall"
 +    },
 +    {
 +      "stableSiteId": 6,
@@ -114208,7 +114208,7 @@ index 00000000..b968b499
 +    },
 +    {
 +      "stableSiteId": 7,
-+      "siteSlug": "cultural-heritage-park",
++      "siteSlug": "national-trade-center",
 +      "speciesDex": 146,
 +      "species": "MOLTRES",
 +      "level": 75,
@@ -114218,9 +114218,9 @@ index 00000000..b968b499
 +        "MOVE_AGILITY",
 +        "MOVE_SAFEGUARD"
 +      ],
-+      "entryScript": "TaichungEncounter_CulturalHeritagePark",
++      "entryScript": "TaichungEncounter_NationalTradeCenter",
 +      "existingPlace": true,
-+      "currentBinding": "TaichungCity_Sign_CulturalHeritagePark"
++      "currentBinding": "TaichungLandmark_NationalTradeCenter"
 +    },
 +    {
 +      "stableSiteId": 8,
@@ -114290,7 +114290,7 @@ index 00000000..b968b499
 +    },
 +    {
 +      "stableSiteId": 12,
-+      "siteSlug": "city-hall",
++      "siteSlug": "tiger-city",
 +      "speciesDex": 150,
 +      "species": "MEWTWO",
 +      "level": 75,
@@ -114300,9 +114300,9 @@ index 00000000..b968b499
 +        "MOVE_BARRIER",
 +        "MOVE_SAFEGUARD"
 +      ],
-+      "entryScript": "TaichungEncounter_CityHall",
++      "entryScript": "TaichungEncounter_TigerCity",
 +      "existingPlace": true,
-+      "currentBinding": "TaichungBoulevard_Sign_CityHall"
++      "currentBinding": "TaichungBoulevard_Sign_TigerCity"
 +    },
 +    {
 +      "stableSiteId": 13,
@@ -114323,7 +114323,7 @@ index 00000000..b968b499
 +    },
 +    {
 +      "stableSiteId": 14,
-+      "siteSlug": "tiger-city",
++      "siteSlug": "cultural-heritage-park",
 +      "speciesDex": 145,
 +      "species": "ZAPDOS",
 +      "level": 75,
@@ -114333,9 +114333,9 @@ index 00000000..b968b499
 +        "MOVE_AGILITY",
 +        "MOVE_LIGHT_SCREEN"
 +      ],
-+      "entryScript": "TaichungEncounter_TigerCity",
++      "entryScript": "TaichungEncounter_CulturalHeritagePark",
 +      "existingPlace": true,
-+      "currentBinding": "TaichungBoulevard_Sign_TigerCity"
++      "currentBinding": "TaichungCity_Sign_CulturalHeritagePark"
 +    },
 +    {
 +      "stableSiteId": 15,
@@ -114437,7 +114437,7 @@ index 00000000..b968b499
 +    },
 +    {
 +      "stableSiteId": 21,
-+      "siteSlug": "national-trade-center",
++      "siteSlug": "jingming-street",
 +      "speciesDex": 82,
 +      "species": "MAGNETON",
 +      "level": 65,
@@ -114447,9 +114447,9 @@ index 00000000..b968b499
 +        "MOVE_METAL_SOUND",
 +        "MOVE_THUNDER_WAVE"
 +      ],
-+      "entryScript": "TaichungEncounter_NationalTradeCenter",
++      "entryScript": "TaichungEncounter_JingmingStreet",
 +      "existingPlace": true,
-+      "currentBinding": "TaichungLandmark_NationalTradeCenter"
++      "currentBinding": "TaichungBoulevard_Sign_JingmingStreet"
 +    },
 +    {
 +      "stableSiteId": 22,
@@ -114486,7 +114486,7 @@ index 00000000..b968b499
 +    },
 +    {
 +      "stableSiteId": 24,
-+      "siteSlug": "jingming-street",
++      "siteSlug": "yuanbao-temple",
 +      "speciesDex": 6,
 +      "species": "CHARIZARD",
 +      "level": 65,
@@ -114496,10 +114496,10 @@ index 00000000..b968b499
 +        "MOVE_DRAGON_CLAW",
 +        "MOVE_SMOKESCREEN"
 +      ],
-+      "entryScript": "TaichungEncounter_JingmingStreet",
++      "entryScript": "TaichungEncounter_YuanbaoTemple",
 +      "existingPlace": true,
-+      "currentBinding": "TaichungBoulevard_Sign_JingmingStreet",
-+      "history": "Independent new starter history; no inherited old location or free-picker unlock."
++      "currentBinding": "TaichungCity_Sign_YuanbaoTemple",
++      "history": "Charizard keeps saved bit 24 and its encounter history from Jingming 1st Street."
 +    },
 +    {
 +      "stableSiteId": 25,
@@ -114550,7 +114550,7 @@ index 00000000..b968b499
 +    },
 +    {
 +      "stableSiteId": 28,
-+      "siteSlug": "yuanbao-temple",
++      "siteSlug": "shen-ji-new-village",
 +      "speciesDex": 113,
 +      "species": "CHANSEY",
 +      "level": 60,
@@ -114560,9 +114560,10 @@ index 00000000..b968b499
 +        "MOVE_THUNDER_WAVE",
 +        "MOVE_SOFT_BOILED"
 +      ],
-+      "entryScript": "TaichungEncounter_YuanbaoTemple",
++      "entryScript": "TaichungEncounter_ShenJi",
 +      "existingPlace": true,
-+      "currentBinding": "TaichungCity_Sign_YuanbaoTemple"
++      "currentBinding": "TaichungLandmark_ShenJi",
++      "history": "Chansey keeps saved bit 28 and its encounter history from Yuanbao Temple."
 +    }
 +  ],
 +  "capture": {
@@ -114575,7 +114576,7 @@ index 00000000..b968b499
 +  "bridge": {
 +    "version": 2,
 +    "size": 72,
-+    "change": "29-slot bounds with reserved Mew history and active Yuanbao Temple; EC03 and v2/72-byte packet shape unchanged"
++    "change": "EC03 and v2/72-byte packet unchanged. Place bindings resolve to the same 29 stable species slots, including reserved Mew history."
 +  }
 +}
 diff --git a/data/taichung/greenway-grove-flower-beds/audit-before.json b/data/taichung/greenway-grove-flower-beds/audit-before.json
@@ -319392,7 +319393,7 @@ index 00000000..fe8b131d
 +}
 diff --git a/data/taichung/named-xitun-bindings/anchors.json b/data/taichung/named-xitun-bindings/anchors.json
 new file mode 100644
-index 00000000..24420b0e
+index 00000000..104e1d62
 --- /dev/null
 +++ b/data/taichung/named-xitun-bindings/anchors.json
 @@ -0,0 +1,225 @@
@@ -319400,7 +319401,7 @@ index 00000000..24420b0e
 +  "schemaVersion": 1,
 +  "nativeBase": "a701ed5109ffd5eddd6b0581ade46591146e9656",
 +  "coordinateRule": "Authored x minus31 is website world x; y unchanged. Real visitor addresses are separate.",
-+  "scope": "Only new capture sites21–23. The existing market, park and housing remain scenery.",
++  "scope": "The three named Xitun sites retain their sign and guide positions; stable capture IDs follow the current species.",
 +  "sites": [
 +    {
 +      "id": "national-trade-center",
@@ -319408,8 +319409,8 @@ index 00000000..24420b0e
 +        "en": "National Trade Center",
 +        "zh": "NTC國家商貿中心"
 +      },
-+      "captureSiteId": 21,
-+      "species": "Magneton",
++      "captureSiteId": 7,
++      "species": "Moltres",
 +      "gym": false,
 +      "game": {
 +        "authoredWorldRect": [
@@ -633865,10 +633866,10 @@ index 00000000..a486066c
 +#endif
 diff --git a/include/constants/taichung_encounters.h b/include/constants/taichung_encounters.h
 new file mode 100644
-index 00000000..a9918419
+index 00000000..cedfbc79
 --- /dev/null
 +++ b/include/constants/taichung_encounters.h
-@@ -0,0 +1,91 @@
+@@ -0,0 +1,89 @@
 +#ifndef GUARD_CONSTANTS_TAICHUNG_ENCOUNTERS_H
 +#define GUARD_CONSTANTS_TAICHUNG_ENCOUNTERS_H
 +
@@ -633904,35 +633905,33 @@ index 00000000..a9918419
 +#define TAICHUNG_ENCOUNTER_LAPRAS 0
 +#define TAICHUNG_ENCOUNTER_WENCHANG_TEMPLE 1
 +#define TAICHUNG_ENCOUNTER_LEGACY_BOTANICAL_GARDEN 2
-+#define TAICHUNG_ENCOUNTER_SHEN_JI 3
-+// Alakazam retains the original saved bit after moving from Confucius Temple.
-+#define TAICHUNG_ENCOUNTER_CONFUCIUS_TEMPLE TAICHUNG_ENCOUNTER_SHEN_JI
++#define TAICHUNG_ENCOUNTER_ALAKAZAM 3
 +#define TAICHUNG_ENCOUNTER_YIZHONG_STREET 4
-+#define TAICHUNG_ENCOUNTER_PREFECTURAL_HALL 5
++#define TAICHUNG_ENCOUNTER_ARCANINE 5
 +#define TAICHUNG_ENCOUNTER_SECOND_MARKET 6
-+#define TAICHUNG_ENCOUNTER_CULTURAL_HERITAGE_PARK 7
++#define TAICHUNG_ENCOUNTER_MOLTRES 7
 +#define TAICHUNG_ENCOUNTER_LEGACY_FENGLE_SCULPTURE_PARK 8
 +#define TAICHUNG_ENCOUNTER_LEGACY_WENXIN_FOREST_PARK 9
 +// Dragonite keeps its saved ID from its former Central Park location.
 +#define TAICHUNG_ENCOUNTER_GREEN_MUSEUMBRARY 10
 +#define TAICHUNG_ENCOUNTER_RAINBOW_VILLAGE 11
-+#define TAICHUNG_ENCOUNTER_CITY_HALL 12
++#define TAICHUNG_ENCOUNTER_MEWTWO 12
 +#define TAICHUNG_ENCOUNTER_JINGMING_STREET 13
-+#define TAICHUNG_ENCOUNTER_TIGER_CITY 14
++#define TAICHUNG_ENCOUNTER_ZAPDOS 14
 +#define TAICHUNG_ENCOUNTER_LEGACY_GREEN_MUSEUMBRARY 15
 +#define TAICHUNG_ENCOUNTER_BALLPARK 16
 +#define TAICHUNG_ENCOUNTER_FOLKLORE_PARK 17
 +#define TAICHUNG_ENCOUNTER_BOTANICAL_GARDEN 18
 +#define TAICHUNG_ENCOUNTER_FENGLE_SCULPTURE_PARK 19
 +#define TAICHUNG_ENCOUNTER_WENXIN_FOREST_PARK 20
-+#define TAICHUNG_ENCOUNTER_NATIONAL_TRADE_CENTER 21
++#define TAICHUNG_ENCOUNTER_MAGNETON 21
 +#define TAICHUNG_ENCOUNTER_DING_SHENG_BHW 22
 +#define TAICHUNG_ENCOUNTER_THE_LIN 23
 +#define TAICHUNG_ENCOUNTER_CHARIZARD 24
 +#define TAICHUNG_ENCOUNTER_BLASTOISE 25
 +#define TAICHUNG_ENCOUNTER_VENUSAUR 26
 +#define TAICHUNG_ENCOUNTER_RESERVED_MEW 27
-+#define TAICHUNG_ENCOUNTER_YUANBAO_TEMPLE 28
++#define TAICHUNG_ENCOUNTER_CHANSEY 28
 +// Historic location-named constants above retain their original saved IDs.
 +#define TAICHUNG_ENCOUNTER_RETIRED_MASK ((1u << TAICHUNG_ENCOUNTER_LAPRAS) \
 +    | (1u << TAICHUNG_ENCOUNTER_LEGACY_BOTANICAL_GARDEN) \
@@ -646022,7 +646021,7 @@ index 00000000..47759efa
 +}
 diff --git a/src/taichung_encounter.c b/src/taichung_encounter.c
 new file mode 100644
-index 00000000..d54642a5
+index 00000000..71777e75
 --- /dev/null
 +++ b/src/taichung_encounter.c
 @@ -0,0 +1,292 @@
@@ -646038,32 +646037,32 @@ index 00000000..d54642a5
 +    {"taichung-park-lakeshore", SPECIES_LAPRAS, 65, {MOVE_SURF, MOVE_ICE_BEAM, MOVE_BODY_SLAM, MOVE_SING}},
 +    {"wenchang-temple", SPECIES_GYARADOS, 70, {MOVE_BITE, MOVE_WATERFALL, MOVE_LEER, MOVE_TWISTER}},
 +    {"botanical-garden-legacy", SPECIES_EXEGGUTOR, 65, {MOVE_CONFUSION, MOVE_STOMP, MOVE_LEECH_SEED, MOVE_REFLECT}},
-+    {"shen-ji-new-village", SPECIES_ALAKAZAM, 65, {MOVE_CONFUSION, MOVE_PSYBEAM, MOVE_KINESIS, MOVE_REFLECT}},
++    {"prefectural-hall", SPECIES_ALAKAZAM, 65, {MOVE_CONFUSION, MOVE_PSYBEAM, MOVE_KINESIS, MOVE_REFLECT}},
 +    {"yizhong-street", SPECIES_ELECTABUZZ, 60, {MOVE_THUNDER_SHOCK, MOVE_SWIFT, MOVE_LEER, MOVE_LIGHT_SCREEN}},
-+    {"prefectural-hall", SPECIES_ARCANINE, 65, {MOVE_EMBER, MOVE_BITE, MOVE_LEER, MOVE_AGILITY}},
++    {"city-hall", SPECIES_ARCANINE, 65, {MOVE_EMBER, MOVE_BITE, MOVE_LEER, MOVE_AGILITY}},
 +    {"second-market", SPECIES_SNORLAX, 60, {MOVE_TACKLE, MOVE_HEADBUTT, MOVE_DEFENSE_CURL, MOVE_AMNESIA}},
-+    {"cultural-heritage-park", SPECIES_MOLTRES, 75, {MOVE_EMBER, MOVE_WING_ATTACK, MOVE_AGILITY, MOVE_SAFEGUARD}},
++    {"national-trade-center", SPECIES_MOLTRES, 75, {MOVE_EMBER, MOVE_WING_ATTACK, MOVE_AGILITY, MOVE_SAFEGUARD}},
 +    {"fengle-sculpture-park-legacy", SPECIES_ONIX, 65, {MOVE_TACKLE, MOVE_ROCK_THROW, MOVE_HARDEN, MOVE_SCREECH}},
 +    {"wenxin-forest-park-legacy", SPECIES_JYNX, 60, {MOVE_POUND, MOVE_POWDER_SNOW, MOVE_LICK, MOVE_SWEET_KISS}},
 +    {"green-museumbrary", SPECIES_DRAGONITE, 72, {MOVE_WING_ATTACK, MOVE_TWISTER, MOVE_THUNDER_WAVE, MOVE_SAFEGUARD}},
 +    {"rainbow-village", SPECIES_CLEFABLE, 67, {MOVE_BODY_SLAM, MOVE_PSYWAVE, MOVE_REFLECT, MOVE_SING}},
-+    {"city-hall", SPECIES_MEWTWO, 75, {MOVE_PSYCHIC, MOVE_SWIFT, MOVE_BARRIER, MOVE_SAFEGUARD}},
++    {"tiger-city", SPECIES_MEWTWO, 75, {MOVE_PSYCHIC, MOVE_SWIFT, MOVE_BARRIER, MOVE_SAFEGUARD}},
 +    {"jingming-street-legacy", SPECIES_NINETALES, 65, {MOVE_FLAMETHROWER, MOVE_QUICK_ATTACK, MOVE_TAIL_WHIP, MOVE_CONFUSE_RAY}},
-+    {"tiger-city", SPECIES_ZAPDOS, 75, {MOVE_THUNDERBOLT, MOVE_DRILL_PECK, MOVE_AGILITY, MOVE_LIGHT_SCREEN}},
++    {"cultural-heritage-park", SPECIES_ZAPDOS, 75, {MOVE_THUNDERBOLT, MOVE_DRILL_PECK, MOVE_AGILITY, MOVE_LIGHT_SCREEN}},
 +    {"green-museumbrary-legacy", SPECIES_PORYGON, 65, {MOVE_TRI_ATTACK, MOVE_PSYBEAM, MOVE_AGILITY, MOVE_CONVERSION}},
 +    {"baseball-stadium", SPECIES_AERODACTYL, 72, {MOVE_WING_ATTACK, MOVE_ANCIENT_POWER, MOVE_SCARY_FACE, MOVE_SUPERSONIC}},
 +    {"folklore-park", SPECIES_GENGAR, 68, {MOVE_SHADOW_BALL, MOVE_NIGHT_SHADE, MOVE_CONFUSE_RAY, MOVE_LICK}},
 +    {"botanical-garden", SPECIES_VICTREEBEL, 65, {MOVE_RAZOR_LEAF, MOVE_ACID, MOVE_STUN_SPORE, MOVE_SWEET_SCENT}},
 +    {"fengle-sculpture-park", SPECIES_RHYDON, 68, {MOVE_ROCK_SLIDE, MOVE_STOMP, MOVE_SCARY_FACE, MOVE_TAIL_WHIP}},
 +    {"wenxin-forest-park", SPECIES_ARTICUNO, 75, {MOVE_ICE_BEAM, MOVE_GUST, MOVE_MIST, MOVE_AGILITY}},
-+    {"national-trade-center", SPECIES_MAGNETON, 65, {MOVE_THUNDER_SHOCK, MOVE_SONIC_BOOM, MOVE_METAL_SOUND, MOVE_THUNDER_WAVE}},
++    {"jingming-street", SPECIES_MAGNETON, 65, {MOVE_THUNDER_SHOCK, MOVE_SONIC_BOOM, MOVE_METAL_SOUND, MOVE_THUNDER_WAVE}},
 +    {"ding-sheng-bhw-legacy", SPECIES_KABUTOPS, 65, {MOVE_WATER_GUN, MOVE_ROCK_THROW, MOVE_LEER, MOVE_HARDEN}},
 +    {"the-lin", SPECIES_PERSIAN, 65, {MOVE_SCRATCH, MOVE_BITE, MOVE_GROWL, MOVE_SCREECH}},
-+    {"jingming-street", SPECIES_CHARIZARD, 65, {MOVE_FLAMETHROWER, MOVE_WING_ATTACK, MOVE_DRAGON_CLAW, MOVE_SMOKESCREEN}},
++    {"yuanbao-temple", SPECIES_CHARIZARD, 65, {MOVE_FLAMETHROWER, MOVE_WING_ATTACK, MOVE_DRAGON_CLAW, MOVE_SMOKESCREEN}},
 +    {"ding-sheng-bhw", SPECIES_BLASTOISE, 65, {MOVE_SURF, MOVE_ICE_BEAM, MOVE_BITE, MOVE_SKULL_BASH}},
 +    {"maple-garden", SPECIES_VENUSAUR, 65, {MOVE_SOLAR_BEAM, MOVE_SLUDGE_BOMB, MOVE_SUNNY_DAY, MOVE_SLEEP_POWDER}},
 +    // Slot 27 preserves saved history without enabling the Mew encounter.
-+    [TAICHUNG_ENCOUNTER_YUANBAO_TEMPLE] = {"yuanbao-temple", SPECIES_CHANSEY, 60, {MOVE_SEISMIC_TOSS, MOVE_ICE_BEAM, MOVE_THUNDER_WAVE, MOVE_SOFT_BOILED}},
++    [TAICHUNG_ENCOUNTER_CHANSEY] = {"shen-ji-new-village", SPECIES_CHANSEY, 60, {MOVE_SEISMIC_TOSS, MOVE_ICE_BEAM, MOVE_THUNDER_WAVE, MOVE_SOFT_BOILED}},
 +};
 +
 +static EWRAM_DATA struct
@@ -646394,7 +646393,7 @@ index 00000000..503d796e
 +}
 diff --git a/src/taichung_encounter_field.c b/src/taichung_encounter_field.c
 new file mode 100644
-index 00000000..cde75e00
+index 00000000..9ab2057b
 --- /dev/null
 +++ b/src/taichung_encounter_field.c
 @@ -0,0 +1,458 @@
@@ -646579,15 +646578,15 @@ index 00000000..cde75e00
 +static const u8 sYuanbaoZh[] = _("元保宮");
 +static const u8 *const sPlaces[][2] = {
 +    {sParkLakeshoreEn, sParkLakeshoreZh}, {sWenchangEn, sWenchangZh}, {sBotanicalEn, sBotanicalZh},
-+    {sShenJiEn, sShenJiZh}, {sYizhongEn, sYizhongZh}, {sPrefecturalEn, sPrefecturalZh},
-+    {sSecondMarketEn, sSecondMarketZh}, {sHeritageEn, sHeritageZh}, {sFengleEn, sFengleZh},
++    {sPrefecturalEn, sPrefecturalZh}, {sYizhongEn, sYizhongZh}, {sCityHallEn, sCityHallZh},
++    {sSecondMarketEn, sSecondMarketZh}, {sNationalTradeEn, sNationalTradeZh}, {sFengleEn, sFengleZh},
 +    {sWenxinEn, sWenxinZh}, {sMuseumbraryEn, sMuseumbraryZh}, {sRainbowEn, sRainbowZh},
-+    {sCityHallEn, sCityHallZh}, {sJingmingEn, sJingmingZh}, {sTigerCityEn, sTigerCityZh},
++    {sTigerCityEn, sTigerCityZh}, {sJingmingEn, sJingmingZh}, {sHeritageEn, sHeritageZh},
 +    {sMuseumbraryEn, sMuseumbraryZh}, {sBallparkEn, sBallparkZh}, {sFolkloreEn, sFolkloreZh},
 +    {sBotanicalEn, sBotanicalZh}, {sFengleEn, sFengleZh}, {sWenxinEn, sWenxinZh},
-+    {sNationalTradeEn, sNationalTradeZh}, {sDingShengEn, sDingShengZh}, {sTheLinEn, sTheLinZh},
-+    {sJingmingEn, sJingmingZh}, {sDingShengEn, sDingShengZh}, {sMapleEn, sMapleZh},
-+    {sUnavailableEn, sUnavailableZh}, {sYuanbaoEn, sYuanbaoZh}
++    {sJingmingEn, sJingmingZh}, {sDingShengEn, sDingShengZh}, {sTheLinEn, sTheLinZh},
++    {sYuanbaoEn, sYuanbaoZh}, {sDingShengEn, sDingShengZh}, {sMapleEn, sMapleZh},
++    {sUnavailableEn, sUnavailableZh}, {sShenJiEn, sShenJiZh}
 +};
 +typedef char EncounterPlaceCountCheck[ARRAY_COUNT(sPlaces) == TAICHUNG_ENCOUNTER_COUNT ? 1 : -1];
 +static const u8 sBall0En[] = _("{PALETTE 5}{COLOR_HIGHLIGHT_SHADOW 13 14 15}FIGHT{CLEAR_TO 56}BALL 0\nPOKéMON{CLEAR_TO 56}RUN");
@@ -659644,7 +659643,7 @@ index 00000000..49e262e7
 +}
 diff --git a/tests/taichung_encounter_bridge_test.c b/tests/taichung_encounter_bridge_test.c
 new file mode 100644
-index 00000000..16c7fb04
+index 00000000..c4fbf3a6
 --- /dev/null
 +++ b/tests/taichung_encounter_bridge_test.c
 @@ -0,0 +1,75 @@
@@ -659669,7 +659668,7 @@ index 00000000..16c7fb04
 +{
 +    volatile struct TaichungEncounterBridge *p = &gTaichungEncounterBridge;
 +    u32 begin;
-+    const u16 site = TAICHUNG_ENCOUNTER_YUANBAO_TEMPLE;
++    const u16 site = TAICHUNG_ENCOUNTER_CHANSEY;
 +    const struct TaichungEncounterSite *profile = TaichungEncounterGetSite(site);
 +    const u32 history = (1u << TAICHUNG_ENCOUNTER_VENUSAUR) | (1u << TAICHUNG_ENCOUNTER_RESERVED_MEW);
 +    const u32 mask = history | (1u << site);
@@ -659721,14 +659720,14 @@ index 00000000..16c7fb04
 +    assert(p->phase == TAICHUNG_ENCOUNTER_PHASE_DONE && !(p->publication & 1));
 +    TaichungEncounterResetSession(); assert(!TaichungEncounterBegin(site));
 +    gSaveBlock2Ptr = NULL; TaichungEncounterBridge_Tick(TRUE); assert(p->trainerId == 0);
-+    puts("PASS: v2/72-byte bridge carries Yuanbao bit 28 and inert Mew history through begin and result, rejecting stale and incomplete ACKs");
++    puts("PASS: v2/72-byte bridge carries Chansey bit 28 and inert Mew history through begin and result, rejecting stale and incomplete ACKs");
 +}
 diff --git a/tests/taichung_encounter_field_test.c b/tests/taichung_encounter_field_test.c
 new file mode 100644
-index 00000000..549dd2a0
+index 00000000..d6a04028
 --- /dev/null
 +++ b/tests/taichung_encounter_field_test.c
-@@ -0,0 +1,434 @@
+@@ -0,0 +1,447 @@
 +#include "global.h"
 +#include "battle.h"
 +#include "battle_setup.h"
@@ -659968,6 +659967,20 @@ index 00000000..549dd2a0
 +
 +static void TestPlaceNames(void)
 +{
++    static const struct
++    {
++        u8 site;
++        const char *name[2];
++    } moved[] = {
++        {TAICHUNG_ENCOUNTER_ALAKAZAM, {"Prefectural Hall", "臺中州廳"}},
++        {TAICHUNG_ENCOUNTER_ARCANINE, {"City Hall / Taichung Hub", "市政中心"}},
++        {TAICHUNG_ENCOUNTER_MOLTRES, {"National Trade Center", "NTC國家商貿中心"}},
++        {TAICHUNG_ENCOUNTER_MEWTWO, {"Tiger City", "老虎城"}},
++        {TAICHUNG_ENCOUNTER_ZAPDOS, {"Cultural Heritage Park", "文化資產園區"}},
++        {TAICHUNG_ENCOUNTER_MAGNETON, {"Jingming 1st Street", "精明一街"}},
++        {TAICHUNG_ENCOUNTER_CHARIZARD, {"Yuanbao Temple", "元保宮"}},
++        {TAICHUNG_ENCOUNTER_CHANSEY, {"Shen Ji Village", "審計新村"}},
++    };
 +    u16 site;
 +    for (site = 0; site < TAICHUNG_ENCOUNTER_COUNT; site++)
 +        assert(TaichungEncounterGetPlaceName(site) != NULL && TaichungEncounterGetPlaceName(site)[0]);
@@ -659975,11 +659988,10 @@ index 00000000..549dd2a0
 +                   sChinese ? "臺中公園湖邊" : "Taichung Park Lakeshore"));
 +    assert(!strcmp((const char *)TaichungEncounterGetPlaceName(TAICHUNG_ENCOUNTER_BOTANICAL_GARDEN),
 +                   sChinese ? "植物園" : "Botanical Garden"));
-+    assert(!strcmp((const char *)TaichungEncounterGetPlaceName(24), sChinese ? "精明一街" : "Jingming 1st Street"));
 +    assert(!strcmp((const char *)TaichungEncounterGetPlaceName(25), sChinese ? "鼎盛BHW" : "Ding Sheng BHW"));
 +    assert(!strcmp((const char *)TaichungEncounterGetPlaceName(26), sChinese ? "秋紅谷" : "Maple Garden"));
-+    assert(!strcmp((const char *)TaichungEncounterGetPlaceName(TAICHUNG_ENCOUNTER_YUANBAO_TEMPLE),
-+                   sChinese ? "元保宮" : "Yuanbao Temple"));
++    for (site = 0; site < ARRAY_COUNT(moved); site++)
++        assert(!strcmp((const char *)TaichungEncounterGetPlaceName(moved[site].site), moved[site].name[sChinese]));
 +}
 +
 +static void TestGlobalRules(void)
@@ -660695,7 +660707,7 @@ index 00000000..2c867073
 +}
 diff --git a/tests/taichung_encounter_test.c b/tests/taichung_encounter_test.c
 new file mode 100644
-index 00000000..a95286f1
+index 00000000..d5d0ac8d
 --- /dev/null
 +++ b/tests/taichung_encounter_test.c
 @@ -0,0 +1,362 @@
@@ -660818,9 +660830,9 @@ index 00000000..a95286f1
 +    puts("PASS: EC02 available/spent/caught at all4rotated sites, all historical bits, upper24/25 noise and arbitrary oldEF sanitized; all other variables protected; current29-bit history/idempotence and reserved-bit rejection.");
 +}
 +
-+static void TestYuanbaoWithEc03History(void)
++static void TestChanseyWithEc03History(void)
 +{
-+    const u8 site = TAICHUNG_ENCOUNTER_YUANBAO_TEMPLE;
++    const u8 site = TAICHUNG_ENCOUNTER_CHANSEY;
 +    const u32 chansey = 1u << site;
 +    const struct TaichungEncounterSite *profile = TaichungEncounterGetSite(site);
 +    u8 venusaurState, mewState, caught;
@@ -660902,7 +660914,7 @@ index 00000000..a95286f1
 +    u32 bits, mask;
 +    u8 outcome;
 +    TestEc03Migration();
-+    TestYuanbaoWithEc03History();
++    TestChanseyWithEc03History();
 +    TestRetiredLaprasAndBotanicalHistory();
 +    // A failed Snorlax throw, including the misleading near-catch line, is not
 +    // capture provenance. Even a bogus caught outcome cannot grant its unlock.
@@ -755807,10 +755819,10 @@ index 00000000..7a543824
 +print("PASS:20 approved PNG/payload roundtrips, palette/hashes/bit numbering/names,4 after-win-only guarded script paths, no scene/collection progress or money writers")
 diff --git a/tools/taichung_gameplay/audit-encounter-slice.py b/tools/taichung_gameplay/audit-encounter-slice.py
 new file mode 100755
-index 00000000..ba146edd
+index 00000000..7176935f
 --- /dev/null
 +++ b/tools/taichung_gameplay/audit-encounter-slice.py
-@@ -0,0 +1,201 @@
+@@ -0,0 +1,229 @@
 +#!/usr/bin/env python3
 +"""Check the live landmark roster, saved IDs, dispatch and encounter-only odds."""
 +from collections import Counter
@@ -755824,7 +755836,7 @@ index 00000000..ba146edd
 +core = (root / "src/taichung_encounter.c").read_text()
 +rows = re.findall(r'\{"([\w-]+)", SPECIES_(\w+), (\d+), \{([^}]+)\}\}', core)
 +manifest = json.loads((root / "data/taichung/encounters/sites.json").read_text())
-+assert '[TAICHUNG_ENCOUNTER_YUANBAO_TEMPLE] = {"yuanbao-temple"' in core
++assert '[TAICHUNG_ENCOUNTER_CHANSEY] = {"shen-ji-new-village"' in core
 +rows.insert(27, None)
 +assert len(rows) == len(manifest["sites"]) == 29
 +reserved = {27}
@@ -755832,10 +755844,15 @@ index 00000000..ba146edd
 +retired = {0: "LAPRAS", 2: "EXEGGUTOR", 8: "ONIX", 9: "JYNX", 13: "NINETALES",
 +           15: "PORYGON", 22: "KABUTOPS"}
 +assert {row["stableSiteId"]: row["species"] for row in manifest["sites"] if row.get("retired")} == retired
-+assert {(row["siteSlug"], row["species"]) for row in manifest["sites"]} >= {
-+    ("city-hall", "MEWTWO"), ("tiger-city", "ZAPDOS"),
-+    ("cultural-heritage-park", "MOLTRES"), ("wenxin-forest-park", "ARTICUNO"),
-+    ("green-museumbrary", "DRAGONITE"),
++moved = {
++    3: ("prefectural-hall", "ALAKAZAM", "PrefecturalHall"),
++    5: ("city-hall", "ARCANINE", "CityHall"),
++    7: ("national-trade-center", "MOLTRES", "NationalTradeCenter"),
++    12: ("tiger-city", "MEWTWO", "TigerCity"),
++    14: ("cultural-heritage-park", "ZAPDOS", "CulturalHeritagePark"),
++    21: ("jingming-street", "MAGNETON", "JingmingStreet"),
++    24: ("yuanbao-temple", "CHARIZARD", "YuanbaoTemple"),
++    28: ("shen-ji-new-village", "CHANSEY", "ShenJi"),
 +}
 +ids = dict((s,int(n)) for s,n in re.findall(r'^#define SPECIES_(\w+) (\d+)$', (root / "include/constants/species.h").read_text(), re.M))
 +unsafe = {"MOVE_EXPLOSION","MOVE_SELF_DESTRUCT","MOVE_TELEPORT","MOVE_ROAR","MOVE_WHIRLWIND",
@@ -755860,19 +755877,29 @@ index 00000000..ba146edd
 +old_rows = re.findall(r'\{"([\w-]+)", SPECIES_(\w+), (\d+), \{([^}]+)\}\}', baseline)
 +assert len(old_rows) == 21
 +for index, row in enumerate(old_rows):
-+    expected = ("shen-ji-new-village", *row[1:]) if index == 3 else row
++    expected = row
 +    if index == 0:
 +        # The retired lakeshore keeps its Lapras profile and saved bit.
 +        expected = ("taichung-park-lakeshore", row[1], row[2],
 +                    "MOVE_SURF, MOVE_ICE_BEAM, MOVE_BODY_SLAM, MOVE_SING")
 +    elif index == 13:
 +        expected = ("jingming-street-legacy", *row[1:])
++    if index in moved:
++        expected = (moved[index][0], *row[1:])
 +    assert rows[index] == expected, (index, "historic encounter reinterpreted")
-+assert [(row[0], row[1], row[2]) for row in rows[21:] if row is not None] == [
-+    ("national-trade-center", "MAGNETON", "65"),
-+    ("ding-sheng-bhw-legacy", "KABUTOPS", "65"), ("the-lin", "PERSIAN", "65"),
-+    ("jingming-street", "CHARIZARD", "65"), ("ding-sheng-bhw", "BLASTOISE", "65"),
-+    ("maple-garden", "VENUSAUR", "65"), ("yuanbao-temple", "CHANSEY", "60")]
++assert {index: rows[index][:3] for index in (22, 23, 25, 26)} == {
++    22: ("ding-sheng-bhw-legacy", "KABUTOPS", "65"), 23: ("the-lin", "PERSIAN", "65"),
++    25: ("ding-sheng-bhw", "BLASTOISE", "65"), 26: ("maple-garden", "VENUSAUR", "65"),
++}
++previous_source = subprocess.check_output(["git", "show", "6b784d61:src/taichung_encounter.c"], cwd=root, text=True)
++previous_profiles = re.findall(r'\{"([\w-]+)", SPECIES_(\w+), (\d+), \{([^}]+)\}\}', previous_source)
++previous_profiles.insert(27, None)
++for index, previous in enumerate(previous_profiles):
++    if index in moved:
++        place, species, _ = moved[index]
++        assert previous[1] == species and rows[index] == (place, *previous[1:])
++    else:
++        assert rows[index] == previous
 +for site, expected_moves in {
 +    24: ["MOVE_FLAMETHROWER", "MOVE_WING_ATTACK", "MOVE_DRAGON_CLAW", "MOVE_SMOKESCREEN"],
 +    25: ["MOVE_SURF", "MOVE_ICE_BEAM", "MOVE_BITE", "MOVE_SKULL_BASH"],
@@ -755907,7 +755934,7 @@ index 00000000..ba146edd
 +    'SAVE_LOW_BITS': 10, 'SAVE_LOW_MASK': 0x03FF, 'V2_MASK': 0x00FFFFFF,
 +    'EXTRA_VAR': 0x40EF, 'EXTRA_ATTEMPT_BIT': 0x0001, 'EXTRA_UNLOCK_BIT': 0x0100,
 +    'EXTRA_FIRST_SITE': 26, 'EXTRA_USED_MASK': 0x0707, 'EXTRA_RESERVED_MASK': 0xF8F8,
-+    'RESERVED_MEW': 27, 'YUANBAO_TEMPLE': 28,
++    'RESERVED_MEW': 27, 'CHANSEY': 28,
 +}.items():
 +    assert ids_by_constant['TAICHUNG_ENCOUNTER_' + name] == value
 +assert ids_by_constant['TAICHUNG_ENCOUNTER_EXTRA_USED_MASK'] ^ ids_by_constant['TAICHUNG_ENCOUNTER_EXTRA_RESERVED_MASK'] == 0xFFFF
@@ -755916,7 +755943,16 @@ index 00000000..ba146edd
 +assert len(entry_ids) == 21 and set(entry_ids.values()) == set(range(29)) - retired.keys() - reserved
 +assert "TaichungEncounter_TaichungParkLakeshore" not in entry_ids
 +assert entry_ids["TaichungEncounter_BotanicalGarden"] == 18
-+assert entry_ids["TaichungEncounter_YuanbaoTemple"] == 28
++for index, (_, _, wrapper) in moved.items():
++    assert entry_ids["TaichungEncounter_" + wrapper] == index
++xitun = json.loads((root / "data/taichung/named-xitun-bindings/anchors.json").read_text())
++active_by_slug = {row["siteSlug"]: row for row in manifest["sites"] if row["currentBinding"]}
++for named in xitun["sites"]:
++    row = active_by_slug[named["id"]]
++    assert named["captureSiteId"] == row["stableSiteId"]
++    assert named["species"].upper() == row["species"]
++shen_ji = json.loads((root / "data/taichung/confucius-map-bindings/anchors.json").read_text())["shenJi"]
++assert shen_ji["captureSiteId"] == active_by_slug["shen-ji-new-village"]["stableSiteId"]
 +offer = script.split('TaichungEncounter_Offer::',1)[1].split('TaichungEncounter_Begin::',1)[0]
 +assert 'ScriptBegin' not in offer and 'ScriptSave' not in offer
 +assert script.index('goto_if_questlog') < script.index('TaichungEncounter_Offer::')
@@ -755948,13 +755984,15 @@ index 00000000..ba146edd
 +
 +scripts = "\n".join(path.read_text() for path in sorted((root / "data/scripts").glob("*.inc")))
 +blocks = dict(re.findall(r'^(\w+)::\s*\n(.*?)(?=^\w+::|\Z)', scripts, re.M | re.S))
-+# Historical Temple text must not remain a second route to bit3 after the move.
++# The retired Temple entry and the informational legacy interior stay inert.
 +assert re.findall(r'^\s*goto (\w+)\s*$', blocks['TaichungStory_Sign13'], re.M)[-1] == 'TaichungStory_SignDone'
 +assert re.findall(r'^\s*goto (\w+)\s*$', blocks['TaichungStory_Sign5'], re.M)[-1] == 'TaichungEncounter_ShenJi'
 +retired_entry = [line.split('@',1)[0].strip() for line in blocks['TaichungEncounter_ConfuciusTemple'].splitlines()]
 +assert [line for line in retired_entry if line and not line.startswith(('.', '#'))][:2] == ['releaseall','end']
 +if 'TaichungLandmark_ShenJi' in blocks:
 +    assert re.findall(r'^\s*goto (\w+)\s*$', blocks['TaichungLandmark_ShenJi'], re.M)[-1] == 'TaichungStory_Sign5'
++assert re.findall(r'^\s*goto (\w+)\s*$', blocks['TaichungCity_Sign_ShenJi'], re.M)[-1] == 'TaichungStory_Sign5'
++assert 'TaichungEncounter' not in blocks['TaichungShenJi_LandmarkGuide']
 +maps = root / "data/maps"
 +groups = json.loads((maps / "map_groups.json").read_text())["gMapGroup_Taichung"]
 +events = Counter()
@@ -755966,8 +756004,10 @@ index 00000000..ba146edd
 +        for event in record['bg_events']:
 +            if event['type'] == 'sign':
 +                event_positions.setdefault(event['script'], []).append((map_name, 'sign', event['x'], event['y']))
-+    events.update(event["script"] for event in record["object_events"])
 +    for event in record['object_events']:
++        if event.get('type') == 'clone':
++            continue
++        events[event['script']] += 1
 +        event_positions.setdefault(event['script'], []).append((map_name, 'object', event['x'], event['y']))
 +
 +if "--registry-only" not in sys.argv:
