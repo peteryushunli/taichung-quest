@@ -219,8 +219,8 @@ def landmark_facades(native, fill, report, extras):
             source = kit / filename
         require(source.is_file() and digest(source) == report["spriteSha256"].get(landmark),
                 f"{landmark} art does not match the compiled Boulevard report.")
-        if landmark == "yuanbao-temple":
-            source = WEB / "src/assets/landmarks/reviewed/yuanbao-temple-4x.png"
+        if landmark in {"calligraphy-greenway", "yuanbao-temple"}:
+            source = WEB / "src/assets/landmarks/reviewed" / f"{landmark}-4x.png"
         with Image.open(source) as sprite:
             image = sprite.convert("RGBA")
         bounds = image.getchannel("A").getbbox()
