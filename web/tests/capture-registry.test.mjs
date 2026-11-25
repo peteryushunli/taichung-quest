@@ -105,3 +105,20 @@ test('Yuanbao uses slot 28 while reserved slot 27 has no marker or interaction',
     assert.notEqual(validate(registry).status, 0, mutate.toString());
   }
 });
+
+test('the retired Lapras slot keeps its species and level without a public binding', () => {
+  const registry = yuanbao();
+  const lapras = registry.sites[0];
+  Object.assign(lapras, { retired: true, species: 'LAPRAS', entryScript: null, currentBinding: null });
+  const result = validate(registry);
+  assert.equal(result.status, 0, result.stderr);
+  assert.ok(!Object.values(JSON.parse(result.stdout)).includes(0));
+  for (const change of [
+    { species: null }, { speciesDex: 71 }, { level: 60 },
+    { entryScript: 'TaichungEncounter_Lapras' }, { currentBinding: 'TaichungEncounter_Lapras' },
+  ]) {
+    const broken = structuredClone(registry);
+    Object.assign(broken.sites[0], change);
+    assert.notEqual(validate(broken).status, 0, JSON.stringify(change));
+  }
+});

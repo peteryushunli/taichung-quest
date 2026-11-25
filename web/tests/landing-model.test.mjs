@@ -105,10 +105,7 @@ test('map pins and gym cards use the short English names', () => {
 test('every gym and landmark has facade art in the website catalog', () => {
   assert.ok(assets.includes("('./assets/landmarks/isolated/*.png'"));
   for (const place of [...landmarks, ...sights, ...extraSights]) {
-    const parentIcon = place.id === 'taichung-park-lakeshore';
-    if (parentIcon) assert.ok(assets.includes("landmarkArt['taichung-park-lakeshore'] = landmarkArt['taichung-park']"));
-    const facadeId = parentIcon ? 'taichung-park' : place.id;
-    assert.ok(existsSync(new URL(`../src/assets/landmarks/isolated/${facadeId}.png`, import.meta.url)), place.id);
+    assert.ok(existsSync(new URL(`../src/assets/landmarks/isolated/${place.id}.png`, import.meta.url)), place.id);
   }
 });
 

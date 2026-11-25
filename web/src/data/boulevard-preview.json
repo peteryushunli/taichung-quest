@@ -3469,37 +3469,6 @@
         ]
       }
     },
-    "taichung-park-lakeshore": {
-      "id": "taichung-park-lakeshore",
-      "name": {
-        "en": "Taichung Park Lakeshore",
-        "zh": "臺中公園湖邊"
-      },
-      "kind": "landmark",
-      "world": [
-        289,
-        80
-      ],
-      "localEntrance": [
-        8,
-        18
-      ],
-      "exteriorMapId": "MAP_TAICHUNG_BLVD_PARK",
-      "exteriorNativeKey": "43:70",
-      "captureBit": 0,
-      "captureInteraction": {
-        "script": "TaichungEncounter_TaichungParkLakeshore",
-        "world": [
-          289,
-          79
-        ],
-        "nativeKey": "43:70",
-        "local": [
-          8,
-          17
-        ]
-      }
-    },
     "guest-house": {
       "id": "guest-house",
       "name": {
@@ -4924,32 +4893,10 @@
         "https://www.thelin.com.tw/en",
         "https://travel.taichung.gov.tw/zh-tw/shop/accommodation/595"
       ]
-    },
-    {
-      "id": "taichung-park-lakeshore",
-      "nameEn": "Taichung Park Lakeshore",
-      "nameZh": "臺中公園湖邊",
-      "shortNameEn": "Taichung Park Lakeshore",
-      "shortNameZh": "臺中公園湖邊",
-      "minimapNameEn": "Taichung Park Lakeshore",
-      "minimapNameZh": "臺中公園湖邊",
-      "districtId": "oldcity",
-      "districtEn": "Old City",
-      "districtZh": "舊城 · 中區",
-      "category": "Lakeshore",
-      "categoryZh": "湖畔",
-      "kind": "sight",
-      "gymStatus": "not-a-gym",
-      "playable": true,
-      "description": "Paths along Taichung Park’s lake pass arched bridges and look out over the twin roofs of the Mid-Lake Pavilion. The pavilion was built in 1908 for the ceremony marking completion of Taiwan’s north–south railway.",
-      "descriptionZh": "沿著臺中公園日月湖畔的步道散步，可經過拱橋，眺望雙亭並立的湖心亭。湖心亭建於1908年，當時是臺灣縱貫鐵路全通式典禮的貴賓休憩所。",
-      "officialUrl": "https://travel.taichung.gov.tw/en/attractions/intro/882",
-      "officialUrlZh": "https://travel.taichung.gov.tw/en/attractions/intro/882",
-      "officialSourceTitle": "Taichung Tourism and Travel Bureau — Taichung Park"
     }
   ],
   "sourceSha256": {
-    "compiledMapReport": "ebad9d726bc29d76ac78eb289deffe0ea04a94e78feeecb504d132ff4bf405c3",
+    "compiledMapReport": "52a06d8365fa0e4500610485c6f0954f9986b0ab623a262395f89445ecbcd8c9",
     "fill": "22d9c6695e21ab7419ccafe55d86e4833df8a5e394aee84133d4a1cd6b5849f6",
     "mapBook": "265d64cf1b47a26d412626301a6f1e542f3a19bcd89ec0084e6f08022a713b4d",
     "northXitunPlan": "89c555bbfa2a80d277b9729e6a2a9a1b6480dea9e4ffbf76ace332c7386f76e5",
@@ -4959,11 +4906,9 @@
     "yuanbaoTemple": "d85cf4d0629a37d6c145e04b7f9caf419a0e07256006f7b70331f274583ecac1",
     "fengjiaSouth": "88ae5f2c9904223e8886e0eb778ab4f77ddaa7c4d01a87ceee1a00a206a526f4",
     "fineArtsToned": "1daa5b536583b99fc63be9ab5d242b2b271856838fdee299c18db4bf8cd14083",
-    "parkLakeshore": "c94b2788731344c60e78c2d6dc9897df41d864fe7997fb20a3a50cc8a121a688",
     "streetPeople": "370ac784ff89540cc741402d14c495f5eefe7650c14feb2b51c076ffc8f6a07f",
-    "landmarkSignPlan": "6bd1d4f535ff1a1601667ef17e263c8926d24c267f1cd37dceff594deadeebfc",
-    "namedXitunBindings": "8dd6432e66f3e9b47e7eb3238f2e8788d29531b60c2f9fc96d5a13a7477d098d",
-    "taichungParkLakeshore": "c94b2788731344c60e78c2d6dc9897df41d864fe7997fb20a3a50cc8a121a688"
+    "landmarkSignPlan": "f57a0556709e320c2d485ab57935f634643c39731650570f7adc93e7fd5f4f3c",
+    "namedXitunBindings": "8dd6432e66f3e9b47e7eb3238f2e8788d29531b60c2f9fc96d5a13a7477d098d"
   },
-  "geometryFingerprintSha256": "7d97c647b0ee2a779ced4550810c746718175c700b5277fe99c52f1039d83c50"
+  "geometryFingerprintSha256": "39d7834b1b5ba8e521bbb1a3a0dd76d7cbb5793e451762514f08f33bdb8d5270"
 }

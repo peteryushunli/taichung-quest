@@ -8,8 +8,6 @@ const legacySignSites = new Set([
 export function landmarkCaptureCopy(id: string, surface: 'guide' | 'landing',
   hasEncounter = legacySignSites.has(id) || id === 'wenchang-temple', captureBit?: number): string | undefined {
   if (!hasEncounter) return undefined;
-  if (id === 'taichung-park-lakeshore' && captureBit === 0)
-    return 'Read the lakeshore sign for a level 65 Lapras encounter. A successful capture unlocks Lapras in TEAM.';
   if (id === 'botanical-garden' && captureBit === 18)
     return 'Read the sign for a level 65 Victreebel encounter. A successful capture unlocks Victreebel in TEAM.';
   if (id === 'yuanbao-temple' && captureBit === 28)

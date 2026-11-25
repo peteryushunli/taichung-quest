@@ -18,19 +18,24 @@ def captures_from_registry(registry):
         raise SystemExit("Multiple native encounters share a current place or binding.")
     if len(sites) >= 27:
         by_id = {site["stableSiteId"]: site for site in sites}
-        expected = {"taichung-park-lakeshore": (0, 131), "botanical-garden": (18, 71),
+        expected = {"botanical-garden": (18, 71),
                     "jingming-street": (24, 6),
                     "ding-sheng-bhw": (25, 9), "maple-garden": (26, 3)}
+        lapras = by_id[0]
+        if lapras.get("retired"):
+            if (lapras.get("species"), lapras.get("speciesDex"), lapras.get("level"),
+                    lapras.get("entryScript"), lapras.get("currentBinding")) != ("LAPRAS", 131, 65, None, None):
+                raise SystemExit("Retired capture slot 0 must preserve Lapras and its saved history.")
+        else:
+            expected["taichung-park-lakeshore"] = (0, 131)
+            if lapras.get("currentBinding") != "TaichungEncounter_TaichungParkLakeshore":
+                raise SystemExit("The historical active Lapras interaction differs.")
         for place, (stable_id, species) in expected.items():
             site = captures.get(place, {})
             if (site.get("stableSiteId"), site.get("speciesDex"), site.get("level")) != (stable_id, species, 65):
                 raise SystemExit(f"The active capture roster differs for {place}.")
-        for place, binding in {
-            "taichung-park-lakeshore": "TaichungEncounter_TaichungParkLakeshore",
-            "botanical-garden": "TaichungCity_Sign_BotanicalGarden",
-        }.items():
-            if captures[place]["currentBinding"] != binding:
-                raise SystemExit(f"The active capture interaction differs for {place}.")
+        if captures["botanical-garden"]["currentBinding"] != "TaichungCity_Sign_BotanicalGarden":
+            raise SystemExit("The active capture interaction differs for botanical-garden.")
         for stable_id, species in ((13, 38), (22, 141)):
             site = by_id[stable_id]
             if not site.get("retired") or site.get("currentBinding") or site["speciesDex"] != species:
