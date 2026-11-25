@@ -173,7 +173,8 @@ const hdScene = new HdSceneTracker();
 const hdOverlay = new HdOverlay(canvas, '/hd/world', '/hd/sprites', {
   getScene: () => {
     if (!running || restarting) { hdScene.reset(); return; }
-    return hdScene.observe(navigationState, onboarding?.currentState ?? { status: 'unavailable' });
+    return hdScene.observe(navigationState, onboarding?.currentState ?? { status: 'unavailable' },
+      navigationBridge?.canRenderFieldInteraction);
   },
 });
 canvas.after(hdOverlay.element);

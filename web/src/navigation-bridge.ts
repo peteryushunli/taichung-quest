@@ -2,6 +2,7 @@ import { CAPTURE_MASK } from './capture-persistence.ts';
 
 /** Read-only TCNAV001 client. The GBA address identifies the native packet. */
 export const NAVIGATION_FLAGS = { READY: 1, FIELD: 2, POSITION_VALID: 4, OUTDOOR: 8, INDOOR: 16, CYCLING: 32, CAN_TOGGLE_BIKE: 64 } as const;
+const FIELD_SCRIPT_CONTEXTS = (1 << 4) | (1 << 5); // Native SCRIPT and DIALOGUE.
 export type NavigationMetadata = ({ version: 1; size: 48 } | { version: 2; size: 52 }) &
   { address: number; magicA: number; magicB: number };
 export type NavigationSnapshot = {
@@ -67,6 +68,13 @@ export function isFieldSnapshot(packet: NavigationSnapshot) {
     Number.isInteger(packet.x) && Number.isInteger(packet.y) && packet.x >= 0 && packet.y >= 0 &&
     packet.width > 0 && packet.height > 0 && packet.x < packet.width && packet.y < packet.height &&
     packet.facing >= 1 && packet.facing <= 4;
+}
+
+/** A script can hide navigation while the native overworld remains on screen. */
+export function isFieldInteractionSnapshot(packet: NavigationSnapshot) {
+  const readyField = NAVIGATION_FLAGS.READY | NAVIGATION_FLAGS.FIELD;
+  return (packet.flags & readyField) === readyField && packet.contextFlags !== 0 &&
+    (packet.contextFlags & ~FIELD_SCRIPT_CONTEXTS) === 0;
 }
 
 /** First samples, pauses, frame/sequence rewind and wrap start a new epoch.
@@ -136,10 +144,12 @@ export class NativeNavigationBridge {
   private freshness = new NavigationFreshness();
   private wasActive = false;
   private invalidReads = 0;
+  private fieldInteraction = false;
   private state: NavigationState = { phase: 'connecting' };
   private options: ClientOptions;
   constructor(options: ClientOptions) { this.options = options; }
   get currentState() { return this.state; }
+  get canRenderFieldInteraction() { return this.fieldInteraction; }
   /** The uniquely advancing nav allocation anchors other ROM-paired EWRAM
    * packets even in hidden native menus. Never exposes a hidden position. */
   get ewramAnchor(): NativeEwramAnchor | undefined {
@@ -150,7 +160,8 @@ export class NativeNavigationBridge {
     if (!packet || !this.freshness.canAnchor(packet, performance.now())) return;
     return { heap, offset: this.offset, address: this.options.metadata.address };
   }
-  private publish(state: NavigationState) {
+  private publish(state: NavigationState, fieldInteraction = false) {
+    this.fieldInteraction = fieldInteraction;
     if (!state.snapshot && !this.state.snapshot && this.state.phase === state.phase) return;
     this.state = state;
     this.options.onState(state);
@@ -224,7 +235,8 @@ export class NativeNavigationBridge {
     this.invalidReads = 0;
     const now = performance.now();
     const fresh = this.freshness.observe(packet, now);
-    this.publish(fresh && isFieldSnapshot(packet) ? { phase: 'live', snapshot: packet } : { phase: 'hidden' });
+    this.publish(fresh && isFieldSnapshot(packet) ? { phase: 'live', snapshot: packet } : { phase: 'hidden' },
+      fresh && isFieldInteractionSnapshot(packet));
     // EWRAM can be reallocated inside the same Wasm heap after a core reset.
     // A coherent but frozen old allocation is not a reason to keep its offset.
     if (this.freshness.isStale(now)) this.reconnect();
