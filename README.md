@@ -61,21 +61,17 @@ Play: <https://taichung-quest.vercel.app> — the canonical production frontend.
 
 A Pokémon FireRed modification set in a compressed, fictionalized Taichung. A real Game Boy Advance ROM runs in the browser through mGBA WebAssembly.
 
-Explore Claude’s expanded Taichung across six connected districts, with ten gym
-challenges, two temple halls and twenty featured places. Start at Old Taichung
-Station, choose a partner, then explore on foot or by bike. The ten newly approved
-landmark scenes (places11–20) are installed in the cartridge and reflected in the
-city map, minimap and guide cards. See [the art release](docs/approved-landmark-release.md)
-for source provenance, save compatibility and verification.
+Wake up in a guest house near Old Taichung Station, choose a partner, then explore on foot or by bike. The city is straightened out along Taiwan Boulevard, from Fengjia in the west to the Old Station in the east. Read the signs at real landmarks for their history, catch the rare Pokémon living at some of them, and challenge the leaders inside others to fill your City Pass. The leaders are fictional; the buildings are real.
 
 ## Project layout
 
 - `vendor/pokefirered/`: reconstructed FireRed source, with local game modifications.
 - `vendor/agbcc/` and `.tools/`: local game build dependencies.
-- `web/`: browser player, touch controls, audio, and game saves.
+- `web/`: website and browser player, with touch controls, audio, game saves, and the sharper art drawn over the game's picture.
 - `scripts/`: reproducible setup, ROM builds, and change export.
 - `patches/`: portable changes against the pinned upstream game source.
-- `docs/map-design.md`: map coordinates, landmarks, quest, and art decisions.
+- `assets/`: approved source art for badges, portraits, and landmarks.
+- `docs/`: build and deployment guides, design notes, and dated release records.
 
 Upstream FireRed source: <https://github.com/pret/pokefirered>, pinned to `ce6406d8c2eaf46d543c8a2606de0c3cb1951982`.
 
@@ -88,31 +84,31 @@ bash scripts/bootstrap-game.sh
 bash scripts/build-game.sh
 cd web
 npm ci
-npm run dev
+VITE_BOULEVARD_PREVIEW=1 npm run dev
 ```
 
-Open the local address printed by Vite. Start the player with the page's Play button. The browser needs cross-origin isolation for the emulator; the development server sets the required headers. A production host must send COOP and COEP on its actual responses; copying `_headers` alone is not sufficient on every host.
+Open the local address printed by Vite. Start the player with the page's Play button. `VITE_BOULEVARD_PREVIEW=1` selects the current city for the website's map and minimap; without it the site shows the earlier, smaller city. A cartridge built from this patch still reports the earlier map's fingerprint, so the live minimap stays off until release metadata is prepared for it. The browser needs cross-origin isolation for the emulator; the development server sets the required headers. A production host must send COOP and COEP on its actual responses; copying `_headers` alone is not sufficient on every host.
 
 For game compiler prerequisites and baseline verification, see [docs/game-build.md](docs/game-build.md). After editing the vendor game source, run `bash scripts/build-game.sh` and reload the browser player. Export the finished source changes with `bash scripts/export-game-patch.sh`.
 
-For production, use the frozen ROM and matching metadata in a clean release checkout, run `node scripts/prepare-vercel.mjs`, then `vercel deploy --prebuilt --target preview`. Verify the preview before promoting it to production. Vercel is the sole target for future releases; see [deployment instructions](docs/vercel-readiness.md). The legacy Sites helpers and `.openai/hosting.json` remain archival records, not release targets. Public source excludes generated game images, saves, dependencies, and local tools; the website artifact contains the built game required by the player.
+For production, use the frozen ROM and matching metadata in a clean release checkout, run `VITE_BOULEVARD_PREVIEW=1 node scripts/prepare-vercel.mjs`, then `vercel deploy --prebuilt --target preview`. Verify the preview before promoting it to production. Vercel is the sole target for future releases; see [deployment instructions](docs/vercel-readiness.md). The legacy Sites helpers and `.openai/hosting.json` remain archival records, not release targets. Public source excludes generated game images, saves, dependencies, and local tools; the website artifact contains the built game required by the player.
 
-## First playable scope
+## How it plays
 
-Choose English or Traditional Chinese, independent Off / Low / Normal encounter settings, and Charmander, Bulbasaur, Squirtle or Pikachu. The native TEAM menu freely adds or replaces up to six Pokémon from species 001–150, including evolved forms, with level-50 stats and useful moves. Accepted gym challenges heal the team; city battles avoid EXP and evolution gates. Genuine victories record the corresponding badge in the ten-gym City Pass; defeat heals and returns to the nearby plaza for a retry. A fresh B press toggles the bike in eligible outdoor exploration; city cycling takes three native frames per tile, twice the original bike speed. The native menu remains available, and doors automatically dismount the player.
+On the first screen, choose English or Traditional Chinese, set wild Pokémon and trainer encounters to Off, Low, or Normal, and choose whether your team heals after gym battles. Your first partner is Charmander, Bulbasaur, Squirtle, or Pikachu. Use TEAM in the game menu to add or swap up to six available Pokémon at level 50; rare landmark Pokémon unlock there once you catch them. Press B outdoors to get on or off the bike.
 
-The bilingual City Map describes twenty real places with original illustrations and official visitor links. A separate live minimap reads a coherent native position packet, shows mapped interiors at their landmark entrance, and hides during menus, battles, transitions or stale data. Its remembered On/Off option defaults to On. The browser never writes navigation memory or invents earned stamps.
+Beat a landmark's leader to earn its badge on the City Pass. If you lose, you are healed back at the plaza for another try.
 
-Native Traditional Chinese covers custom city text, district names, starters, City Pass, exploration settings, menu actions and common save/battle labels. Original FireRed story, Pokémon/move names and many detail screens remain English. The browser and native language controls synchronize through a versioned packet validated against the exact ROM. Changes wait while the game is busy or paused. See [docs/native-localization.md](docs/native-localization.md) for coverage.
+The bilingual City Map describes the city's real places, with official visitor links. A live minimap follows you outdoors, shows interiors at their landmark's entrance, and hides during menus and battles. You can turn it off in Game options.
 
-Native saves survive reloads and can be exported/imported. Version-6 migration refreshes CMP Park Lane and repairs only its 57 newly blocked saved positions, retaining all 1,938 valid positions. Earlier saves also receive the version-5 Greenway upgrade and its 29 exact repairs. It retains the earlier Theater/Xitun upgrade and its 33 exact repairs. Earlier saves retain the connected-district upgrade chain, including Continue through quest-log replay. Party, inventory, preferences, checkpoint and progress are preserved. Character cache refreshes show the installed hosts and local characters on older saves; new optional NPCs move aside if the player saved on their square. Browser snapshots are isolated by ROM digest. Use native Save before exporting a backup or changing ROM revisions.
+Traditional Chinese covers the city's signs, dialogue, menus, place names, City Pass, settings, and the common save and battle labels. The original FireRed story, Pokémon and move names, and many detail screens remain English. The website and the game keep the same language choice. See [docs/native-localization.md](docs/native-localization.md).
 
-## Design input
+Native saves survive reloads and can be exported and imported. Saves from earlier versions upgrade when you choose Continue, keeping your party, items, settings, and progress. Browser snapshots belong to one cartridge build, so use the game's own Save before exporting a backup or moving to a new version.
 
-The common level is 50; final leader teams and balance remain open. Additional landmark facades and unfinished gym challenges remain separate work. The original submission and presentation builds are preserved at `submission-2026-11-07` and `presentation-2026-11-07`, with their cartridge/save artifacts retained as fallbacks.
+## History and rights
+
+The original submission and presentation builds are preserved at `submission-2026-11-07` and `presentation-2026-11-07`, with their cartridge and save artifacts retained as fallbacks. See [the submission release notes](docs/submission-release.md) for that build's exact native source, cartridge hashes, verified scope, and limitations, and [the approved landmark art](docs/approved-landmark-release.md) for the provenance of ten of the landmark drawings.
 
 Source reconstruction and emulator licenses do not grant publication rights to Pokémon's game content. Keep attribution and licenses for the emulator and dependencies with the browser build.
 
-## Submission checkpoint
-
-See [the submission release notes](docs/submission-release.md) for the exact native source, cartridge hashes, verified scope and limitations. The public repository contains the portable source patch and build tooling; generated cartridges and native saves remain excluded.
+The public repository contains the portable source patch and build tooling; generated cartridges and native saves remain excluded.
