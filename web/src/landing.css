@@ -449,3 +449,7 @@ html[lang="zh-Hant"] .lp-card-other { font-family: inherit; font-size: 12px; let
   .lp-marker-icon > .lp-gym-icon { width: 64%; height: 64%; }
   .lp-detail-team .lp-mon { width: 56px; height: 56px; }
 }
+@media (max-width: 360px) {
+  .lp-marker-icon > .lp-mon { width: 22px; height: 22px; }
+  .lp-marker-icon > .lp-gym-icon { width: 18px; height: 18px; }
+}

@@ -28,7 +28,10 @@ export function createMapLayers(map: HTMLElement, controls: HTMLElement, layoutD
     const bounds = map.getBoundingClientRect();
     if (!bounds.width || !bounds.height) return;
     // Give compact maps room to place a name beside its street after trying its centerline.
-    const crossOffsets = bounds.width <= 390 ? [0, -6, 6, -12, 12, -18, 18] : [0];
+    const compact = bounds.width <= 390;
+    const narrow = bounds.width <= 280;
+    const crossOffsets = compact ? [0, -6, 6, -12, 12, -18, 18] : [0];
+    if (narrow) crossOffsets.push(-24, 24);
     const occupied = [...map.querySelectorAll('.lp-marker,.lp-pin-label,.lp-map-chip,.lp-map-legend,.is-neighborhood,.lp-map-anchor > span')]
       .map(element => element.querySelector(':scope > .lp-gym-icon, :scope > .lp-mon') ?? element)
       .map(element => element.getBoundingClientRect()).filter(box => box.width && box.height)
@@ -40,7 +43,8 @@ export function createMapLayers(map: HTMLElement, controls: HTMLElement, layoutD
       const horizontal = label.dataset.axis === 'h';
       const axisLength = horizontal ? (right - left) * bounds.width / 100 : (bottom - top) * bounds.height / 100;
       const origin = { x: (left + right) / 200 * bounds.width - width / 2, y: (top + bottom) / 200 * bounds.height - height / 2 };
-      const limit = (axisLength - (horizontal ? width : height)) / 2;
+      const labelLength = horizontal ? width : height;
+      const limit = (axisLength - labelLength) / 2 + (narrow ? 6 : 0);
       let found = false;
       for (const cross of crossOffsets) {
         for (let radius = 0; radius <= limit && !found; radius += 6) {
@@ -51,7 +55,7 @@ export function createMapLayers(map: HTMLElement, controls: HTMLElement, layoutD
               width, height,
             };
             if (box.x < 2 || box.y < 2 || box.x + width > bounds.width - 2 || box.y + height > bounds.height - 2 ||
-                occupied.some(other => boxesOverlap(box, other, 2))) continue;
+                occupied.some(other => boxesOverlap(box, other, narrow ? 1 : 2))) continue;
             label.style.left = `${box.x}px`;
             label.style.top = `${box.y}px`;
             occupied.push(box);
