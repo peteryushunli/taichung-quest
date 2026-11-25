@@ -3312,6 +3312,37 @@
         ]
       }
     },
+    "yuanbao-temple": {
+      "id": "yuanbao-temple",
+      "name": {
+        "en": "Yuanbao Temple",
+        "zh": "元保宮"
+      },
+      "kind": "landmark",
+      "world": [
+        285,
+        50
+      ],
+      "localEntrance": [
+        4,
+        24
+      ],
+      "exteriorMapId": "MAP_TAICHUNG_BLVD_CONFUCIUS_TEMPLE",
+      "exteriorNativeKey": "43:69",
+      "captureBit": 28,
+      "captureInteraction": {
+        "script": "TaichungCity_Sign_YuanbaoTemple",
+        "world": [
+          285,
+          50
+        ],
+        "nativeKey": "43:69",
+        "local": [
+          4,
+          24
+        ]
+      }
+    },
     "national-trade-center": {
       "id": "national-trade-center",
       "name": {
@@ -4744,6 +4775,37 @@
       "officialSourceTitle": "Taichung Tourism and Travel Bureau"
     },
     {
+      "id": "yuanbao-temple",
+      "nameEn": "Yuanbao Temple",
+      "nameZh": "元保宮",
+      "shortNameEn": "Yuanbao Temple",
+      "shortNameZh": "元保宮",
+      "minimapNameEn": "Yuanbao Temple",
+      "minimapNameZh": "元保宮",
+      "districtId": "north",
+      "districtEn": "North · Yizhong",
+      "districtZh": "北區 · 一中",
+      "category": "Temple",
+      "categoryZh": "廟宇",
+      "kind": "sight",
+      "gymStatus": "not-a-gym",
+      "playable": true,
+      "description": "Completed in 1791, Yuanbao Temple stands on Meichuan West Road in Taichung’s North District. The Lai family came from Pinghe, Fujian, and brought their devotion to Baosheng Dadi from Xintian Temple. Seventeen villages helped build the temple.",
+      "descriptionZh": "元保宮位於臺中市北區梅川西路，於1791年落成。來自福建平和的賴氏族人，從心田宮迎來保生大帝香火，並與十七庄信眾合力興建廟宇。",
+      "officialUrl": "https://travel.taichung.gov.tw/en/Attractions/Intro/1659",
+      "officialSourceTitle": "Taichung Tourism and Travel Bureau",
+      "location": {
+        "address": "No. 109, Sec. 3, Meichuan W. Rd., North District, Taichung City",
+        "addressZh": "臺中市北區梅川西路三段109號",
+        "latitude": 24.1628328,
+        "longitude": 120.676291
+      },
+      "descriptionSources": [
+        "https://travel.taichung.gov.tw/en/Attractions/Intro/1659",
+        "https://www.tchac.taichung.gov.tw/historybuilding?pid=272&uid=39"
+      ]
+    },
+    {
       "id": "national-trade-center",
       "nameEn": "National Trade Center",
       "nameZh": "NTC國家商貿中心",
@@ -4854,18 +4916,19 @@
     }
   ],
   "sourceSha256": {
-    "compiledMapReport": "71a1b6bd3ac192b1383ce7652870cca86745fca1a6a946f21f414d81700934ab",
+    "compiledMapReport": "f87578166ac67f1832342729272babf3e32ea367d745a6a3de219458132be0e9",
     "fill": "22d9c6695e21ab7419ccafe55d86e4833df8a5e394aee84133d4a1cd6b5849f6",
     "mapBook": "265d64cf1b47a26d412626301a6f1e542f3a19bcd89ec0084e6f08022a713b4d",
     "northXitunPlan": "89c555bbfa2a80d277b9729e6a2a9a1b6480dea9e4ffbf76ace332c7386f76e5",
     "northXitunCompiler": "be903fd3d2d37b0dc6c581512e86b84054457a30a53ce90bc7f83fcd1b65fb34",
     "xitunTowerSwap": "3c6d0e8c0deddd092f650297f58be5ee686d8a1f9c073c009ecc33ea04443ab3",
     "scienceMuseumExterior": "d5498ab8795db850dfeb38174107e6b3f5aa0b0fe23e4d346df7b00513f23409",
+    "yuanbaoTemple": "94da92965bd3f587a217e217fbd16d6af5eb5436689fb01bacc1c81b2179750f",
     "parkLakeshore": "c94b2788731344c60e78c2d6dc9897df41d864fe7997fb20a3a50cc8a121a688",
     "streetPeople": "370ac784ff89540cc741402d14c495f5eefe7650c14feb2b51c076ffc8f6a07f",
-    "landmarkSignPlan": "1221181ab85671ec1434f1756a3b45f635c6ba0cbcaa229e2953509713463a30",
+    "landmarkSignPlan": "1e5f3c8c82421450b92d956689b7566af2bfb51e88577d24fa7cbef8bac87071",
     "namedXitunBindings": "8dd6432e66f3e9b47e7eb3238f2e8788d29531b60c2f9fc96d5a13a7477d098d",
     "taichungParkLakeshore": "c94b2788731344c60e78c2d6dc9897df41d864fe7997fb20a3a50cc8a121a688"
   },
-  "geometryFingerprintSha256": "23b85655c20ec6344d5c9a06f8f806a351fce741387f22907bdc0d6db3c862c8"
+  "geometryFingerprintSha256": "2285a0fc1f604d4a495653c42b2f4bc2c8327ae12964e6ddae7ab5385d9ec147"
 }
