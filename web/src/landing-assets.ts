@@ -1,4 +1,5 @@
 import { sharpBadgeArt } from './badge-art';
+import captureSpecies from './data/capture-species.json';
 import bikeShot from './assets/landing/bike-greenway.png';
 import cityMap from './assets/landing/city-map.png';
 import boulevardMap from './assets/boulevard/city.webp';
@@ -62,6 +63,14 @@ export interface PokemonIcon { name: string; icon: string }
 export interface LandmarkArt { facade?: string; tint: string; leader?: string; team?: PokemonIcon[] }
 
 const mon = (name: string, icon: string): PokemonIcon => ({ name, icon });
+
+const iconFiles = import.meta.glob<string>('./assets/pokemon/icon/*.png', { eager: true, import: 'default' });
+/** The Pokémon the game keeps at a capture site (a landmark marker's captureBit), when the site has its icon. */
+export function capturePokemon(site: number | undefined): PokemonIcon | undefined {
+  const slug = site === undefined ? undefined : captureSpecies.species[site];
+  const icon = slug ? iconFiles[`./assets/pokemon/icon/${slug}.png`] : undefined;
+  return slug && icon ? mon(slug[0].toUpperCase() + slug.slice(1), icon) : undefined;
+}
 const brick = '#ede2d9';
 const park = '#e0e8dc';
 const modern = '#e3e9e6';
@@ -74,6 +83,7 @@ export const landmarkArt: Record<string, LandmarkArt> = {
   miyahara: { tint: brick, leader: peiqi, team: [mon('Dewgong', dewgongIcon), mon('Cloyster', cloysterIcon), mon('Lapras', laprasIcon)] },
   'natural-science-museum': { tint: modern, leader: yicheng, team: [mon('Magneton', magnetonIcon), mon('Aerodactyl', aerodactylIcon), mon('Omastar', omastarIcon)] },
   'calligraphy-greenway': { tint: park, leader: xingan, team: [mon('Victreebel', victreebelIcon), mon('Vileplume', vileplumeIcon), mon('Tangela', tangelaIcon)] },
+  'yuanbao-temple': { tint: brick },
   'confucius-temple': { tint: neutral, leader: wenyi, team: [mon('Slowbro', slowbroIcon), mon('Exeggutor', exeggutorIcon), mon('Alakazam', alakazamIcon)] },
   'fine-arts-museum': { tint: neutral, leader: caining, team: [mon('Butterfree', butterfreeIcon), mon('Muk', mukIcon), mon('Clefable', clefableIcon)] },
   'fengjia-night-market': { tint: brick, leader: jiahe, team: [mon('Farfetch’d', farfetchdIcon), mon('Magmar', magmarIcon), mon('Snorlax', snorlaxIcon)] },

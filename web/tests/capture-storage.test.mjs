@@ -111,7 +111,7 @@ test('a genuinely replaced native save reconciles only after its new identity an
 });
 
 test('new high-bit results retain the ordered native durability transaction', async () => {
-  for (const site of [21, 22, 23, 24, 25, 26]) for (const caught of [false, true]) {
+  for (const site of [21, 22, 23, 24, 25, 26, 28]) for (const caught of [false, true]) {
     const f = setup();
     f.current = { ...f.current, phase: 4, site, attempts: proof.attempts | 1 << site, unlocks: proof.unlocks | (caught ? 1 << site : 0) };
     f.bytes = fixture(f.current, 1, 5, site >= 24 ? 0xec03 : 0xec02).bytes;
@@ -123,7 +123,7 @@ test('new high-bit results retain the ordered native durability transaction', as
 });
 
 test('each starter Begin survives reload until its exact EC03 native Continue can reconcile', async () => {
-  for (const [site, species] of [[24, 6], [25, 9], [26, 3]]) {
+  for (const [site, species] of [[24, 6], [25, 9], [26, 3], [28, 113]]) {
     const f = setup();
     f.current = { ...f.current, site, species, attempts: proof.attempts | 1 << site };
     f.bytes = fixture(f.current, 0, 13, 0xec03).bytes;

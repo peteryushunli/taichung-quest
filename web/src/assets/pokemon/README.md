@@ -71,3 +71,19 @@ icon/tangela.png c30256d79899afc52f9acda5471688549f0c9f51f1ec7f02fea0a8838d4e574
 icon/vaporeon.png ac7eb05a1fe6d1831c0283597fc579a4acac1318ace977d4e0604e4902ca2a9d
 icon/vileplume.png 225bb834ad8daff529cd834bb340f3636acdc2d9612cea037ccb59da1d0dca0f
 ```
+
+## Landmark Pokémon on the landing map
+
+Added on 25 November 2026. On the landing map each landmark's pin is the Pokémon the game keeps there. The list is `src/data/capture-species.json`, written by `scripts/prepare-capture-species.py` from the game's encounter registry (`data/taichung/encounters/sites.json`) as carried in `patches/taichung.patch`; a site's number is the marker's `captureBit` in `boulevard-preview.json`. Eleven of the twenty were already here. The other nine are unchanged copies of `graphics/pokemon/<species>/icon.png` from native checkout `c8e1495c` (the files are upstream's own, last changed in `ce6406d8`):
+
+```text
+icon/arcanine.png 4c7c6a13345a92cd58ecda94e2cf5800f7898c8e7afd237ca122ed8c8ed67754
+icon/articuno.png d9461bea2bc9b86c27c9315f3a14cf25bc2e9ef5fbc49450f327575d1fd2c810
+icon/blastoise.png 7c5f402b5b40b97f5fb232cd3960c5525c65ce58b33f7b39cdbd01ceb022dffe
+icon/electabuzz.png d4ca6dfc30d137ebd31632d3a14f05bcf2de3119ce453495a6b48fffd8ee2b97
+icon/mewtwo.png 06dafc71a8abbcf8c7478699a5bfcd853a83d9ecc80b73f7dc28dbc1e61329aa
+icon/moltres.png 83b4d56cdad4a17a610a7db5fd65f5ec752b61a64e047459798cab92ccd6a87b
+icon/rhydon.png a99b5062f0e5866e4af7b5252825b13a08d64d610d569619fda090d259b1bbc2
+icon/venusaur.png 30db54b2a3dc580b9c239d39644cfd8a837d1ec8b2cb049a7bf2b284f3afee63
+icon/zapdos.png 27d6cc54e9e6f1feb5c6a785b7d60f7c6496325b429aa09721be12adab93b2fb
+```

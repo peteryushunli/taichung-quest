@@ -25,7 +25,8 @@
           350,
           113
         ],
-        "axis": "h"
+        "axis": "h",
+        "id": "taiwan"
       },
       {
         "name": {
@@ -38,7 +39,8 @@
           170,
           65
         ],
-        "axis": "h"
+        "axis": "h",
+        "id": "xitun"
       },
       {
         "name": {
@@ -51,7 +53,8 @@
           284,
           65
         ],
-        "axis": "h"
+        "axis": "h",
+        "id": "jianxing"
       },
       {
         "name": {
@@ -64,7 +67,8 @@
           322,
           65
         ],
-        "axis": "h"
+        "axis": "h",
+        "id": "jingwu"
       },
       {
         "name": {
@@ -77,7 +81,8 @@
           257,
           47
         ],
-        "axis": "h"
+        "axis": "h",
+        "id": "wenxin"
       },
       {
         "name": {
@@ -90,7 +95,8 @@
           119,
           220
         ],
-        "axis": "v"
+        "axis": "v",
+        "id": "wenxin"
       },
       {
         "name": {
@@ -103,7 +109,8 @@
           322,
           46
         ],
-        "axis": "h"
+        "axis": "h",
+        "id": "lixing"
       },
       {
         "name": {
@@ -116,7 +123,8 @@
           17,
           149
         ],
-        "axis": "h"
+        "axis": "h",
+        "id": "shizheng"
       },
       {
         "name": {
@@ -129,7 +137,8 @@
           118,
           149
         ],
-        "axis": "h"
+        "axis": "h",
+        "id": "shizheng"
       },
       {
         "name": {
@@ -142,7 +151,8 @@
           170,
           167
         ],
-        "axis": "h"
+        "axis": "h",
+        "id": "gongyi"
       },
       {
         "name": {
@@ -155,7 +165,8 @@
           170,
           167
         ],
-        "axis": "v"
+        "axis": "v",
+        "id": "gongyi"
       },
       {
         "name": {
@@ -168,7 +179,8 @@
           256,
           147
         ],
-        "axis": "h"
+        "axis": "h",
+        "id": "gongyi"
       },
       {
         "name": {
@@ -181,7 +193,8 @@
           347,
           147
         ],
-        "axis": "h"
+        "axis": "h",
+        "id": "minquan"
       },
       {
         "name": {
@@ -194,7 +207,8 @@
           346,
           128
         ],
-        "axis": "h"
+        "axis": "h",
+        "id": "zhongshan"
       },
       {
         "name": {
@@ -207,7 +221,8 @@
           256,
           193
         ],
-        "axis": "h"
+        "axis": "h",
+        "id": "wuquanw"
       },
       {
         "name": {
@@ -220,7 +235,8 @@
           118,
           219
         ],
-        "axis": "h"
+        "axis": "h",
+        "id": "nantun"
       },
       {
         "name": {
@@ -233,7 +249,8 @@
           347,
           175
         ],
-        "axis": "h"
+        "axis": "h",
+        "id": "fuxing_s"
       },
       {
         "name": {
@@ -246,7 +263,8 @@
           17,
           219
         ],
-        "axis": "v"
+        "axis": "v",
+        "id": "liming"
       },
       {
         "name": {
@@ -259,7 +277,8 @@
           28,
           64
         ],
-        "axis": "v"
+        "axis": "v",
+        "id": "fuxing_n"
       },
       {
         "name": {
@@ -272,7 +291,8 @@
           44,
           167
         ],
-        "axis": "v"
+        "axis": "v",
+        "id": "henan"
       },
       {
         "name": {
@@ -285,7 +305,8 @@
           43,
           218
         ],
-        "axis": "v"
+        "axis": "v",
+        "id": "wanhe"
       },
       {
         "name": {
@@ -298,7 +319,8 @@
           93,
           193
         ],
-        "axis": "v"
+        "axis": "v",
+        "id": "huizhong"
       },
       {
         "name": {
@@ -311,7 +333,8 @@
           140,
           193
         ],
-        "axis": "v"
+        "axis": "v",
+        "id": "dadun"
       },
       {
         "name": {
@@ -324,7 +347,8 @@
           170,
           193
         ],
-        "axis": "v"
+        "axis": "v",
+        "id": "zhongming"
       },
       {
         "name": {
@@ -337,7 +361,8 @@
           190,
           193
         ],
-        "axis": "v"
+        "axis": "v",
+        "id": "meicun"
       },
       {
         "name": {
@@ -350,7 +375,8 @@
           240,
           147
         ],
-        "axis": "v"
+        "axis": "v",
+        "id": "yingcai"
       },
       {
         "name": {
@@ -363,7 +389,8 @@
           256,
           193
         ],
-        "axis": "v"
+        "axis": "v",
+        "id": "wuquan"
       },
       {
         "name": {
@@ -376,7 +403,8 @@
           284,
           175
         ],
-        "axis": "v"
+        "axis": "v",
+        "id": "sanmin"
       },
       {
         "name": {
@@ -389,7 +417,8 @@
           322,
           111
         ],
-        "axis": "v"
+        "axis": "v",
+        "id": "shuangshi"
       },
       {
         "name": {
@@ -402,7 +431,8 @@
           346,
           174
         ],
-        "axis": "v"
+        "axis": "v",
+        "id": "jianguo"
       },
       {
         "name": {
@@ -415,7 +445,8 @@
           117,
           92
         ],
-        "axis": "h"
+        "axis": "h",
+        "id": "qinghai"
       },
       {
         "name": {
@@ -428,7 +459,8 @@
           92,
           129
         ],
-        "axis": "h"
+        "axis": "h",
+        "id": "n7"
       },
       {
         "name": {
@@ -441,7 +473,8 @@
           67,
           166
         ],
-        "axis": "v"
+        "axis": "v",
+        "id": "huilai"
       },
       {
         "name": {
@@ -2464,7 +2497,7 @@
       "parentMarkerId": "fengjia-night-market",
       "parentEntranceWorld": [
         16,
-        47
+        59
       ],
       "indoorLabel": {
         "en": "Indoors",
@@ -2752,11 +2785,11 @@
       "kind": "landmark-gym",
       "world": [
         16,
-        47
+        59
       ],
       "localEntrance": [
         8,
-        21
+        33
       ],
       "exteriorMapId": "MAP_TAICHUNG_BLVD_FENGJIA_NIGHT_MARKET",
       "exteriorNativeKey": "43:26"
@@ -3309,6 +3342,37 @@
         "local": [
           23,
           11
+        ]
+      }
+    },
+    "yuanbao-temple": {
+      "id": "yuanbao-temple",
+      "name": {
+        "en": "Yuanbao Temple",
+        "zh": "元保宮"
+      },
+      "kind": "landmark",
+      "world": [
+        285,
+        50
+      ],
+      "localEntrance": [
+        4,
+        24
+      ],
+      "exteriorMapId": "MAP_TAICHUNG_BLVD_CONFUCIUS_TEMPLE",
+      "exteriorNativeKey": "43:69",
+      "captureBit": 28,
+      "captureInteraction": {
+        "script": "TaichungCity_Sign_YuanbaoTemple",
+        "world": [
+          285,
+          50
+        ],
+        "nativeKey": "43:69",
+        "local": [
+          4,
+          24
         ]
       }
     },
@@ -4744,6 +4808,37 @@
       "officialSourceTitle": "Taichung Tourism and Travel Bureau"
     },
     {
+      "id": "yuanbao-temple",
+      "nameEn": "Yuanbao Temple",
+      "nameZh": "元保宮",
+      "shortNameEn": "Yuanbao Temple",
+      "shortNameZh": "元保宮",
+      "minimapNameEn": "Yuanbao Temple",
+      "minimapNameZh": "元保宮",
+      "districtId": "north",
+      "districtEn": "North · Yizhong",
+      "districtZh": "北區 · 一中",
+      "category": "Temple",
+      "categoryZh": "廟宇",
+      "kind": "sight",
+      "gymStatus": "not-a-gym",
+      "playable": true,
+      "description": "Completed in 1791, Yuanbao Temple stands on Meichuan West Road in Taichung’s North District. The Lai family came from Pinghe, Fujian, and brought their devotion to Baosheng Dadi from Xintian Temple. Seventeen villages helped build the temple.",
+      "descriptionZh": "元保宮位於臺中市北區梅川西路，於1791年落成。來自福建平和的賴氏族人，從心田宮迎來保生大帝香火，並與十七庄信眾合力興建廟宇。",
+      "officialUrl": "https://travel.taichung.gov.tw/en/Attractions/Intro/1659",
+      "officialSourceTitle": "Taichung Tourism and Travel Bureau",
+      "location": {
+        "address": "No. 109, Sec. 3, Meichuan W. Rd., North District, Taichung City",
+        "addressZh": "臺中市北區梅川西路三段109號",
+        "latitude": 24.1628328,
+        "longitude": 120.676291
+      },
+      "descriptionSources": [
+        "https://travel.taichung.gov.tw/en/Attractions/Intro/1659",
+        "https://www.tchac.taichung.gov.tw/historybuilding?pid=272&uid=39"
+      ]
+    },
+    {
       "id": "national-trade-center",
       "nameEn": "National Trade Center",
       "nameZh": "NTC國家商貿中心",
@@ -4854,18 +4949,21 @@
     }
   ],
   "sourceSha256": {
-    "compiledMapReport": "71a1b6bd3ac192b1383ce7652870cca86745fca1a6a946f21f414d81700934ab",
+    "compiledMapReport": "ebad9d726bc29d76ac78eb289deffe0ea04a94e78feeecb504d132ff4bf405c3",
     "fill": "22d9c6695e21ab7419ccafe55d86e4833df8a5e394aee84133d4a1cd6b5849f6",
     "mapBook": "265d64cf1b47a26d412626301a6f1e542f3a19bcd89ec0084e6f08022a713b4d",
     "northXitunPlan": "89c555bbfa2a80d277b9729e6a2a9a1b6480dea9e4ffbf76ace332c7386f76e5",
     "northXitunCompiler": "be903fd3d2d37b0dc6c581512e86b84054457a30a53ce90bc7f83fcd1b65fb34",
     "xitunTowerSwap": "3c6d0e8c0deddd092f650297f58be5ee686d8a1f9c073c009ecc33ea04443ab3",
     "scienceMuseumExterior": "d5498ab8795db850dfeb38174107e6b3f5aa0b0fe23e4d346df7b00513f23409",
+    "yuanbaoTemple": "d85cf4d0629a37d6c145e04b7f9caf419a0e07256006f7b70331f274583ecac1",
+    "fengjiaSouth": "88ae5f2c9904223e8886e0eb778ab4f77ddaa7c4d01a87ceee1a00a206a526f4",
+    "fineArtsToned": "1daa5b536583b99fc63be9ab5d242b2b271856838fdee299c18db4bf8cd14083",
     "parkLakeshore": "c94b2788731344c60e78c2d6dc9897df41d864fe7997fb20a3a50cc8a121a688",
     "streetPeople": "370ac784ff89540cc741402d14c495f5eefe7650c14feb2b51c076ffc8f6a07f",
-    "landmarkSignPlan": "1221181ab85671ec1434f1756a3b45f635c6ba0cbcaa229e2953509713463a30",
+    "landmarkSignPlan": "6bd1d4f535ff1a1601667ef17e263c8926d24c267f1cd37dceff594deadeebfc",
     "namedXitunBindings": "8dd6432e66f3e9b47e7eb3238f2e8788d29531b60c2f9fc96d5a13a7477d098d",
     "taichungParkLakeshore": "c94b2788731344c60e78c2d6dc9897df41d864fe7997fb20a3a50cc8a121a688"
   },
-  "geometryFingerprintSha256": "23b85655c20ec6344d5c9a06f8f806a351fce741387f22907bdc0d6db3c862c8"
+  "geometryFingerprintSha256": "7d97c647b0ee2a779ced4550810c746718175c700b5277fe99c52f1039d83c50"
 }

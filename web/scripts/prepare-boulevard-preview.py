@@ -24,6 +24,7 @@ EXTRA_SIGHTS = {
     "city-hall": ("City Hall", "臺中市政府", "xitun", "Civic plaza", "市政廣場"),
 }
 INSTALLED_SIGHTS = {
+    "yuanbao-temple": ("Yuanbao Temple", "元保宮", "north", "Temple", "廟宇"),
     "national-trade-center": ("National Trade Center", "NTC國家商貿中心", "xitun", "Office tower", "商辦大樓"),
     "ding-sheng-bhw": ("Ding Sheng BHW", "鼎盛BHW", "xitun", "Office tower", "商辦大樓"),
     "the-lin": ("The Lin", "林酒店", "xitun", "Hotel", "飯店"),
@@ -81,10 +82,13 @@ def street_bands(plan, fill, origin, forecourt=None):
     bands = []
     forecourt_applied = False
 
-    def add(name, zh, rect, axis):
+    def add(name, zh, rect, axis, street_id=None):
         x0, y0, x1, y1 = rect
         bounds = [x0 - origin[0], y0 - origin[1], x1 - origin[0], y1 - origin[1]]
-        bands.append({"name": {"en": name, "zh": zh}, "bounds": bounds, "axis": axis})
+        band = {"name": {"en": name, "zh": zh}, "bounds": bounds, "axis": axis}
+        if street_id is not None:
+            band["id"] = street_id
+        bands.append(band)
 
     for street in plan["streets"]:
         if street["kind"] not in ("boulevard", "street", "lane"):
@@ -98,11 +102,11 @@ def street_bands(plan, fill, origin, forecourt=None):
                 require(not forecourt_applied and axis == "h" and
                         top == cut_top and bottom == cut_bottom and left < cut_left < cut_right < right,
                         "The compiled forecourt must cut the full width of a single Shizheng Road band.")
-                add(en, street["zh"], (left, top, cut_left, bottom), axis)
-                add(en, street["zh"], (cut_right, top, right, bottom), axis)
+                add(en, street["zh"], (left, top, cut_left, bottom), axis, street["id"])
+                add(en, street["zh"], (cut_right, top, right, bottom), axis, street["id"])
                 forecourt_applied = True
             else:
-                add(en, street["zh"], rect, axis)
+                add(en, street["zh"], rect, axis, street["id"])
     for lane in fill["newLanes"]:
         if lane["zh"] and lane["direction"] in ("h", "v"):
             add(lane["name"], lane["zh"], lane["rect"], lane["direction"])
@@ -143,6 +147,8 @@ def terrain_images(fill, plan, candidate, geometry, report):
     elif paving := tower_block.get("paving"):
         world.put(paving, "p")
     apply_compiled_ground(world, report.get("xitunFrontageCleanup", {}).get("radarGround", []))
+    apply_compiled_ground(world, report.get("yuanbaoTemple", {}).get("ground", []))
+    apply_compiled_ground(world, report.get("fengjiaSouthEntrance", {}).get("radarGround", []))
     width, height = geometry["world"]["width"], geometry["world"]["height"]
     origin = plan["world"]["box"][:2]
     ink = {
@@ -217,11 +223,17 @@ def landmark_facades(native, fill, report, extras):
             source = kit / filename
         require(source.is_file() and digest(source) == report["spriteSha256"].get(landmark),
                 f"{landmark} art does not match the compiled Boulevard report.")
+        fengjia_arch = landmark == "fengjia-night-market" and report.get("fengjiaSouthEntrance")
+        if landmark in {"calligraphy-greenway", "yuanbao-temple"} or fengjia_arch:
+            source = WEB / "src/assets/landmarks/reviewed" / f"{landmark}-4x.png"
         with Image.open(source) as sprite:
             image = sprite.convert("RGBA")
         bounds = image.getchannel("A").getbbox()
         require(bounds, f"{landmark} facade has no visible pixels.")
-        facades[filename] = image.crop(bounds)
+        facade = image.crop(bounds)
+        if fengjia_arch:
+            facade = facade.resize((facade.width // 2, facade.height // 2), Image.Resampling.LANCZOS)
+        facades[filename] = facade
     directory = WEB / "src/assets/landmarks/isolated"
     directory.mkdir(parents=True, exist_ok=True)
     for filename, image in facades.items():
@@ -281,6 +293,12 @@ def main():
     plan_districts = {district["id"]: district for district in plan["districts"]}
     installed = {entry["id"]: entry for entry in report.get("installedLandmarks", [])}
     captures = captures_from_registry(read(args.native / "data/taichung/encounters/sites.json"))
+    yuanbao = report.get("yuanbaoTemple")
+    require(bool(yuanbao) == ("yuanbao-temple" in captures),
+            "The Yuanbao Temple placement and encounter registry must be paired.")
+    if yuanbao:
+        require(yuanbao["id"] == "yuanbao-temple", "The compiled Yuanbao Temple landmark ID differs.")
+        installed["yuanbao-temple"] = yuanbao
     named_bindings_path = args.native / "data/taichung/named-xitun-bindings/anchors.json"
     named_bindings = read(named_bindings_path) if named_bindings_path.is_file() else None
     if named_bindings:
@@ -387,6 +405,15 @@ def main():
     }
     require(required_exterior_captures <= located,
             "Moved/new Boulevard captures lack their current exterior sign or guide.")
+
+    if yuanbao:
+        interaction = capture_anchors["yuanbao-temple"]
+        approach = normalize(yuanbao["readFrom"])
+        sign = normalize(yuanbao["signTile"])
+        require(interaction["script"] == yuanbao["script"] and interaction["world"] == sign
+                and map_at(approach)["nativeKey"] == interaction["nativeKey"] == yuanbao["nativeKey"]
+                and approach == [sign[0], sign[1] + 1],
+                "The compiled Yuanbao Temple encounter does not match its sign and south approach.")
 
     lakeshore_path = None
     if "taichung-park-lakeshore" in captures:

@@ -4,7 +4,7 @@ import type { OnboardingSnapshot } from './onboarding-bridge';
 
 type Pair = number[];
 type LocalizedName = { en: string; zh: string };
-type StreetBand = { name: LocalizedName; bounds: number[]; axis: string };
+type StreetBand = { id?: string; name: LocalizedName; bounds: number[]; axis: string };
 export type MinimapGeometry = {
   schemaVersion: number;
   geometryFingerprintSha256: string;

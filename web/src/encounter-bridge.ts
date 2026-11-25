@@ -1,5 +1,5 @@
 import type { CaptureSaveProof } from './capture-persistence';
-import { CAPTURE_MASK, CAPTURE_SITE_COUNT, LEGACY_CAPTURE_MASK } from './capture-persistence.ts';
+import { CAPTURE_MASK, CAPTURE_SITE_COUNT, LEGACY_CAPTURE_MASK, RESERVED_CAPTURE_SITE_ID } from './capture-persistence.ts';
 
 export type EncounterMetadata = ({ version: 1; size: 64 } | { version: 2; size: 72 })
   & { address: number; magicA: number; magicB: number };
@@ -59,7 +59,8 @@ export function readEncounterSnapshot(heap: Uint8Array, offset: number, metadata
   if (snapshot.attempts > mask || snapshot.unlocks > mask || snapshot.unlocks & ~snapshot.attempts
     || snapshot.phase > 6 || snapshot.balls > 3 || snapshot.result > 7 || snapshot.saveStatus > 1 || snapshot.ackStatus > 2) return;
   if (snapshot.phase === 0 ? snapshot.site !== 255 || snapshot.species !== 0
-    : snapshot.site >= (wide ? CAPTURE_SITE_COUNT : 14) || snapshot.species < 1 || snapshot.species > 150
+    : snapshot.site >= (wide ? CAPTURE_SITE_COUNT : 14) || snapshot.site === RESERVED_CAPTURE_SITE_ID
+      || snapshot.species < 1 || snapshot.species > 150
       || !snapshot.request || !(snapshot.attempts & 1 << snapshot.site)) return;
   return snapshot;
 }

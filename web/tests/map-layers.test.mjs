@@ -34,3 +34,11 @@ test('visitor links name the actual place in both languages and retain the exist
   assert.equal(localizedPlace(temple, 'en').url, new URL(temple.officialUrl).href);
   assert.equal(localizedPlace(temple, 'zh-Hant').url, new URL(temple.officialUrlZh ?? temple.officialUrl).href);
 });
+
+test('the fixed boulevard anchor replaces only the optional Taiwan Boulevard label', () => {
+  const labels = namedStreetLabels(geometry);
+  const boulevard = labels.find(band => band.id === 'taiwan');
+  assert.deepEqual(boulevard?.name, { en: 'Taiwan Boulevard', zh: '臺灣大道' });
+  assert.deepEqual(namedStreetLabels(geometry, 'taiwan'), labels.filter(band => band !== boulevard));
+  assert.ok(geometry.world.streetBands.includes(boulevard));
+});

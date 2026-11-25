@@ -70,11 +70,11 @@ test('v2 reads saved progress with the original packet size', () => {
   assert.equal(readNavigationSnapshot(heap, 64, v2).captureMask, 0x10008);
   words[11] = 1 << 23;
   assert.equal(readNavigationSnapshot(heap, 64, v2).captureMask, 1 << 23);
-  for (const site of [24, 25, 26]) {
+  for (const site of [24, 25, 26, 27, 28]) {
     words[11] = 1 << site;
     assert.equal(readNavigationSnapshot(heap, 64, v2).captureMask, 1 << site);
   }
-  words[11] = 1 << 27;
+  words[11] = 1 << 29;
   assert.equal(readNavigationSnapshot(heap, 64, v2), undefined);
 });
 

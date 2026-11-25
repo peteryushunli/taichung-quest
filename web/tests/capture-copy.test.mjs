@@ -29,7 +29,7 @@ test('the existing twenty places route captures to nine signs and Wenchang host,
   }
   assert.equal(signs, 9, 'eight outdoor sights plus the Maple Garden sign');
   assert.equal(hosts, 1, 'Wenchang is the hall-host route');
-  for (const id of ['confucius-temple', 'luce-chapel', 'rainbow-village', 'city-hall', 'jingming-street', 'unknown']) {
+  for (const id of ['confucius-temple', 'luce-chapel', 'rainbow-village', 'city-hall', 'jingming-street', 'yuanbao-temple', 'unknown']) {
     assert.equal(landmarkCaptureCopy(id, 'guide'), undefined, id);
     assert.equal(landmarkCaptureCopy(id, 'landing'), undefined, id);
   }
@@ -55,6 +55,11 @@ test('real sign/host copy keeps capture-before-TEAM-unlock and the correct entry
           }
         }
       }
+      for (const surface of ['guide', 'landing']) {
+        const chansey = landmarkCaptureCopy('yuanbao-temple', surface, true, 28);
+        const expected = locale === 'en' ? /level 60 Chansey.*capture.*TEAM/ : /Lv\. 60 的吉利蛋.*捕捉.*TEAM/;
+        assert.match(t(chansey), expected);
+      }
     }
   } finally {
     if (previous) Object.defineProperty(globalThis, 'document', previous);
@@ -78,7 +83,23 @@ test('the Boulevard guide includes encounters for every non-gym destination', ()
     assert.ok(!Object.values(markersById).some(marker => (lakeshore ? [13, 22] : [13, 18, 22]).includes(marker.captureBit)));
   }
   const hasNewXitun = newSites.some(([id]) => extraSights.some(place => place.id === id));
-  assert.equal(sights.length, (hasNewXitun ? 20 : 17) + Number(Boolean(lakeshore)));
+  const temple = markersById['yuanbao-temple'];
+  assert.equal(sights.length, (hasNewXitun ? 20 : 17) + Number(Boolean(lakeshore)) + Number(Boolean(temple)));
+  assert.equal(Object.values(markersById).filter((marker) => marker.kind === 'landmark-gym').length, 10);
+  assert.ok(!Object.values(markersById).some((marker) => marker.captureBit === 27));
+  if (temple) {
+    const card = sights.find((place) => place.id === temple.id);
+    assert.deepEqual(temple.captureInteraction, {
+      nativeKey: '43:69', local: [4, 24], world: [285, 50], script: 'TaichungCity_Sign_YuanbaoTemple',
+    });
+    assert.deepEqual(temple.world, temple.captureInteraction.world);
+    assert.equal(temple.kind, 'landmark');
+    assert.equal(temple.captureBit, 28);
+    assert.equal(card.nameZh, '元保宮');
+    assert.equal(card.districtId, 'north');
+    assert.equal(card.officialUrl, 'https://travel.taichung.gov.tw/en/Attractions/Intro/1659');
+    assert.deepEqual([card.location.latitude, card.location.longitude], [24.1628328, 120.676291]);
+  }
   if (lakeshore) {
     const gym = markersById['taichung-park'];
     assert.equal(lakeshore.captureBit, 0);

@@ -76,3 +76,32 @@ test('exporter rejects reused history, wrong species, missing slots and ambiguou
     assert.notEqual(validate(registry).status, 0, mutate.toString());
   }
 });
+
+function yuanbao() {
+  const registry = rotated();
+  registry.sites.push(
+    { stableSiteId: 27, siteSlug: 'central-park-mew-reserved', reserved: true, species: null,
+      speciesDex: null, level: null, entryScript: null, currentBinding: null },
+    { stableSiteId: 28, siteSlug: 'yuanbao-temple', speciesDex: 113, level: 60,
+      entryScript: 'TaichungEncounter_YuanbaoTemple', currentBinding: 'TaichungCity_Sign_YuanbaoTemple' },
+  );
+  return registry;
+}
+
+test('Yuanbao uses slot 28 while reserved slot 27 has no marker or interaction', () => {
+  const candidate = validate(yuanbao(), named(25));
+  assert.equal(candidate.status, 0, candidate.stderr);
+  const bits = JSON.parse(candidate.stdout);
+  assert.equal(bits['yuanbao-temple'], 28);
+  assert.ok(!Object.values(bits).includes(27));
+  for (const mutate of [
+    slots => { slots[27].currentBinding = 'TaichungEncounter_CentralParkMew'; },
+    slots => { slots[27].reserved = false; },
+    slots => { slots[27].speciesDex = 151; },
+    slots => { slots[28].level = 65; },
+    slots => { slots[28].currentBinding = null; },
+  ]) {
+    const registry = yuanbao(); mutate(registry.sites);
+    assert.notEqual(validate(registry).status, 0, mutate.toString());
+  }
+});

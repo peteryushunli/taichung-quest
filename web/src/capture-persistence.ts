@@ -3,7 +3,8 @@
 import { isFullFireRedSaveSize, readFireRedSaveSlot } from './firered-save.ts';
 
 export const CAPTURE_BOOT_INTENT_KEY = 'taichung-quest-capture-boot-v1';
-export const CAPTURE_SITE_COUNT = 27;
+export const RESERVED_CAPTURE_SITE_ID = 27;
+export const CAPTURE_SITE_COUNT = 29;
 export const CAPTURE_MASK = (1 << CAPTURE_SITE_COUNT) - 1;
 export const LEGACY_CAPTURE_MASK = 0x3fff;
 const SAVE_LOW_BITS = 10;
@@ -14,6 +15,7 @@ const SCHEMA = 0xec03;
 // EC02 predates the starter rotation. Its reserved bits must not become new
 // starter history merely because the live bridge supports more stable slots.
 const EC02_CAPTURE_MASK = 0xffffff;
+const EC03_EXTRA_MASK = 0x0707;
 
 export type CaptureSaveProof = {
   saveCounter: number;
@@ -53,19 +55,19 @@ export function verifyCaptureNativeSave(bytes: Uint8Array, expected: CaptureSave
     const variable = (id: number) => view.getUint16(save1SecondSector + 0x1000 + (id - 0x4000) * 2 - 0xf80, true);
     const schema = variable(0x40f3);
     if (schema !== SCHEMA && schema !== EC02_SCHEMA && schema !== LEGACY_SCHEMA) continue;
-    // EC03 dedicates 0x40EF bit0/bit8 to attempted/caught slot26. Its other
-    // bits are invalid, not additional capture IDs. Older schemas ignore this
-    // previously unallocated word entirely (native owns their migration).
+    // EC03 stores attempts at 0x40EF bits 0–2 and catches at bits 8–10
+    // for slots 26–28. Slot 27 remains valid history even while inactive.
+    // Older schemas ignore this word.
     const extra = schema === SCHEMA ? variable(0x40ef) : 0;
-    if (extra & ~0x0101) continue;
-    const mask = (low: number, upper: number, extraBit: number) => {
+    if (extra & ~EC03_EXTRA_MASK) continue;
+    const mask = (low: number, upper: number, extraShift: number) => {
       if (schema === LEGACY_SCHEMA) return variable(low) & LEGACY_CAPTURE_MASK;
       const historical = (variable(low) & SAVE_LOW_MASK) | (variable(upper) << SAVE_LOW_BITS);
       if (schema === EC02_SCHEMA) return historical & EC02_CAPTURE_MASK;
-      return historical | (extra & extraBit ? 1 << 26 : 0);
+      return historical | (((extra >>> extraShift) & 7) << 26);
     };
-    const attempts = mask(0x40f4, 0x40f0, 0x0001);
-    const unlocks = mask(0x40f5, 0x40f2, 0x0100);
+    const attempts = mask(0x40f4, 0x40f0, 0);
+    const unlocks = mask(0x40f5, 0x40f2, 8);
     if (attempts !== expected.attempts || unlocks !== expected.unlocks
       || (unlocks & ~attempts) || view.getUint32(save2 + 0xa, true) !== expected.trainerId) continue;
     matches.push({ ...expected, slot });

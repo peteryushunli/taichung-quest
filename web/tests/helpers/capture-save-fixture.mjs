@@ -19,7 +19,7 @@ export function fixture(expected = proof, slot = 1, rotation = 5, schema = 0xec0
   const lowMask = wide ? 0x3ff : 0xffff;
   const fields = [[0xf3, schema], [0xf4, expected.attempts & lowMask], [0xf5, expected.unlocks & lowMask]];
   if (wide) fields.push([0xf0, expected.attempts >>> 10], [0xf2, expected.unlocks >>> 10]);
-  if (schema === 0xec03) fields.push([0xef, (expected.attempts >>> 26 & 1) | (expected.unlocks >>> 26 & 1) << 8]);
+  if (schema === 0xec03) fields.push([0xef, (expected.attempts >>> 26 & 7) | (expected.unlocks >>> 26 & 7) << 8]);
   for (const [id, value] of fields)
     view.setUint16(positions[2] + 0x1000 + id * 2 - 0xf80, value, true);
   function seal(id) {
