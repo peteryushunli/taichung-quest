@@ -9,14 +9,16 @@ import type { HdScene } from './hd-scene';
 // that frame and draws a 4x copy of it. Buildings: the game reports which map
 // the player is on and where; the overlay loads that map's exact in-game
 // picture, finds where the screen sits on it, and paints each building's
-// high-resolution original over the copy. Characters: any gym leader or story
+// high-resolution original over the copy. The maps one step away are prepared
+// meanwhile, so the next street, a sign or the greeting outside the guest house
+// is crisp from its first frame. Characters: any gym leader or story
 // character frame is found on screen by its exact pixels and replaced. Every
 // pixel the game draws differently (the player, people, grass, a text box, a
 // fade) is put back from the frame, so whatever the game puts in front stays in
 // front. With nothing to replace, the overlay hides and the original canvas shows.
 
 type Building = { sprite: string; x: number; y: number; w: number; h: number; picture: string; covers: string; mask?: Uint8Array; kind?: 'sign' };
-type MapEntry = { name: string; ref: string; width: number; height: number; margin: number; cells: [number, number]; buildings: Building[] };
+type MapEntry = { name: string; ref: string; width: number; height: number; margin: number; cells: [number, number]; buildings: Building[]; near?: string[] };
 type WorldPack = { version: 2; scale: number; group: number; romSha256: string | null; maps: Record<string, MapEntry> };
 type Loaded = { key: string; map: MapEntry; ref: Uint16Array; refW: number; refH: number };
 export type Detail = 2 | 3 | 4;
@@ -76,30 +78,49 @@ export function keepCanvasReadable(canvas: HTMLCanvasElement) {
 
 const to555 = (r: number, g: number, b: number) => ((r >> 3) << 10) | ((g >> 3) << 5) | (b >> 3);
 
-async function loadImage(url: string) {
+async function loadImage(url: string, ahead = false) {
   const image = new Image();
   image.decoding = 'async';
+  if (ahead) image.fetchPriority = 'low';
   image.src = url;
   await image.decode();
   return image;
 }
 
-async function loadMap(base: string, key: string, map: MapEntry): Promise<Loaded> {
-  const refImage = await loadImage(`${base}/${map.ref}`);
-  const c = document.createElement('canvas');
-  c.width = refImage.width; c.height = refImage.height;
-  const x = c.getContext('2d', { willReadFrequently: true })!;
-  x.drawImage(refImage, 0, 0);
-  const rgba = x.getImageData(0, 0, c.width, c.height).data;
-  const ref = new Uint16Array(c.width * c.height);
-  for (let i = 0; i < ref.length; i++) ref[i] = to555(rgba[i * 4], rgba[i * 4 + 1], rgba[i * 4 + 2]);
+/** A pause between slices of work nobody is waiting for, so the game keeps its frames. */
+const pause = () => new Promise<void>((resolve) => {
+  if (typeof requestIdleCallback === 'function') requestIdleCallback(() => resolve(), { timeout: 60 });
+  else setTimeout(resolve, 16);
+});
+const BAND = 32;             // rows of a map picture read at a time
+const MASK_PIXELS = 24_000;  // mask pixels unpacked at a time
+
+/** `ahead` says whether the player is still elsewhere; it is asked again at every slice. */
+async function loadMap(base: string, key: string, map: MapEntry, ahead: () => boolean): Promise<Loaded> {
+  const image = await loadImage(`${base}/${map.ref}`, ahead());
+  const refW = image.width, refH = image.height;
+  const band = document.createElement('canvas');
+  band.width = refW; band.height = BAND;
+  const x = band.getContext('2d', { willReadFrequently: true })!;
+  const ref = new Uint16Array(refW * refH);
+  for (let top = 0; top < refH; top += BAND) {
+    if (ahead()) await pause();
+    const rows = Math.min(BAND, refH - top), first = top * refW;
+    x.drawImage(image, 0, top, refW, rows, 0, 0, refW, rows);
+    const rgba = x.getImageData(0, 0, refW, rows).data;
+    for (let i = 0; i < refW * rows; i++) ref[first + i] = to555(rgba[i * 4], rgba[i * 4 + 1], rgba[i * 4 + 2]);
+  }
+  let unpacked = 0;
   for (const b of map.buildings) {
     if (b.mask) continue;
+    if (unpacked > MASK_PIXELS && ahead()) { unpacked = 0; await pause(); }
     const bits = Uint8Array.from(atob(b.covers), (ch) => ch.charCodeAt(0));
-    b.mask = new Uint8Array(b.w * b.h);
-    for (let i = 0; i < b.mask.length; i++) b.mask[i] = (bits[i >> 3] >> (i & 7)) & 1;
+    const mask = new Uint8Array(b.w * b.h);
+    for (let i = 0; i < mask.length; i++) mask[i] = (bits[i >> 3] >> (i & 7)) & 1;
+    b.mask = mask;
+    unpacked += mask.length;
   }
-  return { key, map, ref, refW: c.width, refH: c.height };
+  return { key, map, ref, refW, refH };
 }
 
 export class HdOverlay {
@@ -116,7 +137,9 @@ export class HdOverlay {
   private rgba = new Uint8ClampedArray(W * H * 4);
   private loaded?: Loaded;
   private pack?: WorldPack;
-  private loadingMap?: string;
+  private currentKey?: string;
+  private readonly ready = new Map<string, Loaded>();
+  private readonly preparing = new Map<string, Promise<void>>();
   private readonly pictures = new Map<string, HTMLImageElement | 'loading'>();
   lastNav?: Nav;
   private sprites?: SpritePack;
@@ -233,27 +256,48 @@ export class HdOverlay {
     for (let i = 0; i < f.length; i++) f[i] = to555(rgba[i * 4], rgba[i * 4 + 1], rgba[i * 4 + 2]);
   }
 
-  /** The current map's picture, fetched the first time the player is on it. */
+  /** The current map, as soon as its picture is here: usually it was prepared from the map before. */
   private currentMap(nav: Nav | undefined) {
     if (!nav || !this.pack) return undefined;
     const key = `${nav.group}.${nav.map}`;
+    if (!this.pack.maps[key]) return undefined;
+    if (this.currentKey !== key) { this.currentKey = key; void this.prepareAround(key); }
     if (this.loaded?.key === key) return this.loaded;
-    const map = this.pack.maps[key];
-    if (!map) return undefined;
-    if (this.loadingMap !== key) {
-      this.loadingMap = key;
-      loadMap(this.packBase, key, map).then((loaded) => { if (this.loadingMap === key) { this.loaded = loaded; this.camera = undefined; } })
-        .catch((error) => console.info('HD map unavailable:', key, error));
-      for (const b of map.buildings) this.picture(b.picture);
-    }
-    return undefined;
+    const ready = this.ready.get(key);
+    if (ready) { this.loaded = ready; this.camera = undefined; }
+    return ready;
   }
 
-  private picture(file: string) {
+  /** This map first, then the ones a step away, two at a time; maps further off are let go. */
+  private async prepareAround(key: string) {
+    const near = this.pack!.maps[key].near ?? [];
+    for (const other of [...this.ready.keys()]) if (other !== key && !near.includes(other)) this.ready.delete(other);
+    await this.prepareMap(key);
+    const queue = [...near];
+    const lane = async () => { while (queue.length && this.currentKey === key) await this.prepareMap(queue.shift()!); };
+    await Promise.all([lane(), lane()]);
+  }
+
+  private prepareMap(key: string) {
+    const map = this.pack!.maps[key];
+    if (!map || this.ready.has(key)) return Promise.resolve();
+    const ahead = () => this.currentKey !== key;
+    for (const b of map.buildings) this.picture(b.picture, ahead());
+    let job = this.preparing.get(key);
+    if (!job) {
+      job = loadMap(this.packBase, key, map, ahead).then((loaded) => { this.ready.set(key, loaded); })
+        .catch((error) => console.info('HD map unavailable:', key, error))
+        .finally(() => this.preparing.delete(key));
+      this.preparing.set(key, job);
+    }
+    return job;
+  }
+
+  private picture(file: string, ahead = false) {
     const have = this.pictures.get(file);
     if (have) return have === 'loading' ? undefined : have;
     this.pictures.set(file, 'loading');
-    loadImage(`${this.packBase}/${file}`).then((image) => this.pictures.set(file, image)).catch(() => this.pictures.delete(file));
+    loadImage(`${this.packBase}/${file}`, ahead).then((image) => this.pictures.set(file, image)).catch(() => this.pictures.delete(file));
     return undefined;
   }
 

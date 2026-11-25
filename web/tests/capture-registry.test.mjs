@@ -19,8 +19,8 @@ print(json.dumps({place: site['stableSiteId'] for place, site in captures.items(
   if (result.error) throw result.error;
   return result;
 }
-function named(bhw) {
-  return { sites: [['national-trade-center', 21], ['ding-sheng-bhw', bhw], ['the-lin', 23]]
+function named(bhw, ntc = 21) {
+  return { sites: [['national-trade-center', ntc], ['ding-sheng-bhw', bhw], ['the-lin', 23]]
     .map(([id, captureSiteId]) => ({ id, captureSiteId })) };
 }
 // Synthetic candidate using the confirmed identity rotation, without geometry
@@ -103,5 +103,54 @@ test('Yuanbao uses slot 28 while reserved slot 27 has no marker or interaction',
   ]) {
     const registry = yuanbao(); mutate(registry.sites);
     assert.notEqual(validate(registry).status, 0, mutate.toString());
+  }
+});
+
+test('the retired Lapras slot keeps its species and level without a public binding', () => {
+  const registry = yuanbao();
+  const lapras = registry.sites[0];
+  Object.assign(lapras, { retired: true, species: 'LAPRAS', entryScript: null, currentBinding: null });
+  const result = validate(registry, named(25));
+  assert.equal(result.status, 0, result.stderr);
+  assert.ok(!Object.values(JSON.parse(result.stdout)).includes(0));
+  for (const change of [
+    { species: null }, { speciesDex: 71 }, { level: 60 },
+    { entryScript: 'TaichungEncounter_Lapras' }, { currentBinding: 'TaichungEncounter_Lapras' },
+  ]) {
+    const broken = structuredClone(registry);
+    Object.assign(broken.sites[0], change);
+    assert.notEqual(validate(broken, named(25)).status, 0, JSON.stringify(change));
+  }
+});
+
+test('the reassignment preserves each species and level and rejects partial or stale location changes', () => {
+  const registry = yuanbao();
+  const baseline = structuredClone(registry.sites);
+  const moves = [[24, 28], [12, 14], [5, 12], [7, 21], [28, 3], [21, 24], [3, 5], [14, 7]];
+  const expected = {
+    'yuanbao-temple': 24, 'tiger-city': 12, 'city-hall': 5, 'national-trade-center': 7,
+    'shen-ji-new-village': 28, 'jingming-street': 21, 'prefectural-hall': 3, 'cultural-heritage-park': 14,
+  };
+  for (const [bit, prior] of moves) {
+    const { siteSlug, currentBinding } = baseline[prior];
+    Object.assign(registry.sites[bit], { siteSlug, currentBinding });
+  }
+  const result = validate(registry, named(25, 7));
+  assert.equal(result.status, 0, result.stderr);
+  const byPlace = JSON.parse(result.stdout);
+  for (const [place, bit] of Object.entries(expected)) assert.equal(byPlace[place], bit, place);
+  assert.notEqual(validate(registry, named(25)).status, 0, 'stale NTC metadata must fail');
+  const partial = yuanbao();
+  [partial.sites[5].siteSlug, partial.sites[12].siteSlug] = [partial.sites[12].siteSlug, partial.sites[5].siteSlug];
+  assert.notEqual(validate(partial, named(25)).status, 0, 'a reassignment outside Yuanbao must not pass as the earlier roster');
+  for (const mutate of [
+    slots => { slots[28].level = 65; },
+    slots => { slots[21].speciesDex = 6; },
+    slots => { slots[7].currentBinding = null; },
+    slots => { slots[3].siteSlug = 'shen-ji-new-village'; },
+  ]) {
+    const broken = structuredClone(registry);
+    mutate(broken.sites);
+    assert.notEqual(validate(broken).status, 0, mutate.toString());
   }
 });

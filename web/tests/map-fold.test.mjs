@@ -132,16 +132,18 @@ test('every landmark pin has the Pokémon the game keeps there', () => {
   }
   const registry = JSON.parse(body.join('\n'));
   const { species } = JSON.parse(read('../src/data/capture-species.json'));
-  assert.deepEqual(species, [...registry.sites].sort((a, b) => a.stableSiteId - b.stableSiteId)
-    .map((site) => site.species?.toLowerCase() ?? null));
+  const slots = [...registry.sites].sort((a, b) => a.stableSiteId - b.stableSiteId);
+  assert.deepEqual(species, slots.map((site) => site.species?.toLowerCase() ?? null));
+  assert.equal(species[0], 'lapras');
   assert.equal(species[27], null);
-  assert.equal(species[city.markersById['yuanbao-temple'].captureBit], 'chansey');
   const translations = read('../src/i18n.ts');
   const landmarks = Object.values(city.markersById).filter((marker) => marker.captureBit !== undefined);
+  assert.ok(!landmarks.some((marker) => marker.captureBit === 0));
   assert.equal(new Set(landmarks.map((marker) => marker.captureBit)).size, landmarks.length, 'no two landmarks share a Pokémon');
   for (const marker of landmarks) {
     const slug = species[marker.captureBit];
     assert.ok(slug, `${marker.id} points to an active capture slot`);
+    assert.equal(slots[marker.captureBit].siteSlug, marker.id);
     assert.ok(existsSync(new URL(`../src/assets/pokemon/icon/${slug}.png`, import.meta.url)), `${marker.id} has the ${slug} icon`);
     assert.ok(translations.includes(`'${slug[0].toUpperCase()}${slug.slice(1)}': '`), `${slug} has a Chinese name`);
   }
@@ -154,7 +156,8 @@ test('the paired real map has geographic points for every public game pin', () =
   assert.equal(fold.source.cityGeometryFingerprintSha256, city.geometryFingerprintSha256);
   assert.deepEqual(Object.keys(fold.places).sort(), Object.keys(city.markersById).filter(id => id !== 'guest-house').sort());
   assert.deepEqual(fold.places['yuanbao-temple'], [0.59431, 0.35798]);
-  assert.deepEqual(fold.places['taichung-park-lakeshore'], [0.74723, 0.51452]);
+  assert.deepEqual(fold.places['taichung-park'], [0.7473, 0.50239]);
+  assert.equal(fold.places['taichung-park-lakeshore'], undefined);
   assert.equal(fold.sheet.kmWide, 11.85);
 });
 
