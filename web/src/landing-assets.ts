@@ -66,10 +66,12 @@ const mon = (name: string, icon: string): PokemonIcon => ({ name, icon });
 
 const iconFiles = import.meta.glob<string>('./assets/pokemon/icon/*.png', { eager: true, import: 'default' });
 /** The Pokémon the game keeps at a capture site (a landmark marker's captureBit), when the site has its icon. */
-export function capturePokemon(site: number | undefined): PokemonIcon | undefined {
-  const slug = site === undefined ? undefined : captureSpecies.species[site];
+export function capturePokemon(site: number | undefined): (PokemonIcon & { level: number }) | undefined {
+  if (site === undefined) return;
+  const slug = captureSpecies.species[site];
   const icon = slug ? iconFiles[`./assets/pokemon/icon/${slug}.png`] : undefined;
-  return slug && icon ? mon(slug[0].toUpperCase() + slug.slice(1), icon) : undefined;
+  const level = captureSpecies.levels[site];
+  return slug && icon && level != null ? { ...mon(slug[0].toUpperCase() + slug.slice(1), icon), level } : undefined;
 }
 const brick = '#ede2d9';
 const park = '#e0e8dc';

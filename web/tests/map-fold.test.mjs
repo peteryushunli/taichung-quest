@@ -131,10 +131,12 @@ test('every landmark pin has the Pokémon the game keeps there', () => {
     if (line.startsWith('+') && !line.startsWith('+++')) body.push(line.slice(1));
   }
   const registry = JSON.parse(body.join('\n'));
-  const { species } = JSON.parse(read('../src/data/capture-species.json'));
+  const { species, levels } = JSON.parse(read('../src/data/capture-species.json'));
   const slots = [...registry.sites].sort((a, b) => a.stableSiteId - b.stableSiteId);
   assert.deepEqual(species, slots.map((site) => site.species?.toLowerCase() ?? null));
+  assert.deepEqual(levels, slots.map((site) => site.level));
   assert.equal(species[0], 'lapras');
+  assert.equal(levels[0], 65);
   assert.equal(species[27], null);
   const translations = read('../src/i18n.ts');
   const landmarks = Object.values(city.markersById).filter((marker) => marker.captureBit !== undefined);
@@ -142,8 +144,8 @@ test('every landmark pin has the Pokémon the game keeps there', () => {
   assert.equal(new Set(landmarks.map((marker) => marker.captureBit)).size, landmarks.length, 'no two landmarks share a Pokémon');
   for (const marker of landmarks) {
     const slug = species[marker.captureBit];
-    assert.ok(slug, `${marker.id} points to an active capture slot`);
     assert.equal(slots[marker.captureBit].siteSlug, marker.id);
+    assert.ok(slug, `${marker.id} points to an active capture slot`);
     assert.ok(existsSync(new URL(`../src/assets/pokemon/icon/${slug}.png`, import.meta.url)), `${marker.id} has the ${slug} icon`);
     assert.ok(translations.includes(`'${slug[0].toUpperCase()}${slug.slice(1)}': '`), `${slug} has a Chinese name`);
   }

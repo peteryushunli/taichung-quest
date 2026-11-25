@@ -40,7 +40,9 @@ def main():
         raise SystemExit('The encounter registry has a gap in its site numbers.')
     species = [site['species'].lower() if site['species'] is not None else None for site in sites]
     out = WEB / 'src/data/capture-species.json'
-    out.write_text(json.dumps({'source': f'{REGISTRY} in patches/taichung.patch', 'species': species}, indent=2) + '\n')
+    levels = [site['level'] for site in sites]
+    out.write_text(json.dumps({'source': f'{REGISTRY} in patches/taichung.patch',
+                               'species': species, 'levels': levels}, indent=2) + '\n')
     print(f'wrote {out.relative_to(WEB.parent)}: {len(species)} sites')
 
     city = json.loads((WEB / 'src/data/boulevard-preview.json').read_text())

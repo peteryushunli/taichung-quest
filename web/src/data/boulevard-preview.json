@@ -2593,7 +2593,7 @@
       "parentMarkerId": "wenchang-temple",
       "parentEntranceWorld": [
         34,
-        206
+        205
       ],
       "indoorLabel": {
         "en": "Indoors",
@@ -2870,11 +2870,11 @@
       "kind": "landmark",
       "world": [
         34,
-        206
+        205
       ],
       "localEntrance": [
         26,
-        16
+        15
       ],
       "exteriorMapId": "MAP_TAICHUNG_BLVD_WENCHANG_TEMPLE",
       "exteriorNativeKey": "43:31",
@@ -4896,19 +4896,21 @@
     }
   ],
   "sourceSha256": {
-    "compiledMapReport": "52a06d8365fa0e4500610485c6f0954f9986b0ab623a262395f89445ecbcd8c9",
+    "compiledMapReport": "d7f60ddb06f963103d0b182439860f80932ec4fe0855fc32c5b644d098d6ef78",
     "fill": "22d9c6695e21ab7419ccafe55d86e4833df8a5e394aee84133d4a1cd6b5849f6",
     "mapBook": "265d64cf1b47a26d412626301a6f1e542f3a19bcd89ec0084e6f08022a713b4d",
+    "coolAlleyPaving": "4a216db0027306e406e3a9da833ae132f3650675f72991d62d6f7a6a062d0574",
     "northXitunPlan": "89c555bbfa2a80d277b9729e6a2a9a1b6480dea9e4ffbf76ace332c7386f76e5",
     "northXitunCompiler": "be903fd3d2d37b0dc6c581512e86b84054457a30a53ce90bc7f83fcd1b65fb34",
     "xitunTowerSwap": "3c6d0e8c0deddd092f650297f58be5ee686d8a1f9c073c009ecc33ea04443ab3",
     "scienceMuseumExterior": "d5498ab8795db850dfeb38174107e6b3f5aa0b0fe23e4d346df7b00513f23409",
-    "yuanbaoTemple": "d85cf4d0629a37d6c145e04b7f9caf419a0e07256006f7b70331f274583ecac1",
-    "fengjiaSouth": "88ae5f2c9904223e8886e0eb778ab4f77ddaa7c4d01a87ceee1a00a206a526f4",
+    "yuanbaoTemple": "f0b1f1cfd6e4f57be2a9169137364c27dbc5bee8c67a1cb326c943b8fd4063e2",
+    "fengjiaSouth": "f293263dd783ede83240cd029df9f198044040972ff7b0c38c2a8ff062c741b7",
+    "fengjiaAlignedArt": "e4df271dd06957ce8948a0561805e4f332f049de5772cf7f30162f79d9c70282",
     "fineArtsToned": "1daa5b536583b99fc63be9ab5d242b2b271856838fdee299c18db4bf8cd14083",
     "streetPeople": "370ac784ff89540cc741402d14c495f5eefe7650c14feb2b51c076ffc8f6a07f",
-    "landmarkSignPlan": "f57a0556709e320c2d485ab57935f634643c39731650570f7adc93e7fd5f4f3c",
+    "landmarkSignPlan": "2fb0f4481091ce2b51c2e63e80a19020b7b4a2317130abf0c7d376d68fae2293",
     "namedXitunBindings": "a421378b20de3e224b25aeb0c1af057c0dee989c32f477a0ef95cc9160bdba2c"
   },
-  "geometryFingerprintSha256": "17a668365f3a5547658429a5e53d74f76a26e3c0d9c698c7cd00a343b31c15e4"
+  "geometryFingerprintSha256": "4dfd202484fca32162c15bc07633df0b289b9a6c78d19a93a122e040299f7ba2"
 }

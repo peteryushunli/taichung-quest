@@ -148,6 +148,8 @@ def terrain_images(fill, plan, candidate, geometry, report):
         world.put(paving, "p")
     apply_compiled_ground(world, report.get("xitunFrontageCleanup", {}).get("radarGround", []))
     apply_compiled_ground(world, report.get("yuanbaoTemple", {}).get("ground", []))
+    for x, y in report.get("alleyPaving", {}).get("mergedSurfaceJoins", []):
+        world.put((x, y, x + 1, y + 1), "z")
     apply_compiled_ground(world, report.get("fengjiaSouthEntrance", {}).get("radarGround", []))
     width, height = geometry["world"]["width"], geometry["world"]["height"]
     origin = plan["world"]["box"][:2]
@@ -216,12 +218,13 @@ def landmark_facades(native, fill, report, extras):
     for place in catalog:
         landmark = place["id"]
         filename = f"{landmark}.png"
-        source = approved / filename
-        if not source.is_file():
-            source = kit / filename
-        require(source.is_file() and digest(source) == report["spriteSha256"].get(landmark),
-                f"{landmark} art does not match the compiled Boulevard report.")
         fengjia_arch = landmark == "fengjia-night-market" and report.get("fengjiaSouthEntrance")
+        sprite = "fengjia-aligned-market" if fengjia_arch and fengjia_arch.get("visualLayers") else landmark
+        source = approved / f"{sprite}.png"
+        if not source.is_file():
+            source = kit / f"{sprite}.png"
+        require(source.is_file() and digest(source) == report["spriteSha256"].get(sprite),
+                f"{landmark} art does not match the compiled Boulevard report.")
         if landmark in {"calligraphy-greenway", "yuanbao-temple"} or fengjia_arch:
             source = WEB / "src/assets/landmarks/reviewed" / f"{landmark}-4x.png"
         with Image.open(source) as sprite:

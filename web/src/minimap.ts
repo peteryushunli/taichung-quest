@@ -13,6 +13,7 @@ import radarArt from './assets/minimap/city.png';
 import boulevardRadar from './assets/boulevard/radar.png';
 import { isGym, placeWorld } from './landing-model';
 import type { LandingLandmark } from './landing-model';
+import { capturePokemon } from './landing-assets';
 
 export const MARKS = {
   gym: '<path class="minimap-marker minimap-badge" d="M0,-3 2.5,-1.9 3,.5 1.6,2.6 0,3.3 -1.6,2.6 -3,.5 -2.5,-1.9Z"/><path class="minimap-detail" d="M0,-1.55 1.3,0 0,1.55 -1.3,0Z"/>',
@@ -70,7 +71,8 @@ export function createMinimap(options: {
     const gymBit = gymIds.indexOf(place.id);
     const captureBit = geometry.markersById[place.id]?.captureBit;
     const kind: 'gym' | 'sight' | 'capture' = gymBit >= 0 ? 'gym' : captureBit === undefined ? 'sight' : 'capture';
-    return { id: place.id, kind, gymBit, captureBit, world: placeWorld(place, geometry.markersById) };
+    return { id: place.id, kind, gymBit, captureBit, encounter: capturePokemon(captureBit),
+             name: { en: place.nameEn, zh: place.nameZh }, world: placeWorld(place, geometry.markersById) };
   });
   const markers = places.map((place) =>
     `<g data-landmark="${place.id}" class="minimap-blip minimap-${place.kind}">${MARKS[place.kind]}</g>`).join('');
@@ -158,7 +160,10 @@ export function createMinimap(options: {
       entry.element.classList.toggle('is-earned', entry.gymBit >= 0 ? earned : outcome === 'caught');
       for (const value of ['caught', 'spent', 'pending']) entry.element.classList.toggle(`is-${value}`, outcome === value);
       entry.element.dataset.encounter = outcome;
-      if (entry.captureBit !== undefined) entry.element.setAttribute('aria-label', t(ENCOUNTER_LABELS[outcome]));
+      if (entry.captureBit !== undefined) {
+        const title = getLocale() === 'zh-Hant' ? entry.name.zh : entry.name.en;
+        entry.element.setAttribute('aria-label', [title, entry.encounter && t(entry.encounter.name), t(ENCOUNTER_LABELS[outcome])].filter(Boolean).join(' · '));
+      }
       place(entry.element, mode !== 'citywide' && radarContains(view, entry.world) ? entry.world : undefined, scale);
     }
     const homeTile = geometry.world.homeWorld ?? HOME_WORLD;
