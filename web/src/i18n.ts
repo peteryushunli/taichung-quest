@@ -235,6 +235,7 @@ const zh: Record<string, string> = {
   'Three districts. Ten real places.': '三個街區，十個真實地點。',
   'Distances are compressed and side streets are gone, but the city keeps its shape: the old city around the station, the Greenway\'s museums in the middle, Xitun\'s theater and night market to the northwest.': '距離經過壓縮，小巷也省略了，但城市的輪廓還在：車站周圍是舊城區，中段是草悟道沿線的博物館，西北方則是西屯的歌劇院與夜市。',
   'IN-GAME MAP': '遊戲內地圖',
+  'Taichung is waiting.': '臺中在等你。',
   'Real Taichung': '真實臺中',
   'Explore Taichung, street by street.': '走遍臺中的大街小巷。',
   'Taiwan Boulevard runs through the heart of this map, just as it runs through the heart of the city. The night market, the temples and the old station were all built out from it by hand. Flip the map to see the real Taichung underneath.': '臺灣大道貫穿這張地圖，就像它貫穿整座城市。夜市、廟宇和舊車站，都是從它向外一磚一瓦親手打造。翻開地圖，看看底下真實的臺中。',

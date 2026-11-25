@@ -10,7 +10,7 @@ import { badgeArt, landingMedia, landmarkArt } from './landing-assets';
 import { landmarkCaptureCopy } from './capture-copy';
 import type { PokemonIcon } from './landing-assets';
 import { pixelFlag } from './landing-flag';
-import { districtLabelSpots, gymStatusSummary, isGym, isGymOpen, localizedPlace, markerPosition, orderPlaces, placeStatus, placeWorld } from './landing-model';
+import { districtLabelSpots, isGym, isGymOpen, localizedPlace, markerPosition, orderPlaces, placeStatus, placeWorld } from './landing-model';
 import type { LandingLandmark } from './landing-model';
 import type { MapView } from './map-fold';
 
@@ -170,7 +170,6 @@ function markup() {
               <div class="lp-bezel"><div class="lp-screen">${heroScreen()}</div></div>
               <div class="lp-partner">${landingMedia.heroPartner ? pixelImage(landingMedia.heroPartner, 'Pikachu') : placeholder('Partner Pokémon sprite', 'lp-slot-fill')}</div>
             </div>
-            <p class="lp-status"><b>${copy('Early access.')}</b> <span id="lp-gym-status"></span></p>
           </div>
         </div>
         <div class="lp-step-one">
@@ -206,8 +205,7 @@ function markup() {
 
       <section class="lp-cta" id="play"><div class="lp-wrap lp-cta-inner">
         <div class="lp-cta-copy">
-          <p class="lp-eyebrow">${copy('YOUR JOURNEY STARTS NEAR')}</p>
-          <h2 class="lp-cta-title lp-display">${copy('Old Taichung Station.')}<span class="lp-cta-zh" lang="zh-Hant">舊臺中車站</span></h2>
+          <h2 class="lp-cta-title lp-display">${copy('Taichung is waiting.')}</h2>
           <p class="lp-cta-text">${copy('Runs in any modern browser with keyboard or touch. Saves stay on your device — export a backup anytime.')}</p>
           <div class="lp-actions">
             <button type="button" class="lp-btn" id="lp-new-game"><span aria-hidden="true">▶</span> ${copy('Start a new game')}</button>
@@ -355,7 +353,6 @@ export function createLanding(root: HTMLElement, host: LandingHost) {
     root.querySelectorAll<HTMLElement>('[data-map-layer-label]').forEach(label => { label.textContent = mapLayerLabel(label.dataset.mapLayerLabel as typeof MAP_LAYERS[number], getLocale()); });
     layers.refresh();
     root.querySelector('#lp-pass')!.innerHTML = renderPass();
-    root.querySelector('#lp-gym-status')!.textContent = gymStatusSummary(landmarks, getLocale());
     root.querySelectorAll<HTMLImageElement>('[data-i18n-alt]').forEach((image) => { image.alt = t(image.dataset.i18nAlt!); });
     root.querySelectorAll<HTMLButtonElement>('[data-locale-toggle]').forEach((button) => button.setAttribute('aria-pressed', String(button.dataset.localeToggle === getLocale())));
   }

@@ -77,8 +77,6 @@ html[lang="zh-Hant"] .lp-display { font-family: var(--lp-zh); font-weight: 500; 
 .lp-screen video { display: block; width: 100%; height: 100%; object-fit: cover; }
 .lp-partner { position: absolute; right: -22px; bottom: -34px; width: 128px; height: 128px; overflow: hidden; border-radius: 6px; background: var(--lp-cream); box-shadow: 0 0 0 1px var(--lp-card-line); }
 .lp-partner img { display: block; width: 100%; height: 100%; object-fit: contain; }
-.lp-status { margin: 0 6px; padding-right: 110px; font-size: 13px; line-height: 1.6; color: var(--lp-muted); }
-.lp-status b { color: var(--lp-pine); font-weight: 600; }
 
 /* Map */
 .lp-map-section { background: var(--lp-pine); color: var(--lp-cream-dark); }
@@ -213,8 +211,6 @@ html[lang="zh-Hant"] .lp-card-other { font-family: inherit; font-size: 12px; let
 .lp-cta-copy { display: flex; flex-direction: column; gap: 22px; }
 .lp-cta .lp-eyebrow { color: #4d6a45; }
 .lp-cta-title { font-size: clamp(40px, 5vw, 64px); line-height: 1.02; letter-spacing: -1.6px; color: var(--lp-pine); }
-.lp-cta-zh { display: block; font-family: var(--lp-zh); font-size: .6em; letter-spacing: 4px; }
-html[lang="zh-Hant"] .lp-cta-zh { display: none; }
 .lp-cta-text { max-width: 440px; font-size: 16px; line-height: 1.6; color: #3d5446; }
 .lp-play-status { max-width: 440px; font-size: 13px; line-height: 1.6; color: #3d5446; }
 .lp-play-status:empty { display: none; }
@@ -273,7 +269,6 @@ html[lang="zh-Hant"] .lp-cta-zh { display: none; }
   .lp-map-legend { gap: 4px; padding: 5px 7px; font-size: 10px; }
   .lp-detail-art { height: 150px; }
   .lp-detail-body { padding: 18px; }
-  .lp-status { padding-right: 76px; }
   .lp-partner { right: -8px; bottom: -28px; width: 96px; height: 96px; }
   .lp-starter-art img { width: 128px; height: 128px; }
   .lp-casing { padding: 14px 14px 24px; border-radius: 12px 12px 36px 12px; }
