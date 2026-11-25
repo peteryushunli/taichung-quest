@@ -14,7 +14,7 @@ import boulevardRadar from './assets/boulevard/radar.png';
 import { isGym, placeWorld } from './landing-model';
 import type { LandingLandmark } from './landing-model';
 
-const MARKS = {
+export const MARKS = {
   gym: '<path class="minimap-marker minimap-badge" d="M0,-3 2.5,-1.9 3,.5 1.6,2.6 0,3.3 -1.6,2.6 -3,.5 -2.5,-1.9Z"/><path class="minimap-detail" d="M0,-1.55 1.3,0 0,1.55 -1.3,0Z"/>',
   capture: '<circle class="minimap-marker minimap-ball" r="2.7"/><path class="minimap-ball-top" d="M-2.4,0 A2.4,2.4 0 0,1 2.4,0Z"/><path class="minimap-detail minimap-ball-seam" d="M-2.6,0H2.6"/><circle class="minimap-marker minimap-ball-button" r=".82"/><path class="minimap-outcome-check" d="M-1.35,0 -.35,1.05 1.5,-1.1"/><path class="minimap-outcome-cross" d="M-1.25,-1.25 1.25,1.25 M1.25,-1.25 -1.25,1.25"/>',
   sight: '<path class="minimap-marker minimap-signpost" d="M-.5,2.3V.5H-2V-1.6H1.2L2.5,-.55 1.2,.5H.5V2.3Z"/>',

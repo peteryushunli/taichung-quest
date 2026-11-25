@@ -6,10 +6,10 @@ import './landing.css';
 import { escapeHtml } from './city-guide';
 import { getLocale, onLocaleChange, setLocale, t } from './i18n';
 import type { Locale } from './i18n';
-import { badgeArt, landingMedia, landmarkArt } from './landing-assets';
-import { landmarkCaptureCopy } from './capture-copy';
+import { badgeArt, capturePokemon, landingMedia, landmarkArt } from './landing-assets';
 import type { PokemonIcon } from './landing-assets';
 import { pixelFlag } from './landing-flag';
+import { MARKS as MINIMAP_MARKS } from './minimap';
 import { districtLabelSpots, isGym, isGymOpen, localizedPlace, markerPosition, orderPlaces, placeStatus, placeWorld } from './landing-model';
 import type { LandingLandmark } from './landing-model';
 import type { MapView } from './map-fold';
@@ -30,9 +30,11 @@ const taiwanBoulevard = city.world.streetBands?.find((band) => band.name.en === 
 const BOULEVARD_ROW = taiwanBoulevard ? (taiwanBoulevard[1] + taiwanBoulevard[3]) / 2 : city.world.height / 2;
 // The page's words sell the city; they do not explain how the map was made.
 const LEAD_HEADING = 'Explore Taichung, street by street.';
-const LEAD_TEXT = 'Taiwan Boulevard runs through the heart of this map, just as it runs through the heart of the city. The night market, the temples and the old station were all built out from it by hand. Flip the map to see the real Taichung underneath.';
+const LEAD_TEXT = 'Taiwan Boulevard runs through the heart of this map, just as it runs through the heart of the city. The night market, the temples and the old station were all built out from it. Flip the map to see the real Taichung underneath.';
 const REAL_MAP_CAPTION = 'The real city. Everything inside the bright ground is yours to explore.';
 const GAME_MAP_CAPTION = 'The same streets, ready to ride.';
+const PLACES_HEADING = 'See the Taichung a local would show you.';
+const PLACES_TEXT = 'Stand under the station clock, squeeze through the night market, catch your breath by the lake in the park. Gym leaders are fictional; the buildings are real.';
 const HOW_HEADING = 'Plays like the Pokémon you remember.';
 const HOW_TEXT = "Pick a partner, take on gym leaders, fill your badge case. The only thing that's new is the city.";
 const GITHUB_URL = 'https://github.com/peteryushunli/taichung-quest';
@@ -49,6 +51,11 @@ const placeholder = (label: string, extra = '') => `<div class="lp-slot ${extra}
 const pixelImage = (url: string, alt = '') => `<img class="lp-px" src="${escapeHtml(url)}" alt="${escapeHtml(t(alt))}"${alt ? ` data-i18n-alt="${escapeHtml(alt)}"` : ''} loading="lazy">`;
 const reducedMotion = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
 // Party-menu icons flip between their two frames; `index` staggers a row of them.
+// Gym pins wear the gym mark from the game's own minimap.
+const GYM_ICON = `<svg class="lp-gym-icon" viewBox="-4 -3.85 8 8" aria-hidden="true">${MINIMAP_MARKS.gym}</svg>`;
+/** The Pokémon that lives at a landmark, as the game's capture registry has it. */
+const wildAt = (id: string) => BOULEVARD_PREVIEW ? capturePokemon(city.markersById[id]?.captureBit) : undefined;
+const legendPokemon = sights.map((place) => wildAt(place.id)).find(Boolean);
 const monIcon = (mon: PokemonIcon, index: number, labelled = true) => `<span class="lp-mon" ${labelled ? `role="img" aria-label="${escapeHtml(t(mon.name))}" data-i18n-label="${escapeHtml(mon.name)}"` : 'aria-hidden="true"'} style="--i:${index};background-image:url('${escapeHtml(mon.icon)}')"></span>`;
 
 function cityMap() {
@@ -60,14 +67,15 @@ function cityMap() {
   const layers = `<div id="lp-districts-layer" data-map-layer="districts" hidden>${labels}</div><div id="lp-streets-layer" data-map-layer="streets" hidden></div>`;
   if (!BOULEVARD_PREVIEW) return `${art}${layers}<span class="lp-map-chip">${copy('IN-GAME MAP')}</span>`;
   // The Boulevard map has a second view, real Taichung, which folds into this one around Taiwan Blvd (real-map.ts).
-  // The gold line traces the boulevard in both; its name tag sits on the one point that never moves.
+  // The gold line traces the boulevard in both; its name tag rides on the boulevard's middle. On the real map a
+  // label names the city and the compass is a button: it turns that map until north points up, and back.
   const lineHeight = 1000 * height / width;
   const lineY = (lineHeight * BOULEVARD_ROW / height).toFixed(1);
   return `${art}<img class="lp-map-real-art" id="lp-map-real-art" alt="" hidden><canvas class="lp-map-fold" id="lp-map-fold" hidden></canvas>
     <svg class="lp-map-boulevard-line" viewBox="0 0 1000 ${lineHeight.toFixed(3)}" preserveAspectRatio="none" aria-hidden="true"><polyline class="lp-boulevard-casing" points="0,${lineY} 1000,${lineY}"/><polyline class="lp-boulevard-gold" points="0,${lineY} 1000,${lineY}"/></svg>
     ${layers}
     <div class="lp-map-anchor" style="top:${BOULEVARD_ROW / height * 100}%" aria-hidden="true"><i></i><span>${copy('Taiwan Blvd')}</span></div>
-    <div class="lp-map-real-only" aria-hidden="true"><span class="lp-map-north"><svg viewBox="-12 -12 24 24" width="26" height="26"><g transform="rotate(-34.4)"><path d="M0 -10L4.2 3.5L0 1.2L-4.2 3.5Z"/><text y="10.6" text-anchor="middle">N</text></g></svg></span><span class="lp-map-scale"><b id="lp-map-scale-bar"></b><span>2 km</span></span></div>`;
+    <div class="lp-map-real-only"><button type="button" class="lp-map-north" id="lp-map-north" aria-label="${escapeHtml(t('North up'))}" data-i18n-label="North up" aria-pressed="false" disabled><svg viewBox="-12 -12 24 24" width="26" height="26" aria-hidden="true"><g class="lp-map-north-arrow"><path d="M0 -10L4.2 3.5L0 1.2L-4.2 3.5Z"/><text y="10.6" text-anchor="middle">N</text></g></svg></button><span class="lp-map-place">${copy('Taichung')}</span><span class="lp-map-scale" aria-hidden="true"><b id="lp-map-scale-bar"></b><span>2 km</span></span></div>`;
 }
 
 function mapSwitch() {
@@ -136,6 +144,7 @@ function markup() {
           </div>
         </div>
         <div class="lp-map-body" id="lp-map-stage">
+          ${landingMedia.heroPartner ? `<img class="lp-px lp-lead-partner" src="${escapeHtml(landingMedia.heroPartner)}" alt="${escapeHtml(t('Pikachu'))}" data-i18n-alt="Pikachu" width="64" height="64">` : ''}
           <div class="lp-map-col">
           <div class="lp-map-bar">
             ${BOULEVARD_PREVIEW ? mapSwitch() : ''}
@@ -144,7 +153,7 @@ function markup() {
           <div class="lp-map${BOULEVARD_PREVIEW ? ' lp-map-boulevard' : ''}" id="lp-map" style="aspect-ratio:${city.world.width} / ${city.world.height};background-size:${800 / city.world.width}% ${800 / city.world.height}%" role="group" aria-label="${escapeHtml(t('Choose a landmark'))}" data-i18n-label="Choose a landmark">
             ${cityMap()}
             <div id="lp-markers"></div>
-            <div class="lp-map-legend"><span data-map-legend="gyms"><i class="lp-swatch-open"></i>${copy('Gym')}</span><span data-map-legend="landmarks"><i class="lp-swatch-landmark"></i>${copy('Landmark')}</span>${gyms.some((place) => !isGymOpen(place)) ? `<span data-map-legend="gyms"><i class="lp-swatch-planned"></i>${copy('In development')}</span>` : ''}${BOULEVARD_PREVIEW ? `<span><i class="lp-swatch-boulevard"></i>${copy('Taiwan Blvd')}</span><span class="lp-legend-real-only"><i class="lp-swatch-covered"></i>${copy('In the game')}</span>` : ''}</div>
+            <div class="lp-map-legend"><span data-map-legend="gyms"><i class="lp-swatch-icon">${GYM_ICON}</i>${copy('Gym')}</span><span data-map-legend="landmarks">${legendPokemon ? `<i class="lp-swatch-icon">${monIcon(legendPokemon, 0, false)}</i>` : '<i class="lp-swatch-landmark"></i>'}${copy('Landmark')}</span>${gyms.some((place) => !isGymOpen(place)) ? `<span data-map-legend="gyms"><i class="lp-swatch-planned"></i>${copy('In development')}</span>` : ''}${BOULEVARD_PREVIEW ? `<span class="lp-legend-real-only"><i class="lp-swatch-covered"></i>${copy('In the game')}</span>` : ''}</div>
           </div>
           ${BOULEVARD_PREVIEW ? `<div class="lp-map-foot"><p><span data-map-caption="real" hidden>${copy(REAL_MAP_CAPTION)}</span><span data-map-caption="game">${copy(GAME_MAP_CAPTION)}</span></p><small>${copy('Real map © OpenStreetMap contributors')}</small></div>` : ''}
           </div>
@@ -153,7 +162,7 @@ function markup() {
       </div></section>
 
       <section class="lp-wrap" id="gyms">
-        ${sectionHead('01 — THE LANDMARKS', 'Ten landmark gyms. Rare Pokémon across the city.', 'Each place is redrawn tile by tile. Gym leaders are fictional; the buildings are real.')}
+        ${sectionHead('01 — THE LANDMARKS', PLACES_HEADING, PLACES_TEXT)}
         <div class="lp-gallery" id="lp-gallery"></div>
       </section>
 
@@ -229,8 +238,12 @@ function renderMarkers(selected: string) {
     const { x, y, side } = markerPosition(placeWorld(place, city.markersById), city.world);
     const { name, mapLabel } = localizedPlace(place, locale);
     const state = `${!isGym(place) ? 'is-landmark' : isGymOpen(place) ? 'is-open' : 'is-planned'}${place.id === selected ? ' is-selected' : ''}`;
-    return { layer: isGym(place) ? 'gyms' : 'landmarks', html: `<div class="lp-pin ${state} lp-side-${place.landingLabelSide ?? side}" data-pin="${escapeHtml(place.id)}" data-x="${x}" data-y="${y}" style="left:${x}%;top:${y}%">
-      <button type="button" class="lp-marker" data-select="${escapeHtml(place.id)}" aria-label="${escapeHtml(`${name} · ${t(placeStatus(place))}`)}" aria-pressed="${place.id === selected}">${number(index)}</button>
+    // No numbers or names on the map: a landmark's pin is the Pokémon that lives there, a gym's pin is the minimap's gym mark.
+    const wild = isGym(place) ? undefined : wildAt(place.id);
+    const icon = isGym(place) ? GYM_ICON : wild ? monIcon(wild, index, false) : '';
+    const label = [name, t(placeStatus(place)), wild ? t(wild.name) : ''].filter(Boolean).join(' · ');
+    return { layer: isGym(place) ? 'gyms' : 'landmarks', html: `<div class="lp-pin ${state}${icon ? ' lp-pin-icon' : ''} lp-side-${place.landingLabelSide ?? side}" data-pin="${escapeHtml(place.id)}" data-x="${x}" data-y="${y}" style="left:${x}%;top:${y}%">
+      <button type="button" class="lp-marker${icon ? ' lp-marker-icon' : ''}" data-select="${escapeHtml(place.id)}" aria-label="${escapeHtml(label)}" aria-pressed="${place.id === selected}">${icon || number(index)}</button>
       <span class="lp-pin-label" data-select="${escapeHtml(place.id)}" aria-hidden="true">${escapeHtml(mapLabel)}</span>
     </div>` };
   });
@@ -241,28 +254,17 @@ function renderDetail(id: string) {
   const index = landmarks.findIndex((place) => place.id === id);
   const place = landmarks[index];
   const info = localizedPlace(place, getLocale());
-  const captureBit = city.markersById[id]?.captureBit;
-  const hasEncounter = BOULEVARD_PREVIEW ? captureBit !== undefined : undefined;
   const art = landmarkArt[id];
   const facade = art?.facade
     ? `<img class="lp-facade" src="${escapeHtml(art.facade)}" alt="${escapeHtml(info.name)}" loading="lazy" decoding="async">`
     : `<div class="lp-facade-pending">${copy('Facade art pending')}</div>`;
-  const portrait = art?.leader && info.leader
-    ? `<img class="lp-portrait lp-portrait-art" src="${escapeHtml(art.leader)}" alt="" width="56" height="56" loading="lazy" decoding="async">`
-    : '<div class="lp-portrait">?</div>';
   const team = info.leader ? art?.team : undefined;
-  const teamSprites = team
-    ? `<div class="lp-team-sprites" role="group" aria-label="${escapeHtml(t("Leader's team"))}">${team.map((mon, slot) => `<i>${monIcon(mon, slot)}</i>`).join('')}</div>`
-    : '<div class="lp-team-sprites" aria-hidden="true"><i>?</i><i>?</i><i>?</i></div>';
   return `
-    <div class="lp-detail-art">${facade}</div>
+    <div class="lp-detail-art">${facade}${team ? `<div class="lp-detail-team" role="group" aria-label="${escapeHtml(t("Leader's team"))}">${team.map((mon, slot) => monIcon(mon, slot)).join('')}</div>` : ''}</div>
     <div class="lp-detail-body" role="region" aria-labelledby="lp-detail-name" tabindex="0">
       <div class="lp-detail-meta"><span>No. ${number(index)} · ${escapeHtml(info.district)}</span></div>
       <div class="lp-detail-names"><h3 class="lp-display" id="lp-detail-name">${escapeHtml(info.name)}</h3><span>${escapeHtml(info.otherName)}</span></div>
       <p class="lp-detail-text">${escapeHtml(info.description)}</p>
-      <div class="lp-detail-foot">
-        ${isGym(place) ? `<div class="lp-leader">${portrait}<div class="lp-leader-name"><small>${copy('Gym leader')}</small><b>${info.leader ? escapeHtml(info.leader) : copy('To be revealed')}</b></div>${teamSprites}</div>` : `<p class="lp-landmark-note">${copy(landmarkCaptureCopy(place.id, 'landing', hasEncounter, BOULEVARD_PREVIEW ? captureBit : undefined) ?? 'Visit this landmark and learn its local history.')}</p>`}
-      </div>
       ${info.url ? `<div class="lp-visit-link"><a href="${escapeHtml(info.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(info.visitLabel)} <span aria-hidden="true">↗</span></a></div>` : ''}
     </div>`;
 }
@@ -280,11 +282,11 @@ function renderCard(place: LandingLandmark, locale: ReturnType<typeof getLocale>
 function renderGallery() {
   const locale = getLocale();
   const group = (title: string, note: string, places: LandingLandmark[]) => `<div class="lp-gallery-group">
-      <div class="lp-gallery-head"><h3>${copy(title)} <span>${places.length}</span></h3><p>${copy(note)}</p></div>
+      <div class="lp-gallery-head"><h3>${copy(title)}</h3><p>${copy(note)}</p></div>
       <div class="lp-gallery-grid">${places.map((place) => renderCard(place, locale)).join('')}</div>
     </div>`;
-  return group('Gyms', 'Beat the leader inside to earn a City Pass stamp.', gyms)
-    + group('Landmarks', 'Explore temples, markets and parks. Selected landmarks offer rare Pokémon captures that unlock new TEAM choices.', sights);
+  return group('Gyms', 'A leader is waiting inside each one.', gyms)
+    + group('Landmarks', 'A rare Pokémon is waiting at each one.', sights);
 }
 
 /** Renders into `root` and binds; call refresh() whenever host state changes. */
@@ -325,6 +327,8 @@ export function createLanding(root: HTMLElement, host: LandingHost) {
         gameArt: root.querySelector<HTMLImageElement>('.lp-map-art')!,
         realArt: root.querySelector<HTMLImageElement>('#lp-map-real-art')!,
         boulevard: [...root.querySelectorAll<SVGPolylineElement>('.lp-map-boulevard-line polyline')],
+        anchor: root.querySelector<HTMLElement>('.lp-map-anchor')!,
+        north: root.querySelector<HTMLButtonElement>('#lp-map-north')!,
         scaleBar: root.querySelector<HTMLElement>('#lp-map-scale-bar')!,
         reducedMotion,
         onView: showMapView,

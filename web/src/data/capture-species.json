@@ -1,0 +1,32 @@
+{
+  "source": "data/taichung/encounters/sites.json in patches/taichung.patch",
+  "species": [
+    "lapras",
+    "gyarados",
+    "exeggutor",
+    "alakazam",
+    "electabuzz",
+    "arcanine",
+    "snorlax",
+    "moltres",
+    "onix",
+    "jynx",
+    "dragonite",
+    "clefable",
+    "mewtwo",
+    "ninetales",
+    "zapdos",
+    "porygon",
+    "aerodactyl",
+    "gengar",
+    "victreebel",
+    "rhydon",
+    "articuno",
+    "magneton",
+    "kabutops",
+    "persian",
+    "charizard",
+    "blastoise",
+    "venusaur"
+  ]
+}
