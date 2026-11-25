@@ -261,10 +261,11 @@ function renderDetail(id: string) {
     ? `<img class="lp-facade" src="${escapeHtml(art.facade)}" alt="${escapeHtml(info.name)}" loading="lazy" decoding="async">`
     : `<div class="lp-facade-pending">${copy('Facade art pending')}</div>`;
   const team = info.leader ? art?.team : undefined;
+  const encounter = wildAt(id);
   return `
     <div class="lp-detail-art">${facade}${team ? `<div class="lp-detail-team" role="group" aria-label="${escapeHtml(t("Leader's team"))}">${team.map((mon, slot) => monIcon(mon, slot)).join('')}</div>` : ''}</div>
     <div class="lp-detail-body" role="region" aria-labelledby="lp-detail-name" tabindex="0">
-      <div class="lp-detail-meta"><span>No. ${number(index)} · ${escapeHtml(info.district)}</span></div>
+      <div class="lp-detail-meta"><span>No. ${number(index)} · ${escapeHtml(info.district)}</span>${encounter ? `<span class="lp-detail-capture">${monIcon(encounter, 0, false)} <span>${escapeHtml(t(encounter.name))} · Lv. ${encounter.level}</span></span>` : ''}</div>
       <div class="lp-detail-names"><h3 class="lp-display" id="lp-detail-name">${escapeHtml(info.name)}</h3><span>${escapeHtml(info.otherName)}</span></div>
       <p class="lp-detail-text">${escapeHtml(info.description)}</p>
       ${info.url ? `<div class="lp-visit-link"><a href="${escapeHtml(info.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(info.visitLabel)} <span aria-hidden="true">↗</span></a></div>` : ''}
@@ -275,9 +276,10 @@ function renderCard(place: LandingLandmark, locale: ReturnType<typeof getLocale>
   const index = landmarks.indexOf(place);
   const info = localizedPlace(place, locale);
   const art = landmarkArt[place.id];
+  const encounter = wildAt(place.id);
   return `<button type="button" class="lp-card${isGym(place) ? '' : ' is-landmark'}" data-card="${escapeHtml(place.id)}">
       <span class="lp-card-art" style="background:${art?.tint ?? '#eee8dc'}">${art?.facade ? `<img class="lp-card-facade" src="${escapeHtml(art.facade)}" alt="" loading="lazy" decoding="async">` : `<span class="lp-card-pending">${copy('facade art')}</span>`}</span>
-      <span class="lp-card-body"><span class="lp-card-meta"><span>No. ${number(index)}</span></span><span class="lp-card-name">${escapeHtml(info.shortName)}</span><span class="lp-card-other">${escapeHtml(info.otherName)}</span></span>
+      <span class="lp-card-body"><span class="lp-card-meta"><span>No. ${number(index)}</span>${encounter ? monIcon(encounter, 0) : ''}</span><span class="lp-card-name">${escapeHtml(info.shortName)}</span><span class="lp-card-other">${escapeHtml(info.otherName)}</span></span>
     </button>`;
 }
 

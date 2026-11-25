@@ -4,7 +4,7 @@ import type { EncounterProgress } from './encounter-progress';
 import type { EncounterBridgeState } from './encounter-bridge';
 import landmarkCatalog from './data/landmarks.json';
 import { BOULEVARD_PREVIEW, cityGeometry, sightCatalog } from './preview-world';
-import { landingMedia, landmarkArt } from './landing-assets';
+import { capturePokemon, landingMedia, landmarkArt } from './landing-assets';
 import { districtLabelSpots, isGym, localizedPlace, markerPosition, orderPlaces, placeWorld } from './landing-model';
 import type { LandingLandmark } from './landing-model';
 import './city-guide.css';
@@ -95,6 +95,7 @@ export function createCityGuide(host: GuideHost) {
     const areaLabel = !place.playable ? 'PLANNED AREA · NOT PLAYABLE' : place.phase === 'arrival' ? 'ARRIVAL AREA · EXPLORABLE' : 'EXPLORABLE GAME AREA';
     const areaNote = !place.playable ? 'This landmark is in the city plan; its game area is not playable in this build.' : outdoor ? 'Walk to it on the city streets and read its sign.' : 'Explore this landmark’s district and visitor hall.';
     const captureBit = cityGeometry.markersById[place.id]?.captureBit;
+    const encounter = BOULEVARD_PREVIEW ? capturePokemon(captureBit) : undefined;
     const hasEncounter = BOULEVARD_PREVIEW ? captureBit !== undefined : undefined;
     const gymNote = landmarkCaptureCopy(place.id, 'guide', hasEncounter, BOULEVARD_PREVIEW ? captureBit : undefined) ?? (!gym ? 'Visit this landmark and learn its local history.' : place.gymStatus === 'playable' ? 'A gym battle is playable here. Speak to the leader and win to earn a badge.' : place.gymStatus === 'pending-verification' ? 'This gym challenge is being verified. The district and visitor hall are explorable.' : 'This landmark’s fictional gym challenge is still in development.');
     const artLabel = chinese ? `${place.nameZh}原創插圖` : `Original illustration of ${place.nameEn}`;
@@ -104,7 +105,7 @@ export function createCityGuide(host: GuideHost) {
     dialog.querySelector('#landmark-detail')!.innerHTML = `
       ${art}
       <div class="landmark-copy"><p class="landmark-category">${escapeHtml(chinese ? place.categoryZh : place.category)} <span>· ${escapeHtml(chinese ? place.districtZh : place.districtEn)}</span></p><h3>${escapeHtml(chinese ? place.nameZh : place.nameEn)}<span lang="${chinese ? 'en' : 'zh-Hant'}">${escapeHtml(chinese ? place.nameEn : place.nameZh)}</span></h3><p class="visitor-description">${escapeHtml(chinese ? place.descriptionZh : place.description)}</p>${place.location ? `<div class="visitor-address"><span>${t('Real-world address')}</span><address>${escapeHtml(chinese ? place.location.addressZh : place.location.address)}</address></div>` : ''}${info.url ? `<div class="visitor-link"><a class="official-link" href="${escapeHtml(info.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(info.visitLabel)} <span aria-hidden="true">↗</span></a></div>` : ''}</div>
-      <div class="landmark-game-note"><span class="area-status ${place.playable ? 'area-playable' : 'area-planned'}">${t(areaLabel)}</span><p>${t(areaNote)}</p><div class="gym-note"><span>${t(gym ? 'FICTIONAL GYM CHALLENGE' : 'LANDMARK')}</span><p>${t(gymNote)}</p><p class="guide-encounter-status" hidden></p></div></div>`;
+      <div class="landmark-game-note"><span class="area-status ${place.playable ? 'area-playable' : 'area-planned'}">${t(areaLabel)}</span><p>${t(areaNote)}</p><div class="gym-note"><span>${t(gym ? 'FICTIONAL GYM CHALLENGE' : 'LANDMARK')}</span>${encounter ? `<p class="guide-encounter-species"><span class="lp-mon" aria-hidden="true" style="background-image:url('${escapeHtml(encounter.icon)}')"></span>${escapeHtml(t(encounter.name))} · Lv. ${encounter.level}</p>` : ''}<p>${t(gymNote)}</p><p class="guide-encounter-status" hidden></p></div></div>`;
     renderEncounterStatus();
     layoutLabels();
     if (reveal && matchMedia('(max-width: 670px)').matches) dialog.querySelector('#landmark-detail')!.scrollIntoView({ block: 'nearest', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' });
@@ -118,7 +119,9 @@ export function createCityGuide(host: GuideHost) {
       button.dataset.encounter = outcome;
       const place = landmarks.find((entry) => entry.id === id)!;
       const label = `${place.nameEn} · ${place.nameZh}`;
-      button.setAttribute('aria-label', bit === undefined ? label : `${label} · ${t(ENCOUNTER_LABELS[outcome])}`);
+      const encounter = capturePokemon(bit);
+      const labels = bit === undefined ? [label] : [label, encounter ? t(encounter.name) : '', t(ENCOUNTER_LABELS[outcome])];
+      button.setAttribute('aria-label', labels.filter(Boolean).join(' · '));
       let mark = button.querySelector<HTMLElement>('.guide-encounter-mark');
       if (bit !== undefined && !mark) {
         mark = document.createElement('span'); mark.className = 'guide-encounter-mark'; mark.setAttribute('aria-hidden', 'true'); button.append(mark);

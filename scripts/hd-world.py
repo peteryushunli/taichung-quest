@@ -212,16 +212,24 @@ class Streamed:
     def __init__(self, game):
         sec = os.path.join(game, 'data/tilesets/secondary/taichung_boulevard')
         pri = os.path.join(game, 'data/tilesets/primary/taichung_approved_old_city_north')
-        # The streamed city isolates its animated flower graphics from the
-        # legacy primary while retaining that primary's palettes/metatiles.
-        city_tiles = os.path.join(game, 'data/tilesets/primary/taichung_boulevard/tiles.4bpp')
+        # Boulevard graphics and colors may have private copies. Metatile
+        # definitions still come from the original primary tileset.
+        city_primary = os.path.join(game, 'data/tilesets/primary/taichung_boulevard')
+        city_tiles = os.path.join(city_primary, 'tiles.4bpp')
         primary_tiles = city_tiles if os.path.isfile(city_tiles) else os.path.join(pri, 'tiles.4bpp')
         self.sec = sec
         self.tiles = [open(primary_tiles, 'rb').read(), open(os.path.join(sec, 'tiles.bin'), 'rb').read()]
         pal = words(os.path.join(sec, 'palettes.bin'))
         self.palettes = [pal[i * 16:(i + 1) * 16] for i in range(len(pal) // 16)]
-        for i in range(7):
-            self.palettes[i] = words(os.path.join(pri, 'palettes', f'{i:02}.gbapal'))[:16]
+        city_palettes = os.path.join(city_primary, 'palettes.bin')
+        if os.path.isfile(city_palettes):
+            primary = words(city_palettes)
+            if len(primary) != 16 * 16:
+                raise ValueError(f"Unexpected primary palette size in {city_palettes}")
+            self.palettes[:7] = [primary[i * 16:(i + 1) * 16] for i in range(7)]
+        else:
+            for i in range(7):
+                self.palettes[i] = words(os.path.join(pri, 'palettes', f'{i:02}.gbapal'))[:16]
         self.primary = words(os.path.join(pri, 'metatiles.bin'))
         self.tile_cache = {}
 

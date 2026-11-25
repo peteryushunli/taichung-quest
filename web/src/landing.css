@@ -119,6 +119,8 @@ html[lang="zh-Hant"] .lp-display { font-family: var(--lp-zh); font-weight: 500; 
 .lp-detail-body > * { flex: none; }
 .lp-detail-body:focus-visible { outline: 2px solid var(--lp-pine); outline-offset: -3px; }
 .lp-detail-meta { display: flex; justify-content: space-between; align-items: center; gap: 10px; font: 11px var(--lp-mono-face); letter-spacing: 1px; color: var(--lp-muted); }
+.lp-detail-capture { display: inline-flex; align-items: center; gap: 4px; letter-spacing: 0; color: var(--lp-ink); }
+.lp-detail-capture .lp-mon, .lp-card-meta .lp-mon { width: 24px; height: 24px; }
 .lp-chip { flex: none; padding: 3px 8px; border-radius: 2px; background: #eadfc9; color: #6e5238; }
 .lp-chip.is-open { background: var(--lp-pine); color: var(--lp-cream-dark); }
 .lp-chip.is-landmark { background: var(--lp-gold); color: var(--lp-gold-ink); }

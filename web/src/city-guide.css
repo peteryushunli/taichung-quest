@@ -93,6 +93,8 @@ html[lang="zh-Hant"] .landmark-tab-names b { font-size: 9px; color: #99a28b; }
 [data-encounter="spent"] .marker-number { background: #d6d8cc; color: #60685d; border-color: #7a8176; }
 [data-encounter="spent"] .marker-label { opacity: .65; }
 .guide-encounter-status { font-weight: 700; }
+.gym-note > .guide-encounter-species { display: flex; align-items: center; gap: 5px; color: inherit; font-weight: 700; }
+.guide-encounter-species .lp-mon { width: 24px; height: 24px; }
 .guide-encounter-status[data-encounter="caught"] { color: #a9d599; }
 .guide-encounter-status[data-encounter="spent"] { color: #b4b9ad; }
 
