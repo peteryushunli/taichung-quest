@@ -2488,7 +2488,7 @@
       "parentMarkerId": "wanhe-temple",
       "parentEntranceWorld": [
         49,
-        206
+        205
       ],
       "indoorLabel": {
         "en": "Indoors",
@@ -2770,11 +2770,11 @@
       "kind": "landmark-gym",
       "world": [
         49,
-        206
+        205
       ],
       "localEntrance": [
         8,
-        16
+        15
       ],
       "exteriorMapId": "MAP_TAICHUNG_BLVD_WANHE_TEMPLE",
       "exteriorNativeKey": "43:39"
@@ -4854,7 +4854,7 @@
     }
   ],
   "sourceSha256": {
-    "compiledMapReport": "1f8c41053120902c2b4fb9175b8451d3b38ca40a683843d23b1d14d077fbd8c3",
+    "compiledMapReport": "71a1b6bd3ac192b1383ce7652870cca86745fca1a6a946f21f414d81700934ab",
     "fill": "22d9c6695e21ab7419ccafe55d86e4833df8a5e394aee84133d4a1cd6b5849f6",
     "mapBook": "265d64cf1b47a26d412626301a6f1e542f3a19bcd89ec0084e6f08022a713b4d",
     "northXitunPlan": "89c555bbfa2a80d277b9729e6a2a9a1b6480dea9e4ffbf76ace332c7386f76e5",
@@ -4867,5 +4867,5 @@
     "namedXitunBindings": "8dd6432e66f3e9b47e7eb3238f2e8788d29531b60c2f9fc96d5a13a7477d098d",
     "taichungParkLakeshore": "c94b2788731344c60e78c2d6dc9897df41d864fe7997fb20a3a50cc8a121a688"
   },
-  "geometryFingerprintSha256": "27aa906f34c38fb5af56a9104b6857da918e5577160d1c2f133c9855068af9ef"
+  "geometryFingerprintSha256": "23b85655c20ec6344d5c9a06f8f806a351fce741387f22907bdc0d6db3c862c8"
 }
