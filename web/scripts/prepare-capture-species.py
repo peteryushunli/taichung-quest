@@ -38,15 +38,21 @@ def main():
     sites = sorted(registry['sites'], key=lambda site: site['stableSiteId'])
     if [site['stableSiteId'] for site in sites] != list(range(len(sites))):
         raise SystemExit('The encounter registry has a gap in its site numbers.')
-    species = [site['species'].lower() for site in sites]
+    species = [site['species'].lower() if site['species'] is not None else None for site in sites]
     out = WEB / 'src/data/capture-species.json'
     out.write_text(json.dumps({'source': f'{REGISTRY} in patches/taichung.patch', 'species': species}, indent=2) + '\n')
     print(f'wrote {out.relative_to(WEB.parent)}: {len(species)} sites')
 
     city = json.loads((WEB / 'src/data/boulevard-preview.json').read_text())
-    needed = sorted({species[marker['captureBit']] for marker in city['markersById'].values() if marker.get('captureBit') is not None})
+    needed = set()
+    for marker in city['markersById'].values():
+        bit = marker.get('captureBit')
+        if bit is not None:
+            if not 0 <= bit < len(species) or species[bit] is None:
+                raise SystemExit(f"{marker['id']} does not bind to an active capture species.")
+            needed.add(species[bit])
     icons = WEB / 'src/assets/pokemon/icon'
-    missing = [name for name in needed if not (icons / f'{name}.png').exists()]
+    missing = [name for name in sorted(needed) if not (icons / f'{name}.png').exists()]
     game = Path(sys.argv[1]) if len(sys.argv) > 1 else None
     for name in missing:
         if game is None:
@@ -54,7 +60,7 @@ def main():
         source = game / 'graphics/pokemon' / name / 'icon.png'
         shutil.copyfile(source, icons / f'{name}.png')
         print(f'icon/{name}.png {hashlib.sha256(source.read_bytes()).hexdigest()}')
-    still = [name for name in needed if not (icons / f'{name}.png').exists()]
+    still = [name for name in missing if not (icons / f'{name}.png').exists()]
     if still:
         raise SystemExit(f'Missing icons (pass the game source folder to copy them): {", ".join(still)}')
     print(f'{len(needed)} landmark Pokémon, every icon present')

@@ -313,6 +313,7 @@ const zh: Record<string, string> = {
   'Seel': '小海獅',
   'Cloyster': '刺甲貝',
   'Lapras': '拉普拉斯',
+  'Chansey': '吉利蛋',
   'Venusaur': '妙蛙花',
   'Blastoise': '水箭龜',
   'Arcanine': '風速狗',

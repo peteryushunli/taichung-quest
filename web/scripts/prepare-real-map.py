@@ -64,11 +64,14 @@ def main():
             x, y = sheet['places'][place_id]['px']
             places[place_id] = [round((x / sheet['pxkm'] + pu0 - u0) / (u1 - u0), 5), round((y / sheet['pxkm'] + pv0 - v0) / (v1 - v0), 5)]
     # Places added to the game since the plan was drawn: their real coordinates, turned into the sheet's frame.
-    extra = study / 'extra-places.json'
-    if extra.exists():
+    supplementary = {}
+    for extra in (study / 'extra-places.json', WEB / 'src/data/real-map-places.json'):
+        if extra.exists():
+            supplementary.update(json.loads(extra.read_text())['places'])
+    if supplementary:
         sys.path.insert(0, str(study.parent / 'src'))
         import frame
-        for place_id, at in json.loads(extra.read_text())['places'].items():
+        for place_id, at in supplementary.items():
             if place_id in city['markersById'] and place_id not in places:
                 u, v = frame.uv(at['lat'], at['lon'])
                 places[place_id] = [round((u - u0) / (u1 - u0), 5), round((v - v0) / (v1 - v0), 5)]

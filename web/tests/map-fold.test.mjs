@@ -132,18 +132,30 @@ test('every landmark pin has the Pokémon the game keeps there', () => {
   }
   const registry = JSON.parse(body.join('\n'));
   const { species } = JSON.parse(read('../src/data/capture-species.json'));
-  assert.deepEqual(species, [...registry.sites].sort((a, b) => a.stableSiteId - b.stableSiteId).map((site) => site.species.toLowerCase()));
+  assert.deepEqual(species, [...registry.sites].sort((a, b) => a.stableSiteId - b.stableSiteId)
+    .map((site) => site.species?.toLowerCase() ?? null));
+  assert.equal(species[27], null);
+  assert.equal(species[city.markersById['yuanbao-temple'].captureBit], 'chansey');
   const translations = read('../src/i18n.ts');
   const landmarks = Object.values(city.markersById).filter((marker) => marker.captureBit !== undefined);
   assert.equal(new Set(landmarks.map((marker) => marker.captureBit)).size, landmarks.length, 'no two landmarks share a Pokémon');
   for (const marker of landmarks) {
     const slug = species[marker.captureBit];
+    assert.ok(slug, `${marker.id} points to an active capture slot`);
     assert.ok(existsSync(new URL(`../src/assets/pokemon/icon/${slug}.png`, import.meta.url)), `${marker.id} has the ${slug} icon`);
     assert.ok(translations.includes(`'${slug[0].toUpperCase()}${slug.slice(1)}': '`), `${slug} has a Chinese name`);
   }
   // The map carries no place names or numbers: a Pokémon or a gym front marks each place.
   const landing = read('../src/landing.ts');
   assert.ok(landing.includes("${icon || number(index)}") && read('../src/landing.css').includes('.lp-pin-icon > .lp-pin-label { display: none; }'));
+});
+
+test('the paired real map has geographic points for every public game pin', () => {
+  assert.equal(fold.source.cityGeometryFingerprintSha256, city.geometryFingerprintSha256);
+  assert.deepEqual(Object.keys(fold.places).sort(), Object.keys(city.markersById).filter(id => id !== 'guest-house').sort());
+  assert.deepEqual(fold.places['yuanbao-temple'], [0.59431, 0.35798]);
+  assert.deepEqual(fold.places['taichung-park-lakeshore'], [0.74723, 0.51452]);
+  assert.equal(fold.sheet.kmWide, 11.85);
 });
 
 test('the real view can be turned north-up without running out of picture', () => {

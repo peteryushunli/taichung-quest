@@ -2464,7 +2464,7 @@
       "parentMarkerId": "fengjia-night-market",
       "parentEntranceWorld": [
         16,
-        47
+        59
       ],
       "indoorLabel": {
         "en": "Indoors",
@@ -2752,11 +2752,11 @@
       "kind": "landmark-gym",
       "world": [
         16,
-        47
+        59
       ],
       "localEntrance": [
         8,
-        21
+        33
       ],
       "exteriorMapId": "MAP_TAICHUNG_BLVD_FENGJIA_NIGHT_MARKET",
       "exteriorNativeKey": "43:26"
@@ -4916,19 +4916,21 @@
     }
   ],
   "sourceSha256": {
-    "compiledMapReport": "b38733532e6811677ef9a994f5423311e17700586fce3aad4231d6c8eecb9220",
+    "compiledMapReport": "ebad9d726bc29d76ac78eb289deffe0ea04a94e78feeecb504d132ff4bf405c3",
     "fill": "22d9c6695e21ab7419ccafe55d86e4833df8a5e394aee84133d4a1cd6b5849f6",
     "mapBook": "265d64cf1b47a26d412626301a6f1e542f3a19bcd89ec0084e6f08022a713b4d",
     "northXitunPlan": "89c555bbfa2a80d277b9729e6a2a9a1b6480dea9e4ffbf76ace332c7386f76e5",
     "northXitunCompiler": "be903fd3d2d37b0dc6c581512e86b84054457a30a53ce90bc7f83fcd1b65fb34",
     "xitunTowerSwap": "3c6d0e8c0deddd092f650297f58be5ee686d8a1f9c073c009ecc33ea04443ab3",
     "scienceMuseumExterior": "d5498ab8795db850dfeb38174107e6b3f5aa0b0fe23e4d346df7b00513f23409",
-    "yuanbaoTemple": "94da92965bd3f587a217e217fbd16d6af5eb5436689fb01bacc1c81b2179750f",
+    "yuanbaoTemple": "d85cf4d0629a37d6c145e04b7f9caf419a0e07256006f7b70331f274583ecac1",
+    "fengjiaSouth": "88ae5f2c9904223e8886e0eb778ab4f77ddaa7c4d01a87ceee1a00a206a526f4",
+    "fineArtsToned": "1daa5b536583b99fc63be9ab5d242b2b271856838fdee299c18db4bf8cd14083",
     "parkLakeshore": "c94b2788731344c60e78c2d6dc9897df41d864fe7997fb20a3a50cc8a121a688",
     "streetPeople": "370ac784ff89540cc741402d14c495f5eefe7650c14feb2b51c076ffc8f6a07f",
-    "landmarkSignPlan": "1e5f3c8c82421450b92d956689b7566af2bfb51e88577d24fa7cbef8bac87071",
+    "landmarkSignPlan": "6bd1d4f535ff1a1601667ef17e263c8926d24c267f1cd37dceff594deadeebfc",
     "namedXitunBindings": "8dd6432e66f3e9b47e7eb3238f2e8788d29531b60c2f9fc96d5a13a7477d098d",
     "taichungParkLakeshore": "c94b2788731344c60e78c2d6dc9897df41d864fe7997fb20a3a50cc8a121a688"
   },
-  "geometryFingerprintSha256": "2285a0fc1f604d4a495653c42b2f4bc2c8327ae12964e6ddae7ab5385d9ec147"
+  "geometryFingerprintSha256": "d6a6950aa867039750cc84ef6ff0a0f68e034e1f05c507e358d8404f674e4cf7"
 }

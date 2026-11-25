@@ -145,6 +145,7 @@ def terrain_images(fill, plan, candidate, geometry, report):
         world.put(paving, "p")
     apply_compiled_ground(world, report.get("xitunFrontageCleanup", {}).get("radarGround", []))
     apply_compiled_ground(world, report.get("yuanbaoTemple", {}).get("ground", []))
+    apply_compiled_ground(world, report.get("fengjiaSouthEntrance", {}).get("radarGround", []))
     width, height = geometry["world"]["width"], geometry["world"]["height"]
     origin = plan["world"]["box"][:2]
     ink = {
@@ -219,7 +220,8 @@ def landmark_facades(native, fill, report, extras):
             source = kit / filename
         require(source.is_file() and digest(source) == report["spriteSha256"].get(landmark),
                 f"{landmark} art does not match the compiled Boulevard report.")
-        if landmark in {"calligraphy-greenway", "yuanbao-temple"}:
+        if landmark in {"calligraphy-greenway", "yuanbao-temple"} or (
+                landmark == "fengjia-night-market" and report.get("fengjiaSouthEntrance")):
             source = WEB / "src/assets/landmarks/reviewed" / f"{landmark}-4x.png"
         with Image.open(source) as sprite:
             image = sprite.convert("RGBA")
